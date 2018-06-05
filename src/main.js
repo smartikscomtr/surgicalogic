@@ -14,13 +14,11 @@ const store = new Vuex.Store(storeOptions);
 // Registering Components
 import EditPageComponent from '@/components/EditPageComponent';
 import GridComponent from '@/components/GridComponent';
-import HelloWorld from '@/components/HelloWorld';
 import Loading from '@/components/Loading';
 import OperationDividerComponent from '@/components/OperationDividerComponent';
 
 Vue.component('edit-page-component', EditPageComponent);
 Vue.component('grid-component', GridComponent);
-Vue.component('hello-world', HelloWorld);
 Vue.component('loading', Loading);
 Vue.component('operation-divider-component', OperationDividerComponent);
 
