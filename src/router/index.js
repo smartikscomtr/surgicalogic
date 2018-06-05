@@ -14,8 +14,6 @@ import PersonnelPage from "@/pages/index/PersonnelPage";
 import RoomsPage from "@/pages/index/RoomsPage";
 
 
-import EquipmentsEditPage from "@/pages/edit/EquipmentsEditPage";
-
 export default new VueRouter({
   mode: 'history',
   routes: [
@@ -38,14 +36,6 @@ export default new VueRouter({
       path: '/roomspage',
       name: 'RoomsPage',
       component: RoomsPage
-    },
-
-
-
-    {
-      path: '/equipmentseditpage',
-      name: 'EquipmentsEditPage',
-      component: EquipmentsEditPage
     }
   ]
 })

@@ -2,41 +2,31 @@
     <div>
       <grid-component :headers="headers"
                       :items="equipments"
-
                       :show-edit="true"
                       :show-delete="true"
                       @edited="edited">
       </grid-component>
-      <edit-page-component :headers="headers"
-                             :editedItem="editedItem"
-                             :visible="showEditPageComponent">
-        </edit-page-component>
+
+      <equipments-edit-component :headers="headers"
+                                 :editedItem="editedItem"
+                                 :visible="dialog">
+      </equipments-edit-component>
     </div>
 </template>
 
 <script>
 
-import EditPageComponent from '../../components/EditPageComponent';
+import EquipmentsEditComponent from '../../components/editcomponents/EquipmentsEditComponent';
 
 export default {
     data() {
       return {
-        showEditPageComponent: false,
+        dialog: false,
         editedItem : {}
       };
     },
 
     computed: {
-      // editedItem() {
-      //   return
-      //     {
-      //       name = '',
-      //       type = '',
-      //       portable = '',
-      //       description = ''
-      //     };
-      // },
-
       headers() {
         return [
           {
@@ -75,13 +65,16 @@ export default {
 
     methods: {
       edited(payload){
-        this.showEditPageComponent = true;
-        this.editedItem = payload;
+        const vm = this;
+
+        vm.dialog = true;
+        vm.editedItem = payload;
       }
     },
 
     created() {
       const vm = this;
+
       vm.$store.dispatch('fetchEquipments');
     }
 }

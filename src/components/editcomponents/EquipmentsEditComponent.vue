@@ -2,7 +2,6 @@
     <div>
       <v-dialog v-model="showModal"
                 slot="activator"
-                :editedItem="editedItem"
                 max-width="500px">
                 <!-- :headers="headers" -->
         <v-card>
@@ -58,16 +57,20 @@ export default {
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "Düzenleme" : "Düzenleme";
+        const vm = this;
+
+        return vm.editedIndex === -1 ? "Düzenleme" : "Düzenleme";
       },
 
       showModal: {
         get() {
-          return this.visible;
+          const vm = this;
+
+          return vm.visible;
         },
         set (value) {
           if (!value) {
-            this.$emit('close')
+            vm.$emit('close')
           }
         }
       }

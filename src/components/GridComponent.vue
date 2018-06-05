@@ -61,6 +61,7 @@ export default {
         return [];
       }
     },
+
     headers: {
       type: Array,
       required: false,
@@ -68,17 +69,12 @@ export default {
         return [];
       }
     },
-    editedItem: {
-      type: Object,
-      required: false,
-      default() {
-        return {};
-      }
-    },
+
     showEdit: {
       type: Boolean,
       required: false
     },
+
     showDelete: {
       type: Boolean,
       required: false
@@ -87,26 +83,24 @@ export default {
 
   data() {
     return {
-      search: '',
-      showEditPageComponent: false,
-      editedIndex: -1
+      search: ''
     };
   },
 
   methods: {
     editItem(item) {
-      // this.editedIndex = this.items.indexOf(item);
-      // this.editedItem = Object.assign({}, item);
-      // this.showEditPageComponent = true;
+      const vm = this;
 
-      this.$emit('edited', item);
+      vm.$emit('edited', item);
     },
 
     deleteItem(item) {
-      const index = this.items.indexOf(item);
+      const vm = this;
+
+      const index = vm.items.indexOf(item);
 
       confirm("Are you sure you want to delete this item?") &&
-        this.items.splice(index, 1);
+        vm.items.splice(index, 1);
     }
   }
 };
