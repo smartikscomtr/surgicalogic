@@ -2,27 +2,14 @@
   <div>
     <v-card>
       <v-container grid-list-md>
-        <v-card-title >
-          <v-text-field v-model="search"
-                        append-icon="search"
-                        label="Search"
-                        single-line
-                        hide-details>
-          </v-text-field>
-
-            <v-btn icon
-                  slot="activator"
-                  class="mb-2">
-              <v-icon color="teal">
-                add
-              </v-icon>
-            </v-btn>
-        </v-card-title>
 
         <v-data-table :columns="columns"
                       :items="items"
                       class="elevation-1">
           <template slot="items" slot-scope="props">
+            <td v-for="(column, i) in columns" :key="i">
+              {{ props.item[column.text] }}
+            </td>
             <td v-for="(column, i) in columns" :key="i">
               {{ props.item[column.value] }}
             </td>

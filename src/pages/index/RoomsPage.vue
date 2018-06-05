@@ -1,5 +1,22 @@
 <template>
   <div>
+    <v-card-title>
+      <v-text-field v-model="search"
+                    append-icon="search"
+                    label="Search"
+                    single-line
+                    hide-details>
+      </v-text-field>
+
+      <v-btn icon
+             slot="activator"
+             class="mb-2">
+        <v-icon color="teal">
+                add
+        </v-icon>
+      </v-btn>
+    </v-card-title>
+
     <grid-component :columns="columns"
                     :items="rooms"
                     :show-edit="true"
@@ -21,8 +38,8 @@ import RoomsEditComponent from '../../components/editcomponents/RoomsEditCompone
 export default {
   data() {
     return {
-        dialog: false,
-        actions : {}
+      dialog: false,
+      actions : {}
     }
   },
 
