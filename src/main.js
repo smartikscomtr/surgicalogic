@@ -12,13 +12,11 @@ Vue.use(Vuetify);
 const store = new Vuex.Store(storeOptions);
 
 // Registering Components
-import EditPageComponent from '@/components/EditPageComponent';
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';
 import GridComponent from '@/components/GridComponent';
 import Loading from '@/components/Loading';
 import OperationDividerComponent from '@/components/OperationDividerComponent';
 
-Vue.component('edit-page-component', EditPageComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
 Vue.component('grid-component', GridComponent);
 Vue.component('loading', Loading);
