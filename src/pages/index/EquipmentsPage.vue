@@ -1,14 +1,14 @@
 <template>
     <div>
-      <grid-component :headers="headers"
+      <grid-component :columns="columns"
                       :items="equipments"
                       :show-edit="true"
                       :show-delete="true"
-                      @edited="edited">
+                      @action="action">
       </grid-component>
 
-      <equipments-edit-component :headers="headers"
-                                 :editedItem="editedItem"
+      <equipments-edit-component :columns="columns"
+                                 :actions="actions"
                                  :visible="dialog">
       </equipments-edit-component>
     </div>
@@ -22,12 +22,12 @@ export default {
     data() {
       return {
         dialog: false,
-        editedItem : {}
+        actions : {}
       };
     },
 
     computed: {
-      headers() {
+      columns() {
         return [
           {
             value: "name",
@@ -64,11 +64,11 @@ export default {
     },
 
     methods: {
-      edited(payload){
+      action(payload){
         const vm = this;
 
         vm.dialog = true;
-        vm.editedItem = payload;
+        vm.actions = payload;
       }
     },
 

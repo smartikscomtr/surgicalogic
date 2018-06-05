@@ -331,7 +331,9 @@ export default {
     }
   },
   mounted() {
-    this.isMounted = true;
+    const vm = this;
+
+    vm.isMounted = true;
   }
 };
 </script>

@@ -1,14 +1,14 @@
 <template>
     <div>
-      <grid-component :headers="headers"
+      <grid-component :columns="columns"
                       :items="personnels"
                       :show-edit="true"
                       :show-delete="true"
-                      @edited="edited">
+                      @action="action">
       </grid-component>
 
-      <personnel-edit-component :headers="headers"
-                                :editedItem="editedItem"
+      <personnel-edit-component :columns="columns"
+                                :actions="actions"
                                 :visible="dialog">
       </personnel-edit-component>
     </div>
@@ -16,18 +16,18 @@
 
 <script>
 
-import PersonnelEditComponent from '../../components/editcomponents/PersonnelEditComponent';
+import PersonnelEditComponent from "../../components/editcomponents/PersonnelEditComponent";
 
 export default {
   data() {
     return {
-        dialog: false,
-        editedItem : {}
-      };
+      dialog: false,
+      actions: {}
+    };
   },
 
   computed: {
-    headers() {
+    columns() {
       return [
         {
           value: "personnelCode",
@@ -81,17 +81,20 @@ export default {
     }
   },
 
-    methods: {
-      edited(payload){
-        const vm = this;
+  methods: {
+    action(payload) {
+      const vm = this;
 
-        vm.dialog = true;
-        vm.editedItem = payload;
-      }
-    },
+      vm.dialog = true;
+      vm.actions = payload;
+    }
+  },
 
   created() {
-    this.$store.dispatch("fetchPersonnel");
+    const vm = this;
+
+    vm.$store.dispatch("fetchPersonnel");
   }
 };
+
 </script>

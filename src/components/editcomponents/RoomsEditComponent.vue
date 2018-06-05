@@ -13,8 +13,8 @@
           <v-card-text >
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md4 v-for="(header, i) in headers" :key="i">
-                  <v-text-field v-model="editedItem[header.value]" label=""></v-text-field>
+                <v-flex xs12 sm6 md4 v-for="(column, i) in columns" :key="i">
+                  <v-text-field v-model="actions[column.value]" label=""></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -39,7 +39,7 @@ export default {
       required: false
     },
 
-    headers: {
+    columns: {
       type: Array,
       required: false,
       default() {
@@ -47,7 +47,7 @@ export default {
       }
     },
 
-    editedItem: {
+    actions: {
       type: Object,
       required: false,
       default() {
@@ -65,7 +65,7 @@ export default {
       formTitle() {
         const vm = this;
 
-        return vm.editedIndex === -1 ? "Düzenleme" : "Düzenleme";
+        return vm.editedIndex === -1 ? "Oda Bilgileri Düzenle" : "Düzenleme";
       },
 
       showModal: {

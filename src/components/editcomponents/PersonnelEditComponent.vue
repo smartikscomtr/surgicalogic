@@ -13,8 +13,26 @@
           <v-card-text >
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md4 v-for="(header, i) in headers" :key="i">
-                  <v-text-field v-model="editedItem[header.value]" label=""></v-text-field>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['personnelCode']" label="Personel Kodu"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['givenName']" label="Adı"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['familyName']" label="Soyadı"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['tasks']" label="Görevi"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['branch']" label="Branşı"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['shift']" label="Vardiya"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['workType']" label="Çalışma Tipi"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -39,7 +57,7 @@ export default {
       required: false
     },
 
-    headers: {
+    columns: {
       type: Array,
       required: false,
       default() {
@@ -47,7 +65,7 @@ export default {
       }
     },
 
-    editedItem: {
+    actions: {
       type: Object,
       required: false,
       default() {
@@ -65,7 +83,7 @@ export default {
       formTitle() {
         const vm = this;
 
-        return vm.editedIndex === -1 ? "Düzenleme" : "Düzenleme";
+        return vm.editedIndex === -1 ? "Personel Bilgileri Düzenle" : "Düzenleme";
       },
 
       showModal: {

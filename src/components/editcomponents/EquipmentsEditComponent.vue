@@ -13,8 +13,17 @@
           <v-card-text >
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex xs12 sm6 md4 v-for="(header, i) in headers" :key="i">
-                  <v-text-field v-model="editedItem[header.value]" label=""></v-text-field>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['name']" label="Adı"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['type']" label="Tipi"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['portable']" label="Taşınabilirlik"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field v-model="actions['description']" label="Açıklama"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -39,7 +48,7 @@ export default {
       required: false
     },
 
-    headers: {
+    columns: {
       type: Array,
       required: false,
       default() {
@@ -47,7 +56,7 @@ export default {
       }
     },
 
-    editedItem: {
+    actions: {
       type: Object,
       required: false,
       default() {
@@ -55,34 +64,35 @@ export default {
       }
     }
   },
-    data() {
-      return {
-        editedIndex: -1
-      };
+
+  data() {
+    return {
+      editedIndex: -1
+    };
+  },
+
+  computed: {
+    formTitle() {
+      const vm = this;
+
+      return vm.editedIndex === -1 ? "Ekipman Bilgileri Düzenleme" : "Düzenleme";
     },
 
-    computed: {
-      formTitle() {
+    showModal: {
+      get() {
         const vm = this;
 
-        return vm.editedIndex === -1 ? "Düzenleme" : "Düzenleme";
+        return vm.visible;
       },
+      set (value) {
+        const vm = this;
 
-      showModal: {
-        get() {
-          const vm = this;
-
-          return vm.visible;
-        },
-        set (value) {
-          const vm = this;
-
-          if (!value) {
-            vm.$emit('close')
-          }
+        if (!value) {
+          vm.$emit('close')
         }
       }
     }
+  }
 }
 
 </script>

@@ -19,12 +19,12 @@
             </v-btn>
         </v-card-title>
 
-        <v-data-table :headers="headers"
+        <v-data-table :columns="columns"
                       :items="items"
                       class="elevation-1">
           <template slot="items" slot-scope="props">
-            <td v-for="(header, i) in headers" :key="i">
-              {{ props.item[header.value] }}
+            <td v-for="(column, i) in columns" :key="i">
+              {{ props.item[column.value] }}
             </td>
 
             <td slot="activator">
@@ -59,7 +59,7 @@ export default {
       }
     },
 
-    headers: {
+    columns: {
       type: Array,
       required: false,
       default() {
@@ -88,7 +88,7 @@ export default {
     editItem(item) {
       const vm = this;
 
-      vm.$emit('edited', item);
+      vm.$emit('action', item);
     },
 
     deleteItem(item) {

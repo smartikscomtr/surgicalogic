@@ -1,14 +1,14 @@
 <template>
   <div>
-    <grid-component :headers="headers"
+    <grid-component :columns="columns"
                     :items="rooms"
                     :show-edit="true"
                     :show-delete="true"
-                    @edited="edited">
+                    @action="action">
     </grid-component>
 
-    <rooms-edit-component :headers="headers"
-                          :editedItem="editedItem"
+    <rooms-edit-component :columns="columns"
+                          :actions="actions"
                           :visible="dialog">
     </rooms-edit-component>
   </div>
@@ -22,12 +22,12 @@ export default {
   data() {
     return {
         dialog: false,
-        editedItem : {}
+        actions : {}
     }
   },
 
   computed: {
-    headers() {
+    columns() {
       return [
         {
           value: "room",
@@ -51,21 +51,25 @@ export default {
     },
 
     rooms() {
-      return this.$store.state.rooms;
+      const vm = this;
+
+      return vm.$store.state.rooms;
     }
   },
 
   methods: {
-    edited(payload){
+    action(payload){
       const vm = this;
 
       vm.dialog = true;
-      vm.editedItem = payload;
+      vm.actions = payload;
     }
   },
 
   created() {
-    this.$store.dispatch("fetchRooms");
+    const vm = this;
+
+    vm.$store.dispatch("fetchRooms");
   }
 };
 

@@ -28,12 +28,16 @@ export default {
 
   computed: {
     rooms() {
-      return this.$store.state.rooms;
+      const vm = this;
+
+      return vm.$store.state.rooms;
     }
   },
 
   created() { //vuex store'una $store diyerek ulasabiliriz
-    this.$store.dispatch('fetchRooms');
+    const vm = this;
+
+    vm.$store.dispatch('fetchRooms');
   }
 }
 </script>
