@@ -10,8 +10,6 @@
                         hide-details>
           </v-text-field>
 
-          <!-- <v-dialog v-model="dialog"
-                    max-width="500px">
             <v-btn icon
                   slot="activator"
                   class="mb-2">
@@ -19,7 +17,6 @@
                 add
               </v-icon>
             </v-btn>
-          </v-dialog> -->
         </v-card-title>
 
         <v-data-table :headers="headers"
@@ -99,8 +96,8 @@ export default {
 
       const index = vm.items.indexOf(item);
 
-      confirm("Are you sure you want to delete this item?") &&
-        vm.items.splice(index, 1);
+    confirm("Are you sure you want to delete this item?") &&
+        this.items.splice(index, 1);
     }
   }
 };

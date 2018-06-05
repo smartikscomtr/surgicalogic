@@ -16,12 +16,15 @@ import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditC
 import GridComponent from '@/components/GridComponent';
 import Loading from '@/components/Loading';
 import OperationDividerComponent from '@/components/OperationDividerComponent';
+import PersonnelEditComponent from '@/components/editcomponents/PersonnelEditComponent';
+import RoomsEditComponent from '@/components/editcomponents/RoomsEditComponent';
 
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
 Vue.component('grid-component', GridComponent);
 Vue.component('loading', Loading);
 Vue.component('operation-divider-component', OperationDividerComponent);
-
+Vue.component('personnel-edit-component', PersonnelEditComponent);
+Vue.component('rooms-edit-component', RoomsEditComponent);
 
 new Vue({
   el: '#app',

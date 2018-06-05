@@ -3,16 +3,27 @@
       <grid-component :headers="headers"
                       :items="personnels"
                       :show-edit="true"
-                      :show-delete="true">
+                      :show-delete="true"
+                      @edited="edited">
       </grid-component>
+
+      <personnel-edit-component :headers="headers"
+                                :editedItem="editedItem"
+                                :visible="dialog">
+      </personnel-edit-component>
     </div>
 </template>
 
 <script>
 
+import PersonnelEditComponent from '../../components/editcomponents/PersonnelEditComponent';
+
 export default {
   data() {
-    return {};
+    return {
+        dialog: false,
+        editedItem : {}
+      };
   },
 
   computed: {
@@ -69,6 +80,15 @@ export default {
       return vm.$store.state.personnel;
     }
   },
+
+    methods: {
+      edited(payload){
+        const vm = this;
+
+        vm.dialog = true;
+        vm.editedItem = payload;
+      }
+    },
 
   created() {
     this.$store.dispatch("fetchPersonnel");

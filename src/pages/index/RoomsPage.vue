@@ -1,35 +1,28 @@
 <template>
   <div>
-
     <grid-component :headers="headers"
                     :items="rooms"
                     :show-edit="true"
-                    :show-delete="true">
+                    :show-delete="true"
+                    @edited="edited">
     </grid-component>
+
+    <rooms-edit-component :headers="headers"
+                          :editedItem="editedItem"
+                          :visible="dialog">
+    </rooms-edit-component>
   </div>
 </template>
 
 <script>
 
+import RoomsEditComponent from '../../components/editcomponents/RoomsEditComponent';
+
 export default {
   data() {
     return {
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      }
+        dialog: false,
+        editedItem : {}
     }
   },
 
@@ -59,6 +52,15 @@ export default {
 
     rooms() {
       return this.$store.state.rooms;
+    }
+  },
+
+  methods: {
+    edited(payload){
+      const vm = this;
+
+      vm.dialog = true;
+      vm.editedItem = payload;
     }
   },
 
