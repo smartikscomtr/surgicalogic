@@ -1,0 +1,51 @@
+[
+  {
+    "id":1,
+    "name":"Cerrahi Makas",
+    "type":"Kompozit Malzeme",
+    "description":"Paslanmaz Çelik",
+    "portable":"Taşınabilir"
+  },
+  {
+    "id":2,
+    "name":"Sedye",
+    "type":"Kompozit Malzeme",
+    "description":"Paslanmaz Çelik",
+    "portable":"Taşınabilir"
+  },
+  {
+    "id":3,
+    "name":"Neşter",
+    "type":"Kompozit Malzeme",
+    "description":"Paslanmaz Çelik",
+    "portable":"Taşınabilir"
+  },
+  {
+    "id":4,
+    "name":"Tromel",
+    "type":"Kompozit Malzeme",
+    "description":"Krom Nikel",
+    "portable":"Taşınabilir"
+  },
+  {
+    "id":5,
+    "name":"Oksijenli Su",
+    "type":"Sarf Malzeme",
+    "description":"",
+    "portable":"Taşınabilir"
+  },
+  {
+    "id":6,
+    "name":"İğne",
+    "type":"Sarf Malzeme",
+    "description":"",
+    "portable":"Taşınabilir"
+  },
+  {
+    "id":7,
+    "name":"İplik",
+    "type":"Sarf Malzeme",
+    "description":"",
+    "portable":"Taşınabilir"
+  }
+]
