@@ -1,34 +1,17 @@
 <template>
   <div>
-      <v-card-title >
-        <v-text-field v-model="search"
-                      append-icon="search"
-                      label="Search"
-                      single-line
-                      hide-details>
-        </v-text-field>
+    <grid-component :columns="columns"
+                    :items="equipments"
+                    :show-edit="true"
+                    :show-delete="true"
+                    @action="action">
+    </grid-component>
 
-          <v-btn icon
-                 slot="activator"
-                 class="mb-2">
-            <v-icon color="teal">
-                    add
-            </v-icon>
-          </v-btn>
-      </v-card-title>
-
-      <grid-component :columns="columns"
-                      :items="equipments"
-                      :show-edit="true"
-                      :show-delete="true"
-                      @action="action">
-      </grid-component>
-
-      <equipments-edit-component :columns="columns"
-                                 :actions="actions"
-                                 :visible="dialog">
-      </equipments-edit-component>
-    </div>
+    <equipments-edit-component :columns="columns"
+                                :actions="actions"
+                                :visible="dialog">
+    </equipments-edit-component>
+  </div>
 </template>
 
 <script>
@@ -38,6 +21,7 @@ import EquipmentsEditComponent from '../../components/editcomponents/EquipmentsE
 export default {
     data() {
       return {
+        search: '',
         dialog: false,
         actions : {}
       };
@@ -48,25 +32,25 @@ export default {
         return [
           {
             value: "name",
-            text: "Adı",
+            name: "Adı",
             sortable: 'true',
             align: "left"
           },
           {
             value: "type",
-            text: "Tipi",
+            name: "Tipi",
             sortable: 'true',
             align: "left"
           },
           {
             value: "portable",
-            text: "Taşınabilirlilik",
+            name: "Taşınabilirlilik",
             sortable: 'true',
             align: "left"
           },
           {
             value: "description",
-            text: "Açıklama",
+            name: "Açıklama",
             sortable: 'true',
             align: "left"
           }

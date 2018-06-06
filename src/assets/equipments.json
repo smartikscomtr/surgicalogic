@@ -28,21 +28,21 @@
     "portable":"Taşınabilir"
   },
   {
-    "id":4,
+    "id":5,
     "name":"Oksijenli Su",
     "type":"Sarf Malzeme",
     "description":"",
     "portable":"Taşınabilir"
   },
   {
-    "id":4,
+    "id":6,
     "name":"İğne",
     "type":"Sarf Malzeme",
     "description":"",
     "portable":"Taşınabilir"
   },
   {
-    "id":4,
+    "id":7,
     "name":"İplik",
     "type":"Sarf Malzeme",
     "description":"",

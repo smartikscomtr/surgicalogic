@@ -31,7 +31,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click.native="dialog=false">Cancel</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
             <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
           </v-card-actions>
         </v-card>
@@ -67,17 +67,16 @@ export default {
 
   data() {
     return {
-      editedIndex: -1
+      defaultItem: {
+        name: '',
+        type: '',
+        portable: '',
+        description: ''
+      }
     };
   },
 
   computed: {
-    formTitle() {
-      const vm = this;
-
-      return vm.editedIndex === -1 ? "Ekipman Bilgileri Düzenleme" : "Düzenleme";
-    },
-
     showModal: {
       get() {
         const vm = this;
@@ -91,6 +90,45 @@ export default {
           vm.$emit('close')
         }
       }
+    },
+
+    formTitle() {
+      const vm = this;
+
+      return vm.editedIndex === -1 ? "Yeni Ekipman Bilgisi Ekle" : "Ekipman Bilgileri Düzenleme";
+    }
+  },
+
+  methods: {
+    cancel() {
+      this.dialog = false;
+
+      // setTimeout(() => {
+      //   this.actions = Object.assign({}, this.defaultItem);
+      //   this.editedIndex = -1;
+      // }, 300);
+    },
+
+    save() {
+      const vm = this;
+
+      if (this.editedIndex > -1) {
+        // Object.assign(this.items[this.editedIndex], this.actions);
+      }
+
+      vm.$store.dispatch('updateEquipments', {
+        id: vm.actions.id,
+        name: vm.actions.name,
+        type: vm.actions.type,
+        portable: vm.actions.portable,
+        description: vm.actions.description
+      });
+      // editedName: this.actions.name,
+      // editedType: this.actions.type,
+      // editedPortable: this.actions.portable,
+      // editedDescription: this.actions.description
+        // this.items.push(this.actions);
+      vm.cancel();
     }
   }
 }

@@ -19,6 +19,25 @@ const mutations = {
 
   setRooms(state, rooms) {
     state.rooms = rooms;
+  },
+
+  setUpdateEquipments(state, payload) {
+    const equipment = state.equipments.find(equipment => {
+      return equipment.id = payload.id
+    });
+
+    if (payload.name) {
+      equipment.name = payload.name;
+    }
+    if (payload.type) {
+      equipment.type = payload.type;
+    }
+    if (payload.portable) {
+      equipment.portable = payload.portable;
+    }
+    if (payload.description) {
+      equipment.description = payload.description;
+    }
   }
 }
 
@@ -39,6 +58,31 @@ const actions = {
       return service.fetchRooms().then((snapshot) => {
         context.commit('setRooms', snapshot.val());
       });
+  },
+
+  updateEquipments(context, payload) {
+    const updateObj = {}
+
+    if (payload.name) {
+      updateObj.name = payload.name;
+    }
+    if (payload.type) {
+      updateObj.type = payload.type;
+    }
+    if (payload.portable) {
+      updateObj.portable = payload.portable;
+    }
+    if (payload.description) {
+      updateObj.description = payload.description;
+    }
+
+    // firebase.database().ref('/equipments').child(payload.id).update(updateObj).
+    // then(() => {debugger
+    //   context.commit('setUpdateEquipments', payload);
+    // });
+    return service.updateEquipments(payload).update(updateObj).then(() => {
+      context.commit('setUpdateEquipments', payload);
+    });
   }
 }
 

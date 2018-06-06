@@ -1,22 +1,5 @@
 <template>
   <div>
-      <v-card-title>
-        <v-text-field v-model="search"
-                      append-icon="search"
-                      label="Search"
-                      single-line
-                      hide-details>
-        </v-text-field>
-
-        <v-btn icon
-              slot="activator"
-              class="mb-2">
-          <v-icon color="teal">
-                  add
-          </v-icon>
-        </v-btn>
-      </v-card-title>
-
       <grid-component :columns="columns"
                       :items="personnels"
                       :show-edit="true"
@@ -38,6 +21,7 @@ import PersonnelEditComponent from "../../components/editcomponents/PersonnelEdi
 export default {
   data() {
     return {
+      search: '',
       dialog: false,
       actions: {}
     };
@@ -48,43 +32,43 @@ export default {
       return [
         {
           value: "personnelCode",
-          text: "Personel Kodu",
+          label: "Personel Kodu",
           sortable: true,
           align: "left"
         },
         {
           value: "givenName",
-          text: "Adı",
+          label: "Adı",
           sortable: true,
           align: "left"
         },
         {
           value: "familyName",
-          text: "Soyadı",
+          label: "Soyadı",
           sortable: true,
           align: "left"
         },
         {
           value: "tasks",
-          text: "Görevi",
+          label: "Görevi",
           sortable: true,
           align: "left"
         },
         {
           value: "branch",
-          text: "Branşı",
+          label: "Branşı",
           sortable: true,
           align: "left"
         },
         {
           value: "shift",
-          text: "Vardiya",
+          label: "Vardiya",
           sortable: true,
           align: "left"
         },
         {
           value: "workType",
-          text: "Çalışma Tipi",
+          label: "Çalışma Tipi",
           sortable: true,
           align: "left"
         }

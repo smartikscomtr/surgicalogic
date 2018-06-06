@@ -8,6 +8,10 @@ export default {
   },
 
   fetchRooms() {
-      return firebase.database().ref('/rooms').once('value');
+    return firebase.database().ref('/rooms').once('value');
+  },
+
+  updateEquipments(payload) {
+    return firebase.database().ref('/equipments').child(payload.id);
   }
 }
