@@ -32,7 +32,7 @@
               {{ props.item[column.value] }}
             </td>
 
-            <td slot="activator">
+          <td class="justify-center layout px-0" slot="activator">
               <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
                 <v-icon color="teal">edit</v-icon>
               </v-btn>
@@ -107,4 +107,5 @@ export default {
     }
   }
 };
+
 </script>

@@ -76,10 +76,6 @@ const actions = {
       updateObj.description = payload.description;
     }
 
-    // firebase.database().ref('/equipments').child(payload.id).update(updateObj).
-    // then(() => {debugger
-    //   context.commit('setUpdateEquipments', payload);
-    // });
     return service.updateEquipments(payload).update(updateObj).then(() => {
       context.commit('setUpdateEquipments', payload);
     });
