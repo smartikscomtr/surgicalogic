@@ -54,7 +54,7 @@ export default {
     rooms() {
       const vm = this;
 
-      return vm.$store.state.rooms;
+      return vm.$store.state.roomModule.rooms;
     }
   },
 
@@ -70,7 +70,7 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("fetchRooms");
+    vm.$store.dispatch("getRooms");
   }
 };
 

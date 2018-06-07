@@ -59,8 +59,7 @@ export default {
 
       equipments() {
         const vm = this;
-
-        return vm.$store.state.equipments;
+        return vm.$store.state.equipmentModule.equipments;
       }
     },
 
@@ -76,7 +75,7 @@ export default {
     created() {
       const vm = this;
 
-      vm.$store.dispatch('fetchEquipments');
+      vm.$store.dispatch('getEquipments');
     }
 }
 

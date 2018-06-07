@@ -78,7 +78,7 @@ export default {
     personnels() {
       const vm = this;
 
-      return vm.$store.state.personnel;
+      return vm.$store.state.personnelModule.personnel;
     }
   },
 
@@ -94,7 +94,7 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("fetchPersonnel");
+    vm.$store.dispatch("getPersonnel");
   }
 };
 

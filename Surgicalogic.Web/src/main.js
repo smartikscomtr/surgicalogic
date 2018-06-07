@@ -3,13 +3,12 @@ import App from './App';
 import Vuetify from 'vuetify';
 import Vuex from 'vuex';
 import router from './router';
-import storeOptions from './stores/store';
+import store from './stores';
 
 export const EventBus = new Vue();
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
-const store = new Vuex.Store(storeOptions);
 
 // Registering Components
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';
