@@ -1,17 +1,19 @@
 <template>
   <div>
-      <grid-component :columns="columns"
-                      :items="personnels"
-                      :show-edit="true"
-                      :show-delete="true"
-                      @action="action">
-      </grid-component>
+    <grid-component :columns="columns"
+                    :items="personnels"
+                    :show-edit="true"
+                    :show-delete="true"
+                    @action="action"
+                    @deleteitem="deleteItem">
+    </grid-component>
 
-      <personnel-edit-component :columns="columns"
-                                :actions="actions"
-                                :visible="dialog">
-      </personnel-edit-component>
-    </div>
+    <personnel-edit-component :columns="columns"
+                              :actions="actions"
+                              :visible="dialog"
+                              :delete-value="deleteValue">
+    </personnel-edit-component>
+  </div>
 </template>
 
 <script>
@@ -23,7 +25,8 @@ export default {
     return {
       search: '',
       dialog: false,
-      actions: {}
+      actions: {},
+      deleteValue: {}
     };
   },
 
@@ -32,43 +35,43 @@ export default {
       return [
         {
           value: "personnelCode",
-          label: "Personel Kodu",
+          name: "Personel Kodu",
           sortable: true,
           align: "left"
         },
         {
           value: "givenName",
-          label: "Adı",
+          name: "Adı",
           sortable: true,
           align: "left"
         },
         {
           value: "familyName",
-          label: "Soyadı",
+          name: "Soyadı",
           sortable: true,
           align: "left"
         },
         {
           value: "tasks",
-          label: "Görevi",
+          name: "Görevi",
           sortable: true,
           align: "left"
         },
         {
           value: "branch",
-          label: "Branşı",
+          name: "Branşı",
           sortable: true,
           align: "left"
         },
         {
           value: "shift",
-          label: "Vardiya",
+          name: "Vardiya",
           sortable: true,
           align: "left"
         },
         {
           value: "workType",
-          label: "Çalışma Tipi",
+          name: "Çalışma Tipi",
           sortable: true,
           align: "left"
         }
@@ -88,6 +91,12 @@ export default {
 
       vm.dialog = true;
       vm.actions = payload;
+    },
+
+    deleteItem(payload) {
+      const vm = this;
+
+      vm.deleteValue = payload;
     }
   },
 

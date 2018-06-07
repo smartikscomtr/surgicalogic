@@ -50,7 +50,7 @@
                            :key="i"
                            @click="changePages(child.route)">
                 <v-list-tile-action v-if="child.icon">
-                  <v-icon> {{ child.icon }} </v-icon>
+                  <v-icon color="primary"> {{ child.icon }} </v-icon>
                 </v-list-tile-action>
 
                 <v-list-tile-content>
@@ -65,7 +65,7 @@
                          :key="item.text"
                          @click="changePages(item.route)">
               <v-list-tile-action>
-                <v-icon> {{ item.icon }} </v-icon>
+                <v-icon color="primary"> {{ item.icon }} </v-icon>
               </v-list-tile-action>
 
               <v-list-tile-content>
@@ -336,5 +336,5 @@ export default {
     vm.isMounted = true;
   }
 };
-</script>
 
+</script>

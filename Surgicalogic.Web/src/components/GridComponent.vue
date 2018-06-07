@@ -3,7 +3,7 @@
     <v-card>
       <v-container grid-list-md>
 
-      <v-card-title >
+      <v-card-title>
         <v-text-field v-model="search"
                       append-icon="search"
                       label="Search"
@@ -28,9 +28,9 @@
               {{ props.item[column.name] }}
             </td> -->
 
-            <td v-for="(column, i) in columns" :key="i">
-              {{ props.item[column.value] }}
-            </td>
+          <td v-for="(column, i) in columns" :key="i">
+            {{ props.item[column.value] }}
+          </td>
 
           <td class="justify-center layout px-0" slot="activator">
               <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
@@ -52,7 +52,6 @@
 </template>
 
 <script>
-
 
 export default {
   props: {
@@ -100,10 +99,7 @@ export default {
     deleteItem(item) {
       const vm = this;
 
-      const index = vm.items.indexOf(item);
-
-    confirm("Are you sure you want to delete this item?") &&
-        this.items.splice(index, 1);
+      vm.$emit('deleteitem', item);
     }
   }
 };

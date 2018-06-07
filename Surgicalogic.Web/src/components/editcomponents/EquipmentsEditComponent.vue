@@ -62,11 +62,17 @@ export default {
       default() {
         return {};
       }
+    },
+
+    deleteValue: {
+      type: Object,
+      required: false
     }
   },
 
   data() {
     return {
+      editedIndex: -1,
       defaultItem: {
         name: '',
         type: '',
@@ -77,6 +83,12 @@ export default {
   },
 
   computed: {
+    formTitle() {
+      const vm = this;
+
+      return vm.editedIndex === -1 ? "Yeni Ekipman Bilgisi Ekle" : "Ekipman Bilgileri Düzenleme";
+    },
+
     showModal: {
       get() {
         const vm = this;
@@ -90,12 +102,6 @@ export default {
           vm.$emit('visible')
         }
       }
-    },
-
-    formTitle() {
-      const vm = this;
-
-      return vm.editedIndex === -1 ? "Yeni Ekipman Bilgisi Ekle" : "Ekipman Bilgileri Düzenleme";
     }
   },
 
@@ -104,11 +110,6 @@ export default {
       const vm = this;
 
       vm.visible = false;
-
-      setTimeout(() => {
-        vm.actions = Object.assign({}, vm.defaultItem);
-        vm.editedIndex = -1;
-      }, 300);
     },
 
     save() {
@@ -118,16 +119,31 @@ export default {
         Object.assign(vm.items[vm.editedIndex], vm.actions);
       }
 
-      vm.$store.dispatch('updateEquipments', {
-        id: vm.actions.id,
-        name: vm.actions.name,
-        type: vm.actions.type,
-        portable: vm.actions.portable,
-        description: vm.actions.description
-      });
+      //Güncelleme işlemi
+
+      // vm.$store.dispatch('updateEquipments', {
+      //   id: vm.actions.id,
+      //   name: vm.actions.name,
+      //   type: vm.actions.type,
+      //   portable: vm.actions.portable,
+      //   description: vm.actions.description
+      // });
 
       vm.cancel();
     }
+  },
+
+  created() {
+    const vm = this;
+
+    vm.$watch('deleteValue', (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+          confirm("Silmek istediğinizden emin misiniz ?")
+
+          vm.visible = false;
+          //Silme İşlemi
+        }
+    });
   }
 }
 
