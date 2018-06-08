@@ -17,8 +17,6 @@
 
 <script>
 
-import EquipmentsEditComponent from '../../components/editcomponents/EquipmentsEditComponent';
-
 export default {
   data() {
     return {

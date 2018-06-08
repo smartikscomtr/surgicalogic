@@ -31,6 +31,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
+
           <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
           <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
         </v-card-actions>
@@ -64,13 +65,7 @@ export default {
 
   data() {
     return {
-      editedIndex: -1,
-      defaultItem: {
-        name: '',
-        type: '',
-        portable: '',
-        description: ''
-      }
+      editedIndex: -1
     };
   },
 
@@ -129,12 +124,12 @@ export default {
     const vm = this;
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
-        if (newValue !== oldValue) {
-          confirm("Silmek istediğinizden emin misiniz ?")
+      if (newValue !== oldValue) {
+        confirm("Silmek istediğinizden emin misiniz ?")
 
-          vm.visible = false;
-          //Silme İşlemi
-        }
+        vm.visible = false;
+        //Silme İşlemi
+      }
     });
   }
 }

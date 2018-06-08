@@ -17,8 +17,6 @@
 
 <script>
 
-import PersonnelEditComponent from "../../components/editcomponents/PersonnelEditComponent";
-
 export default {
   data() {
     return {

@@ -1,34 +1,34 @@
 <template>
   <div>
-    <grid-component :columns="columns"
+    <grid-component :headers="headers"
                     :items="rooms"
                     :show-edit="true"
                     :show-delete="true"
-                    @action="action">
+                    @action="action"
+                    @deleteitem="deleteItem">
     </grid-component>
 
-    <rooms-edit-component :columns="columns"
-                          :actions="actions"
-                          :visible="dialog">
+    <rooms-edit-component :actions="actions"
+                          :visible="dialog"
+                          :delete-value="deleteValue">
     </rooms-edit-component>
   </div>
 </template>
 
 <script>
 
-import RoomsEditComponent from '../../components/editcomponents/RoomsEditComponent';
-
 export default {
   data() {
     return {
       search: '',
       dialog: false,
-      actions : {}
+      actions : {},
+      deleteValue: {}
     }
   },
 
   computed: {
-    columns() {
+    headers() {
       return [
         {
           value: "room",
@@ -59,11 +59,17 @@ export default {
   },
 
   methods: {
-    action(payload){
+    action(payload) {
       const vm = this;
 
       vm.dialog = true;
       vm.actions = payload;
+    },
+
+    deleteItem(payload) {
+      const vm = this;
+
+      vm.deleteValue = payload;
     }
   },
 

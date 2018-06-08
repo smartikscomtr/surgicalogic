@@ -10,7 +10,7 @@
           </span>
         </v-card-title>
 
-        <v-card-text >
+        <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
@@ -73,16 +73,7 @@ export default {
 
   data() {
     return {
-      editedIndex: -1,
-      defaultItem: {
-        personnelCode: 0,
-        givenName: '',
-        familyName: '',
-        tasks: '',
-        branch: '',
-        shift: '',
-        workType: ''
-      }
+      editedIndex: -1
     };
   },
 
