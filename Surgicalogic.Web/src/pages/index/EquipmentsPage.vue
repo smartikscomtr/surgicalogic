@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>          
     <grid-component :headers="headers"
                     :items="equipments"
                     :show-edit="true"
@@ -19,6 +19,8 @@
 
 <script>
 
+import { i18n } from '@/plugins/vue-i18n';
+
 export default {
   data() {
     return {
@@ -35,25 +37,25 @@ export default {
       return [
         {
           value: "name",
-          text: "Adı",
+          text: i18n.t("equipments.name"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "type",
-          text: "Tipi",
+          text: i18n.t("equipments.type"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "portable",
-          text: "Taşınabilirlilik",
+          text: i18n.t("equipments.portable"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "description",
-          text: "Açıklama",
+          text: i18n.t("equipments.description"),
           sortable: 'true',
           align: "left"
         }

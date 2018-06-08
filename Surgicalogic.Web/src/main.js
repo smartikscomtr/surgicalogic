@@ -1,8 +1,26 @@
+/* ============
+ * Main File
+ * ============
+ * Will initialize the application.
+ */
 import Vue from 'vue';
-import App from './App';
+/* ============
+ * Plugins
+ * ============
+ * Import and bootstrap the plugins.
+ */
+
 import Vuetify from 'vuetify';
 import Vuex from 'vuex';
+import { i18n } from './plugins/vue-i18n';
 import router from './router';
+
+/* ============
+ * Main App
+ * ============
+ * we import the main application.
+ */
+import App from './App';
 import store from './stores';
 
 export const EventBus = new Vue();
@@ -25,8 +43,11 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 Vue.component('personnel-edit-component', PersonnelEditComponent);
 Vue.component('rooms-edit-component', RoomsEditComponent);
 
+
+
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   components: { App },

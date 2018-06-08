@@ -11,7 +11,7 @@
   <div id="app"
        v-show= isMounted
        v-else>
-    <v-app id="insipere">
+    <v-app id="insipere">      
       <v-navigation-drawer fixed
                            :clipped="$vuetify.breakpoint.mdAndUp"
                            app
