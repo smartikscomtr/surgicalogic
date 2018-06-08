@@ -19,8 +19,6 @@
 
 <script>
 
-import { i18n } from '@/plugins/vue-i18n';
-
 export default {
   data() {
     return {
@@ -37,25 +35,25 @@ export default {
       return [
         {
           value: "name",
-          text: i18n.t("equipments.name"),
+          text: this.$i18n.t("equipments.name"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "type",
-          text: i18n.t("equipments.type"),
+          text: this.$i18n.t("equipments.type"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "portable",
-          text: i18n.t("equipments.portable"),
+          text: this.$i18n.t("equipments.portable"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "description",
-          text: i18n.t("equipments.description"),
+          text: this.$i18n.t("equipments.description"),
           sortable: 'true',
           align: "left"
         }
