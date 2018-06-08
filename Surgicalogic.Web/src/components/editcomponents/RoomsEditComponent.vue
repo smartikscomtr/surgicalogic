@@ -57,20 +57,23 @@ export default {
     deleteValue: {
       type: Object,
       required: false
+    },
+
+    title: {
+      type: Number,
+      required: false
     }
   },
 
   data() {
-    return {
-      editedIndex: -1
-    };
+    return {};
   },
 
   computed: {
     formTitle() {
       const vm = this;
 
-      return vm.editedIndex === -1 ? "Yeni Oda Bilgisi Ekle" : "Oda Bilgisi Düzenle";
+      return vm.title === -1 ? "Yeni Oda Bilgisi Ekle" : "Oda Bilgisi Düzenle";
     },
 
     showModal: {
@@ -99,8 +102,8 @@ export default {
     save() {
       const vm = this;
 
-      if (vm.editedIndex > -1) {
-        Object.assign(vm.items[vm.editedIndex], vm.actions);
+      if (vm.title > -1) {
+        Object.assign(vm.items[vm.title], vm.actions);
       }
 
       //Güncelleme işlemi

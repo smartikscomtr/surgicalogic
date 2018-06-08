@@ -5,11 +5,13 @@
                     :show-edit="true"
                     :show-delete="true"
                     @action="action"
+                    @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
     <equipments-edit-component :actions="actions"
                                :visible="dialog"
+                               :title="editedIndex"
                                :delete-value="deleteValue">
     </equipments-edit-component>
   </div>
@@ -23,7 +25,8 @@ export default {
       search: '',
       dialog: false,
       actions : {},
-      deleteValue: {}
+      deleteValue: {},
+      editedIndex: -1
     };
   },
 
@@ -69,7 +72,16 @@ export default {
       const vm = this;
 
       vm.dialog = true;
+      vm.editedIndex = vm.equipments.indexOf(payload);
       vm.actions = payload;
+    },
+
+    addNewItem(){
+      const vm = this;
+
+      vm.dialog = true;
+
+      //Yeni Ekleme
     },
 
     deleteItem(payload) {

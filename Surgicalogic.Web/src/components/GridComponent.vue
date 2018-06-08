@@ -12,8 +12,9 @@
           </v-text-field>
 
           <v-btn icon
-                  slot="activator"
-                  class="mb-2">
+                 slot="activator"
+                 class="mb-2"
+                 @click="addNewItem">
             <v-icon color="teal">
                     add
             </v-icon>
@@ -78,12 +79,17 @@ export default {
 
   data() {
     return {
-      search: '',
-      editedIndex: -1
+      search: ''
     };
   },
 
   methods: {
+    addNewItem() {
+      const vm = this;
+
+      vm.$emit('newaction');
+    },
+
     editItem(item) {
       const vm = this;
 

@@ -5,6 +5,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     @action="action"
+                    @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
@@ -88,6 +89,14 @@ export default {
 
       vm.dialog = true;
       vm.actions = payload;
+    },
+
+    addNewItem(){
+      const vm = this;
+
+      vm.dialog = true;
+
+      //Yeni Ekleme
     },
 
     deleteItem(payload) {
