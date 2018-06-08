@@ -57,14 +57,6 @@ export default {
       required: false
     },
 
-    columns: {
-      type: Array,
-      required: false,
-      default() {
-        return [];
-      }
-    },
-
     actions: {
       type: Object,
       required: false,

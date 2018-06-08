@@ -1,6 +1,6 @@
 <template>
   <div>
-    <grid-component :columns="columns"
+    <grid-component :headers="headers"
                     :items="personnels"
                     :show-edit="true"
                     :show-delete="true"
@@ -8,8 +8,7 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <personnel-edit-component :columns="columns"
-                              :actions="actions"
+    <personnel-edit-component :actions="actions"
                               :visible="dialog"
                               :delete-value="deleteValue">
     </personnel-edit-component>
@@ -31,47 +30,47 @@ export default {
   },
 
   computed: {
-    columns() {
+    headers() {
       return [
         {
           value: "personnelCode",
-          name: "Personel Kodu",
+          text: "Personel Kodu",
           sortable: true,
           align: "left"
         },
         {
           value: "givenName",
-          name: "Adı",
+          text: "Adı",
           sortable: true,
           align: "left"
         },
         {
           value: "familyName",
-          name: "Soyadı",
+          text: "Soyadı",
           sortable: true,
           align: "left"
         },
         {
           value: "tasks",
-          name: "Görevi",
+          text: "Görevi",
           sortable: true,
           align: "left"
         },
         {
           value: "branch",
-          name: "Branşı",
+          text: "Branşı",
           sortable: true,
           align: "left"
         },
         {
           value: "shift",
-          name: "Vardiya",
+          text: "Vardiya",
           sortable: true,
           align: "left"
         },
         {
           value: "workType",
-          name: "Çalışma Tipi",
+          text: "Çalışma Tipi",
           sortable: true,
           align: "left"
         }

@@ -20,16 +20,16 @@
           </v-btn>
       </v-card-title>
 
-        <v-data-table :columns="columns"
+        <v-data-table :headers="headers"
                       :items="items"
                       class="elevation-1">
           <template slot="items" slot-scope="props">
             <!-- <td v-for="(column, i) in columns" :key="i">
               {{ props.item[column.name] }}
             </td> -->
-
-          <td v-for="(column, i) in columns" :key="i">
-            {{ props.item[column.value] }}
+          {{ props.item[headers.name]}}
+          <td v-for="(header, i) in headers" :key="i">
+            {{ props.item[header.value] }}
           </td>
 
           <td class="justify-center layout px-0" slot="activator">
@@ -61,6 +61,11 @@ export default {
       default() {
         return [];
       }
+    },
+
+    headers: {
+      type: Array,
+      required: false
     },
 
     columns: {

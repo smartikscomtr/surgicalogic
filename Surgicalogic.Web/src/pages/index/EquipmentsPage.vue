@@ -1,6 +1,6 @@
 <template>
   <div>
-    <grid-component :columns="columns"
+    <grid-component :headers="headers"
                     :items="equipments"
                     :show-edit="true"
                     :show-delete="true"
@@ -8,8 +8,7 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <equipments-edit-component :columns="columns"
-                               :actions="actions"
+    <equipments-edit-component :actions="actions"
                                :visible="dialog"
                                :delete-value="deleteValue">
     </equipments-edit-component>
@@ -31,29 +30,29 @@ export default {
   },
 
   computed: {
-    columns() {
+    headers() {
       return [
         {
           value: "name",
-          name: "Adı",
+          text: "Adı",
           sortable: 'true',
           align: "left"
         },
         {
           value: "type",
-          name: "Tipi",
+          text: "Tipi",
           sortable: 'true',
           align: "left"
         },
         {
           value: "portable",
-          name: "Taşınabilirlilik",
+          text: "Taşınabilirlilik",
           sortable: 'true',
           align: "left"
         },
         {
           value: "description",
-          name: "Açıklama",
+          text: "Açıklama",
           sortable: 'true',
           align: "left"
         }
