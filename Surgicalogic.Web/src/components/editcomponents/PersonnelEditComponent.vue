@@ -22,16 +22,16 @@
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="actions['familyName']" label="Soyadı"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['tasks']" label="Görevi"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['branch']" label="Branşı"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['shift']" label="Vardiya"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['workType']" label="Çalışma Tipi"></v-text-field>
               </v-flex>
             </v-layout>

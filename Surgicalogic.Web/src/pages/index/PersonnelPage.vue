@@ -11,6 +11,7 @@
 
     <personnel-edit-component :actions="actions"
                               :visible="dialog"
+                              :title="editedIndex"
                               :delete-value="deleteValue">
     </personnel-edit-component>
   </div>
@@ -24,7 +25,8 @@ export default {
       search: '',
       dialog: false,
       actions: {},
-      deleteValue: {}
+      deleteValue: {},
+      editedIndex: -1
     };
   },
 
@@ -88,6 +90,7 @@ export default {
       const vm = this;
 
       vm.dialog = true;
+      vm.editedIndex = vm.personnels.indexOf(payload);
       vm.actions = payload;
     },
 

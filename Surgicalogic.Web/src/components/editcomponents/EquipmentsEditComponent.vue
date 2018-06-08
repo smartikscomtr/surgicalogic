@@ -22,7 +22,7 @@
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="actions['portable']" label="Taşınabilirlik"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="actions['description']" label="Açıklama"></v-text-field>
               </v-flex>
             </v-layout>

@@ -11,6 +11,7 @@
 
     <rooms-edit-component :actions="actions"
                           :visible="dialog"
+                          :title="editedIndex"
                           :delete-value="deleteValue">
     </rooms-edit-component>
   </div>
@@ -24,7 +25,8 @@ export default {
       search: '',
       dialog: false,
       actions : {},
-      deleteValue: {}
+      deleteValue: {},
+      editedIndex: -1
     }
   },
 
@@ -64,6 +66,7 @@ export default {
       const vm = this;
 
       vm.dialog = true;
+      vm.editedIndex = vm.rooms.indexOf(payload);
       vm.actions = payload;
     },
 
