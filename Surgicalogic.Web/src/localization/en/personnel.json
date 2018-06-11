@@ -6,6 +6,8 @@
   "branch": "Branch",
   "shift": "Shift",
   "workType": "Work Type",
+  "personnel": "Personnel",
+  "personnels": "Personnels",
   "addPersonnelInformation": "Add Personnel Information",
   "editPersonnelInformation": "Edit Personnel Information"
 }

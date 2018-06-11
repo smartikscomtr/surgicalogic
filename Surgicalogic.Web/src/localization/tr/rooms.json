@@ -3,6 +3,7 @@
   "location": "Konum",
   "size": "Ölçüler",
   "equipments": "Ekipmanlar",
+  "rooms": "Odalar",
   "addRoomInformation": "Yeni Oda Bilgisi Ekleme",
   "editRoomInformation": "Oda Bilgisi Düzenleme"
 }

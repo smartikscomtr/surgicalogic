@@ -3,6 +3,7 @@
   "type": "Type",
   "portable" : "Portablity",
   "description" : "Description",
+  "equipment": "Equipment",
   "equipments": "Equipments",
   "addEquipmentsInformation": "Add Equipments Information",
   "editEquipmentsInformation": "Edit Equipments Information"

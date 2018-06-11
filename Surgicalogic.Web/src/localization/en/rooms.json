@@ -2,6 +2,7 @@
   "room": "Room",
   "location": "Location",
   "size": "Size",
+  "rooms": "Rooms",
   "addRoomInformation": "Add Room Information",
   "editRoomInformation": "Edit Room Information"
 }
