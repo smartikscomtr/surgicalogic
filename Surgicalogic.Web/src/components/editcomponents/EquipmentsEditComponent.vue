@@ -14,16 +14,16 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['name']" label="Adı"></v-text-field>
+                <v-text-field v-model="actions['name']" :label="$t('equipments.name')"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['type']" label="Tipi"></v-text-field>
+                <v-text-field v-model="actions['type']" :label="$t('equipments.type')"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['portable']" label="Taşınabilirlik"></v-text-field>
+                <v-text-field v-model="actions['portable']" :label="$t('equipments.portable')"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['description']" label="Açıklama"></v-text-field>
+                <v-text-field v-model="actions['description']" :label="$t('equipments.description')"></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -76,7 +76,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.title === -1 ? "Yeni Ekipman Bilgisi Ekle" : "Ekipman Bilgileri Düzenleme";
+      return vm.title === -1 ? vm.$i18n.t("equipments.addEquipmentsInformation") : vm.$i18n.t("equipments.editEquipmentsInformation");
     },
 
     showModal: {

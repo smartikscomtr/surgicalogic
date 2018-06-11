@@ -32,46 +32,48 @@ export default {
 
   computed: {
     headers() {
+      const vm = this;
+
       return [
         {
           value: "personnelCode",
-          text: "Personel Kodu",
+          text: vm.$i18n.t("personnel.personnelCode"),
           sortable: true,
           align: "left"
         },
         {
           value: "givenName",
-          text: "Adı",
+          text: vm.$i18n.t("personnel.givenName"),
           sortable: true,
           align: "left"
         },
         {
           value: "familyName",
-          text: "Soyadı",
+          text: vm.$i18n.t("personnel.familyName"),
           sortable: true,
           align: "left"
         },
         {
-          value: "tasks",
-          text: "Görevi",
+          value: "task",
+          text: vm.$i18n.t("personnel.task"),
           sortable: true,
           align: "left"
         },
         {
           value: "branch",
-          text: "Branşı",
+          text: vm.$i18n.t("personnel.branch"),
           sortable: true,
           align: "left"
         },
         {
           value: "shift",
-          text: "Vardiya",
+          text: vm.$i18n.t("personnel.shift"),
           sortable: true,
           align: "left"
         },
         {
           value: "workType",
-          text: "Çalışma Tipi",
+          text: vm.$i18n.t("personnel.workType"),
           sortable: true,
           align: "left"
         }

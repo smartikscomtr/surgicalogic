@@ -1,5 +1,5 @@
 <template>
-  <div>          
+  <div>
     <grid-component :headers="headers"
                     :items="equipments"
                     :show-edit="true"
@@ -32,28 +32,30 @@ export default {
 
   computed: {
     headers() {
+      const vm = this;
+
       return [
         {
           value: "name",
-          text: this.$i18n.t("equipments.name"),
+          text: vm.$i18n.t("equipments.name"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "type",
-          text: this.$i18n.t("equipments.type"),
+          text: vm.$i18n.t("equipments.type"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "portable",
-          text: this.$i18n.t("equipments.portable"),
+          text: vm.$i18n.t("equipments.portable"),
           sortable: 'true',
           align: "left"
         },
         {
           value: "description",
-          text: this.$i18n.t("equipments.description"),
+          text: vm.$i18n.t("equipments.description"),
           sortable: 'true',
           align: "left"
         }

@@ -2,5 +2,7 @@
     "name": "Adı",
     "type": "Tipi",
     "portable" : "Taşınabilirlilik",
-    "description" : "Açıklama"
-  }
+    "description" : "Açıklama",
+    "addEquipmentsInformation": "Yeni Ekipman Bilgisi Ekle",
+    "editEquipmentsInformation": "Ekipman Bilgileri Düzenleme"
+}

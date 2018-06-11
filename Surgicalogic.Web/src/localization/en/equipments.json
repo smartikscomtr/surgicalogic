@@ -2,5 +2,8 @@
   "name": "Name",
   "type": "Type",
   "portable" : "Portablity",
-  "description" : "Description"
+  "description" : "Description",
+  "equipments": "Equipments",
+  "addEquipmentsInformation": "Add Equipments Information",
+  "editEquipmentsInformation": "Edit Equipments Information"
 }

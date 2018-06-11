@@ -7,7 +7,7 @@
  */
 /*
 USAGE
-  {{ $t("message.hello") }} in page
+  {{ $t("equipments.name") }} in page
   i18n.t("equipments.name") in js
 */
 

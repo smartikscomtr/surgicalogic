@@ -1,0 +1,11 @@
+{
+  "personnnelCode": "Personnel Kodu",
+  "givenName" : "Adı",
+  "familyName": "Soyadı",
+  "task": "Görevi",
+  "branch": "Branşı",
+  "shift": "Vardiya",
+  "workType": "Çalışma Tipi",
+  "addPersonnelInformation": "Yeni Personel Bilgisi Ekleme",
+  "editPersonnelInformation": "Personel Bilgisi Düzenleme"
+}

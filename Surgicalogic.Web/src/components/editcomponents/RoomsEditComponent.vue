@@ -14,13 +14,16 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['room']" label="Oda"></v-text-field>
+                <v-text-field v-model="actions['room']" :label="$t('rooms.room')"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['operationRoom']" label="Operasyon Odası"></v-text-field>
+                <v-text-field v-model="actions['location']" :label="$t('rooms.location')"></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['size']" label="Ölçüler"></v-text-field>
+                <v-text-field v-model="actions['size']" :label="$t('rooms.size')"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md4>
+                <v-select v-model="actions['equipments']" :label="$t('equipments.equipments')"></v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -73,7 +76,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.title === -1 ? "Yeni Oda Bilgisi Ekle" : "Oda Bilgisi Düzenle";
+      return vm.title === -1 ? vm.$t('rooms.addRoomInformation') : vm.$t('rooms.editRoomInformation');
     },
 
     showModal: {

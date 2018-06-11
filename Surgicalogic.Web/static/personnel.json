@@ -4,7 +4,7 @@
     "personnelCode":213458,
     "givenName":"Tuba",
     "familyName":"Bayraktutar",
-    "tasks":"Doktor",
+    "task":"Doktor",
     "branch":"Kardiyoloji",
     "shift":"09.00-18.00",
     "workType": "Sözleşmeli Personel"
@@ -14,7 +14,7 @@
     "personnelCode":216965,
     "givenName":"Mustafa",
     "familyName":"Deniz",
-    "tasks":"Doktor",
+    "task":"Doktor",
     "branch":"Nöroloji",
     "shift":"16.00-24.00",
     "workType": "Sözleşmeli Personel"
@@ -24,7 +24,7 @@
     "personnelCode":113325,
     "givenName":"Gürkan",
     "familyName":"Kesebir",
-    "tasks":"Doktor",
+    "task":"Doktor",
     "branch":"Ortopedi ve Travmatoloji",
     "shift":"12.00-21.00",
     "workType": "Sözleşmeli Personel"
@@ -34,7 +34,7 @@
     "personnelCode":576098,
     "givenName":"Yusuf Orhan",
     "familyName":"Uçal",
-    "tasks":"Doktor",
+    "task":"Doktor",
     "branch":"Ortopedi ve Travmatoloji",
     "shift":"16.00-24.00",
     "workType": "Sözleşmeli Personel"
@@ -44,7 +44,7 @@
     "personnelCode":870644,
     "givenName":"Belma",
     "familyName":"Şahin",
-    "tasks":"Hemşire",
+    "task":"Hemşire",
     "branch":"Ortopedi ve Travmatoloji",
     "shift":"16.00-24.00",
     "workType": "Sözleşmeli Personel"
@@ -54,7 +54,7 @@
     "personnelCode":285097,
     "givenName":"Deniz",
     "familyName":"Küçükkaya",
-    "tasks":"Hemşire",
+    "task":"Hemşire",
     "branch":"Plastik Cerrahi",
     "shift":"09.00-18.00",
     "workType": "Sözleşmeli Personel"
@@ -64,7 +64,7 @@
     "personnelCode":907492,
     "givenName":"Hasan",
     "familyName":"Beyaz",
-    "tasks":"Doktor",
+    "task":"Doktor",
     "branch":"Ortopedi ve Travmatoloji",
     "shift":"09.00-18.00",
     "workType": "Sözleşmeli Personel"
