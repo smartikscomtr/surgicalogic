@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Api", "Surgicalogic.Api\Surgicalogic.Api.csproj", "{0CA2D94A-F88E-47A4-8891-98497CB57E16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Api", "Surgicalogic.Api\Surgicalogic.Api.csproj", "{0CA2D94A-F88E-47A4-8891-98497CB57E16}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Surgicalogic.Web", "Surgicalogic.Web\", "{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -26,6 +26,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Surgicalogic.Web", "Surgica
 		SlnRelativePath = "Surgicalogic.Web\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.ORTools", "Surgicalogic.ORTools\Surgicalogic.ORTools.csproj", "{DB258AD9-A232-485A-9375-1E1D513065AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Test", "Surgicalogic.Test\Surgicalogic.Test.csproj", "{66C06FD8-FC15-48F8-9A84-9BB594895BF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,14 @@ Global
 		{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{DB258AD9-A232-485A-9375-1E1D513065AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB258AD9-A232-485A-9375-1E1D513065AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB258AD9-A232-485A-9375-1E1D513065AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB258AD9-A232-485A-9375-1E1D513065AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
