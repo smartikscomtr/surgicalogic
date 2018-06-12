@@ -139,7 +139,7 @@ export default {
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
-        confirm('Silmek istediğinizden emin misiniz ?');
+        confirm(vm.$i18n.t('comman.areYouSureWantToDelete'));
 
         //Silme İşlemi
       }

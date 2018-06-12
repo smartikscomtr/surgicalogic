@@ -11,7 +11,7 @@
   <div id="app"
        v-show= isMounted
        v-else>
-    <v-app id="insipere">      
+    <v-app id="insipere">
       <v-navigation-drawer fixed
                            :clipped="$vuetify.breakpoint.mdAndUp"
                            app
@@ -136,193 +136,203 @@ export default {
   props: {
     source: String
   },
+
   data: () => ({
     dialog: false,
     isMounted: false,
     drawer: null,
-    abc: null,
-    items: [
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Tanımlar",
-        model: true,
-        children: [
-          {
-            icon: "storage",
-            text: "Ekipmanlar",
-            route: "/equipmentspage"
-          },
-          {
-            icon: "group",
-            text: "Personel",
-            route: "/personnelpage"
-          },
-          {
-            icon: "assignment",
-            text: "Odalar",
-            route: "/roomspage",
-          },
-          {
-            icon: "announcement",
-            text: "Koşullar"
-            // route: "/CreatePlan"
-          },
-          {
-            icon: "domain",
-            text: "Klinik"
-            // route: "/CreatePlan"
-          }
-        ]
-      },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Operasyon Yönetimi",
-        children: [
-          {
-            icon: "add_comment",
-            text: "Yeni Operasyon",
-            // route: "/CreatePlan"
-          },
-          {
-            icon: "edit",
-            text: "Operayon Düzenleme",
-            // route: "/CreatePlan"
-          }
-        ]
-      },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Plan Yönetimi",
-        children: [
-          {
-            icon: "add_alarm",
-            text: "Plan Düzenlemeleri",
-            // route: "/CreatePlan"
-          },
-          {
-            icon: "history",
-            text: "Plan Tarihçesi",
-            // route: "/CreatePlan"
-          }
-        ]
-      },
-      {
-        icon: "domain",
-        text: "Klinik Yönetimi",
-        // route: "/eventcalendarpage"
-      },
-      {
-        icon: "content_copy",
-        text: "Raporlar",
-        // route: "/eventcalendarpage"
-      },
-      {
-        icon: "event",
-        text: "Simülasyon",
-        // route: "/eventcalendarpage"
-      },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Yönetim Paneli",
-        children: [
-          {
-            icon: "group",
-            text: "Kullanıcılar",
-            // route: "/CreatePlan"
-          },
-          {
-            icon: "chat_bubble",
-            text: "Geri Bildirim",
-            // route: "/CreatePlan"
-          },
-          {
-            icon: "help",
-            text: "Yardım",
-            // route: "/CreatePlan"
-          },
-          {
-            icon: "settings",
-            text: "Ayarlar",
-            // route: "/CreatePlan"
-          }
-        ]
-      }
-      // {
-      //   icon: "event",
-      //   text: "Event Calendar",
-      //   route: "/eventcalendarpage"
-      // },
-      // {
-      //   icon: "history",
-      //   text: "Operations Database",
-      //   route: "History"
-      // },
-      // {
-      //   icon: "content_copy",
-      //   text: "Reports",
-      //   route: "/reportspage"
-      // },
-      // {
-      //   icon: "keyboard_arrow_up",
-      //   "icon-alt": "keyboard_arrow_down",
-      //   text: "Planning",
-      //   children: [
-      //     {
-      //       icon: "add_alarm",
-      //       text: "Create New Plan",
-      //       route: "/CreatePlan"
-      //     }
-      //   ]
-      // },
-      // {
-      //   icon: "keyboard_arrow_up",
-      //   "icon-alt": "keyboard_arrow_down",
-      //   text: "Inventory",
-      //   children: [
-      //     {
-      //       icon: "domain",
-      //       text: "Operation Room",
-      //       route: "/operationroompage"
-      //     },
-      //     // { icon: "", text: "Operation Type", route: "/operationtypepage" },
-      //     {
-      //       icon: "storage",
-      //       text: "Items",
-      //       route: "itemspage"
-      //     }
-      //   ]
-      // },
-      // {
-      //   icon: "group",
-      //   text: "Users",
-      //   route: "/userspage"
-      //   // children: [
-      //   //   { icon: "pageview", text: "View", route: "/viewpage" },
-      //   //   { icon: "person_add", text: "Add New User", route: "/addnewuserpage" },
-      //   //   { icon: "delete", text: "Delete User", route: "/deleteuserpage" }
-      //   // ]
-      // },
-      // {
-      //   icon: "settings",
-      //   text: "Settings",
-      //   route: "/settingspage"
-      // },
-      // {
-      //   icon: "chat_bubble",
-      //   text: "Send feedback",
-      //   route: "SendFeedback"
-      // },
-      // {
-      //   icon: "help",
-      //   text: "Help",
-      //   route: "/Help"
-      // }
-    ]
+    abc: null
   }),
+
+  computed: {
+    items() {
+      const vm = this;
+
+      return [
+        {
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "Tanımlar",
+          model: true,
+          children: [
+            {
+              icon: "storage",
+              text: "Ekipmanlar",
+              text: vm.$i18n.t("equipments.equipments"),
+              route: "/equipmentspage"
+            },
+            {
+              icon: "group",
+              text: vm.$i18n.t("personnel.personnel"),
+              route: "/personnelpage"
+            },
+            {
+              icon: "assignment",
+              text: vm.$i18n.t("rooms.rooms"),
+              route: "/roomspage",
+            },
+            {
+              icon: "announcement",
+              text: "Koşullar"
+              // route: "/CreatePlan"
+            },
+            {
+              icon: "domain",
+              text: "Klinik"
+              // route: "/CreatePlan"
+            }
+          ]
+        },
+        {
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "Operasyon Yönetimi",
+          children: [
+            {
+              icon: "add_comment",
+              text: "Yeni Operasyon",
+              // route: "/CreatePlan"
+            },
+            {
+              icon: "edit",
+              text: "Operayon Düzenleme",
+              // route: "/CreatePlan"
+            }
+          ]
+        },
+        {
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "Plan Yönetimi",
+          children: [
+            {
+              icon: "add_alarm",
+              text: "Plan Düzenlemeleri",
+              // route: "/CreatePlan"
+            },
+            {
+              icon: "history",
+              text: "Plan Tarihçesi",
+              // route: "/CreatePlan"
+            }
+          ]
+        },
+        {
+          icon: "domain",
+          text: "Klinik Yönetimi",
+          // route: "/eventcalendarpage"
+        },
+        {
+          icon: "content_copy",
+          text: "Raporlar",
+          // route: "/eventcalendarpage"
+        },
+        {
+          icon: "event",
+          text: "Simülasyon",
+          // route: "/eventcalendarpage"
+        },
+        {
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "Yönetim Paneli",
+          children: [
+            {
+              icon: "group",
+              text: "Kullanıcılar",
+              // route: "/CreatePlan"
+            },
+            {
+              icon: "chat_bubble",
+              text: "Geri Bildirim",
+              // route: "/CreatePlan"
+            },
+            {
+              icon: "help",
+              text: "Yardım",
+              // route: "/CreatePlan"
+            },
+            {
+              icon: "settings",
+              text: "Ayarlar",
+              // route: "/CreatePlan"
+            }
+          ]
+        }
+        // {
+        //   icon: "event",
+        //   text: "Event Calendar",
+        //   route: "/eventcalendarpage"
+        // },
+        // {
+        //   icon: "history",
+        //   text: "Operations Database",
+        //   route: "History"
+        // },
+        // {
+        //   icon: "content_copy",
+        //   text: "Reports",
+        //   route: "/reportspage"
+        // },
+        // {
+        //   icon: "keyboard_arrow_up",
+        //   "icon-alt": "keyboard_arrow_down",
+        //   text: "Planning",
+        //   children: [
+        //     {
+        //       icon: "add_alarm",
+        //       text: "Create New Plan",
+        //       route: "/CreatePlan"
+        //     }
+        //   ]
+        // },
+        // {
+        //   icon: "keyboard_arrow_up",
+        //   "icon-alt": "keyboard_arrow_down",
+        //   text: "Inventory",
+        //   children: [
+        //     {
+        //       icon: "domain",
+        //       text: "Operation Room",
+        //       route: "/operationroompage"
+        //     },
+        //     // { icon: "", text: "Operation Type", route: "/operationtypepage" },
+        //     {
+        //       icon: "storage",
+        //       text: "Items",
+        //       route: "itemspage"
+        //     }
+        //   ]
+        // },
+        // {
+        //   icon: "group",
+        //   text: "Users",
+        //   route: "/userspage"
+        //   // children: [
+        //   //   { icon: "pageview", text: "View", route: "/viewpage" },
+        //   //   { icon: "person_add", text: "Add New User", route: "/addnewuserpage" },
+        //   //   { icon: "delete", text: "Delete User", route: "/deleteuserpage" }
+        //   // ]
+        // },
+        // {
+        //   icon: "settings",
+        //   text: "Settings",
+        //   route: "/settingspage"
+        // },
+        // {
+        //   icon: "chat_bubble",
+        //   text: "Send feedback",
+        //   route: "SendFeedback"
+        // },
+        // {
+        //   icon: "help",
+        //   text: "Help",
+        //   route: "/Help"
+        // }
+      ];
+    }
+  },
+
   methods: {
     changePages(route) {
       const vm = this;
@@ -330,6 +340,7 @@ export default {
       return vm.$router.push(route);
     }
   },
+
   mounted() {
     const vm = this;
 

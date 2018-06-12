@@ -3,6 +3,8 @@
     "type": "Tipi",
     "portable" : "Taşınabilirlilik",
     "description" : "Açıklama",
+    "equipment": "Ekipman",
+    "equipments": "Ekipmanlar",
     "addEquipmentsInformation": "Yeni Ekipman Bilgisi Ekle",
     "editEquipmentsInformation": "Ekipman Bilgileri Düzenleme"
 }
