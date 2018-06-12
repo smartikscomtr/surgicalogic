@@ -32,23 +32,31 @@ export default {
 
   computed: {
     headers() {
+      const vm = this;
+
       return [
         {
           value: "room",
-          text: "Oda",
+          text: vm.$i18n.t("rooms.room"),
           sortable: "true",
           align: "left"
         },
         {
-          value: "operationRoom",
-          text: "Operasyon Odası",
+          value: "location",
+          text: vm.$i18n.t("rooms.location"),
           sortable: "true",
           align: "left"
         },
         {
           value: "size",
-          text: "Ölçüler",
+          text: vm.$i18n.t("rooms.size"),
           sortable: "true",
+          align: "left"
+        },
+        {
+          value: "equipmentsName",
+          text: vm.$i18n.t("equipments.equipments"),
+          sortable: 'true',
           align: "left"
         }
       ];

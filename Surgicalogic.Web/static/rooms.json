@@ -4,83 +4,27 @@
     "room":"G1",
     "location":"213",
     "size":"16m^2-1.2",
-    "equipmentId": 5
+    "equipmentsName": "Neşter, iğne"
 	},
 	{
 		"id":2,
 		"room":"G2",
     "location":"245",
     "size":"24m^2-1.2",
-    "equipmentId": 3
+    "equipmentId": "[5,6]"
 	},
 	{
 		"id":3,
 		"room":"G3",
     "location":"534",
     "size":"48m^2-1.2",
-    "equipmentId": 2
+    "equipmentId": "[3,5]"
 	},
 	{
 		"id":4,
 		"room":"G4",
     "location":"109",
     "size":"12m^2-1.2",
-    "equipmentId": 6
-  },
-	{
-		"id":5,
-		"room":"G5",
-    "location":"634",
-    "size":"60m^2-1.2",
-    "equipmentId": 1
-	},
-	{
-		"id":6,
-		"room":"G6",
-    "location":"278",
-    "size":"44m^2-1.2",
-    "equipmentId": 3
-	},
-	{
-		"id":7,
-		"room":"K1",
-    "location":"904",
-    "size":"52m^2-1.2",
-    "equipmentId": 2
-	},
-	{
-		"id":8,
-		"room":"K2",
-    "location":"896",
-    "size":"16m^2-1.2",
-    "equipmentId": 5
-	},
-	{
-		"id":9,
-		"room":"K3",
-    "location":"365",
-    "size":"36m^2-1.2",
-    "equipmentId": 5
-	},
-	{
-		"id":10,
-		"room":"K4",
-    "location":"142",
-    "size":"32m^2-1.2",
-    "equipmentId": 1
-	},
-	{
-		"id":11,
-		"room":"K5",
-    "location":"222",
-    "size":"18m^2-1.2",
-    "equipmentId": 6
-	},
-	{
-		"id":12,
-		"room":"K6",
-    "location":"534",
-    "size":"24m^2-1.2",
-    "equipmentId": 5
-	}
+    "equipmentId":"[3]"
+  }
 ]
