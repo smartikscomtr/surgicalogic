@@ -188,7 +188,7 @@ namespace Surgicalogic.Test
 
             var expected = new List<OperationPlan>();
             var tomorrow = DateTime.Now.AddDays(1);
-            expected.Add(new OperationPlan { OperationId = 1, RoomId = 4, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 15, 30, 0) });
+            expected.Add(new OperationPlan { OperationId = 1, RoomId = 4, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 11, 30, 0) });
             expected.Add(new OperationPlan { OperationId = 2, RoomId = 3, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 06, 30, 0) });
             expected.Add(new OperationPlan { OperationId = 3, RoomId = 3, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 30, 0) });
             expected.Add(new OperationPlan { OperationId = 4, RoomId = 1, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 06, 30, 0) });

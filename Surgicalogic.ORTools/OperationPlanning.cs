@@ -34,8 +34,8 @@ namespace SurgicaLogic.ORTools
             //Buraya dummy bir shift daha ekliyorum. Bunu, ameliyat süresinden daha ilerideki ihtimallere atayacagim.
             var dummyIndex = operationRoomCount * maximumPeriodLength + 100;
             roomPeriodIndex.Add(dummyIndex);
-            //Geçerli statüler. Maksimum süre dahil tüm statüleri içerir. Örnegin 2 ameliyathane olan bir senaryoda a1 1.ameliyathanenin 1. periyodunu, a2 2. ameliyathanenin 1.periyodunu, a3 1.ameliyathanenin 2. periyodunu, a4 2.ameliyathanenin 2. periyodunu vs. temsil eder.
-            var validShifts = roomPeriodIndex.ToArray();
+            //Geçerli statüler. Maksimum süre dahil tüm statüleri içerir. Örnegin 2 ameliyathane olan bir senaryoda 1= 1.ameliyathanenin 1. periyodunu, 2= 2. ameliyathanenin 1.periyodunu, 3= 1.ameliyathanenin 2. periyodunu, 4= 2.ameliyathanenin 2. periyodunu vs. temsil eder.
+            var validStatus = roomPeriodIndex.ToArray();
 
             //AllDifferent methodunda kullanmak üzere maksimum süreyi ienumerable olarak tutan değişkenler.
             IEnumerable<int> maximumLengthList = Enumerable.Range(0, maximumPeriodLength);
@@ -46,12 +46,13 @@ namespace SurgicaLogic.ORTools
 
             for (int i = 0; i < operationRoomCount; i++)
             {
-                //Eğer bu ameliyathane en uzun süreden daha kısaysa, en uzun süreye kadar olan değerlerini en uzun süreye sahip odanın değerlerinden daha yüksek yapıyoruz ki önce onlara ameliyat ataması yapılsın.
+                //Eğer bu ameliyathane en uzun süreye sahip ameliyathaneden daha kısa süre kullanılacaksa, en uzun süreye kadar olan değerlerini en uzun süreye sahip odanın değerlerinden daha yüksek yapıyoruz ki önce onlara ameliyat ataması yapılsın.
+                //Örneğin 2 ameliyathane var birinci 10, ikinci 3 saat kullanılabilir. İkinci ameliyathanenin 4. saat ve sonraki değerlerini birinci ameliyathanenin 10. saat değerinden daha büyük yapıyorum.
                 if (operationRoomTimes[i] < optimalRoomAvailability)
                 {
-                    for (int j = operationRoomTimes[i]; j < (validShifts.Length - 1) / operationRoomCount; j++)
+                    for (int j = operationRoomTimes[i]; j < (validStatus.Length - 1) / operationRoomCount; j++)
                     {
-                        validShifts[(j * operationRoomCount) + i] += (optimalRoomAvailability - operationRoomTimes[i]) * operationRoomCount;
+                        validStatus[(j * operationRoomCount) + i] += (optimalRoomAvailability - operationRoomTimes[i]) * operationRoomCount;
                     }
                 }
             }
@@ -60,7 +61,7 @@ namespace SurgicaLogic.ORTools
 
             //Ameliyatların hangi oda-zaman diliminde yapılacağına karar verilen değişken. Tüm ihtimaller bu değişken içerisine tanımlanıyor.
             IntVar[,] x =
-                solver.MakeIntVarMatrix(operationCount, maximumPeriodLength, validShifts, "x");
+                solver.MakeIntVarMatrix(operationCount, maximumPeriodLength, validStatus, "x");
 
             //Yukarıdaki değişkeni çözümleyebilmek için tek boyutlu hali.
             IntVar[] x_flat = x.Flatten();
@@ -101,6 +102,7 @@ namespace SurgicaLogic.ORTools
                     for (int m = 0; m < maximumPeriodLength; m++)
                     {
                         //Burada bu ameliyat bu zamanda, bu odada yapılamaz kuralını ekliyoruz.
+                        //Console.WriteLine("x[{0}, {1}] != {2}", i, m, item);
                         solver.Add(x[i, m] != item);
                     }
                 }
@@ -122,6 +124,7 @@ namespace SurgicaLogic.ORTools
                                 {
                                     //Bir sonraki ameliyatın süreleri, mevcut ameliyat ile aynı süreye ve aynı indexe gelen değerlere eşit olamaz. 
                                     //Örneğin 2 ameliyathaneli bir hastanede aynı doktorun 1. ameliyatı 3 saat sürsün. Doktor bu ameliyata karşılık gelen a1,a3,a5 değerlerinin yanı sıra diğer odalardaki aynı zaman karşılık gelen a2,a4,a6 zamanlarında da bu ameliyatı yapamaz.
+                                    Console.WriteLine("x[{0}, {1}] != x[{2}, {3}] + {4}", ad, ml, i, t, r);
                                     solver.Add(x[ad, ml] != x[i, t] + r);
                                 }
                             }
@@ -142,6 +145,7 @@ namespace SurgicaLogic.ORTools
                             if (j < maximumPeriodLength - operationTimes[i] && preview[i, j + k] == 0)
                             {
                                 //Ameliyatların aynı odada yapılmasını sağlamak için yeni atayacağımız değeri, bir önceki  değere ameliyathane sayısı kadar ekleyerek buluyoruz. Yani a1'de başladıysa, 2 ameliyathane varsa bir sonraki değer a3 olmalı.
+                                //Console.WriteLine("x[{0}, {1} + {2}] == x[{0}, {1} + {2} - 1] + {3}", i, j, k, operationRoomCount);
                                 solver.Add(x[i, j + k] == x[i, j + k - 1] + operationRoomCount);
                                 preview[i, j + k] = 1;
                                 preview[i, j + k - 1] = 1;
@@ -168,6 +172,7 @@ namespace SurgicaLogic.ORTools
                     for (int t = 0; t < operationTimes[i]; t++)
                     {
                         list.Add(x[i, t]);
+                        //Console.WriteLine("x[{0},{1}]", i, t);
                     }
                     solver.Add(list.ToArray().AllDifferent());
                 }
@@ -211,8 +216,9 @@ namespace SurgicaLogic.ORTools
                         int v = (int)x[i, j].Value();
                         if (j == 0)
                         {
+                            int valueIndex = Array.IndexOf(validStatus, v);
                             int room = v % operationRoomCount != 0 ? v % operationRoomCount : operationRoomCount;
-                            int time = room == operationRoomCount ? v / operationRoomCount : (v / operationRoomCount) + 1;
+                            int time = room == operationRoomCount ? (valueIndex + 1) / operationRoomCount : ((valueIndex + 1) / operationRoomCount) + 1;
                             var tomorrow = DateTime.Now.AddDays(1);
                             var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, startingHour, startingMinute, 0);
                             dateTime = dateTime.AddMinutes((time - 1) * timePeriod);
@@ -229,8 +235,8 @@ namespace SurgicaLogic.ORTools
                     }
 
                     Console.WriteLine();
-
                 }
+
                 Console.WriteLine();
 
                 Console.WriteLine("Usage statistics per room:\n");
