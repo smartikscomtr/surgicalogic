@@ -1,29 +1,35 @@
 <template>
   <div>
-    <v-card>
-      <v-container grid-list-md>
+    <v-card class="grid-card">
+      <div class="page-title">
+        {{ title }}
+      </div>
 
+      <v-container class="elevation-3">
         <v-card-title>
+          <v-btn color="teal"
+                 class="white--text"
+                 round
+                 slot="activator"
+                 @click="addNewItem">
+            <v-icon color="white--text">
+                    add
+            </v-icon>
+            {{ $t("comman.add") }}
+          </v-btn>
+
+          <v-spacer></v-spacer>
+
           <v-text-field v-model="search"
-                        append-icon="search"
+                        prepend-icon="search"
                         label="Search"
                         single-line
                         hide-details>
           </v-text-field>
-
-          <v-btn icon
-                 slot="activator"
-                 class="mb-2"
-                 @click="addNewItem">
-            <v-icon color="teal">
-                    add
-            </v-icon>
-          </v-btn>
         </v-card-title>
 
         <v-data-table :headers="headers"
-                      :items="items"
-                      class="elevation-1">
+                      :items="items">
           <template slot="items" slot-scope="props">
             <td v-for="(header, i) in headers" :key="i">
               {{ props.item[header.value] }}
@@ -66,6 +72,11 @@ export default {
       required: false
     },
 
+    title: {
+      type: String,
+      required: false
+    },
+
     showEdit: {
       type: Boolean,
       required: false
@@ -105,3 +116,18 @@ export default {
 };
 
 </script>
+
+<style>
+  .grid-card {
+    margin: 15px;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 1px 5px 0 rgba(0, 0, 0, 0.12)
+  }
+
+  .page-title {
+    font-size: 20px;
+    line-height: 2.25;
+    color: #464646;
+  }
+</style>

@@ -70,7 +70,7 @@ export default {
       required: false
     },
 
-    title: {
+    edit: {
       type: Number,
       required: false
     }
@@ -84,7 +84,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.title === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
+      return vm.edit === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
     },
 
     showModal: {
@@ -113,8 +113,8 @@ export default {
     save() {
       const vm = this;
 
-      if (vm.title > -1) {
-        Object.assign(vm.items[vm.title], vm.actions);
+      if (vm.edit > -1) {
+        Object.assign(vm.items[vm.edit], vm.actions);
       }
 
       //Güncelleme işlemi

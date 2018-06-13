@@ -2,6 +2,7 @@
   <div>
     <grid-component :headers="headers"
                     :items="rooms"
+                    :title="title"
                     :show-edit="true"
                     :show-delete="true"
                     @action="action"
@@ -11,7 +12,7 @@
 
     <rooms-edit-component :actions="actions"
                           :visible="dialog"
-                          :title="editedIndex"
+                          :edit="editedIndex"
                           :delete-value="deleteValue">
     </rooms-edit-component>
   </div>
@@ -21,7 +22,10 @@
 
 export default {
   data() {
+    const vm = this;
+
     return {
+      title: vm.$i18n.t('rooms.rooms'),
       search: '',
       dialog: false,
       actions : {},
