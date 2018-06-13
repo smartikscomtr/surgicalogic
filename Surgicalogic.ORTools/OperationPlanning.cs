@@ -40,6 +40,9 @@ namespace SurgicaLogic.ORTools
             //AllDifferent methodunda kullanmak üzere maksimum süreyi ienumerable olarak tutan değişkenler.
             IEnumerable<int> maximumLengthList = Enumerable.Range(0, maximumPeriodLength);
 
+            //Karar mekanizmasının davranışını tanımlıyorum. Belli durumlara göre bunu değiştirebiliyorum.
+            int variableStart = Solver.CHOOSE_MIN_SIZE;
+
             #region Ameliyathanelerin uygunluklarını burada ayarlıyorum.
             //Odaların sahip olduğu en uzun süreyi alıyorum.
             int optimalRoomAvailability = operationRoomTimes.Max();
@@ -50,6 +53,8 @@ namespace SurgicaLogic.ORTools
                 //Örneğin 2 ameliyathane var birinci 10, ikinci 3 saat kullanılabilir. İkinci ameliyathanenin 4. saat ve sonraki değerlerini birinci ameliyathanenin 10. saat değerinden daha büyük yapıyorum.
                 if (operationRoomTimes[i] < optimalRoomAvailability)
                 {
+                    //Ameliyathane uygunluk süreleri birbirinden farklıysa validStatus değerlerini değiştiriyorum. Daha doğru sonuç verdiği için karar değişkenininin davranışını değiştiriyorum.
+                    variableStart = Solver.CHOOSE_MIN_SLACK_RANK_FORWARD;
                     for (int j = operationRoomTimes[i]; j < (validStatus.Length - 1) / operationRoomCount; j++)
                     {
                         validStatus[(j * operationRoomCount) + i] += (optimalRoomAvailability - operationRoomTimes[i]) * operationRoomCount;
@@ -95,15 +100,18 @@ namespace SurgicaLogic.ORTools
                 int doctorId = operationDoctor[i];
 
                 //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu değişkende tutuluyor.
-                int[] blockedTimes = GetBlockedTimes(operationRoomRestriction, i, operationRoomCount, maximumPeriodLength);
+                int[] blockedTimes = GetBlockedTimes(operationRoomRestriction, i, operationRoomCount, maximumPeriodLength, validStatus);
 
                 foreach (var item in blockedTimes)
                 {
                     for (int m = 0; m < maximumPeriodLength; m++)
                     {
                         //Burada bu ameliyat bu zamanda, bu odada yapılamaz kuralını ekliyoruz.
-                        //Console.WriteLine("x[{0}, {1}] != {2}", i, m, item);
-                        solver.Add(x[i, m] != item);
+                        if (item != dummyIndex)
+                        {
+                            //Console.WriteLine("x[{0}, {1}] != {2}", i, m, item);
+                            solver.Add(x[i, m] != item);
+                        }
                     }
                 }
 
@@ -120,12 +128,14 @@ namespace SurgicaLogic.ORTools
                             for (int t = 0; t < operationTimes[i]; t++)
                             {
                                 //Ameliyat odası sayısı kadar dön.
-                                for (int r = 0; r < operationRoomCount; r++)
+                                for (int r = 1; r < operationRoomCount; r++)
                                 {
+                                    //Console.WriteLine("x[{0}, {1}] % {2} <= {5} && x[{0}, {1}] % {2} != 0  ? x[{3}, {4}] != x[{0}, {1}] + ({2} - {5}) : x[0, 0] == x[0, 0]", i, t, operationRoomCount, ad, ml, r);
+                                    solver.Add(x[i, t] % operationRoomCount <= r && x[i, t] % operationRoomCount != 0 ? x[ad, ml] != x[i, t] + (operationRoomCount - r) : x[0, 0] == x[0, 0]);
                                     //Bir sonraki ameliyatın süreleri, mevcut ameliyat ile aynı süreye ve aynı indexe gelen değerlere eşit olamaz. 
                                     //Örneğin 2 ameliyathaneli bir hastanede aynı doktorun 1. ameliyatı 3 saat sürsün. Doktor bu ameliyata karşılık gelen a1,a3,a5 değerlerinin yanı sıra diğer odalardaki aynı zaman karşılık gelen a2,a4,a6 zamanlarında da bu ameliyatı yapamaz.
-                                    Console.WriteLine("x[{0}, {1}] != x[{2}, {3}] + {4}", ad, ml, i, t, r);
-                                    solver.Add(x[ad, ml] != x[i, t] + r);
+                                    //Console.WriteLine("x[{0}, {1}] != x[{2}, {3}] + {4}", ad, ml, i, t, r);
+                                    //solver.Add(x[ad, ml] != x[i, t] + r);
                                 }
                             }
                         }
@@ -147,6 +157,9 @@ namespace SurgicaLogic.ORTools
                                 //Ameliyatların aynı odada yapılmasını sağlamak için yeni atayacağımız değeri, bir önceki  değere ameliyathane sayısı kadar ekleyerek buluyoruz. Yani a1'de başladıysa, 2 ameliyathane varsa bir sonraki değer a3 olmalı.
                                 //Console.WriteLine("x[{0}, {1} + {2}] == x[{0}, {1} + {2} - 1] + {3}", i, j, k, operationRoomCount);
                                 solver.Add(x[i, j + k] == x[i, j + k - 1] + operationRoomCount);
+
+                                //solver.Add(x[i, j + k - 1] % operationRoomCount == x[i, j + k] % operationRoomCount);
+
                                 preview[i, j + k] = 1;
                                 preview[i, j + k - 1] = 1;
                                 ameliyatBasladi = true;
@@ -196,7 +209,7 @@ namespace SurgicaLogic.ORTools
 
             // İhtimalleri bu kriterlere göre oluştur.
             DecisionBuilder db = solver.MakePhase(x_flat,
-                                                  Solver.CHOOSE_MIN_SIZE,
+                                                  variableStart,
                                                   Solver.ASSIGN_MIN_VALUE);
 
             solver.NewSearch(db);
@@ -235,8 +248,8 @@ namespace SurgicaLogic.ORTools
                     }
 
                     Console.WriteLine();
-                }
 
+                }
                 Console.WriteLine();
 
                 Console.WriteLine("Usage statistics per room:\n");
@@ -279,7 +292,7 @@ namespace SurgicaLogic.ORTools
         }
 
         //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu metodda hesaplanılıyor.
-        private static int[] GetBlockedTimes(int[,] operationRoomRestriction, int ameliyatId, int operationRoomCount, int maximumLength)
+        private static int[] GetBlockedTimes(int[,] operationRoomRestriction, int ameliyatId, int operationRoomCount, int maximumLength, int[] validStatus)
         {
             List<int> blockedTimes = new List<int>();
             for (int i = 0; i < operationRoomCount; i++)
@@ -287,10 +300,9 @@ namespace SurgicaLogic.ORTools
                 //Bu ameliyat, bu ameliyathanede yapılamazsa
                 if (operationRoomRestriction[ameliyatId, i] == 0)
                 {
-                    for (int j = 0; j <= maximumLength; j++)
+                    for (int j = 0; j < maximumLength; j++)
                     {
-                        //bu ameliyathane için oluşturduğum tüm oda-zaman değerlerini listeye ekliyorum.
-                        blockedTimes.Add(i + 1 + (j * operationRoomCount));
+                        blockedTimes.Add(validStatus[(i + (j * operationRoomCount))]);
                     }
                 }
             }
