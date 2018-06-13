@@ -2,6 +2,7 @@
   <div>
     <grid-component :headers="headers"
                     :items="personnels"
+                    :title="title"
                     :show-edit="true"
                     :show-delete="true"
                     @action="action"
@@ -11,7 +12,7 @@
 
     <personnel-edit-component :actions="actions"
                               :visible="dialog"
-                              :title="editedIndex"
+                              :edit="editedIndex"
                               :delete-value="deleteValue">
     </personnel-edit-component>
   </div>
@@ -21,7 +22,10 @@
 
 export default {
   data() {
+    const vm = this;
+
     return {
+      title: vm.$i18n.t('personnel.personnels'),
       search: '',
       dialog: false,
       actions: {},

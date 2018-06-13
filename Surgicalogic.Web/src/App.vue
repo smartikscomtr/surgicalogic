@@ -12,7 +12,8 @@
        v-show= isMounted
        v-else>
     <v-app id="insipere">
-      <v-navigation-drawer fixed
+      <v-navigation-drawer class="navigation"
+                           fixed
                            :clipped="$vuetify.breakpoint.mdAndUp"
                            app
                            v-model="drawer">
@@ -132,6 +133,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     source: String
@@ -140,8 +142,7 @@ export default {
   data: () => ({
     dialog: false,
     isMounted: false,
-    drawer: null,
-    abc: null
+    drawer: null
   }),
 
   computed: {
@@ -349,3 +350,12 @@ export default {
 };
 
 </script>
+
+<style>
+  .navigation {
+    width: 275px;
+    transform: translateX(5px);
+    margin-top: 60px;
+  }
+</style>
+
