@@ -31,7 +31,7 @@ namespace SurgicaLogic.ORTools
 
             var roomPeriodIndex = Enumerable.Range(1, operationRoomCount * maximumPeriodLength).ToList();
 
-            //Buraya dummy bir shift daha ekliyorum. Bunu, ameliyat süresinden daha ilerideki ihtimallere atayacagim.
+            //Buraya dummy bir status daha ekliyorum. Bunu, ameliyat süresinden daha ilerideki ihtimallere atayacağım.
             var dummyIndex = operationRoomCount * maximumPeriodLength + 100;
             roomPeriodIndex.Add(dummyIndex);
             //Geçerli statüler. Maksimum süre dahil tüm statüleri içerir. Örnegin 2 ameliyathane olan bir senaryoda 1= 1.ameliyathanenin 1. periyodunu, 2= 2. ameliyathanenin 1.periyodunu, 3= 1.ameliyathanenin 2. periyodunu, 4= 2.ameliyathanenin 2. periyodunu vs. temsil eder.
@@ -53,8 +53,9 @@ namespace SurgicaLogic.ORTools
                 //Örneğin 2 ameliyathane var birinci 10, ikinci 3 saat kullanılabilir. İkinci ameliyathanenin 4. saat ve sonraki değerlerini birinci ameliyathanenin 10. saat değerinden daha büyük yapıyorum.
                 if (operationRoomTimes[i] < optimalRoomAvailability)
                 {
-                    //Ameliyathane uygunluk süreleri birbirinden farklıysa validStatus değerlerini değiştiriyorum. Daha doğru sonuç verdiği için karar değişkenininin davranışını değiştiriyorum.
+                    //Daha doğru sonuç verdiği için karar değişkenininin davranışını değiştiriyorum.
                     variableStart = Solver.CHOOSE_MIN_SLACK_RANK_FORWARD;
+                    //Ameliyathane uygunluk süreleri birbirinden farklıysa validStatus değerlerini değiştiriyorum. 
                     for (int j = operationRoomTimes[i]; j < (validStatus.Length - 1) / operationRoomCount; j++)
                     {
                         validStatus[(j * operationRoomCount) + i] += (optimalRoomAvailability - operationRoomTimes[i]) * operationRoomCount;
@@ -73,14 +74,6 @@ namespace SurgicaLogic.ORTools
 
             //Hangi zaman dilimlerine atama yaptığımı anlayabilmek için ameliyat - süre ilişkisini iki boyutlu dizi olarak tutuyorum. İki ameliyatın aynı oda-zaman dilimine atanmasını bu şekilde engelliyorum.
             int[,] preview = new int[operationCount, maximumPeriodLength];
-
-            for (int i = 0; i < operationCount; i++)
-            {
-                for (int j = 0; j < maximumPeriodLength; j++)
-                {
-                    preview[i, j] = 0;
-                }
-            }
 
             //Ameliyatların aynı odada devam edebilmesi ve önceki bir zamana atama yapmaması için, bir sonraki değerin bir önceki değerden en az oda sayısı kadar büyük olması olması kuralı.
             for (int i = operationCount - 1; i >= 0; i--)
@@ -215,6 +208,43 @@ namespace SurgicaLogic.ORTools
             solver.NewSearch(db);
 
             int num_solutions = 0;
+
+            //while (solver.NextSolution())
+            //{
+            //    num_solutions++;
+            //    List<int> roomUsage = new List<int>();
+            //    for (int i = 0; i < operationCount; i++)
+            //    {
+            //        Console.Write("ameliyat #{0,-2}: ", i + 1);
+            //        for (int j = 0; j < operationTimes[i]; j++)
+            //        {
+            //            int v = (int)x[i, j].Value();
+            //            Console.Write(v + " ");
+            //            roomUsage.Add(v);
+            //        }
+
+            //        Console.WriteLine();
+
+            //    }
+            //    Console.WriteLine();
+
+            //    //Console.WriteLine("Usage statistics per room:\n");
+            //    //for (int i = 0; i < operat; i++)
+            //    //{
+            //    //    Console.Write("Oda #{0,-2}: ", i + 1);
+            //    //    var usage = roomUsage.Count(p => (p % ameliyathaneSayisi == i));
+            //    //    Console.Write("Kullanılan Süre: {0}, Overtime: {1}", usage, usage > mesaiSuresi ? usage - mesaiSuresi : 0);
+            //    //    Console.WriteLine();
+            //    //}
+            //    Console.WriteLine();
+
+            //    // We just show 2 solutions
+            //    if (num_solutions > 0)
+            //    {
+            //        break;
+            //    }
+            //}
+
 
             while (solver.NextSolution())
             {
