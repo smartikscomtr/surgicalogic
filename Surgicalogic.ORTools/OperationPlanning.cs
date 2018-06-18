@@ -41,7 +41,17 @@ namespace SurgicaLogic.ORTools
             IEnumerable<int> maximumLengthList = Enumerable.Range(0, maximumPeriodLength);
 
             //Karar mekanizmasının davranışını tanımlıyorum. Belli durumlara göre bunu değiştirebiliyorum.
-            int variableStart = Solver.CHOOSE_MIN_SIZE;
+            int variableStart = Solver.CHOOSE_MIN_SLACK_RANK_FORWARD;
+
+            //Arka arkaya ameliyatları aynı doktor yapıyorsa karar mekanizmasını bu şekilde değiştirmenin daha doğru sonuç verdiği tespit edildi. 
+            for (int i = 0; i < operationDoctor.Length - 1; i++)
+            {
+                if (operationDoctor[i] == operationDoctor[i + 1])
+                {
+                    variableStart = Solver.CHOOSE_MIN_SIZE_HIGHEST_MIN;
+                }
+            }
+
 
             #region Ameliyathanelerin uygunluklarını burada ayarlıyorum.
             //Odaların sahip olduğu en uzun süreyi alıyorum.
@@ -208,43 +218,6 @@ namespace SurgicaLogic.ORTools
             solver.NewSearch(db);
 
             int num_solutions = 0;
-
-            //while (solver.NextSolution())
-            //{
-            //    num_solutions++;
-            //    List<int> roomUsage = new List<int>();
-            //    for (int i = 0; i < operationCount; i++)
-            //    {
-            //        Console.Write("ameliyat #{0,-2}: ", i + 1);
-            //        for (int j = 0; j < operationTimes[i]; j++)
-            //        {
-            //            int v = (int)x[i, j].Value();
-            //            Console.Write(v + " ");
-            //            roomUsage.Add(v);
-            //        }
-
-            //        Console.WriteLine();
-
-            //    }
-            //    Console.WriteLine();
-
-            //    //Console.WriteLine("Usage statistics per room:\n");
-            //    //for (int i = 0; i < operat; i++)
-            //    //{
-            //    //    Console.Write("Oda #{0,-2}: ", i + 1);
-            //    //    var usage = roomUsage.Count(p => (p % ameliyathaneSayisi == i));
-            //    //    Console.Write("Kullanılan Süre: {0}, Overtime: {1}", usage, usage > mesaiSuresi ? usage - mesaiSuresi : 0);
-            //    //    Console.WriteLine();
-            //    //}
-            //    Console.WriteLine();
-
-            //    // We just show 2 solutions
-            //    if (num_solutions > 0)
-            //    {
-            //        break;
-            //    }
-            //}
-
 
             while (solver.NextSolution())
             {
