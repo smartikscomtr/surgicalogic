@@ -131,7 +131,7 @@ export default {
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
-        confirm(vm.$i18n.t('comman.areYouSureWantToDelete'));
+        confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
 
         vm.visible = false;
         //Silme İşlemi
