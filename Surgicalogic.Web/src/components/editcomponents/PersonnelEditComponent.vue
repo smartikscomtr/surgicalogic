@@ -107,14 +107,14 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.visible = false;
+      return vm.visible;
     },
 
     save() {
       const vm = this;
 
       if (vm.edit > -1) {
-        Object.assign(vm.items[vm.edit], vm.actions);
+        // Object.assign(vm.items[vm.edit], vm.actions);
       }
 
       //Güncelleme işlemi

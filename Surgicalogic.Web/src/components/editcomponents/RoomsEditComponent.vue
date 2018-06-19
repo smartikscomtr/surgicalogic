@@ -99,7 +99,7 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.visible = false;
+      return vm.visible;
     },
 
     save() {
