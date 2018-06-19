@@ -42,26 +42,31 @@ export default {
         {
           value: "name",
           text: vm.$i18n.t("equipments.name"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
         },
         {
           value: "type",
           text: vm.$i18n.t("equipments.type"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
         },
         {
           value: "portable",
           text: vm.$i18n.t("equipments.portable"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
         },
         {
           value: "description",
           text: vm.$i18n.t("equipments.description"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
+        },
+        {
+          text: vm.$i18n.t("common.actions"),
+          sortable: false,
+          isAction: true
         }
       ];
     },

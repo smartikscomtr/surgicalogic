@@ -1,5 +1,6 @@
 {
-    "name": "Ad",
-    "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz ?",
-    "add": "Ekle"
+  "actions": "Aksiyon",
+  "add": "Ekle",
+  "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz ?",
+  "name": "Ad"
 }

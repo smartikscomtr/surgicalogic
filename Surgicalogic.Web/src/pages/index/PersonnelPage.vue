@@ -80,6 +80,11 @@ export default {
           text: vm.$i18n.t("personnel.workType"),
           sortable: true,
           align: "left"
+        },
+        {
+          text: vm.$i18n.t("common.actions"),
+          sortable: false,
+          isAction: true
         }
       ];
     },
@@ -106,6 +111,7 @@ export default {
       vm.dialog = true;
 
       //Yeni Ekleme
+
     },
 
     deleteItem(payload) {

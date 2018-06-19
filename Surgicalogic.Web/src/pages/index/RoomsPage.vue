@@ -42,26 +42,31 @@ export default {
         {
           value: "room",
           text: vm.$i18n.t("rooms.room"),
-          sortable: "true",
+          sortable: true,
           align: "left"
         },
         {
           value: "location",
           text: vm.$i18n.t("rooms.location"),
-          sortable: "true",
+          sortable: true,
           align: "left"
         },
         {
           value: "size",
           text: vm.$i18n.t("rooms.size"),
-          sortable: "true",
+          sortable: true,
           align: "left"
         },
         {
           value: "equipmentsName",
           text: vm.$i18n.t("equipments.equipments"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
+        },
+        {
+          text: vm.$i18n.t("common.actions"),
+          sortable: false,
+          isAction: true
         }
       ];
     },
