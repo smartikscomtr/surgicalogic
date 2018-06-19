@@ -30,6 +30,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.ORTools", "Sur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Test", "Surgicalogic.Test\Surgicalogic.Test.csproj", "{66C06FD8-FC15-48F8-9A84-9BB594895BF1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Data", "Surgicalogic.Data\Surgicalogic.Data.csproj", "{44FBE89A-67D3-4583-BFE3-A28BE08D2858}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Data.Migrations", "Surgicalogic.Data.Migrations\Surgicalogic.Data.Migrations.csproj", "{0EC33303-6E56-4144-9959-D69351A59CA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Contracts", "Surgicalogic.Contracts\Surgicalogic.Contracts.csproj", "{E39AD109-48BE-4D81-81BE-DECC311E9253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Services", "Surgicalogic.Services\Surgicalogic.Services.csproj", "{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Model", "Surgicalogic.Model\Surgicalogic.Model.csproj", "{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +62,26 @@ Global
 		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66C06FD8-FC15-48F8-9A84-9BB594895BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EC33303-6E56-4144-9959-D69351A59CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EC33303-6E56-4144-9959-D69351A59CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EC33303-6E56-4144-9959-D69351A59CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EC33303-6E56-4144-9959-D69351A59CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
