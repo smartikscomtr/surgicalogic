@@ -1,4 +1,5 @@
 ﻿using Google.OrTools.ConstraintSolver;
+using Surgicalogic.ORTools.Model;
 using SurgicaLogic.ORTools.Model;
 using System;
 using System.Collections.Generic;
@@ -12,27 +13,25 @@ namespace SurgicaLogic.ORTools
         /// <summary>
         /// Çözümlemeyi yapan ana metot.
         /// </summary>
-        /// <param name="operationCount">Planlanacak ameliyat sayısı.</param>
-        /// <param name="operationRoomCount">Ameliyathane sayısı</param>
-        /// <param name="operationTimes">Ameliyatların süresini sırasıyla içerir. (temizlik, hazırlık vs. dahil)</param>
+        /// <param name="operatios">Planlanacak ameliyatlar.</param>
+        /// <param name="roomCount">Ameliyathane sayısı</param>
         /// <param name="maximumPeriodLength">Overtime dahil ameliyatlara ayrılacak maksimum süre.</param>
-        /// <param name="operationRoomTimes">Ameliyathanelerin uygunluk süresini belirtir. Maksimum değer, mesai süresi olmalı.</param>
-        /// <param name="operationRoomRestriction">Hangi ameliyat hangi odada yapılabilir kısıtı. Örneğin 1. ameliyat 1. odada yapılır, 2. odada yapılamaz, 3. ameliyat 1. odada yapılamaz 2. odada yapılabilir.</param>
-        /// <param name="operationDoctor">Ameliyatı hangi doktorun yapacağı bilgisini dizi olarak tutan değişken.</param>
+        /// <param name="roomPeriodLength">Ameliyathanelerin uygunluk süresini belirtir. Maksimum değer, mesai süresi olmalı.</param>
         /// <param name="startingHour">Ameliyatların saat kaçta başlayacağı bilgisi</param>
         /// <param name="startingMinute">Ameliyatların hangi dakikada başlayacağı bilgisi. Buçukta da başlayabilirse diye.</param>
         /// <param name="timePeriod">Ameliyat periyodlarının kaç dakika olduğu bilgisi</param>
-        public static List<OperationPlan> Solve(int operationCount, int operationRoomCount, int[] operationTimes, int maximumPeriodLength, int[] operationRoomTimes, int[,] operationRoomRestriction, int[] operationDoctor, int startingHour, int startingMinute, int timePeriod)
+
+        public static List<OperationPlan> Solve(List<Operation> operations, int roomCount, int maximumPeriodLength, int roomPeriodLength, int startingHour, int startingMinute, int timePeriod)
         {
             Console.WriteLine("Uygulama başlıyor.");
             var result = new List<OperationPlan>();
 
             Solver solver = new Solver("SurgicaLogic");
 
-            var roomPeriodIndex = Enumerable.Range(1, operationRoomCount * maximumPeriodLength).ToList();
+            var roomPeriodIndex = Enumerable.Range(1, roomCount * maximumPeriodLength).ToList();
 
             //Buraya dummy bir status daha ekliyorum. Bunu, ameliyat süresinden daha ilerideki ihtimallere atayacağım.
-            var dummyIndex = operationRoomCount * maximumPeriodLength + 100;
+            var dummyIndex = roomCount * maximumPeriodLength + 100;
             roomPeriodIndex.Add(dummyIndex);
             //Geçerli statüler. Maksimum süre dahil tüm statüleri içerir. Örnegin 2 ameliyathane olan bir senaryoda 1= 1.ameliyathanenin 1. periyodunu, 2= 2. ameliyathanenin 1.periyodunu, 3= 1.ameliyathanenin 2. periyodunu, 4= 2.ameliyathanenin 2. periyodunu vs. temsil eder.
             var validStatus = roomPeriodIndex.ToArray();
@@ -43,54 +42,31 @@ namespace SurgicaLogic.ORTools
             //Karar mekanizmasının davranışını tanımlıyorum. Belli durumlara göre bunu değiştirebiliyorum.
             int variableStart = Solver.CHOOSE_MIN_SLACK_RANK_FORWARD;
 
-            //Arka arkaya ameliyatları aynı doktor yapıyorsa karar mekanizmasını bu şekilde değiştirmenin daha doğru sonuç verdiği tespit edildi. 
-            for (int i = 0; i < operationDoctor.Length - 1; i++)
+            //Arka arkaya ameliyatları aynı doktor yapıyorsa karar mekanizmasını bu şekilde değiştirmek daha doğru sonuç verdiği tespit edildi. 
+            for (int i = 0; i < operations.Count - 1; i++)
             {
-                if (operationDoctor[i] == operationDoctor[i + 1])
+                if (operations[i].DoctorId == operations[i + 1].DoctorId)
                 {
                     variableStart = Solver.CHOOSE_MIN_SIZE_HIGHEST_MIN;
                 }
             }
 
-
-            #region Ameliyathanelerin uygunluklarını burada ayarlıyorum.
-            //Odaların sahip olduğu en uzun süreyi alıyorum.
-            int optimalRoomAvailability = operationRoomTimes.Max();
-
-            for (int i = 0; i < operationRoomCount; i++)
-            {
-                //Eğer bu ameliyathane en uzun süreye sahip ameliyathaneden daha kısa süre kullanılacaksa, en uzun süreye kadar olan değerlerini en uzun süreye sahip odanın değerlerinden daha yüksek yapıyoruz ki önce onlara ameliyat ataması yapılsın.
-                //Örneğin 2 ameliyathane var birinci 10, ikinci 3 saat kullanılabilir. İkinci ameliyathanenin 4. saat ve sonraki değerlerini birinci ameliyathanenin 10. saat değerinden daha büyük yapıyorum.
-                if (operationRoomTimes[i] < optimalRoomAvailability)
-                {
-                    //Daha doğru sonuç verdiği için karar değişkenininin davranışını değiştiriyorum.
-                    variableStart = Solver.CHOOSE_MIN_SLACK_RANK_FORWARD;
-                    //Ameliyathane uygunluk süreleri birbirinden farklıysa validStatus değerlerini değiştiriyorum. 
-                    for (int j = operationRoomTimes[i]; j < (validStatus.Length - 1) / operationRoomCount; j++)
-                    {
-                        validStatus[(j * operationRoomCount) + i] += (optimalRoomAvailability - operationRoomTimes[i]) * operationRoomCount;
-                    }
-                }
-            }
-
-            #endregion
-
             //Ameliyatların hangi oda-zaman diliminde yapılacağına karar verilen değişken. Tüm ihtimaller bu değişken içerisine tanımlanıyor.
             IntVar[,] x =
-                solver.MakeIntVarMatrix(operationCount, maximumPeriodLength, validStatus, "x");
+                solver.MakeIntVarMatrix(operations.Count, maximumPeriodLength, validStatus, "x");
 
             //Yukarıdaki değişkeni çözümleyebilmek için tek boyutlu hali.
             IntVar[] x_flat = x.Flatten();
 
             //Hangi zaman dilimlerine atama yaptığımı anlayabilmek için ameliyat - süre ilişkisini iki boyutlu dizi olarak tutuyorum. İki ameliyatın aynı oda-zaman dilimine atanmasını bu şekilde engelliyorum.
-            int[,] preview = new int[operationCount, maximumPeriodLength];
+            int[,] preview = new int[operations.Count, maximumPeriodLength];
 
             //Ameliyatların aynı odada devam edebilmesi ve önceki bir zamana atama yapmaması için, bir sonraki değerin bir önceki değerden en az oda sayısı kadar büyük olması olması kuralı.
-            for (int i = operationCount - 1; i >= 0; i--)
+            for (int i = operations.Count - 1; i >= 0; i--)
             {
-                for (int j = operationTimes[i] - 1; j > 0; j--)
+                for (int j = operations[i].Period - 1; j > 0; j--)
                 {
-                    for (int k = 1; k < operationRoomCount; k++)
+                    for (int k = 1; k < roomCount; k++)
                     {
                         solver.Add(x[i, j] != dummyIndex);
                         solver.Add(x[i, j] > x[i, j - 1] + k);
@@ -98,12 +74,12 @@ namespace SurgicaLogic.ORTools
                 }
             }
 
-            for (int i = 0; i < operationCount; i++)
+            for (int i = 0; i < operations.Count; i++)
             {
-                int doctorId = operationDoctor[i];
+                int doctorId = operations[i].DoctorId;
 
                 //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu değişkende tutuluyor.
-                int[] blockedTimes = GetBlockedTimes(operationRoomRestriction, i, operationRoomCount, maximumPeriodLength, validStatus);
+                int[] blockedTimes = GetBlockedTimes(operations[i].UnavailableRooms, i, roomCount, maximumPeriodLength, validStatus);
 
                 foreach (var item in blockedTimes)
                 {
@@ -119,22 +95,22 @@ namespace SurgicaLogic.ORTools
                 }
 
                 //Aynı doktora aynı anda birden fazla ameliyat planlanmaması için
-                for (int ad = 0; ad < operationTimes.Length; ad++)
+                for (int ad = 0; ad < operations.Count; ad++)
                 {
                     //Eğer sonraki ameliyatı yapacak doktorlardan birisi, bu ameliyatı yapan doktor ise.
-                    if (operationDoctor[ad] == doctorId && ad != i)
+                    if (operations[ad].DoctorId == doctorId && ad != i)
                     {
                         //Bir sonraki ameliyat süresi kadar dön.
-                        for (int ml = 0; ml < operationTimes[ad]; ml++)
+                        for (int ml = 0; ml < operations[ad].Period; ml++)
                         {
                             //Mevcut ameliyatın süresi kadar dön.
-                            for (int t = 0; t < operationTimes[i]; t++)
+                            for (int t = 0; t < operations[i].Period; t++)
                             {
                                 //Ameliyat odası sayısı kadar dön.
-                                for (int r = 1; r < operationRoomCount; r++)
+                                for (int r = 1; r < roomCount; r++)
                                 {
                                     //Console.WriteLine("x[{0}, {1}] % {2} <= {5} && x[{0}, {1}] % {2} != 0  ? x[{3}, {4}] != x[{0}, {1}] + ({2} - {5}) : x[0, 0] == x[0, 0]", i, t, operationRoomCount, ad, ml, r);
-                                    solver.Add(x[i, t] % operationRoomCount <= r && x[i, t] % operationRoomCount != 0 ? x[ad, ml] != x[i, t] + (operationRoomCount - r) : x[0, 0] == x[0, 0]);
+                                    solver.Add(x[i, t] % roomCount <= r && x[i, t] % roomCount != 0 ? x[ad, ml] != x[i, t] + (roomCount - r) : x[0, 0] == x[0, 0]);
                                     //Bir sonraki ameliyatın süreleri, mevcut ameliyat ile aynı süreye ve aynı indexe gelen değerlere eşit olamaz. 
                                     //Örneğin 2 ameliyathaneli bir hastanede aynı doktorun 1. ameliyatı 3 saat sürsün. Doktor bu ameliyata karşılık gelen a1,a3,a5 değerlerinin yanı sıra diğer odalardaki aynı zaman karşılık gelen a2,a4,a6 zamanlarında da bu ameliyatı yapamaz.
                                     //Console.WriteLine("x[{0}, {1}] != x[{2}, {3}] + {4}", ad, ml, i, t, r);
@@ -152,14 +128,14 @@ namespace SurgicaLogic.ORTools
                     //Bu for daha önce tamamlanmadıysa. En dışta ameliyatlar içerisinde döndüğüm için bir ameliyat için iki kez planlama yapılmasın diye bu kontrolü yapıyorum.
                     if (!forCompleted)
                     {
-                        for (int k = 1; k < operationTimes[i]; k++)
+                        for (int k = 1; k < operations[i].Period; k++)
                         {
                             //Eğer ameliyat için yeterli süre varsa, atama yapacağım yere daha önce herhangi bir ameliyat planlamadıysam.
-                            if (j < maximumPeriodLength - operationTimes[i] && preview[i, j + k] == 0)
+                            if (j < maximumPeriodLength - operations[i].Period && preview[i, j + k] == 0)
                             {
                                 //Ameliyatların aynı odada yapılmasını sağlamak için yeni atayacağımız değeri, bir önceki  değere ameliyathane sayısı kadar ekleyerek buluyoruz. Yani a1'de başladıysa, 2 ameliyathane varsa bir sonraki değer a3 olmalı.
                                 //Console.WriteLine("x[{0}, {1} + {2}] == x[{0}, {1} + {2} - 1] + {3}", i, j, k, operationRoomCount);
-                                solver.Add(x[i, j + k] == x[i, j + k - 1] + operationRoomCount);
+                                solver.Add(x[i, j + k] == x[i, j + k - 1] + roomCount);
 
                                 //solver.Add(x[i, j + k - 1] % operationRoomCount == x[i, j + k] % operationRoomCount);
 
@@ -178,14 +154,14 @@ namespace SurgicaLogic.ORTools
                 }
             }
 
-            for (int i = 1; i < operationCount; i++)
+            for (int i = 1; i < operations.Count; i++)
             {
                 for (int j = 0; j < i; j++)
                 {
                     //Bundan önce yapılan tüm ameliyatların odaZaman değerleri, o an yapılan ameliyatın odaZaman değerlerinden farklı olsun.
-                    var list = (from k in maximumLengthList.Take(operationTimes[j])
+                    var list = (from k in maximumLengthList.Take(operations[j].Period)
                                 select x[j, k]).ToList();
-                    for (int t = 0; t < operationTimes[i]; t++)
+                    for (int t = 0; t < operations[i].Period; t++)
                     {
                         list.Add(x[i, t]);
                         //Console.WriteLine("x[{0},{1}]", i, t);
@@ -195,12 +171,12 @@ namespace SurgicaLogic.ORTools
             }
 
             //Burada da atama yapilmayan yerlere va/rsayilan bir deger atiyorum ki farkli ihtimallerde farkli senaryolar görünebilsin. Yoksa atama yapilmayan yerdeki ihtimalleri degistirip sonuçta ayni programi çikartiyordu.
-            for (int i = 1; i < operationCount; i++)
+            for (int i = 1; i < operations.Count; i++)
             {
                 for (int j = 0; j <= i; j++)
                 {
                     //Bundan önce yapilan tüm ameliyatlarin bitisinden maksimum süreye kadar olan degerleri, hep ayni olsun diyorum ki kendi üretmesini istedigim ihtimaller farklilassin.
-                    var list = (from k in maximumLengthList.Skip(operationTimes[j])
+                    var list = (from k in maximumLengthList.Skip(operations[j].Period)
                                 select x[j, k]).ToList();
 
                     foreach (var item in list)
@@ -219,22 +195,59 @@ namespace SurgicaLogic.ORTools
 
             int num_solutions = 0;
 
+            //while (solver.NextSolution())
+            //{
+            //    num_solutions++;
+            //    List<int> roomUsage = new List<int>();
+            //    for (int i = 0; i < operations.Count; i++)
+            //    {
+            //        Console.Write("ameliyat #{0,-2}: ", i + 1);
+            //        for (int j = 0; j < operationTimes[i]; j++)
+            //        {
+            //            int v = (int)x[i, j].Value();
+            //            Console.Write(v + " ");
+            //            roomUsage.Add(v);
+            //        }
+
+            //        Console.WriteLine();
+
+            //    }
+            //    Console.WriteLine();
+
+            //    //Console.WriteLine("Usage statistics per room:\n");
+            //    //for (int i = 0; i < operat; i++)
+            //    //{
+            //    //    Console.Write("Oda #{0,-2}: ", i + 1);
+            //    //    var usage = roomUsage.Count(p => (p % ameliyathaneSayisi == i));
+            //    //    Console.Write("Kullanılan Süre: {0}, Overtime: {1}", usage, usage > mesaiSuresi ? usage - mesaiSuresi : 0);
+            //    //    Console.WriteLine();
+            //    //}
+            //    Console.WriteLine();
+
+            //    // We just show 2 solutions
+            //    if (num_solutions > 0)
+            //    {
+            //        break;
+            //    }
+            //}
+
+
             while (solver.NextSolution())
             {
                 Console.WriteLine();
                 num_solutions++;
                 List<int> roomUsage = new List<int>();
-                for (int i = 0; i < operationCount; i++)
+                for (int i = 0; i < operations.Count; i++)
                 {
                     Console.Write("Ameliyat #{0,-2}: ", i + 1);
-                    for (int j = 0; j < operationTimes[i]; j++)
+                    for (int j = 0; j < operations[i].Period; j++)
                     {
                         int v = (int)x[i, j].Value();
                         if (j == 0)
                         {
                             int valueIndex = Array.IndexOf(validStatus, v);
-                            int room = v % operationRoomCount != 0 ? v % operationRoomCount : operationRoomCount;
-                            int time = room == operationRoomCount ? (valueIndex + 1) / operationRoomCount : ((valueIndex + 1) / operationRoomCount) + 1;
+                            int room = v % roomCount != 0 ? v % roomCount : roomCount;
+                            int time = room == roomCount ? (valueIndex + 1) / roomCount : ((valueIndex + 1) / roomCount) + 1;
                             var tomorrow = DateTime.Now.AddDays(1);
                             var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, startingHour, startingMinute, 0);
                             dateTime = dateTime.AddMinutes((time - 1) * timePeriod);
@@ -256,12 +269,13 @@ namespace SurgicaLogic.ORTools
                 Console.WriteLine();
 
                 Console.WriteLine("Usage statistics per room:\n");
-                for (int i = 0; i < operationRoomCount; i++)
+                for (int i = 0; i < roomCount; i++)
                 {
                     Console.Write("Oda #{0,-2}: ", i + 1);
-                    var usage = i + 1 == operationRoomCount ? roomUsage.Count(p => (p % operationRoomCount == 0)) : roomUsage.Count(p => (p % operationRoomCount == i + 1));
-                    int overTime = CalculateOverTime(usage, operationRoomTimes[i]);
-                    Console.Write("Uygunluk: {0}, Kullanılan Süre: {1}, Overtime: {2}", operationRoomTimes[i], usage, overTime);
+                    var usage = i + 1 == roomCount ? roomUsage.Count(p => (p % roomCount == 0)) : roomUsage.Count(p => (p % roomCount == i + 1));
+                    var usageTimes = i + 1 == roomCount ? roomUsage.Where(p => (p % roomCount == 0)) : roomUsage.Where(p => (p % roomCount == i + 1));
+                    int overTime = CalculateOverTime(usage, roomPeriodLength); //usageTimes.Count(t => t > operationRoomCount * roomPeriodLength[i]);
+                    Console.Write("Uygunluk: {0}, Kullanılan Süre: {1}, Overtime: {2}", roomPeriodLength, usage, overTime);
                     Console.WriteLine();
                 }
                 Console.WriteLine();
@@ -295,200 +309,144 @@ namespace SurgicaLogic.ORTools
         }
 
         //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu metodda hesaplanılıyor.
-        private static int[] GetBlockedTimes(int[,] operationRoomRestriction, int ameliyatId, int operationRoomCount, int maximumLength, int[] validStatus)
+        private static int[] GetBlockedTimes(List<int> unavailableRooms, int ameliyatId, int operationRoomCount, int maximumLength, int[] validStatus)
         {
-            List<int> blockedTimes = new List<int>();
+            var result = new List<int>();
+            if (unavailableRooms == null)
+            {
+                return result.ToArray();
+            }
+
             for (int i = 0; i < operationRoomCount; i++)
             {
                 //Bu ameliyat, bu ameliyathanede yapılamazsa
-                if (operationRoomRestriction[ameliyatId, i] == 0)
+                if (unavailableRooms.Any(t => t - 1 == i))
                 {
                     for (int j = 0; j < maximumLength; j++)
                     {
-                        blockedTimes.Add(validStatus[(i + (j * operationRoomCount))]);
+                        result.Add(validStatus[(i + (j * operationRoomCount))]);
                     }
                 }
             }
 
-            return blockedTimes.ToArray();
+            return result.ToArray();
         }
 
         public static void Main(String[] args)
         {
-            int ameliyatSayisi = 0;
-            int ameliyathaneSayisi = 0;
-            int maksimumSure = 0;
-            List<int> ameliyatSureleri = new List<int>();
-            List<int> ameliyathaneSureleri = new List<int>();
-            List<int> ameliyatDoktor = new List<int>();
-            bool odaKisiti = true;
-            int startingHour = 0;
-            int startingMinute = -1;
-            int timePeriod = 0;
+            #region ParameterValues
+            int operationRoomCount = 5;
+            int maximumPeriodLength = 24;
+            int roomPeriodLength = 18;
+            int startingHour = 8;
+            int startingMinute = 15;
+            int timePeriod = 60;
+            #endregion
 
-            Console.Write("Lütfen ameliyat sayısını giriniz: ");
-            while (ameliyatSayisi == 0)
+            List<Operation> operations = new List<Operation>();
+
+            var operation = new Operation
             {
-                if (!int.TryParse(Console.ReadLine(), out ameliyatSayisi))
-                {
-                    Console.Write("Lütfen geçerli bir sayı giriniz: ");
+                Id = 1,
+                DoctorId = 2,
+                Period = 4,
+                UnavailableRooms = new List<int> { 3, 4 }
+            };
 
-                }
-            }
+            operations.Add(operation);
 
-            Console.Write("Lütfen ameliyathane sayısını giriniz: ");
-            while (ameliyathaneSayisi == 0)
+            operation = new Operation
             {
-                if (!int.TryParse(Console.ReadLine(), out ameliyathaneSayisi))
-                {
-                    Console.Write("Lütfen geçerli bir sayı giriniz: ");
+                Id = 2,
+                DoctorId = 1,
+                Period = 6,
+                UnavailableRooms = new List<int> { 1, 2, 5 }
+            };
 
-                }
-            }
+            operations.Add(operation);
 
-            Console.Write("Ameliyat sürelerini kaç dakikalık periyod olarak belirleyeceksiniz: ");
-            while (timePeriod == 0)
+            operation = new Operation
             {
-                if (!int.TryParse(Console.ReadLine(), out timePeriod))
-                {
-                    Console.Write("Lütfen geçerli bir sayı giriniz: ");
+                Id = 3,
+                DoctorId = 1,
+                Period = 5,
+                UnavailableRooms = new List<int> { 2, 3 }
+            };
 
-                }
-            }
+            operations.Add(operation);
 
-            for (int i = 0; i < ameliyatSayisi; i++)
+            operation = new Operation
             {
-                int ameliyatSuresi = 0;
-                Console.Write("Lütfen {0}. ameliyatın kaç periyod süreceğini giriniz: ", i + 1);
-                while (ameliyatSuresi == 0)
-                {
-                    if (!int.TryParse(Console.ReadLine(), out ameliyatSuresi))
-                    {
-                        Console.Write("Lütfen geçerli bir sayı giriniz: ");
-                    }
-                    else
-                    {
-                        ameliyatSureleri.Add(ameliyatSuresi);
-                    }
-                }
+                Id = 4,
+                DoctorId = 2,
+                Period = 7,
+                UnavailableRooms = new List<int> { 1, 2, 3, 5 }
+            };
 
-                int doktorId = 0;
-                Console.Write("Lütfen {0}. ameliyatı yapacak doktorun ID'sini giriniz: ", i + 1);
-                while (doktorId == 0)
-                {
-                    if (!int.TryParse(Console.ReadLine(), out doktorId))
-                    {
-                        Console.Write("Lütfen geçerli bir ID giriniz: ");
-                    }
-                    else
-                    {
-                        ameliyatDoktor.Add(doktorId);
-                    }
-                }
-            }
+            operations.Add(operation);
 
-            Console.Write("Lütfen overtime dahil ameliyat süresinin kaç periyod olacağını giriniz: ");
-            while (maksimumSure == 0)
+            operation = new Operation
             {
-                if (!int.TryParse(Console.ReadLine(), out maksimumSure))
-                {
-                    Console.Write("Lütfen geçerli bir sayı giriniz: ");
-                }
-                else if (ameliyatSureleri.Any(x => x > maksimumSure))
-                {
-                    maksimumSure = 0;
-                    Console.Write("Lütfen en uzun ameliyat süresine eşit veya büyük bir değer giriniz: ");
-                }
-            }
+                Id = 5,
+                DoctorId = 3,
+                Period = 2,
+                UnavailableRooms = new List<int> { 1, 4 }
+            };
 
-            for (int i = 0; i < ameliyathaneSayisi; i++)
+            operations.Add(operation);
+
+            operation = new Operation
             {
-                int ameliyathaneSuresi = 0;
-                Console.Write("Lütfen {0}. ameliyathanenin kaç periyod uygun olacağını giriniz: ", i + 1);
-                while (ameliyathaneSuresi == 0)
-                {
-                    if (!int.TryParse(Console.ReadLine(), out ameliyathaneSuresi))
-                    {
-                        Console.Write("Lütfen geçerli bir sayı giriniz: ");
-                    }
-                    else
-                    {
-                        ameliyathaneSureleri.Add(ameliyathaneSuresi);
-                    }
-                }
-            }
+                Id = 6,
+                DoctorId = 3,
+                Period = 4,
+                UnavailableRooms = new List<int> { 1, 3, 4, 5 }
+            };
 
-            int[,] ameliyatOdaKisiti = new int[ameliyatSayisi, ameliyathaneSayisi];
+            operations.Add(operation);
 
-            for (int i = 0; i < ameliyatSayisi; i++)
+            operation = new Operation
             {
-                for (int j = 0; j < ameliyathaneSayisi; j++)
-                {
-                    ameliyatOdaKisiti[i, j] = 1;
-                }
-            }
+                Id = 7,
+                DoctorId = 5,
+                Period = 6,
+                UnavailableRooms = new List<int> { 1, 2, 3, 5 }
+            };
 
-            while (odaKisiti)
+            operations.Add(operation);
+
+            operation = new Operation
             {
-                Console.Write("Oda - Ameliyat kısıtlaması yapmak istiyor musunuz? (E/H): ");
-                string val = Console.ReadLine();
-                if (val.ToUpper() == "H")
-                {
-                    odaKisiti = false;
-                }
-                else if (val.ToUpper() == "E")
-                {
-                    int ameliyatNo = 0;
-                    Console.Write("Lütfen ameliyat numarasını giriniz: ");
-                    while (ameliyatNo == 0)
-                    {
-                        if (!int.TryParse(Console.ReadLine(), out ameliyatNo))
-                        {
-                            Console.Write("Lütfen geçerli bir sayı giriniz: ");
-                        }
-                    }
+                Id = 8,
+                DoctorId = 5,
+                Period = 6,
+                UnavailableRooms = new List<int> { 1, 2, 3 }
 
-                    int odaNo = 0;
-                    Console.Write("Lütfen {0} numaralı ameliyatın yapılamayacağı oda numarasını giriniz: ", ameliyatNo);
-                    while (odaNo == 0)
-                    {
-                        if (!int.TryParse(Console.ReadLine(), out odaNo))
-                        {
-                            Console.Write("Lütfen geçerli bir sayı giriniz: ");
-                        }
-                    }
+            };
 
-                    ameliyatOdaKisiti[ameliyatNo - 1, odaNo - 1] = 0;
-                    Console.WriteLine("Tanımlama başarılı bir şekilde yapılmıştır.");
-                }
-                else
-                {
-                    Console.WriteLine("Bunu hayır olarak kabul ediyorum.");
-                    odaKisiti = false;
-                }
-            }
+            operations.Add(operation);
 
-            Console.Write("Lütfen ameliyatların başlangıç saatini giriniz: ");
-            while (startingHour == 0)
+            operation = new Operation
             {
-                if (!int.TryParse(Console.ReadLine(), out startingHour))
-                {
-                    Console.Write("Lütfen geçerli bir sayı giriniz: ");
+                Id = 9,
+                DoctorId = 3,
+                Period = 3,
+                UnavailableRooms = new List<int> { 1, 2, 3, 5 }
+            };
 
-                }
-            }
+            operations.Add(operation);
 
-            Console.Write("Lütfen ameliyatların başlangıç dakikasını giriniz: ");
-            while (startingMinute < 0)
+            operation = new Operation
             {
-                if (!int.TryParse(Console.ReadLine(), out startingMinute))
-                {
-                    Console.Write("Lütfen geçerli bir sayı giriniz: ");
+                Id = 10,
+                DoctorId = 2,
+                Period = 8,
+                UnavailableRooms = new List<int> { 3, 4 }
+            };
 
-                }
-            }
+            operations.Add(operation);
 
-            var result = Solve(ameliyatSayisi, ameliyathaneSayisi, ameliyatSureleri.ToArray(), maksimumSure, ameliyathaneSureleri.ToArray(), ameliyatOdaKisiti, ameliyatDoktor.ToArray(), startingHour, startingMinute, timePeriod);
+            Solve(operations, operationRoomCount, maximumPeriodLength, roomPeriodLength, startingHour, startingMinute, timePeriod);
             Console.ReadKey();
         }
     }

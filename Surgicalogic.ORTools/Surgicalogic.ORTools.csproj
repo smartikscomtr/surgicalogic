@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Operation.cs" />
     <Compile Include="Model\OperationPlan.cs" />
     <Compile Include="Model\ValidationResult.cs" />
     <Compile Include="OperationPlanning.cs" />
