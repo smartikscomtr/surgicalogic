@@ -170,7 +170,7 @@ namespace SurgicaLogic.ORTools
                 }
             }
 
-            //Burada da atama yapilmayan yerlere va/rsayilan bir deger atiyorum ki farkli ihtimallerde farkli senaryolar görünebilsin. Yoksa atama yapilmayan yerdeki ihtimalleri degistirip sonuçta ayni programi çikartiyordu.
+            //Burada da atama yapılmayan yerlere varsayilan bir deger atiyorum ki farkli ihtimallerde farkli senaryolar görünebilsin. Yoksa atama yapilmayan yerdeki ihtimalleri degistirip sonuçta ayni programi çikartiyordu.
             for (int i = 1; i < operations.Count; i++)
             {
                 for (int j = 0; j <= i; j++)
@@ -195,43 +195,6 @@ namespace SurgicaLogic.ORTools
 
             int num_solutions = 0;
 
-            //while (solver.NextSolution())
-            //{
-            //    num_solutions++;
-            //    List<int> roomUsage = new List<int>();
-            //    for (int i = 0; i < operations.Count; i++)
-            //    {
-            //        Console.Write("ameliyat #{0,-2}: ", i + 1);
-            //        for (int j = 0; j < operationTimes[i]; j++)
-            //        {
-            //            int v = (int)x[i, j].Value();
-            //            Console.Write(v + " ");
-            //            roomUsage.Add(v);
-            //        }
-
-            //        Console.WriteLine();
-
-            //    }
-            //    Console.WriteLine();
-
-            //    //Console.WriteLine("Usage statistics per room:\n");
-            //    //for (int i = 0; i < operat; i++)
-            //    //{
-            //    //    Console.Write("Oda #{0,-2}: ", i + 1);
-            //    //    var usage = roomUsage.Count(p => (p % ameliyathaneSayisi == i));
-            //    //    Console.Write("Kullanılan Süre: {0}, Overtime: {1}", usage, usage > mesaiSuresi ? usage - mesaiSuresi : 0);
-            //    //    Console.WriteLine();
-            //    //}
-            //    Console.WriteLine();
-
-            //    // We just show 2 solutions
-            //    if (num_solutions > 0)
-            //    {
-            //        break;
-            //    }
-            //}
-
-
             while (solver.NextSolution())
             {
                 Console.WriteLine();
@@ -239,7 +202,7 @@ namespace SurgicaLogic.ORTools
                 List<int> roomUsage = new List<int>();
                 for (int i = 0; i < operations.Count; i++)
                 {
-                    Console.Write("Ameliyat #{0,-2}: ", i + 1);
+                    Console.Write("Ameliyat #{0,-2}: ", operations[i].Id);
                     for (int j = 0; j < operations[i].Period; j++)
                     {
                         int v = (int)x[i, j].Value();
@@ -255,7 +218,7 @@ namespace SurgicaLogic.ORTools
 
                             result.Add(new OperationPlan
                             {
-                                OperationId = i + 1,
+                                OperationId = operations[i].Id,
                                 RoomId = room,
                                 StartDate = dateTime
                             });
