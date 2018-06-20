@@ -13,7 +13,8 @@
     <equipments-edit-component :actions="actions"
                                :visible="dialog"
                                :edit="editedIndex"
-                               :delete-value="deleteValue">
+                               :delete-value="deleteValue"
+                               @cancel="cancel">
     </equipments-edit-component>
   </div>
 </template>
@@ -42,26 +43,32 @@ export default {
         {
           value: "name",
           text: vm.$i18n.t("equipments.name"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
         },
         {
           value: "type",
           text: vm.$i18n.t("equipments.type"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
         },
         {
           value: "portable",
           text: vm.$i18n.t("equipments.portable"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
         },
         {
           value: "description",
           text: vm.$i18n.t("equipments.description"),
-          sortable: 'true',
+          sortable: true,
           align: "left"
+        },
+        {
+          text: vm.$i18n.t("common.actions"),
+          sortable: false,
+          isAction: true,
+          align: "right"
         }
       ];
     },
@@ -80,6 +87,12 @@ export default {
       vm.dialog = true;
       vm.editedIndex = vm.equipments.indexOf(payload);
       vm.actions = payload;
+    },
+
+    cancel() {
+      const vm = this;
+
+      vm.dialog = false;
     },
 
     addNewItem(){

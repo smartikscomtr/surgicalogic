@@ -2,61 +2,63 @@
   <div>
     <v-card class="grid-card">
       <div class="page-title">
-        {{ title }}
-      </div>
+        <h2> {{ title }} </h2>
 
-      <v-container class="elevation-3">
-        <v-card-title>
-          <v-btn color="teal"
-                 class="white--text"
-                 round
-                 slot="activator"
-                 @click="addNewItem">
-            <v-icon color="white--text">
-                    add
-            </v-icon>
-            {{ $t("comman.add") }}
-          </v-btn>
+        <v-container >
+          <v-card-title>
 
-          <v-spacer></v-spacer>
+            <v-text-field v-model="search"
+                          append-icon="search"
+                          label="Search"
+                          single-line
+                          hide-details>
+            </v-text-field>
 
-          <v-text-field v-model="search"
-                        prepend-icon="search"
-                        label="Search"
-                        single-line
-                        hide-details>
-          </v-text-field>
-        </v-card-title>
 
-        <v-data-table :headers="headers"
-                      :items="items">
-          <template slot="items" slot-scope="props">
-            <td v-for="(header, i) in headers" :key="i">
-              {{ props.item[header.value] }}
-            </td>
+            <v-spacer></v-spacer>
 
-            <td class="justify-center layout px-0" slot="activator">
-              <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
-                <v-icon color="teal">edit</v-icon>
-              </v-btn>
+            <v-btn color="teal"
+                  class="white--text"
+                  slot="activator"
+                  @click="addNewItem">
+              <v-icon color="white--text">
+                      add
+              </v-icon>
+              {{ $t("common.add") }}
+            </v-btn>
 
-              <v-btn v-if="showDelete" icon class="mx-0" @click="deleteItem(props.item)">
-                <v-icon color="pink">delete</v-icon>
-              </v-btn>
-            </td>
+          </v-card-title>
 
-            <template slot="no-data">
-              <v-btn color="primary">Reset</v-btn>
+          <v-data-table :headers="headers"
+                        :items="items">
+
+            <template slot="items" slot-scope="props">
+
+              <td v-for="(header, i) in headers"
+                  :key="i">
+                <template v-if="!header.isAction">
+                  {{ props.item[header.value] }}
+                </template>
+
+                <template v-else>
+                  <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
+                    <v-icon color="#262626">edit</v-icon>
+                  </v-btn>
+
+                  <v-btn v-if="showDelete" icon class="mx-0" @click="deleteItem(props.item)">
+                    <v-icon color="#262626">delete</v-icon>
+                  </v-btn>
+                </template>
+              </td>
             </template>
-          </template>
-        </v-data-table>
-      </v-container>
+          </v-data-table>
+        </v-container>
+      </div>
     </v-card>
   </div>
 </template>
 
 <script>
-
 export default {
   props: {
     items: {
@@ -90,7 +92,7 @@ export default {
 
   data() {
     return {
-      search: ''
+      search: ""
     };
   },
 
@@ -98,36 +100,90 @@ export default {
     addNewItem() {
       const vm = this;
 
-      vm.$emit('newaction');
+      vm.$emit("newaction");
     },
 
     editItem(item) {
       const vm = this;
 
-      vm.$emit('action', item);
+      vm.$emit("action", item);
     },
 
     deleteItem(item) {
       const vm = this;
 
-      vm.$emit('deleteitem', item);
+      vm.$emit("deleteitem", item);
     }
   }
 };
-
 </script>
 
 <style>
-  .grid-card {
-    margin: 15px;
-    padding: 50px;
+.grid-card.card {
+  box-shadow: inherit;
+  height: 100vh !important;
+}
+.grid-card .page-title h2 {
+  padding-left: 30px;
+  padding-top: 20px;
+}
+.datatable__actions {
+  background-color: #f8f8f8 !important;
+  padding-top: 20px;
+}
+.menuable__content__active .list {
+  /* background-color: #c3c3c3; */
+}
+.white--text {
+  width: 158px;
+  margin-right: 0;
+}
+/* .grid-card {
+    min-height: 667px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 7px;
+    margin-bottom: 14px;
+    padding: 30px 20px;
     border-radius: 15px;
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24), 0 1px 5px 0 rgba(0, 0, 0, 0.12)
+    background-color: #fff;
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,.24), 0 1px 5px 0 rgba(0,0,0,.12);
   }
 
   .page-title {
-    font-size: 20px;
-    line-height: 2.25;
+    font-size: 17px;
+    line-height: 3.25;
     color: #464646;
-  }
+  } */
+
+/* .elevation-2 {
+    border-radius: 15px
+  } */
+/* .page-title h1 {
+    font-size: 34px;
+    line-height: 1.32;
+    color: #000;
+    margin-bottom: 25px;
+  } */
+
+table.table thead tr {
+  height: 70px;
+}
+
+table.table thead th {
+  font-weight: bold;
+  font-size: initial;
+}
+
+table.table thead td {
+  font-weight: 400;
+  font-size: 75%;
+}
+
+table.table tbody td:last-child {
+  text-align: right;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 </style>

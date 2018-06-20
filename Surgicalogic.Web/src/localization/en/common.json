@@ -1,5 +1,6 @@
 {
-    "name": "Name",
-    "areYouSureWantToDelete": "Are you sure want to delete ?",
-    "add": "Add"
+  "actions": "Actions",
+  "name": "Name",
+  "areYouSureWantToDelete": "Are you sure want to delete ?",
+  "add": "Add"
 }

@@ -89,7 +89,7 @@ export default {
         const vm = this;
 
         if (!value) {
-          vm.$emit('visible')
+          vm.$emit('cancel');
         }
       }
     }
@@ -99,7 +99,7 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.visible = false;
+      return vm.visible;
     },
 
     save() {

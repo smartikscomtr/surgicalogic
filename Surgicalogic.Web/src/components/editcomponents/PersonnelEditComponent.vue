@@ -14,11 +14,15 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['personnelCode']" :label="$t('personnel.personnelCode')"></v-text-field>
+                <v-text-field v-model="actions['personnelCode']"
+                              :label="$t('personnel.personnelCode')">
+                </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="actions['givenName']" :label="$t('personnel.givenName')"></v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="actions['familyName']" :label="$t('personnel.familyName')"></v-text-field>
               </v-flex>
@@ -97,7 +101,7 @@ export default {
         const vm = this;
 
         if (!value) {
-          vm.$emit('visible')
+          vm.$emit('cancel');
         }
       }
     }
@@ -107,14 +111,14 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.visible = false;
+      return vm.visible;
     },
 
     save() {
       const vm = this;
 
       if (vm.edit > -1) {
-        Object.assign(vm.items[vm.edit], vm.actions);
+        // Object.assign(vm.items[vm.edit], vm.actions);
       }
 
       //Güncelleme işlemi
