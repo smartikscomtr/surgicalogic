@@ -14,16 +14,27 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['name']" :label="$t('equipments.name')"></v-text-field>
+                <v-text-field v-model="actions['name']"
+                              :label="$t('equipments.name')">
+                </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['type']" :label="$t('equipments.type')"></v-text-field>
+                <v-text-field v-model="actions['type']"
+                              :label="$t('equipments.type')">
+                </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['portable']" :label="$t('equipments.portable')"></v-text-field>
+                <v-text-field v-model="actions['portable']"
+                              :label="$t('equipments.portable')">
+                </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['description']" :label="$t('equipments.description')"></v-text-field>
+                <v-text-field v-model="actions['description']"
+                              :label="$t('equipments.description')">
+                </v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -32,8 +43,16 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+          <v-btn color="blue darken-1"
+                 flat
+                 @click.native="cancel">
+            Cancel
+          </v-btn>
+          <v-btn color="blue darken-1"
+                 flat
+                 @click.native="save">
+            Save
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -89,18 +108,13 @@ export default {
         const vm = this;
 
         if (!value) {
-          vm.$emit('visible')
+          vm.$emit('cancel');
         }
       }
     }
   },
 
   methods: {
-    cancel() {
-      const vm = this;
-
-      return vm.visible;
-    },
 
     save() {
       const vm = this;
@@ -119,7 +133,7 @@ export default {
       //   description: vm.actions.description
       // });
 
-      vm.cancel();
+      // vm.cancel();
     }
   },
 
@@ -129,7 +143,6 @@ export default {
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-
         vm.visible = false;
         //Silme İşlemi
       }

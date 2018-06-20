@@ -13,7 +13,8 @@
     <personnel-edit-component :actions="actions"
                               :visible="dialog"
                               :edit="editedIndex"
-                              :delete-value="deleteValue">
+                              :delete-value="deleteValue"
+                              @cancel="cancel">
     </personnel-edit-component>
   </div>
 </template>
@@ -84,7 +85,8 @@ export default {
         {
           text: vm.$i18n.t("common.actions"),
           sortable: false,
-          isAction: true
+          isAction: true,
+          align: "right"
         }
       ];
     },
@@ -103,6 +105,12 @@ export default {
       vm.dialog = true;
       vm.editedIndex = vm.personnels.indexOf(payload);
       vm.actions = payload;
+    },
+
+    cancel() {
+      const vm = this;
+
+      vm.dialog = false;
     },
 
     addNewItem(){

@@ -13,7 +13,8 @@
     <rooms-edit-component :actions="actions"
                           :visible="dialog"
                           :edit="editedIndex"
-                          :delete-value="deleteValue">
+                          :delete-value="deleteValue"
+                          @cancel="cancel">
     </rooms-edit-component>
   </div>
 </template>
@@ -66,7 +67,8 @@ export default {
         {
           text: vm.$i18n.t("common.actions"),
           sortable: false,
-          isAction: true
+          isAction: true,
+          align: "right"
         }
       ];
     },
@@ -95,6 +97,11 @@ export default {
       //Yeni Ekleme
     },
 
+    cancel() {
+      const vm = this;
+
+      vm.dialog = false;
+    },
 
     deleteItem(payload) {
       const vm = this;

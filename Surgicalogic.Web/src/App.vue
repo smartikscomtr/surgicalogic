@@ -133,7 +133,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     source: String
@@ -170,7 +169,7 @@ export default {
             {
               icon: "assignment",
               text: vm.$i18n.t("rooms.rooms"),
-              route: "/roomspage",
+              route: "/roomspage"
             },
             {
               icon: "announcement",
@@ -191,12 +190,12 @@ export default {
           children: [
             {
               icon: "add_comment",
-              text: "Yeni Operasyon",
+              text: "Yeni Operasyon"
               // route: "/CreatePlan"
             },
             {
               icon: "edit",
-              text: "Operayon Düzenleme",
+              text: "Operayon Düzenleme"
               // route: "/CreatePlan"
             }
           ]
@@ -208,29 +207,29 @@ export default {
           children: [
             {
               icon: "add_alarm",
-              text: "Plan Düzenlemeleri",
+              text: "Plan Düzenlemeleri"
               // route: "/CreatePlan"
             },
             {
               icon: "history",
-              text: "Plan Tarihçesi",
+              text: "Plan Tarihçesi"
               // route: "/CreatePlan"
             }
           ]
         },
         {
           icon: "domain",
-          text: "Klinik Yönetimi",
+          text: "Klinik Yönetimi"
           // route: "/eventcalendarpage"
         },
         {
           icon: "content_copy",
-          text: "Raporlar",
+          text: "Raporlar"
           // route: "/eventcalendarpage"
         },
         {
           icon: "event",
-          text: "Simülasyon",
+          text: "Simülasyon"
           // route: "/eventcalendarpage"
         },
         {
@@ -240,22 +239,22 @@ export default {
           children: [
             {
               icon: "group",
-              text: "Kullanıcılar",
+              text: "Kullanıcılar"
               // route: "/CreatePlan"
             },
             {
               icon: "chat_bubble",
-              text: "Geri Bildirim",
+              text: "Geri Bildirim"
               // route: "/CreatePlan"
             },
             {
               icon: "help",
-              text: "Yardım",
+              text: "Yardım"
               // route: "/CreatePlan"
             },
             {
               icon: "settings",
-              text: "Ayarlar",
+              text: "Ayarlar"
               // route: "/CreatePlan"
             }
           ]
@@ -348,14 +347,28 @@ export default {
     vm.isMounted = true;
   }
 };
-
 </script>
 
 <style>
-  .navigation {
-    width: 275px;
-    transform: translateX(5px);
-    margin-top: 60px;
-  }
+.navigation {
+  width: 275px;
+  transform: translateX(5px);
+  margin-top: 60px;
+  background-color: #333 !important;
+}
+.navigation .list__tile__title,
+.navigation .list__tile__action i,
+.navigation .list__group__header i {
+  color: #fff !important;
+}
+.list__group--active {
+  background-color: #262626;
+}
+.list__group--active .list__group__header--active {
+  background-color: #232222;
+}
+.grid-card .card__title {
+  padding: 0;
+}
 </style>
 
