@@ -4,4 +4,16 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Surgicalogic.Common\Surgicalogic.Common.csproj" />
+    <ProjectReference Include="..\Surgicalogic.Contracts\Surgicalogic.Contracts.csproj" />
+    <ProjectReference Include="..\Surgicalogic.Data\Surgicalogic.Data.csproj" />
+  </ItemGroup>
+
 </Project>

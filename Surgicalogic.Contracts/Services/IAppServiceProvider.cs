@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Surgicalogic.Contracts.Services
 {
-    public interface IServiceProviderService
+    public interface IAppServiceProvider
     {
         TService GetService<TService>();
     }
