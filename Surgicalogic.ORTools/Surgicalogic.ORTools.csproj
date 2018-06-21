@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Model\Operation.cs" />
     <Compile Include="Model\OperationPlan.cs" />
+    <Compile Include="Model\SurgeryPlan.cs" />
     <Compile Include="Model\ValidationResult.cs" />
     <Compile Include="OperationPlanning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
