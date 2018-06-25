@@ -20,7 +20,7 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="branchs"
+                <v-select v-model="actions['branch']"
                           :items="branchs"
                           :label="$t('branchs.branch')">
                 </v-select>
@@ -117,12 +117,12 @@ export default {
     // },
 
 
-    branchs() {
-      const vm = this;
+    // branchs() {
+    //   const vm = this;
 
-      console.log('branchs', vm.$store.state.branchsModule.branch[0].name);
-      return vm.$store.state.branchsModule.branch;
-    },
+    //   console.log('branchs', vm.$store.state.branchsModule.branch[0].name);
+    //   return vm.$store.state.branchsModule.branch;
+    // },
 
     // selectBranchs() {
     //   const vm = this;
