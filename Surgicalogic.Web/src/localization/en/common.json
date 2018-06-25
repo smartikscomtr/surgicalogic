@@ -2,5 +2,6 @@
   "actions": "Actions",
   "name": "Name",
   "areYouSureWantToDelete": "Are you sure want to delete ?",
-  "add": "Add"
+  "add": "Add",
+  "description": "Description"
 }

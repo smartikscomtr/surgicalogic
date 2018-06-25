@@ -2,5 +2,6 @@
   "actions": "Aksiyon",
   "add": "Ekle",
   "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz ?",
-  "name": "Ad"
+  "name": "Ad",
+  "description": "Açıklama"
 }

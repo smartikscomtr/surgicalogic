@@ -1,7 +1,7 @@
 {
     "name": "Adı",
     "type": "Tipi",
-    "portable" : "Taşınabilirlilik",
+    "portable" : "Taşınabilirlik",
     "description" : "Açıklama",
     "equipment": "Ekipman",
     "equipments": "Ekipmanlar",
