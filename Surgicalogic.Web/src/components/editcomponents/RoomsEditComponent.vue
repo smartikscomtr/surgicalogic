@@ -4,7 +4,7 @@
               slot="activator"
               max-width="500px">
       <v-card>
-          <v-card-title>
+        <v-card-title>
           <span class="headline">
             {{ formTitle }}
           </span>
@@ -13,17 +13,23 @@
         <v-card-text >
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['room']" :label="$t('rooms.room')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['location']" :label="$t('rooms.location')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['size']" :label="$t('rooms.size')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-select v-model="actions['equipments']" :label="$t('equipments.equipments')"></v-select>
+
+                <!-- <v-select :items="equipments"
+                          :label="$t('equipments.equipments')"
+                          multiple
+                          chips>
+                </v-select> -->
               </v-flex>
             </v-layout>
           </v-container>
@@ -41,6 +47,8 @@
 </template>
 
 <script>
+
+import _map from 'lodash/map';
 
 export default {
   props: {
@@ -69,7 +77,9 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      equipment: []
+    };
   },
 
   computed: {
@@ -92,10 +102,17 @@ export default {
           vm.$emit('cancel');
         }
       }
-    }
+    },
+
+    // equipments() {
+    //   const vm = this;
+
+    //   return vm.actions['equipments'].value.split(', ');
+    // }
   },
 
   methods: {
+
     cancel() {
       const vm = this;
 

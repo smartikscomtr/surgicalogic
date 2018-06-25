@@ -22,7 +22,6 @@
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="actions['givenName']" :label="$t('personnel.givenName')"></v-text-field>
               </v-flex>
-
               <v-flex xs12 sm6 md4>
                 <v-text-field v-model="actions['familyName']" :label="$t('personnel.familyName')"></v-text-field>
               </v-flex>

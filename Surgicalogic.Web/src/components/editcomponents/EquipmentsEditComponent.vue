@@ -20,15 +20,16 @@
               </v-flex>
 
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['type']"
-                              :label="$t('equipments.type')">
-                </v-text-field>
+                <v-select v-model="actions['type']"
+                          :label="$t('equipments.type')">
+                </v-select>
               </v-flex>
 
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['portable']"
-                              :label="$t('equipments.portable')">
-                </v-text-field>
+                <v-checkbox v-model="actions['portable']"
+                              :label="$t('equipments.portable')"
+                              color="primary">
+                </v-checkbox>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
