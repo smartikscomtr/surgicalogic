@@ -29,7 +29,7 @@ export default {
       title: vm.$i18n.t('equipments.equipments'),
       search: '',
       dialog: false,
-      actions : {},
+      actions: {},
       deleteValue: {},
       editedIndex: -1
     };
@@ -65,9 +65,8 @@ export default {
           align: "left"
         },
         {
-          text: vm.$i18n.t("common.actions"),
-          sortable: false,
           isAction: true,
+          sortable: false,
           align: "right"
         }
       ];

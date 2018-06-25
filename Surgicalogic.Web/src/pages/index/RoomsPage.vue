@@ -59,15 +59,14 @@ export default {
           align: "left"
         },
         {
-          value: "equipmentsName",
+          value: "equipments",
           text: vm.$i18n.t("equipments.equipments"),
           sortable: true,
           align: "left"
         },
         {
-          text: vm.$i18n.t("common.actions"),
-          sortable: false,
           isAction: true,
+          sortable: false,
           align: "right"
         }
       ];

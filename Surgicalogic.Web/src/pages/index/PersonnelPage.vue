@@ -83,9 +83,8 @@ export default {
           align: "left"
         },
         {
-          text: vm.$i18n.t("common.actions"),
-          sortable: false,
           isAction: true,
+          sortable: false,
           align: "right"
         }
       ];
