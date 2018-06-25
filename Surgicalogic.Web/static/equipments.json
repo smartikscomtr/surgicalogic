@@ -4,48 +4,48 @@
     "name":"Cerrahi Makas 3",
     "type":"Kompozit Malzeme",
     "description":"Paslanmaz Çelik",
-    "portable":"Taşınabilir"
+    "portable": true
   },
   {
     "id":2,
     "name":"Sedye",
     "type":"Kompozit Malzeme",
     "description":"Paslanmaz Çelik",
-    "portable":"Taşınabilir"
+    "portable": false
   },
   {
     "id":3,
     "name":"Neşter",
     "type":"Kompozit Malzeme",
     "description":"Paslanmaz Çelik",
-    "portable":"Taşınabilir"
+    "portable": true
   },
   {
     "id":4,
     "name":"Tromel",
     "type":"Kompozit Malzeme",
     "description":"Krom Nikel",
-    "portable":"Taşınabilir"
+    "portable": true
   },
   {
     "id":5,
     "name":"Oksijenli Su",
     "type":"Sarf Malzeme",
     "description":"",
-    "portable":"Taşınabilir"
+    "portable": true
   },
   {
     "id":6,
     "name":"İğne",
     "type":"Sarf Malzeme",
     "description":"",
-    "portable":"Taşınabilir"
+    "portable": false
   },
   {
     "id":7,
     "name":"İplik",
     "type":"Sarf Malzeme",
     "description":"",
-    "portable":"Taşınabilir"
+    "portable": true
   }
 ]

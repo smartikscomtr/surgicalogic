@@ -4,27 +4,27 @@
     "room":"G1",
     "location":"213",
     "size":"16m^2-1.2",
-    "equipmentsName": "Neşter, iğne"
+    "equipments": "Neşter"
 	},
 	{
 		"id":2,
 		"room":"G2",
     "location":"245",
     "size":"24m^2-1.2",
-    "equipmentId": "[5,6]"
+    "equipments": "iğne"
 	},
 	{
 		"id":3,
 		"room":"G3",
     "location":"534",
     "size":"48m^2-1.2",
-    "equipmentId": "[3,5]"
+    "equipments": "Neşter, iğne"
 	},
 	{
 		"id":4,
 		"room":"G4",
     "location":"109",
     "size":"12m^2-1.2",
-    "equipmentId":"[3]"
+    "equipments": "iğne"
   }
 ]
