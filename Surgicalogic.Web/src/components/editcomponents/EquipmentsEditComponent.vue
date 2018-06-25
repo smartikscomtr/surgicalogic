@@ -13,19 +13,24 @@
         <v-card-text >
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="actions['name']"
                               :label="$t('equipments.name')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md4>
-                <v-select v-model="actions['type']"
-                          :label="$t('equipments.type')">
+              <v-flex xs12 sm6 md12>
+                <v-select v-model="selectEquipmentTypes"
+                          :items="equipmentTypes"
+                          :label="$t('equipmenttypes.equipmentTypes')"
+                          item-text="name"
+                          item-value="id"
+                          multiple
+                          chips>
                 </v-select>
               </v-flex>
 
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md12>
                 <v-checkbox v-model="actions['portable']"
                               :label="$t('equipments.portable')"
                               color="primary">
@@ -61,6 +66,8 @@
 </template>
 
 <script>
+
+import _each from 'lodash/each';
 
 export default {
   props: {
@@ -112,14 +119,31 @@ export default {
           vm.$emit('cancel');
         }
       }
+    },
+
+    equipmentTypes() {
+      const vm = this;
+
+      return vm.$store.state.equipmentTypesModule.equipmentTypes;
+    },
+
+    selectEquipmentTypes() {
+      const vm = this;
+
+      const items = vm.actions['equipmentTypes'];
+
+      _each(items, (item) => {
+          item.name = vm.$store.state.equipmentTypesModule.equipmentTypes.find(d => d.id === item.id);
+      });
+
+      return items;
     }
   },
 
   methods: {
-
     save() {
       const vm = this;
-      
+
       // if (vm.edit > -1) {
       //   Object.assign(vm.items[vm.edit], vm.actions);
       // }
@@ -139,6 +163,8 @@ export default {
 
   created() {
     const vm = this;
+
+    vm.$store.dispatch('getEquipmentTypes');
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

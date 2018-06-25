@@ -2,49 +2,49 @@
   {
     "id":1,
     "name":"Cerrahi Makas 3",
-    "type":"Kompozit Malzeme",
+    "equipmentTypes": [{ "id" :"1", "name": "Saf Malzeme", "description": "Saf Malzeme Açıklama" }],
     "description":"Paslanmaz Çelik",
     "portable": true
   },
   {
     "id":2,
     "name":"Sedye",
-    "type":"Kompozit Malzeme",
+    "equipmentTypes":[{ "id" :"1", "name": "Saf Malzeme", "description": "Saf Malzeme Açıklama" }, { "id" :"2", "name": "Kompozit Malzeme", "description": "Kompozit Malzeme Açıklama" }],
     "description":"Paslanmaz Çelik",
     "portable": false
   },
   {
     "id":3,
     "name":"Neşter",
-    "type":"Kompozit Malzeme",
+    "equipmentTypes":[{ "id" :"2", "name": "Kompozit Malzeme", "description": "Kompozit Malzeme Açıklama" }],
     "description":"Paslanmaz Çelik",
     "portable": true
   },
   {
     "id":4,
     "name":"Tromel",
-    "type":"Kompozit Malzeme",
+    "equipmentTypes":[{ "id" :"1", "name": "Saf Malzeme", "description": "Saf Malzeme Açıklama" }, { "id" :"2", "name": "Kompozit Malzeme", "description": "Kompozit Malzeme Açıklama" }],
     "description":"Krom Nikel",
     "portable": true
   },
   {
     "id":5,
     "name":"Oksijenli Su",
-    "type":"Sarf Malzeme",
+    "equipmentTypes":[{ "id" :"1", "name": "Saf Malzeme", "description": "Saf Malzeme Açıklama" }, { "id" :"2", "name": "Kompozit Malzeme", "description": "Kompozit Malzeme Açıklama" }],
     "description":"",
     "portable": true
   },
   {
     "id":6,
     "name":"İğne",
-    "type":"Sarf Malzeme",
+    "equipmentTypes":[{ "id" :"1", "name": "Saf Malzeme", "description": "Saf Malzeme Açıklama" }, { "id" :"2", "name": "Kompozit Malzeme", "description": "Kompozit Malzeme Açıklama" }],
     "description":"",
     "portable": false
   },
   {
     "id":7,
     "name":"İplik",
-    "type":"Sarf Malzeme",
+    "equipmentTypes":[{ "id" :"1", "name": "Saf Malzeme", "description": "Saf Malzeme Açıklama" }, { "id" :"2", "name": "Kompozit Malzeme", "description": "Kompozit Malzeme Açıklama" }],
     "description":"",
     "portable": true
   }
