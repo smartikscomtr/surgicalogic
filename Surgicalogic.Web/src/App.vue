@@ -79,7 +79,7 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-toolbar color="blue darken-3"
+      <v-toolbar color="teal"
                  dark
                  app
                  :clipped-left="$vuetify.breakpoint.mdAndUp"
@@ -152,50 +152,12 @@ export default {
         {
           icon: "keyboard_arrow_up",
           "icon-alt": "keyboard_arrow_down",
-          text: "Tanımlar",
-          model: true,
-          children: [
-            {
-              icon: "storage",
-              text: "Ekipmanlar",
-              text: vm.$i18n.t("equipments.equipments"),
-              route: "/equipmentspage"
-            },
-            {
-              icon: "group",
-              text: vm.$i18n.t("personnel.personnel"),
-              route: "/personnelpage"
-            },
-            {
-              icon: "assignment",
-              text: vm.$i18n.t("rooms.rooms"),
-              route: "/roomspage"
-            },
-            {
-              icon: "announcement",
-              text: "Koşullar"
-              // route: "/CreatePlan"
-            },
-            {
-              icon: "domain",
-              text: "Klinik"
-              // route: "/CreatePlan"
-            }
-          ]
-        },
-        {
-          icon: "keyboard_arrow_up",
-          "icon-alt": "keyboard_arrow_down",
+          // model: true,
           text: "Operasyon Yönetimi",
           children: [
             {
               icon: "add_comment",
-              text: "Yeni Operasyon"
-              // route: "/CreatePlan"
-            },
-            {
-              icon: "edit",
-              text: "Operayon Düzenleme"
+              text: "Operasyonlar"
               // route: "/CreatePlan"
             }
           ]
@@ -257,6 +219,48 @@ export default {
               text: "Ayarlar"
               // route: "/CreatePlan"
             }
+          ]
+        },
+        {
+          icon: "keyboard_arrow_up",
+          "icon-alt": "keyboard_arrow_down",
+          text: "Tanımlar",
+          children: [
+            {
+              icon: "storage",
+              text: vm.$i18n.t("equipments.equipments"),
+              route: "/equipmentspage"
+            },
+            {
+              icon: "group",
+              text: vm.$i18n.t("personnel.personnel"),
+              route: "/personnelpage"
+            },
+            {
+              icon: "assignment",
+              text: vm.$i18n.t("rooms.rooms"),
+              route: "/roomspage"
+            },
+            {
+              icon: "assignment",
+              text: vm.$i18n.t("branchs.branchs"),
+              route: "/branchspage"
+            },
+            {
+              icon: "assignment",
+              text: vm.$i18n.t("equipmenttypes.equipmentTypes"),
+              route: "/equipmenttypespage"
+            },
+            {
+              icon: "announcement",
+              text: vm.$i18n.t("operationtypes.operationtypes"),
+              route: "/operationtypespage"
+            }
+            // {
+            //   icon: "domain",
+            //   text: "Klinik"
+            //   // route: "/CreatePlan"
+            // }
           ]
         }
         // {
