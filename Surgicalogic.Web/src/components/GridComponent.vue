@@ -6,7 +6,6 @@
 
         <v-container >
           <v-card-title>
-
             <v-text-field v-model="search"
                           append-icon="search"
                           label="Search"
@@ -14,11 +13,9 @@
                           hide-details>
             </v-text-field>
 
-
             <v-spacer></v-spacer>
 
-            <v-btn color="teal"
-                  class="white--text"
+            <v-btn class="white--text"
                   slot="activator"
                   @click="addNewItem">
               <v-icon color="white--text">
@@ -31,7 +28,6 @@
 
           <v-data-table :headers="headers"
                         :items="items">
-
             <template slot="items" slot-scope="props">
 
               <td v-for="(header, i) in headers"
@@ -42,11 +38,11 @@
 
                 <template v-else>
                   <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
-                    <v-icon color="#262626">edit</v-icon>
+                    <v-icon color="#232222">edit</v-icon>
                   </v-btn>
 
                   <v-btn v-if="showDelete" icon class="mx-0" @click="deleteItem(props.item)">
-                    <v-icon color="#262626">delete</v-icon>
+                    <v-icon color="#232222">delete</v-icon>
                   </v-btn>
                 </template>
               </td>
@@ -131,12 +127,16 @@ export default {
   background-color: #f8f8f8 !important;
   padding-top: 20px;
 }
-.menuable__content__active .list {
-  /* background-color: #c3c3c3; */
+.datatable__actions__range-controls {
+  margin-right: 15px;
 }
 .white--text {
   width: 158px;
   margin-right: 0;
+  background-color: #ff7107 !important;
+}
+.table__overflow {
+  margin-top: 36px;
 }
 /* .grid-card {
     min-height: 667px;
