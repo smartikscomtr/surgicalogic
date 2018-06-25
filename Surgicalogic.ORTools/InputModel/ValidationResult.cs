@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SurgicaLogic.ORTools.Model
+namespace Smartiks.Teydeb.Surgicalogic.ConsoleApp.Model
 {
     public class ValidationResult
     {

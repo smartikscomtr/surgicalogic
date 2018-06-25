@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SurgicaLogic.ORTools.Model
+namespace Smartiks.Teydeb.Surgicalogic.ConsoleApp.Model
 {
     public class OperationPlan
     {

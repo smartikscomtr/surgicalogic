@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.OutputModel;
 
-namespace Surgicalogic.Data.Utils
+namespace Surgicalogic.Data.Utilities
 {
-    public static class MapUtil
+    public static class MapUtility
     {
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
@@ -15,7 +16,7 @@ namespace Surgicalogic.Data.Utils
 
             config.CreateMap<Equipment, EquipmentModel>();
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
-            config.CreateMap<BranchType, BranchTypeModel>();
+            config.CreateMap<BranchType, BranchTypeModel>();          
 
             #endregion
 
