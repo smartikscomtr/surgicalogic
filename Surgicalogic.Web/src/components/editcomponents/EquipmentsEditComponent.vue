@@ -118,22 +118,21 @@ export default {
 
     save() {
       const vm = this;
-
-      if (vm.edit > -1) {
-        Object.assign(vm.items[vm.edit], vm.actions);
-      }
+      
+      // if (vm.edit > -1) {
+      //   Object.assign(vm.items[vm.edit], vm.actions);
+      // }
 
       //Güncelleme işlemi
 
-      // vm.$store.dispatch('updateEquipments', {
-      //   id: vm.actions.id,
-      //   name: vm.actions.name,
-      //   type: vm.actions.type,
-      //   portable: vm.actions.portable,
-      //   description: vm.actions.description
-      // });
-
-      // vm.cancel();
+      vm.$store.dispatch('updateEquipment',{
+        id : vm.actions.id,
+        name: vm.actions.name,
+        type: vm.actions.type,
+        portable: vm.actions.portable,
+        description: vm.actions.description
+      });
+       //vm.cancel();
     }
   },
 

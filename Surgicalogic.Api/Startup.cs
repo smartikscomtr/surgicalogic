@@ -31,14 +31,30 @@ namespace Surgicalogic.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataContext"), x => x.MigrationsAssembly("Surgicalogic.Data.Migrations")));
+           //DbContext service registered 
+            services.AddDbContext<DataContext>(options =>
+                 options.UseSqlServer(Configuration.GetConnectionString("DataContext"),
+                            builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
+            );
 
             services.AddSingleton<IAppServiceProvider, AppServiceProvider>();
 
+            //CROS service registerd. This methode was add besause of allow-control-access-origin 
+            services.AddCors(options =>            
+                options.AddPolicy("CorsConfig",
+                    builder =>
+                        builder.WithOrigins(Configuration["AppSettings:Http:AllowedOrigin"])
+                       .AllowAnyMethod()
+                       .AllowAnyHeader())
+            );
+
             #region StoreService Registeration
+
             services.AddTransient<IEquipmentStoreService, EquipmentStoreService>();
+            
             #endregion
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,16 +66,20 @@ namespace Surgicalogic.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            //StaticFile Allowance Initialized
+            app.UseStaticFiles();
 
-            #region Initialize Mappings
+            app.UseCors("CorsConfig");
 
+            app.UseMvc();            
+
+            //Mapping Initialized
             Mapper.Initialize(cfg =>
             {
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            #endregion
+
 
         }
 
