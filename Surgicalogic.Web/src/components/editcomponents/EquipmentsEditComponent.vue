@@ -24,10 +24,14 @@
                           :items="equipmentTypes"
                           :label="$t('equipmenttypes.equipmentTypes')"
                           item-text="name"
-                          item-value="id"
-                          multiple
-                          chips>
+                          item-value="id">
                 </v-select>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="actions['description']"
+                              :label="$t('equipments.description')">
+                </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
@@ -35,12 +39,6 @@
                               :label="$t('equipments.portable')"
                               color="primary">
                 </v-checkbox>
-              </v-flex>
-
-              <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['description']"
-                              :label="$t('equipments.description')">
-                </v-text-field>
               </v-flex>
             </v-layout>
           </v-container>

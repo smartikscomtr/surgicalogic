@@ -21,6 +21,8 @@
 
 <script>
 
+import _each from 'lodash/each';
+
 export default {
   data() {
     const vm = this;
@@ -31,7 +33,8 @@ export default {
       dialog: false,
       actions: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      equipmentTypeTitle: []
     };
   },
 
@@ -47,8 +50,8 @@ export default {
           align: "left"
         },
         {
-          value: "type",
-          text: vm.$i18n.t("equipments.type"),
+          value: "equipmentTypeTitle",
+          text: vm.$i18n.t("equipmenttypes.equipmentType"),
           sortable: true,
           align: "left"
         },
@@ -73,9 +76,7 @@ export default {
     },
 
     equipments() {
-      const vm = this;
-
-      return vm.$store.state.equipmentModule.equipments;
+      return _each(this.$store.state.equipmentModule.equipments, (item) => item.equipmentTypeTitle = item.equipmentTypes[0].name );
     }
   },
 
