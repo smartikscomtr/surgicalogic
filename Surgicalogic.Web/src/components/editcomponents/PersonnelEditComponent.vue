@@ -34,8 +34,13 @@
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['shift']" :label="$t('personnel.shift')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="actions['workType']" :label="$t('personnel.workType')"></v-text-field>
+              <v-flex xs12 sm6 md12>
+                <v-select v-model="selectWorkTypes"
+                          :items="workTypes"
+                          :label="$t('worktypes.workTypes')"
+                          item-text="name"
+                          item-value="id">
+                </v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -52,6 +57,8 @@
 </template>
 
 <script>
+
+import _each from 'lodash/each';
 
 export default {
   props: {
@@ -103,6 +110,24 @@ export default {
           vm.$emit('cancel');
         }
       }
+    },
+
+    workTypes() {
+      const vm = this;
+
+      return vm.$store.state.workTypesModule.workTypes;
+    },
+
+    selectWorkTypes() {
+      const vm = this;
+
+      const items = vm.actions['workTypes'];
+
+      _each(items, (item) => {
+          item.name = vm.$store.state.workTypesModule.workTypes.find(d => d.id === item.id);
+      });
+
+      return items;
     }
   },
 
@@ -139,6 +164,8 @@ export default {
 
   created() {
     const vm = this;
+
+    vm.$store.dispatch('getWorkTypes');
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

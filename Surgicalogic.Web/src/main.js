@@ -38,6 +38,7 @@ import OperationDividerComponent from '@/components/OperationDividerComponent';
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
 import PersonnelEditComponent from '@/components/editcomponents/PersonnelEditComponent';
 import RoomsEditComponent from '@/components/editcomponents/RoomsEditComponent';
+import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 
 Vue.component('branchs-edit-component', BranchsEditComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
@@ -48,6 +49,7 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);
 Vue.component('personnel-edit-component', PersonnelEditComponent);
 Vue.component('rooms-edit-component', RoomsEditComponent);
+Vue.component('work-types-edit-component', WorkTypesEditComponent);
 
 
 
