@@ -22,7 +22,6 @@
 <script>
 
 import _each from 'lodash/each';
-import _map from 'lodash/map';
 
 export default {
   data() {
