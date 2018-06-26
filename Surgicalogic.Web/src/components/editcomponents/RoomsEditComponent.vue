@@ -13,23 +13,25 @@
         <v-card-text >
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="actions['room']" :label="$t('rooms.room')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="actions['location']" :label="$t('rooms.location')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="actions['size']" :label="$t('rooms.size')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="actions['equipments']" :label="$t('equipments.equipments')"></v-select>
+              <v-flex xs12 sm6 md12>
 
-                <!-- <v-select :items="equipments"
-                          :label="$t('equipments.equipments')"
-                          multiple
-                          chips>
-                </v-select> -->
+              <v-select v-model="selectEquipments"
+                        :items="equipments"
+                        :label="$t('equipments.equipments')"
+                        item-text="name"
+                        item-value="id"
+                        multiple
+                        chips>
+              </v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -48,7 +50,7 @@
 
 <script>
 
-import _map from 'lodash/map';
+import _each from 'lodash/each';
 
 export default {
   props: {
@@ -78,7 +80,6 @@ export default {
 
   data() {
     return {
-      equipment: []
     };
   },
 
@@ -104,11 +105,23 @@ export default {
       }
     },
 
-    // equipments() {
-    //   const vm = this;
+    equipments() {
+      const vm = this;
 
-    //   return vm.actions['equipments'].value.split(', ');
-    // }
+      return vm.$store.state.equipmentModule.equipments;
+    },
+
+    selectEquipments() {
+      const vm = this;
+
+      const items = vm.actions['equipments'];
+
+      _each(items, (item) => {
+          item.name = vm.$store.state.equipmentModule.equipments.find(d => d.id === item.id);
+      });
+
+      return items;
+    }
   },
 
   methods: {
@@ -145,6 +158,8 @@ export default {
 
   created() {
     const vm = this;
+
+    vm.$store.dispatch("getEquipments");
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
