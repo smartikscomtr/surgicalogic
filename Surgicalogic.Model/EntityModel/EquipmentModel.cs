@@ -7,10 +7,8 @@ namespace Surgicalogic.Model.EntityModel
 {
     public class EquipmentModel : Base.EntityModel
     {
-        [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
-        [StringLength(500)]
+        
+        public string Name { get; set; }        
         public string Description { get; set; }
         public int EquipmentTypeId { get; set; }
         public bool IsPortable { get; set; }        

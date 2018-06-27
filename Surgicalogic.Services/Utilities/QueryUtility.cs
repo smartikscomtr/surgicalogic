@@ -259,7 +259,7 @@ namespace Surgicalogic.Services.Utils
                     return $"'{(likeOperator ? "%" : "")}{((string)value).Replace("'", "''")}{(likeOperator ? "%" : "")}'";
 
                 case "DateTime":
-                    return $"TO_DATE('{(DateTime)value:yyyy-MM-dd hh:mm:ss}', 'yyyy-mm-dd hh24:mi:ss')";
+                    return $"GETDATE()";
 
                 case "DBNull":
                     return "NULL";

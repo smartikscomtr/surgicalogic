@@ -9,7 +9,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BranchTypes",
+                name: "Branches",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -23,7 +23,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BranchTypes", x => x.Id);
+                    table.PrimaryKey("PK_Branches", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,7 +56,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     Width = table.Column<double>(nullable: true),
                     Height = table.Column<double>(nullable: true),
                     Length = table.Column<double>(nullable: true),
-                    DoorWidth = table.Column<double>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     CreatedBy = table.Column<int>(nullable: false),
@@ -68,7 +67,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonnelTitleTypes",
+                name: "PersonnelTitles",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -82,7 +81,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonnelTitleTypes", x => x.Id);
+                    table.PrimaryKey("PK_PersonnelTitles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -138,8 +137,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     PersonnelCode = table.Column<string>(maxLength: 100, nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    PersonnelTitleTypeId = table.Column<int>(nullable: false),
-                    BranchTypeId = table.Column<int>(nullable: false),
+                    PersonnelTitleId = table.Column<int>(nullable: false),
+                    BranchId = table.Column<int>(nullable: false),
                     WorkTypeId = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
@@ -150,9 +149,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     table.PrimaryKey("PK_Personnels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Personnels_PersonnelTitleTypes_PersonnelTitleTypeId",
-                        column: x => x.PersonnelTitleTypeId,
-                        principalTable: "PersonnelTitleTypes",
+                        name: "FK_Personnels_PersonnelTitles_PersonnelTitleId",
+                        column: x => x.PersonnelTitleId,
+                        principalTable: "PersonnelTitles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -169,9 +168,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "EquipmentTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Personnels_PersonnelTitleTypeId",
+                name: "IX_Personnels_PersonnelTitleId",
                 table: "Personnels",
-                column: "PersonnelTitleTypeId");
+                column: "PersonnelTitleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Personnels_WorkTypeId",
@@ -182,7 +181,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BranchTypes");
+                name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "Equipments");
@@ -197,7 +196,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "EquipmentTypes");
 
             migrationBuilder.DropTable(
-                name: "PersonnelTitleTypes");
+                name: "PersonnelTitles");
 
             migrationBuilder.DropTable(
                 name: "WorkTypes");

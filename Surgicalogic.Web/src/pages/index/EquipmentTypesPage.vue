@@ -10,12 +10,12 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <branchs-edit-component :actions="actions"
+    <equipment-types-edit-component :actions="actions"
                             :visible="dialog"
                             :edit="editedIndex"
                             :delete-value="deleteValue"
                             @cancel="cancel">
-    </branchs-edit-component>
+    </equipment-types-edit-component>
   </div>
 </template>
 
@@ -91,9 +91,11 @@ export default {
     },
 
     deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
+      const vm = this;      
+      vm.$store.dispatch('deleteEquipmentType', {
+        id: payload.id
+      });
+      //vm.deleteValue = payload;
     }
   },
 

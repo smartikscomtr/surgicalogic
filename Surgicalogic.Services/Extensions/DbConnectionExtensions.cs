@@ -10,7 +10,7 @@ namespace Surgicalogic.Services.Extensions
 {
     public static class DbConnectionExtensions
     {
-        public static async Task<int> ExecuteNonQueryAndGetInsertedIdAsync(this IDbConnection connection, string query, string returnValue = "id")
+        public static async Task<int> ExecuteScalarAndGetInsertedIdAsync(this IDbConnection connection, string query, string returnValue = "@Id")
         {
             if (connection is SqlConnection dbConnection)
             {
@@ -20,11 +20,27 @@ namespace Surgicalogic.Services.Extensions
 
                     var outputParameter = new SqlParameter(returnValue, SqlDbType.Decimal);
 
-                    command.Parameters.Add(outputParameter);
+                    command.Parameters.Add(outputParameter).Direction = ParameterDirection.Output;
 
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteScalarAsync();
+                }
+            }
 
-                    return int.Parse(outputParameter.Value.ToString());
+            return 0;
+        }
+        public static async Task<int> ExecuteNonQueryAndGetInsertedIdAsync(this IDbConnection connection, string query, string returnValue = "@Id")
+        {
+            if (connection is SqlConnection dbConnection)
+            {
+                using (var command = dbConnection.CreateCommand())
+                {
+                    command.CommandText = query;
+
+                    var outputParameter = new SqlParameter(returnValue, SqlDbType.Decimal);
+
+                    command.Parameters.Add(outputParameter).Direction = ParameterDirection.Output;
+
+                    return (int)await command.ExecuteNonQueryAsync();                    
                 }
             }
 

@@ -14,13 +14,16 @@ namespace Surgicalogic.Contracts.Stores
         NotSet,
 
         NameAsc,
-        NameDesc
+        NameDesc,
+
+        DescriptionAsc,
+        DescriptionDesc
     }
     public enum EquipmentTypeFilter
     {
         NotSet,
         Id,
-        Name
+        Name,
+        Description
     }
-
 }

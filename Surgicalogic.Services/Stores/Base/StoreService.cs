@@ -160,9 +160,29 @@ namespace Surgicalogic.Services.Stores.Base
 
                 var query = insertQueryBuilder.BuildQuery(entity);
 
-                var id = await connection.ExecuteNonQueryAndGetInsertedIdAsync(query);
+                return await connection.ExecuteScalarAndGetInsertedIdAsync(query);                
+            }
+            finally
+            {
+                HandleConnection(connection);
+            }
+        }
 
-                return id;
+        public virtual async Task<int> DeleteByIdAsync(int id)
+        {
+            var connection = GetConnection();
+
+            try
+            {
+                var selectQuery = $"SELECT * FROM \"{GetTableName()}\" WHERE \"Id\" = {id}";
+
+                var entity = await connection.QueryFirstOrDefaultAsync<TEntity>(selectQuery, commandType: CommandType.Text);
+
+                await BeforeDeleteAsync(connection, entity);
+
+                var deleteQuery = $"DELETE FROM \"{GetTableName()}\" WHERE \"Id\" = {id}";
+
+                return await connection.ExecuteAsync(deleteQuery, commandType: CommandType.Text);
             }
             finally
             {
@@ -178,7 +198,7 @@ namespace Surgicalogic.Services.Stores.Base
             {
                 var id = model.Id;
 
-                var selectQuery = $"SELECT * FROM \"{_schema}\".\"{GetTableName()}\" WHERE \"Id\" = {id}";
+                var selectQuery = $"SELECT * FROM \"{GetTableName()}\" WHERE \"Id\" = {id}";
 
                 var entity = await connection.QueryFirstOrDefaultAsync<TEntity>(selectQuery, commandType: CommandType.Text);
 
@@ -222,29 +242,7 @@ namespace Surgicalogic.Services.Stores.Base
             {
                 HandleConnection(connection);
             }
-        }
-
-        public virtual async Task DeleteByIdAsync(int id)
-        {
-            var connection = GetConnection();
-
-            try
-            {
-                var selectQuery = $"SELECT * FROM \"{_schema}\".\"{GetTableName()}\" WHERE \"Id\" = {id}";
-
-                var entity = await connection.QueryFirstOrDefaultAsync<TEntity>(selectQuery, commandType: CommandType.Text);
-
-                await BeforeDeleteAsync(connection, entity);
-
-                var deleteQuery = $"DELETE FROM \"{_schema}\".\"{GetTableName()}\" WHERE \"Id\" = {id}";
-
-                await connection.ExecuteAsync(deleteQuery, commandType: CommandType.Text);
-            }
-            finally
-            {
-                HandleConnection(connection);
-            }
-        }
+        }        
 
         protected virtual Task SetSearchAsync(SelectQueryBuilder query, string search)
         {

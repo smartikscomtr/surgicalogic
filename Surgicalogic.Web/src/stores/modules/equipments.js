@@ -19,7 +19,7 @@ const equipmentModule = {
           })
         },
         updateEquipment(context, payload){
-          axios.post('http://localhost:6632/Equipment/UpdateEquipment',{ equipment : payload })
+          axios.delete('http://localhost:6632/Equipment/UpdateEquipment',{ equipment : payload })
               .then(response => {
                 context.commit('updateEquipment', response.data.result) // update the Equipments in the store
           })

@@ -37,7 +37,7 @@ namespace Surgicalogic.Api
                             builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
-            services.AddSingleton<IAppServiceProvider, AppServiceProvider>();
+            services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
             //CROS service registerd. This methode was add besause of allow-control-access-origin 
             services.AddCors(options =>            
@@ -51,6 +51,7 @@ namespace Surgicalogic.Api
             #region StoreService Registeration
 
             services.AddTransient<IEquipmentStoreService, EquipmentStoreService>();
+            services.AddTransient<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
             
             #endregion
 

@@ -17,12 +17,12 @@ namespace Surgicalogic.Data.DbContexts
             : base(options)
         { }
 
-        public DbSet<BranchType> BranchTypes { get; set; }
+        public DbSet<Branch> Branches { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
         public DbSet<OperatingRoom> OperatingRooms { get; set; }
         public DbSet<Personnel> Personnels { get; set; }
-        public DbSet<PersonnelTitleType> PersonnelTitleType { get; set; }
+        public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
         public DbSet<WorkType> WorkType { get; set; }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

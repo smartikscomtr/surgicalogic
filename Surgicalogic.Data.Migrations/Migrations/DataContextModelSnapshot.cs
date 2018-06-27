@@ -19,7 +19,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Surgicalogic.Data.Entities.BranchType", b =>
+            modelBuilder.Entity("Surgicalogic.Data.Entities.Branch", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BranchTypes");
+                    b.ToTable("Branches");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Equipment", b =>
@@ -109,8 +109,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<double?>("DoorWidth");
-
                     b.Property<double?>("Height");
 
                     b.Property<double?>("Length");
@@ -138,7 +136,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BranchTypeId");
+                    b.Property<int>("BranchId");
 
                     b.Property<int>("CreatedBy");
 
@@ -160,20 +158,20 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int>("PersonnelTitleTypeId");
+                    b.Property<int>("PersonnelTitleId");
 
                     b.Property<int>("WorkTypeId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonnelTitleTypeId");
+                    b.HasIndex("PersonnelTitleId");
 
                     b.HasIndex("WorkTypeId");
 
                     b.ToTable("Personnels");
                 });
 
-            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelTitleType", b =>
+            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelTitle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +191,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PersonnelTitleTypes");
+                    b.ToTable("PersonnelTitles");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.WorkType", b =>
@@ -229,9 +227,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
                 {
-                    b.HasOne("Surgicalogic.Data.Entities.PersonnelTitleType", "GetPersonnelTitleType")
+                    b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
                         .WithMany()
-                        .HasForeignKey("PersonnelTitleTypeId")
+                        .HasForeignKey("PersonnelTitleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Surgicalogic.Data.Entities.WorkType", "WorkType")

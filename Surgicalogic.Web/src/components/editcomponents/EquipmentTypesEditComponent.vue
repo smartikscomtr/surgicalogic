@@ -15,7 +15,7 @@
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="actions['name']"
-                              :label="$t('equipmenttypes.equipmenttype')">
+                              :label="$t('equipmenttypes.equipmentType')">
                 </v-text-field>
               </v-flex>
 
@@ -83,7 +83,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.edit === -1 ? vm.$i18n.t("equipmenttypes.addEquipmentTypesInformation") : vm.$i18n.t("equipmenttypes.ediEquipmentTypesInformation");
+      return vm.edit === -1 ? vm.$i18n.t("equipmenttypes.addEquipmentTypesInformation") : vm.$i18n.t("equipmenttypes.editEquipmentTypesInformation");
     },
 
     showModal: {
@@ -107,22 +107,28 @@ export default {
     save() {
       const vm = this;
 
+    console.log(vm.edit)
+
+      //Update condition
       if (vm.edit > -1) {
-        Object.assign(vm.items[vm.edit], vm.actions);
+        
+        vm.$store.dispatch('updateEquipmentType', {
+          id: vm.actions.id,
+          name: vm.actions.name,
+          description: vm.actions.description
+        });
+
+      } else {
+        
+        vm.$store.dispatch('insertEquipmentType', {          
+          name: vm.actions.name,
+          description: vm.actions.description
+        });
+
       }
-
-      //Güncelleme işlemi
-
-      // vm.$store.dispatch('updateEquipments', {
-      //   id: vm.actions.id,
-      //   name: vm.actions.name,
-      //   type: vm.actions.type,
-      //   portable: vm.actions.portable,
-      //   description: vm.actions.description
-      // });
-
-      // vm.cancel();
+  
     }
+
   },
 
   created() {

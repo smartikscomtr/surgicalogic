@@ -12,38 +12,32 @@ using Surgicalogic.Services.QueryBuilder.Enums;
 
 namespace Surgicalogic.Services.Stores
 {
-    public class EquipmentStoreService : StoreService<Equipment, EquipmentModel, EquipmentSorting, EquipmentFilter>, IEquipmentStoreService 
+    public class EquipmentTypeStoreService : StoreService<EquipmentType, EquipmentTypeModel, EquipmentTypeSorting, EquipmentTypeFilter> , IEquipmentTypeStoreService
     {
-        public EquipmentStoreService(IConfiguration configuration) 
-            : base(configuration)
+        public EquipmentTypeStoreService(IConfiguration configuration)
+            :base(configuration)
         {
+
         }
-        protected override Task SetSortingAsync(SelectQueryBuilder query, EquipmentSorting? sorting)
+        protected override Task SetSortingAsync(SelectQueryBuilder query, EquipmentTypeSorting? sorting)
         {
             if (sorting.HasValue)
             {
                 switch (sorting.Value)
                 {
-                    case EquipmentSorting.NameAsc:
+                    case EquipmentTypeSorting.NameAsc:
                         query.OrderClause.AddStatement("main", "Name");
                         break;
 
-                    case EquipmentSorting.NameDesc:
+                    case EquipmentTypeSorting.NameDesc:
                         query.OrderClause.AddStatement("main", "Name", Sorting.Descending);
-                        break;
-
-
-                    case EquipmentSorting.IsPortableAsc:
-                        query.OrderClause.AddStatement("main", "IsPortable");
-                        break;
-
-                    case EquipmentSorting.IsPortableDesc:
-                        query.OrderClause.AddStatement("main", "IsPortable", Sorting.Descending);
                         break;
                 }
             }
 
             return Task.CompletedTask;
         }
+
+
     }
 }

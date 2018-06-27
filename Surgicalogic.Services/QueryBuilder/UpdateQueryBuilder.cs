@@ -16,7 +16,7 @@ namespace Surgicalogic.Services.QueryBuilder
         public string BuildQuery(TEntity entity)
         {
             var columnValues = QueryUtility.GetColumnValues(entity)
-                .Select(x => $"\"{x.Column}\" = {QueryUtility.GetFormattedValue(x.Value)}")
+                .Select(x => $"{x.Column} = {QueryUtility.GetFormattedValue(x.Value)}")
                 .ToArray();
 
             var sb = new StringBuilder();
@@ -32,12 +32,12 @@ namespace Surgicalogic.Services.QueryBuilder
         {
             var setValues =
                 set
-                    .Select(x => $"\"{x.Column}\" = {QueryUtility.GetFormattedValue(x.Value)}")
+                    .Select(x => $"{x.Column} = {QueryUtility.GetFormattedValue(x.Value)}")
                     .ToArray();
 
             var whereValues =
                 where
-                    .Select(x => $"\"{x.Column}\" = {QueryUtility.GetFormattedValue(x.Value)}")
+                    .Select(x => $"{x.Column} = {QueryUtility.GetFormattedValue(x.Value)}")
                     .ToArray();
 
             var sb = new StringBuilder();

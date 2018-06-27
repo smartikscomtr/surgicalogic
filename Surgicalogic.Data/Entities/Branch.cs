@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Surgicalogic.Data.Entities
 {
-    [Table("BranchTypes")]
-    public class BranchType : Entity 
+    [Table("Branches")]
+    public class Branch : Entity 
     {
         public string Name { get; set; }
         public string Description { get; set; }
