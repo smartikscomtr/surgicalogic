@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Api.Controllers
@@ -28,6 +29,23 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<EquipmentModel>> GetEquipments([FromQuery] StringFilterSortPaginationModel<EquipmentSorting, EquipmentFilter> filter = null)
         {
             return await _equipmentStoreService.GetAsync(filter);          
+        }
+
+        [Route("EquipmentType/InsertEquipmentType")]
+        [HttpPost]
+        public async Task<int> InsertEquipment([FromBody] EquipmentInputModel item)
+        {
+            var equipmentItem = new EquipmentModel()
+            {
+                Name = item.Name,
+                EquipmentTypeId = item.EquipmentTypeId,
+                IsPortable = item.IsPortable,
+                Description = item.Description,
+                CreatedDate = DateTime.Now,
+                CreatedBy = 2
+            };
+
+            return await _equipmentStoreService.InsertAsync(equipmentItem);
         }
 
         [Route("Equipment/UpdateEquipment")]

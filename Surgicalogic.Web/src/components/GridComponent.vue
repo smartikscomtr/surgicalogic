@@ -95,14 +95,14 @@ export default {
   methods: {
     addNewItem() {
       const vm = this;
-     
+
       vm.$emit("newaction");
     },
 
     editItem(item) {
       const vm = this;
 
-      vm.$emit("action", item);
+      vm.$emit("edit", item);
     },
 
     deleteItem(item) {

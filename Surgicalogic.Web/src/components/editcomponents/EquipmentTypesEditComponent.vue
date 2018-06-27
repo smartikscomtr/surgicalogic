@@ -14,13 +14,13 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="actions['name']"
+                <v-text-field v-model="editAction['name']"
                               :label="$t('equipmenttypes.equipmentType')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="actions['description']"
+                <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
@@ -51,12 +51,12 @@
 
 export default {
   props: {
-    visible: {
+    editVisible: {
       type: Boolean,
       required: false
     },
 
-    actions: {
+    editAction: {
       type: Object,
       required: false,
       default() {
@@ -69,7 +69,7 @@ export default {
       required: false
     },
 
-    edit: {
+    editIndex: {
       type: Number,
       required: false
     }
@@ -83,14 +83,14 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.edit === -1 ? vm.$i18n.t("equipmenttypes.addEquipmentTypesInformation") : vm.$i18n.t("equipmenttypes.editEquipmentTypesInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t("equipmenttypes.addEquipmentTypesInformation") : vm.$i18n.t("equipmenttypes.editEquipmentTypesInformation");
     },
 
     showModal: {
       get() {
         const vm = this;
 
-        return vm.visible;
+        return vm.editVisible;
       },
       set (value) {
         const vm = this;
@@ -103,32 +103,30 @@ export default {
   },
 
   methods: {
+    cancel() {
+      const vm = this;
+
+      vm.showModal = false;
+    },
 
     save() {
       const vm = this;
 
-    console.log(vm.edit)
-
-      //Update condition
-      if (vm.edit > -1) {
-        
+      if (vm.editIndex > -1) {
         vm.$store.dispatch('updateEquipmentType', {
-          id: vm.actions.id,
-          name: vm.actions.name,
-          description: vm.actions.description
+          id: vm.editAction.id,
+          name: vm.editAction.name,
+          description: vm.editAction.description
         });
-
       } else {
-        
-        vm.$store.dispatch('insertEquipmentType', {          
-          name: vm.actions.name,
-          description: vm.actions.description
+        vm.$store.dispatch('insertEquipmentType', {
+          name: vm.editAction.name,
+          description: vm.editAction.description
         });
-
       }
-  
-    }
 
+      vm.showModal = false;
+    }
   },
 
   created() {
@@ -137,7 +135,7 @@ export default {
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-        vm.visible = false;
+        vm.editVisible = false;
         //Silme İşlemi
       }
     });
