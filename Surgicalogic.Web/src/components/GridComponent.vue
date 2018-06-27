@@ -95,7 +95,7 @@ export default {
   methods: {
     addNewItem() {
       const vm = this;
-
+     
       vm.$emit("newaction");
     },
 
