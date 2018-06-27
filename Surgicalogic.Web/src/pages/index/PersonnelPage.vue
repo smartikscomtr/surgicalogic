@@ -21,6 +21,8 @@
 
 <script>
 
+import _each from 'lodash/each';
+
 export default {
   data() {
     const vm = this;
@@ -31,7 +33,8 @@ export default {
       dialog: false,
       actions: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      workTypeTitle: []
     };
   },
 
@@ -77,7 +80,7 @@ export default {
           align: "left"
         },
         {
-          value: "workType",
+          value: "workTypeTitle",
           text: vm.$i18n.t("personnel.workType"),
           sortable: true,
           align: "left"
@@ -91,9 +94,7 @@ export default {
     },
 
     personnels() {
-      const vm = this;
-
-      return vm.$store.state.personnelModule.personnel;
+      return _each(this.$store.state.personnelModule.personnel, (item) => item.workTypeTitle = item.workTypes[0].name );
     }
   },
 

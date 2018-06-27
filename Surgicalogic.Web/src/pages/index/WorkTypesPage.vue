@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="operationTypes"
+                    :items="workTypes"
                     :title="title"
                     :show-edit="true"
                     :show-delete="true"
@@ -10,31 +10,28 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operation-types-edit-component :actions="actions"
+    <work-types-edit-component :actions="actions"
                                     :visible="dialog"
                                     :edit="editedIndex"
                                     :delete-value="deleteValue"
                                     @cancel="cancel">
-    </operation-types-edit-component>
+    </work-types-edit-component>
   </div>
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   data() {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('operationtypes.operationtypes'),
+      title: vm.$i18n.t('worktypes.workTypes'),
       search: '',
       dialog: false,
       actions: {},
       deleteValue: {},
-      editedIndex: -1,
-      branchTitle: []
+      editedIndex: -1
     };
   },
 
@@ -45,13 +42,13 @@ export default {
       return [
         {
           value: "name",
-          text: vm.$i18n.t("operationtypes.operationtype"),
+          text: vm.$i18n.t("worktypes.workTypes"),
           sortable: true,
           align: "left"
         },
         {
-          value: "branchTitle",
-          text: vm.$i18n.t("branchs.branch"),
+          value: "description",
+          text: vm.$i18n.t("common.description"),
           sortable: true,
           align: "left"
         },
@@ -63,17 +60,19 @@ export default {
       ];
     },
 
-    operationTypes() {
-      return _each(this.$store.state.operationTypeModule.operationTypes, (item) => item.branchTitle = item.branch[0].name );
+    workTypes() {
+      const vm = this;
+
+      return vm.$store.state.workTypesModule.workTypes;
     }
   },
 
   methods: {
-    action(payload) {
+    action(payload){
       const vm = this;
 
       vm.dialog = true;
-      vm.editedIndex = vm.operationTypes.indexOf(payload);
+      vm.editedIndex = vm.workTypes.indexOf(payload);
       vm.actions = payload;
     },
 
@@ -89,7 +88,6 @@ export default {
       vm.dialog = true;
 
       //Yeni Ekleme
-
     },
 
     deleteItem(payload) {
@@ -102,7 +100,7 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getOperationTypes");
+    vm.$store.dispatch('getWorkTypes');
   }
 };
 

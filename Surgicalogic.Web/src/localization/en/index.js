@@ -12,6 +12,7 @@ import * as equipmenttypes from './equipmenttypes.json';
 import * as operationtypes from './operationtypes.json';
 import * as personnel from './personnel.json';
 import * as rooms from './rooms.json';
+import * as worktypes from './worktypes.json';
 
 export default {
     branchs,
@@ -20,5 +21,6 @@ export default {
     equipmenttypes,
     operationtypes,
     personnel,
-    rooms
+    rooms,
+    worktypes
 };

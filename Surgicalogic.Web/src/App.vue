@@ -255,6 +255,11 @@ export default {
               icon: "announcement",
               text: vm.$i18n.t("operationtypes.operationtypes"),
               route: "/operationtypespage"
+            },
+            {
+              icon: "assignment",
+              text: vm.$i18n.t("worktypes.workTypes"),
+              route: "/worktypespage"
             }
             // {
             //   icon: "domain",

@@ -20,9 +20,11 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="actions['branch']"
+                <v-select v-model="selectBranchs"
                           :items="branchs"
-                          :label="$t('branchs.branch')">
+                          :label="$t('branchs.branch')"
+                          item-text="name"
+                          items-value="id">
                 </v-select>
               </v-flex>
             </v-layout>
@@ -51,7 +53,6 @@
 <script>
 
 import _each from 'lodash/each';
-import _map from 'lodash/map';
 
 export default {
   props: {
@@ -108,51 +109,22 @@ export default {
       }
     },
 
-    // branchTitle() {
-    //   const vm = this;
+    branchs() {
+      const vm = this;
+      return vm.$store.state.branchsModule.branchs;
+    },
 
-    //   // _each(this.$store.state.operationTypeModule.operationTypes, (item) => item.branchTitle = item.branch[0].name );
-    //   console.log(vm.actions['branch']);
-    //   return vm.actions['branch'].name;
-    // },
+    selectBranchs() {
+      const vm = this;
 
+      const items = vm.actions['branch'];
 
-    // branchs() {
-    //   const vm = this;
+      _each(items, (item) => {
+          item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
+      });
 
-    //   console.log('branchs', vm.$store.state.branchsModule.branch[0].name);
-    //   return vm.$store.state.branchsModule.branch;
-    // },
-
-    // selectBranchs() {
-    //   const vm = this;
-
-    //   const items = vm.$store.state.branchModule.branch;
-
-    //   // console.log("branch", items);
-
-    //   _each(items, (item) => {
-    //       item.name = vm.$store.state.branchModule.branch.find(d => d.id === item.id);
-    //       // console.log(item.name)
-    //   });
-
-    //   return items;
-    // }
-
-    // operationTypes() {
-    //   const vm = this;
-
-    //   const items = _map(vm.$store.state.operationTypeModule.operationTypes);
-
-    //   _each(items, (item) => {
-    //     if (item.branch) {
-    //       item.branch.name = vm.$store.state.branchModule.branch.name;
-    //       console.log(item.branch.name);
-    //     }
-    //   });
-
-    //   return items;
-    // }
+      return items;
+    }
   },
 
   methods: {
@@ -180,7 +152,7 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getBranch");
+    vm.$store.dispatch("getBranchs");
 
     vm.$watch("deleteValue", (newValue, oldValue) => {
       if (newValue !== oldValue) {

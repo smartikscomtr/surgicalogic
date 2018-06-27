@@ -4,27 +4,27 @@
     "room":"G1",
     "location":"213",
     "size":"16m^2-1.2",
-    "equipments": "Neşter"
+    "equipments" : [{"id" :"1","name":"Neşter" }, {"id" :"2","name":"İğne" }]
 	},
 	{
 		"id":2,
 		"room":"G2",
     "location":"245",
     "size":"24m^2-1.2",
-    "equipments": "iğne"
+    "equipments" : [{"id" :"2","name":"İğne" }]
 	},
 	{
 		"id":3,
 		"room":"G3",
     "location":"534",
     "size":"48m^2-1.2",
-    "equipments": "Neşter, iğne"
+    "equipments" : [{"id" :"3","name":"İplik" }]
 	},
 	{
 		"id":4,
 		"room":"G4",
     "location":"109",
     "size":"12m^2-1.2",
-    "equipments": "iğne"
+    "equipments" : [{"id" :"4","name":"Şırınga" }]
   }
 ]
