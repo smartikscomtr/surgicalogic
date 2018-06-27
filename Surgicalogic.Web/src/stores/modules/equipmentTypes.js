@@ -44,8 +44,8 @@ const equipmentTypesModule = {
 
       },
       deleteEquipmentType(context, payload) {
-                
-        axios.delete('http://localhost/Surgicalogic.Api/EquipmentType/DeleteEquipmentType/' + payload.id)
+
+        axios.post('http://localhost/Surgicalogic.Api/EquipmentType/DeleteEquipmentType/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK') {
               context.commit('deleteEquipmentType', { payload }); // delete the Equipments in the store

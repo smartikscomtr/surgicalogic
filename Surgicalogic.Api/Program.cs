@@ -18,7 +18,8 @@ namespace Surgicalogic.Api
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)                
+            WebHost.CreateDefaultBuilder(args)
+                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
     }

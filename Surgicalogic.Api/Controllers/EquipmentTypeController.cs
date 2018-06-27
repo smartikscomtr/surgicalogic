@@ -45,7 +45,7 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("EquipmentType/DeleteEquipmentType/{id:int}")]
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeleteEquipmentType(int id)
         {           
             var result = await _equipmentTypeStoreService.DeleteByIdAsync(id);                        
