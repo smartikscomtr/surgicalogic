@@ -26,7 +26,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("WorkType/InsertWorkType")]
         [HttpPost]
-        public async Task<int> InsertWorkType([FromBody] WorkTypeInputModel item)
+        public async Task<ResultModel<WorkTypeModel>> InsertWorkType([FromBody] WorkTypeInputModel item)
         {
             var workTypeItem = new WorkTypeModel()
             {
@@ -57,8 +57,8 @@ namespace Surgicalogic.Api.Controllers
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                ModifiedDate = DateTime.Now,
+                ModifiedBy = 2
             };
 
             return _workTypeStoreService.UpdateAsync(workTypeItem);

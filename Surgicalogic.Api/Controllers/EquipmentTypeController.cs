@@ -27,7 +27,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("EquipmentType/InsertEquipmentType")]
         [HttpPost]
-        public async Task<int> InsertEquipmentType([FromBody] EquipmentTypeInputModel item)
+        public async Task<ResultModel<EquipmentTypeModel>> InsertEquipmentType([FromBody] EquipmentTypeInputModel item)
         {
             var equipmentTypeItem = new EquipmentTypeModel()
             {
@@ -57,8 +57,8 @@ namespace Surgicalogic.Api.Controllers
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                ModifiedDate = DateTime.Now,
+                ModifiedBy = 2
             };
             return _equipmentTypeStoreService.UpdateAsync(equipmentTypeItem);
         }

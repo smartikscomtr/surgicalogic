@@ -73,7 +73,8 @@ namespace Surgicalogic.Services.Stores.Base
                 return new ResultModel<TModel>
                 {
                     Result = await BeforeSelectResultAsync(connection, models),
-                    TotalCount = totalCount
+                    TotalCount = totalCount,
+                    Info = new Info()
                 };
             }
             finally
@@ -141,8 +142,8 @@ namespace Surgicalogic.Services.Stores.Base
                 HandleConnection(connection);
             }
         }
-
-        public virtual async Task<int> InsertAsync(TModel model)
+        
+        public virtual async Task<ResultModel<TModel>> InsertAsync(TModel model)
         {
             var connection = GetConnection();
 
@@ -160,7 +161,12 @@ namespace Surgicalogic.Services.Stores.Base
 
                 var query = insertQueryBuilder.BuildQuery(entity);
 
-                return await connection.ExecuteScalarAndGetInsertedIdAsync(query);                
+                model.Id = await connection.ExecuteScalarAndGetInsertedIdAsync(query);
+                return new ResultModel<TModel>
+                {
+                    Result = new List<TModel>() { model },
+                    Info = new Info()
+                };
             }
             finally
             {
@@ -190,7 +196,7 @@ namespace Surgicalogic.Services.Stores.Base
             }
         }
 
-        public virtual async Task UpdateAsync(TModel model)
+        public virtual async Task<ResultModel<TModel>> UpdateAsync(TModel model)
         {
             var connection = GetConnection();
 
@@ -215,6 +221,14 @@ namespace Surgicalogic.Services.Stores.Base
                 var query = updateQueryBuilder.BuildQuery(entity);
 
                 await connection.ExecuteAsync(query);
+
+                return new ResultModel<TModel>
+                {
+                    Result = new List<TModel>() { model },
+                    Info = new Info()
+
+                };
+
             }
             finally
             {

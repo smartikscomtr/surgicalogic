@@ -18,25 +18,25 @@ const equipmentModule = {
         getEquipments(context) {
           axios.get('http://localhost:6632/Equipment/GetEquipments')
               .then(response => {
-                context.commit('setEquipments', response.data.result) // set the Equipments in the store
+                if (response.data.info.succeeded == true){
+                  context.commit('setEquipments', response.data.result) // set the Equipments in the store
+                }
           })
       },
       insertEquipment(context, payload) {
 
         axios.post('http://localhost:6632/Equipment/InsertEquipment', payload)
           .then(response => {
-            if (response.statusText == 'OK') {
-              payload.id = response.data;
-
-              context.commit('insertEquipment', { item: payload }) // insert the Equipments in the store
-            }
+            if (response.data.info.succeeded == true) {
+              context.commit('insertEquipment', { item: response.data.result[0] }) // insert the Equipments in the store
+            }            
           })
 
       },
         updateEquipment(context, payload){
           axios.delete('http://localhost:6632/Equipment/UpdateEquipment',{ equipment : payload })
               .then(response => {
-                context.commit('updateEquipment', response.data.result) // update the Equipments in the store
+                //context.commit('updateEquipment', response.data.result) // update the Equipments in the store
           })
         }    
     }

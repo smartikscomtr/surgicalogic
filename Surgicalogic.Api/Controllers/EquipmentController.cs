@@ -27,9 +27,9 @@ namespace Surgicalogic.Api.Controllers
             return await _equipmentStoreService.GetAsync(filter);
         }
 
-        [Route("EquipmentType/InsertEquipmentType")]
+        [Route("Equipment/InsertEquipment")]
         [HttpPost]
-        public async Task<int> InsertEquipment([FromBody] EquipmentInputModel item)
+        public async Task<ResultModel<EquipmentModel>> InsertEquipment([FromBody] EquipmentInputModel item)
         {
             var equipmentItem = new EquipmentModel()
             {
@@ -44,21 +44,28 @@ namespace Surgicalogic.Api.Controllers
             return await _equipmentStoreService.InsertAsync(equipmentItem);
         }
 
-        [Route("Equipment/UpdateEquipment")]
-        [HttpPost("")]
-        public Task UpdateEquipments([FromQuery] StringFilterSortPaginationModel<EquipmentSorting, EquipmentFilter> filter = null)
+        [Route("Equipment/DeleteEquipment/{id:int}")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteEquipmentType(int id)
         {
-            var m = new EquipmentModel();
-            return _equipmentStoreService.UpdateAsync(m);
+            var result = await _equipmentStoreService.DeleteByIdAsync(id);
+            return Json(result);
         }
 
-
-
-        // POST api/values
-        //[HttpPost]
-        //public async Task AddEquipments([FromBody]string value)
-        //{
-        //    //await _equipmentStoreService.InsertAsync();
-        //}
+        [Route("Equipment/UpdateEquipment")]
+        [HttpPost("")]
+        public Task<ResultModel<EquipmentModel>> UpdateEquipments([FromQuery] EquipmentModel item)
+        {
+            var equipmentItem = new EquipmentModel()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                ModifiedDate = DateTime.Now,
+                ModifiedBy = 2
+            };
+            return _equipmentStoreService.UpdateAsync(equipmentItem);
+        }
+       
     }
 }

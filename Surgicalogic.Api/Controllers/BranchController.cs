@@ -26,7 +26,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Branch/InsertBranch")]
         [HttpPost]
-        public async Task<int> InsertBranch([FromBody] BranchInputModel item)
+        public async Task<ResultModel<BranchModel>> InsertBranch([FromBody] BranchInputModel item)
         {
             var branchItem = new BranchModel()
             {
@@ -49,15 +49,15 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Branch/UpdateBranch")]
         [HttpPost]
-        public Task UpdateBranch([FromBody] BranchInputModel item)
+        public Task<ResultModel<BranchModel>> UpdateBranch([FromBody] BranchInputModel item)
         {
             var branchItem = new BranchModel()
             {
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                ModifiedDate = DateTime.Now,
+                ModifiedBy = 2
             };
             return _branchStoreService.UpdateAsync(branchItem);
         }

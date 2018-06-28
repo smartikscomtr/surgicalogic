@@ -32,17 +32,17 @@ const workTypesModule = {
     getWorkTypes(context) {
       axios.get('http://localhost/Surgicalogic.Api/WorkType/GetWorkTypes')
         .then(response => {
-          context.commit('setworkTypes', response.data.result) // set the WorkType in the store
+          if (response.data.info.succeeded == true){
+            context.commit('setworkTypes', response.data.result) // set the WorkType in the store
+          }
         })
     },
 
     insertWorkType(context, payload) {
       axios.post('http://localhost/Surgicalogic.Api/WorkType/InsertWorkType', payload)
         .then(response => {
-          if (response.statusText == 'OK') {
-            payload.id = response.data;
-
-            context.commit('insertWorkType', { item: payload }) // insert the WorkType in the store
+          if (response.data.info.succeeded == true) {            
+            context.commit('insertWorkType', { item: response.data.result[0] }) // insert the WorkType in the store
           }
         })
     },

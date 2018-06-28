@@ -44,10 +44,10 @@ namespace Surgicalogic.Api
 
             #region StoreService Registeration
 
-            services.AddTransient<IBranchStoreService, BranchStoreService>();
-            services.AddTransient<IEquipmentStoreService, EquipmentStoreService>();
-            services.AddTransient<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
-            services.AddTransient<IWorkTypeStoreService, WorkTypeStoreService>();
+            services.AddScoped<IBranchStoreService, BranchStoreService>();
+            services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
+            services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
+            services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
             
             #endregion
 
