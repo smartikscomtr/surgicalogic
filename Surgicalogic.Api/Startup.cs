@@ -52,6 +52,7 @@ namespace Surgicalogic.Api
 
             services.AddTransient<IEquipmentStoreService, EquipmentStoreService>();
             services.AddTransient<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
+            services.AddTransient<IBranchStoreService, BranchStoreService>();
             
             #endregion
 
