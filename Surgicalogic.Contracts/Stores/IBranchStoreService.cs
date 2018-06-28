@@ -3,10 +3,11 @@ using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IEquipmentTypeStoreService : IStoreService<EquipmentTypeModel, EquipmentTypeSorting, EquipmentTypeFilter>
+    public interface IBranchStoreService : IStoreService<BranchModel, BranchSorting, BranchFilter>
     {
     }
-    public enum EquipmentTypeSorting
+
+    public enum BranchSorting
     {
         NotSet,
 
@@ -16,7 +17,8 @@ namespace Surgicalogic.Contracts.Stores
         DescriptionAsc,
         DescriptionDesc
     }
-    public enum EquipmentTypeFilter
+
+    public enum BranchFilter
     {
         NotSet,
         Id,

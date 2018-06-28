@@ -14,12 +14,13 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['name']"
+                <v-text-field v-model="editAction['name']"
                               :label="$t('branchs.branch')">
                 </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['description']"
+                <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
@@ -50,12 +51,12 @@
 
 export default {
   props: {
-    visible: {
+    editVisible: {
       type: Boolean,
       required: false
     },
 
-    actions: {
+    editAction: {
       type: Object,
       required: false,
       default() {
@@ -68,7 +69,7 @@ export default {
       required: false
     },
 
-    edit: {
+    editIndex: {
       type: Number,
       required: false
     }
@@ -82,14 +83,14 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.edit === -1 ? vm.$i18n.t("branchs.addBranchsInformation") : vm.$i18n.t("branchs.editBranchsInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t("branchs.addBranchsInformation") : vm.$i18n.t("branchs.editBranchsInformation");
     },
 
     showModal: {
       get() {
         const vm = this;
 
-        return vm.visible;
+        return vm.editVisible;
       },
       set (value) {
         const vm = this;
@@ -102,25 +103,29 @@ export default {
   },
 
   methods: {
+    cancel() {
+      const vm = this;
+
+      vm.showModal = false;
+    },
 
     save() {
       const vm = this;
 
-      if (vm.edit > -1) {
-        Object.assign(vm.items[vm.edit], vm.actions);
+      if (vm.editIndex > -1) {
+        vm.$store.dispatch('updateBranch', {
+          id: vm.editAction.id,
+          name: vm.editAction.name,
+          description: vm.editAction.description
+        });
+      } else {
+        vm.$store.dispatch('insertBranch', {
+          name: vm.editAction.name,
+          description: vm.editAction.description
+        });
       }
 
-      //Güncelleme işlemi
-
-      // vm.$store.dispatch('updateEquipments', {
-      //   id: vm.actions.id,
-      //   name: vm.actions.name,
-      //   type: vm.actions.type,
-      //   portable: vm.actions.portable,
-      //   description: vm.actions.description
-      // });
-
-      // vm.cancel();
+      vm.showModal = false;
     }
   },
 
@@ -130,7 +135,7 @@ export default {
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-        vm.visible = false;
+        vm.editVisible = false;
         //Silme İşlemi
       }
     });

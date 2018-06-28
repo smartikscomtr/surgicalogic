@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
-using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Model.InputModel;
+using System;
+using System.Threading.Tasks;
 
 
 namespace Surgicalogic.Api.Controllers
@@ -21,7 +17,7 @@ namespace Surgicalogic.Api.Controllers
         {
             _equipmentTypeStoreService = equipmentTypeStoreService;
         }
-        
+
         [Route("EquipmentType/GetEquipmentTypes")]
         [HttpGet]
         public async Task<ResultModel<EquipmentTypeModel>> GetEquipmentTypes([FromQuery] StringFilterSortPaginationModel<EquipmentTypeSorting, EquipmentTypeFilter> filter = null)
@@ -32,7 +28,7 @@ namespace Surgicalogic.Api.Controllers
         [Route("EquipmentType/InsertEquipmentType")]
         [HttpPost]
         public async Task<int> InsertEquipmentType([FromBody] EquipmentTypeInputModel item)
-        {            
+        {
             var equipmentTypeItem = new EquipmentTypeModel()
             {
                 Name = item.Name,
@@ -47,8 +43,8 @@ namespace Surgicalogic.Api.Controllers
         [Route("EquipmentType/DeleteEquipmentType/{id:int}")]
         [HttpPost]
         public async Task<IActionResult> DeleteEquipmentType(int id)
-        {           
-            var result = await _equipmentTypeStoreService.DeleteByIdAsync(id);                        
+        {
+            var result = await _equipmentTypeStoreService.DeleteByIdAsync(id);
             return Json(result);
         }
 

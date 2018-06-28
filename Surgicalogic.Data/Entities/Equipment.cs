@@ -1,9 +1,7 @@
 ﻿using Surgicalogic.Data.Entities.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Surgicalogic.Data.Entities
 {
@@ -22,7 +20,7 @@ namespace Surgicalogic.Data.Entities
         public int CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public virtual EquipmentType EquipmentType { get; set; }
-        
+
 
     }
 }

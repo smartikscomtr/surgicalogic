@@ -9,32 +9,29 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores
 {
-    public class EquipmentTypeStoreService : StoreService<EquipmentType, EquipmentTypeModel, EquipmentTypeSorting, EquipmentTypeFilter>, IEquipmentTypeStoreService
+    public class BranchStoreService : StoreService<Branch, BranchModel, BranchSorting, BranchFilter>, IBranchStoreService
     {
-        public EquipmentTypeStoreService(IConfiguration configuration)
-            : base(configuration)
+        public BranchStoreService(IConfiguration configuration) : base(configuration)
         {
-
         }
-        protected override Task SetSortingAsync(SelectQueryBuilder query, EquipmentTypeSorting? sorting)
+
+        protected override Task SetSortingAsync(SelectQueryBuilder query, BranchSorting? sorting)
         {
             if (sorting.HasValue)
             {
                 switch (sorting.Value)
                 {
-                    case EquipmentTypeSorting.NameAsc:
+                    case BranchSorting.NameAsc:
                         query.OrderClause.AddStatement("main", "Name");
                         break;
 
-                    case EquipmentTypeSorting.NameDesc:
-                        query.OrderClause.AddStatement("main", "Name", Sorting.Descending);
+                    case BranchSorting.NameDesc:
+                        query.OrderClause.AddStatement("main", "name", Sorting.Descending);
                         break;
                 }
             }
 
             return Task.CompletedTask;
         }
-
-
     }
 }
