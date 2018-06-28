@@ -1,21 +1,67 @@
 import axios from 'axios';
+
 const personnelModule = {
     state: {
-        personnel: []
+      personnel: []
     },
+
     mutations: {
-        setPersonnel(state, personnel) {
-            state.personnel = personnel;
-          }
-    },  
+      setPersonnels(state, personnel) {
+        state.personnel = personnel;
+      },
+
+      insertPersonnel(state, { item }) {
+        state.personnel.push(item);
+      },
+
+      deletePersonnel(state, { payload }) {
+        let index = state.personnel.findIndex((item) => {
+          return item.id === payload.id
+        });
+        state.personnel.splice(index, 1);
+      },
+
+      updatePersonnel(state, payload) {
+        //state.personnel.payload = payload;
+      }
+    },
+
     getters: {},
+
     actions: {
-        getPersonnel(context) {
-            axios.get('http://localhost:8080/static/personnel.json')
-              .then(response => {        
-                context.commit('setPersonnel', response.data) // set the Personnel in the store
-              })   
-          }
+      getPersonnels(context) {
+        axios.get('http://localhost/Surgicalogic.Api/Personnel/GetPersonnels')
+          .then(response => {
+            context.commit('setPersonnels', response.data.result) // set the Personnel in the store
+          })
+      },
+
+      insertPersonnel(context, payload) {
+        axios.post('http://localhost/Surgicalogic.Api/Personnel/InsertPersonnel', payload)
+          .then(response => {
+            if (response.statusText == 'OK') {
+              payload.id = response.data;
+
+              context.commit('insertPersonnel', { item: payload }) // insert the Personnel in the store
+            }
+          })
+      },
+
+      deletePersonnel(context, payload) {
+        axios.post('http://localhost/Surgicalogic.Api/Personnel/DeletePersonnel/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK') {
+              context.commit('deletePersonnel', { payload }); // delete the Personnel in the store
+            }
+          })
+      },
+
+      updatePersonnel(context, payload) {
+        axios.post('http://localhost/Surgicalogic.Api/Personnel/UpdatePersonnel',  payload)
+          .then(response => {
+            //context.commit('updatePersonnel', {payload}) // update the Personnel in the store
+          })
+      }
     }
   }
 

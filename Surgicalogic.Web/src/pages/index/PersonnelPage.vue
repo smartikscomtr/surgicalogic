@@ -5,14 +5,14 @@
                     :title="title"
                     :show-edit="true"
                     :show-delete="true"
-                    @action="action"
+                    @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <personnel-edit-component :actions="actions"
-                              :visible="dialog"
-                              :edit="editedIndex"
+    <personnel-edit-component :editAction="editAction"
+                              :editVisible="editDialog"
+                              :editIndex="editedIndex"
                               :delete-value="deleteValue"
                               @cancel="cancel">
     </personnel-edit-component>
@@ -30,8 +30,8 @@ export default {
     return {
       title: vm.$i18n.t('personnel.personnels'),
       search: '',
-      dialog: false,
-      actions: {},
+      editDialog: false,
+      editAction: {},
       deleteValue: {},
       editedIndex: -1,
       workTypeTitle: []
@@ -99,33 +99,34 @@ export default {
   },
 
   methods: {
-    action(payload) {
+    edit(payload){
       const vm = this;
 
-      vm.dialog = true;
-      vm.editedIndex = vm.personnels.indexOf(payload);
-      vm.actions = payload;
+      vm.editDialog = true;
+      vm.editedIndex = vm.rooms.indexOf(payload);
+      vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.dialog = false;
+      vm.editDialog = false;
     },
 
     addNewItem(){
       const vm = this;
 
-      vm.dialog = true;
+      vm.editDialog = true;
 
       //Yeni Ekleme
-
     },
 
     deleteItem(payload) {
       const vm = this;
-
-      vm.deleteValue = payload;
+      vm.$store.dispatch('deleteRoom', {
+        id: payload.id
+      });
+      //vm.deleteValue = payload;
     }
   },
 

@@ -5,14 +5,14 @@
                     :title="title"
                     :show-edit="true"
                     :show-delete="true"
-                    @action="action"
+                    @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <rooms-edit-component :actions="actions"
-                          :visible="dialog"
-                          :edit="editedIndex"
+    <rooms-edit-component :editAction="editAction"
+                          :editVisible="editDialog"
+                          :editIndex="editedIndex"
                           :delete-value="deleteValue"
                           @cancel="cancel">
     </rooms-edit-component>
@@ -31,7 +31,8 @@ export default {
       title: vm.$i18n.t('rooms.rooms'),
       search: '',
       dialog: false,
-      actions : {},
+      editDialog: false,
+      editAction: {},
       deleteValue: {},
       editedIndex: -1,
       equipmentTitle: []
@@ -81,32 +82,34 @@ export default {
   },
 
   methods: {
-    action(payload) {
+    edit(payload){
       const vm = this;
 
-      vm.dialog = true;
+      vm.editDialog = true;
       vm.editedIndex = vm.rooms.indexOf(payload);
-      vm.actions = payload;
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.dialog = true;
-
-      //Yeni Ekleme
+      vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.dialog = false;
+      vm.editDialog = false;
+    },
+
+    addNewItem(){
+      const vm = this;
+
+      vm.editDialog = true;
+
+      //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
-
-      vm.deleteValue = payload;
+      vm.$store.dispatch('deleteRoom', {
+        id: payload.id
+      });
+      //vm.deleteValue = payload;
     }
   },
 
