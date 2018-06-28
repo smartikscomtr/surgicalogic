@@ -35,7 +35,7 @@ namespace Surgicalogic.Api.Controllers
                 CreatedDate = DateTime.Now,
                 CreatedBy = 2
             };
-            
+
             return await _branchStoreService.InsertAsync(branchItem);
         }
 

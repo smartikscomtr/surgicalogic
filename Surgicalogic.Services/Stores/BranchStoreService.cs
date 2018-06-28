@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Surgicalogic.Services.Stores.Base;
+﻿using Microsoft.Extensions.Configuration;
+using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
-using Surgicalogic.Contracts.Stores;
-using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
 using Surgicalogic.Services.QueryBuilder;
 using Surgicalogic.Services.QueryBuilder.Enums;
+using Surgicalogic.Services.Stores.Base;
+using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores
 {
@@ -20,9 +17,9 @@ namespace Surgicalogic.Services.Stores
 
         protected override Task SetSortingAsync(SelectQueryBuilder query, BranchSorting? sorting)
         {
-            if(sorting.HasValue)
+            if (sorting.HasValue)
             {
-                switch(sorting.Value)
+                switch (sorting.Value)
                 {
                     case BranchSorting.NameAsc:
                         query.OrderClause.AddStatement("main", "Name");

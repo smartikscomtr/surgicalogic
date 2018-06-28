@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Surgicalogic.Contracts.Stores.Base;
+﻿using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores

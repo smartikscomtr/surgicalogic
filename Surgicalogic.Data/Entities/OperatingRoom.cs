@@ -1,9 +1,7 @@
 ﻿using Surgicalogic.Data.Entities.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Surgicalogic.Data.Entities
 {
@@ -17,7 +15,7 @@ namespace Surgicalogic.Data.Entities
         public string Location { get; set; }
         public Nullable<double> Width { get; set; }
         public Nullable<double> Height { get; set; }
-        public Nullable<double> Length { get; set; }        
+        public Nullable<double> Length { get; set; }
         public DateTime CreatedDate { get; set; }
         public Nullable<DateTime> ModifiedDate { get; set; }
         public int CreatedBy { get; set; }
