@@ -11,6 +11,7 @@ namespace Smartiks.Teydeb.Surgicalogic.ConsoleApp.OutputModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Period { get; set; }
         public Doctor Doctor { get; set; }
         public DateTime StartDate { get; set; }
     }

@@ -33,7 +33,7 @@ namespace SurgicaLogic.ORTools
 
             Solver solver = new Solver("SurgicaLogic");
 
-            var roomPeriodIndex = Enumerable.Range(1, input.Rooms.Count * input.Settings.MaximumPeriod).ToList();
+            var roomPeriodIndex = Enumerable.Range(0, input.Rooms.Count * input.Settings.MaximumPeriod).ToList();
 
             //Buraya dummy bir status daha ekliyorum. Bunu, ameliyat süresinden daha ilerideki ihtimallere atayacağım.
             var dummyIndex = input.Rooms.Count * input.Settings.MaximumPeriod + 100;
@@ -44,18 +44,6 @@ namespace SurgicaLogic.ORTools
             //AllDifferent methodunda kullanmak üzere maksimum süreyi ienumerable olarak tutan değişkenler.
             IEnumerable<int> maximumLengthList = Enumerable.Range(0, input.Settings.MaximumPeriod);
 
-            //Karar mekanizmasının davranışını tanımlıyorum. Belli durumlara göre bunu değiştirebiliyorum.
-            int variableStart = Solver.CHOOSE_MIN_SLACK_RANK_FORWARD;
-
-            //Arka arkaya ameliyatları aynı doktor yapıyorsa karar mekanizmasını bu şekilde değiştirmek daha doğru sonuç verdiği tespit edildi. 
-            for (int i = 0; i < input.Operations.Count - 1; i++)
-            {
-                if (input.Operations[i].Doctor.Id == input.Operations[i + 1].Doctor.Id)
-                {
-                    variableStart = Solver.CHOOSE_MIN_SIZE_HIGHEST_MIN;
-                }
-            }
-
             //Ameliyatların hangi oda-zaman diliminde yapılacağına karar verilen değişken. Tüm ihtimaller bu değişken içerisine tanımlanıyor.
             IntVar[,] x =
                 solver.MakeIntVarMatrix(input.Operations.Count, input.Settings.MaximumPeriod, validStatus, "x");
@@ -65,6 +53,12 @@ namespace SurgicaLogic.ORTools
 
             //Hangi zaman dilimlerine atama yaptığımı anlayabilmek için ameliyat - süre ilişkisini iki boyutlu dizi olarak tutuyorum. İki ameliyatın aynı oda-zaman dilimine atanmasını bu şekilde engelliyorum.
             int[,] preview = new int[input.Operations.Count, input.Settings.MaximumPeriod];
+
+            if (input.Operations.Any(t => t.Period > input.Settings.MaximumPeriod))
+            {
+                Console.WriteLine("Çözüm bulunamadı");
+                return result;
+            }
 
             //Ameliyatların aynı odada devam edebilmesi ve önceki bir zamana atama yapmaması için, bir sonraki değerin bir önceki değerden en az oda sayısı kadar büyük olması olması kuralı.
             for (int i = input.Operations.Count - 1; i >= 0; i--)
@@ -88,7 +82,7 @@ namespace SurgicaLogic.ORTools
                 int doctorId = input.Operations[i].Doctor.Id;
 
                 //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu değişkende tutuluyor.
-                int[] blockedTimes = GetBlockedTimes(input.Operations[i].UnavailableRooms, i, input.Rooms.Count, input.Settings.MaximumPeriod, validStatus);
+                int[] blockedTimes = GetBlockedTimes(input.Operations[i].UnavailableRooms, input.Operations[i].Id, input.Rooms, input.Settings.MaximumPeriod, validStatus);
 
                 foreach (var item in blockedTimes)
                 {
@@ -116,14 +110,11 @@ namespace SurgicaLogic.ORTools
                             for (int t = 0; t < input.Operations[i].Period; t++)
                             {
                                 //Ameliyat odası sayısı kadar dön.
-                                for (int r = 1; r < input.Rooms.Count; r++)
+                                for (int r = 0; r < input.Rooms.Count; r++)
                                 {
-                                    //Bir sonraki ameliyatın süreleri, mevcut ameliyat ile aynı süreye ve aynı indexe gelen değerlere eşit olamaz. 
-                                    //Örneğin 2 ameliyathaneli bir hastanede aynı doktorun 1. ameliyatı 3 saat sürsün. Doktor bu ameliyata karşılık gelen a1,a3,a5 değerlerinin yanı sıra diğer odalardaki aynı zaman karşılık gelen a2,a4,a6 zamanlarında da bu ameliyatı yapamaz.
-                                    solver.Add(x[i, t] % input.Rooms.Count <= r && x[i, t] % input.Rooms.Count != 0 ? x[ad, ml] != x[i, t] + (input.Rooms.Count - r) : x[0, 0] == x[0, 0]);
-                                    //Console.WriteLine("x[{0}, {1}] % {2} <= {5} && x[{0}, {1}] % {2} != 0  ? x[{3}, {4}] != x[{0}, {1}] + ({2} - {5}) : x[0, 0] == x[0, 0]", i, t, input.RoomCount, ad, ml, r);
-                                    //solver.Add(x[ad, ml] != x[i, t] + r);
-                                    //Console.WriteLine("x[{0}, {1}] != x[{2}, {3}] + {4}", ad, ml, i, t, r);
+                                    var div = solver.MakeDiv(x[i, t], input.Rooms.Count);
+                                    var prod = solver.MakeProd(div, input.Rooms.Count);
+                                    solver.Add(x[ad, ml] != solver.MakeSum(prod, r));
                                 }
                             }
                         }
@@ -196,10 +187,19 @@ namespace SurgicaLogic.ORTools
 
             // İhtimalleri bu kriterlere göre oluştur.
             DecisionBuilder db = solver.MakePhase(x_flat,
-                                                  variableStart,
+                                                  Solver.CHOOSE_MIN_SIZE_LOWEST_MIN,
                                                   Solver.ASSIGN_MIN_VALUE);
 
+
+            //IntVar objective_var = solver.MakeMin(x_flat).Var();
+
+            //var monitor = solver.MakeSimulatedAnnealing(false, objective_var, 0, 0.8);
+            //solver.MakeGenericTabuSearch();
+            //solver.MakeTabuSearch();
+            //solver.MakeGuidedLocalSearch();
+
             solver.NewSearch(db);
+
 
             int num_solutions = 0;
 
@@ -239,7 +239,6 @@ namespace SurgicaLogic.ORTools
             //    }
             //}
 
-
             while (solver.NextSolution())
             {
                 Console.WriteLine();
@@ -255,17 +254,17 @@ namespace SurgicaLogic.ORTools
                         if (j == 0)
                         {
                             int valueIndex = Array.IndexOf(validStatus, v);
-                            int room = v % input.Rooms.Count != 0 ? v % input.Rooms.Count : input.Rooms.Count;
-                            var surgeryRoom = result.Rooms[room - 1];
-                            int time = room == input.Rooms.Count ? (valueIndex + 1) / input.Rooms.Count : ((valueIndex + 1) / input.Rooms.Count) + 1;
+                            int room = v % input.Rooms.Count;
+                            var surgeryRoom = result.Rooms[room];
+                            int time = room == input.Rooms.Count - 1 ? (valueIndex + 1) / input.Rooms.Count : ((valueIndex + 1) / input.Rooms.Count) + 1;
                             var tomorrow = DateTime.Now.AddDays(1);
                             var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
                             dateTime = dateTime.AddMinutes((time - 1) * input.Settings.PeriodInMinutes);
-                            Console.Write(surgeryRoom.Id + "-" + surgeryRoom.Name + " Ameliyathanesi, Saat: " + dateTime.ToShortTimeString());
+                            Console.Write(surgeryRoom.Id + "-" + surgeryRoom.Name + " Ameliyathanesi, Başlangıç: " + dateTime.ToShortTimeString() + ", Bitiş: " + dateTime.AddMinutes(input.Operations[i].Period * input.Settings.PeriodInMinutes).ToShortTimeString());
                             //Console.Write(surgeryRoom.Id + ". Oda, Saat: " + dateTime.ToShortTimeString());
                             operationTimes.Add(dateTime.Hour);
 
-                            surgeryRoom.Operations.Add(new Operation { Id = input.Operations[i].Id, Name = input.Operations[i].Name, Doctor = input.Operations[i].Doctor, StartDate = dateTime });
+                            surgeryRoom.Operations.Add(new Operation { Id = input.Operations[i].Id, Name = input.Operations[i].Name, Doctor = input.Operations[i].Doctor, Period = input.Operations[i].Period, StartDate = dateTime });
                         }
                         roomUsage.Add(v);
                     }
@@ -287,6 +286,20 @@ namespace SurgicaLogic.ORTools
                 }
                 Console.WriteLine();
 
+                for (int i = 0; i < input.Operations.Count; i++)
+                {
+                    Console.Write("#{0,-2}: ", i + 1);
+                    for (int j = 0; j < input.Operations[i].Period; j++)
+                    {
+                        int v = (int)x[i, j].Value();
+                        Console.Write(v + " ");
+                    }
+
+                    Console.WriteLine();
+
+                }
+                Console.WriteLine();
+
                 //We just show 1 solution
                 if (num_solutions > 0)
                 {
@@ -299,7 +312,7 @@ namespace SurgicaLogic.ORTools
                 Console.WriteLine("Sonuç üretilemedi.");
             }
 
-            //Console.WriteLine("\nSolutions: {0}", solver.Solutions());
+            Console.WriteLine("\nSolutions: {0}", solver.Solutions());
             //Console.WriteLine("WallTime: {0}ms", solver.WallTime());
             //Console.WriteLine("Failures: {0}", solver.Failures());
             //Console.WriteLine("Branches: {0} ", solver.Branches());
@@ -309,28 +322,30 @@ namespace SurgicaLogic.ORTools
             return result;
 
         }
+
         private static int CalculateOverTime(int usage, int mesaiSuresi)
         {
             return usage > mesaiSuresi ? usage - mesaiSuresi : 0;
         }
 
         //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu metodda hesaplanılıyor.
-        private static int[] GetBlockedTimes(List<int> unavailableRooms, int ameliyatId, int operationRoomCount, int maximumLength, int[] validStatus)
+        private static int[] GetBlockedTimes(List<int> unavailableRooms, int ameliyatId, List<RoomInputModel> operationRooms, int maximumLength, int[] validStatus)
         {
             var result = new List<int>();
+
             if (unavailableRooms == null)
             {
                 return result.ToArray();
             }
 
-            for (int i = 0; i < operationRoomCount; i++)
+            for (int i = 0; i < operationRooms.Count; i++)
             {
                 //Bu ameliyat, bu ameliyathanede yapılamazsa
-                if (unavailableRooms.Any(t => t - 1 == i))
+                if (unavailableRooms.Any(t => t == operationRooms[i].Id))
                 {
                     for (int j = 0; j < maximumLength; j++)
                     {
-                        result.Add(validStatus[(i + (j * operationRoomCount))]);
+                        result.Add(validStatus[(i + (j * operationRooms.Count))]);
                     }
                 }
             }
@@ -340,58 +355,37 @@ namespace SurgicaLogic.ORTools
 
         public static void Main(String[] args)
         {
-            var rooms = new List<RoomInputModel>();
-
-            rooms.Add(new RoomInputModel
-            {
-                Id = 1,
-                Name = "Florence Nightingale"
-            });
-
-            rooms.Add(new RoomInputModel
-            {
-                Id = 2,
-                Name = "Hipokrat"
-            });
-
-            rooms.Add(new RoomInputModel
-            {
-                Id = 3,
-                Name = "William Harvey"
-            });
-
-            rooms.Add(new RoomInputModel
-            {
-                Id = 4,
-                Name = "Lois Pasteur"
-            });
-
-            rooms.Add(new RoomInputModel
-            {
-                Id = 5,
-                Name = "Gregor Mendel"
-            });
-
             var surgeryPlan = new DailyPlanInputModel
             {
+                Rooms = new List<RoomInputModel>(),
                 Settings = new Settings
                 {
-                    RoomsPeriod = 3,
-                    MaximumPeriod = 4,
+                    RoomsPeriod = 1,
+                    MaximumPeriod = 32,
                     StartingHour = 8,
-                    StartingMinute = 00,
-                    PeriodInMinutes = 60,
+                    StartingMinute = 10,
+                    PeriodInMinutes = 40,
                 },
-                Operations = new List<OperationInputModel>(),
-                Rooms = rooms
+                Operations = new List<OperationInputModel>()
             };
+
+            for (int i = 1; i < 4; i++)
+            {
+                surgeryPlan.Rooms.Add(new RoomInputModel
+                {
+                    Id = i,
+                    Name = string.Format("Room {0}", i)
+                });
+            }
+
+            #region Operations
 
             var operation = new OperationInputModel
             {
                 Id = 1,
-                Doctor = new Doctor { Id = 2 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 3, 4 }
+                Doctor = new Doctor { Id = 1 },
+                Period = 3,
+                UnavailableRooms = new List<int> { 2 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -400,17 +394,7 @@ namespace SurgicaLogic.ORTools
             {
                 Id = 2,
                 Doctor = new Doctor { Id = 1 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 2, 5 }
-            };
-
-            surgeryPlan.Operations.Add(operation);
-
-            operation = new OperationInputModel
-            {
-                Id = 3,
-                Doctor = new Doctor { Id = 1 },
-                Period = 1,
+                Period = 4,
                 UnavailableRooms = new List<int> { 2, 3 }
             };
 
@@ -418,10 +402,20 @@ namespace SurgicaLogic.ORTools
 
             operation = new OperationInputModel
             {
+                Id = 3,
+                Doctor = new Doctor { Id = 2 },
+                Period = 5,
+                UnavailableRooms = new List<int> { 3 }
+            };
+
+            surgeryPlan.Operations.Add(operation);
+
+            operation = new OperationInputModel
+            {
                 Id = 4,
                 Doctor = new Doctor { Id = 2 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 2, 3, 5 }
+                Period = 5,
+                UnavailableRooms = new List<int> { 1, 2 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -429,9 +423,9 @@ namespace SurgicaLogic.ORTools
             operation = new OperationInputModel
             {
                 Id = 5,
-                Doctor = new Doctor { Id = 3 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 4 }
+                Doctor = new Doctor { Id = 2 },
+                Period = 4,
+                UnavailableRooms = new List<int> { 1, 2 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -439,9 +433,9 @@ namespace SurgicaLogic.ORTools
             operation = new OperationInputModel
             {
                 Id = 6,
-                Doctor = new Doctor { Id = 3 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 3, 4, 5 }
+                Doctor = new Doctor { Id = 1 },
+                Period = 5,
+                UnavailableRooms = new List<int> { 1, 1 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -449,9 +443,9 @@ namespace SurgicaLogic.ORTools
             operation = new OperationInputModel
             {
                 Id = 7,
-                Doctor = new Doctor { Id = 5 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 2, 3, 5 }
+                Doctor = new Doctor { Id = 2 },
+                Period = 5,
+                UnavailableRooms = new List<int> { 2, 2 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -459,10 +453,9 @@ namespace SurgicaLogic.ORTools
             operation = new OperationInputModel
             {
                 Id = 8,
-                Doctor = new Doctor { Id = 5 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 2, 3 }
-
+                Doctor = new Doctor { Id = 2 },
+                Period = 4,
+                UnavailableRooms = new List<int> { 1, 2 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -470,9 +463,9 @@ namespace SurgicaLogic.ORTools
             operation = new OperationInputModel
             {
                 Id = 9,
-                Doctor = new Doctor { Id = 3 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 1, 2, 3, 5 }
+                Doctor = new Doctor { Id = 2 },
+                Period = 4,
+                UnavailableRooms = new List<int> { 3 }
             };
 
             surgeryPlan.Operations.Add(operation);
@@ -481,13 +474,15 @@ namespace SurgicaLogic.ORTools
             {
                 Id = 10,
                 Doctor = new Doctor { Id = 2 },
-                Period = 1,
-                UnavailableRooms = new List<int> { 3, 4 }
+                Period = 4,
+                UnavailableRooms = new List<int> { 3 }
             };
 
             surgeryPlan.Operations.Add(operation);
+            #endregion
 
             var result = Solve(surgeryPlan);
+
             Console.ReadKey();
         }
     }
