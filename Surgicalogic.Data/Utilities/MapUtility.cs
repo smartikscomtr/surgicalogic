@@ -16,13 +16,15 @@ namespace Surgicalogic.Data.Utilities
 
             config.CreateMap<Equipment, EquipmentModel>();
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
-            config.CreateMap<Branch, BranchModel>();          
+            config.CreateMap<Branch, BranchModel>();
 
             #endregion
 
             #region EntityModel to Entity
+
             config.CreateMap<EquipmentModel, Equipment>();
             config.CreateMap<EquipmentTypeModel, EquipmentType>();
+            config.CreateMap<BranchModel, Branch>();
 
             #endregion
         }
