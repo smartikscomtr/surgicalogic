@@ -6,8 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
+using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Utilities;
+using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Services.Services;
 using Surgicalogic.Services.Stores;
 
@@ -46,7 +48,7 @@ namespace Surgicalogic.Api
 
             services.AddScoped<IBranchStoreService, BranchStoreService>();
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
-            services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
+            services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();            
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
             
             #endregion

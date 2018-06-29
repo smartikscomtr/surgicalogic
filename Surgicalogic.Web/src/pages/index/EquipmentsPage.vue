@@ -26,19 +26,19 @@ import _each from 'lodash/each';
 export default {
   data() {
     const vm = this;
-
     return {
       title: vm.$i18n.t('equipments.equipments'),
       search: '',
       editDialog: false,
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      equipmentTypeLoadOnce : true
       //equipmentTypeTitle: []
     };
   },
 
-  computed: {
+  computed: {    
     headers() {
       const vm = this;
 
@@ -80,11 +80,18 @@ export default {
       return this.$store.state.equipmentModule.equipments;
     }
   },
-
+  watch: {
+   editDialog : function(){
+     if(this.equipmentTypeLoadOnce){
+        this.$store.dispatch('getEquipmentTypes');
+        this.equipmentTypeLoadOnce = false;
+     }
+      
+    }
+  },
   methods: {
     edit(payload){
-      const vm = this;
-
+      const vm = this;           
       vm.editDialog = true;
       vm.editedIndex = vm.equipments.indexOf(payload);
       vm.editAction = payload;
@@ -97,8 +104,7 @@ export default {
     },
 
     addNewItem(){
-      const vm = this;
-
+      const vm = this;      
       vm.editDialog = true;
 
       //Yeni Ekleme

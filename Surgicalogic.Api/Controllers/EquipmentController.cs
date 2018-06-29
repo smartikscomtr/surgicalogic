@@ -5,6 +5,7 @@ using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using System;
 using System.Threading.Tasks;
+using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -22,9 +23,9 @@ namespace Surgicalogic.Api.Controllers
         // GET api/values
         [Route("Equipment/GetEquipments")]
         [HttpGet]
-        public async Task<ResultModel<EquipmentModel>> GetEquipments([FromQuery] StringFilterSortPaginationModel<EquipmentSorting, EquipmentFilter> filter = null)
+        public async Task<ResultModel<EquipmentOutputModel>> GetEquipments([FromQuery] StringFilterSortPaginationModel<EquipmentSorting, EquipmentFilter> filter = null)
         {
-            return await _equipmentStoreService.GetAsync(filter);
+            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>(filter);
         }
 
         [Route("Equipment/InsertEquipment")]

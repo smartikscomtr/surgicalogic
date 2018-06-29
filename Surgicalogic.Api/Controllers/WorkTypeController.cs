@@ -3,6 +3,7 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Model.OutputModel;
 using System;
 using System.Threading.Tasks;
 
@@ -19,9 +20,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("WorkType/GetWorkTypes")]
         [HttpGet]
-        public async Task<ResultModel<WorkTypeModel>> GetWorkTypes([FromQuery] StringFilterSortPaginationModel<WorkTypeSorting, WorkTypeFilter> filter = null)
+        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes([FromQuery] StringFilterSortPaginationModel<WorkTypeSorting, WorkTypeFilter> filter = null)
         {
-            return await _workTypeStoreService.GetAsync(filter);
+            return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>(filter);
         }
 
         [Route("WorkType/InsertWorkType")]

@@ -109,7 +109,7 @@ export default {
     showModal: {
       get() {
         const vm = this;
-
+        
         return vm.editVisible;
       },
       set (value) {
@@ -138,8 +138,7 @@ export default {
 
     //   return items;
     // }
-  },
-
+  },  
   methods: {
     save() {
       const vm = this;
@@ -169,7 +168,7 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch('getEquipmentTypes');
+    
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

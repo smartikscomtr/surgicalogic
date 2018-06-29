@@ -1,11 +1,20 @@
-﻿namespace Surgicalogic.Model.OutputModel
+﻿
+
+using Surgicalogic.Model.EntityModel;
+
+namespace Surgicalogic.Model.OutputModel
 {
     public class EquipmentOutputModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int EquipmentTypeId { get; set; }
-        public int EquipmentTypeName { get; set; }
         public bool IsPortable { get; set; }
+        
+        //public int EquipmentTypeName { get; set; }
+
+
+        //public EquipmentTypeOutputModel EquipmentTypeModel { get; set;}
     }
 }

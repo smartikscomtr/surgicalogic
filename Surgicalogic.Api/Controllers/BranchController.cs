@@ -3,6 +3,7 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Model.OutputModel;
 using System;
 using System.Threading.Tasks;
 
@@ -19,9 +20,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Branch/GetBranchs")]
         [HttpGet]
-        public async Task<ResultModel<BranchModel>> GetBranch([FromQuery] StringFilterSortPaginationModel<BranchSorting, BranchFilter> filter = null)
+        public async Task<ResultModel<BranchOutputModel>> GetBranch([FromQuery] StringFilterSortPaginationModel<BranchSorting, BranchFilter> filter = null)
         {
-            return await _branchStoreService.GetAsync(filter);
+            return await _branchStoreService.GetAsync<BranchOutputModel>(filter);
         }
 
         [Route("Branch/InsertBranch")]

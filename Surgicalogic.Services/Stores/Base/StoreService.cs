@@ -1,21 +1,19 @@
 ﻿using AutoMapper;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using Surgicalogic.Common.Extensions;
 using Surgicalogic.Data.Entities.Base;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel.Base;
-using Surgicalogic.Services.QueryBuilder;
-using Surgicalogic.Services.QueryBuilder.Statements;
-using Surgicalogic.Services.QueryBuilder.Clauses;
-using Surgicalogic.Common.Extensions;
 using Surgicalogic.Services.Extensions;
-using System;
+using Surgicalogic.Services.QueryBuilder;
+using Surgicalogic.Services.QueryBuilder.Clauses;
+using Surgicalogic.Services.QueryBuilder.Statements;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores.Base
 {
@@ -83,6 +81,18 @@ namespace Surgicalogic.Services.Stores.Base
             }
         }
 
+        public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(FilterSortPaginationModel<TSorting, TFilter> filterSortPagination)            
+        {
+            var result = await GetAsync(filterSortPagination);
+
+            return new ResultModel<TOutputModel>
+            {
+                TotalCount = result.TotalCount,
+                Result = Mapper.Map<IEnumerable<TOutputModel>>(result.Result),
+                Info = result.Info
+            };
+        }
+
         public virtual async Task<TModel> FirstOrDefaultAsync(FilterSortPaginationModel<TSorting, TFilter> filterSortPagination)
         {
             var connection = GetConnection();
@@ -101,7 +111,7 @@ namespace Surgicalogic.Services.Stores.Base
 
                 if (entity == null)
                 {
-                    return null;
+                    //return null;
                 }
 
                 var model = Mapper.Map<TEntity, TModel>(entity);
@@ -128,7 +138,7 @@ namespace Surgicalogic.Services.Stores.Base
 
                 if (entity == null)
                 {
-                    return null;
+                    //return null;
                 }
 
                 var model = Mapper.Map<TEntity, TModel>(entity);
@@ -142,7 +152,7 @@ namespace Surgicalogic.Services.Stores.Base
                 HandleConnection(connection);
             }
         }
-        
+
         public virtual async Task<ResultModel<TModel>> InsertAsync(TModel model)
         {
             var connection = GetConnection();
@@ -164,7 +174,7 @@ namespace Surgicalogic.Services.Stores.Base
                 model.Id = await connection.ExecuteScalarAndGetInsertedIdAsync(query);
                 return new ResultModel<TModel>
                 {
-                    Result =  model,
+                    Result = model,
                     Info = new Info()
                 };
             }
@@ -256,7 +266,7 @@ namespace Surgicalogic.Services.Stores.Base
             {
                 HandleConnection(connection);
             }
-        }        
+        }
 
         protected virtual Task SetSearchAsync(SelectQueryBuilder query, string search)
         {

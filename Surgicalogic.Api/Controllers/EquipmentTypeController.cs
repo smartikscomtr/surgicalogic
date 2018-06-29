@@ -3,6 +3,7 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Model.OutputModel;
 using System;
 using System.Threading.Tasks;
 
@@ -20,9 +21,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("EquipmentType/GetEquipmentTypes")]
         [HttpGet]
-        public async Task<ResultModel<EquipmentTypeModel>> GetEquipmentTypes([FromQuery] StringFilterSortPaginationModel<EquipmentTypeSorting, EquipmentTypeFilter> filter = null)
+        public async Task<ResultModel<EquipmentTypeOutputModel>> GetEquipmentTypes([FromQuery] StringFilterSortPaginationModel<EquipmentTypeSorting, EquipmentTypeFilter> filter = null)
         {
-            return await _equipmentTypeStoreService.GetAsync(filter);
+            return await _equipmentTypeStoreService.GetAsync<EquipmentTypeOutputModel>(filter);
         }
 
         [Route("EquipmentType/InsertEquipmentType")]
