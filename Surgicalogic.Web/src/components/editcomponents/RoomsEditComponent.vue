@@ -6,11 +6,11 @@
       <v-card>
         <v-card-title>
           <div class="headline-wrap">
-            <v-btn class="backBtn"
+            <a class="backBtn"
                   flat
-                  @click.native="cancel">
+                   @click="cancel">
               <v-icon>arrow_back</v-icon>
-            </v-btn>
+            </a>
 
             <span class="text">
               {{ formTitle }}
@@ -28,24 +28,32 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['room']" :label="$t('rooms.room')"></v-text-field>
+                <v-text-field v-model="editAction['room']"
+                              :label="$t('rooms.room')">
+                </v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['location']" :label="$t('rooms.location')"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['size']" :label="$t('rooms.size')"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md12>
 
-              <v-select v-model="selectEquipments"
-                        :items="equipments"
-                        :label="$t('equipments.equipments')"
-                        item-text="name"
-                        item-value="id"
-                        multiple
-                        chips>
-              </v-select>
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['location']"
+                              :label="$t('rooms.location')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['size']"
+                              :label="$t('rooms.size')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-select v-model="selectEquipments"
+                          :items="equipments"
+                          :label="$t('equipments.equipments')"
+                          item-text="name"
+                          item-value="id"
+                          multiple
+                          chips>
+                </v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -61,12 +69,12 @@ import _each from 'lodash/each';
 
 export default {
   props: {
-    visible: {
+    editVisible: {
       type: Boolean,
       required: false
     },
 
-    actions: {
+    editAction: {
       type: Object,
       required: false,
       default() {
@@ -79,35 +87,34 @@ export default {
       required: false
     },
 
-    edit: {
+    editIndex: {
       type: Number,
       required: false
     }
   },
 
   data() {
-    return {
-    };
+    return {};
   },
 
   computed: {
     formTitle() {
       const vm = this;
 
-      return vm.edit === -1 ? vm.$t('rooms.addRoomInformation') : vm.$t('rooms.editRoomInformation');
+      return vm.editIndex === -1 ? vm.$t('rooms.addRoomInformation') : vm.$t('rooms.editRoomInformation');
     },
 
     showModal: {
       get() {
         const vm = this;
 
-        return vm.visible;
+        return vm.editVisible;
       },
-      set (value) {
+      set(value) {
         const vm = this;
 
         if (!value) {
-          vm.$emit('cancel');
+          vm.$emit("cancel");
         }
       }
     },
@@ -132,34 +139,40 @@ export default {
   },
 
   methods: {
-
     cancel() {
       const vm = this;
 
-      return vm.visible;
+      vm.showModal = false;
     },
 
     save() {
       const vm = this;
 
-      if (vm.edit > -1) {
-        Object.assign(vm.items[vm.edit], vm.actions);
+      if (vm.editIndex > -1) {
+        vm.$store.dispatch("updateBranch", {
+          id: vm.actions.id,
+          personnelCode: vm.editAction.personnelCode,
+          givenName: vm.editAction.givenName,
+          familyName: vm.editAction.familyName,
+          tasks: vm.editAction.tasks,
+          branch: vm.editAction.branch,
+          shift: vm.editAction.shift,
+          workType: vm.editAction.workType
+        });
+      } else {
+        vm.$store.dispatch("insertBranch", {
+          id: vm.actions.id,
+          personnelCode: vm.editAction.personnelCode,
+          givenName: vm.editAction.givenName,
+          familyName: vm.editAction.familyName,
+          tasks: vm.editAction.tasks,
+          branch: vm.editAction.branch,
+          shift: vm.editAction.shift,
+          workType: vm.editAction.workType
+        });
       }
 
-      //Güncelleme işlemi
-
-      // vm.$store.dispatch('updatePersonnel', {
-      //   id: vm.actions.id,
-      //   personnelCode: vm.actions.personnelCode,
-      //   givenName: vm.actions.givenName,
-      //   familyName: vm.actions.familyName,
-      //   tasks: vm.actions.tasks,
-      //   branch: vm.actions.branch,
-      //   shift: vm.actions.shift,
-      //   workType: vm.actions.workType
-      // });
-
-      vm.cancel();
+      vm.showModal = false;
     }
   },
 
@@ -172,7 +185,7 @@ export default {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
 
-        vm.visible = false;
+        vm.editVisible = false;
         //Silme İşlemi
       }
     });

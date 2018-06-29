@@ -173,4 +173,65 @@ table.table tbody td:last-child {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+.headline-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.card {
+  border-radius: 8px;
+  background-color: #fff;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 20px 50px;
+}
+.card__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.text {
+  flex: 1;
+  font-size: 18px;
+  color: #000;
+  margin: 0;
+}
+.btnSave {
+  padding: 0;
+  margin: 0;
+  min-width: 140px;
+  background-color: #ff7107 !important;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 15px;
+}
+.btnSave .btn__content{ color: #fff;}
+.headline-wrap .btn--active .btn__content:before,
+.headline-wrap .btn:focus .btn__content:before,
+.headline-wrap .btn:hover .btn__content:before {
+  background-color: transparent;
+}
+.headline-wrap .backBtn {
+  position: absolute;
+  left: 20px;
+}
+.headline-wrap .backBtn i {
+  color: #ff7107 !important;
+}
+.label {
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: left;
+  color: #464646;
+}
+.value {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  color: #000;
+}
+
 </style>

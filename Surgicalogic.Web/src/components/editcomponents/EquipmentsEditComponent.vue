@@ -5,9 +5,23 @@
               max-width="500px">
       <v-card>
         <v-card-title>
-          <span class="headline">
-            {{ formTitle }}
-          </span>
+          <div class="headline-wrap">
+            <a class="backBtn"
+                  flat
+                   @click="cancel">
+              <v-icon>arrow_back</v-icon>
+            </a>
+
+            <span class="text">
+              {{ formTitle }}
+            </span>
+
+            <v-btn class="btnSave"
+                  flat
+                  @click.native="save">
+              Save
+            </v-btn>
+          </div>
         </v-card-title>
 
         <v-card-text >
@@ -43,21 +57,6 @@
             </v-layout>
           </v-container>
         </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn color="blue darken-1"
-                 flat
-                 @click.native="cancel">
-            Cancel
-          </v-btn>
-          <v-btn color="blue darken-1"
-                 flat
-                 @click.native="save">
-            Save
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -109,7 +108,7 @@ export default {
     showModal: {
       get() {
         const vm = this;
-        
+
         return vm.editVisible;
       },
       set (value) {
@@ -138,37 +137,41 @@ export default {
 
     //   return items;
     // }
-  },  
+  },
   methods: {
+    cancel() {
+      const vm = this;
+
+      vm.showModal = false;
+    },
+
     save() {
       const vm = this;
 
       if (vm.editIndex > -1) {
-        
           vm.$store.dispatch('updateEquipment',{
             id : vm.editAction.id,
             name: vm.editAction.name,
             description: vm.editAction.description,
             isPortable: vm.editAction.isPortable,
-            equipmentTypeId: vm.selectEquipmentType            
-          });
-
-      }else{
-          vm.$store.dispatch('insertEquipment', {
-            name: vm.editAction.name,
-            description: vm.editAction.description,
-            isPortable: vm.editAction.isPortable,
             equipmentTypeId: vm.selectEquipmentType
           });
+
+      } else {
+        vm.$store.dispatch('insertEquipment', {
+          name: vm.editAction.name,
+          description: vm.editAction.description,
+          isPortable: vm.editAction.isPortable,
+          equipmentTypeId: vm.selectEquipmentType
+        });
       }
 
+      vm.showModal = false;
     }
   },
 
   created() {
     const vm = this;
-
-    
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

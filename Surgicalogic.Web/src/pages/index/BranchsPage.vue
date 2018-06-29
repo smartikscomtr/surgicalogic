@@ -109,9 +109,10 @@ export default {
 
     deleteItem(payload) {
       const vm = this;
-      vm.$store.dispatch('deleteBranch', {
-        id: payload.id
-      });
+
+        vm.$store.dispatch('deleteBranch', {
+          id: payload.id
+        });
       //vm.deleteValue = payload;
     }
   },

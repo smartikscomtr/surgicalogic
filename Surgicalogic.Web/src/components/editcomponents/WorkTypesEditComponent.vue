@@ -6,11 +6,11 @@
       <v-card>
         <v-card-title>
           <div class="headline-wrap">
-            <v-btn class="backBtn"
+            <a class="backBtn"
                   flat
-                  @click.native="cancel">
+                   @click="cancel">
               <v-icon>arrow_back</v-icon>
-            </v-btn>
+            </a>
 
             <span class="text">
               {{ formTitle }}

@@ -3,16 +3,18 @@
     <grid-component :headers="headers"
                     :items="operationTypes"
                     :title="title"
+                    :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
-                    @action="action"
+                    @detail="detail"
+                    @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operation-types-edit-component :actions="actions"
-                                    :visible="dialog"
-                                    :edit="editedIndex"
+    <operation-types-edit-component :editAction="editAction"
+                                    :editVisible="editDialog"
+                                    :editIndex="editedIndex"
                                     :delete-value="deleteValue"
                                     @cancel="cancel">
     </operation-types-edit-component>
@@ -30,8 +32,10 @@ export default {
     return {
       title: vm.$i18n.t('operationtypes.operationtypes'),
       search: '',
-      dialog: false,
-      actions: {},
+      detailDialog: false,
+      editDialog: false,
+      detailAction: {},
+      editAction: {},
       deleteValue: {},
       editedIndex: -1,
       branchTitle: []
@@ -69,33 +73,43 @@ export default {
   },
 
   methods: {
-    action(payload) {
+    detail(payload) {
       const vm = this;
 
-      vm.dialog = true;
+      vm.detailDialog = true;
+      vm.detailAction = payload;
+    },
+
+    edit(payload){
+      const vm = this;
+
+      vm.editDialog = true;
       vm.editedIndex = vm.operationTypes.indexOf(payload);
-      vm.actions = payload;
+      vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.dialog = false;
+      vm.detailDialog = false;
+      vm.editDialog = false;
     },
 
     addNewItem(){
       const vm = this;
 
-      vm.dialog = true;
+      vm.editDialog = true;
 
       //Yeni Ekleme
-
     },
 
     deleteItem(payload) {
       const vm = this;
 
-      vm.deleteValue = payload;
+        vm.$store.dispatch('deleteOperationType', {
+          id: payload.id
+        });
+      //vm.deleteValue = payload;
     }
   },
 
