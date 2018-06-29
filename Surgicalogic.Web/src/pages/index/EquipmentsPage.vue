@@ -3,8 +3,10 @@
     <grid-component :headers="headers"
                     :items="equipments"
                     :title="title"
+                    :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -29,16 +31,17 @@ export default {
     return {
       title: vm.$i18n.t('equipments.equipments'),
       search: '',
+      detailDialog: false,
       editDialog: false,
+      detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1,
-      equipmentTypeLoadOnce : true
+      editedIndex: -1
       //equipmentTypeTitle: []
     };
   },
 
-  computed: {    
+  computed: {
     headers() {
       const vm = this;
 
@@ -86,12 +89,20 @@ export default {
         this.$store.dispatch('getAllEquipmentTypes');
         this.equipmentTypeLoadOnce = false;
      }
-      
+
     }
   },
   methods: {
+    detail(payload) {
+      const vm = this;
+
+      vm.detailDialog = true;
+      vm.detailAction = payload;
+    },
+
     edit(payload){
-      const vm = this;           
+      const vm = this;
+
       vm.editDialog = true;
       vm.editedIndex = vm.equipments.indexOf(payload);
       vm.editAction = payload;
@@ -100,11 +111,13 @@ export default {
     cancel() {
       const vm = this;
 
+      vm.detailDialog = false;
       vm.editDialog = false;
     },
 
     addNewItem(){
-      const vm = this;      
+      const vm = this;
+
       vm.editDialog = true;
 
       //Yeni Ekleme
@@ -112,6 +125,7 @@ export default {
 
     deleteItem(payload) {
       const vm = this;
+
       vm.$store.dispatch('deleteEquipment', {
         id: payload.id
       });

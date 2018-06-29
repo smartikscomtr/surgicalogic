@@ -3,8 +3,10 @@
     <grid-component :headers="headers"
                     :items="personnels"
                     :title="title"
+                    :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -30,7 +32,9 @@ export default {
     return {
       title: vm.$i18n.t('personnel.personnels'),
       search: '',
+      detailDialog: false,
       editDialog: false,
+      detailAction: {},
       editAction: {},
       deleteValue: {},
       editedIndex: -1,
@@ -99,17 +103,25 @@ export default {
   },
 
   methods: {
+    detail(payload) {
+      const vm = this;
+
+      vm.detailDialog = true;
+      vm.detailAction = payload;
+    },
+
     edit(payload){
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.rooms.indexOf(payload);
+      vm.editedIndex = vm.personnel.indexOf(payload);
       vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
+      vm.detailDialog = false;
       vm.editDialog = false;
     },
 
@@ -123,13 +135,13 @@ export default {
 
     deleteItem(payload) {
       const vm = this;
-      vm.$store.dispatch('deleteRoom', {
-        id: payload.id
-      });
+
+        vm.$store.dispatch('deletePersonnel', {
+          id: payload.id
+        });
       //vm.deleteValue = payload;
     }
   },
-
   created() {
     const vm = this;
 

@@ -5,9 +5,23 @@
               max-width="500px">
       <v-card>
         <v-card-title>
-          <span class="headline">
-            {{ formTitle }}
-          </span>
+          <div class="headline-wrap">
+            <a class="backBtn"
+                  flat
+                   @click="cancel">
+              <v-icon>arrow_back</v-icon>
+            </a>
+
+            <span class="text">
+              {{ formTitle }}
+            </span>
+
+            <v-btn class="btnSave"
+                  flat
+                  @click.native="save">
+              Save
+            </v-btn>
+          </div>
         </v-card-title>
 
         <v-card-text>
@@ -45,12 +59,6 @@
             </v-layout>
           </v-container>
         </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -62,12 +70,12 @@ import _each from 'lodash/each';
 
 export default {
   props: {
-    visible: {
+    editVisible: {
       type: Boolean,
       required: false
     },
 
-    actions: {
+    editAction: {
       type: Object,
       required: false,
       default() {
@@ -80,7 +88,7 @@ export default {
       required: false
     },
 
-    edit: {
+    editIndex: {
       type: Number,
       required: false
     }
@@ -101,13 +109,13 @@ export default {
       get() {
         const vm = this;
 
-        return vm.visible;
+        return vm.editVisible;
       },
-      set (value) {
+      set(value) {
         const vm = this;
 
         if (!value) {
-          vm.$emit('cancel');
+          vm.$emit("cancel");
         }
       }
     },
@@ -135,30 +143,37 @@ export default {
     cancel() {
       const vm = this;
 
-      return vm.visible;
+      vm.showModal = false;
     },
 
     save() {
       const vm = this;
 
-      if (vm.edit > -1) {
-        // Object.assign(vm.items[vm.edit], vm.actions);
+      if (vm.editIndex > -1) {
+        vm.$store.dispatch("updateBranch", {
+          id: vm.editAction.id,
+          personnelCode: vm.editAction.personnelCode,
+          givenName: vm.editAction.givenName,
+          familyName: vm.editAction.familyName,
+          tasks: vm.editAction.tasks,
+          branch: vm.editAction.branch,
+          shift: vm.editAction.shift,
+          workType: vm.editAction.workType
+        });
+      } else {
+        vm.$store.dispatch("insertBranch", {
+          id: vm.editAction.id,
+          personnelCode: vm.editAction.personnelCode,
+          givenName: vm.editAction.givenName,
+          familyName: vm.editAction.familyName,
+          tasks: vm.editAction.tasks,
+          branch: vm.editAction.branch,
+          shift: vm.editAction.shift,
+          workType: vm.editAction.workType
+        });
       }
 
-      //Güncelleme işlemi
-
-      // vm.$store.dispatch('updatePersonnel', {
-      //   id: vm.actions.id,
-      //   personnelCode: vm.actions.personnelCode,
-      //   givenName: vm.actions.givenName,
-      //   familyName: vm.actions.familyName,
-      //   tasks: vm.actions.tasks,
-      //   branch: vm.actions.branch,
-      //   shift: vm.actions.shift,
-      //   workType: vm.actions.workType
-      // });
-
-      vm.cancel();
+      vm.showModal = false;
     }
   },
 
@@ -170,6 +185,7 @@ export default {
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
+        vm.editVisible = false;
 
         //Silme İşlemi
       }
