@@ -71,7 +71,7 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.Fail(); 
                     }
                 }
             }
@@ -1155,7 +1155,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 3, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 16, 50, 0) });
             operations.Add(new OperationOutputModel { Id = 7, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 20, 10, 0) });
             operations.Add(new OperationOutputModel { Id = 9, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 23, 30, 0) });
-            operations.Add(new OperationOutputModel { Id = 10, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.AddDays(1).Day, 02, 10, 0) });
+            operations.Add(new OperationOutputModel { Id = 10, StartDate = new DateTime(tomorrow.AddDays(1).Year, tomorrow.AddDays(1).Month, tomorrow.AddDays(1).Day, 02, 10, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 1, Operations = operations });
             operations = new List<OperationOutputModel>();
             operations.Add(new OperationOutputModel { Id = 6, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 12, 50, 0) });
