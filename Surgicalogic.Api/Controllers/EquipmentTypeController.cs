@@ -50,7 +50,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("EquipmentType/UpdateEquipmentType")]
         [HttpPost]
-        public Task UpdateEquipmentType([FromBody] EquipmentTypeInputModel item)
+        public Task<ResultModel<EquipmentTypeModel>> UpdateEquipmentType([FromBody] EquipmentTypeInputModel item)
         {
             var equipmentTypeItem = new EquipmentTypeModel()
             {

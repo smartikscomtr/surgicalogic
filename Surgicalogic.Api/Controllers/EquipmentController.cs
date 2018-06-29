@@ -34,9 +34,9 @@ namespace Surgicalogic.Api.Controllers
             var equipmentItem = new EquipmentModel()
             {
                 Name = item.Name,
-                EquipmentTypeId = item.EquipmentTypeId,
-                IsPortable = item.IsPortable,
                 Description = item.Description,
+                IsPortable = item.IsPortable,
+                EquipmentTypeId = item.EquipmentTypeId,                                
                 CreatedDate = DateTime.Now,
                 CreatedBy = 2
             };
@@ -53,14 +53,16 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("Equipment/UpdateEquipment")]
-        [HttpPost("")]
-        public Task<ResultModel<EquipmentModel>> UpdateEquipments([FromQuery] EquipmentModel item)
+        [HttpPost]
+        public Task<ResultModel<EquipmentModel>> UpdateEquipments([FromBody] EquipmentInputModel item)
         {
             var equipmentItem = new EquipmentModel()
             {
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
+                IsPortable = item.IsPortable,
+                EquipmentTypeId = item.EquipmentTypeId,
                 ModifiedDate = DateTime.Now,
                 ModifiedBy = 2
             };
