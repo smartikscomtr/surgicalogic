@@ -37,6 +37,9 @@
                 </template>
 
                 <template v-else>
+                  <v-btn v-if="showDetail" icon class="mx-0" @click="detailItem(props.item)">
+                    <v-icon color="#232222">visibility</v-icon>
+                  </v-btn>
                   <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="#232222">edit</v-icon>
                   </v-btn>
@@ -75,6 +78,11 @@ export default {
       required: false
     },
 
+    showDetail: {
+      type: Boolean,
+      required: false
+    },
+
     showEdit: {
       type: Boolean,
       required: false
@@ -99,6 +107,12 @@ export default {
       vm.$emit("newaction");
     },
 
+    detailItem(item) {
+      const vm = this;
+
+      vm.$emit("detail", item);
+    },
+
     editItem(item) {
       const vm = this;
 
@@ -120,7 +134,7 @@ export default {
   height: 100vh !important;
 }
 .grid-card .page-title h2 {
-  padding-left: 30px;
+  padding-left: 16px;
   padding-top: 20px;
 }
 .datatable__actions {
@@ -138,33 +152,6 @@ export default {
 .table__overflow {
   margin-top: 36px;
 }
-/* .grid-card {
-    min-height: 667px;
-    margin-left: 4px;
-    margin-right: 4px;
-    margin-top: 7px;
-    margin-bottom: 14px;
-    padding: 30px 20px;
-    border-radius: 15px;
-    background-color: #fff;
-    box-shadow: 0 5px 5px 0 rgba(0,0,0,.24), 0 1px 5px 0 rgba(0,0,0,.12);
-  }
-
-  .page-title {
-    font-size: 17px;
-    line-height: 3.25;
-    color: #464646;
-  } */
-
-/* .elevation-2 {
-    border-radius: 15px
-  } */
-/* .page-title h1 {
-    font-size: 34px;
-    line-height: 1.32;
-    color: #000;
-    margin-bottom: 25px;
-  } */
 
 table.table thead tr {
   height: 70px;

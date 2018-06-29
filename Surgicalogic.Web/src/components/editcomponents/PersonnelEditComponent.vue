@@ -5,9 +5,23 @@
               max-width="500px">
       <v-card>
         <v-card-title>
-          <span class="headline">
-            {{ formTitle }}
-          </span>
+          <div class="headline-wrap">
+            <v-btn class="backBtn"
+                  flat
+                  @click.native="cancel">
+              <v-icon>arrow_back</v-icon>
+            </v-btn>
+
+            <span class="text">
+              {{ formTitle }}
+            </span>
+
+            <v-btn class="btnSave"
+                  flat
+                  @click.native="save">
+              Save
+            </v-btn>
+          </div>
         </v-card-title>
 
         <v-card-text>
@@ -45,12 +59,6 @@
             </v-layout>
           </v-container>
         </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
