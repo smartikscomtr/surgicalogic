@@ -14,13 +14,13 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['name']"
+                <v-text-field v-model="editAction['name']"
                               :label="$t('equipments.name')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-select v-model="selectEquipmentTypes"
+                <v-select v-model="selectEquipmentType"
                           :items="equipmentTypes"
                           :label="$t('equipmenttypes.equipmentTypes')"
                           item-text="name"
@@ -29,13 +29,13 @@
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="actions['description']"
+                <v-text-field v-model="editAction['description']"
                               :label="$t('equipments.description')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-checkbox v-model="actions['portable']"
+                <v-checkbox v-model="editAction['isPortable']"
                               :label="$t('equipments.portable')"
                               color="primary">
                 </v-checkbox>
@@ -69,12 +69,12 @@ import _each from 'lodash/each';
 
 export default {
   props: {
-    visible: {
+    editVisible: {
       type: Boolean,
       required: false
     },
 
-    actions: {
+    editAction: {
       type: Object,
       required: false,
       default() {
@@ -87,28 +87,30 @@ export default {
       required: false
     },
 
-    edit: {
+    editIndex: {
       type: Number,
       required: false
     }
   },
 
   data() {
-    return {};
+    return {
+      selectEquipmentType : {}
+    };
   },
 
   computed: {
     formTitle() {
       const vm = this;
 
-      return vm.edit === -1 ? vm.$i18n.t("equipments.addEquipmentsInformation") : vm.$i18n.t("equipments.editEquipmentsInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t("equipments.addEquipmentsInformation") : vm.$i18n.t("equipments.editEquipmentsInformation");
     },
 
     showModal: {
       get() {
         const vm = this;
 
-        return vm.visible;
+        return vm.editVisible;
       },
       set (value) {
         const vm = this;
@@ -123,39 +125,44 @@ export default {
       const vm = this;
 
       return vm.$store.state.equipmentTypesModule.equipmentTypes;
-    },
-
-    selectEquipmentTypes() {
-      const vm = this;
-
-      const items = vm.actions['equipmentTypes'];
-
-      _each(items, (item) => {
-          item.name = vm.$store.state.equipmentTypesModule.equipmentTypes.find(d => d.id === item.id);
-      });
-
-      return items;
     }
+
+    // selectEquipmentType() {
+    //   const vm = this;
+
+    //   const items = vm.actions['equipmentTypes'];
+
+    //   _each(items, (item) => {
+    //       item.name = vm.$store.state.equipmentTypesModule.equipmentTypes.find(d => d.id === item.id);
+    //   });
+
+    //   return items;
+    // }
   },
 
   methods: {
     save() {
       const vm = this;
 
-      // if (vm.edit > -1) {
-      //   Object.assign(vm.items[vm.edit], vm.actions);
-      // }
+      if (vm.editIndex > -1) {
+        
+          vm.$store.dispatch('updateEquipment',{
+            id : vm.editAction.id,
+            name: vm.editAction.name,
+            description: vm.editAction.description,
+            isPortable: vm.editAction.isPortable,
+            equipmentTypeId: vm.selectEquipmentType            
+          });
 
-      //Güncelleme işlemi
+      }else{
+          vm.$store.dispatch('insertEquipment', {
+            name: vm.editAction.name,
+            description: vm.editAction.description,
+            isPortable: vm.editAction.isPortable,
+            equipmentTypeId: vm.selectEquipmentType
+          });
+      }
 
-      vm.$store.dispatch('updateEquipment',{
-        id : vm.actions.id,
-        name: vm.actions.name,
-        type: vm.actions.type,
-        portable: vm.actions.portable,
-        description: vm.actions.description
-      });
-       //vm.cancel();
     }
   },
 
@@ -167,7 +174,7 @@ export default {
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-        vm.visible = false;
+        vm.editVisible = false;
         //Silme İşlemi
       }
     });

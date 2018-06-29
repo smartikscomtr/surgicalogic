@@ -36,7 +36,7 @@ const equipmentTypesModule = {
         axios.post('http://localhost/Surgicalogic.Api/EquipmentType/InsertEquipmentType', payload)
           .then(response => {
             if (response.statusText == 'OK') {              
-              context.commit('insertEquipmentType', { item: response.data.result[0] }) // insert the Equipments in the store
+              context.commit('insertEquipmentType', { item: response.data.result }) // insert the Equipments in the store
             }            
           })
 

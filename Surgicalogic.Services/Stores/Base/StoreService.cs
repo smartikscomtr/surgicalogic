@@ -164,7 +164,7 @@ namespace Surgicalogic.Services.Stores.Base
                 model.Id = await connection.ExecuteScalarAndGetInsertedIdAsync(query);
                 return new ResultModel<TModel>
                 {
-                    Result = new List<TModel>() { model },
+                    Result =  model,
                     Info = new Info()
                 };
             }
@@ -224,7 +224,7 @@ namespace Surgicalogic.Services.Stores.Base
 
                 return new ResultModel<TModel>
                 {
-                    Result = new List<TModel>() { model },
+                    Result = model,
                     Info = new Info()
 
                 };

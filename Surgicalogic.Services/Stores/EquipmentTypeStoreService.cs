@@ -16,24 +16,7 @@ namespace Surgicalogic.Services.Stores
         {
 
         }
-        protected override Task SetSortingAsync(SelectQueryBuilder query, EquipmentTypeSorting? sorting)
-        {
-            if (sorting.HasValue)
-            {
-                switch (sorting.Value)
-                {
-                    case EquipmentTypeSorting.NameAsc:
-                        query.OrderClause.AddStatement("main", "Name");
-                        break;
-
-                    case EquipmentTypeSorting.NameDesc:
-                        query.OrderClause.AddStatement("main", "Name", Sorting.Descending);
-                        break;
-                }
-            }
-
-            return Task.CompletedTask;
-        }
+        
 
 
     }

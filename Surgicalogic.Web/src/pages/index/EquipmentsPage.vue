@@ -5,14 +5,14 @@
                     :title="title"
                     :show-edit="true"
                     :show-delete="true"
-                    @action="action"
+                    @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <equipments-edit-component :actions="actions"
-                               :visible="dialog"
-                               :edit="editedIndex"
+    <equipments-edit-component :editAction="editAction"
+                               :editVisible="editDialog"
+                               :editIndex="editedIndex"
                                :delete-value="deleteValue"
                                @cancel="cancel">
     </equipments-edit-component>
@@ -30,11 +30,11 @@ export default {
     return {
       title: vm.$i18n.t('equipments.equipments'),
       search: '',
-      dialog: false,
-      actions: {},
+      editDialog: false,
+      editAction: {},
       deleteValue: {},
-      editedIndex: -1,
-      equipmentTypeTitle: []
+      editedIndex: -1
+      //equipmentTypeTitle: []
     };
   },
 
@@ -50,13 +50,13 @@ export default {
           align: "left"
         },
         {
-          value: "equipmentTypeTitle",
+          value: "equipmentTypeId",
           text: vm.$i18n.t("equipmenttypes.equipmentType"),
           sortable: true,
           align: "left"
         },
         {
-          value: "portable",
+          value: "isPortable",
           text: vm.$i18n.t("equipments.portable"),
           sortable: true,
           align: "left"
@@ -76,37 +76,39 @@ export default {
     },
 
     equipments() {
-      return _each(this.$store.state.equipmentModule.equipments, (item) => item.equipmentTypeTitle = item.equipmentTypes[0].name );
+      //return _each(this.$store.state.equipmentModule.equipments, (item) => item.equipmentTypeTitle = item.equipmentTypes[0].name );
+      return this.$store.state.equipmentModule.equipments;
     }
   },
 
   methods: {
-    action(payload){
+    edit(payload){
       const vm = this;
 
-      vm.dialog = true;
+      vm.editDialog = true;
       vm.editedIndex = vm.equipments.indexOf(payload);
-      vm.actions = payload;
+      vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.dialog = false;
+      vm.editDialog = false;
     },
 
     addNewItem(){
       const vm = this;
 
-      vm.dialog = true;
+      vm.editDialog = true;
 
       //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
-
-      vm.deleteValue = payload;
+      vm.$store.dispatch('deleteEquipment', {
+        id: payload.id
+      });
     }
   },
 
