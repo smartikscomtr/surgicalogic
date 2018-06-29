@@ -42,10 +42,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Branch/DeleteBranch/{id:int}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteBranch(int id)
-        {
-            var result = await _branchStoreService.DeleteByIdAsync(id);
-            return Json(result);
+        public async Task<ResultModel<int>> DeleteBranch(int id)
+        {            
+            return await _branchStoreService.DeleteByIdAsync(id);
         }
 
         [Route("Branch/UpdateBranch")]

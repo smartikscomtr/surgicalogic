@@ -42,11 +42,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("WorkType/DeleteWorkType/{id:int}")]
         [HttpPost]
-        public async Task<IActionResult> DeleteWorkType(int id)
+        public async Task<ResultModel<int>> DeleteWorkType(int id)
         {
-            var result = await _workTypeStoreService.DeleteByIdAsync(id);
-
-            return Json(result);
+            return await _workTypeStoreService.DeleteByIdAsync(id);
         }
 
         [Route("WorkType/UpdateWorkType")]

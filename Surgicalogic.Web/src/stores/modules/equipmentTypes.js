@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const equipmentTypesModule = {
-    state: { equipmentTypes: []},
+    state: { equipmentTypes: [], allEquipmentTypes: []},
     mutations: {
       setEquipmentTypes(state, equipmentTypes) {
         state.equipmentTypes = equipmentTypes;
@@ -18,8 +18,10 @@ const equipmentTypesModule = {
       },
       updateEquipmentType(state, payload) {
         //state.equipments.payload = payload;
-      }
-      
+      },
+      setAllEquipmentTypes(state, payload) {
+        state.allEquipmentTypes = payload;
+      },
     },
     getters: {},
     actions: {
@@ -58,7 +60,15 @@ const equipmentTypesModule = {
               //context.commit('updateEquipmentType', {payload}) // update the Equipments in the store                        
           })
 
-      }
+      },
+      getAllEquipmentTypes(context) {
+
+        axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipmentTypes')
+            .then(response => {
+              context.commit('setAllEquipmentTypes', response.data.result) // set the Equipments in the store
+          })
+
+      },
       
     }
   }

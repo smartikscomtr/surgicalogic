@@ -83,7 +83,7 @@ export default {
   watch: {
    editDialog : function(){
      if(this.equipmentTypeLoadOnce){
-        this.$store.dispatch('getEquipmentTypes');
+        this.$store.dispatch('getAllEquipmentTypes');
         this.equipmentTypeLoadOnce = false;
      }
       

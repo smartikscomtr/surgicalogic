@@ -124,7 +124,7 @@ export default {
     equipmentTypes() {
       const vm = this;
 
-      return vm.$store.state.equipmentTypesModule.equipmentTypes;
+      return vm.$store.state.equipmentTypesModule.allEquipmentTypes;
     }
 
     // selectEquipmentType() {

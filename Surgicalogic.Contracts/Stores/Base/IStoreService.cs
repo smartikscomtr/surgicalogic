@@ -17,7 +17,7 @@ namespace Surgicalogic.Contracts.Stores.Base
         Task<TModel> FirstOrDefaultAsync(FilterSortPaginationModel<TSorting, TFilter> filterSortPagination);
         Task<TModel> FindByIdAsync(int id);
         Task<ResultModel<TModel>> InsertAsync(TModel model);
-        Task<int> DeleteByIdAsync(int id);
+        Task<ResultModel<int>> DeleteByIdAsync(int id);
         Task<ResultModel<TModel>> UpdateAsync(TModel model);
         Task UpdateAsync(IEnumerable<(string Column, object Value)> set, IEnumerable<(string Column, object Value)> where);
     }

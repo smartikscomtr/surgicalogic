@@ -184,7 +184,7 @@ namespace Surgicalogic.Services.Stores.Base
             }
         }
 
-        public virtual async Task<int> DeleteByIdAsync(int id)
+        public virtual async Task<ResultModel<int>> DeleteByIdAsync(int id)
         {
             var connection = GetConnection();
 
@@ -198,7 +198,11 @@ namespace Surgicalogic.Services.Stores.Base
 
                 var deleteQuery = $"DELETE FROM \"{GetTableName()}\" WHERE \"Id\" = {id}";
 
-                return await connection.ExecuteAsync(deleteQuery, commandType: CommandType.Text);
+                return new ResultModel<int>
+                {
+                    Result = await connection.ExecuteAsync(deleteQuery, commandType: CommandType.Text),
+                    Info = new Info()
+                };
             }
             finally
             {
