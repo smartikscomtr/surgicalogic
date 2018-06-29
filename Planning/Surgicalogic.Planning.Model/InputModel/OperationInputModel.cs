@@ -9,7 +9,7 @@ namespace Surgicalogic.Planning.Model.InputModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DoctorModel Doctor { get; set; }
+        public int DoctorId { get; set; }
         public int Period { get; set; }
         public List<int> UnavailableRooms { get; set; }
     }
