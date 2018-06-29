@@ -21,7 +21,6 @@ namespace Surgicalogic.Planning.ORTools
         /// <param name="Settings.PeriodInMinutes">Ameliyat periyodlarının kaç dakika olduğu bilgisi</param>
         public static DailyPlanOutputModel Solve(DailyPlanInputModel input)
         {
-            Console.WriteLine("Uygulama başlıyor.");
             var result = new DailyPlanOutputModel() { Rooms = new List<RoomOutputModel>() };
 
             foreach (var item in input.Rooms)
@@ -77,10 +76,10 @@ namespace Surgicalogic.Planning.ORTools
 
             for (int i = 0; i < input.Operations.Count; i++)
             {
-                int doctorId = input.Operations[i].Doctor.Id;
+                int doctorId = input.Operations[i].DoctorId;
 
                 //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu değişkende tutuluyor.
-                int[] blockedTimes = GetBlockedTimes(input.Operations[i].UnavailableRooms, input.Operations[i].Id, input.Rooms, input.Settings.MaximumPeriod, validStatus);
+                int[] blockedTimes = GetBlockedTimes(input.Operations[i].UnavailableRooms, input.Rooms, input.Settings.MaximumPeriod, validStatus);
 
                 foreach (var item in blockedTimes)
                 {
@@ -99,7 +98,7 @@ namespace Surgicalogic.Planning.ORTools
                 for (int ad = 0; ad < input.Operations.Count; ad++)
                 {
                     //Eğer sonraki ameliyatı yapacak doktorlardan birisi, bu ameliyatı yapan doktor ise.
-                    if (input.Operations[ad].Doctor.Id == doctorId && ad != i)
+                    if (input.Operations[ad].DoctorId == doctorId && ad != i)
                     {
                         //Bir sonraki ameliyat süresi kadar dön.
                         for (int ml = 0; ml < input.Operations[ad].Period; ml++)
@@ -202,7 +201,7 @@ namespace Surgicalogic.Planning.ORTools
                 var operationTimes = new List<int>();
                 for (int i = 0; i < input.Operations.Count; i++)
                 {
-                    Console.Write("Ameliyat #{0,-2}: ", input.Operations[i].Id);
+                    //Console.Write("Ameliyat #{0,-2}: ", input.Operations[i].Id);
                     for (int j = 0; j < input.Operations[i].Period; j++)
                     {
                         int v = (int)x[i, j].Value();
@@ -215,45 +214,26 @@ namespace Surgicalogic.Planning.ORTools
                             var tomorrow = DateTime.Now.AddDays(1);
                             var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
                             dateTime = dateTime.AddMinutes((time - 1) * input.Settings.PeriodInMinutes);
-                            Console.Write(surgeryRoom.Id + "-" + surgeryRoom.Name + " Ameliyathanesi, Başlangıç: " + dateTime.ToShortTimeString() + ", Bitiş: " + dateTime.AddMinutes(input.Operations[i].Period * input.Settings.PeriodInMinutes).ToShortTimeString());
+                            //Console.Write(surgeryRoom.Id + "-" + surgeryRoom.Name + " Ameliyathanesi, Başlangıç: " + dateTime.ToShortTimeString() + ", Bitiş: " + dateTime.AddMinutes(input.Operations[i].Period * input.Settings.PeriodInMinutes).ToShortTimeString());
                             //Console.Write(surgeryRoom.Id + ". Oda, Saat: " + dateTime.ToShortTimeString());
                             operationTimes.Add(dateTime.Hour);
 
-                            surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, Doctor = input.Operations[i].Doctor, Period = input.Operations[i].Period, StartDate = dateTime });
+                            surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorId = input.Operations[i].DoctorId, Period = input.Operations[i].Period, StartDate = dateTime });
                         }
                         roomUsage.Add(v);
                     }
-
-                    Console.WriteLine();
-
                 }
-                Console.WriteLine();
 
-                Console.WriteLine("Usage statistics per room:\n");
-                for (int i = 0; i < input.Rooms.Count; i++)
-                {
-                    Console.Write("Oda #{0,-2}: ", i + 1);
-                    var usage = i + 1 == input.Rooms.Count ? roomUsage.Count(p => (p % input.Rooms.Count == 0)) : roomUsage.Count(p => (p % input.Rooms.Count == i + 1));
-                    var usageTimes = i + 1 == input.Rooms.Count ? roomUsage.Where(p => (p % input.Rooms.Count == 0)) : roomUsage.Where(p => (p % input.Rooms.Count == i + 1));
-                    int overTime = CalculateOverTime(usage, input.Settings.RoomsPeriod); //usageTimes.Count(t => t > operationRoomCount * roomPeriodLength[i]);
-                    Console.Write("Uygunluk: {0}, Kullanılan Süre: {1}, Overtime: {2}", input.Settings.RoomsPeriod, usage, overTime);
-                    Console.WriteLine();
-                }
-                Console.WriteLine();
-
-                for (int i = 0; i < input.Operations.Count; i++)
-                {
-                    Console.Write("#{0,-2}: ", i + 1);
-                    for (int j = 0; j < input.Operations[i].Period; j++)
-                    {
-                        int v = (int)x[i, j].Value();
-                        Console.Write(v + " ");
-                    }
-
-                    Console.WriteLine();
-
-                }
-                Console.WriteLine();
+                //Console.WriteLine("Usage statistics per room:\n");
+                //for (int i = 0; i < input.Rooms.Count; i++)
+                //{
+                //    Console.Write("Oda #{0,-2}: ", i + 1);
+                //    var usage = i + 1 == input.Rooms.Count ? roomUsage.Count(p => (p % input.Rooms.Count == 0)) : roomUsage.Count(p => (p % input.Rooms.Count == i + 1));
+                //    var usageTimes = i + 1 == input.Rooms.Count ? roomUsage.Where(p => (p % input.Rooms.Count == 0)) : roomUsage.Where(p => (p % input.Rooms.Count == i + 1));
+                //    int overTime = CalculateOverTime(usage, input.Settings.RoomsPeriod); //usageTimes.Count(t => t > operationRoomCount * roomPeriodLength[i]);
+                //    Console.Write("Uygunluk: {0}, Kullanılan Süre: {1}, Overtime: {2}", input.Settings.RoomsPeriod, usage, overTime);
+                //    Console.WriteLine();
+                //}
 
                 //We just show 1 solution
                 if (num_solutions > 0)
@@ -267,13 +247,13 @@ namespace Surgicalogic.Planning.ORTools
             return result;
         }
 
-        private static int CalculateOverTime(int usage, int mesaiSuresi)
+        private static int CalculateOverTime(int usage, int roomsPeriod)
         {
-            return usage > mesaiSuresi ? usage - mesaiSuresi : 0;
+            return usage > roomsPeriod ? usage - roomsPeriod : 0;
         }
 
         //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu metodda hesaplanılıyor.
-        private static int[] GetBlockedTimes(List<int> unavailableRooms, int ameliyatId, List<RoomInputModel> operationRooms, int maximumLength, int[] validStatus)
+        private static int[] GetBlockedTimes(List<int> unavailableRooms, List<RoomInputModel> operationRooms, int maximumLength, int[] validStatus)
         {
             var result = new List<int>();
 

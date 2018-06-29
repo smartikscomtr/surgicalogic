@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Surgicalogic.Planning.Api.Controllers
 {
-    public class HomeController : ApiController
+    public class PlanController : ApiController
     {
         public DailyPlanOutputModel Post([FromBody]DailyPlanInputModel input)
         {
