@@ -123,20 +123,21 @@ export default {
       const vm = this;
 
       return vm.$store.state.equipmentTypesModule.allEquipmentTypes;
+    },
+
+    selectEquipmentType() {
+      const vm = this;
+
+      const items = vm.actions['equipmentTypes'];
+
+      _each(items, (item) => {
+          item.name = vm.$store.state.equipmentTypesModule.equipmentTypes.find(d => d.id === item.id);
+      });
+
+      return items;
     }
-
-    // selectEquipmentType() {
-    //   const vm = this;
-
-    //   const items = vm.actions['equipmentTypes'];
-
-    //   _each(items, (item) => {
-    //       item.name = vm.$store.state.equipmentTypesModule.equipmentTypes.find(d => d.id === item.id);
-    //   });
-
-    //   return items;
-    // }
   },
+
   methods: {
     cancel() {
       const vm = this;

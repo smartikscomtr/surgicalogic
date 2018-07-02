@@ -18,6 +18,7 @@ const workTypesModule = {
       let index = state.workTypes.findIndex((item) => {
         return item.id === payload.id
       });
+
       state.workTypes.splice(index, 1);
     },
 
@@ -41,8 +42,8 @@ const workTypesModule = {
     insertWorkType(context, payload) {
       axios.post('http://localhost/Surgicalogic.Api/WorkType/InsertWorkType', payload)
         .then(response => {
-          if (response.data.info.succeeded == true) {            
-            context.commit('insertWorkType', { item: response.data.result[0] }) // insert the WorkType in the store
+          if (response.data.info.succeeded == true) {
+            context.commit('insertWorkType', { item: response.data.result }) // insert the WorkType in the store
           }
         })
     },

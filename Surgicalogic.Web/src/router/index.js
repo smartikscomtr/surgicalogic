@@ -14,6 +14,7 @@ import EquipmentsPage from "@/pages/index/EquipmentsPage";
 import EquipmentTypesPage from "@/pages/index/EquipmentTypesPage";
 import OperationTypesPage from "@/pages/index/OperationTypesPage";
 import PersonnelPage from "@/pages/index/PersonnelPage";
+import PersonnelTitlePage from "@/pages/index/PersonnelTitlePage";
 import RoomsPage from "@/pages/index/RoomsPage";
 import WorkTypesPage from "@/pages/index/WorkTypesPage";
 
@@ -50,6 +51,11 @@ export default new VueRouter({
       path: '/personnelpage',
       name: 'PersonnelPage',
       component: PersonnelPage
+    },
+    {
+      path: '/personneltitlepage',
+      name: 'PersonnelTitlePage',
+      component: PersonnelTitlePage
     },
     {
       path: '/roomspage',

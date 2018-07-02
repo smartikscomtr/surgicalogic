@@ -37,7 +37,7 @@ namespace Surgicalogic.Api.Controllers
                 Name = item.Name,
                 Description = item.Description,
                 IsPortable = item.IsPortable,
-                EquipmentTypeId = item.EquipmentTypeId,                                
+                EquipmentTypeId = item.EquipmentTypeId,
                 CreatedDate = DateTime.Now,
                 CreatedBy = 2
             };

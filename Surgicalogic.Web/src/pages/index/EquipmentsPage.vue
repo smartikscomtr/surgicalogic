@@ -28,6 +28,7 @@ import _each from 'lodash/each';
 export default {
   data() {
     const vm = this;
+
     return {
       title: vm.$i18n.t('equipments.equipments'),
       search: '',
@@ -83,15 +84,18 @@ export default {
       return this.$store.state.equipmentModule.equipments;
     }
   },
+
   watch: {
    editDialog : function(){
-     if(this.equipmentTypeLoadOnce){
-        this.$store.dispatch('getAllEquipmentTypes');
-        this.equipmentTypeLoadOnce = false;
-     }
+     const vm = this;
 
+     if(vm.equipmentTypeLoadOnce){
+        vm.$store.dispatch('getAllEquipmentTypes');
+        vm.equipmentTypeLoadOnce = false;
+     }
     }
   },
+
   methods: {
     detail(payload) {
       const vm = this;

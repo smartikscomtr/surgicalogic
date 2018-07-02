@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Surgicalogic.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Surgicalogic.Model.EntityModel;
-using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Data.Utilities
 {
@@ -17,6 +13,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Branch, BranchModel>();
             config.CreateMap<Equipment, EquipmentModel>();
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
+            config.CreateMap<Personnel, PersonnelModel>();
+            config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
             config.CreateMap<WorkType, WorkTypeModel>();
 
             #endregion
@@ -26,6 +24,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<BranchModel, Branch>();
             config.CreateMap<EquipmentModel, Equipment>();
             config.CreateMap<EquipmentTypeModel, EquipmentType>();
+            config.CreateMap<PersonnelModel, Personnel>();
+            config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
             config.CreateMap<WorkTypeModel, WorkType>();
 
             #endregion

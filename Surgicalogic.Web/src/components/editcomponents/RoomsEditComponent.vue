@@ -178,7 +178,6 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getEquipments");
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

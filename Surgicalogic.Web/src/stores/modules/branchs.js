@@ -24,10 +24,10 @@ const branchsModule = {
       getBranchs(context) {
         axios.get('http://localhost/Surgicalogic.Api/Branch/GetBranchs')
             .then(response => {
-              if (response.data.info.succeeded == true){  
+              if (response.data.info.succeeded == true){
                 context.commit('setBranchs', response.data.result) // set the Branchs in the store
               }
-              
+
           })
 
       },
@@ -35,8 +35,8 @@ const branchsModule = {
       insertBranch(context, payload) {
         axios.post('http://localhost/Surgicalogic.Api/Branch/InsertBranch', payload)
           .then(response => {
-            if (response.data.info.succeeded == true) {              
-              context.commit('insertBranch', { item: response.data.result[0] }) // insert the Branchs in the store
+            if (response.data.info.succeeded == true) {
+              context.commit('insertBranch', { item: response.data.result }) // insert the Branchs in the store
             }
           })
 

@@ -248,6 +248,11 @@ export default {
             },
             {
               icon: "assignment",
+              text: vm.$i18n.t("personneltitle.personnelTitles"),
+              route: "/personneltitlepage"
+            },
+            {
+              icon: "assignment",
               text: vm.$i18n.t("equipmenttypes.equipmentTypes"),
               route: "/equipmenttypespage"
             },

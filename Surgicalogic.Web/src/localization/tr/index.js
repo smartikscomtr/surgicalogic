@@ -11,6 +11,7 @@ import * as equipments from './equipments.json';
 import * as equipmenttypes from './equipmenttypes.json';
 import * as operationtypes from './operationtypes.json';
 import * as personnel from './personnel.json';
+import * as personneltitle from './personneltitle.json';
 import * as rooms from './rooms.json';
 import * as worktypes from './worktypes.json';
 
@@ -21,6 +22,7 @@ export default {
     equipmenttypes,
     operationtypes,
     personnel,
+    personneltitle,
     rooms,
     worktypes
 };

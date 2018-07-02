@@ -37,8 +37,8 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1,
-      workTypeTitle: []
+      editedIndex: -1
+      // workTypeTitle: []
     };
   },
 
@@ -54,37 +54,31 @@ export default {
           align: "left"
         },
         {
-          value: "givenName",
+          value: "firstName",
           text: vm.$i18n.t("personnel.givenName"),
           sortable: true,
           align: "left"
         },
         {
-          value: "familyName",
+          value: "lastName",
           text: vm.$i18n.t("personnel.familyName"),
           sortable: true,
           align: "left"
         },
         {
-          value: "task",
-          text: vm.$i18n.t("personnel.task"),
+          value: "personnelTitleId",
+          text: vm.$i18n.t("personnel.personnelTitle"),
           sortable: true,
           align: "left"
         },
         {
-          value: "branch",
+          value: "branchId",
           text: vm.$i18n.t("personnel.branch"),
           sortable: true,
           align: "left"
         },
         {
-          value: "shift",
-          text: vm.$i18n.t("personnel.shift"),
-          sortable: true,
-          align: "left"
-        },
-        {
-          value: "workTypeTitle",
+          value: "workTypeId",
           text: vm.$i18n.t("personnel.workType"),
           sortable: true,
           align: "left"
@@ -98,7 +92,31 @@ export default {
     },
 
     personnels() {
-      return _each(this.$store.state.personnelModule.personnel, (item) => item.workTypeTitle = item.workTypes[0].name );
+      const vm = this;
+
+      return vm.$store.state.personnelModule.personnel;
+      // return _each(this.$store.state.personnelModule.personnel, (item) => item.workTypeTitle = item.workTypes[0].name );
+    }
+  },
+
+  watch: {
+   editDialog() {
+    const vm = this;
+
+     if(vm.workTypeLoadOnce){
+        vm.$store.dispatch('getWorkTypes');
+        vm.workTypeLoadOnce = false;
+     }
+
+     if(vm.personnelTitleLoadOnce){
+        vm.$store.dispatch('getPersonnelTitles');
+        vm.personnelTitleLoadOnce = false;
+     }
+
+     if(vm.branchLoadOnce){
+        vm.$store.dispatch('getBranchs');
+        vm.branchLoadOnce = false;
+     }
     }
   },
 
@@ -142,10 +160,11 @@ export default {
       //vm.deleteValue = payload;
     }
   },
+
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getPersonnel");
+    vm.$store.dispatch("getPersonnels");
   }
 };
 

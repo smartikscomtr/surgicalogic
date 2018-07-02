@@ -219,7 +219,7 @@ tr:nth-child(even) {
   left: 20px;
 }
 .headline-wrap .backBtn i {
-  color: #ff7107 !important;
+  color: #000 !important;
 }
 .label {
   font-size: 12px;

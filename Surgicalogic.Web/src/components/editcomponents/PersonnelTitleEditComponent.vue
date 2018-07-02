@@ -24,10 +24,11 @@
         </v-card-title>
 
         <v-card-text >
+          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('worktypes.workType')">
+                              :label="$t('personneltitle.personnelTitle')">
                 </v-text-field>
               </v-flex>
 
@@ -37,6 +38,7 @@
                 </v-text-field>
               </v-flex>
             </v-layout>
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -79,7 +81,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t("worktypes.addWorkTypesInformation") : vm.$i18n.t("worktypes.editWorkTypesInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t("personneltitle.addPersonnelTitlesInformation") : vm.$i18n.t("personneltitle.editPersonnelTitlesInformation");
     },
 
     showModal: {
@@ -109,13 +111,13 @@ export default {
       const vm = this;
 
       if (vm.editIndex > -1) {
-        vm.$store.dispatch('updateWorkType', {
+        vm.$store.dispatch('updatePersonnelTitle', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
         });
       } else {
-        vm.$store.dispatch('insertWorkType', {
+        vm.$store.dispatch('insertPersonnelTitle', {
           name: vm.editAction.name,
           description: vm.editAction.description
         });

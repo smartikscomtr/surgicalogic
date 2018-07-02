@@ -115,7 +115,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     CreatedBy = table.Column<int>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true)
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    OperatingRoomId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,6 +127,12 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         principalTable: "EquipmentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Equipments_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,6 +156,12 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     table.PrimaryKey("PK_Personnels", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Personnels_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Personnels_PersonnelTitles_PersonnelTitleId",
                         column: x => x.PersonnelTitleId,
                         principalTable: "PersonnelTitles",
@@ -168,6 +181,16 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "EquipmentTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Equipments_OperatingRoomId",
+                table: "Equipments",
+                column: "OperatingRoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Personnels_BranchId",
+                table: "Personnels",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Personnels_PersonnelTitleId",
                 table: "Personnels",
                 column: "PersonnelTitleId");
@@ -181,19 +204,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Branches");
-
-            migrationBuilder.DropTable(
                 name: "Equipments");
-
-            migrationBuilder.DropTable(
-                name: "OperatingRooms");
 
             migrationBuilder.DropTable(
                 name: "Personnels");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTypes");
+
+            migrationBuilder.DropTable(
+                name: "OperatingRooms");
+
+            migrationBuilder.DropTable(
+                name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "PersonnelTitles");
