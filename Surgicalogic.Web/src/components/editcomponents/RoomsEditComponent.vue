@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="showModal"
-              slot="activator"
-              max-width="500px">
+              slot="activator">
       <v-card>
         <v-card-title>
           <div class="headline-wrap">

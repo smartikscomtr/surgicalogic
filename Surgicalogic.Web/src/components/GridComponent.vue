@@ -129,6 +129,7 @@ export default {
 </script>
 
 <style>
+
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;
@@ -185,7 +186,7 @@ tr:nth-child(even) {
   position: relative;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 20px 50px;
+  padding: 12px 42px;
 }
 .card__title {
   display: flex;
@@ -205,7 +206,6 @@ tr:nth-child(even) {
   min-width: 140px;
   background-color: #ff7107 !important;
   height: 40px;
-  border-radius: 6px;
   font-size: 15px;
 }
 .btnSave .btn__content{ color: #fff;}
@@ -233,5 +233,7 @@ tr:nth-child(even) {
   text-align: left;
   color: #000;
 }
-
+.dialog.dialog--active {
+  max-width: 600px;
+}
 </style>
