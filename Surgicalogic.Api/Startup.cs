@@ -6,12 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
-using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.DbContexts;
+using Surgicalogic.Data.Entities;
+using Surgicalogic.Data.Migrations.Initialize;
 using Surgicalogic.Data.Utilities;
-using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Services.Services;
 using Surgicalogic.Services.Stores;
+using System.Linq;
 
 namespace Surgicalogic.Api
 {
@@ -27,7 +28,7 @@ namespace Surgicalogic.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           //DbContext service registered 
+            //DbContext service registered 
             services.AddDbContext<DataContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DataContext"),
                             builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
@@ -36,7 +37,7 @@ namespace Surgicalogic.Api
             services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
             //CROS service registerd. This methode was add besause of allow-control-access-origin 
-            services.AddCors(options =>            
+            services.AddCors(options =>
                 options.AddPolicy("CorsConfig",
                     builder =>
                         builder.WithOrigins(Configuration["AppSettings:Http:AllowedOrigin"])
@@ -48,18 +49,18 @@ namespace Surgicalogic.Api
 
             services.AddScoped<IBranchStoreService, BranchStoreService>();
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
-            services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();            
+            services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
-            
+
             #endregion
 
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataContext context)
         {
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,7 +71,7 @@ namespace Surgicalogic.Api
 
             app.UseCors("CorsConfig");
 
-            app.UseMvc();            
+            app.UseMvc();
 
             //Mapping Initialized
             Mapper.Initialize(cfg =>
@@ -78,8 +79,7 @@ namespace Surgicalogic.Api
                 MapUtility.ConfigureMapping(cfg);
             });
 
-
-
+            DbInitializer.Initialize(context);
         }
 
 

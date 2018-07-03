@@ -34,4 +34,8 @@
     <ProjectReference Include="..\Surgicalogic.Services\Surgicalogic.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="App_Data\Migration\" />
+  </ItemGroup>
+
 </Project>
