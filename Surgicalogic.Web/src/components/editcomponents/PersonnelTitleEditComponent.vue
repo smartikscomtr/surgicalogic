@@ -28,7 +28,7 @@
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('equipmenttypes.equipmentType')">
+                              :label="$t('personneltitle.personnelTitle')">
                 </v-text-field>
               </v-flex>
 
@@ -81,7 +81,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t("equipmenttypes.addEquipmentTypesInformation") : vm.$i18n.t("equipmenttypes.editEquipmentTypesInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t("personneltitle.addPersonnelTitlesInformation") : vm.$i18n.t("personneltitle.editPersonnelTitlesInformation");
     },
 
     showModal: {
@@ -111,13 +111,13 @@ export default {
       const vm = this;
 
       if (vm.editIndex > -1) {
-        vm.$store.dispatch('updateEquipmentType', {
+        vm.$store.dispatch('updatePersonnelTitle', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
         });
       } else {
-        vm.$store.dispatch('insertEquipmentType', {
+        vm.$store.dispatch('insertPersonnelTitle', {
           name: vm.editAction.name,
           description: vm.editAction.description
         });

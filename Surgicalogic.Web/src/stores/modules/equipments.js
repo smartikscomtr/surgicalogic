@@ -23,7 +23,6 @@ const equipmentModule = {
       },
 
       updateEquipment(state, payload) {
-        console.log(payload)
         //state.equipments.payload = payload;
         state.equipments.findIndex((item) => {
           return item.equipmentTypeId === payload.equipmentTypeId

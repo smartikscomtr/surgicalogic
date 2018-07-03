@@ -1,6 +1,6 @@
-﻿namespace Surgicalogic.Model.OutputModel
+﻿namespace Surgicalogic.Model.InputModel
 {
-    public class WorkTypeOutputModel
+    public class PersonnelTitleInputModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

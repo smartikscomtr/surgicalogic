@@ -49,7 +49,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("WorkType/UpdateWorkType")]
         [HttpPost]
-        public Task UpdateWorkType([FromBody] WorkTypeInputModel item)
+        public Task<ResultModel<WorkTypeModel>> UpdateWorkType([FromBody] WorkTypeInputModel item)
         {
             var workTypeItem = new WorkTypeModel()
             {

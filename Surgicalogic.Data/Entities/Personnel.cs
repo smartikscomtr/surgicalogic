@@ -26,5 +26,6 @@ namespace Surgicalogic.Data.Entities
         public Nullable<int> ModifiedBy { get; set; }
         public virtual PersonnelTitle PersonnelTitle { get; set; }
         public virtual WorkType WorkType { get; set; }
+        public virtual Branch Branch { get; set; }
     }
 }

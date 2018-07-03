@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="showModal"
-              slot="activator"
-              max-width="500px">
+              slot="activator">
       <v-card>
         <v-card-title>
           <div class="headline-wrap">
@@ -28,28 +27,39 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['personnelCode']"
+                <v-text-field v-model="editAction['personnelCode']"
                               :label="$t('personnel.personnelCode')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['givenName']" :label="$t('personnel.givenName')"></v-text-field>
+                <v-text-field v-model="editAction['firstName']" :label="$t('personnel.givenName')"></v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md4>
-                <v-text-field v-model="actions['familyName']" :label="$t('personnel.familyName')"></v-text-field>
+                <v-text-field v-model="editAction['lastName']" :label="$t('personnel.familyName')"></v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="actions['task']" :label="$t('personnel.task')"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="actions['branch']" :label="$t('personnel.branch')"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="actions['shift']" :label="$t('personnel.shift')"></v-text-field>
-              </v-flex>
+
               <v-flex xs12 sm6 md12>
-                <v-select v-model="selectWorkTypes"
+                <v-select v-model="selectPersonnelTitle"
+                          :items="personnelTitles"
+                          :label="$t('personnel.personnelTitle')"
+                          item-text="name"
+                          item-value="id">
+                </v-select>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-select v-model="selectBranch"
+                          :items="branchs"
+                          :label="$t('personnel.branch')"
+                          item-text="name"
+                          item-value="id">
+                </v-select>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-select v-model="selectWorkType"
                           :items="workTypes"
                           :label="$t('worktypes.workTypes')"
                           item-text="name"
@@ -95,7 +105,11 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      selectPersonnelTitle: {},
+      selectBranch: {},
+      selectWorkType: {}
+    };
   },
 
   computed: {
@@ -120,16 +134,52 @@ export default {
       }
     },
 
+    personnelTitles() {
+      const vm = this;
+
+      return vm.$store.state.personnelTitleModule.personnelTitle;
+    },
+
+    branchs() {
+      const vm = this;
+
+      return vm.$store.state.branchsModule.branchs;
+    },
+
     workTypes() {
       const vm = this;
 
       return vm.$store.state.workTypesModule.workTypes;
     },
 
-    selectWorkTypes() {
+    selectPersonnelTitle() {
       const vm = this;
 
-      const items = vm.actions['workTypes'];
+      const items = vm.editAction['personnelTitle'];
+
+      _each(items, (item) => {
+          item.name = vm.$store.state.personnelTitleModule.personnelTitle.find(d => d.id === item.id);
+      });
+
+      return items;
+    },
+
+    selectBranch() {
+      const vm = this;
+
+      const items = vm.editAction['branchs'];
+
+      _each(items, (item) => {
+          item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
+      });
+
+      return items;
+    },
+
+    selectWorkType() {
+      const vm = this;
+
+      const items = vm.editAction['workTypes'];
 
       _each(items, (item) => {
           item.name = vm.$store.state.workTypesModule.workTypes.find(d => d.id === item.id);
@@ -150,26 +200,23 @@ export default {
       const vm = this;
 
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateBranch", {
+        vm.$store.dispatch("updatePersonnel", {
           id: vm.editAction.id,
           personnelCode: vm.editAction.personnelCode,
-          givenName: vm.editAction.givenName,
-          familyName: vm.editAction.familyName,
-          tasks: vm.editAction.tasks,
-          branch: vm.editAction.branch,
-          shift: vm.editAction.shift,
-          workType: vm.editAction.workType
+          firstName: vm.editAction.firstName,
+          lastName: vm.editAction.lastName,
+          personnelTitleId: vm.selectPersonnelTitle,
+          branchId: vm.selectBranch,
+          workTypeId: vm.selectWorkType
         });
       } else {
-        vm.$store.dispatch("insertBranch", {
-          id: vm.editAction.id,
+        vm.$store.dispatch("insertPersonnel", {
           personnelCode: vm.editAction.personnelCode,
-          givenName: vm.editAction.givenName,
-          familyName: vm.editAction.familyName,
-          tasks: vm.editAction.tasks,
-          branch: vm.editAction.branch,
-          shift: vm.editAction.shift,
-          workType: vm.editAction.workType
+          firstName: vm.editAction.firstName,
+          lastName: vm.editAction.lastName,
+          personnelTitleId: vm.selectPersonnelTitle,
+          branchId: vm.selectBranch,
+          workTypeId: vm.selectWorkType
         });
       }
 
@@ -179,8 +226,6 @@ export default {
 
   created() {
     const vm = this;
-
-    vm.$store.dispatch('getWorkTypes');
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

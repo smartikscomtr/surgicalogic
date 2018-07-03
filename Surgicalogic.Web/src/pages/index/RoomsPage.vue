@@ -48,8 +48,14 @@ export default {
 
       return [
         {
-          value: "room",
+          value: "name",
           text: vm.$i18n.t("rooms.room"),
+          sortable: true,
+          align: "left"
+        },
+        {
+          value: "description",
+          text: vm.$i18n.t("common.description"),
           sortable: true,
           align: "left"
         },
@@ -80,7 +86,9 @@ export default {
     },
 
     rooms() {
-      return _each(this.$store.state.roomModule.rooms, (item) => item.equipmentTitle = item.equipments[0].name );
+      return this.$store.state.roomModule.rooms;
+
+      // return _each(this.$store.state.roomModule.rooms, (item) => item.equipmentTitle = item.equipments[0].name );
     }
   },
 

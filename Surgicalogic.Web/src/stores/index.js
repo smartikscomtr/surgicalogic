@@ -10,6 +10,7 @@ import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmentTypes';
 import operationTypeModule from './modules/operationtypes';
 import personnelModule from './modules/personnel';
+import personnelTitleModule from './modules/personnelTitle';
 import roomModule from './modules/rooms';
 import workTypesModule from './modules/workTypes';
 
@@ -25,6 +26,7 @@ export default  new Vuex.Store({
      equipmentTypesModule,
      operationTypeModule,
      personnelModule,
+     personnelTitleModule,
      roomModule,
      workTypesModule
   }

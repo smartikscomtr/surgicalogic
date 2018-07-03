@@ -6,9 +6,9 @@ using Surgicalogic.Services.Stores.Base;
 
 namespace Surgicalogic.Services.Stores
 {
-    public class EquipmentTypeStoreService : StoreService<EquipmentType, EquipmentTypeModel, EquipmentTypeSorting, EquipmentTypeFilter>, IEquipmentTypeStoreService
+    public class PersonnelStoreService : StoreService<Personnel, PersonnelModel, PersonnelSorting, PersonnelFilter>, IPersonnelStoreService
     {
-        public EquipmentTypeStoreService(IConfiguration configuration)
+        public PersonnelStoreService(IConfiguration configuration)
             : base(configuration)
         {
         }

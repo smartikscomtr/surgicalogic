@@ -1,20 +1,19 @@
 <template>
   <div>
     <v-dialog v-model="showModal"
-              slot="activator"
-              max-width="500px">
+              slot="activator">
       <v-card>
         <v-card-title>
-          <span class="headline">
-            <v-btn class="backBtn"
-                  flat
-                  @click.native="cancel">
+          <span class="headline-wrap">
+            <a class="backBtn"
+                flat
+                @click="cancel">
               <v-icon>arrow_back</v-icon>
-            </v-btn>
+            </a>
 
-            <div class="text">
+            <span class="text">
               {{ formTitle }}
-            </div>
+            </span>
           </span>
         </v-card-title>
 

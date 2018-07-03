@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-dialog v-model="showModal"
-              slot="activator"
-              max-width="500px">
+              slot="activator">
       <v-card>
         <v-card-title>
           <div class="headline-wrap">
@@ -25,7 +24,6 @@
         </v-card-title>
 
         <v-card-text >
-          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
@@ -39,7 +37,6 @@
                 </v-text-field>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>

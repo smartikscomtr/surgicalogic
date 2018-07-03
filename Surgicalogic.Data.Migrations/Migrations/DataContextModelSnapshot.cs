@@ -67,9 +67,13 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<int?>("OperatingRoomId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EquipmentTypeId");
+
+                    b.HasIndex("OperatingRoomId");
 
                     b.ToTable("Equipments");
                 });
@@ -164,6 +168,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId");
+
                     b.HasIndex("PersonnelTitleId");
 
                     b.HasIndex("WorkTypeId");
@@ -223,10 +229,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .WithMany("Equipments")
                         .HasForeignKey("EquipmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom")
+                        .WithMany("Equipment")
+                        .HasForeignKey("OperatingRoomId");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
                 {
+                    b.HasOne("Surgicalogic.Data.Entities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
                         .WithMany()
                         .HasForeignKey("PersonnelTitleId")

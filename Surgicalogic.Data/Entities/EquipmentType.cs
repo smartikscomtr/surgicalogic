@@ -14,6 +14,6 @@ namespace Surgicalogic.Data.Entities
         public Nullable<DateTime> ModifiedDate { get; set; }
         public int CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
-        public ICollection<Equipment> Equipments { get; set; }
+        public virtual ICollection<Equipment> Equipments { get; set; }
     }
 }

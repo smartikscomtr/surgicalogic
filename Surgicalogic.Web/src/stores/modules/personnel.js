@@ -42,7 +42,7 @@ const personnelModule = {
             if (response.statusText == 'OK') {
               payload.id = response.data;
 
-              context.commit('insertPersonnel', { item: payload }) // insert the Personnel in the store
+              context.commit('insertPersonnel', { item: response.data.result }) // insert the Personnel in the store
             }
           })
       },

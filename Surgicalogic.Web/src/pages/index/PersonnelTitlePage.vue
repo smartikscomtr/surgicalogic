@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="workTypes"
+                    :items="personnelTitles"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -11,12 +11,12 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <work-types-edit-component :editAction="editAction"
-                               :editVisible="editDialog"
-                               :editIndex="editedIndex"
-                               :delete-value="deleteValue"
-                               @cancel="cancel">
-    </work-types-edit-component>
+    <personnel-title-edit-component :editAction="editAction"
+                                    :editVisible="editDialog"
+                                    :editIndex="editedIndex"
+                                    :delete-value="deleteValue"
+                                    @cancel="cancel">
+    </personnel-title-edit-component>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('worktypes.workTypes'),
+      title: vm.$i18n.t('personneltitle.personnelTitles'),
       search: '',
       editDialog: false,
       editAction: {},
@@ -43,7 +43,7 @@ export default {
       return [
         {
           value: "name",
-          text: vm.$i18n.t("worktypes.workTypes"),
+          text: vm.$i18n.t("personneltitle.personnelTitles"),
           sortable: true,
           align: "left"
         },
@@ -61,10 +61,10 @@ export default {
       ];
     },
 
-    workTypes() {
+    personnelTitles() {
       const vm = this;
 
-      return vm.$store.state.workTypesModule.workTypes;
+      return vm.$store.state.personnelTitleModule.personnelTitle;
     }
   },
 
@@ -73,7 +73,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.workTypes.indexOf(payload);
+      vm.editedIndex = vm.personnelTitles.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -94,7 +94,7 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-        vm.$store.dispatch('deleteWorkType', {
+        vm.$store.dispatch('deletePersonnelTitle', {
           id: payload.id
         });
       //vm.deleteValue = payload;
@@ -103,7 +103,7 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch('getWorkTypes');
+    vm.$store.dispatch('getPersonnelTitles');
   }
 };
 
