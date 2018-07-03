@@ -238,8 +238,8 @@ export default {
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("rooms.rooms"),
-              route: "/roomspage"
+              text: vm.$i18n.t("operatingrooms.operatingRooms"),
+              route: "/operatingroomspage"
             },
             {
               icon: "assignment",
