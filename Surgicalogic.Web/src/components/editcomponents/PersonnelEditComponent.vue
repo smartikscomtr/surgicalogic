@@ -2,9 +2,9 @@
   <div>
     <v-dialog v-model="showModal"
               slot="activator">
-      <v-card>
+      <v-card class="container fluid grid-list-md">
         <v-card-title>
-          <div class="headline-wrap">
+          <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
                   flat
                    @click="cancel">
@@ -24,23 +24,22 @@
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['personnelCode']"
                               :label="$t('personnel.personnelCode')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['firstName']" :label="$t('personnel.givenName')"></v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md4>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['lastName']" :label="$t('personnel.familyName')"></v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-select v-model="selectPersonnelTitle"
                           :items="personnelTitles"
                           :label="$t('personnel.personnelTitle')"
@@ -49,7 +48,7 @@
                 </v-select>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-select v-model="selectBranch"
                           :items="branchs"
                           :label="$t('personnel.branch')"
@@ -58,7 +57,7 @@
                 </v-select>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-select v-model="selectWorkType"
                           :items="workTypes"
                           :label="$t('worktypes.workTypes')"
@@ -67,7 +66,6 @@
                 </v-select>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -218,7 +216,7 @@ export default {
           branchId: vm.selectBranch,
           workTypeId: vm.selectWorkType
         });
-      }
+      }debugger
 
       vm.showModal = false;
     }
@@ -226,6 +224,10 @@ export default {
 
   created() {
     const vm = this;
+
+    vm.$store.dispatch('getBranchs');
+    vm.$store.dispatch('getPersonnelTitles');
+    vm.$store.dispatch('getWorkTypes');
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
