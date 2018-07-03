@@ -11,7 +11,7 @@ import equipmentTypesModule from './modules/equipmentTypes';
 import operationTypeModule from './modules/operationtypes';
 import personnelModule from './modules/personnel';
 import personnelTitleModule from './modules/personnelTitle';
-import roomModule from './modules/rooms';
+import operatingRoomModule from './modules/operatingrooms';
 import workTypesModule from './modules/workTypes';
 
 //New Registeration Of Store
@@ -27,7 +27,7 @@ export default  new Vuex.Store({
      operationTypeModule,
      personnelModule,
      personnelTitleModule,
-     roomModule,
+     operatingRoomModule,
      workTypesModule
   }
 });

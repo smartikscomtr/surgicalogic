@@ -33,7 +33,7 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select
+                <v-select v-model="selectBranchs"
                           :items="branchs"
                           :label="$t('branchs.branch')"
                           item-text="name"
@@ -108,6 +108,7 @@ export default {
 
     branchs() {
       const vm = this;
+
       return vm.$store.state.branchsModule.branchs;
     },
 
@@ -158,8 +159,6 @@ export default {
 
   created() {
     const vm = this;
-
-    vm.$store.dispatch("getBranchs");
 
     vm.$watch("deleteValue", (newValue, oldValue) => {
       if (newValue !== oldValue) {

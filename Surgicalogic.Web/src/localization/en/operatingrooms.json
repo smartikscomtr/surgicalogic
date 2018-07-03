@@ -1,0 +1,11 @@
+{
+  "operatingRoom": "Operating Room",
+  "location": "Location",
+  "size": "Size",
+  "width": "Width",
+  "height": "Height",
+  "lenght": "Lenght",
+  "operatingRooms": "Operating Rooms",
+  "addOperatingRoomInformation": "Add Operating Room Information",
+  "editOperatingRoomInformation": "Edit Operating Room Information"
+}

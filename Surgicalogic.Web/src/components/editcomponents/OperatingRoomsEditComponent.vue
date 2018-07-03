@@ -27,20 +27,38 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="editAction['room']"
-                              :label="$t('rooms.room')">
+                <v-text-field v-model="editAction['name']"
+                              :label="$t('operatingrooms.operatingRoom')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['location']"
-                              :label="$t('rooms.location')">
+                              :label="$t('operatingrooms.location')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="editAction['size']"
-                              :label="$t('rooms.size')">
+                <v-text-field v-model="editAction['width']"
+                              :label="$t('operatingrooms.width')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['height']"
+                              :label="$t('operatingrooms.height')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['lenght']"
+                              :label="$t('operatingrooms.lenght')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['description']"
+                              :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
 
@@ -64,7 +82,6 @@
 
 <script>
 
-import _each from 'lodash/each';
 
 export default {
   props: {
@@ -100,7 +117,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$t('rooms.addRoomInformation') : vm.$t('rooms.editRoomInformation');
+      return vm.editIndex === -1 ? vm.$t('operatingrooms.addOperatingRoomInformation') : vm.$t('operatingrooms.editOperatingRoomInformation');
     },
 
     showModal: {
@@ -148,26 +165,21 @@ export default {
       const vm = this;
 
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateBranch", {
+        vm.$store.dispatch("updateOperatingRoom", {
           id: vm.actions.id,
-          personnelCode: vm.editAction.personnelCode,
-          givenName: vm.editAction.givenName,
-          familyName: vm.editAction.familyName,
-          tasks: vm.editAction.tasks,
-          branch: vm.editAction.branch,
-          shift: vm.editAction.shift,
-          workType: vm.editAction.workType
+          name: vm.editAction.name,
+          description: vm.editAction.description,
+          width: vm.editAction.width,
+          height: vm.editAction.height,
+          lenght: vm.editAction.lenght
         });
       } else {
-        vm.$store.dispatch("insertBranch", {
-          id: vm.actions.id,
-          personnelCode: vm.editAction.personnelCode,
-          givenName: vm.editAction.givenName,
-          familyName: vm.editAction.familyName,
-          tasks: vm.editAction.tasks,
-          branch: vm.editAction.branch,
-          shift: vm.editAction.shift,
-          workType: vm.editAction.workType
+        vm.$store.dispatch("insertOperatingRoom", {
+          name: vm.editAction.name,
+          description: vm.editAction.description,
+          width: vm.editAction.width,
+          height: vm.editAction.height,
+          lenght: vm.editAction.lenght
         });
       }
 
@@ -177,7 +189,6 @@ export default {
 
   created() {
     const vm = this;
-
 
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {

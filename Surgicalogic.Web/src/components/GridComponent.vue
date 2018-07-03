@@ -129,7 +129,6 @@ export default {
 </script>
 
 <style>
-
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;
@@ -181,7 +180,6 @@ tr:nth-child(even) {
   width: 100%;
 }
 .card {
-  border-radius: 8px;
   background-color: #fff;
   position: relative;
   margin-top: 0;
@@ -193,6 +191,12 @@ tr:nth-child(even) {
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+}
+.card__title .flex {
+  padding: 0 14px;
+}
+.card__text .flex {
+  padding: 0 20px !important;
 }
 .text {
   flex: 1;
@@ -208,18 +212,24 @@ tr:nth-child(even) {
   height: 40px;
   font-size: 15px;
 }
-.btnSave .btn__content{ color: #fff;}
+.btnSave .btn__content {
+  color: #fff;
+}
 .headline-wrap .btn--active .btn__content:before,
 .headline-wrap .btn:focus .btn__content:before,
 .headline-wrap .btn:hover .btn__content:before {
   background-color: transparent;
 }
-.headline-wrap .backBtn {
-  position: absolute;
-  left: 20px;
+.headline-wrap span.text {
+  margin: 0 10px;
 }
 .headline-wrap .backBtn i {
   color: #000 !important;
+}
+.headline-wrap .btn__content{
+      will-change: box-shadow;
+    -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }
 .label {
   font-size: 12px;

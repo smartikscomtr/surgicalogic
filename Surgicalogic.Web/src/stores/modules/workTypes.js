@@ -6,7 +6,7 @@ const workTypesModule = {
   },
 
   mutations: {
-    setworkTypes(state, workTypes) {
+    setWorkTypes(state, workTypes) {
       state.workTypes = workTypes;
     },
 
@@ -34,7 +34,7 @@ const workTypesModule = {
       axios.get('http://localhost/Surgicalogic.Api/WorkType/GetWorkTypes')
         .then(response => {
           if (response.data.info.succeeded == true){
-            context.commit('setworkTypes', response.data.result) // set the WorkType in the store
+            context.commit('setWorkTypes', response.data.result) // set the WorkType in the store
           }
         })
     },

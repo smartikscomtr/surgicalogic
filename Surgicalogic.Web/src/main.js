@@ -51,7 +51,7 @@ import EquipmentTypesEditComponent from '@/components/editcomponents/EquipmentTy
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
 import PersonnelEditComponent from '@/components/editcomponents/PersonnelEditComponent';
 import PersonnelTitleEditComponent from '@/components/editcomponents/PersonnelTitleEditComponent';
-import RoomsEditComponent from '@/components/editcomponents/RoomsEditComponent';
+import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRoomsEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 
 Vue.component('branchs-edit-component', BranchsEditComponent);
@@ -60,7 +60,7 @@ Vue.component('equipment-types-edit-component', EquipmentTypesEditComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);
 Vue.component('personnel-edit-component', PersonnelEditComponent);
 Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
-Vue.component('rooms-edit-component', RoomsEditComponent);
+Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
 
 
