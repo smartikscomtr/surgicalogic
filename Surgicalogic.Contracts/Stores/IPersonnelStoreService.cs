@@ -1,31 +1,11 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
+using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IPersonnelStoreService : IStoreService<PersonnelModel, PersonnelSorting, PersonnelFilter>
+    public interface IPersonnelStoreService : IStoreService<Personnel, PersonnelModel>
     {
     }
 
-    public enum PersonnelSorting
-    {
-        NotSet,
-
-        FirstNameAsc,
-        FirstNameDesc,
-
-        LastNameAsc,
-        LastNameDesc
-    }
-
-    public enum PersonnelFilter
-    {
-        NotSet,
-        Id,
-        PersonnelCode,
-        FirstName,
-        LastName,
-        Branch,
-        WorkType
-    }
 }

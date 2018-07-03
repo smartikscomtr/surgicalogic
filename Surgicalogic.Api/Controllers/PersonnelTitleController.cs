@@ -20,9 +20,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("PersonnelTitle/GetPersonnelTitles")]
         [HttpGet]
-        public async Task<ResultModel<PersonnelTitleOutputModel>> GetPersonnelTitle ([FromQuery] StringFilterSortPaginationModel <PersonnelTitleSorting, PersonnelTitleFilter> filter = null)
+        public async Task<ResultModel<PersonnelTitleOutputModel>> GetPersonnelTitle ()
         {
-            return await _personnelTitleStoreService.GetAsync<PersonnelTitleOutputModel>(filter);
+            return await _personnelTitleStoreService.GetAsync<PersonnelTitleOutputModel>();
         }
 
         [Route("PersonnelTitle/InsertPersonnelTitle")]
@@ -32,12 +32,10 @@ namespace Surgicalogic.Api.Controllers
             var personnelTitleItem = new PersonnelTitleModel()
             {
                 Name = item.Name,
-                Description = item.Description,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                Description = item.Description
             };
 
-            return await _personnelTitleStoreService.InsertAsync(personnelTitleItem);
+            return await _personnelTitleStoreService.InsertAndSaveAsync(personnelTitleItem);
         }
 
         [Route("PersonnelTitle/DeletePersonnelTitle/{id:int}")]
@@ -49,18 +47,16 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("PersonnelTitle/UpdatePersonnelTitle")]
         [HttpPost]
-        public Task<ResultModel<PersonnelTitleModel>> UpdatePersonnelTitle([FromBody] PersonnelTitleInputModel item)
+        public async Task<ResultModel<PersonnelTitleModel>> UpdatePersonnelTitle([FromBody] PersonnelTitleInputModel item)
         {
             var personnelTitleItem = new PersonnelTitleModel()
             {
                 Id = item.Id,
                 Name = item.Name,
-                Description = item.Description,
-                ModifiedDate = DateTime.Now,
-                ModifiedBy = 2
+                Description = item.Description
             };
 
-            return _personnelTitleStoreService.UpdateAsync(personnelTitleItem);
+            return await _personnelTitleStoreService.UpdatandSaveAsync(personnelTitleItem);
         }
     }
 }

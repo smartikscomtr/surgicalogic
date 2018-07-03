@@ -1,30 +1,11 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
+using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IEquipmentStoreService : IStoreService<EquipmentModel, EquipmentSorting, EquipmentFilter>
+    public interface IEquipmentStoreService : IStoreService<Equipment, EquipmentModel>
     {
     }
-    public enum EquipmentSorting
-    {
-        NotSet,
 
-        NameAsc,
-        NameDesc,
-
-        DescriptionAsc,
-        DescriptionDesc,
-
-        IsPortableAsc,
-        IsPortableDesc
-    }
-    public enum EquipmentFilter
-    {
-        NotSet,
-        Id,
-        Name,
-        Description,
-        IsPortable
-    }
 }

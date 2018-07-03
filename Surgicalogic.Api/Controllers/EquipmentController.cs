@@ -23,9 +23,9 @@ namespace Surgicalogic.Api.Controllers
         // GET api/values
         [Route("Equipment/GetEquipments")]
         [HttpGet]
-        public async Task<ResultModel<EquipmentOutputModel>> GetEquipments([FromQuery] StringFilterSortPaginationModel<EquipmentSorting, EquipmentFilter> filter = null)
+        public async Task<ResultModel<EquipmentOutputModel>> GetEquipments()
         {
-            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>(filter);
+            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>();
         }
 
         [Route("Equipment/InsertEquipment")]
@@ -37,24 +37,22 @@ namespace Surgicalogic.Api.Controllers
                 Name = item.Name,
                 Description = item.Description,
                 IsPortable = item.IsPortable,
-                EquipmentTypeId = item.EquipmentTypeId,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                EquipmentTypeId = item.EquipmentTypeId
             };
 
-            return await _equipmentStoreService.InsertAsync(equipmentItem);
+            return await _equipmentStoreService.InsertAndSaveAsync(equipmentItem);
         }
 
         [Route("Equipment/DeleteEquipment/{id:int}")]
         [HttpPost]
         public async Task<ResultModel<int>> DeleteEquipmentType(int id)
-        {            
+        {
             return await _equipmentStoreService.DeleteByIdAsync(id);
         }
 
         [Route("Equipment/UpdateEquipment")]
         [HttpPost]
-        public Task<ResultModel<EquipmentModel>> UpdateEquipments([FromBody] EquipmentInputModel item)
+        public async Task<ResultModel<EquipmentModel>> UpdateEquipments([FromBody] EquipmentInputModel item)
         {
             var equipmentItem = new EquipmentModel()
             {
@@ -62,12 +60,10 @@ namespace Surgicalogic.Api.Controllers
                 Name = item.Name,
                 Description = item.Description,
                 IsPortable = item.IsPortable,
-                EquipmentTypeId = item.EquipmentTypeId,
-                ModifiedDate = DateTime.Now,
-                ModifiedBy = 2
+                EquipmentTypeId = item.EquipmentTypeId
             };
-            return _equipmentStoreService.UpdateAsync(equipmentItem);
+            return await _equipmentStoreService.UpdatandSaveAsync(equipmentItem);
         }
-       
+
     }
 }

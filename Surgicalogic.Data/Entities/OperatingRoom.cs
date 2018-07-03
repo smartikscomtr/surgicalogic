@@ -17,10 +17,6 @@ namespace Surgicalogic.Data.Entities
         public Nullable<double> Width { get; set; }
         public Nullable<double> Height { get; set; }
         public Nullable<double> Length { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public Nullable<DateTime> ModifiedDate { get; set; }
-        public int CreatedBy { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
         public ICollection<Equipment> Equipment { get; set; }
 
     }

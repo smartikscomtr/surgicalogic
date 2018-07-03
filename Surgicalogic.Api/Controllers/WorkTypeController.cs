@@ -20,9 +20,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("WorkType/GetWorkTypes")]
         [HttpGet]
-        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes([FromQuery] StringFilterSortPaginationModel<WorkTypeSorting, WorkTypeFilter> filter = null)
+        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes()
         {
-            return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>(filter);
+            return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>();
         }
 
         [Route("WorkType/InsertWorkType")]
@@ -32,12 +32,10 @@ namespace Surgicalogic.Api.Controllers
             var workTypeItem = new WorkTypeModel()
             {
                 Name = item.Name,
-                Description = item.Description,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                Description = item.Description
             };
 
-            return await _workTypeStoreService.InsertAsync(workTypeItem);
+            return await _workTypeStoreService.InsertAndSaveAsync(workTypeItem);
         }
 
         [Route("WorkType/DeleteWorkType/{id:int}")]
@@ -49,18 +47,16 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("WorkType/UpdateWorkType")]
         [HttpPost]
-        public Task<ResultModel<WorkTypeModel>> UpdateWorkType([FromBody] WorkTypeInputModel item)
+        public async Task<ResultModel<WorkTypeModel>> UpdateWorkType([FromBody] WorkTypeInputModel item)
         {
             var workTypeItem = new WorkTypeModel()
             {
                 Id = item.Id,
                 Name = item.Name,
-                Description = item.Description,
-                ModifiedDate = DateTime.Now,
-                ModifiedBy = 2
+                Description = item.Description
             };
 
-            return _workTypeStoreService.UpdateAsync(workTypeItem);
+            return await _workTypeStoreService.UpdatandSaveAsync(workTypeItem);
         }
     }
 }

@@ -1,28 +1,12 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
+using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IBranchStoreService : IStoreService<BranchModel, BranchSorting, BranchFilter>
+    public interface IBranchStoreService : IStoreService<Branch, BranchModel>
     {
     }
 
-    public enum BranchSorting
-    {
-        NotSet,
-
-        NameAsc,
-        NameDesc,
-
-        DescriptionAsc,
-        DescriptionDesc
-    }
-
-    public enum BranchFilter
-    {
-        NotSet,
-        Id,
-        Name,
-        Description
-    }
+    
 }

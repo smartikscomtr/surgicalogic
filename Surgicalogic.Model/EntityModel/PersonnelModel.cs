@@ -10,9 +10,5 @@ namespace Surgicalogic.Model.EntityModel
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public Nullable<DateTime> ModifiedDate { get; set; }
-        public int CreatedBy { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
     }
 }

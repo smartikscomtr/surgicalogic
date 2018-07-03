@@ -20,9 +20,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Branch/GetBranchs")]
         [HttpGet]
-        public async Task<ResultModel<BranchOutputModel>> GetBranch([FromQuery] StringFilterSortPaginationModel<BranchSorting, BranchFilter> filter = null)
+        public async Task<ResultModel<BranchOutputModel>> GetBranch()
         {
-            return await _branchStoreService.GetAsync<BranchOutputModel>(filter);
+            return await _branchStoreService.GetAsync<BranchOutputModel>();
         }
 
         [Route("Branch/InsertBranch")]
@@ -32,34 +32,30 @@ namespace Surgicalogic.Api.Controllers
             var branchItem = new BranchModel()
             {
                 Name = item.Name,
-                Description = item.Description,
-                CreatedDate = DateTime.Now,
-                CreatedBy = 2
+                Description = item.Description
             };
 
-            return await _branchStoreService.InsertAsync(branchItem);
+            return await _branchStoreService.InsertAndSaveAsync(branchItem);
         }
 
         [Route("Branch/DeleteBranch/{id:int}")]
         [HttpPost]
         public async Task<ResultModel<int>> DeleteBranch(int id)
-        {            
+        {
             return await _branchStoreService.DeleteByIdAsync(id);
         }
 
         [Route("Branch/UpdateBranch")]
         [HttpPost]
-        public Task<ResultModel<BranchModel>> UpdateBranch([FromBody] BranchInputModel item)
+        public async Task<ResultModel<BranchModel>> UpdateBranch([FromBody] BranchInputModel item)
         {
             var branchItem = new BranchModel()
             {
                 Id = item.Id,
                 Name = item.Name,
-                Description = item.Description,
-                ModifiedDate = DateTime.Now,
-                ModifiedBy = 2
+                Description = item.Description
             };
-            return _branchStoreService.UpdateAsync(branchItem);
+            return await _branchStoreService.UpdatandSaveAsync(branchItem);
         }
     }
 }

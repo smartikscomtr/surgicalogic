@@ -1,25 +1,10 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
+using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IPersonnelTitleStoreService : IStoreService<PersonnelTitleModel, PersonnelTitleSorting, PersonnelTitleFilter>
+    public interface IPersonnelTitleStoreService : IStoreService<PersonnelTitle, PersonnelTitleModel>
     {
-    }
-
-    public enum PersonnelTitleSorting
-    {
-        NameAsc,
-        NameDesc,
-
-        DescriptionAsc,
-        DescriptionDesc
-    }
-
-    public enum PersonnelTitleFilter
-    {
-        Id,
-        Name,
-        Description
     }
 }

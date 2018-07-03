@@ -1,27 +1,11 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
+using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IWorkTypeStoreService : IStoreService<WorkTypeModel, WorkTypeSorting, WorkTypeFilter>
+    public interface IWorkTypeStoreService : IStoreService<WorkType, WorkTypeModel>
     {
     }
 
-    public enum WorkTypeSorting
-    {
-        NotSet,
-
-        NameAsc,
-        NameDesc,
-
-        DescriptionAsc,
-        DescriptionDesc
-    }
-
-    public enum WorkTypeFilter
-    {
-        Id,
-        Name,
-        Description
-    }
 }
