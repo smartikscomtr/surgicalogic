@@ -23,8 +23,6 @@
 
 <script>
 
-import _each from 'lodash/each';
-
 export default {
   data() {
     const vm = this;
@@ -37,8 +35,7 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1,
-      branchTitle: []
+      editedIndex: -1
     };
   },
 
@@ -54,7 +51,7 @@ export default {
           align: "left"
         },
         {
-          value: "branchTitle",
+          value: "branchId",
           text: vm.$i18n.t("branchs.branch"),
           sortable: true,
           align: "left"
@@ -68,7 +65,10 @@ export default {
     },
 
     operationTypes() {
-      return _each(this.$store.state.operationTypeModule.operationTypes, (item) => item.branchTitle = item.branch[0].name );
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.operationTypes;
+      // return _each(this.$store.state.operationTypeModule.operationTypes, (item) => item.branchTitle = item.branch[0].name );
     }
   },
 

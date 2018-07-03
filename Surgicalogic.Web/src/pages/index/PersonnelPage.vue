@@ -23,8 +23,6 @@
 
 <script>
 
-import _each from 'lodash/each';
-
 export default {
   data() {
     const vm = this;
@@ -38,7 +36,6 @@ export default {
       editAction: {},
       deleteValue: {},
       editedIndex: -1
-      // workTypeTitle: []
     };
   },
 
