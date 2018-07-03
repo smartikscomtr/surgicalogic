@@ -78,7 +78,7 @@ namespace Surgicalogic.Services.Stores.Base
 
             entity.CreatedDate = DateTime.Now;
 
-            _context.Set<TEntity>().Add(entity);
+            await _context.Set<TEntity>().AddAsync(entity);
 
             await _context.SaveChangesAsync();
             
@@ -113,6 +113,8 @@ namespace Surgicalogic.Services.Stores.Base
             entity.ModifiedBy = 2;
 
             entity.ModifiedDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
 
             return new ResultModel<TModel>
             {
