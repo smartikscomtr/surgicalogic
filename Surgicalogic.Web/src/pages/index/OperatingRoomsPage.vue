@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="rooms"
+                    :items="operatingRooms"
                     :title="title"
                     :show-detail="true"
                     :show-edit="true"
@@ -12,33 +12,30 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <rooms-edit-component :editAction="editAction"
-                          :editVisible="editDialog"
-                          :editIndex="editedIndex"
-                          :delete-value="deleteValue"
-                          @cancel="cancel">
-    </rooms-edit-component>
+    <operating-rooms-edit-component :editAction="editAction"
+                                    :editVisible="editDialog"
+                                    :editIndex="editedIndex"
+                                    :delete-value="deleteValue"
+                                    @cancel="cancel">
+    </operating-rooms-edit-component>
   </div>
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   data() {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('rooms.rooms'),
+      title: vm.$i18n.t('operatingrooms.operatingRooms'),
       search: '',
       detailDialog: false,
       editDialog: false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1,
-      equipmentTitle: []
+      editedIndex: -1
     }
   },
 
@@ -49,7 +46,31 @@ export default {
       return [
         {
           value: "name",
-          text: vm.$i18n.t("rooms.room"),
+          text: vm.$i18n.t("operatingrooms.operatingRoom"),
+          sortable: true,
+          align: "left"
+        },
+        {
+          value: "location",
+          text: vm.$i18n.t("operatingrooms.location"),
+          sortable: true,
+          align: "left"
+        },
+        {
+          value: "width",
+          text: vm.$i18n.t("operatingrooms.width"),
+          sortable: true,
+          align: "left"
+        },
+        {
+          value: "height",
+          text: vm.$i18n.t("operatingrooms.height"),
+          sortable: true,
+          align: "left"
+        },
+        {
+          value: "lenght",
+          text: vm.$i18n.t("operatingrooms.lenght"),
           sortable: true,
           align: "left"
         },
@@ -60,19 +81,7 @@ export default {
           align: "left"
         },
         {
-          value: "location",
-          text: vm.$i18n.t("rooms.location"),
-          sortable: true,
-          align: "left"
-        },
-        {
-          value: "size",
-          text: vm.$i18n.t("rooms.size"),
-          sortable: true,
-          align: "left"
-        },
-        {
-          value: "equipmentTitle",
+          value: "equipmentId",
           text: vm.$i18n.t("equipments.equipments"),
           sortable: true,
           align: "left"
@@ -85,8 +94,10 @@ export default {
       ];
     },
 
-    rooms() {
-      return this.$store.state.roomModule.rooms;
+    operatingRooms() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomModule.operatingRooms;
 
       // return _each(this.$store.state.roomModule.rooms, (item) => item.equipmentTitle = item.equipments[0].name );
     }
@@ -126,16 +137,17 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-        vm.$store.dispatch('deleteRoom', {
+        vm.$store.dispatch('deleteOperatingRoom', {
           id: payload.id
         });
+
       //vm.deleteValue = payload;
     }
   },
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getRooms");
+    vm.$store.dispatch("getOperatingRooms");
   }
 };
 
