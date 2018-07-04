@@ -109,7 +109,8 @@ export default {
         vm.$store.dispatch('deleteOperationType', {
           id: payload.id
         });
-      //vm.deleteValue = payload;
+
+      vm.deleteValue = payload;
     }
   },
 

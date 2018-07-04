@@ -10,18 +10,18 @@ const operatingRoomModule = {
         state.operatingRooms = operatingRooms;
       },
 
-      insertOperatingRooms(state, { item }) {
+      insertOperatingRoom(state, { item }) {
         state.operatingRooms.push(item);
       },
 
-      deleteOperatingRooms(state, { payload }) {
+      deleteOperatingRoom(state, { payload }) {
         let index = state.operatingRooms.findIndex((item) => {
           return item.id === payload.id
         });
         state.operatingRooms.splice(index, 1);
       },
 
-      updateOperatingRooms(state, payload) {
+      updateOperatingRoom(state, payload) {
         //state.operatingRooms.payload = payload;
       }
     },
@@ -47,7 +47,7 @@ const operatingRoomModule = {
           })
       },
 
-      deleteOperatingRooms(context, payload) {
+      deleteOperatingRoom(context, payload) {
         axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/DeleteOperatingRoom/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK') {
@@ -56,7 +56,7 @@ const operatingRoomModule = {
           })
       },
 
-      updateOperatingRooms(context, payload) {
+      updateOperatingRoom(context, payload) {
         axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/UpdateOperatingRoom',  payload)
           .then(response => {
             //context.commit('updateOperatingRoom', {payload}) // update the OperatingRooms in the store

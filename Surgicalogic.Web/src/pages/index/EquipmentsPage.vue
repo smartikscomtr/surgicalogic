@@ -133,6 +133,8 @@ export default {
       vm.$store.dispatch('deleteEquipment', {
         id: payload.id
       });
+
+      vm.deleteValue = payload;
     }
   },
 

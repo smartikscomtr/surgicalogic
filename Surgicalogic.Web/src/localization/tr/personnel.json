@@ -1,8 +1,8 @@
 {
-  "personnnelCode": "Personnel Kodu",
+  "personnelCode": "Personel Kodu",
   "givenName" : "Adı",
   "familyName": "Soyadı",
-  "personnelTitle": "Personnel Ünvanı",
+  "personnelTitle": "Personel Ünvanı",
   "branch": "Branşı",
   "workType": "Çalışma Tipi",
   "personnel": "Personel",
