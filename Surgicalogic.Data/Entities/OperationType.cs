@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Surgicalogic.Data.Entities
 {
-    [Table("Branches")]
-    public class Branch : Entity
+    [Table("OperationTypes")]
+    public class OperationType : Entity
     {
         public string Name { get; set; }
-        public string Description { get; set; }
-        public virtual ICollection<OperationType> OperationTypes { get; set; }
+        public string Description {get;set;}
+        public Branch Branch { get; set; }
 
     }
 }

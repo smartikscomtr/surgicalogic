@@ -37,7 +37,8 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      equipmentTypeLoadOnce: true
       //equipmentTypeTitle: []
     };
   },
