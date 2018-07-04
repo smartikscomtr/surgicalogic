@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Surgicalogic.Model.EntityModel;
+using System;
+using System.Collections.Generic;
 
 namespace Surgicalogic.Model.OutputModel
 {
@@ -11,5 +13,7 @@ namespace Surgicalogic.Model.OutputModel
         public Nullable<double> Width { get; set; }
         public Nullable<double> Height { get; set; }
         public Nullable<double> Length { get; set; }
+        public int EquipmentId { get; set; }
+        public ICollection<EquipmentModel> Equipment { get; set; }
     }
 }

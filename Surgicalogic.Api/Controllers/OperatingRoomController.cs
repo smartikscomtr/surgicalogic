@@ -36,7 +36,8 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
-                Length = item.Length
+                Length = item.Length,
+                EquipmentId = item.EquipmentId
             };
 
             return await _operatingRoomStoreService.InsertAndSaveAsync(operatingRoomItem);
@@ -61,8 +62,10 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
-                Length = item.Length
+                Length = item.Length,
+                EquipmentId = item.EquipmentId
             };
+
             return await _operatingRoomStoreService.UpdatandSaveAsync(operatingRoomItem);
         }
 
