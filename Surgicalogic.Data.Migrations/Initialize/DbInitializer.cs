@@ -15,13 +15,14 @@ namespace Surgicalogic.Data.Migrations.Initialize
         {
             context.Database.EnsureCreated(); //if db is not exist ,it will create database .but ,do nothing .
 
-            if (context.WorkType.Any() || 
+            if (context.WorkTypes.Any() || 
                 context.EquipmentTypes.Any() || 
                 context.Equipments.Any() || 
                 context.Branches.Any() || 
                 context.OperatingRooms.Any() || 
                 context.Personnels.Any() || 
-                context.PersonnelTitles.Any())
+                context.PersonnelTitles.Any() ||
+                context.OperationTypes.Any())
             {
                 return; // DB has been seeded
             }
