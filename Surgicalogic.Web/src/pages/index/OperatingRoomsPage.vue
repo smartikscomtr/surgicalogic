@@ -115,7 +115,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.rooms.indexOf(payload);
+      vm.editedIndex = vm.operatingRooms.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -141,13 +141,14 @@ export default {
           id: payload.id
         });
 
-      //vm.deleteValue = payload;
+      vm.deleteValue = payload;
     }
   },
   created() {
     const vm = this;
 
     vm.$store.dispatch("getOperatingRooms");
+    vm.$store.dispatch("getEquipments");
   }
 };
 

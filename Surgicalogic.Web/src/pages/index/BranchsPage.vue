@@ -113,7 +113,8 @@ export default {
         vm.$store.dispatch('deleteBranch', {
           id: payload.id
         });
-      //vm.deleteValue = payload;
+
+      vm.deleteValue = payload;
     }
   },
 
