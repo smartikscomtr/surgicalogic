@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,7 @@ using Surgicalogic.Data.Utilities;
 using Surgicalogic.Services.Services;
 using Surgicalogic.Services.Stores;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 
@@ -41,6 +44,35 @@ namespace Surgicalogic.Api
                             builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+           .AddEntityFrameworkStores<DataContext>()
+           .AddDefaultTokenProviders();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["AppSettings:Token:Issuer"],
+                        ValidAudience = Configuration["AppSettings:Token:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Token:SecurityKey"])),
+                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                    };
+                });
+
             services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
             //CROS service registerd. This methode was add besause of allow-control-access-origin 
@@ -52,28 +84,7 @@ namespace Surgicalogic.Api
                        .AllowAnyHeader())
             );
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<DataContext>()
-            .AddDefaultTokenProviders();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddCookie()
-                    .AddJwtBearer(jwtBearerOptions =>
-                    {
-                        jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
-                        {
-                            ValidateActor = false,
-                            ValidateAudience = false,
-                            ValidateLifetime = true,
-                            ValidateIssuerSigningKey = true,
-                            ValidateIssuer = false,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
-                                                               (Configuration["AppSettings:Token:SecurityKey"]))
-                        };
-                    });
+            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Error401");
 
             #region StoreService Registeration
 
@@ -104,7 +115,7 @@ namespace Surgicalogic.Api
 
             app.UseCors("CorsConfig");
 
-            app.UseMvc();
+            app.UseAuthentication();
 
             AuthAppBuilderExtensions.UseAuthentication(app);
 
@@ -117,12 +128,15 @@ namespace Surgicalogic.Api
             DbInitializer.Seed(context);
 
             BuildAppSettings();
+
+            app.UseMvc();
         }
 
         private void BuildAppSettings()
         {
             AppSettings.TokenSecurityKey = Configuration["AppSettings:Token:SecurityKey"];
             AppSettings.TokenValidityPeriodInMinutes = Configuration["AppSettings:Token:ValidityPeriodInMinutes"].ToNCInt();
+            AppSettings.Issuer = Configuration["AppSettings:Token:Issuer"];
         }
     }
 }
