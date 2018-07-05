@@ -254,7 +254,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BranchId");
+                    b.Property<int>("BranchId");
 
                     b.Property<int>("CreatedBy");
 
@@ -481,7 +481,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     b.HasOne("Surgicalogic.Data.Entities.Branch", "Branch")
                         .WithMany("OperationTypes")
-                        .HasForeignKey("BranchId");
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>

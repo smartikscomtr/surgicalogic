@@ -10,11 +10,7 @@ namespace Surgicalogic.Model.OutputModel
         public string Name { get; set; }
         public string Description { get; set; }
         public int EquipmentTypeId { get; set; }
-        public bool IsPortable { get; set; }
-        
-        //public int EquipmentTypeName { get; set; }
-
-
-        //public EquipmentTypeOutputModel EquipmentTypeModel { get; set;}
+        public bool IsPortable { get; set; }        
+        public string EquipmentTypeName { get; set; }        
     }
 }

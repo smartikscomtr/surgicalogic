@@ -92,9 +92,7 @@ export default {
   },
 
   data() {
-    return {
-      selectEquipmentType : {}
-    };
+    return {}
   },
 
   computed: {
@@ -121,21 +119,18 @@ export default {
 
     equipmentTypes() {
       const vm = this;
-
-      return vm.$store.state.equipmentTypesModule.allEquipmentTypes;
-    },
-
-    selectEquipmentType() {
-      const vm = this;
-
-      const items = vm.actions['equipmentTypes'];
-
-      _each(items, (item) => {
-          item.name = vm.$store.state.equipmentTypesModule.equipmentTypes.find(d => d.id === item.id);
-      });
-
-      return items;
-    }
+      
+      return vm.$store.state.equipmentModule.allEquipmentTypes;
+    },  
+    selectEquipmentType: {
+     get : function(){
+        return this.editAction.equipmentTypeId
+     },
+     set: function(val){
+        this.editAction.equipmentTypeName = this.$store.state.equipmentModule.allEquipmentTypes.find(function(item) { if(item.id == val) return item }).name       
+        this.editAction.equipmentTypeId = val
+     }
+    } 
   },
 
   methods: {
@@ -154,15 +149,17 @@ export default {
             name: vm.editAction.name,
             description: vm.editAction.description,
             isPortable: vm.editAction.isPortable,
-            equipmentTypeId: vm.selectEquipmentType
+            equipmentTypeId: vm.selectEquipmentType                         
           });
 
       } else {
+        console.log(vm)
         vm.$store.dispatch('insertEquipment', {
           name: vm.editAction.name,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
           equipmentTypeId: vm.selectEquipmentType
+
         });
       }
 

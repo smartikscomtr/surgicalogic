@@ -30,7 +30,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Equipment/InsertEquipment")]
         [HttpPost]
-        public async Task<ResultModel<EquipmentModel>> InsertEquipment([FromBody] EquipmentInputModel item)
+        public async Task<ResultModel<EquipmentOutputModel>> InsertEquipment([FromBody] EquipmentInputModel item)
         {
             var equipmentItem = new EquipmentModel()
             {
@@ -40,7 +40,7 @@ namespace Surgicalogic.Api.Controllers
                 EquipmentTypeId = item.EquipmentTypeId
             };
 
-            return await _equipmentStoreService.InsertAndSaveAsync(equipmentItem);
+            return await _equipmentStoreService.InsertAndSaveAsync<EquipmentOutputModel>(equipmentItem);
         }
 
         [Route("Equipment/DeleteEquipment/{id:int}")]

@@ -2,8 +2,7 @@ import axios from 'axios';
 
 const equipmentTypesModule = {
     state: {
-      equipmentTypes: [],
-      allEquipmentTypes: []
+      equipmentTypes: []
     },
 
     mutations: {
@@ -25,11 +24,7 @@ const equipmentTypesModule = {
 
       updateEquipmentType(state, payload) {
         //state.equipments.payload = payload;
-      },
-
-      setAllEquipmentTypes(state, payload) {
-        state.allEquipmentTypes = payload;
-      },
+      }
     },
 
     getters: {},
@@ -64,13 +59,6 @@ const equipmentTypesModule = {
         axios.post('http://localhost/Surgicalogic.Api/EquipmentType/UpdateEquipmentType',  payload)
           .then(response => {
               //context.commit('updateEquipmentType', {payload}) // update the Equipments in the store
-          })
-      },
-
-      getAllEquipmentTypes(context) {
-        axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipmentTypes')
-            .then(response => {
-              context.commit('setAllEquipmentTypes', response.data.result) // set the Equipments in the store
           })
       }
     }
