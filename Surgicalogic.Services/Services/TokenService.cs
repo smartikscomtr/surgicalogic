@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Surgicalogic.Common.Settings;
 using System;
@@ -14,55 +15,28 @@ namespace Surgicalogic.Services.Services
 {
     public static class TokenService
     {
-        public static string GenerateToken(string email)
+        public static object GenerateToken(string email, IdentityUser user)
         {
-            var claims = new[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Jti,email)
-                    };
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
+            };
 
-            var token = new JwtSecurityToken
-            (
-                //issuer: _configuration["Token:Issuer"],
-                //audience: _configuration["Token:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(AppSettings.TokenValidityPeriodInMinutes),
-                notBefore: DateTime.UtcNow,
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey
-                            (Encoding.UTF8.GetBytes(AppSettings.TokenSecurityKey)),
-                        SecurityAlgorithms.HmacSha256)
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettings.TokenSecurityKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddMinutes(AppSettings.TokenValidityPeriodInMinutes);
+
+            var token = new JwtSecurityToken(
+                AppSettings.Issuer,
+                AppSettings.Issuer,
+                claims,
+                expires: expires,
+                signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public static bool VerifyToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = GetValidationParameters();
-
-            SecurityToken validatedToken;
-            IPrincipal principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
-            Thread.CurrentPrincipal = principal;
-            if (validatedToken == null || validatedToken.ValidTo < DateTime.UtcNow)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private static TokenValidationParameters GetValidationParameters()
-        {
-            return new TokenValidationParameters
-            {
-                ValidateActor = false,
-                ValidateAudience = false,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidateIssuer = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
-                                                               (AppSettings.TokenSecurityKey))
-            };
         }
     }
 }

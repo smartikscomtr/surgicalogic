@@ -56,7 +56,6 @@ export default {
   computed: {
     headers() {
       const vm = this;
-
       return [
         {
           value: "name",
@@ -65,7 +64,7 @@ export default {
           align: "left"
         },
         {
-          value: "equipmentTypeId",
+          value:"equipmentTypeName",
           text: vm.$i18n.t("equipmenttypes.equipmentType"),
           sortable: true,
           align: "left"
@@ -91,10 +90,7 @@ export default {
     },
 
     equipments() {
-      const vm = this;
-
-      //return _each(this.$store.state.equipmentModule.equipments, (item) => item.equipmentTypeTitle = item.equipmentTypes[0].name );
-      return vm.$store.state.equipmentModule.equipments;
+      return this.$store.state.equipmentModule.equipments;
     }
   },
 

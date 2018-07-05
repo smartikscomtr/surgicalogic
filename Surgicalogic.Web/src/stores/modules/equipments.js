@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const equipmentModule = {
     state: {
-      equipments: []
+      equipments: [],
+      allEquipmentTypes: []
     },
 
     mutations: {
@@ -10,7 +11,7 @@ const equipmentModule = {
         state.equipments = equipments;
       },
 
-      insertEquipment(state, { item }) {
+      insertEquipment(state, { item }) {       
         state.equipments.push(item);
       },
 
@@ -22,12 +23,12 @@ const equipmentModule = {
         state.equipments.splice(index, 1);
       },
 
-      updateEquipment(state, payload) {
-        //state.equipments.payload = payload;
-        state.equipments.findIndex((item) => {
-          return item.equipmentTypeId === payload.equipmentTypeId
-        });
+      updateEquipment(state, payload) {                     
+      },
+      setAllEquipmentTypes(state, payload) {
+        state.allEquipmentTypes = payload;
       }
+
     },
 
     getters: {},
@@ -46,6 +47,7 @@ const equipmentModule = {
         axios.post('http://localhost/Surgicalogic.Api/Equipment/InsertEquipment', payload)
           .then(response => {
             if (response.data.info.succeeded == true) {
+             // console.log(payload)
               context.commit('insertEquipment', { item: response.data.result }) // insert the Equipments in the store
             }
           })
@@ -65,6 +67,12 @@ const equipmentModule = {
             .then(response => {
               context.commit('updateEquipment', response.data.result) // update the Equipments in the store
         })
+      },
+      getAllEquipmentTypes(context) {
+        axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipmentTypes')
+            .then(response => {
+              context.commit('setAllEquipmentTypes', response.data.result) // set the Equipments in the store
+          })
       }
     }
   }

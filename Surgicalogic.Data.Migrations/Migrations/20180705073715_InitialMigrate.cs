@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Surgicalogic.Data.Migrations.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -333,7 +333,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    BranchId = table.Column<int>(nullable: true)
+                    BranchId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,7 +343,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

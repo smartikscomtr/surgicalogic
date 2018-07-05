@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities.Base;
@@ -11,15 +8,12 @@ using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel.Base;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores.Base
 {
-    public abstract class StoreService<TEntity, TModel>  : IStoreService<TEntity, TModel> 
+    public abstract class StoreService<TEntity, TModel>  
         where TEntity : Entity
         where TModel : EntityModel
         
@@ -80,11 +74,23 @@ namespace Surgicalogic.Services.Stores.Base
             await _context.Set<TEntity>().AddAsync(entity);
 
             await _context.SaveChangesAsync();
-            
+
             return new ResultModel<TModel>
             {
-                Result = entity,
+                Result = _context.Set<TEntity>().AsNoTracking().ProjectTo<TModel>().First(e => e.Id == entity.Id),
                 Info = new Info()
+            };
+        }
+
+        public virtual async Task<ResultModel<TOutputModel>> InsertAndSaveAsync<TOutputModel>(TModel model)
+        {
+            var result = await InsertAndSaveAsync(model);
+              
+
+            return new ResultModel<TOutputModel>
+            {
+                Result = Mapper.Map<TOutputModel>(result.Result),                
+                Info = result.Info
             };
         }
 

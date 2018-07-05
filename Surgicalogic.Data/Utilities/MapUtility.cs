@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Data.Utilities
 {
@@ -11,7 +12,8 @@ namespace Surgicalogic.Data.Utilities
             #region Entity to EntityModel
 
             config.CreateMap<Branch, BranchModel>();
-            config.CreateMap<Equipment, EquipmentModel>();
+            config.CreateMap<Equipment, EquipmentModel>()
+                .ForMember(dest => dest.EquipmentTypeModel, opt => opt.MapFrom(src => src.EquipmentType));
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
             config.CreateMap<OperatingRoom, OperatingRoomModel>();
             config.CreateMap<OperationType, OperationTypeModel>();
@@ -33,6 +35,15 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<WorkTypeModel, WorkType>();
 
             #endregion
+
+            #region EntityModel to EntityOutputModel
+
+            config.CreateMap<EquipmentModel, EquipmentOutputModel>()                
+                .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentTypeModel.Name));
+            config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
+
+            #endregion
+
         }
     }
 }

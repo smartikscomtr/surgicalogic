@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.Account;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Surgicalogic.Common.Extensions;
 using Surgicalogic.Services.Services;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -27,8 +25,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Account/Login")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public async Task<object> Login([FromBody]LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -39,21 +36,18 @@ namespace Surgicalogic.Api.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-            if (result == Microsoft.AspNetCore.Identity.SignInResult.Success)
+            if (result.Succeeded)
             {
-                var token = TokenService.GenerateToken(model.Email);
-                return Ok(token);
+                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+                return TokenService.GenerateToken(model.Email, appUser);
             }
-            else
-            {
-                return BadRequest();
-            }
+
+            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
         }
 
         [Route("Account/Register")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([FromBody]RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -69,20 +63,19 @@ namespace Surgicalogic.Api.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    var token = TokenService.GenerateToken(model.Email);
+                    var token = TokenService.GenerateToken(model.Email, user);
                     return Ok(token);
                 }
 
             }
 
             // If we got this far, something failed, redisplay form
-            return BadRequest();
+            throw new ApplicationException("UNKNOWN_ERROR");
         }
 
         [Route("Account/ForgotPassword")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword([FromBody]ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -102,13 +95,12 @@ namespace Surgicalogic.Api.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return BadRequest();
+            throw new ApplicationException("UNKNOWN_ERROR");
         }
 
         [Route("Account/ResetPassword")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -132,10 +124,9 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("Account/LogOff")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void LogOff()
+        public async Task LogOff()
         {
-            //TODO: LogOff
+            await _signInManager.SignOutAsync();
         }
     }
 }
