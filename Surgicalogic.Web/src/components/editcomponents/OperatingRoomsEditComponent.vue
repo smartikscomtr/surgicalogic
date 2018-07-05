@@ -82,6 +82,7 @@
 
 <script>
 
+import _each from 'lodash/each';
 
 export default {
   props: {
@@ -137,14 +138,13 @@ export default {
 
     equipments() {
       const vm = this;
-
       return vm.$store.state.equipmentModule.equipments;
     },
 
     selectEquipments() {
       const vm = this;
 
-      const items = vm.actions['equipments'];
+      const items = vm.editAction['equipmentId'];
 
       _each(items, (item) => {
           item.name = vm.$store.state.equipmentModule.equipments.find(d => d.id === item.id);
@@ -195,7 +195,6 @@ export default {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
 
         vm.editVisible = false;
-        //Silme İşlemi
       }
     });
   }

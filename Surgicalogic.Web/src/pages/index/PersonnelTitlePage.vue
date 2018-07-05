@@ -97,7 +97,8 @@ export default {
         vm.$store.dispatch('deletePersonnelTitle', {
           id: payload.id
         });
-      //vm.deleteValue = payload;
+
+      vm.deleteValue = payload;
     }
   },
   created() {

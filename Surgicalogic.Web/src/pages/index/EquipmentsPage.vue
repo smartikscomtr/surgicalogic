@@ -37,7 +37,8 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      equipmentTypeLoadOnce: true
       //equipmentTypeTitle: []
     };
   },
@@ -133,6 +134,8 @@ export default {
       vm.$store.dispatch('deleteEquipment', {
         id: payload.id
       });
+
+      vm.deleteValue = payload;
     }
   },
 

@@ -216,7 +216,7 @@ export default {
           branchId: vm.selectBranch,
           workTypeId: vm.selectWorkType
         });
-      }debugger
+      }
 
       vm.showModal = false;
     }
