@@ -26,7 +26,7 @@ namespace Surgicalogic.Services.Services
                 //issuer: _configuration["Token:Issuer"],
                 //audience: _configuration["Token:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddSeconds(AppSettings.TokenValidityPeriodInMinutes),
+                expires: DateTime.UtcNow.AddMinutes(AppSettings.TokenValidityPeriodInMinutes),
                 notBefore: DateTime.UtcNow,
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey
                             (Encoding.UTF8.GetBytes(AppSettings.TokenSecurityKey)),

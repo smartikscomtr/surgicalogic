@@ -238,7 +238,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     "KH Tırnak kesme pensi 11 cm"
             };
 
-            foreach (var item in equipmentTypes)
+            foreach (var item in equipments)
             {
                 context.Equipments.Add(new Entities.Equipment
                 {
