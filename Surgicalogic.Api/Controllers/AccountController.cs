@@ -18,21 +18,11 @@ namespace Surgicalogic.Api.Controllers
     {
         private SignInManager<User> _signInManager;
         private UserManager<User> _userManager;
-        private IConfiguration _configuration;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration Configuration)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _configuration = Configuration;
-        }
-
-        [Route("Account/GetToken")]
-        public ActionResult GetToken()
-        {
-            var token = TokenService.GenerateToken("gktest@gmail.com");
-            bool verified = TokenService.VerifyToken(token);
-            return Ok(token);
         }
 
         [Route("Account/Login")]
