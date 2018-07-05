@@ -67,9 +67,9 @@ Vue.component('work-types-edit-component', WorkTypesEditComponent);
 
 
 // Registering Delete Components
-import EquipmentsDeleteComponent from '@/components/deletecomponents/EquipmentsDeleteComponent';
+import DeleteComponent from '@/components/DeleteComponent';
 
-Vue.component('equipments-delete-component', EquipmentsDeleteComponent);
+Vue.component('delete-component', DeleteComponent);
 
 
 new Vue({
