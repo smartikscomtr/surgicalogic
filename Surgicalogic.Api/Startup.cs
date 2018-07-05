@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Surgicalogic.Common.Extensions;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.DbContexts;
@@ -12,7 +17,9 @@ using Surgicalogic.Data.Migrations.Initialize;
 using Surgicalogic.Data.Utilities;
 using Surgicalogic.Services.Services;
 using Surgicalogic.Services.Stores;
+using System;
 using System.Linq;
+using System.Text;
 
 namespace Surgicalogic.Api
 {
@@ -45,6 +52,29 @@ namespace Surgicalogic.Api
                        .AllowAnyHeader())
             );
 
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<DataContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddCookie()
+                    .AddJwtBearer(jwtBearerOptions =>
+                    {
+                        jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidateActor = false,
+                            ValidateAudience = false,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidateIssuer = false,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
+                                                               (Configuration["AppSettings:Token:SecurityKey"]))
+                        };
+                    });
+
             #region StoreService Registeration
 
             services.AddScoped<IBranchStoreService, BranchStoreService>();
@@ -53,7 +83,6 @@ namespace Surgicalogic.Api
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
-
             #endregion
 
             services.AddMvc();
@@ -75,16 +104,23 @@ namespace Surgicalogic.Api
 
             app.UseMvc();
 
+            AuthAppBuilderExtensions.UseAuthentication(app);
+
             //Mapping Initialized
             Mapper.Initialize(cfg =>
             {
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            DbInitializer.Initialize(context);
+            DbInitializer.Seed(context);
+
+            BuildAppSettings();
         }
 
-
-
+        private void BuildAppSettings()
+        {
+            AppSettings.TokenSecurityKey = Configuration["AppSettings:Token:SecurityKey"];
+            AppSettings.TokenValidityPeriodInMinutes = Configuration["AppSettings:Token:ValidityPeriodInMinutes"].ToNCInt();
+        }
     }
 }
