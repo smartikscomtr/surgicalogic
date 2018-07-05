@@ -112,17 +112,17 @@ export default {
       return vm.$store.state.branchsModule.branchs;
     },
 
-    // selectBranchs() {
-    //   const vm = this;
+    selectBranchs() {
+      const vm = this;
 
-    //   const items = vm.actions['branch'];
+      const items = vm.editAction['branchId'];
 
-    //   _each(items, (item) => {
-    //       item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
-    //   });
+      _each(items, (item) => {
+          item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
+      });
 
-    //   return items;
-    // }
+      return items;
+    }
   },
 
   methods: {
@@ -163,6 +163,7 @@ export default {
     vm.$watch("deleteValue", (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t("common.areYouSureWantToDelete"));
+
         vm.editVisible = false;
         //Silme İşlemi
       }

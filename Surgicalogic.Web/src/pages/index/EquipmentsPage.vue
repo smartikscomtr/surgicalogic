@@ -12,12 +12,21 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
+    <equipments-detail-component :detailAction="detailAction"
+                                 :detailVisible="detailDialog"
+                                 @cancel="cancel">
+    </equipments-detail-component>
+
     <equipments-edit-component :editAction="editAction"
                                :editVisible="editDialog"
                                :editIndex="editedIndex"
-                               :delete-value="deleteValue"
                                @cancel="cancel">
     </equipments-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :deleteVisible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -34,6 +43,7 @@ export default {
       search: '',
       detailDialog: false,
       editDialog: false,
+      deleteDialog: false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
@@ -116,6 +126,7 @@ export default {
 
       vm.detailDialog = false;
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -129,11 +140,9 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      vm.$store.dispatch('deleteEquipment', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+
+      vm.deleteDialog = true;
     }
   },
 

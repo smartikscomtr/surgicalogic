@@ -5,6 +5,7 @@
     "description" : "Açıklama",
     "equipment": "Ekipman",
     "equipments": "Ekipmanlar",
+    "detailEquipments": "Ekipman Detayı",
     "addEquipmentsInformation": "Yeni Ekipman Bilgisi Ekle",
     "editEquipmentsInformation": "Ekipman Bilgileri Düzenleme"
 }

@@ -18,7 +18,7 @@
             <v-btn class="btnSave"
                   flat
                   @click.native="save">
-              Save
+              Kaydet
             </v-btn>
           </div>
         </v-card-title>
@@ -78,11 +78,6 @@ export default {
       default() {
         return {};
       }
-    },
-
-    deleteValue: {
-      type: Object,
-      required: false
     },
 
     editIndex: {
@@ -165,18 +160,6 @@ export default {
 
       vm.showModal = false;
     }
-  },
-
-  created() {
-    const vm = this;
-
-    vm.$watch('deleteValue', (newValue, oldValue) => {
-      if (newValue !== oldValue) {
-        confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-        vm.editVisible = false;
-        //Silme İşlemi
-      }
-    });
   }
 }
 

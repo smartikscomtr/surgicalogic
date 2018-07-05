@@ -1,7 +1,4 @@
-﻿using Surgicalogic.Planning.Model.CommonModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Surgicalogic.Planning.Model.OutputModel
 {
