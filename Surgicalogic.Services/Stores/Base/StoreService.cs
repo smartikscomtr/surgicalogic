@@ -9,7 +9,6 @@ using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities.Base;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel.Base;
-using Surgicalogic.Services.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;

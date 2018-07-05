@@ -83,7 +83,7 @@ namespace Surgicalogic.Api
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            DbInitializer.Initialize(context);
+            //DbInitializer.Initialize(context);
         }
 
 

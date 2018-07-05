@@ -24,11 +24,11 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<OperatingRoom> OperatingRooms { get; set; }
         public DbSet<Personnel> Personnels { get; set; }
         public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
-        public DbSet<WorkType> WorkType { get; set; }      
+        public DbSet<WorkType> WorkTypes { get; set; }
+        public DbSet<OperationType> OperationTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<Equipment>().ToTable("Equipments");
+        {            
 
             base.OnModelCreating(modelBuilder);
         }
