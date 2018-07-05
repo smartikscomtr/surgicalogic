@@ -5,6 +5,7 @@
   "description" : "Description",
   "equipment": "Equipment",
   "equipments": "Equipments",
+  "detailEquipments": "detailEquipments",
   "addEquipmentsInformation": "Add Equipments Information",
   "editEquipmentsInformation": "Edit Equipments Information"
 }

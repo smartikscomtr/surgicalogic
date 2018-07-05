@@ -129,6 +129,7 @@ export default {
 </script>
 
 <style>
+
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;
@@ -246,4 +247,5 @@ tr:nth-child(even) {
 .dialog.dialog--active {
   max-width: 600px;
 }
+
 </style>

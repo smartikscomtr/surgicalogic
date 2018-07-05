@@ -40,8 +40,10 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 // Registering Detail Components
 import BranchsDetailComponent from '@/components/detailcomponents/BranchsDetailComponent';
+import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
 
 Vue.component('branchs-detail-component', BranchsDetailComponent);
+Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 
 
 // Registering Edit Components
@@ -62,6 +64,12 @@ Vue.component('personnel-edit-component', PersonnelEditComponent);
 Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
 Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
+
+
+// Registering Delete Components
+import DeleteComponent from '@/components/DeleteComponent';
+
+Vue.component('delete-component', DeleteComponent);
 
 
 new Vue({

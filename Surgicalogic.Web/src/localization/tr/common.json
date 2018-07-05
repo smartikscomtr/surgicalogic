@@ -3,5 +3,9 @@
   "add": "Ekle",
   "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz ?",
   "name": "Ad",
-  "description": "Açıklama"
+  "description": "Açıklama",
+  "deleteOperation": "Silme İşlemi",
+  "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz?",
+  "yes": "Evet",
+  "no": "Hayır"
 }
