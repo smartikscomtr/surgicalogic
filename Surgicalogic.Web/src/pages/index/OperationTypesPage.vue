@@ -3,10 +3,9 @@
     <grid-component :headers="headers"
                     :items="operationTypes"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -30,7 +29,6 @@ export default {
     return {
       title: vm.$i18n.t('operationtypes.operationtypes'),
       search: '',
-      detailDialog: false,
       editDialog: false,
       detailAction: {},
       editAction: {},
@@ -73,13 +71,6 @@ export default {
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
     edit(payload){
       const vm = this;
 
@@ -91,7 +82,6 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.detailDialog = false;
       vm.editDialog = false;
     },
 
@@ -117,6 +107,7 @@ export default {
   created() {
     const vm = this;
 
+    vm.$store.dispatch("getBranchs");
     vm.$store.dispatch("getOperationTypes");
   }
 };
