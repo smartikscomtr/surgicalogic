@@ -16,7 +16,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
         public static void Seed(DataContext context)
         {
-            if (context.WorkType.Any() ||
+            if (context.WorkTypes.Any() ||
                 context.EquipmentTypes.Any() ||
                 context.Equipments.Any() ||
                 context.Branches.Any() ||
@@ -134,7 +134,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
             var workType = new Entities.WorkType();
             foreach (var item in workTypes)
             {
-                workType = context.WorkType.Add(new Entities.WorkType
+                workType = context.WorkTypes.Add(new Entities.WorkType
                 {
                     Name = item,
                     Description = item
@@ -311,7 +311,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
         public static void InitializeDataFromExcel(DataContext context, string excelFilePath)
         {
-            if (context.WorkType.Any() ||
+            if (context.WorkTypes.Any() ||
                 context.EquipmentTypes.Any() ||
                 context.Equipments.Any() ||
                 context.Branches.Any() ||
