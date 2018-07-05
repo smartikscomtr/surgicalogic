@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Surgicalogic.Planning.Model.CommonModel;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
 using Surgicalogic.Planning.ORTools;
