@@ -23,10 +23,10 @@
                                @cancel="cancel">
     </equipments-edit-component>
 
-    <delete-component :delete-value="deleteValue"
-                      :deleteVisible="deleteDialog"
-                      @cancel="cancel">
-    </delete-component>
+    <equipments-delete-component :delete-value="deleteValue"
+                                 :deleteVisible="deleteDialog"
+                                 @cancel="cancel">
+    </equipments-delete-component>
   </div>
 </template>
 
