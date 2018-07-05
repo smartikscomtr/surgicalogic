@@ -6,7 +6,7 @@ const operatingTypeModule = {
     },
 
     mutations: {
-      setoperatingTypes(state, operatingTypes) {
+      setOperatingTypes(state, operatingTypes) {
         state.operatingTypes = operatingTypes;
       },
 

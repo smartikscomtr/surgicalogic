@@ -3,5 +3,9 @@
   "name": "Name",
   "areYouSureWantToDelete": "Are you sure want to delete ?",
   "add": "Add",
-  "description": "Description"
+  "description": "Description",
+  "deleteOperation": "Delete Operation",
+  "doYouWantToDeleteTheRecord": "Do you want to delete the record?",
+  "yes": "Yes",
+  "no": "No"
 }
