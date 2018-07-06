@@ -12,6 +12,7 @@ import BranchsPage from "@/pages/index/BranchsPage";
 import DashboardPage from "@/pages/DashboardPage";
 import EquipmentsPage from "@/pages/index/EquipmentsPage";
 import EquipmentTypesPage from "@/pages/index/EquipmentTypesPage";
+import LoginPage from "@/pages/LoginPage";
 import OperationTypesPage from "@/pages/index/OperationTypesPage";
 import PersonnelPage from "@/pages/index/PersonnelPage";
 import PersonnelTitlePage from "@/pages/index/PersonnelTitlePage";
@@ -41,6 +42,14 @@ export default new VueRouter({
       path: '/equipmenttypespage',
       name: 'EquipmentTypesPage',
       component: EquipmentTypesPage
+    },
+    {
+      path: '/loginpage',
+      name: 'LoginPage',
+      component: LoginPage,
+      meta: {
+        fullPage: true
+      }
     },
     {
       path: '/operationtypespage',

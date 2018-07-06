@@ -14,12 +14,6 @@
             <span class="text">
               {{ formTitle }}
             </span>
-
-            <v-btn class="btnSave"
-                  flat
-                  @click.native="save">
-              Kaydet
-            </v-btn>
           </div>
         </v-card-title>
 
@@ -31,7 +25,6 @@
                               :label="$t('equipments.name')">
                 </v-text-field>
               </v-flex>
-
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectEquipmentType"
                           :items="equipmentTypes"
@@ -40,18 +33,22 @@
                           item-value="id">
                 </v-select>
               </v-flex>
-
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('equipments.description')">
                 </v-text-field>
               </v-flex>
-
               <v-flex xs12 sm6 md6 input-group-checkbox>
                 <v-checkbox v-model="editAction['isPortable']"
                               :label="$t('equipments.portable')"
                               color="primary">
                 </v-checkbox>
+              </v-flex>
+               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+               <v-btn class="btnSave orange"
+                  @click.native="save">
+                   Kaydet
+               </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -118,17 +115,23 @@ export default {
 
       return vm.$store.state.equipmentModule.allEquipmentTypes;
     },
+
     selectEquipmentType: {
-      get: function() {
-        return this.editAction.equipmentTypeId;
+      get() {
+        const vm = this;
+
+        return vm.editAction.equipmentTypeId;
       },
-      set: function(val) {
-        this.editAction.equipmentTypeName = this.$store.state.equipmentModule.allEquipmentTypes.find(
-          function(item) {
+      set(val) {
+        const vm = this;
+
+        vm.editAction.equipmentTypeName = vm.$store.state.equipmentModule.allEquipmentTypes.find(
+          item => {
             if (item.id == val) return item;
           }
         ).name;
-        this.editAction.equipmentTypeId = val;
+
+        vm.editAction.equipmentTypeId = val;
       }
     }
   },

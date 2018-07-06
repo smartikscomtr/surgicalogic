@@ -14,12 +14,6 @@
             <span class="text">
               {{ formTitle }}
             </span>
-
-            <v-btn class="btnSave"
-                  flat
-                  @click.native="save">
-              Save
-            </v-btn>
           </div>
         </v-card-title>
 
@@ -36,6 +30,12 @@
                 <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
+              </v-flex>
+               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+               <v-btn class="btnSave orange"
+                  @click.native="save">
+                   Kaydet
+               </v-btn>
               </v-flex>
             </v-layout>
           </v-container>

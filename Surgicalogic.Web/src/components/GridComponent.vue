@@ -15,7 +15,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn class="white--text"
+            <v-btn class="orange"
                   slot="activator"
                   @click="addNewItem">
               <v-icon color="white--text">
@@ -141,11 +141,7 @@ export default {
   background-color: #f8f8f8 !important;
   padding-top: 10px;
 }
-.white--text {
-  width: 158px;
-  margin-right: 0;
-  background-color: #ff7107 !important;
-}
+
 .table__overflow {
   margin-top: 36px;
 }
@@ -201,7 +197,7 @@ tr:nth-child(even) {
   color: #000;
   margin: 0;
 }
-.btnSave {
+.orange {
   padding: 0;
   margin: 0;
   min-width: 140px;
@@ -209,7 +205,7 @@ tr:nth-child(even) {
   height: 40px;
   font-size: 15px;
 }
-.btnSave .btn__content {
+.orange .btn__content {
   color: #fff;
 }
 .headline-wrap .btn--active .btn__content:before,
@@ -295,4 +291,5 @@ table.table thead th:not(:first-child) {
   padding: 0px 15px;
   white-space: nowrap;
 }
+
 </style>
