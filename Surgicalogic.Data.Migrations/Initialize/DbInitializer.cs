@@ -1,5 +1,6 @@
 ﻿using Smartiks.Framework.IO;
 using Surgicalogic.Data.DbContexts;
+using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 branch = context.Branches.Add(new Entities.Branch
                 {
                     Name = item,
-                    Description = item
+                    Description = item,
+                    CreatedDate = DateTime.Now
                 }).Entity;
             }
 
@@ -123,7 +125,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 title = context.PersonnelTitles.Add(new Entities.PersonnelTitle
                 {
                     Name = item,
-                    Description = item
+                    Description = item,
+                    CreatedDate = DateTime.Now
                 }).Entity;
             }
 
@@ -137,7 +140,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 workType = context.WorkTypes.Add(new Entities.WorkType
                 {
                     Name = item,
-                    Description = item
+                    Description = item,
+                    CreatedDate = DateTime.Now
                 }).Entity;
             }
 
@@ -181,6 +185,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 {
                     Name = item,
                     Description = item,
+                    CreatedDate = DateTime.Now
                 }).Entity;
             }
 
@@ -244,42 +249,49 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 {
                     EquipmentTypeId = equipmentType.Id,
                     Name = item,
-                    Description = item
+                    Description = item,
+                    CreatedDate = DateTime.Now
                 });
             }
 
             #endregion
 
             #region Personnels
-            context.Personnels.Add(new Entities.Personnel
+            var PersonnelsList = new List<Personnel>()
             {
+              new Personnel
+              {
                 PersonnelCode = "TB01",
                 FirstName = "Tuba",
                 LastName = "Bayraktutar",
                 PersonnelTitleId = title.Id,
                 BranchId = branch.Id,
-                WorkTypeId = workType.Id
-            });
-
-            context.Personnels.Add(new Entities.Personnel {
+                WorkTypeId = workType.Id,
+                CreatedDate = DateTime.Now
+              },
+              new Personnel
+              {
                 PersonnelCode = "GK01",
                 FirstName = "Gürkan",
                 LastName = "Kesebir",
                 PersonnelTitleId = title.Id,
                 BranchId = branch.Id,
-                WorkTypeId = workType.Id
-
-            });
-
-            context.Personnels.Add(new Entities.Personnel
-            {
+                WorkTypeId = workType.Id,
+                CreatedDate = DateTime.Now
+              },
+               new Personnel
+               {
                 PersonnelCode = "HC01",
                 FirstName = "Hasan",
                 LastName = "Çolak",
                 PersonnelTitleId = title.Id,
                 BranchId = branch.Id,
-                WorkTypeId = workType.Id
-            });
+                WorkTypeId = workType.Id,
+                CreatedDate = DateTime.Now
+               }
+            };
+
+            context.Personnels.AddRange(PersonnelsList);
 
             #endregion
 
@@ -289,9 +301,10 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 context.OperatingRooms.Add(new Entities.OperatingRoom
                 {
                     Name = GetLetter(),
-                    Height = _random.Next(190,300),
-                    Width = _random.Next(200,600),
-                    Length = _random.Next(200,500)
+                    Height = _random.Next(190, 300),
+                    Width = _random.Next(200, 600),
+                    Length = _random.Next(200, 500),
+                    CreatedDate = DateTime.Now
                 });
             }
             #endregion
