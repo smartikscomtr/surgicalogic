@@ -2,9 +2,9 @@
   <div>
     <v-dialog v-model="showModal"
               slot="activator">
-      <v-card>
+      <v-card class="container fluid grid-list-md">
         <v-card-title>
-          <div class="headline-wrap">
+          <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
                   flat
                    @click="cancel">
@@ -23,46 +23,46 @@
           </div>
         </v-card-title>
 
-        <v-card-text >
+        <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('operatingrooms.operatingRoom')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['location']"
                               :label="$t('operatingrooms.location')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['width']"
                               :label="$t('operatingrooms.width')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['height']"
                               :label="$t('operatingrooms.height')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['lenght']"
                               :label="$t('operatingrooms.lenght')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-select v-model="selectEquipments"
                           :items="equipments"
                           :label="$t('equipments.equipments')"

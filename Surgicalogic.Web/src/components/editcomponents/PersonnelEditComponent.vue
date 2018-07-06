@@ -24,6 +24,7 @@
         </v-card-title>
 
         <v-card-text>
+          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['personnelCode']"
@@ -66,6 +67,7 @@
                 </v-select>
               </v-flex>
             </v-layout>
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>

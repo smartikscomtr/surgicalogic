@@ -129,7 +129,6 @@ export default {
 </script>
 
 <style>
-
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;
@@ -140,10 +139,7 @@ export default {
 }
 .datatable__actions {
   background-color: #f8f8f8 !important;
-  padding-top: 20px;
-}
-.datatable__actions__range-controls {
-  margin-right: 15px;
+  padding-top: 10px;
 }
 .white--text {
   width: 158px;
@@ -194,7 +190,7 @@ tr:nth-child(even) {
   flex-direction: row;
 }
 .card__title .flex {
-  padding: 0 14px;
+  padding: 0 20px;
 }
 .card__text .flex {
   padding: 0 20px !important;
@@ -227,10 +223,12 @@ tr:nth-child(even) {
 .headline-wrap .backBtn i {
   color: #000 !important;
 }
-.headline-wrap .btn__content{
-      will-change: box-shadow;
-    -webkit-box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+.headline-wrap .btn__content {
+  will-change: box-shadow;
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .label {
   font-size: 12px;
@@ -244,8 +242,57 @@ tr:nth-child(even) {
   text-align: left;
   color: #000;
 }
-.dialog.dialog--active {
+.dialog.dialog--active,
+.dialog:not(.dialog--fullscreen) {
   max-width: 600px;
 }
-
+a {
+  color: #009688;
+}
+.primary {
+  background-color: #009688 !important;
+  border-color: #009688 !important;
+}
+.primary--text {
+  color: #009688 !important;
+}
+.primary--text input,
+.primary--text textarea {
+  caret-color: #009688 !important;
+}
+.primary--after::after {
+  background: #009688 !important;
+}
+.input-group-checkbox {
+  display: flex;
+  align-items: center;
+}
+.readonly-wrap {
+  flex-direction: column;
+}
+.dialog:not(.dialog--fullscreen) {
+  max-height: inherit;
+}
+.dialog:not(.dialog--fullscreen) .card__text {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.input-group__selections > div {
+  display: inline-block !important;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+table.table tbody td:first-child,
+table.table tbody td:not(:first-child),
+table.table tbody th:first-child,
+table.table tbody th:not(:first-child),
+table.table thead td:first-child,
+table.table thead td:not(:first-child),
+table.table thead th:first-child,
+table.table thead th:not(:first-child) {
+  padding: 0px 15px;
+  white-space: nowrap;
+}
 </style>
