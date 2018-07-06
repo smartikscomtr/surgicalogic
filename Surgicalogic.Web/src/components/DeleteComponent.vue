@@ -1,25 +1,33 @@
 <template>
   <div>
     <v-dialog v-model="showModal">
-      <v-card>
+      <v-card class="container fluid grid-list-md">
         <v-card-title class="headline">
+           <div class="flex xs12 sm12 md12">
           {{ deleteTitle }}
+           </div>
         </v-card-title>
 
         <v-card-text>
-          {{ deleteText }}
+           <v-container grid-list-md>
+              <v-layout wrap>
+                <div class="flex xs12 sm12 md12">
+               {{ deleteText }}
+                </div>
+              </v-layout>
+           </v-container>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="green darken-1"
+          <v-btn color="darken-1"
                  flat="flat"
                  @click.native="btnYesDelete">
             Evet
           </v-btn>
 
-          <v-btn color="green darken-1"
+          <v-btn color="red darken-1"
                  flat="flat"
                  @click.native="btnNoDelete">
             Hayır
@@ -31,7 +39,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     deleteValue: {
@@ -53,13 +60,13 @@ export default {
     deleteTitle() {
       const vm = this;
 
-      return vm.$i18n.t('common.deleteOperation');
+      return vm.$i18n.t("common.deleteOperation");
     },
 
     deleteText() {
       const vm = this;
 
-      return vm.$i18n.t('common.doYouWantToDeleteTheRecord');
+      return vm.$i18n.t("common.doYouWantToDeleteTheRecord");
     },
 
     showModal: {
@@ -68,11 +75,11 @@ export default {
 
         return vm.deleteVisible;
       },
-      set (value) {
+      set(value) {
         const vm = this;
 
         if (!value) {
-          vm.$emit('cancel');
+          vm.$emit("cancel");
         }
       }
     }
@@ -82,7 +89,7 @@ export default {
     btnYesDelete() {
       const vm = this;
 
-      vm.$store.dispatch('deleteEquipment', {
+      vm.$store.dispatch("deleteEquipment", {
         id: vm.deleteValue.id
       });
 
@@ -95,6 +102,5 @@ export default {
       vm.showModal = false;
     }
   }
-}
-
+};
 </script>

@@ -2,9 +2,9 @@
   <div>
     <v-dialog v-model="showModal"
               slot="activator">
-      <v-card>
+      <v-card class="container fluid grid-list-md">
         <v-card-title>
-          <div class="headline-wrap">
+          <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
                   flat
                    @click="cancel">
@@ -23,7 +23,7 @@
           </div>
         </v-card-title>
 
-        <v-card-text >
+        <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
