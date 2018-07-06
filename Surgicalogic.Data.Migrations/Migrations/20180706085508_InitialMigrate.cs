@@ -57,6 +57,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
@@ -75,6 +76,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
@@ -97,6 +99,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
@@ -115,6 +118,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
@@ -239,6 +243,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 500, nullable: true),
                     EquipmentTypeId = table.Column<int>(nullable: false),
@@ -272,6 +277,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     PersonnelCode = table.Column<string>(maxLength: 100, nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
@@ -306,6 +312,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     PersonnelId = table.Column<int>(nullable: true)
@@ -331,6 +338,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     BranchId = table.Column<int>(nullable: false)

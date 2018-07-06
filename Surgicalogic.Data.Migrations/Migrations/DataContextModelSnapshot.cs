@@ -141,6 +141,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
@@ -170,6 +172,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .HasMaxLength(500);
 
                     b.Property<int>("EquipmentTypeId");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsPortable");
 
@@ -204,6 +208,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
@@ -228,6 +234,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("Description");
 
                     b.Property<double?>("Height");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<double?>("Length");
 
@@ -262,6 +270,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
@@ -290,6 +300,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -327,6 +339,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Description");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -401,6 +415,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("Description");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 

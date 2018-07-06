@@ -15,8 +15,7 @@ namespace Surgicalogic.Services.Stores.Base
 {
     public abstract class StoreService<TEntity, TModel>  
         where TEntity : Entity
-        where TModel : EntityModel
-        
+        where TModel : EntityModel        
     {
 
         private DataContext _context;
@@ -26,11 +25,19 @@ namespace Surgicalogic.Services.Stores.Base
             _context = context;
         }
 
+        /// <summary>
+        /// This methode returns an IQuerable entity list being active. 
+        /// </summary>
+        /// <returns>IQueryable</returns>
         public virtual IQueryable<TEntity> GetQueryable()
         {
-            return _context.Set<TEntity>().AsNoTracking();
+            return _context.Set<TEntity>().AsNoTracking().Where(i => i.IsActive);
         }
 
+        /// <summary>
+        /// This methode returns list of entity model.
+        /// </summary>
+        /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<TModel>> GetAsync()
         {
             var query = GetQueryable();
@@ -50,6 +57,11 @@ namespace Surgicalogic.Services.Stores.Base
             };
         }
 
+        /// <summary>
+        ///This methode returns list of specifed type model list.
+        /// </summary>
+        /// <typeparam name="TOutputModel"></typeparam>
+        /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>()
         {
             var result = await GetAsync();
@@ -61,8 +73,12 @@ namespace Surgicalogic.Services.Stores.Base
                 Info = result.Info
             };
         }
-        
 
+        /// <summary>
+        /// This methode adds a new entity record with entity type.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<TModel>> InsertAndSaveAsync(TModel model)
         {
             var entity = Mapper.Map<TEntity>(model);
@@ -77,11 +93,17 @@ namespace Surgicalogic.Services.Stores.Base
 
             return new ResultModel<TModel>
             {
-                Result = _context.Set<TEntity>().AsNoTracking().ProjectTo<TModel>().First(e => e.Id == entity.Id),
+                Result = GetQueryable().ProjectTo<TModel>().First(e => e.Id == entity.Id),
                 Info = new Info()
             };
         }
 
+        /// <summary>
+        /// This methode adds a new entity record with entity type and retruns specifed type of record.
+        /// </summary>
+        /// <typeparam name="TOutputModel"></typeparam>
+        /// <param name="model"></param>
+        /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<TOutputModel>> InsertAndSaveAsync<TOutputModel>(TModel model)
         {
             var result = await InsertAndSaveAsync(model);
@@ -94,12 +116,21 @@ namespace Surgicalogic.Services.Stores.Base
             };
         }
 
+        /// <summary>
+        /// This methode deletes entity by marking false IsActive value of entity.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<int>> DeleteByIdAsync(int id)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == id);
+           
+            entity.IsActive = false;
 
-            _context.Set<TEntity>().Remove(entity);
+            entity.ModifiedBy = 0;
 
+            entity.ModifiedDate = DateTime.Now;
+              
             await _context.SaveChangesAsync();
 
             return new ResultModel<int>
@@ -109,6 +140,11 @@ namespace Surgicalogic.Services.Stores.Base
             };
         }
 
+        /// <summary>
+        /// This methode modifies the entities properties and saves it.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<TModel>> UpdatandSaveAsync(TModel model)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == model.Id);
