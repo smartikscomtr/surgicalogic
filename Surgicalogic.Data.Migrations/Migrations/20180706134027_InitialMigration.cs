@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Surgicalogic.Data.Migrations.Migrations
 {
-    public partial class InitialMigrate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,8 +58,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,7 +78,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
-                    Description = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
                     Location = table.Column<string>(nullable: true),
                     Width = table.Column<double>(nullable: true),
                     Height = table.Column<double>(nullable: true),
@@ -100,8 +100,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,8 +119,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -245,7 +245,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
-                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EquipmentTypeId = table.Column<int>(nullable: false),
                     IsPortable = table.Column<bool>(nullable: false),
                     OperatingRoomId = table.Column<int>(nullable: true)
@@ -313,8 +313,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
                     PersonnelId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -339,8 +339,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
                     BranchId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

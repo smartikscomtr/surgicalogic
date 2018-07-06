@@ -28,18 +28,7 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<OperationType> OperationTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-            modelBuilder.Entity<Equipment>()
-                .HasOne(e => e.EquipmentType)
-                .WithMany(e => e.Equipments);
-
-            modelBuilder.Entity<EquipmentType>()
-                .HasMany(e => e.Equipments)
-                .WithOne(e => e.EquipmentType)
-                .IsRequired();
-
-
+        {           
 
             base.OnModelCreating(modelBuilder);
         }
