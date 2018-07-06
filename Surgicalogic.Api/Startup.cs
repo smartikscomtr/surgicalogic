@@ -125,7 +125,8 @@ namespace Surgicalogic.Api
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            DbInitializer.Seed(context);
+            if(Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
+                DbInitializer.Seed(context);
 
             BuildAppSettings();
 

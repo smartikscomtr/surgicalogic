@@ -18,10 +18,5 @@ namespace Surgicalogic.Services.Stores
             _context = context;
         }
 
-        //public override IQueryable<Equipment> GetQueryable()
-        //{
-        //       return _context.Set<Equipment>().AsNoTracking().Include(e => e.EquipmentType);
-        //}
-
     }
 }
