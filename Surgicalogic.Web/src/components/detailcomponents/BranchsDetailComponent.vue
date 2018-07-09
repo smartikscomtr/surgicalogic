@@ -21,13 +21,23 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
-                <div class="label">{{ $t('branchs.branch') }}</div>
-                <div class="value">{{ detailAction['name'] }}</div>
+                <div class="label">
+                  {{ $t('branchs.branch') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['name'] }}
+                </div>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <div class="label">{{ $t('common.description') }}</div>
-                <div class="value">{{ detailAction['description'] }}</div>
+                <div class="label">
+                  {{ $t('common.description') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['description'] }}
+                </div>
               </v-flex>
             </v-layout>
           </v-container>
@@ -63,7 +73,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.$i18n.t("branchs.detailBranchs");
+      return vm.$i18n.t('branchs.detailBranchs');
     },
 
     showModal: {
@@ -72,11 +82,12 @@ export default {
 
         return vm.detailVisible;
       },
-      set (value) {
+
+      set(value) {
         const vm = this;
 
         if (!value) {
-          vm.$emit('cancel');
+          vm.$emit("cancel");
         }
       }
     }
@@ -89,6 +100,6 @@ export default {
       vm.showModal = false;
     }
   }
-}
+};
 
 </script>

@@ -33,6 +33,7 @@ namespace Surgicalogic.Common.Extensions
             foreach (var c in normalized)
             {
                 var uc = CharUnicodeInfo.GetUnicodeCategory(c);
+
                 if (uc != UnicodeCategory.NonSpacingMark)
                 {
                     sb.Append(c);
@@ -57,12 +58,10 @@ namespace Surgicalogic.Common.Extensions
             return !value.IsNullOrEmpty() && CellPhoneNumberRegex.IsMatch(value);
         }
 
-        /// <summary>
-        /// String bir değeri integer'a çevirir, integer olamayacak bir değere sahipse hata fırlatmaz, sıfır döner.
-        /// </summary>
         public static int ToNCInt(this string text)
         {
             int.TryParse(text, out int result);
+
             return result;
         }
     }

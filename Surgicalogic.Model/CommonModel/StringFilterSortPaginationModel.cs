@@ -2,9 +2,7 @@
 
 namespace Surgicalogic.Model.CommonModel
 {
-    public class StringFilterSortPaginationModel<TSorting, TFilter> : FilterSortPaginationModel<TSorting, TFilter, string>
-        where TSorting : struct
-        where TFilter : struct
+    public class StringFilterSortPaginationModel<TSorting, TFilter> : FilterSortPaginationModel<TSorting, TFilter, string> where TSorting : struct where TFilter : struct
     {
         public static implicit operator FilterSortPaginationModel<TSorting, TFilter>(StringFilterSortPaginationModel<TSorting, TFilter> right)
         {

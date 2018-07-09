@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                  flat
-                   @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -18,7 +18,7 @@
         </v-card-title>
 
         <v-card-text>
-           <v-container grid-list-md>
+          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
@@ -31,14 +31,14 @@
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-btn class="btnSave orange"
-                  @click.native="save">
-                   Kaydet
-               </v-btn>
+                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+                <v-btn class="btnSave orange"
+                       @click.native="save">
+                  Kaydet
+                </v-btn>
               </v-flex>
             </v-layout>
-           </v-container>
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -81,9 +81,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1
-        ? vm.$i18n.t("branchs.addBranchsInformation")
-        : vm.$i18n.t("branchs.editBranchsInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t('branchs.addBranchsInformation') : vm.$i18n.t('branchs.editBranchsInformation');
     },
 
     showModal: {
@@ -113,13 +111,14 @@ export default {
       const vm = this;
 
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateBranch", {
+        vm.$store.dispatch('updateBranch', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
         });
-      } else {
-        vm.$store.dispatch("insertBranch", {
+      }
+      else {
+        vm.$store.dispatch('insertBranch', {
           name: vm.editAction.name,
           description: vm.editAction.description
         });
@@ -142,5 +141,6 @@ export default {
     });
   }
 };
+
 </script>
 
