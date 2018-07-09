@@ -23,7 +23,6 @@ namespace Surgicalogic.Services.Services
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppSettings.TokenSecurityKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddMinutes(AppSettings.TokenValidityPeriodInMinutes);
-
             var token = new JwtSecurityToken(
                 AppSettings.Issuer,
                 AppSettings.Issuer,

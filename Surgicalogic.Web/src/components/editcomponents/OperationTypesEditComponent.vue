@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                  flat
-                   @click="cancel">
+              flat
+              @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -34,10 +34,11 @@
                           items-value="id">
                 </v-select>
               </v-flex>
+
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                <v-btn class="btnSave orange"
                   @click.native="save">
-                   Kaydet
+                Kaydet
                </v-btn>
               </v-flex>
             </v-layout>
@@ -86,9 +87,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1
-        ? vm.$i18n.t("operationtypes.addOperationType")
-        : vm.$i18n.t("operationtypes.editOperationType");
+      return vm.editIndex === -1 ? vm.$i18n.t('operationtypes.addOperationType') : vm.$i18n.t("operationtypes.editOperationType");
     },
 
     showModal: {
@@ -97,6 +96,7 @@ export default {
 
         return vm.editVisible;
       },
+
       set(value) {
         const vm = this;
 
@@ -143,7 +143,8 @@ export default {
           portable: vm.editAction.portable,
           description: vm.editAction.description
         });
-      } else {
+      }
+      else {
         vm.$store.dispatch("insertOperationType", {
           id: vm.editAction.id,
           name: vm.editAction.name,
@@ -170,4 +171,5 @@ export default {
     });
   }
 };
+
 </script>

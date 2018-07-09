@@ -1,7 +1,6 @@
 ﻿namespace Surgicalogic.Model.CommonModel
 {
-    public class FilterModel<TFilter, TValue>
-        where TFilter : struct
+    public class FilterModel<TFilter, TValue> where TFilter : struct
     {
         public TFilter Filter { get; set; }
         public TValue Value { get; set; }
@@ -15,8 +14,7 @@
         }
     }
 
-    public class FilterModel<TFilter> : FilterModel<TFilter, object>
-        where TFilter : struct
+    public class FilterModel<TFilter> : FilterModel<TFilter, object> where TFilter : struct
     {
     }
 }

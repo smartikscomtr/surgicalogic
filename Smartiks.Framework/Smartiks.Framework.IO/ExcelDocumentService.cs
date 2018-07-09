@@ -35,7 +35,6 @@ namespace Smartiks.Framework.IO
 
 
                 var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
                 var propertiesByName =
                     properties
                         .ToDictionary
@@ -52,14 +51,13 @@ namespace Smartiks.Framework.IO
                             StringComparer.Create(cultureInfo, true)
                         );
 
-
                 var worksheet = package.Workbook.Worksheets[worksheetName];
-
                 var worksheetDimension = worksheet.Dimension;
 
                 if (worksheetDimension == null)
+                {
                     throw new ExcelWorksheetEmptyException();
-
+                }
 
                 var columnNoAndPropertyMaps = new Dictionary<int, PropertyInfo>();
 
@@ -71,22 +69,23 @@ namespace Smartiks.Framework.IO
                         continue;
 
                     if (!propertiesByName.TryGetValue(cell.Text, out var property))
+                    {
                         throw new ExcelInvalidHeaderNameException(1, columnNo, cell.Address);
+                    }
 
                     columnNoAndPropertyMaps.Add(columnNo, property);
                 }
 
                 if (columnNoAndPropertyMaps.Count == 0)
+                {
                     throw new ExcelWorksheetEmptyException();
-
+                }
 
                 var items = new List<object>();
 
                 for (var rowNo = 2; rowNo <= worksheetDimension.Rows; rowNo++)
                 {
                     var isOk = false;
-
-
                     var item = Activator.CreateInstance(type);
 
                     foreach (var columnNoAndPropertyMap in columnNoAndPropertyMaps)
@@ -100,7 +99,6 @@ namespace Smartiks.Framework.IO
                             Nullable.GetUnderlyingType(columnNoAndPropertyMap.Value.PropertyType) ??
                             columnNoAndPropertyMap.Value.PropertyType;
 
-
                         object value;
 
                         try
@@ -111,7 +109,6 @@ namespace Smartiks.Framework.IO
                         {
                             throw new ExcelInvalidCellValueException(rowNo, columnNoAndPropertyMap.Key, cell.Address, columnNoAndPropertyMap.Value.Name, ex);
                         }
-
 
                         if (value != null)
                             columnNoAndPropertyMap.Value.SetValue(item, value);
@@ -135,10 +132,7 @@ namespace Smartiks.Framework.IO
             {
                 package.Compatibility.IsWorksheets1Based = true;
 
-
                 var worksheet = package.Workbook.Worksheets.Add(worksheetName);
-
-
                 var properties =
                     type
                         .GetProperties(BindingFlags.Public | BindingFlags.Instance)
@@ -189,7 +183,6 @@ namespace Smartiks.Framework.IO
 
                     rowNo++;
                 }
-
 
                 package.Save();
             }

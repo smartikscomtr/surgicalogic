@@ -38,7 +38,7 @@ namespace Surgicalogic.Api
             //DbContext service registered 
             services.AddDbContext<DataContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DataContext"),
-                            builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
+                 builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -48,14 +48,15 @@ namespace Surgicalogic.Api
            .AddEntityFrameworkStores<DataContext>()
            .AddDefaultTokenProviders();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            //remove default claims
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
                 })
                 .AddJwtBearer(cfg =>
                 {
@@ -72,7 +73,7 @@ namespace Surgicalogic.Api
 
             services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
-            //CROS service registerd. This methode was add besause of allow-control-access-origin 
+            //CROS service registerd. This methode was add besause of allow-control-access-origin
             services.AddCors(options =>
                 options.AddPolicy("CorsConfig",
                     builder =>
@@ -84,7 +85,6 @@ namespace Surgicalogic.Api
             //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Error401");
 
             #region StoreService Registeration
-
             services.AddScoped<IBranchStoreService, BranchStoreService>();
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
             services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
@@ -101,7 +101,6 @@ namespace Surgicalogic.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataContext context)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -109,9 +108,7 @@ namespace Surgicalogic.Api
 
             //StaticFile Allowance Initialized
             app.UseStaticFiles();
-
             app.UseCors("CorsConfig");
-
             app.UseAuthentication();
 
             AuthAppBuilderExtensions.UseAuthentication(app);
@@ -123,10 +120,11 @@ namespace Surgicalogic.Api
             });
 
             if (Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
+            {
                 DbInitializer.Seed(context);
+            }
 
             BuildAppSettings();
-
             app.UseMvc();
         }
 

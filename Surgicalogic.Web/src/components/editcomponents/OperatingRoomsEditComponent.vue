@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                  flat
-                   @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -66,11 +66,12 @@
                           chips>
                 </v-select>
               </v-flex>
+
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-btn class="btnSave orange"
-                  @click.native="save">
-                   Kaydet
-               </v-btn>
+                <v-btn class="btnSave orange"
+                    @click.native="save">
+                    Kaydet
+                </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -138,6 +139,7 @@ export default {
 
     equipments() {
       const vm = this;
+
       return vm.$store.state.equipmentModule.equipments;
     },
 
@@ -173,7 +175,8 @@ export default {
           height: vm.editAction.height,
           lenght: vm.editAction.lenght
         });
-      } else {
+      }
+      else {
         vm.$store.dispatch("insertOperatingRoom", {
           name: vm.editAction.name,
           description: vm.editAction.description,

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Surgicalogic.Contracts.Services;
 
-
 namespace Surgicalogic.Services.Services
 {
     public class AppServiceProvider : IAppServiceProvider
