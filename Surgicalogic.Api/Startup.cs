@@ -70,7 +70,25 @@ namespace Surgicalogic.Api
                     };
                 });
 
-            services.AddTransient<IAppServiceProvider, AppServiceProvider>();
+            #region Applicaiton Cookie Settings
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                // If the LoginPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/Login.
+                options.LoginPath = "/Account/Login";
+                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/AccessDenied.
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            #endregion
+
+            #region CROS Settings
 
             //CROS service registerd. This methode was add besause of allow-control-access-origin 
             services.AddCors(options =>
@@ -81,7 +99,9 @@ namespace Surgicalogic.Api
                        .AllowAnyHeader())
             );
 
-            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Error401");
+            #endregion
+
+            services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
             #region StoreService Registeration
 
@@ -93,9 +113,11 @@ namespace Surgicalogic.Api
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
+            
             #endregion
 
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
