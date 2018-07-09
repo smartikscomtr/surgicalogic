@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Model.Account
+﻿namespace Surgicalogic.Model.Account
 {
     public class ForgotPasswordViewModel
     {

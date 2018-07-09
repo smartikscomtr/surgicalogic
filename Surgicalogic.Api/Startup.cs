@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +19,6 @@ using Surgicalogic.Services.Services;
 using Surgicalogic.Services.Stores;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
 
 namespace Surgicalogic.Api
@@ -125,7 +122,7 @@ namespace Surgicalogic.Api
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            if(Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
+            if (Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
                 DbInitializer.Seed(context);
 
             BuildAppSettings();

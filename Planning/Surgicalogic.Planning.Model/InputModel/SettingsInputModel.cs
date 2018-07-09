@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Planning.Model.InputModel
+﻿namespace Surgicalogic.Planning.Model.InputModel
 {
     public class SettingsInputModel
     {

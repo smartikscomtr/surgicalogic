@@ -186,9 +186,6 @@ namespace Surgicalogic.Planning.ORTools
             DecisionBuilder db = solver.MakePhase(x_flat,
                                                   Solver.CHOOSE_MIN_SIZE_LOWEST_MIN,
                                                   Solver.ASSIGN_MIN_VALUE);
-
-
-
             solver.NewSearch(db);
 
             int num_solutions = 0;

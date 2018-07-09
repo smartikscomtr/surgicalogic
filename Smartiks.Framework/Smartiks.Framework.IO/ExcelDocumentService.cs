@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using Smartiks.Framework.IO.Abstractions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,8 +8,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using OfficeOpenXml;
-using Smartiks.Framework.IO.Abstractions;
 
 namespace Smartiks.Framework.IO
 {
@@ -40,12 +40,13 @@ namespace Smartiks.Framework.IO
                     properties
                         .ToDictionary
                         (
-                            p => {
+                            p =>
+                            {
 
                                 var displayAttribute = p.GetCustomAttribute<DisplayAttribute>();
 
                                 return
-                                    displayAttribute != null && !String.IsNullOrWhiteSpace(displayAttribute.Name) ? 
+                                    displayAttribute != null && !String.IsNullOrWhiteSpace(displayAttribute.Name) ?
                                         displayAttribute.Name : p.Name;
                             },
                             StringComparer.Create(cultureInfo, true)
@@ -110,7 +111,7 @@ namespace Smartiks.Framework.IO
                         {
                             throw new ExcelInvalidCellValueException(rowNo, columnNoAndPropertyMap.Key, cell.Address, columnNoAndPropertyMap.Value.Name, ex);
                         }
-                        
+
 
                         if (value != null)
                             columnNoAndPropertyMap.Value.SetValue(item, value);
@@ -141,7 +142,8 @@ namespace Smartiks.Framework.IO
                 var properties =
                     type
                         .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                        .OrderBy(p => {
+                        .OrderBy(p =>
+                        {
 
                             var displayAttribute = p.GetCustomAttribute<DisplayAttribute>();
 

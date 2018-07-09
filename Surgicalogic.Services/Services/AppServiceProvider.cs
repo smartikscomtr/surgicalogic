@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Surgicalogic.Contracts.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Surgicalogic.Contracts.Services;
 
 
 namespace Surgicalogic.Services.Services

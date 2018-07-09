@@ -7,5 +7,4 @@ namespace Surgicalogic.Contracts.Stores
     public interface IEquipmentStoreService : IStoreService<Equipment, EquipmentModel>
     {
     }
-
 }

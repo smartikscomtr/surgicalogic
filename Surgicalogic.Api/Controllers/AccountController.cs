@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.Account;
 using Surgicalogic.Services.Services;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -53,6 +50,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
@@ -62,11 +60,10 @@ namespace Surgicalogic.Api.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     var token = TokenService.GenerateToken(model.Email, user);
+
                     return Ok(token);
                 }
-
             }
 
             // If we got this far, something failed, redisplay form
@@ -80,6 +77,7 @@ namespace Surgicalogic.Api.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
+
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -106,13 +104,17 @@ namespace Surgicalogic.Api.Controllers
             {
                 return BadRequest();
             }
+
             var user = await _userManager.FindByNameAsync(model.Email);
+
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return BadRequest();
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");

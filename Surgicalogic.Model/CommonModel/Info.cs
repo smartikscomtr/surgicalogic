@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Surgicalogic.Model.Enum;
+﻿using Surgicalogic.Model.Enum;
+using System;
 
 namespace Surgicalogic.Model.CommonModel
 {

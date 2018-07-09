@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Data.Contracts
+﻿namespace Surgicalogic.Data.Contracts
 {
     public interface IIsActive
     {
-        bool IsActive { get; set;}
+        bool IsActive { get; set; }
     }
 }

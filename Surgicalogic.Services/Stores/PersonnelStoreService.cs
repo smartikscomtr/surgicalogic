@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Surgicalogic.Contracts.Stores;
+﻿using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
@@ -12,7 +11,5 @@ namespace Surgicalogic.Services.Stores
         public PersonnelStoreService(DataContext context) : base(context)
         {
         }
-
-
     }
 }

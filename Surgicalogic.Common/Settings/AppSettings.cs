@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Common.Settings
+﻿namespace Surgicalogic.Common.Settings
 {
     public static class AppSettings
     {

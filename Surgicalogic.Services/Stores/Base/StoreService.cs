@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities.Base;
 using Surgicalogic.Model.CommonModel;
@@ -13,11 +12,10 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores.Base
 {
-    public abstract class StoreService<TEntity, TModel>  
+    public abstract class StoreService<TEntity, TModel>
         where TEntity : Entity
-        where TModel : EntityModel        
+        where TModel : EntityModel
     {
-
         private DataContext _context;
 
         protected StoreService(DataContext context)
@@ -107,11 +105,11 @@ namespace Surgicalogic.Services.Stores.Base
         public virtual async Task<ResultModel<TOutputModel>> InsertAndSaveAsync<TOutputModel>(TModel model)
         {
             var result = await InsertAndSaveAsync(model);
-              
+
 
             return new ResultModel<TOutputModel>
             {
-                Result = Mapper.Map<TOutputModel>(result.Result),                
+                Result = Mapper.Map<TOutputModel>(result.Result),
                 Info = result.Info
             };
         }
@@ -124,13 +122,13 @@ namespace Surgicalogic.Services.Stores.Base
         public virtual async Task<ResultModel<int>> DeleteByIdAsync(int id)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == id);
-           
+
             entity.IsActive = false;
 
             entity.ModifiedBy = 0;
 
             entity.ModifiedDate = DateTime.Now;
-              
+
             await _context.SaveChangesAsync();
 
             return new ResultModel<int>
@@ -163,8 +161,5 @@ namespace Surgicalogic.Services.Stores.Base
                 Info = new Info()
             };
         }
-
-
-
     }
 }

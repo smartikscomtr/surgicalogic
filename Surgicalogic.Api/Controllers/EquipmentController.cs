@@ -3,9 +3,8 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
-using System;
-using System.Threading.Tasks;
 using Surgicalogic.Model.OutputModel;
+using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -80,8 +79,8 @@ namespace Surgicalogic.Api.Controllers
                 IsPortable = item.IsPortable,
                 EquipmentTypeId = item.EquipmentTypeId
             };
+
             return await _equipmentStoreService.UpdatandSaveAsync(equipmentItem);
         }
-
     }
 }
