@@ -15,11 +15,12 @@ using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Data.Migrations.Initialize;
 using Surgicalogic.Data.Utilities;
-using Surgicalogic.Services.Services;
+using Surgicalogic.Services.Common;
 using Surgicalogic.Services.Stores;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Surgicalogic.Api
 {
@@ -68,8 +69,12 @@ namespace Surgicalogic.Api
                         ValidAudience = Configuration["AppSettings:Token:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Token:SecurityKey"])),
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
+
                     };
                 });
+
+            services.AddTransient<IAppServiceProvider, AppServiceProvider>();
+            services.AddTransient<ITokenService, TokenService>();
 
             #region Applicaiton Cookie Settings
 
@@ -86,6 +91,7 @@ namespace Surgicalogic.Api
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
 
             #endregion
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Surgicalogic.Contracts.Services;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.Account;
-using Surgicalogic.Services.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +13,13 @@ namespace Surgicalogic.Api.Controllers
     {
         private SignInManager<User> _signInManager;
         private UserManager<User> _userManager;
+        private ITokenService _tokenService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _tokenService = tokenService;
         }
 
         [Route("Account/Login")]
@@ -36,7 +38,7 @@ namespace Surgicalogic.Api.Controllers
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return TokenService.GenerateToken(model.Email, appUser);
+                return _tokenService.GenerateToken(model.Email, appUser);
             }
 
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
@@ -60,8 +62,7 @@ namespace Surgicalogic.Api.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    var token = TokenService.GenerateToken(model.Email, user);
-
+                    var token = _tokenService.GenerateToken(model.Email, user);
                     return Ok(token);
                 }
             }
@@ -129,6 +130,33 @@ namespace Surgicalogic.Api.Controllers
         public async Task LogOff()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        [Route("Account/RefreshToken")]
+        [HttpPost]
+        public async Task<object> RefreshToken([FromBody]TokenViewModel model)
+        {
+            if (model == null || string.IsNullOrEmpty(model.Token) || string.IsNullOrEmpty(model.RefreshToken))
+            {
+                return BadRequest();
+            }
+
+            var email = _tokenService.GetEmailFromExpiredToken(model.Token);
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var savedRefreshToken = _tokenService.GetRefreshToken(user.Email, model.Token);
+
+            if (savedRefreshToken != model.RefreshToken)
+            {
+                return BadRequest();
+            }
+
+            return _tokenService.GenerateToken(user.Email, user);
         }
     }
 }

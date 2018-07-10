@@ -14,6 +14,7 @@ import Vuetify from 'vuetify';
 import Vuex from 'vuex';
 import { i18n } from './plugins/vue-i18n';
 import router from './router';
+import Authentication from './plugins/authentication-plugin.js';
 
 /* ============
  * Main App
@@ -26,6 +27,7 @@ import store from './stores';
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
+Vue.use(Authentication)
 
 // Registering Components
 import GridComponent from '@/components/GridComponent';
@@ -70,6 +72,12 @@ import DeleteComponent from '@/components/DeleteComponent';
 
 Vue.component('delete-component', DeleteComponent);
 
+import {
+  setupAxios,
+  setupHttpInterceptor
+} from './plugins/setup-axios';
+
+const axios = setupAxios();
 
 new Vue({
   el: '#app',
@@ -77,5 +85,11 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+
+  created() {
+    const vm = this;
+
+    setupHttpInterceptor(vm);
+  }
 })
