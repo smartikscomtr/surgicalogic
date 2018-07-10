@@ -1,68 +1,69 @@
 import axios from 'axios';
 
 const personnelTitleModule = {
-    state: {
-      personnelTitle: []
+  state: {
+    personnelTitle: []
+  },
+
+  mutations: {
+    setPersonnelTitles(state, personnelTitle) {
+      state.personnelTitle = personnelTitle;
     },
 
-    mutations: {
-      setPersonnelTitles(state, personnelTitle) {
-        state.personnelTitle = personnelTitle;
-      },
-
-      insertPersonnelTitle(state, { item }) {
-        state.personnelTitle.push(item);
-      },
-
-      deletePersonnelTitle(state, { payload }) {
-        let index = state.personnelTitle.findIndex((item) => {
-          return item.id === payload.id
-        });
-        state.personnelTitle.splice(index, 1);
-      },
-
-      updatePersonnelTitle(state, payload) {
-        //state.personnelTitle.payload = payload;
-      }
+    insertPersonnelTitle(state, { item }) {
+      state.personnelTitle.push(item);
     },
 
-    getters: {},
+    deletePersonnelTitle(state, { payload }) {
+      let index = state.personnelTitle.findIndex((item) => {
+        return item.id === payload.id
+      });
 
-    actions: {
-      getPersonnelTitles(context) {
-        axios.get('http://localhost/Surgicalogic.Api/PersonnelTitle/GetPersonnelTitles')
-          .then(response => {
-            context.commit('setPersonnelTitles', response.data.result) // set the PersonnelTitle in the store
-          })
-      },
+      state.personnelTitle.splice(index, 1);
+    },
 
-      insertPersonnelTitle(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/InsertPersonnelTitle', payload)
-          .then(response => {
-            if (response.statusText == 'OK') {
-              payload.id = response.data;
+    updatePersonnelTitle(state, payload) {
+      //state.personnelTitle.payload = payload;
+    }
+  },
 
-              context.commit('insertPersonnelTitle', { item: response.data.result }) // insert the PersonnelTitle in the store
-            }
-          })
-      },
+  getters: {},
 
-      deletePersonnelTitle(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/DeletePersonnelTitle/' + payload.id)
-          .then(response => {
-            if (response.statusText == 'OK') {
-              context.commit('deletePersonnelTitle', { payload }); // delete the PersonnelTitle in the store
-            }
-          })
-      },
+  actions: {
+    getPersonnelTitles(context) {
+      axios.get('http://localhost/Surgicalogic.Api/PersonnelTitle/GetPersonnelTitles')
+        .then(response => {
+          context.commit('setPersonnelTitles', response.data.result) //Set the Personnel Title in the store
+        })
+    },
 
-      updatePersonnelTitle(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/UpdatePersonnelTitle',  payload)
-          .then(response => {
-            //context.commit('updatePersonnelTitle', {payload}) // update the PersonnelTitle in the store
-          })
-      }
+    insertPersonnelTitle(context, payload) {
+      axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/InsertPersonnelTitle', payload)
+        .then(response => {
+          if (response.statusText == 'OK') {
+            payload.id = response.data;
+
+            context.commit('insertPersonnelTitle', { item: response.data.result }) //Insert the Personnel Title in the store
+          }
+        })
+    },
+
+    deletePersonnelTitle(context, payload) {
+      axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/DeletePersonnelTitle/' + payload.id)
+        .then(response => {
+          if (response.statusText == 'OK') {
+            context.commit('deletePersonnelTitle', { payload }); //Delete the Personnel Title in the store
+          }
+        })
+    },
+
+    updatePersonnelTitle(context, payload) {
+      axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/UpdatePersonnelTitle', payload)
+        .then(response => {
+          //context.commit('updatePersonnelTitle', {payload}) //Update the Personnel Title in the store
+        })
     }
   }
+}
 
-  export default personnelTitleModule;
+export default personnelTitleModule;

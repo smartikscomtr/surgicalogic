@@ -1,68 +1,69 @@
 import axios from 'axios';
 
 const operatingRoomModule = {
-    state: {
-      operatingRooms: []
+  state: {
+    operatingRooms: []
+  },
+
+  mutations: {
+    setOperatingRooms(state, operatingRooms) {
+      state.operatingRooms = operatingRooms;
     },
 
-    mutations: {
-      setOperatingRooms(state, operatingRooms) {
-        state.operatingRooms = operatingRooms;
-      },
-
-      insertOperatingRoom(state, { item }) {
-        state.operatingRooms.push(item);
-      },
-
-      deleteOperatingRoom(state, { payload }) {
-        let index = state.operatingRooms.findIndex((item) => {
-          return item.id === payload.id
-        });
-        state.operatingRooms.splice(index, 1);
-      },
-
-      updateOperatingRoom(state, payload) {
-        //state.operatingRooms.payload = payload;
-      }
+    insertOperatingRoom(state, { item }) {
+      state.operatingRooms.push(item);
     },
 
-    getters: {},
+    deleteOperatingRoom(state, { payload }) {
+      let index = state.operatingRooms.findIndex((item) => {
+        return item.id === payload.id
+      });
 
-    actions: {
-      getOperatingRooms(context) {
-        axios.get('http://localhost/Surgicalogic.Api/OperatingRoom/GetOperatingRooms')
-            .then(response => {
-              context.commit('setOperatingRooms', response.data.result) // set the OperatingRooms in the store
-          })
-      },
+      state.operatingRooms.splice(index, 1);
+    },
 
-      insertOperatingRoom(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/InsertOperatingRoom', payload)
-          .then(response => {
-            if (response.statusText == 'OK') {
-              payload.id = response.data;
+    updateOperatingRoom(state, payload) {
+      //state.operatingRooms.payload = payload;
+    }
+  },
 
-              context.commit('insertOperatingRoom', { item: payload }) // insert the OperatingRooms in the store
-            }
-          })
-      },
+  getters: {},
 
-      deleteOperatingRoom(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/DeleteOperatingRoom/' + payload.id)
-          .then(response => {
-            if (response.statusText == 'OK') {
-              context.commit('deleteOperatingRoom', { payload }); // delete the OperatingRooms in the store
-            }
-          })
-      },
+  actions: {
+    getOperatingRooms(context) {
+      axios.get('http://localhost/Surgicalogic.Api/OperatingRoom/GetOperatingRooms')
+        .then(response => {
+          context.commit('setOperatingRooms', response.data.result) // set the Operating Rooms in the store
+      })
+    },
 
-      updateOperatingRoom(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/UpdateOperatingRoom',  payload)
-          .then(response => {
-            //context.commit('updateOperatingRoom', {payload}) // update the OperatingRooms in the store
-          })
-      }
+    insertOperatingRoom(context, payload) {
+      axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/InsertOperatingRoom', payload)
+        .then(response => {
+          if (response.statusText == 'OK') {
+            payload.id = response.data;
+
+            context.commit('insertOperatingRoom', { item: payload }) // insert the Operating Rooms in the store
+          }
+        })
+    },
+
+    deleteOperatingRoom(context, payload) {
+      axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/DeleteOperatingRoom/' + payload.id)
+        .then(response => {
+          if (response.statusText == 'OK') {
+            context.commit('deleteOperatingRoom', { payload }); // delete the Operating Rooms in the store
+          }
+        })
+    },
+
+    updateOperatingRoom(context, payload) {
+      axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/UpdateOperatingRoom', payload)
+        .then(response => {
+          //context.commit('updateOperatingRoom', {payload}) // update the Operating Rooms in the store
+        })
     }
   }
+}
 
-  export default operatingRoomModule;
+export default operatingRoomModule;

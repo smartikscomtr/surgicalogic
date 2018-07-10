@@ -15,19 +15,19 @@ import operatingRoomModule from './modules/operatingrooms';
 import workTypesModule from './modules/workTypes';
 
 //New Registeration Of Store
-export default  new Vuex.Store({
+export default new Vuex.Store({
   state,
   getters,
   mutations,
   actions,
   modules : {
-     branchsModule,
-     equipmentModule,
-     equipmentTypesModule,
-     operationTypeModule,
-     personnelModule,
-     personnelTitleModule,
-     operatingRoomModule,
-     workTypesModule
+    branchsModule,
+    equipmentModule,
+    equipmentTypesModule,
+    operationTypeModule,
+    personnelModule,
+    personnelTitleModule,
+    operatingRoomModule,
+    workTypesModule
   }
 });

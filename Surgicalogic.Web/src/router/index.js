@@ -8,6 +8,8 @@ Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
+
+//Registering Pages
 import BranchsPage from "@/pages/index/BranchsPage";
 import DashboardPage from "@/pages/DashboardPage";
 import EquipmentsPage from "@/pages/index/EquipmentsPage";

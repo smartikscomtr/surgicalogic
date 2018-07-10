@@ -8,7 +8,9 @@
             <a class="backBtn"
                flat
                @click="cancel">
-              <v-icon>arrow_back</v-icon>
+              <v-icon>
+                arrow_back
+              </v-icon>
             </a>
 
             <span class="text">

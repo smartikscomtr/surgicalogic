@@ -20,10 +20,9 @@ import router from './router';
  * ============
  * we import the main application.
  */
+
 import App from './App';
 import store from './stores';
-
-export const EventBus = new Vue();
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
