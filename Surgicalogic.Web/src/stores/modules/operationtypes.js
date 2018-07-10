@@ -30,14 +30,14 @@ const operatingTypeModule = {
 
     actions: {
       getOperationTypes(context) {
-        axios.get('http://localhost:6632/OperationType/GetOperationTypes')
+        axios.get('http://localhost/Surgicalogic.Api/OperationType/GetOperationTypes')
             .then(response => {
               context.commit('setOperationTypes', response.data.result) // set the OperationTypes in the store
           })
       },
 
       insertOperationType(context, payload) {
-        axios.post('http://localhost:6632/OperationType/InsertOperationType', payload)
+        axios.post('http://localhost/Surgicalogic.Api/OperationType/InsertOperationType', payload)
           .then(response => {
             if (response.statusText == 'OK') {
               payload.id = response.data;
@@ -48,7 +48,7 @@ const operatingTypeModule = {
       },
 
       deleteOperationType(context, payload) {
-        axios.post('http://localhost:6632/OperationType/DeleteOperationType/' + payload.id)
+        axios.post('http://localhost/Surgicalogic.Api/OperationType/DeleteOperationType/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK') {
               context.commit('deleteOperationType', { payload }); // delete the OperationTypes in the store
@@ -57,7 +57,7 @@ const operatingTypeModule = {
       },
 
       updateOperationType(context, payload) {
-        axios.post('http://localhost:6632/OperationType/UpdateOperationType',  payload)
+        axios.post('http://localhost/Surgicalogic.Api/OperationType/UpdateOperationType',  payload)
           .then(response => {
             //context.commit('updateOperationType', {payload}) // update the OperationTypes in the store
           })

@@ -30,14 +30,14 @@ const operatingRoomModule = {
 
     actions: {
       getOperatingRooms(context) {
-        axios.get('http://localhost:6632/OperatingRoom/GetOperatingRooms')
+        axios.get('http://localhost/Surgicalogic.Api/OperatingRoom/GetOperatingRooms')
             .then(response => {
               context.commit('setOperatingRooms', response.data.result) // set the OperatingRooms in the store
           })
       },
 
       insertOperatingRoom(context, payload) {
-        axios.post('http://localhost:6632/OperatingRoom/InsertOperatingRoom', payload)
+        axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/InsertOperatingRoom', payload)
           .then(response => {
             if (response.statusText == 'OK') {
               payload.id = response.data;
@@ -48,7 +48,7 @@ const operatingRoomModule = {
       },
 
       deleteOperatingRoom(context, payload) {
-        axios.post('http://localhost:6632/OperatingRoom/DeleteOperatingRoom/' + payload.id)
+        axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/DeleteOperatingRoom/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK') {
               context.commit('deleteOperatingRoom', { payload }); // delete the OperatingRooms in the store
@@ -57,7 +57,7 @@ const operatingRoomModule = {
       },
 
       updateOperatingRoom(context, payload) {
-        axios.post('http://localhost:6632/OperatingRoom/UpdateOperatingRoom',  payload)
+        axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/UpdateOperatingRoom',  payload)
           .then(response => {
             //context.commit('updateOperatingRoom', {payload}) // update the OperatingRooms in the store
           })
