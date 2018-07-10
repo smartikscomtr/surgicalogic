@@ -26,7 +26,7 @@ function cleanResponseError(err) {
 
 function setupAxios() {
   const axiosInstance = axios.create({
-    baseURL: 'http://localhost/Surgicalogic.Api/',
+    baseURL: 'http://localhost:6632/',
     headers: {
       'Accept': 'application/json' // eslint-disable-line quote-props
     }
@@ -65,14 +65,16 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
           error.response.statusText === "Unauthorized") {
 
           if (localStorage.getItem("refreshToken")) {
-            axios.post('http://localhost/Surgicalogic.Api/Account/RefreshToken', {
+            axios.post('http://localhost:6632/Account/RefreshToken', {
                 token: localStorage.getItem("token"),
                 refreshToken: localStorage.getItem("refreshToken")
               })
               .then(response => {
                 if (response.statusText == 'OK') {
-                  localStorage.setItem("token", response.data.token);
-                  localStorage.setItem("refreshToken", response.data.refreshToken);
+                  vm.auth.setAuthentication(response.data.token, response.data.refreshToken, response.data.expiresIn);
+                  // localStorage.setItem("token", response.data.token);
+                  // localStorage.setItem("refreshToken", response.data.refreshToken);
+                  // localStorage.setItem("expiresIn", response.data.expiresIn);
                   vm.$router.push(vm.$router.currentRoute.name);
                 }
                 else {

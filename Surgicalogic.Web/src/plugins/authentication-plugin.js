@@ -2,11 +2,11 @@ export default {
   install(Vue, options = {}) {
     const authHandler = {
 
-      setAuthentication(userId, email, token, expiresIn) {
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('email', email);
-        localStorage.setItem('access_token', token); // Token
-        localStorage.setItem('expiresIn', expiresIn); // Token bitiş süresi
+      setAuthentication(token, refreshToken, expiresIn) {
+        debugger;
+        localStorage.setItem('token', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('expiresIn', new Date(Date.parse(expiresIn)).getTime());
       },
 
       set(key, value) {
@@ -31,25 +31,25 @@ export default {
 
       isAuthenticated() { // Yetkili mi değil mi kontrolünü yapan metod
         const accessToken = localStorage.getItem('token');
-        //const expiresIn = localStorage.getItem('expiresIn');
+        const expiresIn = localStorage.getItem('expiresIn');
 
-        // if (accessToken && expiresIn) {
-        //   return +expiresIn > Date.now();
-        // } else {
-        //   return false;
-        // }
-        if (accessToken) {
-          return true;
+        if (accessToken && expiresIn) {
+          return +expiresIn > Date.now();
         } else {
           return false;
         }
+        // if (accessToken) {
+        //   return true;
+        // } else {
+        //   return false;
+        // }
       },
 
       clearAuthentication() {
-        localStorage.removeItem('userId');
-        localStorage.removeItem('email');
-        localStorage.removeItem('token'); // Token
-        localStorage.removeItem('expiresIn'); // Token bitiş süresi
+        debugger;
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('expiresIn');
       }
     };
 

@@ -20,11 +20,12 @@ const loginModule = {
 
   actions: {
     userLogin(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Account/Login', payload)
+      axios.post('http://localhost:6632/Account/Login', payload)
         .then(response => {
           if (response.statusText == "OK") {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("refreshToken", response.data.refreshToken);
+            localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
             router.push("DashboardPage");
           }
           else
@@ -38,11 +39,12 @@ const loginModule = {
     },
 
     userLogout(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Account/LogOff')
+      axios.post('http://localhost:6632/Account/LogOff')
         .then(response => {
           if (response.statusText == "OK") {
             localStorage.removeItem("token");
             localStorage.removeItem("refreshToken");
+            localStorage.removeItem("expiresIn");
           }
         })
     }

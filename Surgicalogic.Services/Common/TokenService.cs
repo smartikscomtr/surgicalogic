@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Data.Entities;
@@ -9,9 +7,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Text;
-using System.Threading;
 
 namespace Surgicalogic.Services.Common
 {
@@ -40,7 +36,7 @@ namespace Surgicalogic.Services.Common
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new { token = accessToken, refreshToken = GetRefreshToken(email, accessToken) };
+            return new { token = accessToken, refreshToken = GetRefreshToken(email, accessToken), expiresIn = expires };
         }
 
         public string GetEmailFromExpiredToken(string token)

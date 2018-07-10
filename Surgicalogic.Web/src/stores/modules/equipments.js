@@ -35,7 +35,7 @@ const equipmentModule = {
 
     actions: {
       getEquipments(context) {
-        axios.get('http://localhost/Surgicalogic.Api/Equipment/GetEquipments')
+        axios.get('http://localhost:6632/Equipment/GetEquipments')
           .then(response => {
             if (response.data.info.succeeded == true){
               context.commit('setEquipments', response.data.result) // set the Equipments in the store
@@ -44,7 +44,7 @@ const equipmentModule = {
       },
 
       insertEquipment(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/Equipment/InsertEquipment', payload)
+        axios.post('http://localhost:6632/Equipment/InsertEquipment', payload)
           .then(response => {
             if (response.data.info.succeeded == true) {
              // console.log(payload)
@@ -54,7 +54,7 @@ const equipmentModule = {
       },
 
       deleteEquipment(context, payload) {
-        axios.post('http://localhost/Surgicalogic.Api/Equipment/DeleteEquipment/' + payload.id)
+        axios.post('http://localhost:6632/Equipment/DeleteEquipment/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK') {
               context.commit('deleteEquipment', { payload }); // delete the Equipments in the store
@@ -63,13 +63,13 @@ const equipmentModule = {
       },
 
       updateEquipment(context, payload){
-        axios.post('http://localhost/Surgicalogic.Api/Equipment/UpdateEquipment', payload)
+        axios.post('http://localhost:6632/Equipment/UpdateEquipment', payload)
             .then(response => {
               context.commit('updateEquipment', response.data.result) // update the Equipments in the store
         })
       },
       getAllEquipmentTypes(context) {
-        axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipmentTypes')
+        axios.get('http://localhost:6632/EquipmentType/GetEquipmentTypes')
             .then(response => {
               context.commit('setAllEquipmentTypes', response.data.result) // set the Equipments in the store
           })
