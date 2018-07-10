@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Model.Enum
+﻿namespace Surgicalogic.Model.Enum
 {
     public enum ActionType
     {
@@ -13,11 +9,9 @@ namespace Surgicalogic.Model.Enum
     }
 
     public enum InfoType
-    {        
+    {
         Error = 1,
         Warning = 2,
         Info = 3
     }
-
-
 }

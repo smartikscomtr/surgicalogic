@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                  flat
-                   @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -25,30 +25,36 @@
                               :label="$t('equipments.name')">
                 </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectEquipmentType"
                           :items="equipmentTypes"
+                          multiple
+                          chips
                           :label="$t('equipmenttypes.equipmentTypes')"
                           item-text="name"
                           item-value="id">
                 </v-select>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('equipments.description')">
                 </v-text-field>
               </v-flex>
+
               <v-flex xs12 sm6 md6 input-group-checkbox>
                 <v-checkbox v-model="editAction['isPortable']"
-                              :label="$t('equipments.portable')"
-                              color="primary">
+                            :label="$t('equipments.portable')"
+                            color="primary">
                 </v-checkbox>
               </v-flex>
+
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-btn class="btnSave orange"
-                  @click.native="save">
-                   Kaydet
-               </v-btn>
+                <v-btn class="btnSave orange"
+                       @click.native="save">
+                  Kaydet
+                </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -59,7 +65,6 @@
 </template>
 
 <script>
-import _each from "lodash/each";
 
 export default {
   props: {
@@ -90,9 +95,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1
-        ? vm.$i18n.t("equipments.addEquipmentsInformation")
-        : vm.$i18n.t("equipments.editEquipmentsInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t('equipments.addEquipmentsInformation') : vm.$i18n.t('equipments.editEquipmentsInformation');
     },
 
     showModal: {
@@ -101,11 +104,13 @@ export default {
 
         return vm.editVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the equipments edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     },
@@ -122,6 +127,7 @@ export default {
 
         return vm.editAction.equipmentTypeId;
       },
+
       set(val) {
         const vm = this;
 
@@ -146,17 +152,21 @@ export default {
     save() {
       const vm = this;
 
+      //Edit equipment
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateEquipment", {
+        //We are accessing updateEquipment in vuex store
+        vm.$store.dispatch('updateEquipment', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
           equipmentTypeId: vm.selectEquipmentType
         });
-      } else {
-        console.log(vm);
-        vm.$store.dispatch("insertEquipment", {
+      }
+      //Add equipment
+      else {
+        //We are accessing insertEquipment in vuex store
+        vm.$store.dispatch('insertEquipment', {
           name: vm.editAction.name,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
@@ -168,4 +178,5 @@ export default {
     }
   }
 };
+
 </script>

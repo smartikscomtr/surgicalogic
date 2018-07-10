@@ -52,6 +52,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
@@ -64,7 +65,6 @@ namespace Surgicalogic.Api.Controllers
                     var token = _tokenService.GenerateToken(model.Email, user);
                     return Ok(token);
                 }
-
             }
 
             // If we got this far, something failed, redisplay form
@@ -78,6 +78,7 @@ namespace Surgicalogic.Api.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
+
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -104,13 +105,17 @@ namespace Surgicalogic.Api.Controllers
             {
                 return BadRequest();
             }
+
             var user = await _userManager.FindByNameAsync(model.Email);
+
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return BadRequest();
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");

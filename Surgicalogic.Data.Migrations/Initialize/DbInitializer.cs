@@ -30,6 +30,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
             #region Branches
             var branch = new Entities.Branch();
+
             string[] branches = new string[] {
                                     "Acil Tıp",
                                     "Anesteziyoloji ve Reanimasyon",
@@ -95,7 +96,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedDate = DateTime.Now
                 }).Entity;
             }
-
             #endregion
 
             #region PersonnelTitles
@@ -120,6 +120,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
             };
 
             var title = new Entities.PersonnelTitle();
+
             foreach (var item in personnelTitles)
             {
                 title = context.PersonnelTitles.Add(new Entities.PersonnelTitle
@@ -129,12 +130,13 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedDate = DateTime.Now
                 }).Entity;
             }
-
             #endregion
 
             #region WorkTypes
-            string[] workTypes = new string[] { "Kadrolu Personel", "Sözleşmeli Personel" };
             var workType = new Entities.WorkType();
+
+            string[] workTypes = new string[] { "Kadrolu Personel", "Sözleşmeli Personel" };
+
             foreach (var item in workTypes)
             {
                 workType = context.WorkTypes.Add(new Entities.WorkType
@@ -144,11 +146,9 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedDate = DateTime.Now
                 }).Entity;
             }
-
             #endregion
 
             #region EquipmentType
-
             string[] equipmentTypes = new string[] {
                     "Aspirasyon Cihazları",
                     "Santrifüj Cihazları",
@@ -178,7 +178,9 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     "OSGB Malzemeleri",
                     "Laboratuvar Cihazları & Ürünleri",
             };
+
             var equipmentType = new Entities.EquipmentType();
+
             foreach (var item in equipmentTypes)
             {
                 equipmentType = context.EquipmentTypes.Add(new Entities.EquipmentType
@@ -188,11 +190,10 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedDate = DateTime.Now
                 }).Entity;
             }
-
             #endregion
 
             #region SaveChanges
-            //Yukarıdaki kayıtların ID'sine aşağıda ihtiyacım olacağı için burada bir kaydediyorum.
+            //Saving here because I need above records IDs below.
             try
             {
                 context.SaveChanges();
@@ -204,7 +205,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
             #endregion
 
             #region Equipments
-
             string[] equipments = new string[] {
                     "Hegar-olsen makaslı portequei 14 cm",
                     "Penset 13 cm eğri",
@@ -253,7 +253,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedDate = DateTime.Now
                 });
             }
-
             #endregion
 
             #region Personnels
@@ -269,6 +268,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 WorkTypeId = workType.Id,
                 CreatedDate = DateTime.Now
               },
+
               new Personnel
               {
                 PersonnelCode = "GK01",
@@ -279,6 +279,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 WorkTypeId = workType.Id,
                 CreatedDate = DateTime.Now
               },
+
                new Personnel
                {
                 PersonnelCode = "HC01",
@@ -292,7 +293,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
             };
 
             context.Personnels.AddRange(PersonnelsList);
-
             #endregion
 
             #region OperatingRooms
@@ -319,7 +319,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 //TODO: Insert Log
             }
             #endregion
-
         }
 
         public static void InitializeDataFromExcel(DataContext context, string excelFilePath)
@@ -336,10 +335,12 @@ namespace Surgicalogic.Data.Migrations.Initialize
             }
 
             ExcelDocumentService excelDocumentService = new ExcelDocumentService();
-            var path = Path.Combine(Environment.CurrentDirectory, excelFilePath);
-            FileStream fs = new FileStream(path, FileMode.Open);
-            var worksheetNames = excelDocumentService.GetWorksheetNames(fs);
 
+            var path = Path.Combine(Environment.CurrentDirectory, excelFilePath);
+
+            FileStream fs = new FileStream(path, FileMode.Open);
+
+            var worksheetNames = excelDocumentService.GetWorksheetNames(fs);
             var metaType = Type.GetType($"Surgicalogic.Model.CommonModel.InitialWorkSheetMetaModel, Surgicalogic.Model");
             var workSheetObject = excelDocumentService.Read(fs, MetaSheetName, metaType, System.Globalization.CultureInfo.CurrentCulture);
             var workSheetData = ConvertWorkSheetObjectToModel(workSheetObject);
@@ -380,6 +381,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
         {
             int num = _random.Next(0, 26);
             char let = (char)('a' + num);
+
             return let + (_random.Next(1, 10)).ToString();
         }
     }

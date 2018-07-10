@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                  flat
-                   @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -27,11 +27,15 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['firstName']" :label="$t('personnel.givenName')"></v-text-field>
+                <v-text-field v-model="editAction['firstName']"
+                              :label="$t('personnel.givenName')">
+                </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['lastName']" :label="$t('personnel.familyName')"></v-text-field>
+                <v-text-field v-model="editAction['lastName']"
+                              :label="$t('personnel.familyName')">
+                </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
@@ -62,8 +66,8 @@
               </v-flex>
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                <v-btn class="btnSave orange"
-                  @click.native="save">
-                   Kaydet
+                      @click.native="save">
+                  Kaydet
                </v-btn>
               </v-flex>
             </v-layout>
@@ -125,11 +129,13 @@ export default {
 
         return vm.editVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the personnel edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     },
@@ -199,8 +205,10 @@ export default {
     save() {
       const vm = this;
 
+      //Edit personnel
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updatePersonnel", {
+        //We are accessing updatePersonnel in vuex store
+        vm.$store.dispatch('updatePersonnel', {
           id: vm.editAction.id,
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
@@ -209,8 +217,11 @@ export default {
           branchId: vm.selectBranch,
           workTypeId: vm.selectWorkType
         });
-      } else {
-        vm.$store.dispatch("insertPersonnel", {
+      }
+      //Add personnel
+      else {
+        //We are accessing insertPersonnel in vuex store
+        vm.$store.dispatch('insertPersonnel', {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
@@ -226,17 +237,17 @@ export default {
 
   created() {
     const vm = this;
-
+    //We are accessing getBranchs, getPersonnelTitles and getWorkTypes in vuex store
     vm.$store.dispatch('getBranchs');
     vm.$store.dispatch('getPersonnelTitles');
     vm.$store.dispatch('getWorkTypes');
 
+    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-        vm.editVisible = false;
 
-        //Silme İşlemi
+        vm.editVisible = false;
       }
     });
   }

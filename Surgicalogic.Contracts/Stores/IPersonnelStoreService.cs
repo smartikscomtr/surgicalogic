@@ -7,5 +7,4 @@ namespace Surgicalogic.Contracts.Stores
     public interface IPersonnelStoreService : IStoreService<Personnel, PersonnelModel>
     {
     }
-
 }

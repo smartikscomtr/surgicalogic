@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Model.CommonModel
+﻿namespace Surgicalogic.Model.CommonModel
 {
-    public class FilterModel<TFilter, TValue>
-        where TFilter : struct
+    public class FilterModel<TFilter, TValue> where TFilter : struct
     {
         public TFilter Filter { get; set; }
         public TValue Value { get; set; }
@@ -19,8 +14,7 @@ namespace Surgicalogic.Model.CommonModel
         }
     }
 
-    public class FilterModel<TFilter> : FilterModel<TFilter, object>
-        where TFilter : struct
+    public class FilterModel<TFilter> : FilterModel<TFilter, object> where TFilter : struct
     {
     }
 }

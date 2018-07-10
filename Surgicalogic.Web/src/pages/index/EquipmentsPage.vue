@@ -12,27 +12,25 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <equipments-detail-component :detailAction="detailAction"
-                                 :detailVisible="detailDialog"
+    <equipments-detail-component :detail-action="detailAction"
+                                 :detail-visible="detailDialog"
                                  @cancel="cancel">
     </equipments-detail-component>
 
-    <equipments-edit-component :editAction="editAction"
-                               :editVisible="editDialog"
-                               :editIndex="editedIndex"
+    <equipments-edit-component :edit-action="editAction"
+                               :edit-visible="editDialog"
+                               :edit-index="editedIndex"
                                @cancel="cancel">
     </equipments-edit-component>
 
     <delete-component :delete-value="deleteValue"
-                      :deleteVisible="deleteDialog"
+                      :delete-visible="deleteDialog"
                       @cancel="cancel">
     </delete-component>
   </div>
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   data() {
@@ -49,42 +47,43 @@ export default {
       deleteValue: {},
       editedIndex: -1,
       equipmentTypeLoadOnce: true
-      //equipmentTypeTitle: []
     };
   },
 
   computed: {
     headers() {
       const vm = this;
+
+      //Columns and actions
       return [
         {
-          value: "name",
-          text: vm.$i18n.t("equipments.name"),
+          value: 'name',
+          text: vm.$i18n.t('equipments.name'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value:"equipmentTypeName",
-          text: vm.$i18n.t("equipmenttypes.equipmentType"),
+          value:'equipmentTypeName',
+          text: vm.$i18n.t('equipmenttypes.equipmentType'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "isPortable",
-          text: vm.$i18n.t("equipments.portable"),
+          value: 'isPortable',
+          text: vm.$i18n.t('equipments.portable'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "description",
-          text: vm.$i18n.t("equipments.description"),
+          value: 'description',
+          text: vm.$i18n.t('equipments.description'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
           isAction: true,
           sortable: false,
-          align: "right"
+          align: 'right'
         }
       ];
     },
@@ -95,9 +94,10 @@ export default {
   },
 
   watch: {
-   editDialog : function(){
+   editDialog(){
      const vm = this;
 
+    //We are accessing getAllEquipmentTypes in vuex store
      if(vm.equipmentTypeLoadOnce){
         vm.$store.dispatch('getAllEquipmentTypes');
         vm.equipmentTypeLoadOnce = false;
@@ -133,15 +133,12 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-
-      //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
 
       vm.deleteValue = payload;
-
       vm.deleteDialog = true;
     }
   },
@@ -149,6 +146,7 @@ export default {
   created() {
     const vm = this;
 
+    //We are accessing getEquipments in vuex store
     vm.$store.dispatch('getEquipments');
   }
 };

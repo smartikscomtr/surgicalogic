@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Surgicalogic.Model.CommonModel
+﻿namespace Surgicalogic.Model.CommonModel
 {
     public class InitialWorkSheetMetaModel
     {

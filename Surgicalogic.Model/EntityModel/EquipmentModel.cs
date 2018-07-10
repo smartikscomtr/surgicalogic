@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Surgicalogic.Model.EntityModel
+﻿namespace Surgicalogic.Model.EntityModel
 {
     public class EquipmentModel : Base.EntityModel
     {

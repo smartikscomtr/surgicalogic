@@ -4,11 +4,12 @@ using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
-using System;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
+    //[Produces("application/json")]
+    //[Route("api/[controller]")]
     public class WorkTypeController : Controller
     {
         private readonly IWorkTypeStoreService _workTypeStoreService;
@@ -18,6 +19,10 @@ namespace Surgicalogic.Api.Controllers
             _workTypeStoreService = workTypeStoreService;
         }
 
+        /// <summary>
+        /// Get workType methode
+        /// </summary>
+        /// <returns>WorkTypeOutputModel list</returns>
         [Route("WorkType/GetWorkTypes")]
         [HttpGet]
         public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes()
@@ -25,6 +30,11 @@ namespace Surgicalogic.Api.Controllers
             return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>();
         }
 
+        /// <summary>
+        /// Add workType methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>WorkTypeOutputModel</returns>
         [Route("WorkType/InsertWorkType")]
         [HttpPost]
         public async Task<ResultModel<WorkTypeModel>> InsertWorkType([FromBody] WorkTypeInputModel item)
@@ -38,6 +48,11 @@ namespace Surgicalogic.Api.Controllers
             return await _workTypeStoreService.InsertAndSaveAsync(workTypeItem);
         }
 
+        /// <summary>
+        /// Remove workType item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Int</returns>
         [Route("WorkType/DeleteWorkType/{id:int}")]
         [HttpPost]
         public async Task<ResultModel<int>> DeleteWorkType(int id)
@@ -45,6 +60,11 @@ namespace Surgicalogic.Api.Controllers
             return await _workTypeStoreService.DeleteByIdAsync(id);
         }
 
+        /// <summary>
+        /// Update workType methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>WorkTypeModel</returns>
         [Route("WorkType/UpdateWorkType")]
         [HttpPost]
         public async Task<ResultModel<WorkTypeModel>> UpdateWorkType([FromBody] WorkTypeInputModel item)

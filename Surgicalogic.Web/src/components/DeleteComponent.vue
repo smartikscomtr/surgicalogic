@@ -4,18 +4,18 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title class="headline">
            <div class="flex xs12 sm12 md12">
-          {{ deleteTitle }}
+            {{ deleteTitle }}
            </div>
         </v-card-title>
 
         <v-card-text>
-           <v-container grid-list-md>
-              <v-layout wrap>
-                <div class="flex xs12 sm12 md12">
-               {{ deleteText }}
-                </div>
-              </v-layout>
-           </v-container>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <div class="flex xs12 sm12 md12">
+                {{ deleteText }}
+              </div>
+            </v-layout>
+          </v-container>
         </v-card-text>
 
         <v-card-actions>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     deleteValue: {
@@ -60,13 +61,13 @@ export default {
     deleteTitle() {
       const vm = this;
 
-      return vm.$i18n.t("common.deleteOperation");
+      return vm.$i18n.t('common.deleteOperation');
     },
 
     deleteText() {
       const vm = this;
 
-      return vm.$i18n.t("common.doYouWantToDeleteTheRecord");
+      return vm.$i18n.t('common.doYouWantToDeleteTheRecord');
     },
 
     showModal: {
@@ -75,11 +76,13 @@ export default {
 
         return vm.deleteVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the delete component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     }
@@ -89,7 +92,8 @@ export default {
     btnYesDelete() {
       const vm = this;
 
-      vm.$store.dispatch("deleteEquipment", {
+      //We are accessing deleteEquipment in vuex store
+      vm.$store.dispatch('deleteEquipment', {
         id: vm.deleteValue.id
       });
 

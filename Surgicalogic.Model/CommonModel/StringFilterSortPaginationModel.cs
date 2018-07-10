@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Surgicalogic.Model.CommonModel
 {
-    public class StringFilterSortPaginationModel<TSorting, TFilter> : FilterSortPaginationModel<TSorting, TFilter, string>
-        where TSorting : struct
-        where TFilter : struct
+    public class StringFilterSortPaginationModel<TSorting, TFilter> : FilterSortPaginationModel<TSorting, TFilter, string> where TSorting : struct where TFilter : struct
     {
         public static implicit operator FilterSortPaginationModel<TSorting, TFilter>(StringFilterSortPaginationModel<TSorting, TFilter> right)
         {

@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                  flat
-                   @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -18,7 +18,7 @@
         </v-card-title>
 
         <v-card-text>
-           <v-container grid-list-md>
+          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
@@ -31,14 +31,14 @@
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-btn class="btnSave orange"
-                  @click.native="save">
-                   Kaydet
-               </v-btn>
+                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+                <v-btn class="btnSave orange"
+                       @click.native="save">
+                  Kaydet
+                </v-btn>
               </v-flex>
             </v-layout>
-           </v-container>
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -81,9 +81,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1
-        ? vm.$i18n.t("branchs.addBranchsInformation")
-        : vm.$i18n.t("branchs.editBranchsInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t('branchs.addBranchsInformation') : vm.$i18n.t('branchs.editBranchsInformation');
     },
 
     showModal: {
@@ -92,11 +90,13 @@ export default {
 
         return vm.editVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the branchs edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     }
@@ -112,14 +112,19 @@ export default {
     save() {
       const vm = this;
 
+      //Edit branch
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateBranch", {
+        //We are accessing updateBranch in vuex store
+        vm.$store.dispatch('updateBranch', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
         });
-      } else {
-        vm.$store.dispatch("insertBranch", {
+      }
+      //Add branch
+      else {
+        //We are accessing insertBranch in vuex store
+        vm.$store.dispatch('insertBranch', {
           name: vm.editAction.name,
           description: vm.editAction.description
         });
@@ -132,15 +137,16 @@ export default {
   created() {
     const vm = this;
 
-    vm.$watch("deleteValue", (newValue, oldValue) => {
+    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
+    vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
-        confirm(vm.$i18n.t("common.areYouSureWantToDelete"));
+        confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
 
         vm.editVisible = false;
-        //Silme İşlemi
       }
     });
   }
 };
+
 </script>
 

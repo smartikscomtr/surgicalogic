@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
 using Surgicalogic.Planning.ORTools;
+using System;
+using System.Collections.Generic;
 
 namespace Surgicalogic.Planning.Test
 {
@@ -70,7 +70,7 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail(); 
+                        Assert.Fail();
                     }
                 }
             }
@@ -462,10 +462,10 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 6, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 45, 0) });
             operations.Add(new OperationOutputModel { Id = 7, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 00, 0) });
             operations.Add(new OperationOutputModel { Id = 8, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 11, 15, 0) });
-            expected.Rooms.Add(new RoomOutputModel{ Id = 1, Operations = operations });
+            expected.Rooms.Add(new RoomOutputModel { Id = 1, Operations = operations });
             operations = new List<OperationOutputModel>();
             operations.Add(new OperationOutputModel { Id = 3, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 0, 0) });
-            expected.Rooms.Add(new RoomOutputModel{ Id = 2, Operations = operations });
+            expected.Rooms.Add(new RoomOutputModel { Id = 2, Operations = operations });
             operations = new List<OperationOutputModel>();
             operations.Add(new OperationOutputModel { Id = 1, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 45, 0) });
             operations.Add(new OperationOutputModel { Id = 2, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 30, 0) });
@@ -1026,7 +1026,7 @@ namespace Surgicalogic.Planning.Test
 
         [TestMethod]
         public void Operations()
-        { 
+        {
 
             var surgeryPlan = new DailyPlanInputModel
             {

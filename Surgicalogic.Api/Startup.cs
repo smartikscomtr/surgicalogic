@@ -39,7 +39,7 @@ namespace Surgicalogic.Api
             //DbContext service registered 
             services.AddDbContext<DataContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DataContext"),
-                            builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
+                 builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -49,7 +49,9 @@ namespace Surgicalogic.Api
            .AddEntityFrameworkStores<DataContext>()
            .AddDefaultTokenProviders();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            //remove default claims
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services
                 .AddAuthentication(options =>
                 {
@@ -74,7 +76,28 @@ namespace Surgicalogic.Api
             services.AddTransient<IAppServiceProvider, AppServiceProvider>();
             services.AddTransient<ITokenService, TokenService>();
 
-            //CROS service registerd. This methode was add besause of allow-control-access-origin 
+            #region Applicaiton Cookie Settings
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                // If the LoginPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/Login.
+                options.LoginPath = "/Account/Login";
+                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/AccessDenied.
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+
+            #endregion
+
+            #region CROS Settings
+
+            //CROS service registerd. This methode was add besause of allow-control-access-origin
             services.AddCors(options =>
                 options.AddPolicy("CorsConfig",
                     builder =>
@@ -83,10 +106,11 @@ namespace Surgicalogic.Api
                        .AllowAnyHeader())
             );
 
-            //services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Error401");
+            #endregion
+
+            services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
             #region StoreService Registeration
-
             services.AddScoped<IBranchStoreService, BranchStoreService>();
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
             services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
@@ -95,15 +119,16 @@ namespace Surgicalogic.Api
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
+            
             #endregion
 
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataContext context)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -111,9 +136,7 @@ namespace Surgicalogic.Api
 
             //StaticFile Allowance Initialized
             app.UseStaticFiles();
-
             app.UseCors("CorsConfig");
-
             app.UseAuthentication();
 
             AuthAppBuilderExtensions.UseAuthentication(app);
@@ -125,10 +148,11 @@ namespace Surgicalogic.Api
             });
 
             if (Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
+            {
                 DbInitializer.Seed(context);
+            }
 
             BuildAppSettings();
-
             app.UseMvc();
         }
 

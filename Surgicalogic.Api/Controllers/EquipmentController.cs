@@ -3,16 +3,14 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
-using System;
-using System.Threading.Tasks;
 using Surgicalogic.Model.OutputModel;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
-    [Authorize]
     public class EquipmentController : Controller
     {
         private readonly IEquipmentStoreService _equipmentStoreService;
@@ -82,8 +80,8 @@ namespace Surgicalogic.Api.Controllers
                 IsPortable = item.IsPortable,
                 EquipmentTypeId = item.EquipmentTypeId
             };
+
             return await _equipmentStoreService.UpdatandSaveAsync(equipmentItem);
         }
-
     }
 }

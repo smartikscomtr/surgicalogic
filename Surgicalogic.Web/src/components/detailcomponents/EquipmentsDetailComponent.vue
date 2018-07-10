@@ -6,42 +6,66 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-                flat
-                @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
+
             <span class="text">
               {{ formTitle }}
             </span>
           </div>
         </v-card-title>
 
-        <v-card-text >
+        <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
-                    <div class="label">{{ $t('equipments.equipment')}}</div>
-                    <div class="value">{{ detailAction['name']}}</div>
+                  <div class="label">
+                    {{ $t('equipments.equipment') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['name'] }}
+                  </div>
                 </div>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
-                 <div class="input-group readonly-wrap">
-                    <div class="label">{{ $t('equipments.type')}}</div>
-                    <div class="value">{{ detailAction['equipmentTypes']}}</div>
-                 </div>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('equipments.type') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['equipmentTypes'] }}
+                  </div>
+                </div>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
-                 <div class="input-group readonly-wrap">
-                    <div class="label">{{ $t('equipments.portable')}}</div>
-                    <div class="value">{{ detailAction['isPortable']}}</div>
-                 </div>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('equipments.portable') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['isPortable'] }}
+                  </div>
+                </div>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
-                 <div class="input-group readonly-wrap">
-                    <div class="label">{{ $t('common.description')}}</div>
-                    <div class="value">{{ detailAction['description']}}</div>
-                 </div>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('common.description') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['description'] }}
+                  </div>
+                </div>
               </v-flex>
             </v-layout>
           </v-container>
@@ -52,6 +76,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     detailVisible: {
@@ -76,7 +101,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.$i18n.t("equipments.detailEquipments");
+      return vm.$i18n.t('equipments.detailEquipments');
     },
 
     showModal: {
@@ -85,11 +110,13 @@ export default {
 
         return vm.detailVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the equipments detail component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     }
@@ -103,4 +130,5 @@ export default {
     }
   }
 };
+
 </script>

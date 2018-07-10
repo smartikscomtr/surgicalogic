@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Surgicalogic.Model.OutputModel
+﻿namespace Surgicalogic.Model.OutputModel
 {
     public class PersonnelOutputModel
     {

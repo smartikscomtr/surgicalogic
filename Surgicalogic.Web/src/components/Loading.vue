@@ -7,9 +7,11 @@
 export default {
 
 }
+
 </script>
 
 <style>
+
 .loading {
     border: 5px solid #f3f3f3;
     border-top: 5px solid #292B2C;
@@ -28,4 +30,5 @@ export default {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 </style>

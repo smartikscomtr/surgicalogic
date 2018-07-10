@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Surgicalogic.Model.InputModel
+﻿namespace Surgicalogic.Model.InputModel
 {
     public class PersonnelInputModel
     {

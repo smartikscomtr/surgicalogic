@@ -11,9 +11,9 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operation-types-edit-component :editAction="editAction"
-                                    :editVisible="editDialog"
-                                    :editIndex="editedIndex"
+    <operation-types-edit-component :edit-action="editAction"
+                                    :edit-visible="editDialog"
+                                    :edit-index="editedIndex"
                                     :delete-value="deleteValue"
                                     @cancel="cancel">
     </operation-types-edit-component>
@@ -41,23 +41,24 @@ export default {
     headers() {
       const vm = this;
 
+      //Columns and actions
       return [
         {
-          value: "name",
-          text: vm.$i18n.t("operationtypes.operationtype"),
+          value: 'name',
+          text: vm.$i18n.t('operationtypes.operationtype'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "branchId",
-          text: vm.$i18n.t("branchs.branch"),
+          value: 'branchId',
+          text: vm.$i18n.t('branchs.branch'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
           isAction: true,
           sortable: false,
-          align: "right"
+          align: 'right'
         }
       ];
     },
@@ -66,7 +67,6 @@ export default {
       const vm = this;
 
       return vm.$store.state.operationTypeModule.operationTypes;
-      // return _each(this.$store.state.operationTypeModule.operationTypes, (item) => item.branchTitle = item.branch[0].name );
     }
   },
 
@@ -89,16 +89,15 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-
-      //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
 
-        vm.$store.dispatch('deleteOperationType', {
-          id: payload.id
-        });
+      //We are accessing deleteOperationType in vuex store
+      vm.$store.dispatch('deleteOperationType', {
+        id: payload.id
+      });
 
       vm.deleteValue = payload;
     }
@@ -107,8 +106,9 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getBranchs");
-    vm.$store.dispatch("getOperationTypes");
+    //We are accessing getBranchs and getOperationTypes in vuex store
+    vm.$store.dispatch('getBranchs');
+    vm.$store.dispatch('getOperationTypes');
   }
 };
 

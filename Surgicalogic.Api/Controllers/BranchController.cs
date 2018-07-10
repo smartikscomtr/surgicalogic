@@ -4,11 +4,12 @@ using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
-using System;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
+    //[Produces("application/json")]
+    //[Route("api/[controller]")]
     public class BranchController : Controller
     {
         private readonly IBranchStoreService _branchStoreService;
@@ -18,6 +19,10 @@ namespace Surgicalogic.Api.Controllers
             _branchStoreService = branchStoreService;
         }
 
+        /// <summary>
+        /// Get branch methode
+        /// </summary>
+        /// <returns>BranchOutputModel list</returns>
         [Route("Branch/GetBranchs")]
         [HttpGet]
         public async Task<ResultModel<BranchOutputModel>> GetBranch()
@@ -25,6 +30,11 @@ namespace Surgicalogic.Api.Controllers
             return await _branchStoreService.GetAsync<BranchOutputModel>();
         }
 
+        /// <summary>
+        /// Add branch methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>BranchOutputModel</returns>
         [Route("Branch/InsertBranch")]
         [HttpPost]
         public async Task<ResultModel<BranchModel>> InsertBranch([FromBody] BranchInputModel item)
@@ -38,6 +48,11 @@ namespace Surgicalogic.Api.Controllers
             return await _branchStoreService.InsertAndSaveAsync(branchItem);
         }
 
+        /// <summary>
+        /// Remove branch item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Int</returns>
         [Route("Branch/DeleteBranch/{id:int}")]
         [HttpPost]
         public async Task<ResultModel<int>> DeleteBranch(int id)
@@ -45,6 +60,11 @@ namespace Surgicalogic.Api.Controllers
             return await _branchStoreService.DeleteByIdAsync(id);
         }
 
+        /// <summary>
+        /// Update branch methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>BranchModel</returns>
         [Route("Branch/UpdateBranch")]
         [HttpPost]
         public async Task<ResultModel<BranchModel>> UpdateBranch([FromBody] BranchInputModel item)
@@ -55,6 +75,7 @@ namespace Surgicalogic.Api.Controllers
                 Name = item.Name,
                 Description = item.Description
             };
+
             return await _branchStoreService.UpdatandSaveAsync(branchItem);
         }
     }

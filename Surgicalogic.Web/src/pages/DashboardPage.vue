@@ -2,7 +2,6 @@
   <div>
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
-
         <v-date-picker v-model="date"
                       width="340"
                       class="mt-1">
@@ -34,14 +33,10 @@ export default {
     }
   },
 
-  created() { //vuex store'una $store diyerek ulasabiliriz
+  created() {
     const vm = this;
 
     vm.$store.dispatch('fetchRooms');
   }
 }
 </script>
-
-<style>
-
-</style>

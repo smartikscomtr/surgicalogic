@@ -12,9 +12,9 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operating-rooms-edit-component :editAction="editAction"
-                                    :editVisible="editDialog"
-                                    :editIndex="editedIndex"
+    <operating-rooms-edit-component :edit-action="editAction"
+                                    :edit-visible="editDialog"
+                                    :edit-index="editedIndex"
                                     :delete-value="deleteValue"
                                     @cancel="cancel">
     </operating-rooms-edit-component>
@@ -43,53 +43,54 @@ export default {
     headers() {
       const vm = this;
 
+      //Columns and actions
       return [
         {
-          value: "name",
-          text: vm.$i18n.t("operatingrooms.operatingRoom"),
+          value: 'name',
+          text: vm.$i18n.t('operatingrooms.operatingRoom'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "location",
-          text: vm.$i18n.t("operatingrooms.location"),
+          value: 'location',
+          text: vm.$i18n.t('operatingrooms.location'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "width",
-          text: vm.$i18n.t("operatingrooms.width"),
+          value: 'width',
+          text: vm.$i18n.t('operatingrooms.width'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "height",
-          text: vm.$i18n.t("operatingrooms.height"),
+          value: 'height',
+          text: vm.$i18n.t('operatingrooms.height'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "lenght",
-          text: vm.$i18n.t("operatingrooms.lenght"),
+          value: 'lenght',
+          text: vm.$i18n.t('operatingrooms.lenght'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "description",
-          text: vm.$i18n.t("common.description"),
+          value: 'description',
+          text: vm.$i18n.t('common.description'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "equipmentId",
-          text: vm.$i18n.t("equipments.equipments"),
+          value: 'equipmentId',
+          text: vm.$i18n.t('equipments.equipments'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
           isAction: true,
           sortable: false,
-          align: "right"
+          align: 'right'
         }
       ];
     },
@@ -98,8 +99,6 @@ export default {
       const vm = this;
 
       return vm.$store.state.operatingRoomModule.operatingRooms;
-
-      // return _each(this.$store.state.roomModule.rooms, (item) => item.equipmentTitle = item.equipments[0].name );
     }
   },
 
@@ -130,16 +129,15 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-
-      //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
 
-        vm.$store.dispatch('deleteOperatingRoom', {
-          id: payload.id
-        });
+      //We are accessing deleteOperatingRoom in vuex store
+      vm.$store.dispatch('deleteOperatingRoom', {
+        id: payload.id
+      });
 
       vm.deleteValue = payload;
     }
@@ -147,8 +145,9 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getOperatingRooms");
-    vm.$store.dispatch("getEquipments");
+    //We are accessing getOperatingRooms and getEquipments in vuex store
+    vm.$store.dispatch('getOperatingRooms');
+    vm.$store.dispatch('getEquipments');
   }
 };
 

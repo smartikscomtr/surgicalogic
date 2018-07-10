@@ -11,6 +11,8 @@ using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Api.Controllers
 {
+    //[Produces("application/json")]
+    //[Route("api/[controller]")]
     public class OperationTypeController : Controller
     {
         private readonly IOperationTypeStoreService _operationTypeStoreService;
@@ -20,11 +22,20 @@ namespace Surgicalogic.Api.Controllers
             _operationTypeStoreService = operationTypeStoreService;
         }
 
+        /// <summary>
+        /// Get operationType methode
+        /// </summary>
+        /// <returns>OperationTypeOutputModel list</returns>
         public async Task<ResultModel<OperationTypeOutputModel>> GetOperationTypes()
         {
             return await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>();
         }
 
+        /// <summary>
+        /// Add operationType methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>OperationTypeOutputModel</returns>
         public async Task<ResultModel<OperationTypeModel>> InsertOperationType([FromBody] OperationTypeInputModel item)
         {
             var operationTypeItem = new OperationTypeModel()
@@ -37,6 +48,11 @@ namespace Surgicalogic.Api.Controllers
             return await _operationTypeStoreService.InsertAndSaveAsync(operationTypeItem);
         }
 
+        /// <summary>
+        /// Remove operationType item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Int</returns>
         [Route("OperationType/DeleteOperationType/{id:int}")]
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperationType(int id)
@@ -44,6 +60,11 @@ namespace Surgicalogic.Api.Controllers
             return await _operationTypeStoreService.DeleteByIdAsync(id);
         }
 
+        /// <summary>
+        /// Update operationType methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>OperationTypeModel</returns>
         [Route("OperationType/UpdateOperationType")]
         [HttpPost]
         public async Task<ResultModel<OperationTypeModel>> UpdateOperationType([FromBody] OperationTypeInputModel item)

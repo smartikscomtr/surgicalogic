@@ -2,9 +2,11 @@
   <div>
     <v-card class="grid-card">
       <div class="page-title">
-        <h2> {{ title }} </h2>
+        <h2>
+          {{ title }}
+        </h2>
 
-        <v-container >
+        <v-container>
           <v-card-title>
             <v-text-field v-model="search"
                           append-icon="search"
@@ -16,20 +18,18 @@
             <v-spacer></v-spacer>
 
             <v-btn class="orange"
-                  slot="activator"
-                  @click="addNewItem">
+                   slot="activator"
+                   @click="addNewItem">
               <v-icon color="white--text">
-                      add
+                add
               </v-icon>
-              {{ $t("common.add") }}
+              {{ $t('common.add') }}
             </v-btn>
-
           </v-card-title>
 
           <v-data-table :headers="headers"
                         :items="items">
             <template slot="items" slot-scope="props">
-
               <td v-for="(header, i) in headers"
                   :key="i">
                 <template v-if="!header.isAction">
@@ -40,6 +40,7 @@
                   <v-btn v-if="showDetail" icon class="mx-0" @click="detailItem(props.item)">
                     <v-icon color="#232222">visibility</v-icon>
                   </v-btn>
+
                   <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
                     <v-icon color="#232222">edit</v-icon>
                   </v-btn>
@@ -58,6 +59,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     items: {
@@ -104,31 +106,37 @@ export default {
     addNewItem() {
       const vm = this;
 
-      vm.$emit("newaction");
+      //When the add new button is clicked, the event is sent to the grid component
+      vm.$emit('newaction');
     },
 
     detailItem(item) {
       const vm = this;
 
-      vm.$emit("detail", item);
+      //When the detail button is clicked, the event is sent to the grid component
+      vm.$emit('detail', item);
     },
 
     editItem(item) {
       const vm = this;
 
-      vm.$emit("edit", item);
+      //When the edit button is clicked, the event is sent to the grid component
+      vm.$emit('edit', item);
     },
 
     deleteItem(item) {
       const vm = this;
 
-      vm.$emit("deleteitem", item);
+      //When the delete button is clicked, the event is sent to the grid component
+      vm.$emit('deleteitem', item);
     }
   }
 };
+
 </script>
 
 <style>
+
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;

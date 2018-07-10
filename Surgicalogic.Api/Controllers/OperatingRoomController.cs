@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
+    //[Produces("application/json")]
+    //[Route("api/[controller]")]
     public class OperatingRoomController : Controller
     {
         private readonly IOperatingRoomStoreService _operatingRoomStoreService;
@@ -18,6 +20,10 @@ namespace Surgicalogic.Api.Controllers
             _operatingRoomStoreService = operatingRoomStoreService;
         }
 
+        /// <summary>
+        /// Get operatingRoom methode
+        /// </summary>
+        /// <returns>OperatingRoomOutputModel list</returns>
         [Route("OperatingRoom/GetOperatingRooms")]
         [HttpGet]
         public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms()
@@ -25,6 +31,11 @@ namespace Surgicalogic.Api.Controllers
             return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
         }
 
+        /// <summary>
+        /// Add operatingRoom methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>OperatingRoomOutputModel</returns>
         [Route("OperatingRoom/InsertOperatingRoom")]
         [HttpPost]
         public async Task<ResultModel<OperatingRoomModel>> InsertOperatingRoom([FromBody] OperatingRoomInputModel item)
@@ -43,6 +54,11 @@ namespace Surgicalogic.Api.Controllers
             return await _operatingRoomStoreService.InsertAndSaveAsync(operatingRoomItem);
         }
 
+        /// <summary>
+        /// Remove operatingRoom item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Int</returns>
         [Route("OperatingRoom/DeleteOperatingRoom/{id:int}")]
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperatingRoom(int id)
@@ -50,6 +66,11 @@ namespace Surgicalogic.Api.Controllers
             return await _operatingRoomStoreService.DeleteByIdAsync(id);
         }
 
+        /// <summary>
+        /// Update operatingRoom methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>OperatingRoomModel</returns>
         [Route("OperatingRoom/UpdateOperatingRoom")]
         [HttpPost]
         public async Task<ResultModel<OperatingRoomModel>> UpdateOperatingRoom([FromBody] OperatingRoomInputModel item)
@@ -68,6 +89,5 @@ namespace Surgicalogic.Api.Controllers
 
             return await _operatingRoomStoreService.UpdatandSaveAsync(operatingRoomItem);
         }
-
     }
 }
