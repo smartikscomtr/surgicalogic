@@ -34,7 +34,9 @@
                   {{ item.action }}
                 </v-list-tile-action-text>
 
-                <v-icon color="grey lighten-1">star_border</v-icon>
+                <v-icon color="grey lighten-1">
+                  star_border
+                </v-icon>
               </v-list-tile-action>
             </v-list-tile>
 

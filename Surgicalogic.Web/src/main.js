@@ -21,10 +21,9 @@ import Authentication from './plugins/authentication-plugin.js';
  * ============
  * we import the main application.
  */
+
 import App from './App';
 import store from './stores';
-
-export const EventBus = new Vue();
 
 Vue.use(Vuex);
 Vue.use(Vuetify);

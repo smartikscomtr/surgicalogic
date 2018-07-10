@@ -5,7 +5,6 @@ using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -26,7 +25,7 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>EquipmentOutputModel list</returns>
         [Route("Equipment/GetEquipments")]
-        [HttpGet]        
+        [HttpGet]
         public async Task<ResultModel<EquipmentOutputModel>> GetEquipments()
         {
             return await _equipmentStoreService.GetAsync<EquipmentOutputModel>();

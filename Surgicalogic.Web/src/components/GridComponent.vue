@@ -37,16 +37,31 @@
                 </template>
 
                 <template v-else>
-                  <v-btn v-if="showDetail" icon class="mx-0" @click="detailItem(props.item)">
-                    <v-icon color="#232222">visibility</v-icon>
+                  <v-btn v-if="showDetail"
+                         icon
+                         class="mx-0"
+                         @click="detailItem(props.item)">
+                    <v-icon color="#232222">
+                      visibility
+                    </v-icon>
                   </v-btn>
 
-                  <v-btn v-if="showEdit" icon class="mx-0" @click="editItem(props.item)">
-                    <v-icon color="#232222">edit</v-icon>
+                  <v-btn v-if="showEdit"
+                         icon
+                         class="mx-0"
+                         @click="editItem(props.item)">
+                    <v-icon color="#232222">
+                      edit
+                    </v-icon>
                   </v-btn>
 
-                  <v-btn v-if="showDelete" icon class="mx-0" @click="deleteItem(props.item)">
-                    <v-icon color="#232222">delete</v-icon>
+                  <v-btn v-if="showDelete"
+                         icon
+                         class="mx-0"
+                         @click="deleteItem(props.item)">
+                    <v-icon color="#232222">
+                      delete
+                    </v-icon>
                   </v-btn>
                 </template>
               </td>
@@ -98,7 +113,7 @@ export default {
 
   data() {
     return {
-      search: ""
+      search: ''
     };
   },
 

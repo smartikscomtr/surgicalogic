@@ -1,138 +1,163 @@
 <template>
-<div>
-  <div id="app"
-       v-show= isMounted
-       v-if="$route.meta.fullPage">
-    <v-app id="insipere">
-      <router-view></router-view>
-    </v-app>
-  </div>
+  <div>
+    <!-- Login Page -->
+    <div id="app"
+         v-show= isMounted
+         v-if="$route.meta.fullPage">
+      <v-app id="insipere">
+        <router-view></router-view>
+      </v-app>
+    </div>
 
-  <div id="app"
-       v-show= isMounted
-       v-else>
-    <v-app id="insipere">
-      <v-navigation-drawer class="navigation"
-                           fixed
-                           :clipped="$vuetify.breakpoint.mdAndUp"
-                           app
-                           v-model="drawer">
-        <v-list dense>
-          <template v-for="item in items">
-            <v-layout row
-                      v-if="item.heading"
-                      align-center
-                      :key="item.heading">
-              <v-flex xs6>
-                <v-subheader v-if="item.heading">
-                  {{ item.heading }}
-                </v-subheader>
-              </v-flex>
+    <!-- Dashboard Page -->
+    <div id="app"
+         v-show= isMounted
+         v-else>
+      <v-app id="insipere">
+        <!-- Navigation -->
+        <v-navigation-drawer class="navigation"
+                             fixed
+                             :clipped="$vuetify.breakpoint.mdAndUp"
+                             app
+                             v-model="drawer">
+          <v-list dense>
+            <template v-for="item in items">
+              <v-layout row
+                        v-if="item.heading"
+                        align-center
+                        :key="item.heading">
+                <v-flex xs6>
+                  <v-subheader v-if="item.heading">
+                    {{ item.heading }}
+                  </v-subheader>
+                </v-flex>
 
-              <v-flex xs6 class="text-xs-center">
-                <a href="#!" class="body-2 black--text">EDIT</a>
-              </v-flex>
-            </v-layout>
-<!-- Alt gruplama varsa -->
-            <v-list-group v-else-if="item.children"
-                          v-model="item.model"
+                <v-flex xs6 class="text-xs-center">
+                  <a href="#!"
+                     class="body-2 black--text">
+                    EDIT
+                  </a>
+                </v-flex>
+              </v-layout>
+
+              <!-- Subgroup -->
+              <v-list-group v-else-if="item.children"
+                            v-model="item.model"
+                            :key="item.text"
+                            :prepend-icon="item.model ? item.icon : item['icon-alt']"
+                            append-icon="">
+                <v-list-tile slot="activator">
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      {{ item.text }}
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+
+                <v-list-tile v-for="(child, i) in item.children"
+                            :key="i"
+                            @click="changePages(child.route)">
+                  <v-list-tile-action v-if="child.icon">
+                    <v-icon color="primary">
+                      {{ child.icon }}
+                    </v-icon>
+                  </v-list-tile-action>
+
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      {{ child.text }}
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list-group>
+
+              <!-- Not Subgroup -->
+              <v-list-tile v-else
                           :key="item.text"
-                          :prepend-icon="item.model ? item.icon : item['icon-alt']"
-                          append-icon="">
-              <v-list-tile slot="activator">
+                          @click="changePages(item.route)">
+                <v-list-tile-action>
+                  <v-icon color="primary">
+                    {{ item.icon }}
+                  </v-icon>
+                </v-list-tile-action>
+
                 <v-list-tile-content>
                   <v-list-tile-title>
                     {{ item.text }}
                   </v-list-tile-title>
                 </v-list-tile-content>
               </v-list-tile>
+            </template>
+          </v-list>
+        </v-navigation-drawer>
 
-              <v-list-tile v-for="(child, i) in item.children"
-                           :key="i"
-                           @click="changePages(child.route)">
-                <v-list-tile-action v-if="child.icon">
-                  <v-icon color="primary"> {{ child.icon }} </v-icon>
-                </v-list-tile-action>
+        <!-- Toolbar -->
+        <v-toolbar color="teal"
+                  dark
+                  app
+                  :clipped-left="$vuetify.breakpoint.mdAndUp"
+                  fixed>
+          <v-toolbar-title style="width: 300px"
+                          class="ml-0 pl-3">
+            <v-toolbar-side-icon @click.stop="drawer = !drawer">
+            </v-toolbar-side-icon>
 
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    {{ child.text }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list-group>
-<!-- Alt gruplama yoksa -->
-            <v-list-tile v-else
-                         :key="item.text"
-                         @click="changePages(item.route)">
-              <v-list-tile-action>
-                <v-icon color="primary"> {{ item.icon }} </v-icon>
-              </v-list-tile-action>
+            <!-- Toolbar text-->
+            <span class="hidden-sm-and-down"
+                  @click="changePages('/dashboardpage')">
+                  Surgicalogic
+            </span>
+          </v-toolbar-title>
 
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ item.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </template>
-        </v-list>
-      </v-navigation-drawer>
+          <!-- Dashboard icon -->
+          <v-btn icon @click="changePages('/dashboardpage')">
+            <v-icon>
+              home
+            </v-icon>
+          </v-btn>
 
-      <v-toolbar color="teal"
-                 dark
-                 app
-                 :clipped-left="$vuetify.breakpoint.mdAndUp"
-                 fixed>
-        <v-toolbar-title style="width: 300px"
-                         class="ml-0 pl-3">
-          <v-toolbar-side-icon @click.stop="drawer = !drawer">
-          </v-toolbar-side-icon>
-<!-- Toolbardaki yazı -->
-          <span class="hidden-sm-and-down"
-                @click="changePages('/dashboardpage')">
-                Surgicalogic
-          </span>
-        </v-toolbar-title>
-<!-- Anasayfa iconu -->
-        <v-btn icon @click="changePages('/dashboardpage')">
-          <v-icon>home</v-icon>
-        </v-btn>
-<!-- Search -->
-        <v-text-field flat
-                      solo-inverted
-                      prepend-icon="search"
-                      label="Search"
-                      class="hidden-sm-and-down">
-        </v-text-field>
-<!-- Searchden sonra boşluk bırakma -->
-        <v-spacer></v-spacer>
+          <!-- Search -->
+          <v-text-field flat
+                        solo-inverted
+                        prepend-icon="search"
+                        label="Search"
+                        class="hidden-sm-and-down">
+          </v-text-field>
 
-        <v-btn icon>
-          <v-icon>apps</v-icon>
-        </v-btn>
+          <v-spacer></v-spacer>
 
-        <v-btn icon>
-          <v-icon>notifications</v-icon>
-        </v-btn>
+          <v-btn icon>
+            <v-icon>
+              apps
+            </v-icon>
+          </v-btn>
 
-        <v-btn icon>
-          <v-icon>language</v-icon>
-        </v-btn>
-      </v-toolbar>
+          <v-btn icon>
+            <v-icon>
+              notifications
+            </v-icon>
+          </v-btn>
 
-      <v-content>
-        <main>
-          <router-view>
-          </router-view>
-        </main>
-      </v-content>
-    </v-app>
+          <v-btn icon>
+            <v-icon>
+              language
+            </v-icon>
+          </v-btn>
+        </v-toolbar>
+
+        <v-content>
+          <main>
+            <router-view>
+            </router-view>
+          </main>
+        </v-content>
+      </v-app>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
+
 export default {
   props: {
     source: String
@@ -361,9 +386,11 @@ export default {
     vm.isMounted = true;
   }
 };
+
 </script>
 
 <style>
+
 .navigation {
   width: 275px;
   transform: translateX(5px);
@@ -384,5 +411,6 @@ export default {
 .grid-card .card__title {
   padding: 0;
 }
+
 </style>
 

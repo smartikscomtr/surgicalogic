@@ -8,7 +8,9 @@
             <a class="backBtn"
                 flat
                 @click="cancel">
-              <v-icon>arrow_back</v-icon>
+              <v-icon>
+                arrow_back
+              </v-icon>
             </a>
 
             <span class="text">
@@ -17,7 +19,7 @@
           </span>
         </v-card-title>
 
-        <v-card-text >
+        <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>

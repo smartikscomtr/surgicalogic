@@ -34,7 +34,7 @@ const workTypesModule = {
       axios.get('http://localhost/Surgicalogic.Api/WorkType/GetWorkTypes')
         .then(response => {
           if (response.data.info.succeeded == true){
-            context.commit('setWorkTypes', response.data.result) // set the WorkType in the store
+            context.commit('setWorkTypes', response.data.result) //Set the Work Type in the store
           }
         })
     },
@@ -43,7 +43,7 @@ const workTypesModule = {
       axios.post('http://localhost/Surgicalogic.Api/WorkType/InsertWorkType', payload)
         .then(response => {
           if (response.data.info.succeeded == true) {
-            context.commit('insertWorkType', { item: response.data.result }) // insert the WorkType in the store
+            context.commit('insertWorkType', { item: response.data.result }) //Insert the Work Type in the store
           }
         })
     },
@@ -52,15 +52,15 @@ const workTypesModule = {
       axios.post('http://localhost/Surgicalogic.Api/WorkType/DeleteWorkType/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
-            context.commit('deleteWorkType', { payload }); // delete the WorkType in the store
+            context.commit('deleteWorkType', { payload }); //Delete the Work Type in the store
           }
         })
     },
 
     updateWorkType(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/WorkType/UpdateWorkType',  payload)
+      axios.post('http://localhost/Surgicalogic.Api/WorkType/UpdateWorkType', payload)
         .then(response => {
-          //context.commit('updateWorkType', {payload}) // update the WorkType in the store
+          //context.commit('updateWorkType', {payload}) //Update the Work Type in the store
         })
     }
   }

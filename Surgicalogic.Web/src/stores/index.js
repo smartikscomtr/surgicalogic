@@ -16,20 +16,20 @@ import workTypesModule from './modules/workTypes';
 import loginModule from './modules/login';
 
 //New Registeration Of Store
-export default  new Vuex.Store({
+export default new Vuex.Store({
   state,
   getters,
   mutations,
   actions,
   modules : {
-     branchsModule,
-     equipmentModule,
-     equipmentTypesModule,
-     operationTypeModule,
-     personnelModule,
-     personnelTitleModule,
-     operatingRoomModule,
-     workTypesModule,
-     loginModule
+    branchsModule,
+    equipmentModule,
+    equipmentTypesModule,
+    operationTypeModule,
+    personnelModule,
+    personnelTitleModule,
+    operatingRoomModule,
+    workTypesModule,
+    loginModule
   }
 });

@@ -16,13 +16,13 @@ import * as operatingrooms from './operatingrooms.json';
 import * as worktypes from './worktypes.json';
 
 export default {
-    branchs,
-    common,
-    equipments,
-    equipmenttypes,
-    operationtypes,
-    personnel,
-    personneltitle,
-    operatingrooms,
-    worktypes
+  branchs,
+  common,
+  equipments,
+  equipmenttypes,
+  operationtypes,
+  personnel,
+  personneltitle,
+  operatingrooms,
+  worktypes
 };
