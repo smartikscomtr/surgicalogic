@@ -12,9 +12,9 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <personnel-edit-component :editAction="editAction"
-                              :editVisible="editDialog"
-                              :editIndex="editedIndex"
+    <personnel-edit-component :edit-action="editAction"
+                              :edit-visible="editDialog"
+                              :edit-index="editedIndex"
                               :delete-value="deleteValue"
                               @cancel="cancel">
     </personnel-edit-component>
@@ -43,47 +43,48 @@ export default {
     headers() {
       const vm = this;
 
+      //Columns and actions
       return [
         {
-          value: "personnelCode",
-          text: vm.$i18n.t("personnel.personnelCode"),
+          value: 'personnelCode',
+          text: vm.$i18n.t('personnel.personnelCode'),
+          sortable: true,
+          align: 'left'
+        },
+        {
+          value: 'firstName',
+          text: vm.$i18n.t('personnel.givenName'),
+          sortable: true,
+          align: 'left'
+        },
+        {
+          value: 'lastName',
+          text: vm.$i18n.t('personnel.familyName'),
+          sortable: true,
+          align: 'left'
+        },
+        {
+          value: 'personnelTitleId',
+          text: vm.$i18n.t('personnel.personnelTitle'),
           sortable: true,
           align: "left"
         },
         {
-          value: "firstName",
-          text: vm.$i18n.t("personnel.givenName"),
+          value: 'branchId',
+          text: vm.$i18n.t('personnel.branch'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "lastName",
-          text: vm.$i18n.t("personnel.familyName"),
+          value: 'workTypeId',
+          text: vm.$i18n.t('personnel.workType'),
           sortable: true,
-          align: "left"
-        },
-        {
-          value: "personnelTitleId",
-          text: vm.$i18n.t("personnel.personnelTitle"),
-          sortable: true,
-          align: "left"
-        },
-        {
-          value: "branchId",
-          text: vm.$i18n.t("personnel.branch"),
-          sortable: true,
-          align: "left"
-        },
-        {
-          value: "workTypeId",
-          text: vm.$i18n.t("personnel.workType"),
-          sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
           isAction: true,
           sortable: false,
-          align: "right"
+          align: 'right'
         }
       ];
     },
@@ -92,7 +93,6 @@ export default {
       const vm = this;
 
       return vm.$store.state.personnelModule.personnel;
-      // return _each(this.$store.state.personnelModule.personnel, (item) => item.workTypeTitle = item.workTypes[0].name );
     }
   },
 
@@ -101,16 +101,19 @@ export default {
     const vm = this;
 
      if(vm.workTypeLoadOnce){
+        //We are accessing getWorkTypes in vuex store
         vm.$store.dispatch('getWorkTypes');
         vm.workTypeLoadOnce = false;
      }
 
      if(vm.personnelTitleLoadOnce){
+        //We are accessing getPersonnelTitles in vuex store
         vm.$store.dispatch('getPersonnelTitles');
         vm.personnelTitleLoadOnce = false;
      }
 
      if(vm.branchLoadOnce){
+        //We are accessing getBranchs in vuex store
         vm.$store.dispatch('getBranchs');
         vm.branchLoadOnce = false;
      }
@@ -144,16 +147,15 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-
-      //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
 
-        vm.$store.dispatch('deletePersonnel', {
-          id: payload.id
-        });
+      //We are accessing deletePersonnel in vuex store
+      vm.$store.dispatch('deletePersonnel', {
+        id: payload.id
+      });
 
       vm.deleteValue = payload;
     }
@@ -162,7 +164,8 @@ export default {
   created() {
     const vm = this;
 
-    vm.$store.dispatch("getPersonnels");
+    //We are accessing getPersonnels in vuex store
+    vm.$store.dispatch('getPersonnels');
   }
 };
 

@@ -69,8 +69,8 @@
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
-                    @click.native="save">
-                    Kaydet
+                       @click.native="save">
+                  Kaydet
                 </v-btn>
               </v-flex>
             </v-layout>
@@ -128,11 +128,13 @@ export default {
 
         return vm.editVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the operating rooms edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     },
@@ -166,8 +168,10 @@ export default {
     save() {
       const vm = this;
 
+      //Edit operating room
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateOperatingRoom", {
+        //We are accessing updateOperatingRoom in vuex store
+        vm.$store.dispatch('updateOperatingRoom', {
           id: vm.actions.id,
           name: vm.editAction.name,
           description: vm.editAction.description,
@@ -176,8 +180,10 @@ export default {
           lenght: vm.editAction.lenght
         });
       }
+      //Add operating room
       else {
-        vm.$store.dispatch("insertOperatingRoom", {
+        //We are accessing insertOperatingRoom in vuex store
+        vm.$store.dispatch('insertOperatingRoom', {
           name: vm.editAction.name,
           description: vm.editAction.description,
           width: vm.editAction.width,
@@ -193,6 +199,7 @@ export default {
   created() {
     const vm = this;
 
+    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));

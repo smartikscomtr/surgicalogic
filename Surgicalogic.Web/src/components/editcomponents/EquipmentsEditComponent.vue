@@ -29,6 +29,8 @@
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectEquipmentType"
                           :items="equipmentTypes"
+                          multiple
+                          chips
                           :label="$t('equipmenttypes.equipmentTypes')"
                           item-text="name"
                           item-value="id">
@@ -50,7 +52,7 @@
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
-                    @click.native="save">
+                       @click.native="save">
                   Kaydet
                 </v-btn>
               </v-flex>
@@ -106,8 +108,9 @@ export default {
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the equipments edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     },
@@ -149,7 +152,9 @@ export default {
     save() {
       const vm = this;
 
+      //Edit equipment
       if (vm.editIndex > -1) {
+        //We are accessing updateEquipment in vuex store
         vm.$store.dispatch('updateEquipment', {
           id: vm.editAction.id,
           name: vm.editAction.name,
@@ -158,7 +163,9 @@ export default {
           equipmentTypeId: vm.selectEquipmentType
         });
       }
+      //Add equipment
       else {
+        //We are accessing insertEquipment in vuex store
         vm.$store.dispatch('insertEquipment', {
           name: vm.editAction.name,
           description: vm.editAction.description,

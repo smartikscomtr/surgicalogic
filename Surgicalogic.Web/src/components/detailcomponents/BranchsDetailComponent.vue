@@ -86,6 +86,7 @@ export default {
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the branchs detail component
         if (!value) {
           vm.$emit("cancel");
         }

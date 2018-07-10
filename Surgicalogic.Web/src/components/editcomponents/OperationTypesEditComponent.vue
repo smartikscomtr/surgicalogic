@@ -6,8 +6,8 @@
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <a class="backBtn"
-              flat
-              @click="cancel">
+               flat
+               @click="cancel">
               <v-icon>arrow_back</v-icon>
             </a>
 
@@ -36,10 +36,10 @@
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-btn class="btnSave orange"
-                  @click.native="save">
-                Kaydet
-               </v-btn>
+                <v-btn class="btnSave orange"
+                       @click.native="save">
+                  Kaydet
+                </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -87,7 +87,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t('operationtypes.addOperationType') : vm.$i18n.t("operationtypes.editOperationType");
+      return vm.editIndex === -1 ? vm.$i18n.t('operationtypes.addOperationType') : vm.$i18n.t('operationtypes.editOperationType');
     },
 
     showModal: {
@@ -100,8 +100,9 @@ export default {
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the operating types edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     },
@@ -135,8 +136,10 @@ export default {
     save() {
       const vm = this;
 
+      //Edit operation type
       if (vm.editIndex > -1) {
-        vm.$store.dispatch("updateOperationType", {
+        //We are accessing updateOperationType in vuex store
+        vm.$store.dispatch('updateOperationType', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           type: vm.editAction.type,
@@ -144,8 +147,10 @@ export default {
           description: vm.editAction.description
         });
       }
+      //Add operation type
       else {
-        vm.$store.dispatch("insertOperationType", {
+        //We are accessing insertOperationType in vuex store
+        vm.$store.dispatch('insertOperationType', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           type: vm.editAction.type,
@@ -161,12 +166,12 @@ export default {
   created() {
     const vm = this;
 
-    vm.$watch("deleteValue", (newValue, oldValue) => {
+    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
+    vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
-        confirm(vm.$i18n.t("common.areYouSureWantToDelete"));
+        confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
 
         vm.editVisible = false;
-        //Silme İşlemi
       }
     });
   }

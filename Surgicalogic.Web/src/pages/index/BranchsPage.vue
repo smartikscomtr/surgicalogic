@@ -12,14 +12,14 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <branchs-detail-component :detailAction="detailAction"
-                              :detailVisible="detailDialog"
+    <branchs-detail-component :detail-action="detailAction"
+                              :detail-visible="detailDialog"
                               @cancel="cancel">
     </branchs-detail-component>
 
-    <branchs-edit-component :editAction="editAction"
-                            :editVisible="editDialog"
-                            :editIndex="editedIndex"
+    <branchs-edit-component :edit-action="editAction"
+                            :edit-visible="editDialog"
+                            :edit-index="editedIndex"
                             :delete-value="deleteValue"
                             @cancel="cancel">
     </branchs-edit-component>
@@ -48,23 +48,24 @@ export default {
     headers() {
       const vm = this;
 
+      //Columns and actions
       return [
         {
-          value: "name",
-          text: vm.$i18n.t("branchs.branch"),
+          value: 'name',
+          text: vm.$i18n.t('branchs.branch'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
-          value: "description",
-          text: vm.$i18n.t("common.description"),
+          value: 'description',
+          text: vm.$i18n.t('common.description'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
           isAction: true,
           sortable: false,
-          align: "right"
+          align: 'right'
         }
       ];
     },
@@ -103,16 +104,15 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-
-      //Yeni Ekleme
     },
 
     deleteItem(payload) {
       const vm = this;
 
-        vm.$store.dispatch('deleteBranch', {
-          id: payload.id
-        });
+      //We are accessing deleteBranch in vuex store
+      vm.$store.dispatch('deleteBranch', {
+        id: payload.id
+      });
 
       vm.deleteValue = payload;
     }
@@ -121,6 +121,7 @@ export default {
   created() {
     const vm = this;
 
+    //We are accessing getBranch in vuex store
     vm.$store.dispatch('getBranchs');
   }
 };

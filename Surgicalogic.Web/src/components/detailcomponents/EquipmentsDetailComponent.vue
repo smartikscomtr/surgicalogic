@@ -110,11 +110,13 @@ export default {
 
         return vm.detailVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the equipments detail component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     }

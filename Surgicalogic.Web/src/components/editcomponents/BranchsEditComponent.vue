@@ -90,11 +90,13 @@ export default {
 
         return vm.editVisible;
       },
+
       set(value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the branchs edit component
         if (!value) {
-          vm.$emit("cancel");
+          vm.$emit('cancel');
         }
       }
     }
@@ -110,14 +112,18 @@ export default {
     save() {
       const vm = this;
 
+      //Edit branch
       if (vm.editIndex > -1) {
+        //We are accessing updateBranch in vuex store
         vm.$store.dispatch('updateBranch', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
         });
       }
+      //Add branch
       else {
+        //We are accessing insertBranch in vuex store
         vm.$store.dispatch('insertBranch', {
           name: vm.editAction.name,
           description: vm.editAction.description
@@ -131,12 +137,12 @@ export default {
   created() {
     const vm = this;
 
-    vm.$watch("deleteValue", (newValue, oldValue) => {
+    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
+    vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
-        confirm(vm.$i18n.t("common.areYouSureWantToDelete"));
+        confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
 
         vm.editVisible = false;
-        //Silme İşlemi
       }
     });
   }

@@ -31,10 +31,11 @@
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
+
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                <v-btn class="btnSave orange"
-                  @click.native="save">
-                   Kaydet
+                      @click.native="save">
+                  Kaydet
                </v-btn>
               </v-flex>
             </v-layout>
@@ -81,7 +82,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t("equipmenttypes.addEquipmentTypesInformation") : vm.$i18n.t("equipmenttypes.editEquipmentTypesInformation");
+      return vm.editIndex === -1 ? vm.$i18n.t('equipmenttypes.addEquipmentTypesInformation') : vm.$i18n.t('equipmenttypes.editEquipmentTypesInformation');
     },
 
     showModal: {
@@ -90,9 +91,11 @@ export default {
 
         return vm.editVisible;
       },
+
       set (value) {
         const vm = this;
 
+        //When the cancel button is clicked, the event is sent to the equipment types edit component
         if (!value) {
           vm.$emit('cancel');
         }
@@ -110,13 +113,18 @@ export default {
     save() {
       const vm = this;
 
+      //Edit equipment type
       if (vm.editIndex > -1) {
+        //We are accessing updateEquipmentType in vuex store
         vm.$store.dispatch('updateEquipmentType', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
         });
-      } else {
+      }
+      //Add equipment type
+      else {
+        //We are accessing insertEquipmentType in vuex store
         vm.$store.dispatch('insertEquipmentType', {
           name: vm.editAction.name,
           description: vm.editAction.description
@@ -130,11 +138,11 @@ export default {
   created() {
     const vm = this;
 
+    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
     vm.$watch('deleteValue', (newValue, oldValue) => {
       if (newValue !== oldValue) {
         confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
         vm.editVisible = false;
-        //Silme İşlemi
       }
     });
   }
