@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,12 +15,12 @@ using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Data.Migrations.Initialize;
 using Surgicalogic.Data.Utilities;
-using Surgicalogic.Services.Services;
+using Surgicalogic.Services.Common;
 using Surgicalogic.Services.Stores;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Surgicalogic.Api
 {
@@ -58,7 +56,6 @@ namespace Surgicalogic.Api
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
                 })
                 .AddJwtBearer(cfg =>
                 {
@@ -70,10 +67,12 @@ namespace Surgicalogic.Api
                         ValidAudience = Configuration["AppSettings:Token:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Token:SecurityKey"])),
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
+
                     };
                 });
 
             services.AddTransient<IAppServiceProvider, AppServiceProvider>();
+            services.AddTransient<ITokenService, TokenService>();
 
             //CROS service registerd. This methode was add besause of allow-control-access-origin 
             services.AddCors(options =>
@@ -125,7 +124,7 @@ namespace Surgicalogic.Api
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            if(Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
+            if (Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
                 DbInitializer.Seed(context);
 
             BuildAppSettings();

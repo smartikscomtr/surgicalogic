@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Surgicalogic.Services.Services
+namespace Surgicalogic.Services.Common
 {
     public class AppServiceProvider : IAppServiceProvider
     {

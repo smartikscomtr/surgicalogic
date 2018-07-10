@@ -13,6 +13,7 @@ import personnelModule from './modules/personnel';
 import personnelTitleModule from './modules/personnelTitle';
 import operatingRoomModule from './modules/operatingrooms';
 import workTypesModule from './modules/workTypes';
+import loginModule from './modules/login';
 
 //New Registeration Of Store
 export default  new Vuex.Store({
@@ -28,6 +29,7 @@ export default  new Vuex.Store({
      personnelModule,
      personnelTitleModule,
      operatingRoomModule,
-     workTypesModule
+     workTypesModule,
+     loginModule
   }
 });
