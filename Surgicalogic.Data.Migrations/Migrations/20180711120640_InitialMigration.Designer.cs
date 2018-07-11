@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180706134027_InitialMigration")]
+    [Migration("20180711120640_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,13 +192,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int?>("OperatingRoomId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EquipmentTypeId");
-
-                    b.HasIndex("OperatingRoomId");
 
                     b.ToTable("Equipments");
                 });
@@ -250,6 +246,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsAvailable")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<double?>("Length");
 
                     b.Property<string>("Location");
@@ -267,6 +266,34 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperatingRooms");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
+                {
+                    b.Property<int>("OperatingRoomId");
+
+                    b.Property<int>("EquipmentId");
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("Id");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.HasKey("OperatingRoomId", "EquipmentId");
+
+                    b.HasAlternateKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.ToTable("OperatingRoomEquipments");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationType", b =>
@@ -513,10 +540,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .WithMany("Equipments")
                         .HasForeignKey("EquipmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
-                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom")
-                        .WithMany("Equipment")
-                        .HasForeignKey("OperatingRoomId");
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.Equipment", "Equipment")
+                        .WithMany("OperatingRoomEquipments")
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom", "OperatingRoom")
+                        .WithMany("OperatingRoomEquipments")
+                        .HasForeignKey("OperatingRoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationType", b =>
@@ -535,7 +571,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Surgicalogic.Data.Entities.WorkType", "WorkType")
-                        .WithMany()
+                        .WithMany("Personnels")
                         .HasForeignKey("WorkTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

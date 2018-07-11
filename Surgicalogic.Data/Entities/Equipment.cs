@@ -1,5 +1,4 @@
 ﻿using Surgicalogic.Data.Entities.Base;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,8 +16,6 @@ namespace Surgicalogic.Data.Entities
         public int EquipmentTypeId { get; set; }
         public bool IsPortable { get; set; }
         public virtual EquipmentType EquipmentType { get; set; }
-
-        public virtual ICollection<RelOperatingRoomEquipment> RelOperatingRoomEquipment { get; set; }
-
+        public virtual ICollection<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
     }
 }
