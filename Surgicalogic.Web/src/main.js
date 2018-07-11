@@ -12,6 +12,7 @@ import Vue from 'vue';
 
 import Vuetify from 'vuetify';
 import Vuex from 'vuex';
+import VueAxios from 'vue-axios';
 import { i18n } from './plugins/vue-i18n';
 import router from './router';
 import Authentication from './plugins/authentication-plugin.js';
@@ -40,12 +41,9 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 
 // Registering Detail Components
-import BranchsDetailComponent from '@/components/detailcomponents/BranchsDetailComponent';
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
 
-Vue.component('branchs-detail-component', BranchsDetailComponent);
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
-
 
 // Registering Edit Components
 import BranchsEditComponent from '@/components/editcomponents/BranchsEditComponent';
@@ -79,6 +77,8 @@ import {
 
 const axios = setupAxios();
 
+Vue.use(VueAxios,axios);
+
 new Vue({
   el: '#app',
   i18n,
@@ -89,7 +89,6 @@ new Vue({
 
   created() {
     const vm = this;
-
     setupHttpInterceptor(vm);
   }
 })

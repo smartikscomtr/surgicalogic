@@ -31,8 +31,6 @@
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectEquipmentType"
                           :items="equipmentTypes"
-                          multiple
-                          chips
                           :label="$t('equipmenttypes.equipmentTypes')"
                           item-text="name"
                           item-value="id">

@@ -31,14 +31,14 @@ const operatingTypeModule = {
 
   actions: {
     getOperationTypes(context) {
-      axios.get('http://localhost/Surgicalogic.Api/OperationType/GetOperationTypes')
+      axios.get('OperationType/GetOperationTypes')
           .then(response => {
             context.commit('setOperationTypes', response.data.result) //Set the Operation Types in the store
         })
     },
 
     insertOperationType(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperationType/InsertOperationType', payload)
+      axios.post('OperationType/InsertOperationType', payload)
         .then(response => {
           if (response.statusText == 'OK') {
             payload.id = response.data;
@@ -48,7 +48,7 @@ const operatingTypeModule = {
     },
 
     deleteOperationType(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperationType/DeleteOperationType/' + payload.id)
+      axios.post('OperationType/DeleteOperationType/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deleteOperationType', { payload }); //Delete the Operation Types in the store
@@ -57,7 +57,7 @@ const operatingTypeModule = {
     },
 
     updateOperationType(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperationType/UpdateOperationType', payload)
+      axios.post('OperationType/UpdateOperationType',  payload)
         .then(response => {
           //context.commit('updateOperationType', {payload}) //Update the OperationTypes in the store
         })
