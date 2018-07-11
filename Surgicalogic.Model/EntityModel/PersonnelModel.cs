@@ -8,8 +8,8 @@
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }
-        public PersonnelTitleModel PersonnelTitle { get; set; }
-        public BranchModel Branch { get; set; }
-        public WorkTypeModel WorkType { get; set; }
+        public PersonnelTitleModel PersonnelTitleModel { get; set; }
+        public BranchModel BranchModel { get; set; }
+        public WorkTypeModel WorkTypeModel { get; set; }
     }
 }

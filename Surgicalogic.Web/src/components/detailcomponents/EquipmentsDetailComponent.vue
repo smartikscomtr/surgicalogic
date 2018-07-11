@@ -41,7 +41,7 @@
                   </div>
 
                   <div class="value">
-                    {{ detailAction['equipmentTypes'] }}
+                    {{ detailAction['equipmentTypeName'] }}
                   </div>
                 </div>
               </v-flex>

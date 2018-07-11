@@ -7,8 +7,10 @@ namespace Surgicalogic.Services.Stores
 {
     public class OperatingRoomStoreService : StoreService<OperatingRoom, OperatingRoomModel>, IOperatingRoomStoreService
     {
+        private DataContext _context;
         public OperatingRoomStoreService(DataContext context) : base(context)
         {
+            _context = context;
         }
     }
 }

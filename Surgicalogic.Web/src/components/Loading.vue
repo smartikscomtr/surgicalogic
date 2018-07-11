@@ -1,5 +1,5 @@
 <template>
-    <i class="loading" />
+  <i class="loading" />
 </template>
 
 <script>

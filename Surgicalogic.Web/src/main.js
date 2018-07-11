@@ -42,10 +42,8 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 
 // Registering Detail Components
-import BranchsDetailComponent from '@/components/detailcomponents/BranchsDetailComponent';
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
 
-Vue.component('branchs-detail-component', BranchsDetailComponent);
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 
 // Registering Edit Components

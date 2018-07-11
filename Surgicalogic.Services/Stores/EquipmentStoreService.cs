@@ -13,6 +13,5 @@ namespace Surgicalogic.Services.Stores
         {
             _context = context;
         }
-
     }
 }

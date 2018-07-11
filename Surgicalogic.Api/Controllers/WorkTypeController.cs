@@ -37,7 +37,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>WorkTypeOutputModel</returns>
         [Route("WorkType/InsertWorkType")]
         [HttpPost]
-        public async Task<ResultModel<WorkTypeModel>> InsertWorkType([FromBody] WorkTypeInputModel item)
+        public async Task<ResultModel<WorkTypeOutputModel>> InsertWorkType([FromBody] WorkTypeInputModel item)
         {
             var workTypeItem = new WorkTypeModel()
             {
@@ -45,7 +45,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _workTypeStoreService.InsertAndSaveAsync(workTypeItem);
+            return await _workTypeStoreService.InsertAndSaveAsync<WorkTypeOutputModel>(workTypeItem);
         }
 
         /// <summary>

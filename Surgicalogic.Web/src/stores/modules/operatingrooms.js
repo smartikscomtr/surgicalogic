@@ -33,7 +33,7 @@ const operatingRoomModule = {
     getOperatingRooms(context) {
       axios.get('OperatingRoom/GetOperatingRooms')
         .then(response => {
-          context.commit('setOperatingRooms', response.data.result) // set the Operating Rooms in the store
+          context.commit('setOperatingRooms', response.data.result) //Set the Operating Rooms in the store
       })
     },
 
@@ -43,7 +43,7 @@ const operatingRoomModule = {
           if (response.statusText == 'OK') {
             payload.id = response.data;
 
-            context.commit('insertOperatingRoom', { item: payload }) // insert the Operating Rooms in the store
+            context.commit('insertOperatingRoom', { item: payload }) //Insert the Operating Rooms in the store
           }
         })
     },
@@ -52,7 +52,7 @@ const operatingRoomModule = {
       axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
-            context.commit('deleteOperatingRoom', { payload }); // delete the Operating Rooms in the store
+            context.commit('deleteOperatingRoom', { payload }); //Delete the Operating Rooms in the store
           }
         })
     },
@@ -60,7 +60,14 @@ const operatingRoomModule = {
     updateOperatingRoom(context, payload) {
       axios.post('OperatingRoom/UpdateOperatingRoom', payload)
         .then(response => {
-          //context.commit('updateOperatingRoom', {payload}) // update the Operating Rooms in the store
+          //context.commit('updateOperatingRoom', {payload}) //Update the Operating Rooms in the store
+        })
+    },
+
+    getAllEquipments(context) {
+      axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipments')
+        .then(response => {
+          context.commit(setAllEquipments, response.data.result) //Set the Operating Rooms in the store
         })
     }
   }

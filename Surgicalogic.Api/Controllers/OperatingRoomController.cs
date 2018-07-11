@@ -38,7 +38,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>OperatingRoomOutputModel</returns>
         [Route("OperatingRoom/InsertOperatingRoom")]
         [HttpPost]
-        public async Task<ResultModel<OperatingRoomModel>> InsertOperatingRoom([FromBody] OperatingRoomInputModel item)
+        public async Task<ResultModel<OperatingRoomOutputModel>> InsertOperatingRoom([FromBody] OperatingRoomInputModel item)
         {
             var operatingRoomItem = new OperatingRoomModel()
             {
@@ -47,11 +47,10 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
-                Length = item.Length,
-                EquipmentId = item.EquipmentId
+                Length = item.Length
             };
 
-            return await _operatingRoomStoreService.InsertAndSaveAsync(operatingRoomItem);
+            return await _operatingRoomStoreService.InsertAndSaveAsync< OperatingRoomOutputModel>(operatingRoomItem);
         }
 
         /// <summary>
@@ -83,8 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
-                Length = item.Length,
-                EquipmentId = item.EquipmentId
+                Length = item.Length
             };
 
             return await _operatingRoomStoreService.UpdatandSaveAsync(operatingRoomItem);

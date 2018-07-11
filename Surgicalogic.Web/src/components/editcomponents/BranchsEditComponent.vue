@@ -24,7 +24,7 @@
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('branchs.branch')">
+                              :label="$t('branchs.branchName')">
                 </v-text-field>
               </v-flex>
 

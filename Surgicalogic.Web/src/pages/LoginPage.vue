@@ -5,45 +5,59 @@
         <v-flex xs12 sm8 md4>
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
-              <v-toolbar-title>Login form</v-toolbar-title>
+              <v-toolbar-title>
+                Login form
+              </v-toolbar-title>
+
               <v-spacer></v-spacer>
             </v-toolbar>
+
             <v-card-text>
               <v-form>
-                <v-text-field v-model="email" prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                <v-text-field v-model="password" prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
+                <v-text-field v-model="email"
+                              prepend-icon="person"
+                              name="login"
+                              label="Login"
+                              type="text">
+                </v-text-field>
+
+                <v-text-field v-model="password"
+                              prepend-icon="lock"
+                              name="password"
+                              label="Password"
+                              id="password"
+                              type="password">
+                </v-text-field>
               </v-form>
             </v-card-text>
+
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="btnSave btn--flat" @click="login()">Login</v-btn>
+
+              <v-btn class="btnSave btn--flat"
+                     @click="login()">
+                Login
+              </v-btn>
             </v-card-actions>
+
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="btnSave btn--flat" @click="logout()">Logout</v-btn>
+
+              <v-btn class="btnSave btn--flat"
+                     @click="logout()">
+                Logout
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
       </v-layout>
     </v-container>
-
   </v-content>
 </template>
 
 <script>
-  export default {
-  // props: {
-  //   email: {
-  //     type: Object,
-  //     required: false
-  //   },
 
-  //   password: {
-  //     type: Object,
-  //     required: false
-  //   }
-  // },
-
+export default {
   data() {
   return {};
   },
@@ -52,30 +66,34 @@
   login() {
   const vm = this;
 
-  vm.$store.dispatch("userLogin", {
-  email: vm.email,
-  password: vm.password
-  });
-  },
+      //We are accessing userLogin in vuex store
+      vm.$store.dispatch("userLogin", {
+        email: vm.email,
+        password: vm.password
+      });
+    },
 
   logout() {
   const vm = this;
 
-  vm.$store.dispatch("userLogout");
-  }
+      //We are accessing userLogout in vuex store
+      vm.$store.dispatch("userLogout");
+    }
   },
 
   created(){
-  const vm = this;
-  
-  if (vm.auth.isAuthenticated()) {
-  vm.$router.push("DashboardPage");
-  }
+    const vm = this;
+
+     if (vm.auth.isAuthenticated()) {
+      vm.$router.push("DashboardPage");
+     }
   }
   };
 
 </script>
+
 <style>
+
 .primary {
     background-color: #009688 !important;
     border-color: #009688 !important;
@@ -117,4 +135,5 @@
 .card__text {
     padding: 16px 45px;
 }
+
 </style>
