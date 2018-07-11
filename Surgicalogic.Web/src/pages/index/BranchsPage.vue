@@ -3,19 +3,13 @@
     <grid-component :headers="headers"
                     :items="branchs"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
-
-    <branchs-detail-component :detail-action="detailAction"
-                              :detail-visible="detailDialog"
-                              @cancel="cancel">
-    </branchs-detail-component>
 
     <branchs-edit-component :edit-action="editAction"
                             :edit-visible="editDialog"
@@ -35,9 +29,7 @@ export default {
     return {
       title: vm.$i18n.t('branchs.branchs'),
       search: '',
-      detailDialog: false,
       editDialog: false,
-      detailAction: {},
       editAction: {},
       deleteValue: {},
       editedIndex: -1
@@ -78,13 +70,6 @@ export default {
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
     edit(payload){
       const vm = this;
 
@@ -96,7 +81,6 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.detailDialog = false;
       vm.editDialog = false;
     },
 

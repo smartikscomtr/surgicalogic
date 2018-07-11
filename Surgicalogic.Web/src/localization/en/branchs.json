@@ -1,6 +1,7 @@
 {
   "branch": "Branch",
   "branchs": "Branchs",
+  "branchName": "Branch Name",
   "addBranchsInformation": "Add Branchs Information",
   "editBranchsInformation": "Edit Branchs Information"
 }
