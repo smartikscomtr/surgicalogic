@@ -1,5 +1,5 @@
 import axios from 'axios';
-import VueAxios from 'vue-axios'
+import VueAxios from 'vue-axios';
 import {
   debug
 } from 'util';
@@ -26,7 +26,6 @@ function cleanResponseError(err) {
 
 function setupAxios() {
   const axiosInstance = axios.create({
-    baseURL: 'http://localhost/Surgicalogic.Api/',
     headers: {
       'Accept': 'application/json' // eslint-disable-line quote-props
     }
@@ -38,6 +37,8 @@ function setupAxios() {
 function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
   axios.interceptors.request.use(
     config => {
+      config.url = process.env.ROOT_API + config.url;
+
       if (vm.auth.isAuthenticated()) {
         const token = vm.auth.getToken();
         config.headers['Authorization'] = `Bearer ${token}`; // eslint-disable-line dot-notation
@@ -65,7 +66,7 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
           error.response.statusText === "Unauthorized") {
 
           if (localStorage.getItem("refreshToken")) {
-            axios.post('http://localhost/Surgicalogic.Api/Account/RefreshToken', {
+            axios.post('Account/RefreshToken', {
                 token: localStorage.getItem("token"),
                 refreshToken: localStorage.getItem("refreshToken")
               })

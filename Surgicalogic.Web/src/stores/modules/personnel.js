@@ -30,14 +30,14 @@ const personnelModule = {
 
   actions: {
     getPersonnels(context) {
-      axios.get('http://localhost/Surgicalogic.Api/Personnel/GetPersonnels')
+      axios.get('Personnel/GetPersonnels')
         .then(response => {
           context.commit('setPersonnels', response.data.result) //Set the Personnel in the store
         })
     },
 
     insertPersonnel(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Personnel/InsertPersonnel', payload)
+      axios.post('Personnel/InsertPersonnel', payload)
         .then(response => {
           if (response.statusText == 'OK') {
             payload.id = response.data;
@@ -48,7 +48,7 @@ const personnelModule = {
     },
 
     deletePersonnel(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Personnel/DeletePersonnel/' + payload.id)
+      axios.post('Personnel/DeletePersonnel/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deletePersonnel', { payload }); //Delete the Personnel in the store
@@ -57,7 +57,7 @@ const personnelModule = {
     },
 
     updatePersonnel(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Personnel/UpdatePersonnel', payload)
+      axios.post('Personnel/UpdatePersonnel', payload)
         .then(response => {
           //context.commit('updatePersonnel', {payload}) //Update the Personnel in the store
         })

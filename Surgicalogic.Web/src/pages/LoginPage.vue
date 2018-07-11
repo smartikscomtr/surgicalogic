@@ -31,7 +31,7 @@
 </template>
 
 <script>
-export default {
+  export default {
   // props: {
   //   email: {
   //     type: Object,
@@ -45,34 +45,34 @@ export default {
   // },
 
   data() {
-    return {};
+  return {};
   },
 
   methods: {
-    login() {
-      const vm = this;
+  login() {
+  const vm = this;
 
-      vm.$store.dispatch("userLogin", {
-        email: vm.email,
-        password: vm.password
-      });
-    },
+  vm.$store.dispatch("userLogin", {
+  email: vm.email,
+  password: vm.password
+  });
+  },
 
-    logout() {
-      const vm = this;
+  logout() {
+  const vm = this;
 
-      vm.$store.dispatch("userLogout");
-    }
+  vm.$store.dispatch("userLogout");
+  }
   },
 
   created(){
-    const vm = this;
-
-     if (vm.auth.isAuthenticated()) {
-      this.$router.push("DashboardPage");
-     }
+  const vm = this;
+  
+  if (vm.auth.isAuthenticated()) {
+  vm.$router.push("DashboardPage");
   }
-};
+  }
+  };
 
 </script>
 <style>

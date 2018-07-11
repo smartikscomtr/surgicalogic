@@ -31,14 +31,14 @@ const operatingRoomModule = {
 
   actions: {
     getOperatingRooms(context) {
-      axios.get('http://localhost/Surgicalogic.Api/OperatingRoom/GetOperatingRooms')
+      axios.get('OperatingRoom/GetOperatingRooms')
         .then(response => {
           context.commit('setOperatingRooms', response.data.result) // set the Operating Rooms in the store
       })
     },
 
     insertOperatingRoom(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/InsertOperatingRoom', payload)
+      axios.post('OperatingRoom/InsertOperatingRoom', payload)
         .then(response => {
           if (response.statusText == 'OK') {
             payload.id = response.data;
@@ -49,7 +49,7 @@ const operatingRoomModule = {
     },
 
     deleteOperatingRoom(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/DeleteOperatingRoom/' + payload.id)
+      axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deleteOperatingRoom', { payload }); // delete the Operating Rooms in the store
@@ -58,7 +58,7 @@ const operatingRoomModule = {
     },
 
     updateOperatingRoom(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperatingRoom/UpdateOperatingRoom', payload)
+      axios.post('OperatingRoom/UpdateOperatingRoom', payload)
         .then(response => {
           //context.commit('updateOperatingRoom', {payload}) // update the Operating Rooms in the store
         })

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -10,7 +11,7 @@ namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class EquipmentController : Controller
     {
         private readonly IEquipmentStoreService _equipmentStoreService;
