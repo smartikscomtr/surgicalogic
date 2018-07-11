@@ -12,7 +12,6 @@ import Vue from 'vue';
 
 import Vuetify from 'vuetify';
 import Vuex from 'vuex';
-import axios from 'axios';
 import VueAxios from 'vue-axios';
 import { i18n } from './plugins/vue-i18n';
 import router from './router';
@@ -76,7 +75,7 @@ import {
   setupHttpInterceptor
 } from './plugins/setup-axios';
 
-//const axios = setupAxios();
+const axios = setupAxios();
 
 Vue.use(VueAxios,axios);
 
