@@ -1,12 +1,10 @@
 {
-  "personnelCode": "Personel Kodu",
-  "givenName" : "Adı",
-  "familyName": "Soyadı",
-  "personnelTitle": "Personel Ünvanı",
-  "branch": "Branşı",
-  "workType": "Çalışma Tipi",
-  "personnel": "Personel",
-  "personnels": "Personeller",
   "addPersonnelInformation": "Yeni Personel Bilgisi Ekleme",
-  "editPersonnelInformation": "Personel Bilgisi Düzenleme"
+  "editPersonnelInformation": "Personel Bilgisi Düzenleme",
+  "familyName": "Soyadı",
+  "givenName" : "Adı",
+  "personnel": "Personel",
+  "personnelCode": "Personel Kodu",
+  "personnels": "Personeller",
+  "personnelTitle": "Personel Ünvanı"
 }

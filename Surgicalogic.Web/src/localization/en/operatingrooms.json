@@ -1,11 +1,11 @@
 {
-  "operatingRoom": "Operating Room",
-  "location": "Location",
-  "size": "Size",
-  "width": "Width",
+  "addOperatingRoomInformation": "Add Operating Room Information",
+  "editOperatingRoomInformation": "Edit Operating Room Information",
   "height": "Height",
   "lenght": "Lenght",
+  "location": "Location",
+  "operatingRoom": "Operating Room",
   "operatingRooms": "Operating Rooms",
-  "addOperatingRoomInformation": "Add Operating Room Information",
-  "editOperatingRoomInformation": "Edit Operating Room Information"
+  "size": "Size",
+  "width": "Width"
 }

@@ -9,17 +9,27 @@ Vue.use(VueRouter);
 Vue.use(Vuex);
 
 
-//Registering Pages
-import BranchsPage from "@/pages/index/BranchsPage";
-import DashboardPage from "@/pages/DashboardPage";
-import EquipmentsPage from "@/pages/index/EquipmentsPage";
-import EquipmentTypesPage from "@/pages/index/EquipmentTypesPage";
-import LoginPage from "@/pages/LoginPage";
-import OperationTypesPage from "@/pages/index/OperationTypesPage";
-import PersonnelPage from "@/pages/index/PersonnelPage";
-import PersonnelTitlePage from "@/pages/index/PersonnelTitlePage";
-import OperatingRoomsPage from "@/pages/index/OperatingRoomsPage";
-import WorkTypesPage from "@/pages/index/WorkTypesPage";
+//Registering Definitions Pages
+import BranchsPage from "@/pages/definitions/BranchsPage";
+import EquipmentsPage from "@/pages/definitions/EquipmentsPage";
+import EquipmentTypesPage from "@/pages/definitions/EquipmentTypesPage";
+import OperationTypesPage from "@/pages/definitions/OperationTypesPage";
+import PersonnelPage from "@/pages/definitions/PersonnelPage";
+import PersonnelTitlePage from "@/pages/definitions/PersonnelTitlePage";
+import OperatingRoomsPage from "@/pages/definitions/OperatingRoomsPage";
+import WorkTypesPage from "@/pages/definitions/WorkTypesPage";
+
+
+//Registering Index Pages
+import DashboardPage from "@/pages/index/DashboardPage";
+
+
+//Registering Login Pages
+import LoginPage from "@/pages/login/LoginPage";
+
+
+//Registering Management Pages
+import UsersPage from "@/pages/management/UsersPage";
 
 
 export default new VueRouter({
@@ -72,6 +82,11 @@ export default new VueRouter({
       path: '/operatingroomspage',
       name: 'OperatingRoomsPage',
       component: OperatingRoomsPage
+    },
+    {
+      path: '/userspage',
+      name: 'UsersPage',
+      component: UsersPage
     },
     {
       path: '/worktypespage',

@@ -99,11 +99,6 @@ export default {
       }
     },
 
-    deleteValue: {
-      type: Object,
-      required: false
-    },
-
     editIndex: {
       type: Number,
       required: false
@@ -243,15 +238,6 @@ export default {
     vm.$store.dispatch('getBranchs');
     vm.$store.dispatch('getPersonnelTitles');
     vm.$store.dispatch('getWorkTypes');
-
-    //The deleteValue prop is followed and when the value is changed, confirm message is displayed to the user
-    vm.$watch('deleteValue', (newValue, oldValue) => {
-      if (newValue !== oldValue) {
-        confirm(vm.$i18n.t('common.areYouSureWantToDelete'));
-
-        vm.editVisible = false;
-      }
-    });
   }
 }
 

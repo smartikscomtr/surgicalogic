@@ -1,4 +1,4 @@
-﻿namespace Surgicalogic.Model.Account
+﻿namespace Surgicalogic.Model.User
 {
     public class ResetPasswordViewModel
     {

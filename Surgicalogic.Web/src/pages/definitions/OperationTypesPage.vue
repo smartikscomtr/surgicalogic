@@ -1,23 +1,26 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="equipmentTypes"
+                    :items="operationTypes"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <equipment-types-edit-component :edit-action="editAction"
+    <operation-types-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
                                     :edit-index="editedIndex"
-                                    :delete-value="deleteValue"
                                     @cancel="cancel">
-    </equipment-types-edit-component>
+    </operation-types-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -28,10 +31,10 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('equipmenttypes.equipmentTypes'),
+      title: vm.$i18n.t('operationtypes.operationtypes'),
       search: '',
-      detailDialog: false,
       editDialog: false,
+      deleteDialog: false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
@@ -47,15 +50,15 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('equipmenttypes.equipmentTypes'),
+          text: vm.$i18n.t('operationtypes.operationtype'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'description',
-          text: vm.$i18n.t('common.description'),
+          value: 'branchId',
+          text: vm.$i18n.t('branchs.branch'),
           sortable: true,
-          align: "left"
+          align: 'left'
         },
         {
           isAction: true,
@@ -65,34 +68,27 @@ export default {
       ];
     },
 
-    equipmentTypes() {
+    operationTypes() {
       const vm = this;
 
-      return vm.$store.state.equipmentTypesModule.equipmentTypes;
+      return vm.$store.state.operationTypeModule.operationTypes;
     }
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
     edit(payload){
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.equipmentTypes.indexOf(payload);
+      vm.editedIndex = vm.operationTypes.indexOf(payload);
       vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.detailDialog = false;
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -101,23 +97,20 @@ export default {
       vm.editDialog = true;
     },
 
-    //We are accessing deleteEquipmentType in vuex store
     deleteItem(payload) {
       const vm = this;
 
-      vm.$store.dispatch('deleteEquipmentType', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+      vm.deleteDialog = true;
     }
   },
 
   created() {
     const vm = this;
 
-    //We are accessing getEquipmentTypes in vuex store
-    vm.$store.dispatch('getEquipmentTypes');
+    //We are accessing getBranchs and getOperationTypes in vuex store
+    vm.$store.dispatch('getBranchs');
+    vm.$store.dispatch('getOperationTypes');
   }
 };
 

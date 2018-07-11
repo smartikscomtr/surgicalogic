@@ -140,6 +140,12 @@ export default {
 
       vm.deleteValue = payload;
       vm.deleteDialog = true;
+
+      // if () {
+      //   vm.$store.dispatch('deleteEquipment', {
+      //     id: vm.deleteValue.id
+      //   });
+      // }
     }
   },
 

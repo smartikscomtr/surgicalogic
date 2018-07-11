@@ -15,9 +15,13 @@
     <operating-rooms-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
                                     :edit-index="editedIndex"
-                                    :delete-value="deleteValue"
                                     @cancel="cancel">
     </operating-rooms-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ export default {
       search: '',
       detailDialog: false,
       editDialog: false,
+      deleteDialog: false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
@@ -136,6 +141,7 @@ export default {
 
       vm.detailDialog = false;
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -147,12 +153,8 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      //We are accessing deleteOperatingRoom in vuex store
-      vm.$store.dispatch('deleteOperatingRoom', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+      vm.deleteDialog = true;
     }
   },
   created() {

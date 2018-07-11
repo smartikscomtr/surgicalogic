@@ -1,11 +1,11 @@
 {
-  "name": "Name",
-  "type": "Type",
-  "portable" : "Portablity",
+  "addEquipmentsInformation": "Add Equipments Information",
   "description" : "Description",
+  "detailEquipments": "detailEquipments",
+  "editEquipmentsInformation": "Edit Equipments Information",
   "equipment": "Equipment",
   "equipments": "Equipments",
-  "detailEquipments": "detailEquipments",
-  "addEquipmentsInformation": "Add Equipments Information",
-  "editEquipmentsInformation": "Edit Equipments Information"
+  "name": "Name",
+  "portable" : "Portablity",
+  "type": "Type"
 }

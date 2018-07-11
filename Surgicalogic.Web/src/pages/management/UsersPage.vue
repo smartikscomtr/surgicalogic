@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="branchs"
+                    :items="users"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -11,12 +11,16 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <branchs-edit-component :edit-action="editAction"
+    <users-edit-component :edit-action="editAction"
                             :edit-visible="editDialog"
                             :edit-index="editedIndex"
-                            :delete-value="deleteValue"
                             @cancel="cancel">
-    </branchs-edit-component>
+    </users-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -27,9 +31,10 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('branchs.branchs'),
+      title: vm.$i18n.t('users.users'),
       search: '',
       editDialog: false,
+      deleteDialog: false,
       editAction: {},
       deleteValue: {},
       editedIndex: -1
@@ -43,14 +48,20 @@ export default {
       //Columns and actions
       return [
         {
-          value: 'name',
-          text: vm.$i18n.t('branchs.branch'),
+          value: 'givenName',
+          text: vm.$i18n.t('users.givenName'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'description',
-          text: vm.$i18n.t('common.description'),
+          value: 'familyName',
+          text: vm.$i18n.t('users.familyName'),
+          sortable: true,
+          align: 'left'
+        },
+        {
+          value: 'email',
+          text: vm.$i18n.t('users.email'),
           sortable: true,
           align: 'left'
         },
@@ -62,10 +73,10 @@ export default {
       ];
     },
 
-    branchs() {
+    users() {
       const vm = this;
 
-      return vm.$store.state.branchsModule.branchs;
+      return vm.$store.state.usersModule.users;
     }
   },
 
@@ -74,7 +85,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.branchs.indexOf(payload);
+      vm.editedIndex = vm.users.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -82,6 +93,7 @@ export default {
       const vm = this;
 
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -93,21 +105,17 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      //We are accessing deleteBranch in vuex store
-      vm.$store.dispatch('deleteBranch', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+      vm.deleteDialog = true;
     }
   },
 
   created() {
     const vm = this;
 
-    //We are accessing getBranch in vuex store
-    vm.$store.dispatch('getBranchs');
+    //We are accessing getUsers in vuex store
+    vm.$store.dispatch('getUsers');
   }
-};
+}
 
 </script>

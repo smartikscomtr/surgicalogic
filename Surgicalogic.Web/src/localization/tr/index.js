@@ -9,10 +9,11 @@ import * as branchs from './branchs.json';
 import * as common from './common.json';
 import * as equipments from './equipments.json';
 import * as equipmenttypes from './equipmenttypes.json';
+import * as operatingrooms from './operatingrooms.json';
 import * as operationtypes from './operationtypes.json';
 import * as personnel from './personnel.json';
 import * as personneltitle from './personneltitle.json';
-import * as operatingrooms from './operatingrooms.json';
+import * as users from './users.json';
 import * as worktypes from './worktypes.json';
 
 export default {
@@ -20,9 +21,10 @@ export default {
     common,
     equipments,
     equipmenttypes,
+    operatingrooms,
     operationtypes,
     personnel,
     personneltitle,
-    operatingrooms,
+    users,
     worktypes
 };

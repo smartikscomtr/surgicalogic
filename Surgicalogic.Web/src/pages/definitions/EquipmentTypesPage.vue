@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="personnelTitles"
+                    :items="equipmentTypes"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -11,12 +11,16 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <personnel-title-edit-component :edit-action="editAction"
+    <equipment-types-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
                                     :edit-index="editedIndex"
-                                    :delete-value="deleteValue"
                                     @cancel="cancel">
-    </personnel-title-edit-component>
+    </equipment-types-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -27,9 +31,10 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('personneltitle.personnelTitles'),
+      title: vm.$i18n.t('equipmenttypes.equipmentTypes'),
       search: '',
       editDialog: false,
+      deleteDialog: false,
       editAction: {},
       deleteValue: {},
       editedIndex: -1
@@ -44,7 +49,7 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('personneltitle.personnelTitles'),
+          text: vm.$i18n.t('equipmenttypes.equipmentTypes'),
           sortable: true,
           align: 'left'
         },
@@ -52,7 +57,7 @@ export default {
           value: 'description',
           text: vm.$i18n.t('common.description'),
           sortable: true,
-          align: 'left'
+          align: "left"
         },
         {
           isAction: true,
@@ -62,10 +67,10 @@ export default {
       ];
     },
 
-    personnelTitles() {
+    equipmentTypes() {
       const vm = this;
 
-      return vm.$store.state.personnelTitleModule.personnelTitle;
+      return vm.$store.state.equipmentTypesModule.equipmentTypes;
     }
   },
 
@@ -74,7 +79,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.personnelTitles.indexOf(payload);
+      vm.editedIndex = vm.equipmentTypes.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -82,6 +87,7 @@ export default {
       const vm = this;
 
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -93,19 +99,16 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      //We are accessing getWorkTypes in vuex store
-      vm.$store.dispatch('deletePersonnelTitle', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+      vm.deleteDialog = true;
     }
   },
+
   created() {
     const vm = this;
 
-    //We are accessing getPersonnelTitles in vuex store
-    vm.$store.dispatch('getPersonnelTitles');
+    //We are accessing getEquipmentTypes in vuex store
+    vm.$store.dispatch('getEquipmentTypes');
   }
 };
 

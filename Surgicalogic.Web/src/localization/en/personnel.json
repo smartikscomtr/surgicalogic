@@ -1,12 +1,10 @@
 {
-  "personnelCode": "Personnel Code",
-  "givenName" : "Given Name",
-  "familyName": "Family Name",
-  "personnelTitle": "Personnel Title",
-  "branch": "Branch",
-  "workType": "Work Type",
-  "personnel": "Personnel",
-  "personnels": "Personnels",
   "addPersonnelInformation": "Add Personnel Information",
-  "editPersonnelInformation": "Edit Personnel Information"
+  "editPersonnelInformation": "Edit Personnel Information",
+  "familyName": "Family Name",
+  "givenName" : "Given Name",
+  "personnelTitle": "Personnel Title",
+  "personnel": "Personnel",
+  "personnelCode": "Personnel Code",
+  "personnels": "Personnels"
 }

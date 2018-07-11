@@ -1,11 +1,11 @@
 {
-  "operatingRoom": "Operasyon Odası",
-  "location": "Konum",
-  "width": "Genişlik",
+  "addOperatingRoomInformation": "Yeni Operasyon Oda Bilgisi Ekle",
+  "editOperatingRoomInformation": "Operasyon Oda Bilgisi Düzenleme",
+  "equipments": "Ekipmanlar",
   "height": "Yükseklik",
   "lenght": "Uzunluk",
-  "equipments": "Ekipmanlar",
+  "location": "Konum",
+  "operatingRoom": "Operasyon Odası",
   "operatingRooms": "Operasyon Odaları",
-  "addOperatingRoomInformation": "Yeni Operasyon Oda Bilgisi Ekle",
-  "editOperatingRoomInformation": "Operasyon Oda Bilgisi Düzenleme"
+  "width": "Genişlik"
 }
