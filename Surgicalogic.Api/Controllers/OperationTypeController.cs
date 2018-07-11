@@ -36,7 +36,7 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <param name="item"></param>
         /// <returns>OperationTypeOutputModel</returns>
-        public async Task<ResultModel<OperationTypeModel>> InsertOperationType([FromBody] OperationTypeInputModel item)
+        public async Task<ResultModel<OperationTypeOutputModel>> InsertOperationType([FromBody] OperationTypeInputModel item)
         {
             var operationTypeItem = new OperationTypeModel()
             {
@@ -45,7 +45,7 @@ namespace Surgicalogic.Api.Controllers
                 //Branch = item.BranchId
             };
 
-            return await _operationTypeStoreService.InsertAndSaveAsync(operationTypeItem);
+            return await _operationTypeStoreService.InsertAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
         }
 
         /// <summary>

@@ -57,7 +57,7 @@ const operatingTypeModule = {
     },
 
     updateOperationType(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/OperationType/UpdateOperationType',  payload)
+      axios.post('http://localhost/Surgicalogic.Api/OperationType/UpdateOperationType', payload)
         .then(response => {
           //context.commit('updateOperationType', {payload}) //Update the OperationTypes in the store
         })

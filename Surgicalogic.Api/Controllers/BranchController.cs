@@ -37,7 +37,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>BranchOutputModel</returns>
         [Route("Branch/InsertBranch")]
         [HttpPost]
-        public async Task<ResultModel<BranchModel>> InsertBranch([FromBody] BranchInputModel item)
+        public async Task<ResultModel<BranchOutputModel>> InsertBranch([FromBody] BranchInputModel item)
         {
             var branchItem = new BranchModel()
             {
@@ -45,7 +45,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _branchStoreService.InsertAndSaveAsync(branchItem);
+            return await _branchStoreService.InsertAndSaveAsync<BranchOutputModel>(branchItem);
         }
 
         /// <summary>

@@ -8,8 +8,10 @@ namespace Surgicalogic.Services.Stores
 {
     public class PersonnelStoreService : StoreService<Personnel, PersonnelModel>, IPersonnelStoreService
     {
+        private DataContext _context;
         public PersonnelStoreService(DataContext context) : base(context)
         {
+            _context = context;
         }
     }
 }

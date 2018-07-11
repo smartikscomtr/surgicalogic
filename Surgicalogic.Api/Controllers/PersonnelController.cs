@@ -37,7 +37,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>PersonnelOutputModel</returns>
         [Route("Personnel/InsertPersonnel")]
         [HttpPost]
-        public async Task<ResultModel<PersonnelModel>> InsertPersonnel([FromBody] PersonnelInputModel item)
+        public async Task<ResultModel<PersonnelOutputModel>> InsertPersonnel([FromBody] PersonnelInputModel item)
         {
             var personnelItem = new PersonnelModel()
             {
@@ -49,7 +49,7 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            return await _personnelStoreService.InsertAndSaveAsync(personnelItem);
+            return await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
         }
 
         /// <summary>

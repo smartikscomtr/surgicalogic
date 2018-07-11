@@ -144,19 +144,29 @@ export default {
     equipments() {
       const vm = this;
 
-      return vm.$store.state.equipmentModule.equipments;
+      return vm.$store.state.operatingRoomModule.allEquipments;
     },
 
-    selectEquipments() {
-      const vm = this;
+    selectEquipments: {
+      get() {
+        const vm = this;
 
-      const items = vm.editAction['equipmentId'];
+        return vm.editAction.equipmentId;
+      },
 
-      _each(items, (item) => {
-          item.name = vm.$store.state.equipmentModule.equipments.find(d => d.id === item.id);
-      });
+      set(val) {
+        const vm = this;
 
-      return items;
+        vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.allEquipments.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.equipmentId = val;
+      }
     }
   },
 

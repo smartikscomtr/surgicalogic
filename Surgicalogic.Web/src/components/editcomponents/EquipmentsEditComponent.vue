@@ -135,7 +135,9 @@ export default {
 
         vm.editAction.equipmentTypeName = vm.$store.state.equipmentModule.allEquipmentTypes.find(
           item => {
-            if (item.id == val) return item;
+            if (item.id == val) {
+              return item;
+            }
           }
         ).name;
 

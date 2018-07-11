@@ -13,7 +13,7 @@ namespace Surgicalogic.Model.OutputModel
         public Nullable<double> Width { get; set; }
         public Nullable<double> Height { get; set; }
         public Nullable<double> Length { get; set; }
-        public int EquipmentId { get; set; }
-        public ICollection<EquipmentModel> Equipment { get; set; }
+        //public string EquipmentName { get; set; }
+        public ICollection<EquipmentModel> EquipmentModel { get; set; }
     }
 }

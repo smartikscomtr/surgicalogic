@@ -35,7 +35,8 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      equipmentLoadOnce: true
     }
   },
 
@@ -82,7 +83,7 @@ export default {
           align: 'left'
         },
         {
-          value: 'equipmentId',
+          value: 'equipmentName',
           text: vm.$i18n.t('equipments.equipments'),
           sortable: true,
           align: 'left'
@@ -99,6 +100,18 @@ export default {
       const vm = this;
 
       return vm.$store.state.operatingRoomModule.operatingRooms;
+    }
+  },
+
+  watch: {
+   editDialog(){
+     const vm = this;
+
+    //We are accessing getAllEquipments in vuex store
+     if(vm.equipmentLoadOnce){
+        vm.$store.dispatch('getAllEquipments');
+        vm.equipmentTypeLoadOnce = false;
+     }
     }
   },
 

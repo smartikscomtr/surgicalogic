@@ -14,7 +14,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Equipment, EquipmentModel>()
                 .ForMember(dest => dest.EquipmentTypeModel, opt => opt.MapFrom(src => src.EquipmentType));
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
-            config.CreateMap<OperatingRoom, OperatingRoomModel>();
+            config.CreateMap<OperatingRoom, OperatingRoomModel>()
+                .ForMember(dest => dest.EquipmentModel, opt => opt.MapFrom(src => src.Equipment));
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<Personnel, PersonnelModel>();
             config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
@@ -36,6 +37,10 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<EquipmentModel, EquipmentOutputModel>()
                 .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentTypeModel.Name));
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
+            config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>()
+                .ForMember(dest => dest.EquipmentModel, opt => opt.MapFrom(src => src.EquipmentModel));
+            //config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>()
+            //    .ForMember(dest => dest.EquipmentName, opt => opt.MapFrom(src => src.EquipmentModel.Name));
             #endregion
         }
     }

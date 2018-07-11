@@ -32,7 +32,7 @@ const equipmentTypesModule = {
     getEquipmentTypes(context) {
       axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipmentTypes')
         .then(response => {
-          context.commit('setEquipmentTypes', response.data.result) // set the Equipment Types in the store
+          context.commit('setEquipmentTypes', response.data.result) //Set the Equipment Types in the store
         })
     },
 
@@ -40,7 +40,7 @@ const equipmentTypesModule = {
       axios.post('http://localhost/Surgicalogic.Api/EquipmentType/InsertEquipmentType', payload)
         .then(response => {
           if (response.statusText == 'OK') {
-            context.commit('insertEquipmentType', { item: response.data.result }) // insert the Equipment Types in the store
+            context.commit('insertEquipmentType', { item: response.data.result }) //Insert the Equipment Types in the store
           }
         })
     },
@@ -49,15 +49,15 @@ const equipmentTypesModule = {
       axios.post('http://localhost/Surgicalogic.Api/EquipmentType/DeleteEquipmentType/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
-            context.commit('deleteEquipmentType', { payload }); // delete the Equipment Types in the store
+            context.commit('deleteEquipmentType', { payload }); //Delete the Equipment Types in the store
           }
         })
     },
 
     updateEquipmentType(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/EquipmentType/UpdateEquipmentType',  payload)
+      axios.post('http://localhost/Surgicalogic.Api/EquipmentType/UpdateEquipmentType', payload)
         .then(response => {
-          //context.commit('updateEquipmentType', {payload}) // update the Equipment Types in the store
+          //context.commit('updateEquipmentType', {payload}) //Update the Equipment Types in the store
         })
     }
   }

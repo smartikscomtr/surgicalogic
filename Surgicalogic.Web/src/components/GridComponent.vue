@@ -164,25 +164,20 @@ export default {
   background-color: #f8f8f8 !important;
   padding-top: 10px;
 }
-
 .table__overflow {
   margin-top: 36px;
 }
-
 table.table thead tr {
   height: 70px;
 }
-
 table.table thead th {
   font-weight: bold;
   font-size: initial;
 }
-
 table.table thead td {
   font-weight: 400;
   font-size: 75%;
 }
-
 table.table tbody td:last-child {
   text-align: right;
 }

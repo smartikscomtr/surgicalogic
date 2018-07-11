@@ -9,5 +9,8 @@
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }
+        public string PersonnelTitleName{ get; set; }
+        public string BranchName { get; set; }
+        public string WorkTypeName { get; set; }
     }
 }
