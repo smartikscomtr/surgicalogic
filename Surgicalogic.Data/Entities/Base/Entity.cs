@@ -1,9 +1,7 @@
 ﻿using Surgicalogic.Data.Contracts;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Surgicalogic.Data.Entities.Base
 {
@@ -22,6 +20,5 @@ namespace Surgicalogic.Data.Entities.Base
         [Column(Order = 104)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public bool IsActive { get; set; } = true;
-
     }
 }

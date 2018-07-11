@@ -31,7 +31,7 @@ const branchsModule = {
 
   actions: {
     getBranchs(context) {
-      axios.get('http://localhost/Surgicalogic.Api/Branch/GetBranchs')
+      axios.get('Branch/GetBranchs')
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setBranchs', response.data.result) //Set the Branchs in the store
@@ -40,7 +40,7 @@ const branchsModule = {
     },
 
     insertBranch(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Branch/InsertBranch', payload)
+      axios.post('Branch/InsertBranch', payload)
         .then(response => {
           if (response.data.info.succeeded == true) {
             context.commit('insertBranch', { item: response.data.result }) //Insert the Branchs in the store
@@ -49,7 +49,7 @@ const branchsModule = {
     },
 
     deleteBranch(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Branch/DeleteBranch/' + payload.id)
+      axios.post('Branch/DeleteBranch/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deleteBranch', { payload }); //Delete the Branchs in the store
@@ -58,7 +58,7 @@ const branchsModule = {
     },
 
     updateBranch(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Branch/UpdateBranch', payload)
+      axios.post('Branch/UpdateBranch', payload)
         .then(response => {
           //context.commit('updateBranch', {payload}) //Update the Branchs in the store
         })

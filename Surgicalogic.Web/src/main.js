@@ -12,6 +12,7 @@ import Vue from 'vue';
 
 import Vuetify from 'vuetify';
 import Vuex from 'vuex';
+import VueAxios from 'vue-axios';
 import { i18n } from './plugins/vue-i18n';
 import router from './router';
 import Authentication from './plugins/authentication-plugin.js';
@@ -45,7 +46,6 @@ import PersonnelDetailComponent from '@/components/detailcomponents/PersonnelDet
 
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 Vue.component('personnel-detail-component', PersonnelDetailComponent);
-
 
 // Registering Edit Components
 import BranchsEditComponent from '@/components/editcomponents/BranchsEditComponent';
@@ -81,6 +81,8 @@ import {
 
 const axios = setupAxios();
 
+Vue.use(VueAxios,axios);
+
 new Vue({
   el: '#app',
   i18n,
@@ -91,7 +93,6 @@ new Vue({
 
   created() {
     const vm = this;
-
     setupHttpInterceptor(vm);
   }
 })

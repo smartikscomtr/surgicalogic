@@ -31,14 +31,14 @@ const personnelTitleModule = {
 
   actions: {
     getPersonnelTitles(context) {
-      axios.get('http://localhost/Surgicalogic.Api/PersonnelTitle/GetPersonnelTitles')
+      axios.get('PersonnelTitle/GetPersonnelTitles')
         .then(response => {
           context.commit('setPersonnelTitles', response.data.result) //Set the Personnel Title in the store
         })
     },
 
     insertPersonnelTitle(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/InsertPersonnelTitle', payload)
+      axios.post('PersonnelTitle/InsertPersonnelTitle', payload)
         .then(response => {
           if (response.statusText == 'OK') {
             payload.id = response.data;
@@ -49,7 +49,7 @@ const personnelTitleModule = {
     },
 
     deletePersonnelTitle(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/DeletePersonnelTitle/' + payload.id)
+      axios.post('PersonnelTitle/DeletePersonnelTitle/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deletePersonnelTitle', { payload }); //Delete the Personnel Title in the store
@@ -58,7 +58,7 @@ const personnelTitleModule = {
     },
 
     updatePersonnelTitle(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/PersonnelTitle/UpdatePersonnelTitle', payload)
+      axios.post('PersonnelTitle/UpdatePersonnelTitle', payload)
         .then(response => {
           //context.commit('updatePersonnelTitle', {payload}) //Update the Personnel Title in the store
         })

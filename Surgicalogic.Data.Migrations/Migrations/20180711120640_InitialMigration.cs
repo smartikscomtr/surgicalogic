@@ -82,7 +82,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     Location = table.Column<string>(nullable: true),
                     Width = table.Column<double>(nullable: true),
                     Height = table.Column<double>(nullable: true),
-                    Length = table.Column<double>(nullable: true)
+                    Length = table.Column<double>(nullable: true),
+                    IsAvailable = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,8 +248,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EquipmentTypeId = table.Column<int>(nullable: false),
-                    IsPortable = table.Column<bool>(nullable: false),
-                    OperatingRoomId = table.Column<int>(nullable: true)
+                    IsPortable = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,12 +259,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         principalTable: "EquipmentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Equipments_OperatingRooms_OperatingRoomId",
-                        column: x => x.OperatingRoomId,
-                        principalTable: "OperatingRooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -298,6 +292,37 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_Personnels_WorkTypes_WorkTypeId",
                         column: x => x.WorkTypeId,
                         principalTable: "WorkTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OperatingRoomEquipments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false),
+                    EquipmentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperatingRoomEquipments", x => new { x.OperatingRoomId, x.EquipmentId });
+                    table.UniqueConstraint("AK_OperatingRoomEquipments_Id", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomEquipments_Equipments_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomEquipments_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -404,9 +429,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "EquipmentTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Equipments_OperatingRoomId",
-                table: "Equipments",
-                column: "OperatingRoomId");
+                name: "IX_OperatingRoomEquipments_EquipmentId",
+                table: "OperatingRoomEquipments",
+                column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OperationTypes_BranchId",
@@ -442,7 +467,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Equipments");
+                name: "OperatingRoomEquipments");
 
             migrationBuilder.DropTable(
                 name: "OperationTypes");
@@ -454,13 +479,16 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "EquipmentTypes");
+                name: "Equipments");
 
             migrationBuilder.DropTable(
                 name: "OperatingRooms");
 
             migrationBuilder.DropTable(
                 name: "Branches");
+
+            migrationBuilder.DropTable(
+                name: "EquipmentTypes");
 
             migrationBuilder.DropTable(
                 name: "Personnels");

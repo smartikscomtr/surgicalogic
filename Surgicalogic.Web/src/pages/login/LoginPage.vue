@@ -59,12 +59,12 @@
 
 export default {
   data() {
-    return {};
+  return {};
   },
 
   methods: {
-    login() {
-      const vm = this;
+  login() {
+  const vm = this;
 
       //We are accessing userLogin in vuex store
       vm.$store.dispatch("userLogin", {
@@ -73,8 +73,8 @@ export default {
       });
     },
 
-    logout() {
-      const vm = this;
+  logout() {
+  const vm = this;
 
       //We are accessing userLogout in vuex store
       vm.$store.dispatch("userLogout");
@@ -88,7 +88,7 @@ export default {
       vm.$router.push("DashboardPage");
      }
   }
-};
+  };
 
 </script>
 

@@ -20,7 +20,7 @@ const loginModule = {
 
   actions: {
     userLogin(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Account/Login', payload)
+      axios.post('Account/Login', payload)
         .then(response => {
           if (response.statusText == "OK") {
             localStorage.setItem("token", response.data.token);
@@ -39,7 +39,7 @@ const loginModule = {
     },
 
     userLogout(context, payload) {
-      axios.post('http://localhost/Surgicalogic.Api/Account/LogOff')
+      axios.post('Account/LogOff')
         .then(response => {
           if (response.statusText == "OK") {
             localStorage.removeItem("token");
