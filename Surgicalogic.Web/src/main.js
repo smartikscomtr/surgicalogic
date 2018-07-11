@@ -27,7 +27,7 @@ import store from './stores';
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
-Vue.use(Authentication)
+Vue.use(Authentication);
 
 // Registering Components
 import GridComponent from '@/components/GridComponent';

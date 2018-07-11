@@ -25,6 +25,7 @@ const loginModule = {
           if (response.statusText == "OK") {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("refreshToken", response.data.refreshToken);
+            localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
             router.push("DashboardPage");
           }
           else
@@ -43,6 +44,7 @@ const loginModule = {
           if (response.statusText == "OK") {
             localStorage.removeItem("token");
             localStorage.removeItem("refreshToken");
+            localStorage.removeItem("expiresIn");
           }
         })
     }

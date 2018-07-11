@@ -10,6 +10,7 @@ namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
+    [Authorize]
     public class EquipmentController : Controller
     {
         private readonly IEquipmentStoreService _equipmentStoreService;

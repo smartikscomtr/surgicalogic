@@ -71,8 +71,10 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
               })
               .then(response => {
                 if (response.statusText == 'OK') {
-                  localStorage.setItem("token", response.data.token);
-                  localStorage.setItem("refreshToken", response.data.refreshToken);
+                  vm.auth.setAuthentication(response.data.token, response.data.refreshToken, response.data.expiresIn);
+                  // localStorage.setItem("token", response.data.token);
+                  // localStorage.setItem("refreshToken", response.data.refreshToken);
+                  // localStorage.setItem("expiresIn", response.data.expiresIn);
                   vm.$router.push(vm.$router.currentRoute.name);
                 }
                 else {
