@@ -118,6 +118,7 @@ namespace Surgicalogic.Api
             services.AddScoped<IOperationTypeStoreService, OperationTypeStoreService>();
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
+            services.AddScoped<IUserStoreService, UserStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
             
             #endregion
