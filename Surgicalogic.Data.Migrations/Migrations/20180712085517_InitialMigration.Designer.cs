@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180711120640_InitialMigration")]
+    [Migration("20180712085517_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,8 +144,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -179,8 +178,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<int>("EquipmentTypeId");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsPortable");
 
@@ -212,8 +210,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -243,8 +240,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<double?>("Height");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsAvailable")
                         .ValueGeneratedOnAdd();
@@ -270,28 +266,29 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
                 {
-                    b.Property<int>("OperatingRoomId");
-
-                    b.Property<int>("EquipmentId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("Id");
+                    b.Property<int>("EquipmentId");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.HasKey("OperatingRoomId", "EquipmentId");
+                    b.Property<int>("OperatingRoomId");
 
-                    b.HasAlternateKey("Id");
+                    b.HasKey("Id");
 
                     b.HasIndex("EquipmentId");
+
+                    b.HasIndex("OperatingRoomId");
 
                     b.ToTable("OperatingRoomEquipments");
                 });
@@ -311,8 +308,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -345,8 +341,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -386,8 +381,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -466,8 +460,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
 

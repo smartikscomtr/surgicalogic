@@ -17,8 +17,7 @@ namespace Surgicalogic.Data.Entities
         public string Location { get; set; }
         public Nullable<double> Width { get; set; }
         public Nullable<double> Height { get; set; }
-        public Nullable<double> Length { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Nullable<double> Length { get; set; }        
         public bool IsAvailable { get; set; } = true;        
         public ICollection<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
     }

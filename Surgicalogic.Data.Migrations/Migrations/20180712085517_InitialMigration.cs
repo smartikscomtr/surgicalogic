@@ -300,19 +300,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "OperatingRoomEquipments",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    OperatingRoomId = table.Column<int>(nullable: false),
-                    EquipmentId = table.Column<int>(nullable: false)
+                    EquipmentId = table.Column<int>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OperatingRoomEquipments", x => new { x.OperatingRoomId, x.EquipmentId });
-                    table.UniqueConstraint("AK_OperatingRoomEquipments_Id", x => x.Id);
+                    table.PrimaryKey("PK_OperatingRoomEquipments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_OperatingRoomEquipments_Equipments_EquipmentId",
                         column: x => x.EquipmentId,
@@ -432,6 +432,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "IX_OperatingRoomEquipments_EquipmentId",
                 table: "OperatingRoomEquipments",
                 column: "EquipmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperatingRoomEquipments_OperatingRoomId",
+                table: "OperatingRoomEquipments",
+                column: "OperatingRoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OperationTypes_BranchId",

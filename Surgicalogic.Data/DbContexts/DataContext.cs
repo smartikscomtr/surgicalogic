@@ -28,9 +28,6 @@ namespace Surgicalogic.Data.DbContexts
         {
 
             modelBuilder.Entity<OperatingRoomEquipment>()
-                .HasKey(o => new { o.OperatingRoomId, o.EquipmentId });
-
-            modelBuilder.Entity<OperatingRoomEquipment>()
                 .HasOne(o => o.OperatingRoom)
                 .WithMany(o => o.OperatingRoomEquipments)
                 .HasForeignKey(o => o.OperatingRoomId);

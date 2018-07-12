@@ -2,6 +2,7 @@
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.OutputModel;
+using System.Linq;
 
 namespace Surgicalogic.Data.Utilities
 {
@@ -11,11 +12,10 @@ namespace Surgicalogic.Data.Utilities
         {
             #region Entity to EntityModel
             config.CreateMap<Branch, BranchModel>();
-            config.CreateMap<Equipment, EquipmentModel>();
-                //.ForMember(dest => dest.EquipmentTypeModel, opt => opt.MapFrom(src => src.EquipmentType));
+            config.CreateMap<Equipment, EquipmentModel>();                
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
-            config.CreateMap<OperatingRoom, OperatingRoomModel>();
-                //.ForMember(dest => dest.OperatingRoomEquipmentModels, opt => opt.MapFrom(src => src.OperatingRoomEquipments));
+            config.CreateMap<OperatingRoom, OperatingRoomModel>()
+                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive == true)); });                
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<Personnel, PersonnelModel>();
             config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
@@ -38,9 +38,6 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentType.Name));
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
-                //.ForMember(dest => dest.OperatingRoomEquipmentOutputModels, opt => opt.MapFrom(src => src.OperatingRoomEquipmentModels));
-            //config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>()
-            //    .ForMember(dest => dest.EquipmentName, opt => opt.MapFrom(src => src.EquipmentModel.Name));
             #endregion
         }
     }
