@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Contracts.Services;
+using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.Entities;
+using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Model.User;
-using Surgicalogic.Services.Common;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
@@ -16,14 +17,21 @@ namespace Surgicalogic.Api.Controllers
         private SignInManager<User> _signInManager;
         private UserManager<User> _userManager;
         private ITokenService _tokenService;
-        //private IUserService _userService;
+        private IUserStoreService _userStoreService;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IUserStoreService userStoreService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
-            //_userService = userService;
+            _userStoreService = userStoreService;
+        }
+
+        [Route("User/GetUsers")]
+        [HttpPost]
+        public async Task<ResultModel<UserOutputModel>> GetUsers()
+        {
+            return await _userStoreService.GetAsync<UserOutputModel>();
         }
 
         [Route("User/Login")]

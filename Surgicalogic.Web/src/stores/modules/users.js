@@ -31,7 +31,7 @@ const usersModule = {
 
   actions: {
     getUsers(context) {
-      axios.get('http://localhost/Surgicalogic.Api/User/GetUsers')
+      axios.post('User/GetUsers')
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setUsers', response.data.result) //Set the Users in the store
