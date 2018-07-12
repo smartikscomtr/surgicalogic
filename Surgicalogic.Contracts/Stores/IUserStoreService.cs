@@ -10,6 +10,6 @@ namespace Surgicalogic.Contracts.Stores
     {
         IQueryable<User> GetQueryable();
         Task<ResultModel<UserModel>> GetAsync();
-        Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>();
+        Task<ResultModel<UserOutputModel>> GetAsync<UserOutputModel>();
     }
 }
