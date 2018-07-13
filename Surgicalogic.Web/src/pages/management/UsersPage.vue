@@ -48,14 +48,8 @@ export default {
       //Columns and actions
       return [
         {
-          value: 'givenName',
-          text: vm.$i18n.t('users.givenName'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'familyName',
-          text: vm.$i18n.t('users.familyName'),
+          value: 'userName',
+          text: vm.$i18n.t('users.userName'),
           sortable: true,
           align: 'left'
         },
