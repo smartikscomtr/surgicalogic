@@ -89,7 +89,9 @@ export default {
     },
 
     equipments() {
-      return this.$store.state.equipmentModule.equipments;
+      const vm = this;
+
+      return vm.$store.state.equipmentModule.equipments;
     }
   },
 

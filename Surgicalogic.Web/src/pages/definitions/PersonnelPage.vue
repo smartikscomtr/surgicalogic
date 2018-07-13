@@ -45,7 +45,10 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      personnelTitleLoadOnce: true,
+      workTypeLoadOnce: true,
+      branchLoadOnce: true
     };
   },
 
@@ -74,20 +77,20 @@ export default {
           align: 'left'
         },
         {
-          value: 'personnelTitleId',
-          text: vm.$i18n.t('personnel.personnelTitle'),
+          value: 'personnelTitleName',
+          text: vm.$i18n.t('personneltitle.personnelTitle'),
           sortable: true,
           align: "left"
         },
         {
-          value: 'branchId',
-          text: vm.$i18n.t('personnel.branch'),
+          value: 'branchName',
+          text: vm.$i18n.t('branchs.branch'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'workTypeId',
-          text: vm.$i18n.t('personnel.workType'),
+          value: 'workTypeName',
+          text: vm.$i18n.t('worktypes.workType'),
           sortable: true,
           align: 'left'
         },
@@ -110,20 +113,20 @@ export default {
    editDialog() {
     const vm = this;
 
+     //We are accessing getWorkTypes in vuex store
      if(vm.workTypeLoadOnce){
-        //We are accessing getWorkTypes in vuex store
         vm.$store.dispatch('getWorkTypes');
         vm.workTypeLoadOnce = false;
      }
 
+     //We are accessing getPersonnelTitles in vuex store
      if(vm.personnelTitleLoadOnce){
-        //We are accessing getPersonnelTitles in vuex store
         vm.$store.dispatch('getPersonnelTitles');
         vm.personnelTitleLoadOnce = false;
      }
 
+     //We are accessing getBranchs in vuex store
      if(vm.branchLoadOnce){
-        //We are accessing getBranchs in vuex store
         vm.$store.dispatch('getBranchs');
         vm.branchLoadOnce = false;
      }
@@ -142,7 +145,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.personnel.indexOf(payload);
+      // vm.editedIndex = vm.personnel.indexOf(payload);
       vm.editAction = payload;
     },
 

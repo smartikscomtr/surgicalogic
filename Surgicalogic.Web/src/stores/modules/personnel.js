@@ -22,7 +22,7 @@ const personnelModule = {
     },
 
     updatePersonnel(state, payload) {
-      //state.personnel.payload = payload;
+      state.personnel = payload;
     }
   },
 
@@ -32,16 +32,16 @@ const personnelModule = {
     getPersonnels(context) {
       axios.get('Personnel/GetPersonnels')
         .then(response => {
-          context.commit('setPersonnels', response.data.result) //Set the Personnel in the store
+          if (response.data.info.succeeded == true){
+            context.commit('setPersonnels', response.data.result) //Set the Personnel in the store
+          }
         })
     },
 
     insertPersonnel(context, payload) {
       axios.post('Personnel/InsertPersonnel', payload)
         .then(response => {
-          if (response.statusText == 'OK') {
-            payload.id = response.data;
-
+          if (response.statusText == true) {
             context.commit('insertPersonnel', { item: response.data.result }) //Insert the Personnel in the store
           }
         })
@@ -59,7 +59,7 @@ const personnelModule = {
     updatePersonnel(context, payload) {
       axios.post('Personnel/UpdatePersonnel', payload)
         .then(response => {
-          //context.commit('updatePersonnel', {payload}) //Update the Personnel in the store
+          context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
         })
     }
   }

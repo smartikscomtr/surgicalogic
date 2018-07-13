@@ -5,6 +5,5 @@
   "givenName" : "Adı",
   "personnel": "Personel",
   "personnelCode": "Personel Kodu",
-  "personnels": "Personeller",
-  "personnelTitle": "Personel Ünvanı"
+  "personnels": "Personeller"
 }
