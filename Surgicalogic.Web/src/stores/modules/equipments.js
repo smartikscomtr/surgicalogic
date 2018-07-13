@@ -70,6 +70,15 @@ const equipmentModule = {
       })
     },
 
+    getAllEquipments(context) {
+      axios.post('Equipment/GetAllEquipments')
+        .then(response => {
+          if (response.data.info.succeeded == true){
+            context.commit('setAllEquipments', response.data.result) //Set the Equipments in the store
+          }
+        })
+    },
+
     getAllEquipmentTypes(context) {
       axios.get('EquipmentType/GetAllEquipmentTypes')
         .then(response => {

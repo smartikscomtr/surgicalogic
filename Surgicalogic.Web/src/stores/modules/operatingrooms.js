@@ -3,7 +3,8 @@ import axios from 'axios';
 const operatingRoomModule = {
   state: {
     operatingRooms: [],
-    totalCount:0
+    totalCount: 0,
+    allEquipments: []
   },
 
   mutations: {
@@ -23,6 +24,11 @@ const operatingRoomModule = {
 
       state.operatingRooms.splice(index, 1);
     },
+
+    setAllEquipments(state, data) {
+      state.allEquipments = data;
+    },
+
 
     updateOperatingRoom(state, payload) {
       //state.operatingRooms.payload = payload;
@@ -67,9 +73,9 @@ const operatingRoomModule = {
     },
 
     getAllEquipments(context) {
-      axios.get('http://localhost/Surgicalogic.Api/EquipmentType/GetEquipments')
+      axios.get('Equipment/GetAllEquipments')
         .then(response => {
-          context.commit(setAllEquipments, response.data.result) //Set the Operating Rooms in the store
+          context.commit("setAllEquipments", response.data.result) //Set the Operating Rooms in the store
         })
     }
   }
