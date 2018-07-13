@@ -22,15 +22,15 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <!-- <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('worktypes.workType')">
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['userName']"
+                              :label="$t('users.userName')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('common.description')">
+                <v-text-field v-model="editAction['email']"
+                              :label="$t('users.email')">
                 </v-text-field>
               </v-flex>
 
@@ -39,7 +39,7 @@
                        @click.native="save">
                   Kaydet
                 </v-btn>
-              </v-flex> -->
+              </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -111,22 +111,22 @@ export default {
       const vm = this;
 
       //Edit work type
-      // if (vm.editIndex > -1) {
-      //   //We are accessing updateWorkType in vuex store
-      //   vm.$store.dispatch('updateWorkType', {
-      //     id: vm.editAction.id,
-      //     name: vm.editAction.name,
-      //     description: vm.editAction.description
-      //   });
-      // }
-      // //Add work type
-      // else {
-      //   //We are accessing insertWorkType in vuex store
-      //   vm.$store.dispatch('insertWorkType', {
-      //     name: vm.editAction.name,
-      //     description: vm.editAction.description
-      //   });
-      // }
+      if (vm.editIndex > -1) {
+        //We are accessing updateWorkType in vuex store
+        vm.$store.dispatch('updateUser', {
+          id: vm.editAction.id,
+          userName: vm.editAction.userName,
+          email: vm.editAction.email
+        });
+      }
+      //Add work type
+      else {
+        //We are accessing insertWorkType in vuex store
+        vm.$store.dispatch('insertUser', {
+          userName: vm.editAction.userName,
+          email: vm.editAction.email
+        });
+      }
 
       vm.showModal = false;
     }

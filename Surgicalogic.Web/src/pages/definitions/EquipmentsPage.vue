@@ -98,6 +98,7 @@ export default {
 
       return vm.$store.state.equipmentModule.equipments;
     },
+
     getTotalCount() {
       const vm = this;
 
@@ -161,7 +162,7 @@ export default {
     },
 
     getMethodName(){
-      return "getEquipments"
+      return "getEquipments";
     }
   }
 

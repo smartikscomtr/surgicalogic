@@ -4,6 +4,8 @@ using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Model.User;
 using System;
@@ -25,13 +27,6 @@ namespace Surgicalogic.Api.Controllers
             _signInManager = signInManager;
             _tokenService = tokenService;
             _userStoreService = userStoreService;
-        }
-
-        [Route("User/GetUsers")]
-        [HttpPost]
-        public async Task<ResultModel<UserOutputModel>> GetUsers()
-        {
-            return await _userStoreService.GetAsync<UserOutputModel>();
         }
 
         [Route("User/Login")]
@@ -56,32 +51,64 @@ namespace Surgicalogic.Api.Controllers
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
         }
 
+        /// <summary>
+        /// Get user methode
+        /// </summary>
+        /// <returns>UserOutputModel list</returns>
+        [Route("User/GetUsers")]
+        [HttpPost]
+        public async Task<ResultModel<UserOutputModel>> GetUsers()
+        {
+            return await _userStoreService.GetAsync<UserOutputModel>();
+        }
 
+        /// <summary>
+        /// Add user methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>UserOutputModel</returns>
         [Route("User/InsertUser")]
         [HttpPost]
-        public async Task<ActionResult> InsertUser([FromBody]RegisterViewModel model)
+        public async Task<ResultModel<UserOutputModel>> InsertUser([FromBody] UserInputModel item)
         {
-            if (ModelState.IsValid)
+            var userItem = new UserModel()
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                UserName = item.UserName,
+                Email = item.Email
+            };
 
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+            return await _userStoreService.InsertAndSaveAsync<UserOutputModel>(userItem);
+        }
 
-                    // For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your user", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    var token = _tokenService.GenerateToken(model.Email, user);
-                    return Ok(token);
-                }
-            }
+        /// <summary>
+        /// Remove user item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Int</returns>
+        [Route("User/DeleteUser/{id:int}")]
+        [HttpPost]
+        public async Task<ResultModel<int>> DeleteUser(string id)
+        {
+            return await _userStoreService.DeleteByIdAsync(id);
+        }
 
-            // If we got this far, something failed, redisplay form
-            throw new ApplicationException("UNKNOWN_ERROR");
+        /// <summary>
+        /// Update personnelTitle methode
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>PersonnelTitleModel</returns>
+        [Route("PersonnelTitle/UpdatePersonnelTitle")]
+        [HttpPost]
+        public async Task<ResultModel<UserModel>> UpdateUser([FromBody] UserInputModel item)
+        {
+            var userItem = new UserModel()
+            {
+                Id = item.Id,
+                UserName = item.UserName,
+                Email = item.Email
+            };
+
+            return await _userStoreService.UpdatandSaveAsync(userItem);
         }
 
         [Route("Login/ForgotPassword")]

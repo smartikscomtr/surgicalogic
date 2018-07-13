@@ -43,7 +43,7 @@
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectPersonnelTitle"
                           :items="personnelTitles"
-                          :label="$t('personnel.personnelTitle')"
+                          :label="$t('personneltitle.personnelTitle')"
                           item-text="name"
                           item-value="id">
                 </v-select>
@@ -52,7 +52,7 @@
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectBranch"
                           :items="branchs"
-                          :label="$t('personnel.branch')"
+                          :label="$t('branchs.branch')"
                           item-text="name"
                           item-value="id">
                 </v-select>
@@ -61,7 +61,7 @@
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectWorkType"
                           :items="workTypes"
-                          :label="$t('worktypes.workTypes')"
+                          :label="$t('worktypes.workType')"
                           item-text="name"
                           item-value="id">
                 </v-select>
@@ -81,8 +81,6 @@
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   props: {
@@ -106,18 +104,14 @@ export default {
   },
 
   data() {
-    return {
-      selectPersonnelTitle: {},
-      selectBranch: {},
-      selectWorkType: {}
-    };
+    return {};
   },
 
   computed: {
     formTitle() {
       const vm = this;
 
-      return vm.edit === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
+      return vm.editIndex === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
     },
 
     showModal: {
@@ -143,10 +137,54 @@ export default {
       return vm.$store.state.personnelTitleModule.personnelTitle;
     },
 
+    selectPersonnelTitle: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.personnelTitleId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.personnelTitleName = vm.$store.state.personnelModule.personnelTitle.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.personnelTitleId = val;
+      }
+    },
+
     branchs() {
       const vm = this;
 
       return vm.$store.state.branchsModule.branchs;
+    },
+
+    selectBranch: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.branchId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.branchId = val;
+      }
     },
 
     workTypes() {
@@ -155,40 +193,26 @@ export default {
       return vm.$store.state.workTypesModule.workTypes;
     },
 
-    selectPersonnelTitle() {
-      const vm = this;
+    selectWorkType: {
+      get() {
+        const vm = this;
 
-      const items = vm.editAction['personnelTitle'];
+        return vm.editAction.workTypeId;
+      },
 
-      _each(items, (item) => {
-          item.name = vm.$store.state.personnelTitleModule.personnelTitle.find(d => d.id === item.id);
-      });
+      set(val) {
+        const vm = this;
 
-      return items;
-    },
+        vm.editAction.workTypeName = vm.$store.state.workTypesModule.workTypes.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
 
-    selectBranch() {
-      const vm = this;
-
-      const items = vm.editAction['branchs'];
-
-      _each(items, (item) => {
-          item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
-      });
-
-      return items;
-    },
-
-    selectWorkType() {
-      const vm = this;
-
-      const items = vm.editAction['workTypes'];
-
-      _each(items, (item) => {
-          item.name = vm.$store.state.workTypesModule.workTypes.find(d => d.id === item.id);
-      });
-
-      return items;
+        vm.editAction.workTypeId = val;
+      }
     }
   },
 
@@ -230,14 +254,6 @@ export default {
 
       vm.showModal = false;
     }
-  },
-
-  created() {
-    const vm = this;
-    //We are accessing getBranchs, getPersonnelTitles and getWorkTypes in vuex store
-    vm.$store.dispatch('getBranchs');
-    vm.$store.dispatch('getPersonnelTitles');
-    vm.$store.dispatch('getWorkTypes');
   }
 }
 
