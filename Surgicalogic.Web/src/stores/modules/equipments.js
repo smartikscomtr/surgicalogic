@@ -71,7 +71,7 @@ const equipmentModule = {
     },
 
     getAllEquipmentTypes(context) {
-      axios.get('EquipmentType/GetEquipmentTypes')
+      axios.get('EquipmentType/GetAllEquipmentTypes')
         .then(response => {
           context.commit('setAllEquipmentTypes', response.data.result) //Set the All Equipments in the store
         })

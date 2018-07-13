@@ -30,6 +30,12 @@ namespace Surgicalogic.Api.Controllers
             return await _equipmentTypeStoreService.GetAsync<EquipmentTypeOutputModel>(input);
         }
 
+        [Route("EquipmentType/GetAllEquipmentTypes")]
+        public async Task<ResultModel<EquipmentTypeOutputModel>> GetAllEquipmentTypes()
+        {
+            return await _equipmentTypeStoreService.GetAsync<EquipmentTypeOutputModel>();
+        }
+
         /// <summary>
         /// Add equipmentType methode
         /// </summary>

@@ -51,6 +51,13 @@ namespace Surgicalogic.Services.Stores.Base
             //        break;
             //}
 
+            if (!string.IsNullOrEmpty(input.Search))
+            {
+                var type = typeof(TModel);
+                var props = type.GetProperties();
+                //projectQuery = projectQuery.Where(x => x.GetProperties().
+            }
+
             int totalCount = await projectQuery.CountAsync();
 
             if (input.PageSize > 0)
@@ -67,6 +74,11 @@ namespace Surgicalogic.Services.Stores.Base
                 TotalCount = totalCount,
                 Info = new Info()
             };
+        }
+
+        public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>()
+        {
+            return await GetAsync<TOutputModel>(new GridInputModel { PageSize = 0 });
         }
 
         /// <summary>

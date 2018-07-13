@@ -137,7 +137,7 @@ watch: {
         handler () {
           const vm = this;
           const { sortBy, descending, page, rowsPerPage } = vm.pagination
-          vm.$store.dispatch(vm.methodName(), { currentPage:page, pageSize: rowsPerPage});
+          vm.$store.dispatch(vm.methodName(), { currentPage:page, pageSize: rowsPerPage, search:vm.search});
         }
   }
 },

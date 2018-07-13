@@ -9,7 +9,6 @@
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
                     :pagination.sync="pagination"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
