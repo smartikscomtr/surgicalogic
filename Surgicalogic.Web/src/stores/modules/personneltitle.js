@@ -3,13 +3,18 @@ import axios from 'axios';
 const personnelTitleModule = {
   state: {
     personnelTitle: [],
-    totalCount:0
+    totalCount:0,
+    allPersonelTitles:[]
   },
 
   mutations: {
     setPersonnelTitles(state, data) {
       state.personnelTitle = data.result;
       state.totalCount = data.totalCount;
+    },
+
+    setAllPersonnelTitles(state, data) {
+      state.allPersonelTitles = data;
     },
 
     insertPersonnelTitle(state, { item }) {
@@ -36,6 +41,13 @@ const personnelTitleModule = {
       axios.post('PersonnelTitle/GetPersonnelTitles', payload)
         .then(response => {
           context.commit('setPersonnelTitles', response.data) //Set the Personnel Title in the store
+        })
+    },
+
+    getAllPersonnelTitles(context) {
+      axios.get('PersonnelTitle/GetAllPersonnelTitles')
+        .then(response => {
+          context.commit('setAllPersonnelTitles', response.data.result) //Set the Personnel Title in the store
         })
     },
 

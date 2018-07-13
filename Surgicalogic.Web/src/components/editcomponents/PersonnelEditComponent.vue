@@ -82,179 +82,179 @@
 
 <script>
 
-export default {
+  export default {
   props: {
-    editVisible: {
-      type: Boolean,
-      required: false
-    },
+  editVisible: {
+  type: Boolean,
+  required: false
+  },
 
-    editAction: {
-      type: Object,
-      required: false,
-      default() {
-        return {};
-      }
-    },
+  editAction: {
+  type: Object,
+  required: false,
+  default() {
+  return {};
+  }
+  },
 
-    editIndex: {
-      type: Number,
-      required: false
-    }
+  editIndex: {
+  type: Number,
+  required: false
+  }
   },
 
   data() {
-    return {};
+  return {};
   },
 
   computed: {
-    formTitle() {
-      const vm = this;
+  formTitle() {
+  const vm = this;
 
-      return vm.editIndex === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
-    },
+  return vm.editIndex === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
+  },
 
-    showModal: {
-      get() {
-        const vm = this;
+  showModal: {
+  get() {
+  const vm = this;
 
-        return vm.editVisible;
-      },
+  return vm.editVisible;
+  },
 
-      set(value) {
-        const vm = this;
+  set(value) {
+  const vm = this;
 
-        //When the cancel button is clicked, the event is sent to the personnel edit component
-        if (!value) {
-          vm.$emit('cancel');
-        }
-      }
-    },
+  //When the cancel button is clicked, the event is sent to the personnel edit component
+  if (!value) {
+  vm.$emit('cancel');
+  }
+  }
+  },
 
-    personnelTitles() {
-      const vm = this;
+  personnelTitles() {
+  const vm = this;
 
-      return vm.$store.state.personnelTitleModule.personnelTitle;
-    },
+  return vm.$store.state.personnelTitleModule.allPersonelTitles;
+  },
 
-    selectPersonnelTitle: {
-      get() {
-        const vm = this;
+  selectPersonnelTitle: {
+  get() {
+  const vm = this;
 
-        return vm.editAction.personnelTitleId;
-      },
+  return vm.editAction.personnelTitleId;
+  },
 
-      set(val) {
-        const vm = this;
+  set(val) {
+  const vm = this;
 
-        vm.editAction.personnelTitleName = vm.$store.state.personnelModule.personnelTitle.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
+  vm.editAction.personnelTitleName = vm.$store.state.personnelModule.personnelTitle.find(
+  item => {
+  if (item.id == val) {
+  return item;
+  }
+  }
+  ).name;
 
-        vm.editAction.personnelTitleId = val;
-      }
-    },
+  vm.editAction.personnelTitleId = val;
+  }
+  },
 
-    branchs() {
-      const vm = this;
+  branchs() {
+  const vm = this;
 
-      return vm.$store.state.branchsModule.branchs;
-    },
+  return vm.$store.state.branchsModule.allBranches;
+  },
 
-    selectBranch: {
-      get() {
-        const vm = this;
+  selectBranch: {
+  get() {
+  const vm = this;
 
-        return vm.editAction.branchId;
-      },
+  return vm.editAction.branchId;
+  },
 
-      set(val) {
-        const vm = this;
+  set(val) {
+  const vm = this;
 
-        vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
+  vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
+  item => {
+  if (item.id == val) {
+  return item;
+  }
+  }
+  ).name;
 
-        vm.editAction.branchId = val;
-      }
-    },
+  vm.editAction.branchId = val;
+  }
+  },
 
-    workTypes() {
-      const vm = this;
+  workTypes() {
+  const vm = this;
 
-      return vm.$store.state.workTypesModule.workTypes;
-    },
+  return vm.$store.state.workTypesModule.allWorkTypes;
+  },
 
-    selectWorkType: {
-      get() {
-        const vm = this;
+  selectWorkType: {
+  get() {
+  const vm = this;
 
-        return vm.editAction.workTypeId;
-      },
+  return vm.editAction.workTypeId;
+  },
 
-      set(val) {
-        const vm = this;
+  set(val) {
+  const vm = this;
 
-        vm.editAction.workTypeName = vm.$store.state.workTypesModule.workTypes.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
+  vm.editAction.workTypeName = vm.$store.state.workTypesModule.workTypes.find(
+  item => {
+  if (item.id == val) {
+  return item;
+  }
+  }
+  ).name;
 
-        vm.editAction.workTypeId = val;
-      }
-    }
+  vm.editAction.workTypeId = val;
+  }
+  }
   },
 
   methods: {
-    cancel() {
-      const vm = this;
+  cancel() {
+  const vm = this;
 
-      vm.showModal = false;
-    },
+  vm.showModal = false;
+  },
 
-    save() {
-      const vm = this;
+  save() {
+  const vm = this;
 
-      //Edit personnel
-      if (vm.editIndex > -1) {
-        //We are accessing updatePersonnel in vuex store
-        vm.$store.dispatch('updatePersonnel', {
-          id: vm.editAction.id,
-          personnelCode: vm.editAction.personnelCode,
-          firstName: vm.editAction.firstName,
-          lastName: vm.editAction.lastName,
-          personnelTitleId: vm.selectPersonnelTitle,
-          branchId: vm.selectBranch,
-          workTypeId: vm.selectWorkType
-        });
-      }
-      //Add personnel
-      else {
-        //We are accessing insertPersonnel in vuex store
-        vm.$store.dispatch('insertPersonnel', {
-          personnelCode: vm.editAction.personnelCode,
-          firstName: vm.editAction.firstName,
-          lastName: vm.editAction.lastName,
-          personnelTitleId: vm.selectPersonnelTitle,
-          branchId: vm.selectBranch,
-          workTypeId: vm.selectWorkType
-        });
-      }
-
-      vm.showModal = false;
-    }
+  //Edit personnel
+  if (vm.editIndex > -1) {
+  //We are accessing updatePersonnel in vuex store
+  vm.$store.dispatch('updatePersonnel', {
+  id: vm.editAction.id,
+  personnelCode: vm.editAction.personnelCode,
+  firstName: vm.editAction.firstName,
+  lastName: vm.editAction.lastName,
+  personnelTitleId: vm.selectPersonnelTitle,
+  branchId: vm.selectBranch,
+  workTypeId: vm.selectWorkType
+  });
   }
-}
+  //Add personnel
+  else {
+  //We are accessing insertPersonnel in vuex store
+  vm.$store.dispatch('insertPersonnel', {
+  personnelCode: vm.editAction.personnelCode,
+  firstName: vm.editAction.firstName,
+  lastName: vm.editAction.lastName,
+  personnelTitleId: vm.selectPersonnelTitle,
+  branchId: vm.selectBranch,
+  workTypeId: vm.selectWorkType
+  });
+  }
+
+  vm.showModal = false;
+  }
+  }
+  }
 
 </script>

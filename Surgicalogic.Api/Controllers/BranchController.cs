@@ -30,6 +30,12 @@ namespace Surgicalogic.Api.Controllers
             return await _branchStoreService.GetAsync<BranchOutputModel>(input);
         }
 
+        [Route("Branch/GetAllBranches")]
+        public async Task<ResultModel<BranchOutputModel>> GetAllBranches()
+        {
+            return await _branchStoreService.GetAsync<BranchOutputModel>();
+        }
+
         /// <summary>
         /// Add branch methode
         /// </summary>

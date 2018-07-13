@@ -3,13 +3,18 @@ import axios from 'axios';
 const branchsModule = {
   state: {
     branchs: [],
-    totalCount:0
+    totalCount: 0,
+    allBranches: []
   },
 
   mutations: {
     setBranchs(state, data) {
         state.branchs = data.result;
         state.totalCount = data.totalCount;
+    },
+
+    setAllBranches(state, data) {
+      state.allBranches = data;
     },
 
     insertBranch(state, { item }) {
@@ -37,6 +42,15 @@ const branchsModule = {
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setBranchs', response.data) //Set the Branchs in the store
+          }
+        })
+    },
+
+    getAllBranches(context) {
+      axios.get('Branch/GetAllBranches')
+        .then(response => {
+          if (response.data.info.succeeded == true) {
+            context.commit('setAllBranches', response.data.result) //Set the Branchs in the store
           }
         })
     },

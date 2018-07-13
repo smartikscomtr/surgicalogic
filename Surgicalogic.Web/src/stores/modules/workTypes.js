@@ -4,12 +4,17 @@ const workTypesModule = {
   state: {
     workTypes: [],
     totalCount:0,
+    allWorkTypes:[]
   },
 
   mutations: {
     setWorkTypes(state, data) {
       state.workTypes = data.result;
       state.totalCount = data.totalCount;
+    },
+
+    setAllWorkTypes(state, data) {
+      state.allWorkTypes = data;
     },
 
     insertWorkType(state, { item }) {
@@ -40,6 +45,16 @@ const workTypesModule = {
           }
         })
     },
+
+    getAllWorkTypes(context) {
+      axios.get('WorkType/GetAllWorkTypes')
+        .then(response => {
+          if (response.data.info.succeeded == true){
+            context.commit('setAllWorkTypes', response.data.result) //Set the Work Type in the store
+          }
+        })
+    },
+
 
     insertWorkType(context, payload) {
       axios.post('WorkType/InsertWorkType', payload)

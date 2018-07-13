@@ -75,7 +75,7 @@ export default {
     personnelTitles() {
       const vm = this;
 
-      return vm.$store.state.personnelTitleModule.personnelTitle;
+      return vm.$store.state.personnelTitleModule.allPersonelTitles;
     },
 
     getTotalCount() {
