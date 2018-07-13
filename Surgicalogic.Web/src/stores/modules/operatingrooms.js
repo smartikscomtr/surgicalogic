@@ -68,7 +68,7 @@ const operatingRoomModule = {
     updateOperatingRoom(context, payload) {
       axios.post('OperatingRoom/UpdateOperatingRoom', payload)
         .then(response => {
-          //context.commit('updateOperatingRoom', {payload}) //Update the Operating Rooms in the store
+          context.commit('updateOperatingRoom', response.data.result) //Update the Operating Rooms in the store
         })
     },
 

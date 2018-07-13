@@ -49,9 +49,7 @@ const branchsModule = {
     getAllBranches(context) {
       axios.get('Branch/GetAllBranches')
         .then(response => {
-          if (response.data.info.succeeded == true) {
-            context.commit('setAllBranches', response.data.result) //Set the Branchs in the store
-          }
+          context.commit('setAllBranches', response.data.result) //Set the Branchs in the store
         })
     },
 

@@ -47,8 +47,8 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['lenght']"
-                              :label="$t('operatingrooms.lenght')">
+                <v-text-field v-model="editAction['length']"
+                              :label="$t('operatingrooms.length')">
                 </v-text-field>
               </v-flex>
 
@@ -59,13 +59,11 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipments"
+                <v-select v-model="selectEquipment"
                           :items="equipments"
                           :label="$t('equipments.equipments')"
                           item-text="name"
-                          item-value="id"
-                          multiple
-                          chips>
+                          item-value="id">
                 </v-select>
               </v-flex>
 
@@ -142,7 +140,7 @@ export default {
       return vm.$store.state.operatingRoomModule.allEquipments;
     },
 
-    selectEquipments: {
+    selectEquipment: {
       get() {
         const vm = this;
 
@@ -179,12 +177,14 @@ export default {
       if (vm.editIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
         vm.$store.dispatch('updateOperatingRoom', {
-          id: vm.actions.id,
+          id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description,
+          location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          lenght: vm.editAction.lenght
+          lenght: vm.editAction.lenght,
+          equipmentId: vm.selectEquipment
         });
       }
       //Add operating room
@@ -193,9 +193,11 @@ export default {
         vm.$store.dispatch('insertOperatingRoom', {
           name: vm.editAction.name,
           description: vm.editAction.description,
+          location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          lenght: vm.editAction.lenght
+          lenght: vm.editAction.lenght,
+          equipmentId: vm.selectEquipment
         });
       }
 

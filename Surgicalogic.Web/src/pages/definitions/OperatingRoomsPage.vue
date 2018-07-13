@@ -46,7 +46,8 @@ export default {
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      equipmentLoadOnce: true
+      equipmentLoadOnce: true,
+      equipmentName: null
     }
   },
 
@@ -81,8 +82,8 @@ export default {
           align: 'left'
         },
         {
-          value: 'lenght',
-          text: vm.$i18n.t('operatingrooms.lenght'),
+          value: 'length',
+          text: vm.$i18n.t('operatingrooms.length'),
           sortable: true,
           align: 'left'
         },
@@ -165,20 +166,26 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+	    vm.deleteDialog = true;
     },
 
     getMethodName(){
       return "getOperatingRooms"
     }
   },
-  created() {
-    const vm = this;
 
-    //We are accessing getOperatingRooms and getEquipments in vuex store
-    //vm.$store.dispatch('getOperatingRooms');
-    vm.$store.dispatch('getEquipments', {CurrentPage:1, PageSize: -1});
-  }
+  // created() {
+  //   const vm = this;
+
+  //   //We are accessing getOperatingRooms and getEquipments in vuex store
+  //   //vm.$store.dispatch('getOperatingRooms');
+  //   vm.$store.dispatch('getEquipments',
+  //     {
+  //       CurrentPage:1,
+  //       PageSize: -1
+  //     }
+  //   );
+  // }
 };
 
 </script>

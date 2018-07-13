@@ -29,7 +29,7 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranchs"
+                <v-select v-model="selectBranch"
                           :items="branchs"
                           :label="$t('branchs.branch')"
                           item-text="name"
@@ -52,8 +52,6 @@
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   props: {
@@ -104,23 +102,33 @@ export default {
       }
     },
 
-    branchs() {
-      const vm = this;
+        branchs() {
+            const vm = this;
 
-      return vm.$store.state.branchsModule.branchs;
-    },
+            return vm.$store.state.branchsModule.allBranches;
+        },
 
-    selectBranchs() {
-      const vm = this;
+        selectBranch: {
+            get() {
+                const vm = this;
 
-      const items = vm.editAction['branchId'];
+                return vm.editAction.branchId;
+            },
 
-      _each(items, (item) => {
-          item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
-      });
+            set(val) {
+                const vm = this;
 
-      return items;
-    }
+                vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
+                    item => {
+                        if (item.id == val) {
+                            return item;
+                        }
+                    }
+                ).name;
+
+                vm.editAction.branchId = val;
+            }
+        }
   },
 
   methods: {
@@ -141,7 +149,8 @@ export default {
           name: vm.editAction.name,
           type: vm.editAction.type,
           portable: vm.editAction.portable,
-          description: vm.editAction.description
+          description: vm.editAction.description,
+          branchId: vm.selectBranch
         });
       }
       //Add operation type
@@ -152,7 +161,8 @@ export default {
           name: vm.editAction.name,
           type: vm.editAction.type,
           portable: vm.editAction.portable,
-          description: vm.editAction.description
+          description: vm.editAction.description,
+          branchId: vm.selectBranch
         });
       }
 

@@ -1,13 +1,10 @@
 <template>
   <div>
-    <v-dialog v-model="showModal"
-              slot="activator">
+    <v-dialog v-model="showModal" slot="activator">
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
+            <a class="backBtn" flat @click="cancel">
               <v-icon>
                 arrow_back
               </v-icon>
@@ -23,54 +20,38 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['personnelCode']"
-                              :label="$t('personnel.personnelCode')">
+                <v-text-field v-model="editAction['personnelCode']" :label="$t('personnel.personnelCode')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['firstName']"
-                              :label="$t('personnel.givenName')">
+                <v-text-field v-model="editAction['firstName']" :label="$t('personnel.givenName')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['lastName']"
-                              :label="$t('personnel.familyName')">
+                <v-text-field v-model="editAction['lastName']" :label="$t('personnel.familyName')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectPersonnelTitle"
-                          :items="personnelTitles"
-                          :label="$t('personneltitle.personnelTitle')"
-                          item-text="name"
-                          item-value="id">
+                <v-select v-model="selectPersonnelTitle" :items="personnelTitles" :label="$t('personneltitle.personnelTitle')" item-text="name" item-value="id">
                 </v-select>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranch"
-                          :items="branchs"
-                          :label="$t('branchs.branch')"
-                          item-text="name"
-                          item-value="id">
+                <v-select v-model="selectBranch" :items="branchs" :label="$t('branchs.branch')" item-text="name" item-value="id">
                 </v-select>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectWorkType"
-                          :items="workTypes"
-                          :label="$t('worktypes.workType')"
-                          item-text="name"
-                          item-value="id">
+                <v-select v-model="selectWorkType" :items="workTypes" :label="$t('worktypes.workType')" item-text="name" item-value="id">
                 </v-select>
               </v-flex>
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-btn class="btnSave orange"
-                      @click.native="save">
+              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+                <v-btn class="btnSave orange" @click.native="save">
                   Kaydet
-               </v-btn>
+                </v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -81,180 +62,180 @@
 </template>
 
 <script>
+export default {
+    props: {
+        editVisible: {
+            type: Boolean,
+            required: false
+        },
 
-  export default {
-  props: {
-  editVisible: {
-  type: Boolean,
-  required: false
-  },
+        editAction: {
+            type: Object,
+            required: false,
+            default() {
+                return {};
+            }
+        },
 
-  editAction: {
-  type: Object,
-  required: false,
-  default() {
-  return {};
-  }
-  },
+        editIndex: {
+            type: Number,
+            required: false
+        }
+    },
 
-  editIndex: {
-  type: Number,
-  required: false
-  }
-  },
+    data() {
+        return {};
+    },
 
-  data() {
-  return {};
-  },
+    computed: {
+        formTitle() {
+            const vm = this;
 
-  computed: {
-  formTitle() {
-  const vm = this;
+            return vm.editIndex === -1
+                ? vm.$t('personnel.addPersonnelInformation')
+                : vm.$t('personnel.editPersonnelInformation');
+        },
 
-  return vm.editIndex === -1 ? vm.$t('personnel.addPersonnelInformation') : vm.$t('personnel.editPersonnelInformation');
-  },
+        showModal: {
+            get() {
+                const vm = this;
 
-  showModal: {
-  get() {
-  const vm = this;
+                return vm.editVisible;
+            },
 
-  return vm.editVisible;
-  },
+            set(value) {
+                const vm = this;
 
-  set(value) {
-  const vm = this;
+                //When the cancel button is clicked, the event is sent to the personnel edit component
+                if (!value) {
+                    vm.$emit('cancel');
+                }
+            }
+        },
 
-  //When the cancel button is clicked, the event is sent to the personnel edit component
-  if (!value) {
-  vm.$emit('cancel');
-  }
-  }
-  },
+        personnelTitles() {
+            const vm = this;
 
-  personnelTitles() {
-  const vm = this;
+            return vm.$store.state.personnelTitleModule.allPersonelTitles;
+        },
 
-  return vm.$store.state.personnelTitleModule.allPersonelTitles;
-  },
+        selectPersonnelTitle: {
+            get() {
+                const vm = this;
 
-  selectPersonnelTitle: {
-  get() {
-  const vm = this;
+                return vm.editAction.personnelTitleId;
+            },
 
-  return vm.editAction.personnelTitleId;
-  },
+            set(val) {
+                const vm = this;
 
-  set(val) {
-  const vm = this;
+                vm.editAction.personnelTitleName = vm.$store.state.personnelModule.personnelTitle.find(
+                    item => {
+                        if (item.id == val) {
+                            return item;
+                        }
+                    }
+                ).name;
 
-  vm.editAction.personnelTitleName = vm.$store.state.personnelModule.personnelTitle.find(
-  item => {
-  if (item.id == val) {
-  return item;
-  }
-  }
-  ).name;
+                vm.editAction.personnelTitleId = val;
+            }
+        },
 
-  vm.editAction.personnelTitleId = val;
-  }
-  },
+        branchs() {
+            const vm = this;
 
-  branchs() {
-  const vm = this;
+            return vm.$store.state.branchsModule.allBranches;
+        },
 
-  return vm.$store.state.branchsModule.allBranches;
-  },
+        selectBranch: {
+            get() {
+                const vm = this;
 
-  selectBranch: {
-  get() {
-  const vm = this;
+                return vm.editAction.branchId;
+            },
 
-  return vm.editAction.branchId;
-  },
+            set(val) {
+                const vm = this;
 
-  set(val) {
-  const vm = this;
+                vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
+                    item => {
+                        if (item.id == val) {
+                            return item;
+                        }
+                    }
+                ).name;
 
-  vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
-  item => {
-  if (item.id == val) {
-  return item;
-  }
-  }
-  ).name;
+                vm.editAction.branchId = val;
+            }
+        },
 
-  vm.editAction.branchId = val;
-  }
-  },
+        workTypes() {
+            const vm = this;
 
-  workTypes() {
-  const vm = this;
+            return vm.$store.state.workTypesModule.allWorkTypes;
+        },
 
-  return vm.$store.state.workTypesModule.allWorkTypes;
-  },
+        selectWorkType: {
+            get() {
+                const vm = this;
 
-  selectWorkType: {
-  get() {
-  const vm = this;
+                return vm.editAction.workTypeId;
+            },
 
-  return vm.editAction.workTypeId;
-  },
+            set(val) {
+                const vm = this;
 
-  set(val) {
-  const vm = this;
+                vm.editAction.workTypeName = vm.$store.state.workTypesModule.workTypes.find(
+                    item => {
+                        if (item.id == val) {
+                            return item;
+                        }
+                    }
+                ).name;
 
-  vm.editAction.workTypeName = vm.$store.state.workTypesModule.workTypes.find(
-  item => {
-  if (item.id == val) {
-  return item;
-  }
-  }
-  ).name;
+                vm.editAction.workTypeId = val;
+            }
+        }
+    },
 
-  vm.editAction.workTypeId = val;
-  }
-  }
-  },
+    methods: {
+        cancel() {
+            const vm = this;
 
-  methods: {
-  cancel() {
-  const vm = this;
+            vm.showModal = false;
+        },
 
-  vm.showModal = false;
-  },
+        save() {
+            const vm = this;
 
-  save() {
-  const vm = this;
+            //Edit personnel
+            if (vm.editIndex > -1) {
+                //We are accessing updatePersonnel in vuex store
+                vm.$store.dispatch('updatePersonnel', {
+                    id: vm.editAction.id,
+                    personnelCode: vm.editAction.personnelCode,
+                    firstName: vm.editAction.firstName,
+                    lastName: vm.editAction.lastName,
+                    personnelTitleId: vm.selectPersonnelTitle,
+                    branchId: vm.selectBranch,
+                    workTypeId: vm.selectWorkType
+                });
+            }
+            //Add personnel
+            else {
+                //We are accessing insertPersonnel in vuex store
+                vm.$store.dispatch('insertPersonnel', {
+                    personnelCode: vm.editAction.personnelCode,
+                    firstName: vm.editAction.firstName,
+                    lastName: vm.editAction.lastName,
+                    personnelTitleId: vm.selectPersonnelTitle,
+                    branchId: vm.selectBranch,
+                    workTypeId: vm.selectWorkType
+                });
+            }
 
-  //Edit personnel
-  if (vm.editIndex > -1) {
-  //We are accessing updatePersonnel in vuex store
-  vm.$store.dispatch('updatePersonnel', {
-  id: vm.editAction.id,
-  personnelCode: vm.editAction.personnelCode,
-  firstName: vm.editAction.firstName,
-  lastName: vm.editAction.lastName,
-  personnelTitleId: vm.selectPersonnelTitle,
-  branchId: vm.selectBranch,
-  workTypeId: vm.selectWorkType
-  });
-  }
-  //Add personnel
-  else {
-  //We are accessing insertPersonnel in vuex store
-  vm.$store.dispatch('insertPersonnel', {
-  personnelCode: vm.editAction.personnelCode,
-  firstName: vm.editAction.firstName,
-  lastName: vm.editAction.lastName,
-  personnelTitleId: vm.selectPersonnelTitle,
-  branchId: vm.selectBranch,
-  workTypeId: vm.selectWorkType
-  });
-  }
-
-  vm.showModal = false;
-  }
-  }
-  }
-
+            vm.showModal = false;
+        }
+    }
+};
 </script>

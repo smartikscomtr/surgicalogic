@@ -60,7 +60,7 @@ export default {
           align: 'left'
         },
         {
-          value: 'branchId',
+          value: 'branchName',
           text: vm.$i18n.t('branchs.branch'),
           sortable: true,
           align: 'left'
@@ -124,7 +124,7 @@ export default {
     const vm = this;
 
     //We are accessing getBranchs and getOperationTypes in vuex store
-    vm.$store.dispatch('getBranchs', { currentPage:1, pageSize: -1});
+    // vm.$store.dispatch('getBranchs', { currentPage:1, pageSize: -1});
     //vm.$store.dispatch('getOperationTypes', { currentPage:1, pageSize: -1});
   }
 };
