@@ -2,13 +2,13 @@ import axios from 'axios';
 
 const operatingTypeModule = {
   state: {
-    operatingTypes: [],
+    operationTypes: [],
     totalCount:0
   },
 
   mutations: {
-    setOperatingTypes(state, data) {
-      state.operatingTypes = data.result;
+    setOperationTypes(state, data) {
+      state.operationTypes = data.result;
       state.totalCount = data.totalCount;
     },
 
