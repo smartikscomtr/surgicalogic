@@ -11,6 +11,7 @@ namespace Surgicalogic.Contracts.Stores.Base
     {
         IQueryable<TEntity> GetQueryable();
         Task<ResultModel<TModel>> GetAsync(GridInputModel input);
+        Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>();
         Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input);
         Task<ResultModel<TModel>> InsertAndSaveAsync(TModel model);
         Task<ResultModel<TOutputModel>> InsertAndSaveAsync<TOutputModel>(TModel model);
