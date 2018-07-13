@@ -7,5 +7,6 @@
   "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz?",
   "name": "Ad",
   "no": "Hayır",
-  "yes": "Evet"
+  "yes": "Evet",
+  "all":"Hepsi"
 }

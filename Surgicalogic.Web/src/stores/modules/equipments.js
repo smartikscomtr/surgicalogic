@@ -3,12 +3,14 @@ import axios from 'axios';
 const equipmentModule = {
   state: {
     equipments: [],
+    totalCount:0,
     allEquipmentTypes: []
   },
 
   mutations: {
-    setEquipments(state, equipments) {
-      state.equipments = equipments;
+    setEquipments(state, data) {
+      state.equipments = data.result;
+      state.totalCount = data.totalCount;
     },
 
     insertEquipment(state, { item }) {
@@ -34,11 +36,11 @@ const equipmentModule = {
   getters: {},
 
   actions: {
-    getEquipments(context) {
-      axios.get('Equipment/GetEquipments')
+    getEquipments(context, payload) {
+      axios.post('Equipment/GetEquipments', payload)
         .then(response => {
           if (response.data.info.succeeded == true){
-            context.commit('setEquipments', response.data.result) //Set the Equipments in the store
+            context.commit('setEquipments', response.data) //Set the Equipments in the store
           }
         })
     },

@@ -6,6 +6,9 @@
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -45,7 +48,9 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
+      pagination: {},
       editedIndex: -1,
+      totalRowCount:0,
       equipmentTypeLoadOnce: true
     };
   },
@@ -92,6 +97,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.equipmentModule.equipments;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.equipmentModule.totalCount;
     }
   },
 
@@ -143,20 +154,24 @@ export default {
       vm.deleteValue = payload;
       vm.deleteDialog = true;
 
-      // if () {
+	  // if () {
       //   vm.$store.dispatch('deleteEquipment', {
       //     id: vm.deleteValue.id
       //   });
       // }
+    },
+
+    getMethodName(){
+      return "getEquipments";
     }
-  },
-
-  created() {
-    const vm = this;
-
-    //We are accessing getEquipments in vuex store
-    vm.$store.dispatch('getEquipments');
   }
+
+  // created() {
+  //    const vm = this;
+
+  //    //We are accessing getEquipments in vuex store
+  //    vm.$store.dispatch('getEquipments');
+  // }
 };
 
 </script>

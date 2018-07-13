@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities.Base;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel.Base;
+using Surgicalogic.Model.InputModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,11 +36,29 @@ namespace Surgicalogic.Services.Stores.Base
         /// This methode returns list of entity model.
         /// </summary>
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<TModel>> GetAsync()
+        public virtual async Task<ResultModel<TModel>> GetAsync(GridInputModel input)
         {
             var query = GetQueryable();
             var projectQuery = query.ProjectTo<TModel>();
+
+            //switch (order)
+            //{
+            //    case order.Asc:
+            //        projectQuery = projectQuery.OrderBy();
+
+            //        break;
+            //    default:
+            //        break;
+            //}
+
             int totalCount = await projectQuery.CountAsync();
+
+            if (input.PageSize > 0)
+            {
+                projectQuery = projectQuery.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
+            }
+
+           
             var result = await projectQuery.ToListAsync();
 
             return new ResultModel<TModel>
@@ -54,9 +74,9 @@ namespace Surgicalogic.Services.Stores.Base
         /// </summary>
         /// <typeparam name="TOutputModel"></typeparam>
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>()
+        public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input)
         {
-            var result = await GetAsync();
+            var result = await GetAsync(input);
 
             return new ResultModel<TOutputModel>
             {

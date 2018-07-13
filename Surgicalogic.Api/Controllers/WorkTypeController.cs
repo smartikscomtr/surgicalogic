@@ -24,10 +24,10 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>WorkTypeOutputModel list</returns>
         [Route("WorkType/GetWorkTypes")]
-        [HttpGet]
-        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes()
+        [HttpPost]
+        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes([FromBody]GridInputModel input)
         {
-            return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>();
+            return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>(input);
         }
 
         /// <summary>

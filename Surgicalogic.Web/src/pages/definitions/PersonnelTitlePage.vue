@@ -6,6 +6,9 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -37,7 +40,9 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      pagination: {},
+      editedIndex: -1,
+      totalRowCount:0,
     };
   },
 
@@ -71,6 +76,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.personnelTitleModule.personnelTitle;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.personnelTitleModule.totalCount;
     }
   },
 
@@ -100,14 +111,18 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-      vm.deleteDialog = true;
+	  vm.deleteDialog = true;
+    },
+
+    getMethodName(){
+      return "getPersonnelTitles"
     }
   },
   created() {
-    const vm = this;
+    // const vm = this;
 
-    //We are accessing getPersonnelTitles in vuex store
-    vm.$store.dispatch('getPersonnelTitles');
+    // //We are accessing getPersonnelTitles in vuex store
+    // vm.$store.dispatch('getPersonnelTitles');
   }
 };
 

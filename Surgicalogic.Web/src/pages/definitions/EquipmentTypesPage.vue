@@ -6,6 +6,10 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
+                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -37,7 +41,9 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      pagination: {},
+      editedIndex: -1,
+      totalRowCount:0,
     };
   },
 
@@ -71,8 +77,18 @@ export default {
       const vm = this;
 
       return vm.$store.state.equipmentTypesModule.equipmentTypes;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.equipmentTypesModule.totalCount;
     }
   },
+
+   watch: {
+
+   },
 
   methods: {
     edit(payload){
@@ -100,16 +116,20 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-      vm.deleteDialog = true;
+	  vm.deleteDialog = true;
+     },
+
+    getMethodName(){
+      return "getEquipmentTypes"
     }
   },
 
-  created() {
-    const vm = this;
+    //created() {
+    // const vm = this;
 
-    //We are accessing getEquipmentTypes in vuex store
-    vm.$store.dispatch('getEquipmentTypes');
-  }
+    // //We are accessing getEquipmentTypes in vuex store
+    // vm.$store.dispatch('getEquipmentTypes');
+  //}
 };
 
 </script>

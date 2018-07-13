@@ -26,9 +26,11 @@ namespace Surgicalogic.Api.Controllers
         /// Get operationType methode
         /// </summary>
         /// <returns>OperationTypeOutputModel list</returns>
-        public async Task<ResultModel<OperationTypeOutputModel>> GetOperationTypes()
+        [Route("OperationType/GetOperationTypes")]
+        [HttpPost]
+        public async Task<ResultModel<OperationTypeOutputModel>> GetOperationTypes([FromBody]GridInputModel input)
         {
-            return await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>();
+            return await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>(input);
         }
 
         /// <summary>
