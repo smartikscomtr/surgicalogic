@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Contracts.Stores.Base
 {
-    public interface IStoreService<TEntity, TModel> where TEntity : Entity where TModel : EntityModel
+    public interface IStoreService<TEntity, TModel> where TEntity : class where TModel : class
     {
         IQueryable<TEntity> GetQueryable();
         Task<ResultModel<TModel>> GetAsync(GridInputModel input);

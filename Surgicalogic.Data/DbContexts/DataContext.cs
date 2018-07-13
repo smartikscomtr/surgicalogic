@@ -22,9 +22,21 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
         public DbSet<WorkType> WorkTypes { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
+        public DbSet<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<OperatingRoomEquipment>()
+                .HasOne(o => o.OperatingRoom)
+                .WithMany(o => o.OperatingRoomEquipments)
+                .HasForeignKey(o => o.OperatingRoomId);
+
+            modelBuilder.Entity<OperatingRoomEquipment>()
+                .HasOne(o => o.Equipment)
+                .WithMany(o => o.OperatingRoomEquipments)
+                .HasForeignKey(o => o.EquipmentId);
+
             base.OnModelCreating(modelBuilder);
         }
     }

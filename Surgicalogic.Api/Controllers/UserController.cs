@@ -1,28 +1,40 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Contracts.Services;
+using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.Entities;
-using Surgicalogic.Model.Account;
+using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.OutputModel;
+using Surgicalogic.Model.User;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
-    public class AccountController : Controller
+    public class UserController : Controller
     {
         private SignInManager<User> _signInManager;
         private UserManager<User> _userManager;
         private ITokenService _tokenService;
+        private IUserStoreService _userStoreService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ITokenService tokenService, IUserStoreService userStoreService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _userStoreService = userStoreService;
         }
 
-        [Route("Account/Login")]
+        [Route("User/GetUsers")]
+        [HttpPost]
+        public async Task<ResultModel<UserOutputModel>> GetUsers()
+        {
+            return await _userStoreService.GetAsync<UserOutputModel>();
+        }
+
+        [Route("User/Login")]
         [HttpPost]
         public async Task<object> Login([FromBody]LoginViewModel model)
         {
@@ -31,8 +43,8 @@ namespace Surgicalogic.Api.Controllers
                 return BadRequest();
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            // This doesn't count login failures towards user lockout
+            // To enable password failures to trigger user lockout, change to shouldLockout: true
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
@@ -44,9 +56,10 @@ namespace Surgicalogic.Api.Controllers
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
         }
 
-        [Route("Account/Register")]
+
+        [Route("User/InsertUser")]
         [HttpPost]
-        public async Task<ActionResult> Register([FromBody]RegisterViewModel model)
+        public async Task<ActionResult> InsertUser([FromBody]RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -57,11 +70,11 @@ namespace Surgicalogic.Api.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // var callbackUrl = Url.Action("ConfirmEmail", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your user", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     var token = _tokenService.GenerateToken(model.Email, user);
                     return Ok(token);
                 }
@@ -71,7 +84,7 @@ namespace Surgicalogic.Api.Controllers
             throw new ApplicationException("UNKNOWN_ERROR");
         }
 
-        [Route("Account/ForgotPassword")]
+        [Route("Login/ForgotPassword")]
         [HttpPost]
         public async Task<ActionResult> ForgotPassword([FromBody]ForgotPasswordViewModel model)
         {
@@ -85,19 +98,19 @@ namespace Surgicalogic.Api.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                // For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                // var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                // return RedirectToAction("ForgotPasswordConfirmation", "User");
             }
 
             // If we got this far, something failed, redisplay form
             throw new ApplicationException("UNKNOWN_ERROR");
         }
 
-        [Route("Account/ResetPassword")]
+        [Route("User/ResetPassword")]
         [HttpPost]
         public async Task<ActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
@@ -118,21 +131,21 @@ namespace Surgicalogic.Api.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("ResetPasswordConfirmation", "User");
             }
 
             return View();
         }
 
 
-        [Route("Account/LogOff")]
+        [Route("User/LogOff")]
         [HttpPost]
         public async Task LogOff()
         {
             await _signInManager.SignOutAsync();
         }
 
-        [Route("Account/RefreshToken")]
+        [Route("User/RefreshToken")]
         [HttpPost]
         public async Task<object> RefreshToken([FromBody]TokenViewModel model)
         {

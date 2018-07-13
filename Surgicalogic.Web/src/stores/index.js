@@ -8,12 +8,13 @@ import getters from './getters'; // root's getters
 import branchsModule from './modules/branchs';
 import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmentTypes';
+import loginModule from './modules/login';
 import operationTypeModule from './modules/operationtypes';
 import personnelModule from './modules/personnel';
 import personnelTitleModule from './modules/personnelTitle';
 import operatingRoomModule from './modules/operatingrooms';
+import usersModule from './modules/users';
 import workTypesModule from './modules/workTypes';
-import loginModule from './modules/login';
 
 //New Registeration Of Store
 export default new Vuex.Store({
@@ -25,11 +26,12 @@ export default new Vuex.Store({
     branchsModule,
     equipmentModule,
     equipmentTypesModule,
+    loginModule,
     operationTypeModule,
     personnelModule,
     personnelTitleModule,
     operatingRoomModule,
-    workTypesModule,
-    loginModule
+    usersModule,
+    workTypesModule
   }
 });

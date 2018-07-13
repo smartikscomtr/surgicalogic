@@ -1,7 +1,7 @@
 {
-  "branch": "Branş",
-  "branchs": "Branşlar",
-  "branchName": "Branş Adı",
   "addBranchsInformation": "Yeni Branş Bilgisi Ekle",
-  "editBranchsInformation": "Branş Bilgileri Düzenleme"
+  "editBranchsInformation": "Branş Bilgileri Düzenleme",
+  "branch": "Branş",
+  "branchName": "Branş Adı",
+  "branchs": "Branşlar"
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="operatingRooms"
+                    :items="equipments"
                     :title="title"
                     :show-detail="true"
                     :show-edit="true"
@@ -15,12 +15,21 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operating-rooms-edit-component :edit-action="editAction"
-                                    :edit-visible="editDialog"
-                                    :edit-index="editedIndex"
-                                    :delete-value="deleteValue"
-                                    @cancel="cancel">
-    </operating-rooms-edit-component>
+    <equipments-detail-component :detail-action="detailAction"
+                                 :detail-visible="detailDialog"
+                                 @cancel="cancel">
+    </equipments-detail-component>
+
+    <equipments-edit-component :edit-action="editAction"
+                               :edit-visible="editDialog"
+                               :edit-index="editedIndex"
+                               @cancel="cancel">
+    </equipments-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -31,18 +40,19 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('operatingrooms.operatingRooms'),
+      title: vm.$i18n.t('equipments.equipments'),
       search: '',
       detailDialog: false,
       editDialog: false,
+      deleteDialog: false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      equipmentLoadOnce: true
-    }
+      equipmentTypeLoadOnce: true
+    };
   },
 
   computed: {
@@ -53,43 +63,25 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('operatingrooms.operatingRoom'),
+          text: vm.$i18n.t('equipments.name'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'location',
-          text: vm.$i18n.t('operatingrooms.location'),
+          value:'equipmentTypeName',
+          text: vm.$i18n.t('equipmenttypes.equipmentType'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'width',
-          text: vm.$i18n.t('operatingrooms.width'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'height',
-          text: vm.$i18n.t('operatingrooms.height'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'lenght',
-          text: vm.$i18n.t('operatingrooms.lenght'),
+          value: 'isPortable',
+          text: vm.$i18n.t('equipments.portable'),
           sortable: true,
           align: 'left'
         },
         {
           value: 'description',
-          text: vm.$i18n.t('common.description'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'equipmentName',
-          text: vm.$i18n.t('equipments.equipments'),
+          text: vm.$i18n.t('equipments.description'),
           sortable: true,
           align: 'left'
         },
@@ -101,16 +93,15 @@ export default {
       ];
     },
 
-    operatingRooms() {
+    equipments() {
       const vm = this;
 
-      return vm.$store.state.operatingRoomModule.operatingRooms;
+      return vm.$store.state.equipmentModule.equipments;
     },
-
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.operatingRoomModule.totalCount;
+      return vm.$store.state.equipmentModule.totalCount;
     }
   },
 
@@ -118,9 +109,9 @@ export default {
    editDialog(){
      const vm = this;
 
-    //We are accessing getAllEquipments in vuex store
-     if(vm.equipmentLoadOnce){
-        vm.$store.dispatch('getAllEquipments');
+    //We are accessing getAllEquipmentTypes in vuex store
+     if(vm.equipmentTypeLoadOnce){
+        vm.$store.dispatch('getAllEquipmentTypes');
         vm.equipmentTypeLoadOnce = false;
      }
     }
@@ -138,7 +129,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.operatingRooms.indexOf(payload);
+      vm.editedIndex = vm.equipments.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -147,6 +138,7 @@ export default {
 
       vm.detailDialog = false;
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -158,25 +150,27 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      //We are accessing deleteOperatingRoom in vuex store
-      vm.$store.dispatch('deleteOperatingRoom', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+      vm.deleteDialog = true;
+
+	  // if () {
+      //   vm.$store.dispatch('deleteEquipment', {
+      //     id: vm.deleteValue.id
+      //   });
+      // }
     },
 
     getMethodName(){
-      return "getOperatingRooms"
+      return "getEquipments"
     }
-  },
-  created() {
-    const vm = this;
-
-    //We are accessing getOperatingRooms and getEquipments in vuex store
-    //vm.$store.dispatch('getOperatingRooms');
-    vm.$store.dispatch('getEquipments', {CurrentPage:1, PageSize: -1});
   }
+
+  // created() {
+  //    const vm = this;
+
+  //    //We are accessing getEquipments in vuex store
+  //    vm.$store.dispatch('getEquipments');
+  // }
 };
 
 </script>

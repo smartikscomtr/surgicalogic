@@ -22,9 +22,9 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md6>
+              <!-- <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('branchs.branchName')">
+                              :label="$t('worktypes.workType')">
                 </v-text-field>
               </v-flex>
 
@@ -33,12 +33,13 @@
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
-                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+
+              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
                        @click.native="save">
                   Kaydet
                 </v-btn>
-              </v-flex>
+              </v-flex> -->
             </v-layout>
           </v-container>
         </v-card-text>
@@ -78,7 +79,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t('branchs.addBranchsInformation') : vm.$i18n.t('branchs.editBranchsInformation');
+      return vm.editIndex === -1 ? vm.$i18n.t('users.addUsersInformation') : vm.$i18n.t('users.editUsersInformation');
     },
 
     showModal: {
@@ -88,10 +89,10 @@ export default {
         return vm.editVisible;
       },
 
-      set(value) {
+      set (value) {
         const vm = this;
 
-        //When the cancel button is clicked, the event is sent to the branchs edit component
+        //When the cancel button is clicked, the event is sent to the users edit component
         if (!value) {
           vm.$emit('cancel');
         }
@@ -109,28 +110,27 @@ export default {
     save() {
       const vm = this;
 
-      //Edit branch
-      if (vm.editIndex > -1) {
-        //We are accessing updateBranch in vuex store
-        vm.$store.dispatch('updateBranch', {
-          id: vm.editAction.id,
-          name: vm.editAction.name,
-          description: vm.editAction.description
-        });
-      }
-      //Add branch
-      else {
-        //We are accessing insertBranch in vuex store
-        vm.$store.dispatch('insertBranch', {
-          name: vm.editAction.name,
-          description: vm.editAction.description
-        });
-      }
+      //Edit work type
+      // if (vm.editIndex > -1) {
+      //   //We are accessing updateWorkType in vuex store
+      //   vm.$store.dispatch('updateWorkType', {
+      //     id: vm.editAction.id,
+      //     name: vm.editAction.name,
+      //     description: vm.editAction.description
+      //   });
+      // }
+      // //Add work type
+      // else {
+      //   //We are accessing insertWorkType in vuex store
+      //   vm.$store.dispatch('insertWorkType', {
+      //     name: vm.editAction.name,
+      //     description: vm.editAction.description
+      //   });
+      // }
 
       vm.showModal = false;
     }
   }
-};
+}
 
 </script>
-

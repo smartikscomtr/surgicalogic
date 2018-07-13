@@ -17,21 +17,23 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
         public static void Seed(DataContext context)
         {
-            if (context.WorkTypes.Any() ||
+            try
+            {
+                if (context.WorkTypes.Any() ||
                 context.EquipmentTypes.Any() ||
                 context.Equipments.Any() ||
                 context.Branches.Any() ||
                 context.OperatingRooms.Any() ||
                 context.Personnels.Any() ||
                 context.PersonnelTitles.Any())
-            {
-                return; // DB has been seeded
-            }
+                {
+                    return; // DB has been seeded
+                }
 
-            #region Branches
-            var branch = new Entities.Branch();
+                #region Branches
+                var branch = new Entities.Branch();
 
-            string[] branches = new string[] {
+                string[] branches = new string[] {
                                     "Acil Tıp",
                                     "Anesteziyoloji ve Reanimasyon",
                                     "Beyin ve Sinir Cerrahisi",
@@ -85,71 +87,71 @@ namespace Surgicalogic.Data.Migrations.Initialize
                                     "Tıbbi Patoloji",
                                     "Üroloji",
                                     "Genel Cerrahi"
-            };
+                };
 
-            foreach (var item in branches)
-            {
-                branch = context.Branches.Add(new Entities.Branch
+                foreach (var item in branches)
                 {
-                    Name = item,
-                    Description = item,
-                    CreatedDate = DateTime.Now
-                }).Entity;
-            }
-            #endregion
+                    branch = context.Branches.Add(new Entities.Branch
+                    {
+                        Name = item,
+                        Description = item,
+                        CreatedDate = DateTime.Now
+                    }).Entity;
+                }
+                #endregion
 
-            #region PersonnelTitles
-            string[] personnelTitles = new string[] {
-                "Çocuk Gelişimcisi",
-                "Diyetisyen",
-                "Ebe",
-                "Eczacı",
-                "Fizyoterapist",
-                "Güvenlik",
-                "Hastane Müdür Yardımcısı",
-                "Hemşire",
-                "Hizmetli",
-                "İmam",
-                "Kimyager",
-                "Memur",
-                "Şoför",
-                "Tekniker",
-                "Teknisyen",
-                "Terzi",
-                "Doktor"
-            };
+                #region PersonnelTitles
+                string[] personnelTitles = new string[] {
+                    "Çocuk Gelişimcisi",
+                    "Diyetisyen",
+                    "Ebe",
+                    "Eczacı",
+                    "Fizyoterapist",
+                    "Güvenlik",
+                    "Hastane Müdür Yardımcısı",
+                    "Hemşire",
+                    "Hizmetli",
+                    "İmam",
+                    "Kimyager",
+                    "Memur",
+                    "Şoför",
+                    "Tekniker",
+                    "Teknisyen",
+                    "Terzi",
+                    "Doktor"
+                };
 
-            var title = new Entities.PersonnelTitle();
+                var title = new Entities.PersonnelTitle();
 
-            foreach (var item in personnelTitles)
-            {
-                title = context.PersonnelTitles.Add(new Entities.PersonnelTitle
+                foreach (var item in personnelTitles)
                 {
-                    Name = item,
-                    Description = item,
-                    CreatedDate = DateTime.Now
-                }).Entity;
-            }
-            #endregion
+                    title = context.PersonnelTitles.Add(new Entities.PersonnelTitle
+                    {
+                        Name = item,
+                        Description = item,
+                        CreatedDate = DateTime.Now
+                    }).Entity;
+                }
+                #endregion
 
-            #region WorkTypes
-            var workType = new Entities.WorkType();
+                #region WorkTypes
+                var workType = new Entities.WorkType();
 
-            string[] workTypes = new string[] { "Kadrolu Personel", "Sözleşmeli Personel" };
+                string[] workTypes = new string[] { "Kadrolu Personel", "Sözleşmeli Personel" };
 
-            foreach (var item in workTypes)
-            {
-                workType = context.WorkTypes.Add(new Entities.WorkType
+                foreach (var item in workTypes)
                 {
-                    Name = item,
-                    Description = item,
-                    CreatedDate = DateTime.Now
-                }).Entity;
-            }
-            #endregion
+                    workType = context.WorkTypes.Add(new Entities.WorkType
+                    {
+                        Name = item,
+                        Description = item,
+                        CreatedDate = DateTime.Now
+                    }).Entity;
+                }
+                #endregion
 
-            #region EquipmentType
-            string[] equipmentTypes = new string[] {
+                #region EquipmentType
+                string[] equipmentTypes = new string[] {
                     "Aspirasyon Cihazları",
                     "Santrifüj Cihazları",
                     "EKG Cihazları",
@@ -177,35 +179,28 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     "Sterilizatörler",
                     "OSGB Malzemeleri",
                     "Laboratuvar Cihazları & Ürünleri",
-            };
+                };
 
-            var equipmentType = new Entities.EquipmentType();
+                var equipmentType = new Entities.EquipmentType();
 
-            foreach (var item in equipmentTypes)
-            {
-                equipmentType = context.EquipmentTypes.Add(new Entities.EquipmentType
+                foreach (var item in equipmentTypes)
                 {
-                    Name = item,
-                    Description = item,
-                    CreatedDate = DateTime.Now
-                }).Entity;
-            }
-            #endregion
+                    equipmentType = context.EquipmentTypes.Add(new Entities.EquipmentType
+                    {
+                        Name = item,
+                        Description = item,
+                        CreatedDate = DateTime.Now
+                    }).Entity;
+                }
+                #endregion
 
-            #region SaveChanges
-            //Saving here because I need above records IDs below.
-            try
-            {
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
                 context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                //TODO: Insert Log
-            }
-            #endregion
+                #endregion
 
-            #region Equipments
-            string[] equipments = new string[] {
+                #region Equipments
+                string[] equipments = new string[] {
                     "Hegar-olsen makaslı portequei 14 cm",
                     "Penset 13 cm eğri",
                     "Mosquito pensi 13 cm düz",
@@ -241,84 +236,104 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     "Babcock´s göz pensi",
                     "Stile 16 cm",
                     "KH Tırnak kesme pensi 11 cm"
-            };
+                };
 
-            foreach (var item in equipments)
-            {
-                context.Equipments.Add(new Entities.Equipment
+                foreach (var item in equipments)
                 {
-                    EquipmentTypeId = equipmentType.Id,
-                    Name = item,
-                    Description = item,
-                    CreatedDate = DateTime.Now
-                });
-            }
-            #endregion
+                    context.Equipments.Add(new Entities.Equipment
+                    {
+                        EquipmentTypeId = equipmentType.Id,
+                        Name = item,
+                        Description = item,
+                        CreatedDate = DateTime.Now
+                    });
+                }
+                #endregion
 
-            #region Personnels
-            var PersonnelsList = new List<Personnel>()
-            {
-              new Personnel
-              {
-                PersonnelCode = "TB01",
-                FirstName = "Tuba",
-                LastName = "Bayraktutar",
-                PersonnelTitleId = title.Id,
-                BranchId = branch.Id,
-                WorkTypeId = workType.Id,
-                CreatedDate = DateTime.Now
-              },
-
-              new Personnel
-              {
-                PersonnelCode = "GK01",
-                FirstName = "Gürkan",
-                LastName = "Kesebir",
-                PersonnelTitleId = title.Id,
-                BranchId = branch.Id,
-                WorkTypeId = workType.Id,
-                CreatedDate = DateTime.Now
-              },
-
-               new Personnel
-               {
-                PersonnelCode = "HC01",
-                FirstName = "Hasan",
-                LastName = "Çolak",
-                PersonnelTitleId = title.Id,
-                BranchId = branch.Id,
-                WorkTypeId = workType.Id,
-                CreatedDate = DateTime.Now
-               }
-            };
-
-            context.Personnels.AddRange(PersonnelsList);
-            #endregion
-
-            #region OperatingRooms
-            for (int i = 0; i <= 10; i++)
-            {
-                context.OperatingRooms.Add(new Entities.OperatingRoom
+                #region Personnels
+                var PersonnelsList = new List<Personnel>()
                 {
-                    Name = GetLetter(),
-                    Height = _random.Next(190, 300),
-                    Width = _random.Next(200, 600),
-                    Length = _random.Next(200, 500),
+                  new Personnel
+                  {
+                    PersonnelCode = "TB01",
+                    FirstName = "Tuba",
+                    LastName = "Bayraktutar",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
                     CreatedDate = DateTime.Now
-                });
-            }
-            #endregion
+                  },
 
-            #region SaveChanges
-            try
-            {
+                  new Personnel
+                  {
+                    PersonnelCode = "GK01",
+                    FirstName = "Gürkan",
+                    LastName = "Kesebir",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    CreatedDate = DateTime.Now
+                  },
+
+                   new Personnel
+                   {
+                    PersonnelCode = "HC01",
+                    FirstName = "Hasan",
+                    LastName = "Çolak",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    CreatedDate = DateTime.Now
+                   }
+                };
+
+                context.Personnels.AddRange(PersonnelsList);
+                #endregion
+
+                #region OperatingRooms
+                for (int i = 0; i <= 10; i++)
+                {
+                    context.OperatingRooms.Add(new Entities.OperatingRoom
+                    {
+                        Name = GetLetter(),
+                        Height = _random.Next(190, 300),
+                        Width = _random.Next(200, 600),
+                        Length = _random.Next(200, 500),
+                        CreatedDate = DateTime.Now
+                    });
+                }
+                #endregion
+
+                #region SaveChanges
                 context.SaveChanges();
+                #endregion
+
+                #region OperatingRoomEquipments
+
+                for (int i = 1; i <= 8; i++)
+                {
+                    
+                    for (int k = 0; k < _random.Next(1, 5); k++)
+                    {
+                        context.OperatingRoomEquipments.Add(new Entities.OperatingRoomEquipment
+                        {                            
+                            OperatingRoomId = i,
+                            EquipmentId = _random.Next(1, 30),
+                            CreatedDate = DateTime.Now
+                        });
+                    }                                        
+                    
+                }
+                #endregion
+
+                #region SaveChanges
+                context.SaveChanges();
+                #endregion
+
             }
-            catch (Exception ex)
-            {
-                //TODO: Insert Log
-            }
-            #endregion
+            catch (Exception)
+            { }
+            
         }
 
         public static void InitializeDataFromExcel(DataContext context, string excelFilePath)

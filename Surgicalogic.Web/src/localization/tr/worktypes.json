@@ -1,6 +1,6 @@
 {
-  "workType": "Çalışma Tipi",
-  "workTypes": "Çalışma Tipleri",
   "addWorkTypesInformation": "Yeni Çalışma Tipi Ekle",
-  "editWorkTypesInformation": "Çalışma Tipi Düzenleme"
+  "editWorkTypesInformation": "Çalışma Tipi Düzenleme",
+  "workType": "Çalışma Tipi",
+  "workTypes": "Çalışma Tipleri"
 }

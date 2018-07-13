@@ -226,8 +226,8 @@ export default {
           children: [
             {
               icon: "group",
-              text: "Kullanıcılar"
-              // route: "/CreatePlan"
+              text: vm.$i18n.t("users.users"),
+              route: "/userspage"
             },
             {
               icon: "chat_bubble",

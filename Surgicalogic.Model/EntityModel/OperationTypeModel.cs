@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public BranchModel BranchModel { get; set; }
+        public BranchModel Branch { get; set; }
     }
 }

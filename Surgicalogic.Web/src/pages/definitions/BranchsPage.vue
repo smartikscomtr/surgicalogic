@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="operationTypes"
+                    :items="branchs"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -14,12 +14,16 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operation-types-edit-component :edit-action="editAction"
-                                    :edit-visible="editDialog"
-                                    :edit-index="editedIndex"
-                                    :delete-value="deleteValue"
-                                    @cancel="cancel">
-    </operation-types-edit-component>
+    <branchs-edit-component :edit-action="editAction"
+                            :edit-visible="editDialog"
+                            :edit-index="editedIndex"
+                            @cancel="cancel">
+    </branchs-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -30,15 +34,15 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('operationtypes.operationtypes'),
+      title: vm.$i18n.t('branchs.branchs'),
       search: '',
       editDialog: false,
-      detailAction: {},
+      deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination: {},
-      editedIndex: -1,
-      totalRowCount:0,
+       pagination:{},
+       totalRowCount:0,
+      editedIndex: -1
     };
   },
 
@@ -50,13 +54,13 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('operationtypes.operationtype'),
+          text: vm.$i18n.t('branchs.branch'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'branchId',
-          text: vm.$i18n.t('branchs.branch'),
+          value: 'description',
+          text: vm.$i18n.t('common.description'),
           sortable: true,
           align: 'left'
         },
@@ -68,16 +72,17 @@ export default {
       ];
     },
 
-    operationTypes() {
+    branchs() {
       const vm = this;
 
-      return vm.$store.state.operationTypeModule.operationTypes;
+      return vm.$store.state.branchsModule.branchs;
     },
 
-    getTotalCount() {
-      const vm = this;
 
-      return vm.$store.state.operationTypeModule.totalCount;
+    getTotalCount() {
+     const vm = this;
+
+      return vm.$store.state.branchsModule.totalCount;
     }
   },
 
@@ -86,7 +91,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.operationTypes.indexOf(payload);
+      vm.editedIndex = vm.branchs.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -94,6 +99,7 @@ export default {
       const vm = this;
 
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -105,26 +111,22 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      //We are accessing deleteOperationType in vuex store
-      vm.$store.dispatch('deleteOperationType', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+	  vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getOperationTypes"
-    }
+     return "getBranchs"
+    },
+
   },
 
-  created() {
-    const vm = this;
+  // created() {
+  //   const vm = this;
 
-    //We are accessing getBranchs and getOperationTypes in vuex store
-    vm.$store.dispatch('getBranchs', { currentPage:1, pageSize: -1});
-    //vm.$store.dispatch('getOperationTypes', { currentPage:1, pageSize: -1});
-  }
+  //   //We are accessing getBranch in vuex store
+  //   vm.$store.dispatch('getBranchs');
+  // }
 };
 
 </script>

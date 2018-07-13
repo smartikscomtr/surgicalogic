@@ -93,6 +93,7 @@ export default {
       const vm = this;
 
       //We are accessing deleteEquipment in vuex store
+
       vm.$store.dispatch('deleteEquipment', {
         id: vm.deleteValue.id
       });

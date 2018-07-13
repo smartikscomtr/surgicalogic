@@ -15,12 +15,21 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
+    <personnel-detail-component :detail-action="detailAction"
+                               :detail-visible="detailDialog"
+                               @cancel="cancel">
+    </personnel-detail-component>
+
     <personnel-edit-component :edit-action="editAction"
                               :edit-visible="editDialog"
                               :edit-index="editedIndex"
-                              :delete-value="deleteValue"
                               @cancel="cancel">
     </personnel-edit-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -35,6 +44,7 @@ export default {
       search: '',
       detailDialog: false,
       editDialog: false,
+      deleteDialog: false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
@@ -152,6 +162,7 @@ export default {
 
       vm.detailDialog = false;
       vm.editDialog = false;
+      vm.deleteDialog = false;
     },
 
     addNewItem(){
@@ -163,12 +174,8 @@ export default {
     deleteItem(payload) {
       const vm = this;
 
-      //We are accessing deletePersonnel in vuex store
-      vm.$store.dispatch('deletePersonnel', {
-        id: payload.id
-      });
-
       vm.deleteValue = payload;
+	  vm.deleteDialog = true;
     },
 
     getMethodName(){

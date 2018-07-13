@@ -1,30 +1,24 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="equipments"
+                    :items="workTypes"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
                     :pagination.sync="pagination"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <equipments-detail-component :detail-action="detailAction"
-                                 :detail-visible="detailDialog"
-                                 @cancel="cancel">
-    </equipments-detail-component>
-
-    <equipments-edit-component :edit-action="editAction"
+    <work-types-edit-component :edit-action="editAction"
                                :edit-visible="editDialog"
                                :edit-index="editedIndex"
                                @cancel="cancel">
-    </equipments-edit-component>
+    </work-types-edit-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
@@ -40,18 +34,15 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('equipments.equipments'),
+      title: vm.$i18n.t('worktypes.workTypes'),
       search: '',
-      detailDialog: false,
       editDialog: false,
       deleteDialog: false,
-      detailAction: {},
       editAction: {},
       deleteValue: {},
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      equipmentTypeLoadOnce: true
     };
   },
 
@@ -63,25 +54,13 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('equipments.name'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value:'equipmentTypeName',
-          text: vm.$i18n.t('equipmenttypes.equipmentType'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'isPortable',
-          text: vm.$i18n.t('equipments.portable'),
+          text: vm.$i18n.t('worktypes.workTypes'),
           sortable: true,
           align: 'left'
         },
         {
           value: 'description',
-          text: vm.$i18n.t('equipments.description'),
+          text: vm.$i18n.t('common.description'),
           sortable: true,
           align: 'left'
         },
@@ -93,50 +72,30 @@ export default {
       ];
     },
 
-    equipments() {
+    workTypes() {
       const vm = this;
 
-      return vm.$store.state.equipmentModule.equipments;
+      return vm.$store.state.workTypesModule.workTypes;
     },
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.equipmentModule.totalCount;
-    }
-  },
-
-  watch: {
-   editDialog(){
-     const vm = this;
-
-    //We are accessing getAllEquipmentTypes in vuex store
-     if(vm.equipmentTypeLoadOnce){
-        vm.$store.dispatch('getAllEquipmentTypes');
-        vm.equipmentTypeLoadOnce = false;
-     }
+      return vm.$store.state.workTypesModule.totalCount;
     }
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
     edit(payload){
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.equipments.indexOf(payload);
+      vm.editedIndex = vm.workTypes.indexOf(payload);
       vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;
     },
@@ -151,20 +110,20 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-      vm.deleteDialog = true;
+	  vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getEquipments"
+      return "getWorkTypes"
     }
+  },
+
+  created() {
+    //const vm = this;
+
+    //We are accessing getWorkTypes in vuex store
+    //vm.$store.dispatch('getWorkTypes');
   }
-
-  // created() {
-  //    const vm = this;
-
-  //    //We are accessing getEquipments in vuex store
-  //    vm.$store.dispatch('getEquipments');
-  // }
 };
 
 </script>

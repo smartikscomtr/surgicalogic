@@ -2,11 +2,11 @@
   "actions": "Aksiyon",
   "add": "Ekle",
   "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz ?",
-  "name": "Ad",
-  "description": "Açıklama",
   "deleteOperation": "Silme İşlemi",
+  "description": "Açıklama",
   "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz?",
-  "yes": "Evet",
+  "name": "Ad",
   "no": "Hayır",
+  "yes": "Evet",
   "all":"Hepsi"
 }
