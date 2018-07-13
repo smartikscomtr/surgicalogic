@@ -6,6 +6,9 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -32,7 +35,9 @@ export default {
       editDialog: false,
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      pagination: {},
+      editedIndex: -1,
+      totalRowCount:0,
     };
   },
 
@@ -66,6 +71,11 @@ export default {
       const vm = this;
 
       return vm.$store.state.workTypesModule.workTypes;
+    },
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.workTypesModule.totalCount;
     }
   },
 
@@ -99,13 +109,17 @@ export default {
       });
 
       vm.deleteValue = payload;
+    },
+
+    getMethodName(){
+      return "getWorkTypes"
     }
   },
   created() {
-    const vm = this;
+    //const vm = this;
 
     //We are accessing getWorkTypes in vuex store
-    vm.$store.dispatch('getWorkTypes');
+    //vm.$store.dispatch('getWorkTypes');
   }
 };
 

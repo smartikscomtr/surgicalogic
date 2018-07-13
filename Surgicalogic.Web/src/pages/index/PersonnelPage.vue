@@ -2,10 +2,13 @@
   <div>
     <grid-component :headers="headers"
                     :items="personnels"
+                    :pagination.sync="pagination"
                     :title="title"
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalRowCount="getTotalCount"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -35,6 +38,8 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
+      pagination:{},
+      totalRows:0,
       editedIndex: -1
     };
   },
@@ -93,6 +98,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.personnelModule.personnel;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.personnelModule.totalCount;
     }
   },
 
@@ -158,14 +169,18 @@ export default {
       });
 
       vm.deleteValue = payload;
+    },
+
+    getMethodName(){
+      return "getPersonnels"
     }
   },
 
   created() {
-    const vm = this;
+    // const vm = this;
 
-    //We are accessing getPersonnels in vuex store
-    vm.$store.dispatch('getPersonnels');
+    // //We are accessing getPersonnels in vuex store
+    // vm.$store.dispatch('getPersonnels');
   }
 };
 

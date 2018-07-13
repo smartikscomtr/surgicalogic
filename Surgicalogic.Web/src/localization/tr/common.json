@@ -7,5 +7,6 @@
   "deleteOperation": "Silme İşlemi",
   "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz?",
   "yes": "Evet",
-  "no": "Hayır"
+  "no": "Hayır",
+  "all":"Hepsi"
 }

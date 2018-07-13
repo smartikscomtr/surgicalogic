@@ -7,5 +7,6 @@
   "deleteOperation": "Delete Operation",
   "doYouWantToDeleteTheRecord": "Do you want to delete the record?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "all":"All"
 }

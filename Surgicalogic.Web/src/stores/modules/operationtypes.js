@@ -2,12 +2,14 @@ import axios from 'axios';
 
 const operatingTypeModule = {
   state: {
-    operatingTypes: []
+    operatingTypes: [],
+    totalCount:0
   },
 
   mutations: {
-    setOperatingTypes(state, operatingTypes) {
-      state.operatingTypes = operatingTypes;
+    setOperatingTypes(state, data) {
+      state.operatingTypes = data.result;
+      state.totalCount = data.totalCount;
     },
 
     insertOperationType(state, { item }) {
@@ -30,10 +32,10 @@ const operatingTypeModule = {
   getters: {},
 
   actions: {
-    getOperationTypes(context) {
-      axios.get('OperationType/GetOperationTypes')
+    getOperationTypes(context, payload) {
+      axios.post('OperationType/GetOperationTypes', payload)
           .then(response => {
-            context.commit('setOperationTypes', response.data.result) //Set the Operation Types in the store
+            context.commit('setOperationTypes', response.data) //Set the Operation Types in the store
         })
     },
 

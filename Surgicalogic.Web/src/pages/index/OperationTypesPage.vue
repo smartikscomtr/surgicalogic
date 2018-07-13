@@ -6,6 +6,9 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -33,7 +36,9 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      pagination: {},
+      editedIndex: -1,
+      totalRowCount:0,
     };
   },
 
@@ -67,6 +72,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.operationTypeModule.operationTypes;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.totalCount;
     }
   },
 
@@ -100,6 +111,10 @@ export default {
       });
 
       vm.deleteValue = payload;
+    },
+
+    getMethodName(){
+      return "getOperationTypes"
     }
   },
 
@@ -107,8 +122,8 @@ export default {
     const vm = this;
 
     //We are accessing getBranchs and getOperationTypes in vuex store
-    vm.$store.dispatch('getBranchs');
-    vm.$store.dispatch('getOperationTypes');
+    vm.$store.dispatch('getBranchs', { currentPage:1, pageSize: -1});
+    //vm.$store.dispatch('getOperationTypes', { currentPage:1, pageSize: -1});
   }
 };
 

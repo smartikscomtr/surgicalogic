@@ -2,12 +2,14 @@ import axios from 'axios';
 
 const workTypesModule = {
   state: {
-    workTypes: []
+    workTypes: [],
+    totalCount:0,
   },
 
   mutations: {
-    setWorkTypes(state, workTypes) {
-      state.workTypes = workTypes;
+    setWorkTypes(state, data) {
+      state.workTypes = data.result;
+      state.totalCount = data.totalCount;
     },
 
     insertWorkType(state, { item }) {
@@ -30,11 +32,11 @@ const workTypesModule = {
   getters: {},
 
   actions: {
-    getWorkTypes(context) {
-      axios.get('WorkType/GetWorkTypes')
+    getWorkTypes(context,payload) {
+      axios.post('WorkType/GetWorkTypes', payload)
         .then(response => {
           if (response.data.info.succeeded == true){
-            context.commit('setWorkTypes', response.data.result) //Set the Work Type in the store
+            context.commit('setWorkTypes', response.data) //Set the Work Type in the store
           }
         })
     },

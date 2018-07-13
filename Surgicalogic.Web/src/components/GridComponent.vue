@@ -28,12 +28,15 @@
           </v-card-title>
 
           <v-data-table :headers="headers"
-                        :items="items">
+                        :items="items"
+                        :pagination.sync="pagination"
+                        :total-items="totalCount"
+                        :rows-per-page-items="[10,20,{'text':$t('common.all'),'value':-1}]">
             <template slot="items" slot-scope="props">
               <td v-for="(header, i) in headers"
                   :key="i">
                 <template v-if="!header.isAction">
-                  {{ props.item[header.value] }}
+                  {{   props.item[header.value] }}
                 </template>
 
                 <template v-else>
@@ -84,6 +87,10 @@ export default {
         return [];
       }
     },
+    totalCount:{
+      type:Number,
+      required:false
+    },
 
     headers: {
       type: Array,
@@ -108,14 +115,32 @@ export default {
     showDelete: {
       type: Boolean,
       required: false
+    },
+
+    methodName:{
+      type: Function,
+      required: true
     }
   },
 
   data() {
     return {
-      search: ''
+      search: '',
+      loading: true,
+      dataRows:[],
+      pagination: {}
     };
   },
+
+watch: {
+  pagination: {
+        handler () {
+          const vm = this;
+          const { sortBy, descending, page, rowsPerPage } = vm.pagination
+          vm.$store.dispatch(vm.methodName(), { currentPage:page, pageSize: rowsPerPage});
+        }
+  }
+},
 
   methods: {
     addNewItem() {

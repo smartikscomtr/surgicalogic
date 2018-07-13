@@ -2,12 +2,14 @@ import axios from 'axios';
 
 const operatingRoomModule = {
   state: {
-    operatingRooms: []
+    operatingRooms: [],
+    totalCount:0
   },
 
   mutations: {
-    setOperatingRooms(state, operatingRooms) {
-      state.operatingRooms = operatingRooms;
+    setOperatingRooms(state, data) {
+      state.operatingRooms = data.result;
+      state.totalCount = data.totalCount;
     },
 
     insertOperatingRoom(state, { item }) {
@@ -30,10 +32,10 @@ const operatingRoomModule = {
   getters: {},
 
   actions: {
-    getOperatingRooms(context) {
-      axios.get('OperatingRoom/GetOperatingRooms')
+    getOperatingRooms(context, payload) {
+      axios.post('OperatingRoom/GetOperatingRooms', payload)
         .then(response => {
-          context.commit('setOperatingRooms', response.data.result) //Set the Operating Rooms in the store
+          context.commit('setOperatingRooms', response.data) //Set the Operating Rooms in the store
       })
     },
 

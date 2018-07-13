@@ -24,10 +24,10 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>PersonnelTitleOutputModel list</returns>
         [Route("PersonnelTitle/GetPersonnelTitles")]
-        [HttpGet]
-        public async Task<ResultModel<PersonnelTitleOutputModel>> GetPersonnelTitle()
+        [HttpPost]
+        public async Task<ResultModel<PersonnelTitleOutputModel>> GetPersonnelTitle([FromBody]GridInputModel input)
         {
-            return await _personnelTitleStoreService.GetAsync<PersonnelTitleOutputModel>();
+            return await _personnelTitleStoreService.GetAsync<PersonnelTitleOutputModel>(input);
         }
 
         /// <summary>

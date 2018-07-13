@@ -6,6 +6,9 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -32,6 +35,8 @@ export default {
       editDialog: false,
       editAction: {},
       deleteValue: {},
+       pagination:{},
+       totalRowCount:0,
       editedIndex: -1
     };
   },
@@ -66,6 +71,13 @@ export default {
       const vm = this;
 
       return vm.$store.state.branchsModule.branchs;
+    },
+
+
+    getTotalCount() {
+     const vm = this;
+
+      return vm.$store.state.branchsModule.totalCount;
     }
   },
 
@@ -99,15 +111,20 @@ export default {
       });
 
       vm.deleteValue = payload;
-    }
+    },
+
+    getMethodName(){
+     return "getBranchs"
+    },
+
   },
 
-  created() {
-    const vm = this;
+  // created() {
+  //   const vm = this;
 
-    //We are accessing getBranch in vuex store
-    vm.$store.dispatch('getBranchs');
-  }
+  //   //We are accessing getBranch in vuex store
+  //   vm.$store.dispatch('getBranchs');
+  // }
 };
 
 </script>

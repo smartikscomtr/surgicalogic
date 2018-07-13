@@ -2,12 +2,14 @@ import axios from 'axios';
 
 const personnelModule = {
   state: {
-    personnel: []
+    personnel: [],
+    totalCount:0
   },
 
   mutations: {
-    setPersonnels(state, personnel) {
-      state.personnel = personnel;
+    setPersonnels(state, data) {
+      state.personnel = data.result;
+      state.totalCount = data.totalCount;
     },
 
     insertPersonnel(state, { item }) {
@@ -29,10 +31,10 @@ const personnelModule = {
   getters: {},
 
   actions: {
-    getPersonnels(context) {
-      axios.get('Personnel/GetPersonnels')
+    getPersonnels(context, payload) {
+      axios.post('Personnel/GetPersonnels', payload)
         .then(response => {
-          context.commit('setPersonnels', response.data.result) //Set the Personnel in the store
+          context.commit('setPersonnels', response.data) //Set the Personnel in the store
         })
     },
 

@@ -6,6 +6,9 @@
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :totalCount="getTotalCount"
+                    :pagination.sync="pagination"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -35,7 +38,9 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
+      pagination: {},
       editedIndex: -1,
+      totalRowCount:0,
       equipmentLoadOnce: true
     }
   },
@@ -100,6 +105,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.operatingRoomModule.operatingRooms;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomModule.totalCount;
     }
   },
 
@@ -153,14 +164,18 @@ export default {
       });
 
       vm.deleteValue = payload;
+    },
+
+    getMethodName(){
+      return "getOperatingRooms"
     }
   },
   created() {
     const vm = this;
 
     //We are accessing getOperatingRooms and getEquipments in vuex store
-    vm.$store.dispatch('getOperatingRooms');
-    vm.$store.dispatch('getEquipments');
+    //vm.$store.dispatch('getOperatingRooms');
+    vm.$store.dispatch('getEquipments', {CurrentPage:1, PageSize: -1});
   }
 };
 

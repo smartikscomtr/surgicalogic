@@ -25,10 +25,10 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>OperatingRoomOutputModel list</returns>
         [Route("OperatingRoom/GetOperatingRooms")]
-        [HttpGet]
-        public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms()
+        [HttpPost]
+        public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms([FromBody]GridInputModel input)
         {
-            return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
+            return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
         }
 
         /// <summary>
