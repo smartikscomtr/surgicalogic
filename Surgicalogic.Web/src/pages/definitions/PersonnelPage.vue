@@ -4,21 +4,15 @@
                     :items="personnels"
                     :pagination.sync="pagination"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalRowCount="getTotalCount"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
-
-    <personnel-detail-component :detail-action="detailAction"
-                               :detail-visible="detailDialog"
-                               @cancel="cancel">
-    </personnel-detail-component>
 
     <personnel-edit-component :edit-action="editAction"
                               :edit-visible="editDialog"
@@ -42,10 +36,8 @@ export default {
     return {
       title: vm.$i18n.t('personnel.personnels'),
       search: '',
-      detailDialog: false,
       editDialog: false,
       deleteDialog: false,
-      detailAction: {},
       editAction: {},
       deleteValue: {},
       pagination:{},
@@ -145,13 +137,6 @@ export default {
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
     edit(payload){
       const vm = this;
 
@@ -163,7 +148,6 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;
     },

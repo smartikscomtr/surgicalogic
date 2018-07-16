@@ -58,15 +58,6 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipment"
-                          :items="equipments"
-                          :label="$t('equipments.equipments')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
-              </v-flex>
-
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
                        @click.native="save">
@@ -82,8 +73,6 @@
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   props: {
@@ -132,34 +121,6 @@ export default {
           vm.$emit('cancel');
         }
       }
-    },
-
-    equipments() {
-      const vm = this;
-
-      return vm.$store.state.operatingRoomModule.allEquipments;
-    },
-
-    selectEquipment: {
-      get() {
-        const vm = this;
-
-        return vm.editAction.equipmentId;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.allEquipments.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
-
-        vm.editAction.equipmentId = val;
-      }
     }
   },
 
@@ -183,8 +144,7 @@ export default {
           location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          lenght: vm.editAction.lenght,
-          equipmentId: vm.selectEquipment
+          length: vm.editAction.length
         });
       }
       //Add operating room
@@ -196,8 +156,7 @@ export default {
           location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          lenght: vm.editAction.lenght,
-          equipmentId: vm.selectEquipment
+          length: vm.editAction.length
         });
       }
 

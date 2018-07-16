@@ -25,13 +25,11 @@ const operatingRoomModule = {
       state.operatingRooms.splice(index, 1);
     },
 
-    setAllEquipments(state, data) {
-      state.allEquipments = data;
+    updateOperatingRoom(state, payload) {
     },
 
-
-    updateOperatingRoom(state, payload) {
-      //state.operatingRooms.payload = payload;
+    setAllEquipments(state, data) {
+      state.allEquipments = data;
     }
   },
 

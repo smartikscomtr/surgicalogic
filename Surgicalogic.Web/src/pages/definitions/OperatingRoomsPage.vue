@@ -94,12 +94,6 @@ export default {
           align: 'left'
         },
         {
-          value: 'equipmentName',
-          text: vm.$i18n.t('equipments.equipments'),
-          sortable: true,
-          align: 'left'
-        },
-        {
           isAction: true,
           sortable: false,
           align: 'right'
@@ -172,20 +166,7 @@ export default {
     getMethodName(){
       return "getOperatingRooms"
     }
-  },
-
-  // created() {
-  //   const vm = this;
-
-  //   //We are accessing getOperatingRooms and getEquipments in vuex store
-  //   //vm.$store.dispatch('getOperatingRooms');
-  //   vm.$store.dispatch('getEquipments',
-  //     {
-  //       CurrentPage:1,
-  //       PageSize: -1
-  //     }
-  //   );
-  // }
+  }
 };
 
 </script>
