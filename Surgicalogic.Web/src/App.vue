@@ -268,8 +268,8 @@ export default {
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("branchs.branchs"),
-              route: "/branchspage"
+              text: vm.$i18n.t("branches.branches"),
+              route: "/branchespage"
             },
             {
               icon: "assignment",

@@ -24,7 +24,7 @@
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('branchs.branchName')">
+                              :label="$t('branches.branchName')">
                 </v-text-field>
               </v-flex>
 
@@ -78,7 +78,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t('branchs.addBranchsInformation') : vm.$i18n.t('branchs.editBranchsInformation');
+      return vm.editIndex === -1 ? vm.$i18n.t('branches.addBranchesInformation') : vm.$i18n.t('branches.editBranchesInformation');
     },
 
     showModal: {
@@ -91,7 +91,7 @@ export default {
       set(value) {
         const vm = this;
 
-        //When the cancel button is clicked, the event is sent to the branchs edit component
+        //When the cancel button is clicked, the event is sent to the branches edit component
         if (!value) {
           vm.$emit('cancel');
         }

@@ -71,13 +71,13 @@ export default {
         },
         {
           value: 'firstName',
-          text: vm.$i18n.t('personnel.givenName'),
+          text: vm.$i18n.t('personnel.firstName'),
           sortable: true,
           align: 'left'
         },
         {
           value: 'lastName',
-          text: vm.$i18n.t('personnel.familyName'),
+          text: vm.$i18n.t('personnel.lastName'),
           sortable: true,
           align: 'left'
         },
@@ -89,7 +89,7 @@ export default {
         },
         {
           value: 'branchName',
-          text: vm.$i18n.t('branchs.branch'),
+          text: vm.$i18n.t('branches.branch'),
           sortable: true,
           align: 'left'
         },
@@ -136,7 +136,7 @@ export default {
         vm.personnelTitleLoadOnce = false;
      }
 
-     //We are accessing getBranchs in vuex store
+     //We are accessing getBranches in vuex store
      if(vm.branchLoadOnce){
         vm.$store.dispatch('getAllBranches');
         vm.branchLoadOnce = false;
@@ -156,7 +156,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      // vm.editedIndex = vm.personnel.indexOf(payload);
+      vm.editedIndex = vm.personnels.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -178,11 +178,11 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+      vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getPersonnels"
+      return "getPersonnels";
     }
   },
 

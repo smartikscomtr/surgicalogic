@@ -48,7 +48,7 @@ Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 Vue.component('personnel-detail-component', PersonnelDetailComponent);
 
 // Registering Edit Components
-import BranchsEditComponent from '@/components/editcomponents/BranchsEditComponent';
+import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';
 import EquipmentTypesEditComponent from '@/components/editcomponents/EquipmentTypesEditComponent';
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
@@ -58,7 +58,7 @@ import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRo
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 
-Vue.component('branchs-edit-component', BranchsEditComponent);
+Vue.component('branches-edit-component', BranchesEditComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
 Vue.component('equipment-types-edit-component', EquipmentTypesEditComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);

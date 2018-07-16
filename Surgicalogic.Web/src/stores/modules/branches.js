@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const branchsModule = {
+const branchesModule = {
   state: {
-    branchs: [],
+    branches: [],
     totalCount: 0,
     allBranches: []
   },
 
   mutations: {
-    setBranchs(state, data) {
-        state.branchs = data.result;
+    setBranches(state, data) {
+        state.branches = data.result;
         state.totalCount = data.totalCount;
     },
 
@@ -18,30 +18,30 @@ const branchsModule = {
     },
 
     insertBranch(state, { item }) {
-      state.branchs.push(item);
+      state.branches.push(item);
     },
 
     deleteBranch(state, { payload }) {
-      let index = state.branchs.findIndex((item) => {
+      let index = state.branches.findIndex((item) => {
         return item.id === payload.id
       });
 
-      state.branchs.splice(index, 1);
+      state.branches.splice(index, 1);
     },
 
     updateBranch(state, payload) {
-      //state.branchs.payload = payload;
+      //state.branches.payload = payload;
     }
   },
 
   getters: {},
 
   actions: {
-    getBranchs(context,payload) {
-      axios.post('Branch/GetBranchs', payload)
+    getBranches(context,payload) {
+      axios.post('Branch/GetBranches', payload)
         .then(response => {
           if (response.data.info.succeeded == true){
-            context.commit('setBranchs', response.data) //Set the Branchs in the store
+            context.commit('setBranches', response.data) //Set the Branches in the store
           }
         })
     },
@@ -49,7 +49,7 @@ const branchsModule = {
     getAllBranches(context) {
       axios.get('Branch/GetAllBranches')
         .then(response => {
-          context.commit('setAllBranches', response.data.result) //Set the Branchs in the store
+          context.commit('setAllBranches', response.data.result) //Set the Branches in the store
         })
     },
 
@@ -57,7 +57,7 @@ const branchsModule = {
       axios.post('Branch/InsertBranch', payload)
         .then(response => {
           if (response.data.info.succeeded == true) {
-            context.commit('insertBranch', { item: response.data.result }) //Insert the Branchs in the store
+            context.commit('insertBranch', { item: response.data.result }) //Insert the Branches in the store
           }
         })
     },
@@ -66,7 +66,7 @@ const branchsModule = {
       axios.post('Branch/DeleteBranch/' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
-            context.commit('deleteBranch', { payload }); //Delete the Branchs in the store
+            context.commit('deleteBranch', { payload }); //Delete the Branches in the store
           }
         })
     },
@@ -74,10 +74,10 @@ const branchsModule = {
     updateBranch(context, payload) {
       axios.post('Branch/UpdateBranch', payload)
         .then(response => {
-          //context.commit('updateBranch', {payload}) //Update the Branchs in the store
+          //context.commit('updateBranch', {payload}) //Update the Branches in the store
         })
     }
   }
 }
 
-export default branchsModule;
+export default branchesModule;

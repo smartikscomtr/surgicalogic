@@ -5,7 +5,7 @@ import mutations from './mutations'; // root's mutation
 import getters from './getters'; // root's getters
 
 //Module import
-import branchsModule from './modules/branchs';
+import branchesModule from './modules/branches';
 import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmentTypes';
 import loginModule from './modules/login';
@@ -23,7 +23,7 @@ export default new Vuex.Store({
   mutations,
   actions,
   modules : {
-    branchsModule,
+    branchesModule,
     equipmentModule,
     equipmentTypesModule,
     loginModule,

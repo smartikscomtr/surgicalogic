@@ -30,8 +30,8 @@
 
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectBranch"
-                          :items="branchs"
-                          :label="$t('branchs.branch')"
+                          :items="branches"
+                          :label="$t('branches.branch')"
                           item-text="name"
                           items-value="id">
                 </v-select>
@@ -102,10 +102,10 @@ export default {
       }
     },
 
-        branchs() {
+        branches() {
             const vm = this;
 
-            return vm.$store.state.branchsModule.allBranches;
+            return vm.$store.state.branchesModule.allBranches;
         },
 
         selectBranch: {
@@ -118,7 +118,7 @@ export default {
             set(val) {
                 const vm = this;
 
-                vm.editAction.branchName = vm.$store.state.branchsModule.branchs.find(
+                vm.editAction.branchName = vm.$store.state.branchesModule.branches.find(
                     item => {
                         if (item.id == val) {
                             return item;

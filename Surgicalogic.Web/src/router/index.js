@@ -10,7 +10,7 @@ Vue.use(Vuex);
 
 
 //Registering Definitions Pages
-import BranchsPage from "@/pages/definitions/BranchsPage";
+import BranchesPage from "@/pages/definitions/BranchesPage";
 import EquipmentsPage from "@/pages/definitions/EquipmentsPage";
 import EquipmentTypesPage from "@/pages/definitions/EquipmentTypesPage";
 import OperationTypesPage from "@/pages/definitions/OperationTypesPage";
@@ -36,9 +36,9 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: '/branchspage',
-      name: 'BranchsPage',
-      component: BranchsPage
+      path: '/branchespage',
+      name: 'BranchesPage',
+      component: BranchesPage
     },
     {
       path: '/dashboardpage',

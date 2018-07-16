@@ -5,7 +5,7 @@
  * An example language file.
  */
 
-import * as branchs from './branchs.json';
+import * as branches from './branches.json';
 import * as common from './common.json';
 import * as equipments from './equipments.json';
 import * as equipmenttypes from './equipmenttypes.json';
@@ -17,7 +17,7 @@ import * as users from './users.json';
 import * as worktypes from './worktypes.json';
 
 export default {
-    branchs,
+    branches,
     common,
     equipments,
     equipmenttypes,

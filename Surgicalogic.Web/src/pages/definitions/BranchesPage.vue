@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="branchs"
+                    :items="branches"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -14,11 +14,11 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <branchs-edit-component :edit-action="editAction"
+    <branches-edit-component :edit-action="editAction"
                             :edit-visible="editDialog"
                             :edit-index="editedIndex"
                             @cancel="cancel">
-    </branchs-edit-component>
+    </branches-edit-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
@@ -34,7 +34,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('branchs.branchs'),
+      title: vm.$i18n.t('branches.branches'),
       search: '',
       editDialog: false,
       deleteDialog: false,
@@ -54,7 +54,7 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('branchs.branch'),
+          text: vm.$i18n.t('branches.branch'),
           sortable: true,
           align: 'left'
         },
@@ -72,17 +72,17 @@ export default {
       ];
     },
 
-    branchs() {
+    branches() {
       const vm = this;
 
-      return vm.$store.state.branchsModule.branchs;
+      return vm.$store.state.branchesModule.branches;
     },
 
 
     getTotalCount() {
      const vm = this;
 
-      return vm.$store.state.branchsModule.totalCount;
+      return vm.$store.state.branchesModule.totalCount;
     }
   },
 
@@ -91,7 +91,7 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.branchs.indexOf(payload);
+      vm.editedIndex = vm.branches.indexOf(payload);
       vm.editAction = payload;
     },
 
@@ -116,7 +116,7 @@ export default {
     },
 
     getMethodName(){
-     return "getBranchs"
+     return "getBranches"
     },
 
   },
@@ -125,7 +125,7 @@ export default {
   //   const vm = this;
 
   //   //We are accessing getBranch in vuex store
-  //   vm.$store.dispatch('getBranchs');
+  //   vm.$store.dispatch('getBranches');
   // }
 };
 
