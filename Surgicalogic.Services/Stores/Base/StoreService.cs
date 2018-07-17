@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Surgicalogic.Common.Settings;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities.Base;
 using Surgicalogic.Model.CommonModel;
@@ -53,9 +52,13 @@ namespace Surgicalogic.Services.Stores.Base
 
             if (!string.IsNullOrEmpty(input.Search))
             {
-                var type = typeof(TModel);
-                var props = type.GetProperties();
-                //projectQuery = projectQuery.Where(x => x.GetProperties().
+                List<string> searchableProperties = Common.QueryService<TModel>.GetSearchableProperties();
+
+                if (searchableProperties.Count > 0)
+                {
+                    var lambda = Common.QueryService<TModel>.GetSearchQuery(searchableProperties, input.Search);
+                    projectQuery = projectQuery.Where(lambda);
+                }
             }
 
             int totalCount = await projectQuery.CountAsync();
