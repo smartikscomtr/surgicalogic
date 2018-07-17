@@ -2,8 +2,12 @@ import axios from 'axios';
 
 const operatingTypeModule = {
   state: {
+    totalCount: 0,
     operationTypes: [],
-    totalCount:0
+    allBranches: [],
+    allEquipments: [],
+    allOperatingRooms: [],
+    allPersonnels: []
   },
 
   mutations: {
@@ -24,8 +28,22 @@ const operatingTypeModule = {
       state.operatingTypes.splice(index, 1);
     },
 
-    updateOperationTypes(state, payload) {
-      //state.operatingType.payload = payload;
+    updateOperationTypes(state, payload) {},
+
+    setAllBranches(state, payload) {
+      state.allBranches = payload;
+    },
+
+    setAllEquipments(state, payload) {
+      state.allEquipments = payload;
+    },
+
+    setAllOperatingRooms(state, payload) {
+      state.allOperatingRooms = payload;
+    },
+
+    setAllPersonnels(state, payload) {
+      state.allPersonnels = payload;
     }
   },
 
@@ -63,6 +81,34 @@ const operatingTypeModule = {
         .then(response => {
           //context.commit('updateOperationType', {payload}) //Update the OperationTypes in the store
         })
+    },
+
+    getAllBranches(context) {
+      axios.get('Branch/GetAllBranches')
+        .then(response => {
+          context.commit('setAllBranches', response.data.result) //Set the All Branches in the store
+        })
+    },
+
+    getAllEquipments(context) {
+      axios.get('Equipment/GetAllEquipments')
+        .then(response => {
+          context.commit('setAllEquipments', response.data.result) //Set the All Equipments in the store
+        })
+    },
+
+    getAllOperatingRooms(context) {
+      axios.get('OperatingRoom/GetAllOperatingRooms')
+        .then(response => {
+          context.commit('setAllOperatingRooms', response.data.result) //Set the All Operating Rooms in the store
+        })
+    },
+
+    getAllPersonnels(context) {
+      axios.get('Personnel/GetAllPersonnels')
+      .then(response => {
+        context.commit('setAllPersonnels', response.data.result) //Set the All Personnels in the store
+      })
     }
   }
 }

@@ -75,7 +75,7 @@ export default {
     personnelTitles() {
       const vm = this;
 
-      return vm.$store.state.personnelTitleModule.allPersonelTitles;
+      return vm.$store.state.personnelTitleModule.personnelTitle;
     },
 
     getTotalCount() {
@@ -111,18 +111,12 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+	    vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getPersonnelTitles"
+      return "getPersonnelTitles";
     }
-  },
-  created() {
-    // const vm = this;
-
-    // //We are accessing getPersonnelTitles in vuex store
-    // vm.$store.dispatch('getPersonnelTitles');
   }
 };
 

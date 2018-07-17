@@ -112,21 +112,13 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+	    vm.deleteDialog = true;
     },
 
     getMethodName(){
      return "getBranches"
-    },
-
-  },
-
-  // created() {
-  //   const vm = this;
-
-  //   //We are accessing getBranch in vuex store
-  //   vm.$store.dispatch('getBranches');
-  // }
+    }
+  }
 };
 
 </script>

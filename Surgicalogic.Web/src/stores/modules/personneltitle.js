@@ -3,18 +3,13 @@ import axios from 'axios';
 const personnelTitleModule = {
   state: {
     personnelTitle: [],
-    totalCount:0,
-    allPersonelTitles:[]
+    totalCount:0
   },
 
   mutations: {
     setPersonnelTitles(state, data) {
       state.personnelTitle = data.result;
       state.totalCount = data.totalCount;
-    },
-
-    setAllPersonnelTitles(state, data) {
-      state.allPersonelTitles = data;
     },
 
     insertPersonnelTitle(state, { item }) {
@@ -29,9 +24,7 @@ const personnelTitleModule = {
       state.personnelTitle.splice(index, 1);
     },
 
-    updatePersonnelTitle(state, payload) {
-      //state.personnelTitle.payload = payload;
-    }
+    updatePersonnelTitle(state, payload) {}
   },
 
   getters: {},
@@ -44,19 +37,10 @@ const personnelTitleModule = {
         })
     },
 
-    getAllPersonnelTitles(context) {
-      axios.get('PersonnelTitle/GetAllPersonnelTitles')
-        .then(response => {
-          context.commit('setAllPersonnelTitles', response.data.result) //Set the Personnel Title in the store
-        })
-    },
-
     insertPersonnelTitle(context, payload) {
       axios.post('PersonnelTitle/InsertPersonnelTitle', payload)
         .then(response => {
           if (response.statusText == 'OK') {
-            payload.id = response.data;
-
             context.commit('insertPersonnelTitle', { item: response.data.result }) //Insert the Personnel Title in the store
           }
         })
@@ -74,7 +58,7 @@ const personnelTitleModule = {
     updatePersonnelTitle(context, payload) {
       axios.post('PersonnelTitle/UpdatePersonnelTitle', payload)
         .then(response => {
-          //context.commit('updatePersonnelTitle', {payload}) //Update the Personnel Title in the store
+          context.commit('updatePersonnelTitle', response.data.result) //Update the Personnel Title in the store
         })
     }
   }
