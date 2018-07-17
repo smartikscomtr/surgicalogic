@@ -3,7 +3,6 @@ export default {
     const authHandler = {
 
       setAuthentication(token, refreshToken, expiresIn) {
-        debugger;
         localStorage.setItem('token', token);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('expiresIn', new Date(Date.parse(expiresIn)).getTime());
@@ -46,7 +45,6 @@ export default {
       },
 
       clearAuthentication() {
-        debugger;
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('expiresIn');
