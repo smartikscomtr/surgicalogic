@@ -120,7 +120,7 @@ export default {
 
     //We are accessing getAllEquipments in vuex store
      if(vm.equipmentLoadOnce){
-        vm.$store.dispatch('getAllEquipments');
+        vm.$store.dispatch('getNonPortableEquipments');
         vm.equipmentTypeLoadOnce = false;
      }
     }
