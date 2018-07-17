@@ -15,6 +15,11 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
+    <operating-rooms-detail-component :detail-action="detailAction"
+                                       :detail-visible="detailDialog"
+                                       @cancel="cancel">
+    </operating-rooms-detail-component>
+
     <operating-rooms-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
                                     :edit-index="editedIndex"
@@ -46,7 +51,8 @@ export default {
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      equipmentLoadOnce: true
+      equipmentLoadOnce: true,
+      equipmentName: null
     }
   },
 
@@ -81,20 +87,14 @@ export default {
           align: 'left'
         },
         {
-          value: 'lenght',
-          text: vm.$i18n.t('operatingrooms.lenght'),
+          value: 'length',
+          text: vm.$i18n.t('operatingrooms.length'),
           sortable: true,
           align: 'left'
         },
         {
           value: 'description',
           text: vm.$i18n.t('common.description'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'equipmentName',
-          text: vm.$i18n.t('equipments.equipments'),
           sortable: true,
           align: 'left'
         },
@@ -119,17 +119,17 @@ export default {
     }
   },
 
-  watch: {
-   editDialog(){
-     const vm = this;
+  // watch: {
+  //  editDialog(){
+  //    const vm = this;
 
-    //We are accessing getAllEquipments in vuex store
-     if(vm.equipmentLoadOnce){
-        vm.$store.dispatch('getAllEquipments');
-        vm.equipmentTypeLoadOnce = false;
-     }
-    }
-  },
+  //   //We are accessing getAllEquipments in vuex store
+  //    if(vm.equipmentLoadOnce){
+  //       vm.$store.dispatch('getAllEquipments');
+  //       vm.equipmentTypeLoadOnce = false;
+  //    }
+  //   }
+  // },
 
   methods: {
     detail(payload) {
@@ -165,19 +165,12 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+	    vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getOperatingRooms"
+      return "getOperatingRooms";
     }
-  },
-  created() {
-    const vm = this;
-
-    //We are accessing getOperatingRooms and getEquipments in vuex store
-    //vm.$store.dispatch('getOperatingRooms');
-    vm.$store.dispatch('getEquipments', {CurrentPage:1, PageSize: -1});
   }
 };
 

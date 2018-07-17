@@ -31,6 +31,12 @@ namespace Surgicalogic.Api.Controllers
             return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
         }
 
+        [Route("OperatingRoom/GetAllOperatingRooms")]
+        public async Task<ResultModel<OperatingRoomOutputModel>> GetAllOperatingRooms()
+        {
+            return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
+        }
+
         /// <summary>
         /// Add operatingRoom methode
         /// </summary>

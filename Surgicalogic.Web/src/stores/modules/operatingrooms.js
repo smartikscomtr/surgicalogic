@@ -25,13 +25,11 @@ const operatingRoomModule = {
       state.operatingRooms.splice(index, 1);
     },
 
-    setAllEquipments(state, data) {
-      state.allEquipments = data;
+    updateOperatingRoom(state, payload) {
     },
 
-
-    updateOperatingRoom(state, payload) {
-      //state.operatingRooms.payload = payload;
+    setAllEquipments(state, data) {
+      state.allEquipments = data;
     }
   },
 
@@ -68,7 +66,7 @@ const operatingRoomModule = {
     updateOperatingRoom(context, payload) {
       axios.post('OperatingRoom/UpdateOperatingRoom', payload)
         .then(response => {
-          //context.commit('updateOperatingRoom', {payload}) //Update the Operating Rooms in the store
+          context.commit('updateOperatingRoom', response.data.result) //Update the Operating Rooms in the store
         })
     },
 

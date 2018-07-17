@@ -21,7 +21,11 @@
             </v-btn>
           </v-card-title>
 
-          <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" :total-items="totalCount" :rows-per-page-items="[10,20,{'text':$t('common.all'),'value':-1}]">
+          <v-data-table :headers="headers"
+                        :items="items"
+                        :pagination.sync="pagination"
+                        :total-items="totalCount"
+                        :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
             <template slot="items" slot-scope="props">
               <td v-for="(header, i) in headers" :key="i">
                 <template v-if="!header.isAction">

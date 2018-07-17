@@ -4,21 +4,15 @@
                     :items="personnels"
                     :pagination.sync="pagination"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalRowCount="getTotalCount"
-                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
-
-    <personnel-detail-component :detail-action="detailAction"
-                               :detail-visible="detailDialog"
-                               @cancel="cancel">
-    </personnel-detail-component>
 
     <personnel-edit-component :edit-action="editAction"
                               :edit-visible="editDialog"
@@ -42,10 +36,8 @@ export default {
     return {
       title: vm.$i18n.t('personnel.personnels'),
       search: '',
-      detailDialog: false,
       editDialog: false,
       deleteDialog: false,
-      detailAction: {},
       editAction: {},
       deleteValue: {},
       pagination:{},
@@ -71,13 +63,13 @@ export default {
         },
         {
           value: 'firstName',
-          text: vm.$i18n.t('personnel.givenName'),
+          text: vm.$i18n.t('personnel.firstName'),
           sortable: true,
           align: 'left'
         },
         {
           value: 'lastName',
-          text: vm.$i18n.t('personnel.familyName'),
+          text: vm.$i18n.t('personnel.lastName'),
           sortable: true,
           align: 'left'
         },
@@ -89,7 +81,7 @@ export default {
         },
         {
           value: 'branchName',
-          text: vm.$i18n.t('branchs.branch'),
+          text: vm.$i18n.t('branches.branch'),
           sortable: true,
           align: 'left'
         },
@@ -136,7 +128,7 @@ export default {
         vm.personnelTitleLoadOnce = false;
      }
 
-     //We are accessing getBranchs in vuex store
+     //We are accessing getBranches in vuex store
      if(vm.branchLoadOnce){
         vm.$store.dispatch('getAllBranches');
         vm.branchLoadOnce = false;
@@ -145,25 +137,17 @@ export default {
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
     edit(payload){
       const vm = this;
 
       vm.editDialog = true;
-      // vm.editedIndex = vm.personnel.indexOf(payload);
+      vm.editedIndex = vm.personnels.indexOf(payload);
       vm.editAction = payload;
     },
 
     cancel() {
       const vm = this;
 
-      vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;
     },
@@ -178,11 +162,11 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+      vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getPersonnels"
+      return "getPersonnels";
     }
   },
 

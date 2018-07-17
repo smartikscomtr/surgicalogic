@@ -2,8 +2,11 @@ import axios from 'axios';
 
 const personnelModule = {
   state: {
+    totalCount:0,
     personnel: [],
-    totalCount:0
+    allBranches: [],
+    allPersonnelTitles: [],
+    allWorkTypes: []
   },
 
   mutations: {
@@ -24,7 +27,18 @@ const personnelModule = {
     },
 
     updatePersonnel(state, payload) {
-      state.personnel = payload;
+    },
+
+    setAllBranches(state, payload) {
+      state.allBranches = payload;
+    },
+
+    setAllPersonnelTitles(state, payload) {
+      state.allPersonnelTitles = payload;
+    },
+
+    setAllWorkTypes(state, payload) {
+      state.allWorkTypes = payload;
     }
   },
 
@@ -43,7 +57,7 @@ const personnelModule = {
     insertPersonnel(context, payload) {
       axios.post('Personnel/InsertPersonnel', payload)
         .then(response => {
-          if (response.statusText == true) {
+          if (response.data.info.succeeded == true) {
             context.commit('insertPersonnel', { item: response.data.result }) //Insert the Personnel in the store
           }
         })
@@ -63,6 +77,33 @@ const personnelModule = {
         .then(response => {
           context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
         })
+    },
+
+    getAllBranches(context) {
+      axios.get('Branch/GetAllBranches')
+      .then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setAllBranches', response.data.result) //Set the All Branches in the store
+        }
+      })
+    },
+
+    getAllPersonnelTitles(context) {
+      axios.get('PersonnelTitle/GetAllPersonnelTitles')
+      .then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setAllPersonnelTitles', response.data.result) //Set the All Personnel Titles in the store
+        }
+      })
+    },
+
+    getAllWorkTypes(context) {
+      axios.get('WorkType/GetAllWorkTypes')
+      .then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setAllWorkTypes', response.data.result) //Set the Work Types in the store
+        }
+      })
     }
   }
 }

@@ -29,9 +29,34 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranchs"
-                          :items="branchs"
-                          :label="$t('branchs.branch')"
+                <v-select v-model="selectBranch"
+                          :items="branches"
+                          :label="$t('branches.branch')"
+                          item-text="name"
+                          items-value="id">
+                </v-select>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-select v-model="selectEquipment"
+                          :items="equipments"
+                          :label="$t('equipments.equipment')"
+                          item-text="name"
+                          items-value="id">
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-select v-model="selectOperatingRoom"
+                          :items="operatingRooms"
+                          :label="$t('operatingrooms.operatingRoom')"
+                          item-text="name"
+                          items-value="id">
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-select v-model="selectPersonnel"
+                          :items="personnels"
+                          :label="$t('personnel.personnel')"
                           item-text="name"
                           items-value="id">
                 </v-select>
@@ -52,8 +77,6 @@
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   props: {
@@ -104,22 +127,116 @@ export default {
       }
     },
 
-    branchs() {
+    branches() {
       const vm = this;
 
-      return vm.$store.state.branchsModule.branchs;
+      return vm.$store.state.operationTypeModule.allBranches;
     },
 
-    selectBranchs() {
+    selectBranch: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.branchId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.branchName = vm.$store.state.operationTypeModule.allBranches.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.branchId = val;
+      }
+    },
+
+    equipments() {
       const vm = this;
 
-      const items = vm.editAction['branchId'];
+      return vm.$store.state.operationTypeModule.allEquipments;
+    },
 
-      _each(items, (item) => {
-          item.name = vm.$store.state.branchsModule.branchs.find(d => d.id === item.id);
-      });
+    selectEquipment: {
+      get() {
+        const vm = this;
 
-      return items;
+        return vm.editAction.equipmentId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.equipmentName = vm.$store.state.operationTypeModule.allEquipments.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.equipmentId = val;
+      }
+    },
+
+    operatingRooms() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.allOperatingRooms;
+    },
+
+    selectOperatingRoom: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.operatingRoomId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.operatingRoomName = vm.$store.state.operationTypeModule.allOperatingRooms.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.operatingRoomId = val;
+      }
+    },
+
+    personnels() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.allPersonnels;
+    },
+
+    selectPersonnel: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.personnelId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.personnelName = vm.$store.state.operationTypeModule.allPersonnels.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.personnelId = val;
+      }
     }
   },
 
@@ -141,7 +258,11 @@ export default {
           name: vm.editAction.name,
           type: vm.editAction.type,
           portable: vm.editAction.portable,
-          description: vm.editAction.description
+          description: vm.editAction.description,
+          branchId: vm.selectBranch,
+          equipmentId: vm.selectEquipment,
+          operatingRoomId: vm.selectOperatingRoom,
+          personnelId: vm.selectPersonnel
         });
       }
       //Add operation type
@@ -152,7 +273,11 @@ export default {
           name: vm.editAction.name,
           type: vm.editAction.type,
           portable: vm.editAction.portable,
-          description: vm.editAction.description
+          description: vm.editAction.description,
+          branchId: vm.selectBranch,
+          equipmentId: vm.selectEquipment,
+          operatingRoomId: vm.selectOperatingRoom,
+          personnelId: vm.selectPersonnel
         });
       }
 

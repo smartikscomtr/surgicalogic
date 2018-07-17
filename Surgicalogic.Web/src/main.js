@@ -42,13 +42,15 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
-import PersonnelDetailComponent from '@/components/detailcomponents/PersonnelDetailComponent';
+import OperatingRoomsDetailComponent from '@/components/detailcomponents/OperatingRoomsDetailComponent';
+import OperationTypesDetailComponent from '@/components/detailcomponents/OperationTypesDetailComponent';
 
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
-Vue.component('personnel-detail-component', PersonnelDetailComponent);
+Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent);
+Vue.component('operation-types-detail-component', OperationTypesDetailComponent);
 
 // Registering Edit Components
-import BranchsEditComponent from '@/components/editcomponents/BranchsEditComponent';
+import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';
 import EquipmentTypesEditComponent from '@/components/editcomponents/EquipmentTypesEditComponent';
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
@@ -58,7 +60,7 @@ import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRo
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 
-Vue.component('branchs-edit-component', BranchsEditComponent);
+Vue.component('branches-edit-component', BranchesEditComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
 Vue.component('equipment-types-edit-component', EquipmentTypesEditComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);

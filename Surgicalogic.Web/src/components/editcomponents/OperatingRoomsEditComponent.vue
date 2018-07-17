@@ -34,39 +34,28 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md4>
                 <v-text-field v-model="editAction['width']"
                               :label="$t('operatingrooms.width')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md4>
                 <v-text-field v-model="editAction['height']"
                               :label="$t('operatingrooms.height')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['lenght']"
-                              :label="$t('operatingrooms.lenght')">
+              <v-flex xs12 sm6 md4>
+                <v-text-field v-model="editAction['length']"
+                              :label="$t('operatingrooms.length')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipments"
-                          :items="equipments"
-                          :label="$t('equipments.equipments')"
-                          item-text="name"
-                          item-value="id"
-                          multiple
-                          chips>
-                </v-select>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -84,8 +73,6 @@
 </template>
 
 <script>
-
-import _each from 'lodash/each';
 
 export default {
   props: {
@@ -134,34 +121,6 @@ export default {
           vm.$emit('cancel');
         }
       }
-    },
-
-    equipments() {
-      const vm = this;
-
-      return vm.$store.state.operatingRoomModule.allEquipments;
-    },
-
-    selectEquipments: {
-      get() {
-        const vm = this;
-
-        return vm.editAction.equipmentId;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.allEquipments.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
-
-        vm.editAction.equipmentId = val;
-      }
     }
   },
 
@@ -179,12 +138,13 @@ export default {
       if (vm.editIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
         vm.$store.dispatch('updateOperatingRoom', {
-          id: vm.actions.id,
+          id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description,
+          location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          lenght: vm.editAction.lenght
+          length: vm.editAction.length
         });
       }
       //Add operating room
@@ -193,9 +153,10 @@ export default {
         vm.$store.dispatch('insertOperatingRoom', {
           name: vm.editAction.name,
           description: vm.editAction.description,
+          location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          lenght: vm.editAction.lenght
+          length: vm.editAction.length
         });
       }
 

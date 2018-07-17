@@ -1,8 +1,9 @@
 {
   "addOperatingRoomInformation": "Add Operating Room Information",
   "editOperatingRoomInformation": "Edit Operating Room Information",
+  "detailOperatingRooms": "Detail Operating Rooms",
   "height": "Height",
-  "lenght": "Lenght",
+  "length": "Length",
   "location": "Location",
   "operatingRoom": "Operating Room",
   "operatingRooms": "Operating Rooms",
