@@ -15,6 +15,11 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
+    <operating-rooms-detail-component :detail-action="detailAction"
+                                       :detail-visible="detailDialog"
+                                       @cancel="cancel">
+    </operating-rooms-detail-component>
+
     <operating-rooms-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
                                     :edit-index="editedIndex"
@@ -114,17 +119,17 @@ export default {
     }
   },
 
-  watch: {
-   editDialog(){
-     const vm = this;
+  // watch: {
+  //  editDialog(){
+  //    const vm = this;
 
-    //We are accessing getAllEquipments in vuex store
-     if(vm.equipmentLoadOnce){
-        vm.$store.dispatch('getAllEquipments');
-        vm.equipmentTypeLoadOnce = false;
-     }
-    }
-  },
+  //   //We are accessing getAllEquipments in vuex store
+  //    if(vm.equipmentLoadOnce){
+  //       vm.$store.dispatch('getAllEquipments');
+  //       vm.equipmentTypeLoadOnce = false;
+  //    }
+  //   }
+  // },
 
   methods: {
     detail(payload) {
@@ -164,7 +169,7 @@ export default {
     },
 
     getMethodName(){
-      return "getOperatingRooms"
+      return "getOperatingRooms";
     }
   }
 };

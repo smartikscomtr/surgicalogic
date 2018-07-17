@@ -153,25 +153,12 @@ export default {
 
       vm.deleteValue = payload;
       vm.deleteDialog = true;
-
-	  // if () {
-      //   vm.$store.dispatch('deleteEquipment', {
-      //     id: vm.deleteValue.id
-      //   });
-      // }
     },
 
     getMethodName(){
       return "getEquipments";
     }
   }
-
-  // created() {
-  //    const vm = this;
-
-  //    //We are accessing getEquipments in vuex store
-  //    vm.$store.dispatch('getEquipments');
-  // }
 };
 
 </script>

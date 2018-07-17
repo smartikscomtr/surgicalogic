@@ -3,16 +3,22 @@
     <grid-component :headers="headers"
                     :items="operationTypes"
                     :title="title"
-                    :show-detail="false"
+                    :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
                     :pagination.sync="pagination"
+                    @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
+
+    <operation-types-detail-component :detail-action="detailAction"
+                                      :detail-visible="detailDialog"
+                                      @cancel="cancel">
+    </operation-types-detail-component>
 
     <operation-types-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
@@ -36,6 +42,7 @@ export default {
     return {
       title: vm.$i18n.t('operationtypes.operationtypes'),
       search: '',
+      detailDialog: false,
       editDialog: false,
       deleteDialog: false,
       detailAction: {},
@@ -44,6 +51,10 @@ export default {
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
+      branchesLoadOnce: true,
+      equipmentsLoadOnce: true,
+      operatingRoomsLoadOnce: true,
+      personnelLoadOnce: true
     };
   },
 
@@ -86,7 +97,44 @@ export default {
     }
   },
 
+  watch: {
+   editDialog(){
+     const vm = this;
+
+    //We are accessing getAllEquipments in vuex store
+     if(vm.branchesLoadOnce){
+        vm.$store.dispatch('getAllBranches');
+        vm.branchesLoadOnce = false;
+     }
+
+    //We are accessing getAllEquipments in vuex store
+     if(vm.equipmentsLoadOnce){
+        vm.$store.dispatch('getAllEquipments');
+        vm.equipmentsLoadOnce = false;
+     }
+
+    //We are accessing getAllEquipmentTypes in vuex store
+     if(vm.operatingRoomsLoadOnce){
+        vm.$store.dispatch('getAllOperatingRooms');
+        vm.operatingRoomsLoadOnce = false;
+     }
+
+    //We are accessing getAllPersonnels in vuex store
+     if(vm.personnelLoadOnce){
+        vm.$store.dispatch('getAllPersonnels');
+        vm.personnelLoadOnce = false;
+     }
+    }
+  },
+
   methods: {
+    detail(payload) {
+      const vm = this;
+
+      vm.detailDialog = true;
+      vm.detailAction = payload;
+    },
+
     edit(payload){
       const vm = this;
 
@@ -98,6 +146,7 @@ export default {
     cancel() {
       const vm = this;
 
+      vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;
     },
@@ -112,20 +161,12 @@ export default {
       const vm = this;
 
       vm.deleteValue = payload;
-	  vm.deleteDialog = true;
+	    vm.deleteDialog = true;
     },
 
     getMethodName(){
-      return "getOperationTypes"
+      return "getOperationTypes";
     }
-  },
-
-  created() {
-    const vm = this;
-
-    //We are accessing getBranches and getOperationTypes in vuex store
-    // vm.$store.dispatch('getBranches', { currentPage:1, pageSize: -1});
-    //vm.$store.dispatch('getOperationTypes', { currentPage:1, pageSize: -1});
   }
 };
 

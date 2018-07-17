@@ -23,7 +23,7 @@ namespace Surgicalogic.Api.Controllers
         /// Get branch methode
         /// </summary>
         /// <returns>BranchOutputModel list</returns>
-        [Route("Branch/GetBranchs")]
+        [Route("Branch/GetBranches")]
         [HttpPost]
         public async Task<ResultModel<BranchOutputModel>> GetBranch([FromBody]GridInputModel input)
         {

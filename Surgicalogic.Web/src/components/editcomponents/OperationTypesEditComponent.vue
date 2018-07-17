@@ -37,6 +37,31 @@
                 </v-select>
               </v-flex>
 
+              <v-flex xs12 sm6 md6>
+                <v-select v-model="selectEquipment"
+                          :items="equipments"
+                          :label="$t('equipments.equipment')"
+                          item-text="name"
+                          items-value="id">
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-select v-model="selectOperatingRoom"
+                          :items="operatingRooms"
+                          :label="$t('operatingrooms.operatingRoom')"
+                          item-text="name"
+                          items-value="id">
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-select v-model="selectPersonnel"
+                          :items="personnels"
+                          :label="$t('personnel.personnel')"
+                          item-text="name"
+                          items-value="id">
+                </v-select>
+              </v-flex>
+
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
                        @click.native="save">
@@ -102,33 +127,117 @@ export default {
       }
     },
 
-        branches() {
-            const vm = this;
+    branches() {
+      const vm = this;
 
-            return vm.$store.state.branchesModule.allBranches;
-        },
+      return vm.$store.state.operationTypeModule.allBranches;
+    },
 
-        selectBranch: {
-            get() {
-                const vm = this;
+    selectBranch: {
+      get() {
+        const vm = this;
 
-                return vm.editAction.branchId;
-            },
+        return vm.editAction.branchId;
+      },
 
-            set(val) {
-                const vm = this;
+      set(val) {
+        const vm = this;
 
-                vm.editAction.branchName = vm.$store.state.branchesModule.branches.find(
-                    item => {
-                        if (item.id == val) {
-                            return item;
-                        }
-                    }
-                ).name;
-
-                vm.editAction.branchId = val;
+        vm.editAction.branchName = vm.$store.state.operationTypeModule.allBranches.find(
+          item => {
+            if (item.id == val) {
+              return item;
             }
-        }
+          }
+        ).name;
+
+        vm.editAction.branchId = val;
+      }
+    },
+
+    equipments() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.allEquipments;
+    },
+
+    selectEquipment: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.equipmentId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.equipmentName = vm.$store.state.operationTypeModule.allEquipments.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.equipmentId = val;
+      }
+    },
+
+    operatingRooms() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.allOperatingRooms;
+    },
+
+    selectOperatingRoom: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.operatingRoomId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.operatingRoomName = vm.$store.state.operationTypeModule.allOperatingRooms.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.operatingRoomId = val;
+      }
+    },
+
+    personnels() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.allPersonnels;
+    },
+
+    selectPersonnel: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.personnelId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.personnelName = vm.$store.state.operationTypeModule.allPersonnels.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.personnelId = val;
+      }
+    }
   },
 
   methods: {
@@ -150,7 +259,10 @@ export default {
           type: vm.editAction.type,
           portable: vm.editAction.portable,
           description: vm.editAction.description,
-          branchId: vm.selectBranch
+          branchId: vm.selectBranch,
+          equipmentId: vm.selectEquipment,
+          operatingRoomId: vm.selectOperatingRoom,
+          personnelId: vm.selectPersonnel
         });
       }
       //Add operation type
@@ -162,7 +274,10 @@ export default {
           type: vm.editAction.type,
           portable: vm.editAction.portable,
           description: vm.editAction.description,
-          branchId: vm.selectBranch
+          branchId: vm.selectBranch,
+          equipmentId: vm.selectEquipment,
+          operatingRoomId: vm.selectOperatingRoom,
+          personnelId: vm.selectPersonnel
         });
       }
 

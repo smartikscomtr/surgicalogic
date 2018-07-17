@@ -31,12 +31,12 @@
                         :items="items"
                         :pagination.sync="pagination"
                         :total-items="totalCount"
-                        :rows-per-page-items="[10,20,{'text':$t('common.all'),'value':-1}]">
+                        :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
             <template slot="items" slot-scope="props">
               <td v-for="(header, i) in headers"
                   :key="i">
                 <template v-if="!header.isAction">
-                  {{   props.item[header.value] }}
+                  {{ props.item[header.value] }}
                 </template>
 
                 <template v-else>
@@ -134,11 +134,25 @@ export default {
 
 watch: {
   pagination: {
-        handler () {
-          const vm = this;
-          const { sortBy, descending, page, rowsPerPage } = vm.pagination
-          vm.$store.dispatch(vm.methodName(), { currentPage:page, pageSize: rowsPerPage, search:vm.search});
+    handler () {
+      const vm = this;
+
+      const {
+        sortBy,
+        descending,
+        page,
+        rowsPerPage
+      } = vm.pagination;
+
+      vm.$store.dispatch(
+        vm.methodName(),
+        {
+          currentPage:page,
+          pageSize: rowsPerPage,
+          search: vm.search
         }
+      );
+    }
   }
 },
 
@@ -176,7 +190,6 @@ watch: {
 </script>
 
 <style>
-
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;
@@ -334,5 +347,4 @@ table.table thead th:not(:first-child) {
   padding: 0px 15px;
   white-space: nowrap;
 }
-
 </style>

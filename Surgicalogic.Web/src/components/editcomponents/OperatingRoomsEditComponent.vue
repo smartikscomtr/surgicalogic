@@ -34,25 +34,25 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md4>
                 <v-text-field v-model="editAction['width']"
                               :label="$t('operatingrooms.width')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md4>
                 <v-text-field v-model="editAction['height']"
                               :label="$t('operatingrooms.height')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md4>
                 <v-text-field v-model="editAction['length']"
                               :label="$t('operatingrooms.length')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>

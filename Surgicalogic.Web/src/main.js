@@ -42,10 +42,12 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
-import PersonnelDetailComponent from '@/components/detailcomponents/PersonnelDetailComponent';
+import OperatingRoomsDetailComponent from '@/components/detailcomponents/OperatingRoomsDetailComponent';
+import OperationTypesDetailComponent from '@/components/detailcomponents/OperationTypesDetailComponent';
 
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
-Vue.component('personnel-detail-component', PersonnelDetailComponent);
+Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent);
+Vue.component('operation-types-detail-component', OperationTypesDetailComponent);
 
 // Registering Edit Components
 import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';

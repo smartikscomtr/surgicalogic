@@ -38,6 +38,7 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <param name="item"></param>
         /// <returns>OperationTypeOutputModel</returns>
+        [Route("OperationType/InsertOperationType")]
         public async Task<ResultModel<OperationTypeOutputModel>> InsertOperationType([FromBody] OperationTypeInputModel item)
         {
             var operationTypeItem = new OperationTypeModel()
