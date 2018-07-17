@@ -46,6 +46,7 @@
               <v-flex xs12 sm6 md6 input-group-checkbox>
                 <v-checkbox v-model="editAction['isPortable']"
                             :label="$t('equipments.portable')"
+                            disabled
                             color="primary">
                 </v-checkbox>
               </v-flex>
