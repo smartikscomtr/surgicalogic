@@ -15,7 +15,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Equipment, EquipmentModel>();
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
             config.CreateMap<OperatingRoom, OperatingRoomModel>()
-                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive == true)); });
+                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.Equipment.IsPortable == false)); });
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<Personnel, PersonnelModel>();
             config.CreateMap<PersonnelTitle, PersonnelTitleModel>();

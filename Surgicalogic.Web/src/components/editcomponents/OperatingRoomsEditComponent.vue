@@ -58,6 +58,16 @@
                 </v-text-field>
               </v-flex>
 
+              <v-flex xs12 sm6 md6>
+                <v-select multiple v-model="selectEquipment"
+                          :items="equipments"
+                          :label="$t('equipments.equipments')"
+                          item-text="name"
+                          item-value="id">
+                </v-select>
+              </v-flex>
+
+
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
                        @click.native="save">
@@ -121,7 +131,34 @@ export default {
           vm.$emit('cancel');
         }
       }
+    },
+    equipments() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomModule.nonPortableEquipments;
+    },
+    selectEquipment: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.equipmentTypeId;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.nonPortableEquipments.find(
+          item => {
+            if (item.id == val) {
+              return item;
+            }
+          }
+        ).name;
+
+        vm.editAction.equipmentId = val;
+      }
     }
+
   },
 
   methods: {
