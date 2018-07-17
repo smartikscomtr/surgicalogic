@@ -4,7 +4,7 @@ const operatingRoomModule = {
   state: {
     operatingRooms: [],
     totalCount: 0,
-    allEquipments: []
+    nonPortableEquipments: []
   },
 
   mutations: {
@@ -28,8 +28,8 @@ const operatingRoomModule = {
     updateOperatingRoom(state, payload) {
     },
 
-    setAllEquipments(state, data) {
-      state.allEquipments = data;
+    setNonPortableEquipments(state, data) {
+      state.nonPortableEquipments = data;
     }
   },
 
@@ -70,10 +70,10 @@ const operatingRoomModule = {
         })
     },
 
-    getAllEquipments(context) {
-      axios.get('Equipment/GetAllEquipments')
+    getNonPortableEquipments(context) {
+      axios.get('Equipment/GetNonPortableEquipments')
         .then(response => {
-          context.commit("setAllEquipments", response.data.result) //Set the Operating Rooms in the store
+          context.commit("setNonPortableEquipments", response.data.result) //Set the Operating Rooms in the store
         })
     }
   }
