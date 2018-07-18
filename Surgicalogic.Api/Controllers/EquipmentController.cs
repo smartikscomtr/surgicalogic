@@ -32,6 +32,12 @@ namespace Surgicalogic.Api.Controllers
             return await _equipmentStoreService.GetAsync<EquipmentOutputModel>(item);
         }
 
+        [Route("Equipment/GetAllEquipments")]
+        public async Task<ResultModel<EquipmentOutputModel>> GetAllEquipments()
+        {
+            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>();
+        }
+
         [Route("Equipment/GetNonPortableEquipments")]
         public async Task<ResultModel<EquipmentOutputModel>> GetNonPortableEquipments()
         {

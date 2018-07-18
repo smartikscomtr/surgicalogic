@@ -9,5 +9,8 @@ namespace Surgicalogic.Model.InputModel
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }
         public string Search { get; set; }
+        public string SortBy { get; set; }
+        public bool? Descending { get; set; }
+   
     }
 }
