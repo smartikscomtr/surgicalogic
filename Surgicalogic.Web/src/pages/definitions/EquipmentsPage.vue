@@ -51,7 +51,7 @@ export default {
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      equipmentTypeLoadOnce: true
+      editLoadOnce: true
     };
   },
 
@@ -111,9 +111,9 @@ export default {
      const vm = this;
 
     //We are accessing getAllEquipmentTypes in vuex store
-     if(vm.equipmentTypeLoadOnce){
+     if(vm.editLoadOnce){
         vm.$store.dispatch('getAllEquipmentTypes');
-        vm.equipmentTypeLoadOnce = false;
+        vm.editLoadOnce = false;
      }
     }
   },

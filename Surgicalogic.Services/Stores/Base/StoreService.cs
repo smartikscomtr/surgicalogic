@@ -167,7 +167,7 @@ namespace Surgicalogic.Services.Stores.Base
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<TModel>> UpdatandSaveAsync(TModel model)
+        public virtual async Task<ResultModel<TModel>> UpdateAndSaveAsync(TModel model)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == model.Id);
 
