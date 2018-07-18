@@ -58,10 +58,13 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-select multiple v-model="selectEquipment"
+              <v-flex xs12 sm6 md12>
+                <v-select v-model="selectEquipment"
                           :items="equipments"
                           :label="$t('equipments.equipments')"
+                          multiple
+                          chips
+                          deletable-chips
                           item-text="name"
                           item-value="id">
                 </v-select>
@@ -137,19 +140,22 @@ export default {
 
       return vm.$store.state.operatingRoomModule.nonPortableEquipments;
     },
+
     selectEquipment: {
       get() {
         const vm = this;
-        let selectedEquipment = []; 
-        vm.editAction.operatingRoomEquipments.forEach(item => {          
+
+        let selectedEquipment = [];
+
+        vm.editAction.operatingRoomEquipments.forEach(item => {
           selectedEquipment.push(item.equipment.id);
         });
-      
+
         return selectedEquipment;
       },
 
       set(val) {
-        const vm = this;                
+        const vm = this;
         // vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.nonPortableEquipments.find(
         //   item => {
         //     if (item.id == val) {
@@ -177,7 +183,7 @@ export default {
       //Edit operating room
       if (vm.editIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
-        
+
         vm.$store.dispatch('updateOperatingRoom', {
           id: vm.editAction.id,
           name: vm.editAction.name,
@@ -186,8 +192,8 @@ export default {
           width: vm.editAction.width,
           height: vm.editAction.height,
           length: vm.editAction.length,
-          equipments : vm.editAction.equipmentId
-          //operatingRoomEquipments : vm.editAction.
+          equipments: vm.editAction.equipmentId,
+          operatingRoomEquipments: vm.selectEquipment
         });
       }
       //Add operating room
@@ -199,7 +205,8 @@ export default {
           location: vm.editAction.location,
           width: vm.editAction.width,
           height: vm.editAction.height,
-          length: vm.editAction.length
+          length: vm.editAction.length,
+          operatingRoomEquipments: vm.selectEquipment
         });
       }
 
