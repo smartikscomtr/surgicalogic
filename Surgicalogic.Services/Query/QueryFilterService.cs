@@ -5,10 +5,11 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using Surgicalogic.Common.CustomAttributes;
 using System.Reflection;
+using Surgicalogic.Services.Common;
 
-namespace Surgicalogic.Services.Common
+namespace Surgicalogic.Services.Query
 {
-    public static class QueryService<TModel> where TModel : EntityModel
+    public static class QueryFilterService<TModel> where TModel : EntityModel
     {
         public static Expression<Func<TModel, bool>> GetSearchQuery(List<string> propertyNames, string searchText)
         {

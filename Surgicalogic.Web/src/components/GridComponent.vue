@@ -21,11 +21,7 @@
             </v-btn>
           </v-card-title>
 
-          <v-data-table :headers="headers"
-                        :items="items"
-                        :pagination.sync="pagination"
-                        :total-items="totalCount"
-                        :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
+          <v-data-table :headers="headers" :items="items" :pagination.sync="pagination" :total-items="totalCount" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
             <template slot="items" slot-scope="props">
               <td v-for="(header, i) in headers" :key="i">
                 <template v-if="!header.isAction">
@@ -111,15 +107,24 @@ export default {
             search: '',
             loading: true,
             dataRows: [],
-            pagination: {}
+            pagination: {},
+            pagingExecuted: false
         };
     },
 
     watch: {
         pagination: {
-            handler() {
-               const vm = this;
-               vm.executeGridOperations();
+            handler(newValue, oldValue) {
+                const vm = this;
+
+                if (!oldValue.rowsPerPage || (oldValue.rowsPerPage && vm.pagingExecuted))
+                {
+                  vm.executeGridOperations();
+                }
+                else
+                {
+                  vm.pagingExecuted = true;
+                }
             }
         }
     },
@@ -133,9 +138,9 @@ export default {
         },
 
         filterGrid() {
-          const vm = this;
+            const vm = this;
 
-          vm.executeGridOperations();
+            vm.executeGridOperations();
         },
 
         detailItem(item) {
@@ -161,11 +166,15 @@ export default {
 
         executeGridOperations() {
             const vm = this;
+
             const { sortBy, descending, page, rowsPerPage } = vm.pagination;
+
             vm.$store.dispatch(vm.methodName(), {
                 currentPage: page,
                 pageSize: rowsPerPage,
-                search: vm.search
+                search: vm.search,
+                sortBy: sortBy,
+                descending: descending
             });
         }
     }

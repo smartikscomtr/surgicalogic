@@ -8,7 +8,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
-                    :totalRowCount="getTotalCount"
+                    :totalCount="getTotalCount"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">

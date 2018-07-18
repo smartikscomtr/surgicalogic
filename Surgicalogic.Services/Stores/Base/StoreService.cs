@@ -6,6 +6,7 @@ using Surgicalogic.Data.Entities.Base;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel.Base;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Services.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,24 +41,26 @@ namespace Surgicalogic.Services.Stores.Base
             var query = GetQueryable();
             var projectQuery = query.ProjectTo<TModel>();
 
-            //switch (order)
-            //{
-            //    case order.Asc:
-            //        projectQuery = projectQuery.OrderBy();
-
-            //        break;
-            //    default:
-            //        break;
-            //}
-
             if (!string.IsNullOrEmpty(input.Search))
             {
-                List<string> searchableProperties = Common.QueryService<TModel>.GetSearchableProperties();
+                List<string> searchableProperties = QueryFilterService<TModel>.GetSearchableProperties();
 
                 if (searchableProperties.Count > 0)
                 {
-                    var lambda = Common.QueryService<TModel>.GetSearchQuery(searchableProperties, input.Search);
+                    var lambda = QueryFilterService<TModel>.GetSearchQuery(searchableProperties, input.Search);
                     projectQuery = projectQuery.Where(lambda);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(input.SortBy))
+            {
+                if (input.Descending == true)
+                {
+                    projectQuery = projectQuery.OrderByPropertyDescending(input.SortBy);
+                }
+                else
+                {
+                    projectQuery = projectQuery.OrderByProperty(input.SortBy);
                 }
             }
 
@@ -68,7 +71,7 @@ namespace Surgicalogic.Services.Stores.Base
                 projectQuery = projectQuery.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
             }
 
-           
+
             var result = await projectQuery.ToListAsync();
 
             return new ResultModel<TModel>
