@@ -2,5 +2,6 @@
   "addOperationType": "Add Operation Type",
   "editOperationType": "Edit Operation Type",
   "operationtype": "Operation Type",
-  "operationtypes": "Operation Types"
+  "operationtypes": "Operation Types",
+  "detailOperationType": "Detail Operation Type"
 }

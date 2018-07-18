@@ -2,5 +2,6 @@
   "addOperationType": "Yeni Operasyon Tipi Ekleme",
   "editOperationType": "Operasyon Tipi Düzenleme",
   "operationtype": "Operasyon Tipi",
-  "operationtypes": "Operasyon Tipleri"
+  "operationtypes": "Operasyon Tipleri",
+  "detailOperationType": "Operasyon Tipi Detayları"
 }
