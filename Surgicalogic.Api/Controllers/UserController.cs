@@ -108,7 +108,7 @@ namespace Surgicalogic.Api.Controllers
                 Email = item.Email
             };
 
-            return await _userStoreService.UpdatandSaveAsync(userItem);
+            return await _userStoreService.UpdateAndSaveAsync(userItem);
         }
 
         [Route("Login/ForgotPassword")]

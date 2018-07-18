@@ -90,7 +90,7 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            return await _personnelStoreService.UpdatandSaveAsync(personnelItem);
+            return await _personnelStoreService.UpdateAndSaveAsync(personnelItem);
         }
     }
 }

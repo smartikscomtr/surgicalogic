@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _workTypeStoreService.UpdatandSaveAsync(workTypeItem);
+            return await _workTypeStoreService.UpdateAndSaveAsync(workTypeItem);
         }
     }
 }

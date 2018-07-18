@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _equipmentTypeStoreService.UpdatandSaveAsync(equipmentTypeItem);
+            return await _equipmentTypeStoreService.UpdateAndSaveAsync(equipmentTypeItem);
         }
     }
 }

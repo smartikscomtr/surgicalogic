@@ -41,7 +41,7 @@ namespace Surgicalogic.Api.Controllers
         [Route("Equipment/GetNonPortableEquipments")]
         public async Task<ResultModel<EquipmentOutputModel>> GetNonPortableEquipments()
         {
-            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>();
+            return await _equipmentStoreService.GetNonPortableEquipments();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Surgicalogic.Api.Controllers
                 EquipmentTypeId = item.EquipmentTypeId
             };
 
-            return await _equipmentStoreService.UpdatandSaveAsync(equipmentItem);
+            return await _equipmentStoreService.UpdateAndSaveAsync(equipmentItem);
         }
     }
 }

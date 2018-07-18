@@ -46,12 +46,12 @@ export default {
       editDialog: false,
       deleteDialog: false,
       detailAction: {},
-      editAction: {},
+      editAction: { operatingRoomEquipments : [] },
       deleteValue: {},
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      equipmentLoadOnce: true,
+      editLoadOnce: true,
       equipmentName: null
     }
   },
@@ -119,17 +119,17 @@ export default {
     }
   },
 
-  // watch: {
-  //  editDialog(){
-  //    const vm = this;
+  watch: {
+   editDialog(){
+     const vm = this;
 
-  //   //We are accessing getAllEquipments in vuex store
-  //    if(vm.equipmentLoadOnce){
-  //       vm.$store.dispatch('getAllEquipments');
-  //       vm.equipmentTypeLoadOnce = false;
-  //    }
-  //   }
-  // },
+    //We are accessing getNonPortableEquipments in vuex store
+     if(vm.editLoadOnce){
+        vm.$store.dispatch('getNonPortableEquipments');
+        vm.editLoadOnce = false;
+     }
+    }
+  },
 
   methods: {
     detail(payload) {

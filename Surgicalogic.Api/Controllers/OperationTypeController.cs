@@ -80,7 +80,7 @@ namespace Surgicalogic.Api.Controllers
                 //Branch = item.BranchId
             };
 
-            return await _operationTypeStoreService.UpdatandSaveAsync(operationTypeItem);
+            return await _operationTypeStoreService.UpdateAndSaveAsync(operationTypeItem);
         }
     }
 }
