@@ -72,7 +72,14 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      defaultItem : {
+        id: 0,
+        name: '',
+        description: '' 
+      }
+
+    };
   },
 
   computed: {
@@ -93,7 +100,7 @@ export default {
         const vm = this;
 
         //When the cancel button is clicked, the event is sent to the equipment types edit component
-        if (!value) {
+        if (!value) {          
           vm.$emit('cancel');
         }
       }

@@ -22,6 +22,7 @@
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
+                      :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
   </div>
@@ -42,7 +43,7 @@ export default {
       deleteValue: {},
       pagination: {},
       editedIndex: -1,
-      totalRowCount:0,
+      totalRowCount:0
     };
   },
 
@@ -117,9 +118,11 @@ export default {
       vm.deleteValue = payload;
 	  vm.deleteDialog = true;
      },
-
     getMethodName(){
       return "getEquipmentTypes"
+    },
+    deleteMethodName(){
+      return "deleteEquipmentType"
     }
   },
 

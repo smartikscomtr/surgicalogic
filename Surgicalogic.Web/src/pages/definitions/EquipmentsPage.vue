@@ -8,7 +8,7 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
+                    :pagination.sync="pagination"                    
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -28,6 +28,7 @@
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
+                      :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
   </div>
@@ -51,7 +52,8 @@ export default {
       pagination: {},
       editedIndex: -1,
       totalRowCount:0,
-      editLoadOnce: true
+      editLoadOnce: true,
+      deletePath : 'deleteEquipment'
     };
   },
 
@@ -154,9 +156,11 @@ export default {
       vm.deleteValue = payload;
       vm.deleteDialog = true;
     },
-
     getMethodName(){
       return "getEquipments";
+    },
+    deleteMethodName(){
+      return "deleteEquipment"
     }
   }
 };

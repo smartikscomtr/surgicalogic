@@ -119,7 +119,7 @@ export default {
     methodName: {
       type: Function,
       required: true
-    }
+    }    
   },
 
   data() {
@@ -152,8 +152,7 @@ export default {
   methods: {
     addNewItem() {
       const vm = this;
-
-      //When the add new button is clicked, the event is sent to the grid component
+      //When the add new button is clicked, the event is sent to the grid component      
       vm.$emit('newaction');
     },
 
