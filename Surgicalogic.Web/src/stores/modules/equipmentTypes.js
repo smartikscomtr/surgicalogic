@@ -49,7 +49,7 @@ const equipmentTypesModule = {
     deleteEquipmentType(context, payload) {
       axios.post('EquipmentType/DeleteEquipmentType/' + payload.id)
         .then(response => {
-          if (response.statusText == 'OK') {
+          if (response.data.info.succeeded == true) {
             context.commit('deleteEquipmentType', { payload }); //Delete the Equipment Types in the store
           }
         })

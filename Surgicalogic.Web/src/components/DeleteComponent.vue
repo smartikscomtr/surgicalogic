@@ -50,6 +50,10 @@ export default {
     deleteVisible: {
       type: Boolean,
       required: false
+    },
+    deleteMethode:{
+      type : Function,
+      required:true
     }
   },
 
@@ -94,7 +98,7 @@ export default {
 
       //We are accessing deleteEquipment in vuex store
 
-      vm.$store.dispatch('deleteEquipment', {
+      vm.$store.dispatch(vm.deleteMethode(), {
         id: vm.deleteValue.id
       });
 
