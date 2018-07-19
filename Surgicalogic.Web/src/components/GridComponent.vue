@@ -198,9 +198,23 @@ export default {
         currentPage: page,
         pageSize: rowsPerPage,
         search: vm.search,
-        sortBy: sortBy,
+        sortBy: vm.getSortByField(sortBy),
         descending: descending
       });
+    },
+
+    getSortByField(sortBy)
+    {
+      const vm = this;
+
+      for (let index = 0; index < vm.headers.length; index++) {
+        const element = vm.headers[index];
+        if (element.value == sortBy)
+        {
+          return element.sortBy ? element.sortBy : sortBy;
+        }
+
+      }
     }
   }
 };

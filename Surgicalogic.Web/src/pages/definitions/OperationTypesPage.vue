@@ -72,6 +72,7 @@ export default {
         },
         {
           value: 'branchName',
+          sortBy: 'Branch.Name',
           text: vm.$i18n.t('branches.branch'),
           sortable: true,
           align: 'left'
