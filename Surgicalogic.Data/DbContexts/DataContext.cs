@@ -23,6 +23,9 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<WorkType> WorkTypes { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
         public DbSet<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
+        public DbSet<OperatingRoomOperationType> OperatingRoomOperationTypes { get; set; }
+        public DbSet<PersonnelBranch> PersonnelBranches { get; set; }
+        public DbSet<OperationTypeEquipment> OperationTypeEquipments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +39,38 @@ namespace Surgicalogic.Data.DbContexts
                 .HasOne(o => o.Equipment)
                 .WithMany(o => o.OperatingRoomEquipments)
                 .HasForeignKey(o => o.EquipmentId);
+
+            modelBuilder.Entity<OperatingRoomOperationType>()
+                .HasOne(o => o.OperatingRoom)
+                .WithMany(o => o.OperatingRoomOperationTypes)
+                .HasForeignKey(o => o.OperatingRoomId);
+
+            modelBuilder.Entity<OperatingRoomOperationType>()
+                .HasOne(o => o.OperationType)
+                .WithMany(o => o.OperatingRoomOperationTypes)
+                .HasForeignKey(o => o.OperationTypeId);
+
+            modelBuilder.Entity<PersonnelBranch>()
+                .HasOne(o => o.Personnel)
+                .WithMany(o => o.PersonnelBranches)
+                .HasForeignKey(o => o.PersonnelId);
+
+            modelBuilder.Entity<PersonnelBranch>()
+                .HasOne(o => o.Branch)
+                .WithMany(o => o.PersonnelBranches)
+                .HasForeignKey(o => o.BranchId);
+
+            modelBuilder.Entity<OperationTypeEquipment>()
+                .HasOne(o => o.OperationType)
+                .WithMany(o => o.OperationTypeEquipment)
+                .HasForeignKey(o => o.OperationTypeId);
+
+            modelBuilder.Entity<OperationTypeEquipment>()
+                .HasOne(o => o.Equipment)
+                .WithMany(o => o.OperationTypeEquipment)
+                .HasForeignKey(o => o.EquipmentId);
+
+
 
             base.OnModelCreating(modelBuilder);
         }

@@ -17,5 +17,6 @@ namespace Surgicalogic.Data.Entities
         public bool IsPortable { get; set; }
         public virtual EquipmentType EquipmentType { get; set; }
         public virtual ICollection<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
+        public virtual ICollection<OperationTypeEquipment> OperationTypeEquipment { get; set; }
     }
 }

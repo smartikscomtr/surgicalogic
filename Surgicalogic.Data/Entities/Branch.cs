@@ -13,6 +13,7 @@ namespace Surgicalogic.Data.Entities
         public string Name { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
-        public virtual ICollection<OperationType> OperationTypes { get; set; }    
+        public virtual ICollection<OperationType> OperationTypes { get; set; }
+        public virtual ICollection<PersonnelBranch> PersonnelBranches { get; set; }
     }
 }
