@@ -79,8 +79,22 @@ namespace Surgicalogic.Api.Controllers
         [Route("OperatingRoom/UpdateOperatingRoom")]
         [HttpPost]
         public async Task<ResultModel<OperatingRoomModel>> UpdateOperatingRoom([FromBody] OperatingRoomInputModel item)
-        {   
-            return await _operatingRoomStoreService.UpdateAndSaveOperatingRoomAsync(item);
+        {
+            var model = new OperatingRoomModel()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Location = item.Location,
+                Width = item.Width,
+                Height = item.Height,
+                Length = item.Length
+            };
+
+            if (item.Equipments != null)            
+                await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);            
+                                                                                          
+            return await _operatingRoomStoreService.UpdateAndSaveAsync(model);
         }
     }
 }

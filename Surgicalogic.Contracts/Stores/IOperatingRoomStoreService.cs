@@ -9,6 +9,6 @@ namespace Surgicalogic.Contracts.Stores
 {
     public interface IOperatingRoomStoreService : IStoreService<OperatingRoom, OperatingRoomModel>
     {
-        Task<ResultModel<OperatingRoomModel>> UpdateAndSaveOperatingRoomAsync(OperatingRoomInputModel model);
+        Task<ResultModel<OperatingRoomModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel model);
     }
 }
