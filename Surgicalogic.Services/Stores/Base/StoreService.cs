@@ -35,6 +35,7 @@ namespace Surgicalogic.Services.Stores.Base
         /// <summary>
         /// This methode returns list of entity model.
         /// </summary>
+        /// <param name="GridInputModel">GridInputModel</param>  
         /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<TModel>> GetAsync(GridInputModel input)
         {
@@ -82,6 +83,10 @@ namespace Surgicalogic.Services.Stores.Base
             };
         }
 
+        /// <summary>
+        /// This methode returns list of specifed type model list.
+        /// </summary>       
+        /// <returns>TOutputModel</returns>
         public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>()
         {
             return await GetAsync<TOutputModel>(new GridInputModel { PageSize = 0 });
@@ -91,7 +96,7 @@ namespace Surgicalogic.Services.Stores.Base
         ///This methode returns list of specifed type model list.
         /// </summary>
         /// <typeparam name="TOutputModel"></typeparam>
-        /// <returns>ResultModel</returns>
+        /// <returns>TOutputModel</returns>
         public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input)
         {
             var result = await GetAsync(input);
@@ -183,8 +188,24 @@ namespace Surgicalogic.Services.Stores.Base
 
             return new ResultModel<TModel>
             {
-                Result = model,
+                Result = GetQueryable().ProjectTo<TModel>().First(e => e.Id == entity.Id),
                 Info = new Info()
+            };
+        }
+
+        /// <summary>
+        /// This methode modifies the entities properties and saves it.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <typeparam name="TOutputModel"></typeparam>
+        /// <returns>TOutputModel</returns>
+        public virtual async Task<ResultModel<TOutputModel>> UpdateAndSaveAsync<TOutputModel>(TModel model)
+        {
+            var result = await UpdateAndSaveAsync(model);
+            return new ResultModel<TOutputModel>
+            {
+                Result = Mapper.Map<TOutputModel>(result.Result),                
+                Info = result.Info
             };
         }
     }

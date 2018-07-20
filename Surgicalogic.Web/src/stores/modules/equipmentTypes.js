@@ -24,7 +24,12 @@ const equipmentTypesModule = {
       state.equipmentTypes.splice(index, 1);
     },
 
-    updateEquipmentType(state, payload) {}
+    updateEquipmentType(state, payload) {
+      state.equipmentTypes.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
+    }
   },
 
   getters: {},
@@ -58,7 +63,7 @@ const equipmentTypesModule = {
     updateEquipmentType(context, payload) {
       axios.post('EquipmentType/UpdateEquipmentType', payload)
         .then(response => {
-          //context.commit('updateEquipmentType', {payload}) //Update the Equipment Types in the store
+          context.commit('updateEquipmentType', payload) //Update the Equipment Types in the store
         })
     }
   }

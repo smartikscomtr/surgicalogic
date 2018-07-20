@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>EquipmentTypeModel</returns>
         [Route("EquipmentType/UpdateEquipmentType")]
         [HttpPost]
-        public async Task<ResultModel<EquipmentTypeModel>> UpdateEquipmentType([FromBody] EquipmentTypeInputModel item)
+        public async Task<ResultModel<EquipmentTypeOutputModel>> UpdateEquipmentType([FromBody] EquipmentTypeInputModel item)
         {
             var equipmentTypeItem = new EquipmentTypeModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _equipmentTypeStoreService.UpdateAndSaveAsync(equipmentTypeItem);
+            return await _equipmentTypeStoreService.UpdateAndSaveAsync<EquipmentTypeOutputModel>(equipmentTypeItem);
         }
     }
 }

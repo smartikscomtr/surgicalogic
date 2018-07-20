@@ -134,7 +134,7 @@ export default {
 
       vm.editDialog = true;
       vm.editedIndex = vm.equipments.indexOf(payload);
-      vm.editAction = payload;
+      vm.editAction =   Object.assign({}, payload);
     },
 
     cancel() {
@@ -143,6 +143,10 @@ export default {
       vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;
+      setTimeout(() =>{
+        vm.editAction = Object.assign({}, {})
+      },300);      
+
     },
 
     addNewItem(){

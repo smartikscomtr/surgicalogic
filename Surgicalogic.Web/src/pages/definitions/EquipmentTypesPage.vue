@@ -95,8 +95,9 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.equipmentTypes.indexOf(payload);
-      vm.editAction = payload;
+      vm.editedIndex = vm.equipmentTypes.indexOf(payload);      
+      vm.editAction =   Object.assign({}, payload);
+      
     },
 
     cancel() {
@@ -104,6 +105,9 @@ export default {
 
       vm.editDialog = false;
       vm.deleteDialog = false;
+      setTimeout(() =>{
+        vm.editAction = Object.assign({}, {})
+      },300); 
     },
 
     addNewItem(){
