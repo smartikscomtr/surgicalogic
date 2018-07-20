@@ -30,7 +30,10 @@ const branchesModule = {
     },
 
     updateBranch(state, payload) {
-      //state.branches.payload = payload;
+      state.branches.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     }
   },
 
@@ -76,7 +79,7 @@ const branchesModule = {
     updateBranch(context, payload) {
       axios.post('Branch/UpdateBranch', payload)
         .then(response => {
-          //context.commit('updateBranch', {payload}) //Update the Branches in the store
+          context.commit('updateBranch', response.data.result) //Update the Branches in the store
         })
     }
   }

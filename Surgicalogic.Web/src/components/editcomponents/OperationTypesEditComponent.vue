@@ -27,6 +27,11 @@
                               :label="$t('operationtypes.operationtype')">
                 </v-text-field>
               </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['description']"
+                              :label="$t('common.description')">
+                </v-text-field>
+              </v-flex>
 
               <v-flex xs12 sm6 md6>
                 <v-select v-model="selectBranch"

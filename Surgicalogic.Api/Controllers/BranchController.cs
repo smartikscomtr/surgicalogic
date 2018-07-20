@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>BranchModel</returns>
         [Route("Branch/UpdateBranch")]
         [HttpPost]
-        public async Task<ResultModel<BranchModel>> UpdateBranch([FromBody] BranchInputModel item)
+        public async Task<ResultModel<BranchOutputModel>> UpdateBranch([FromBody] BranchInputModel item)
         {
             var branchItem = new BranchModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _branchStoreService.UpdateAndSaveAsync(branchItem);
+            return await _branchStoreService.UpdateAndSaveAsync<BranchOutputModel>(branchItem);
         }
     }
 }

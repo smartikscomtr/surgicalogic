@@ -28,7 +28,12 @@ const operatingTypeModule = {
       state.operatingTypes.splice(index, 1);
     },
 
-    updateOperationTypes(state, payload) {},
+    updateOperationTypes(state, payload) {
+      state.operatingTypes.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
+    },
 
     setAllBranches(state, payload) {
       state.allBranches = payload;
@@ -81,7 +86,7 @@ const operatingTypeModule = {
     updateOperationType(context, payload) {
       axios.post('OperationType/UpdateOperationType',  payload)
         .then(response => {
-          //context.commit('updateOperationType', {payload}) //Update the OperationTypes in the store
+          context.commit('updateOperationType', response.data.result) //Update the OperationTypes in the store
         })
     },
 

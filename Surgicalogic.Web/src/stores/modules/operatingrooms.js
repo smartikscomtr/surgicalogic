@@ -26,6 +26,10 @@ const operatingRoomModule = {
     },
 
     updateOperatingRoom(state, payload) {
+      state.operatingRooms.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     },
 
     setNonPortableEquipments(state, data) {

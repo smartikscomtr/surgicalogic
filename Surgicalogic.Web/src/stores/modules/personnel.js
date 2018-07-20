@@ -27,6 +27,10 @@ const personnelModule = {
     },
 
     updatePersonnel(state, payload) {
+      state.personnel.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     },
 
     setAllBranches(state, payload) {
