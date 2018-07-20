@@ -28,6 +28,7 @@
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
+                      :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
   </div>
@@ -170,6 +171,10 @@ export default {
 
     getMethodName(){
       return "getOperatingRooms";
+    },
+
+    deleteMethodName(){
+      return "deleteOperatingRoom";
     }
   }
 };

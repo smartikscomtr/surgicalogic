@@ -23,11 +23,6 @@ namespace Surgicalogic.Services.Query
         public static IQueryable<T> OrderByProperty<T>(
            this IQueryable<T> source, string propertyName)
         {
-            if (typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase |
-                BindingFlags.Public | BindingFlags.Instance) == null)
-            {
-                return null;
-            }
             ParameterExpression paramterExpression = Expression.Parameter(typeof(T));
             var orderByProperty = GetOrderByParameter<T>(paramterExpression, propertyName);
             LambdaExpression lambda = Expression.Lambda(orderByProperty, paramterExpression);
@@ -40,11 +35,6 @@ namespace Surgicalogic.Services.Query
         public static IQueryable<T> OrderByPropertyDescending<T>(
             this IQueryable<T> source, string propertyName)
         {
-            if (typeof(T).GetProperty(propertyName, BindingFlags.IgnoreCase |
-                BindingFlags.Public | BindingFlags.Instance) == null)
-            {
-                return null;
-            }
             ParameterExpression paramterExpression = Expression.Parameter(typeof(T));
             var orderByProperty = GetOrderByParameter<T>(paramterExpression, propertyName);
             LambdaExpression lambda = Expression.Lambda(orderByProperty, paramterExpression);

@@ -71,6 +71,7 @@ export default {
         },
         {
           value:'equipmentTypeName',
+          sortBy:'EquipmentType.Name',
           text: vm.$i18n.t('equipmenttypes.equipmentType'),
           sortable: true,
           align: 'left'
