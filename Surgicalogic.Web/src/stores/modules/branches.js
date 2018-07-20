@@ -37,8 +37,10 @@ const branchesModule = {
   getters: {},
 
   actions: {
-    getBranches(context,payload) {
-      axios.post('Branch/GetBranches', payload)
+    getBranches(context,params) {
+      axios.get('Branch/GetBranches', {
+        params: params
+      })
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setBranches', response.data) //Set the Branches in the store

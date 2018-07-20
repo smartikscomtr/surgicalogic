@@ -36,8 +36,11 @@ const operatingRoomModule = {
   getters: {},
 
   actions: {
-    getOperatingRooms(context, payload) {
-      axios.post('OperatingRoom/GetOperatingRooms', payload)
+    getOperatingRooms(context, params) {
+
+      axios.get('OperatingRoom/GetOperatingRooms', {
+        params: params
+      })
         .then(response => {
           context.commit('setOperatingRooms', response.data) //Set the Operating Rooms in the store
       })

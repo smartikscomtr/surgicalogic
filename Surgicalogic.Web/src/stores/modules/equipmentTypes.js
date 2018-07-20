@@ -30,8 +30,10 @@ const equipmentTypesModule = {
   getters: {},
 
   actions: {
-    getEquipmentTypes(context, payload) {
-      axios.post('EquipmentType/GetEquipmentTypes', payload)
+    getEquipmentTypes(context, params) {
+      axios.get('EquipmentType/GetEquipmentTypes', {
+        params: params
+      })
         .then(response => {
           context.commit('setEquipmentTypes', response.data) //Set the Equipment Types in the store
         })
