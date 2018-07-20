@@ -68,7 +68,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperatingRoom(int id)
         {
-            return await _operatingRoomStoreService.DeleteByIdAsync(id);
+            return await _operatingRoomStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -91,9 +91,16 @@ namespace Surgicalogic.Api.Controllers
                 Length = item.Length
             };
 
-            if (item.Equipments != null)            
-                await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);            
-                                                                                          
+            if (item.Equipments != null)
+            {
+               var result =  await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+
+                if (!result.Info.Succeeded)
+                {
+                    return result;
+                }
+            }
+
             return await _operatingRoomStoreService.UpdateAndSaveAsync(model);
         }
     }

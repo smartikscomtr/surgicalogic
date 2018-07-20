@@ -33,6 +33,22 @@ namespace Surgicalogic.Services.Stores.Base
         }
 
         /// <summary>
+        /// This methode returns the model which has given id.
+        /// </summary>       
+        /// <returns>TModel</returns>
+        public virtual async Task<ResultModel<TModel>> FindByIdAsync(int id)
+        {
+            var query = GetQueryable();
+            var model = await query.FirstOrDefaultAsync(x => x.Id == id);
+
+            return new ResultModel<TModel>
+            {
+                Result = model,
+                Info = new Info()
+            };
+        }
+
+        /// <summary>
         /// This methode returns list of entity model.
         /// </summary>
         /// <param name="GridInputModel">GridInputModel</param>  
@@ -110,11 +126,11 @@ namespace Surgicalogic.Services.Stores.Base
         }
 
         /// <summary>
-        /// This methode adds a new entity record with entity type.
+        /// This methode adds a new entity record with entity type. This method doesn't save changes.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<TModel>> InsertAndSaveAsync(TModel model)
+        public virtual async Task<TEntity> InsertAsync(TModel model)
         {
             var entity = Mapper.Map<TEntity>(model);
 
@@ -122,6 +138,19 @@ namespace Surgicalogic.Services.Stores.Base
             entity.CreatedDate = DateTime.Now;
 
             await _context.Set<TEntity>().AddAsync(entity);
+
+            return entity;
+        }
+
+        /// <summary>
+        /// This methode adds and saves a new entity record with entity type.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>ResultModel</returns>
+        public virtual async Task<ResultModel<TModel>> InsertAndSaveAsync(TModel model)
+        {
+            var entity = await InsertAsync(model);
+
             await _context.SaveChangesAsync();
 
             return new ResultModel<TModel>
@@ -149,17 +178,29 @@ namespace Surgicalogic.Services.Stores.Base
         }
 
         /// <summary>
-        /// This methode deletes entity by marking false IsActive value of entity.
+        /// This methode deletes entity by marking false IsActive value of entity. This method doesn't save changes.
         /// </summary>
         /// <param name="id"></param>
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<int>> DeleteByIdAsync(int id)
+        public virtual async Task<TEntity> DeleteByIdAsync(int id)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == id);
 
             entity.IsActive = false;
             entity.ModifiedBy = 0;
             entity.ModifiedDate = DateTime.Now;
+
+            return entity;
+        }
+
+        /// <summary>
+        /// This methode deletes entity by marking false IsActive value of entity and saves changes.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>ResultModel</returns>
+        public virtual async Task<ResultModel<int>> DeleteAndSaveByIdAsync(int id)
+        {
+            var entity = await DeleteByIdAsync(id);
 
             await _context.SaveChangesAsync();
 
@@ -171,11 +212,11 @@ namespace Surgicalogic.Services.Stores.Base
         }
 
         /// <summary>
-        /// This methode modifies the entities properties and saves it.
+        /// This methode modifies the entities properties and doesn't save it.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<TModel>> UpdateAndSaveAsync(TModel model)
+        public virtual async Task<TEntity> UpdateAsync(TModel model)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == model.Id);
 
@@ -183,6 +224,18 @@ namespace Surgicalogic.Services.Stores.Base
 
             entity.ModifiedBy = 2;
             entity.ModifiedDate = DateTime.Now;
+
+            return entity;
+        }
+
+        /// <summary>
+        /// This methode modifies the entities properties and saves it.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>ResultModel</returns>
+        public virtual async Task<ResultModel<TModel>> UpdateAndSaveAsync(TModel model)
+        {
+            var entity = await UpdateAsync(model);
 
             await _context.SaveChangesAsync();
 
@@ -207,6 +260,24 @@ namespace Surgicalogic.Services.Stores.Base
                 Result = Mapper.Map<TOutputModel>(result.Result),                
                 Info = result.Info
             };
+        }
+
+        /// <summary>
+        /// This method saves changes synchronous.
+        /// </summary>
+        /// <returns>int</returns>
+        public virtual int SaveChanges()
+        {
+            return _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// This method saves changes asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
     }
 }

@@ -37,7 +37,6 @@ const operatingRoomModule = {
 
   actions: {
     getOperatingRooms(context, params) {
-
       axios.get('OperatingRoom/GetOperatingRooms', {
         params: params
       })
@@ -58,7 +57,7 @@ const operatingRoomModule = {
     },
 
     deleteOperatingRoom(context, payload) {
-      axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
+      axios.post('OperatingRoom/DeleteOperatingRoom' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deleteOperatingRoom', { payload }); //Delete the Operating Rooms in the store

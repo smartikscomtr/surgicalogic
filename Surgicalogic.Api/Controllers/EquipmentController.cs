@@ -74,7 +74,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteEquipmentType(int id)
         {
-            return await _equipmentStoreService.DeleteByIdAsync(id);
+            return await _equipmentStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>

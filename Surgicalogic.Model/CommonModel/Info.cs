@@ -7,7 +7,7 @@ namespace Surgicalogic.Model.CommonModel
     public class Info
     {
         public bool Succeeded { get; set; } = true;
-        public string Message { get; set; }
+        public MessageType Message { get; set; }
         public InfoType InfoType { get; set; }
     }
 }

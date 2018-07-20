@@ -63,7 +63,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteWorkType(int id)
         {
-            return await _workTypeStoreService.DeleteByIdAsync(id);
+            return await _workTypeStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>

@@ -67,7 +67,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeletePersonnel(int id)
         {
-            return await _personnelStoreService.DeleteByIdAsync(id);
+            return await _personnelStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>

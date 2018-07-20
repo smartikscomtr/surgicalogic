@@ -63,7 +63,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteBranch(int id)
         {
-            return await _branchStoreService.DeleteByIdAsync(id);
+            return await _branchStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>

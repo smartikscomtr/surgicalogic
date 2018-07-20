@@ -27,7 +27,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<BranchModel, Branch>();
             config.CreateMap<EquipmentModel, Equipment>();
             config.CreateMap<EquipmentTypeModel, EquipmentType>();
-            config.CreateMap<OperatingRoomModel, OperatingRoom>();
+            config.CreateMap<OperatingRoomModel, OperatingRoom>()
+                .ForMember(src => src.OperatingRoomEquipments, opt => opt.Ignore());
             config.CreateMap<OperationTypeModel, OperationType>();
             config.CreateMap<PersonnelModel, Personnel>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
