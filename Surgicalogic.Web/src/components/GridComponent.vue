@@ -119,7 +119,7 @@ export default {
     methodName: {
       type: Function,
       required: true
-    }    
+    }
   },
 
   data() {
@@ -152,7 +152,7 @@ export default {
   methods: {
     addNewItem() {
       const vm = this;
-      //When the add new button is clicked, the event is sent to the grid component      
+      //When the add new button is clicked, the event is sent to the grid component
       vm.$emit('newaction');
     },
 
@@ -206,14 +206,14 @@ export default {
     {
       const vm = this;
 
-      for (let index = 0; index < vm.headers.length; index++) {
-        const element = vm.headers[index];
-        if (element.value == sortBy)
+      vm.headers.forEach(element => {
+        if (element.value == sortBy && element.sortBy)
         {
-          return element.sortBy ? element.sortBy : sortBy;
+          sortBy = element.sortBy;
         }
+      });
 
-      }
+      return sortBy;
     }
   }
 };

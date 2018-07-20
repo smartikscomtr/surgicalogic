@@ -45,8 +45,10 @@ const personnelModule = {
   getters: {},
 
   actions: {
-    getPersonnels(context, payload) {
-      axios.post('Personnel/GetPersonnels', payload)
+    getPersonnels(context, params) {
+      axios.get('Personnel/GetPersonnels', {
+        params: params
+      })
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setPersonnels', response.data) //Set the Personnel in the store

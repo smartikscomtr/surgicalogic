@@ -40,8 +40,10 @@ const equipmentModule = {
   getters: {},
 
   actions: {
-    getEquipments(context, payload) {
-      axios.post('Equipment/GetEquipments', payload)
+    getEquipments(context, params) {
+      axios.get('Equipment/GetEquipments', {
+        params: params
+      })
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setEquipments', response.data) //Set the Equipments in the store

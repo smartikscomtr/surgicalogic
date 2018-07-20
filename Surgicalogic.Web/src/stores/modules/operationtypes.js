@@ -50,8 +50,10 @@ const operatingTypeModule = {
   getters: {},
 
   actions: {
-    getOperationTypes(context, payload) {
-      axios.post('OperationType/GetOperationTypes', payload)
+    getOperationTypes(context, params) {
+      axios.get('OperationType/GetOperationTypes', {
+        params: params
+      })
           .then(response => {
             context.commit('setOperationTypes', response.data) //Set the Operation Types in the store
         })

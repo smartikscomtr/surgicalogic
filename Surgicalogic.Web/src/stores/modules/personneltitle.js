@@ -30,8 +30,10 @@ const personnelTitleModule = {
   getters: {},
 
   actions: {
-    getPersonnelTitles(context, payload) {
-      axios.post('PersonnelTitle/GetPersonnelTitles', payload)
+    getPersonnelTitles(context, params) {
+      axios.get('PersonnelTitle/GetPersonnelTitles', {
+        params: params
+      })
         .then(response => {
           context.commit('setPersonnelTitles', response.data) //Set the Personnel Title in the store
         })

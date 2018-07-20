@@ -24,8 +24,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>PersonnelOutputModel list</returns>
         [Route("Personnel/GetPersonnels")]
-        [HttpPost]
-        public async Task<ResultModel<PersonnelOutputModel>> GetPersonnel([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<PersonnelOutputModel>> GetPersonnel(GridInputModel input)
         {
             return await _personnelStoreService.GetAsync<PersonnelOutputModel>(input);
         }

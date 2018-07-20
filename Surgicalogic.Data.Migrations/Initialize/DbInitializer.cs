@@ -312,17 +312,17 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
                 for (int i = 1; i <= 8; i++)
                 {
-                    
+
                     for (int k = 0; k < _random.Next(1, 5); k++)
                     {
                         context.OperatingRoomEquipments.Add(new Entities.OperatingRoomEquipment
-                        {                            
+                        {
                             OperatingRoomId = i,
                             EquipmentId = _random.Next(1, 30),
                             CreatedDate = DateTime.Now
                         });
-                    }                                        
-                    
+                    }
+
                 }
                 #endregion
 
@@ -333,7 +333,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
             }
             catch (Exception)
             { }
-            
+
         }
 
         public static void InitializeDataFromExcel(DataContext context, string excelFilePath)
