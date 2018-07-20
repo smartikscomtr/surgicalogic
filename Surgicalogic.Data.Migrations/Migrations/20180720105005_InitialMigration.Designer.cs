@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180720083248_InitialMigration")]
+    [Migration("20180720105005_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -261,6 +261,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperatingRooms");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomCalendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperatingRoomId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperatingRoomId");
+
+                    b.ToTable("OperatingRoomCalendars");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
@@ -618,6 +647,14 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.EquipmentType", "EquipmentType")
                         .WithMany("Equipments")
                         .HasForeignKey("EquipmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomCalendar", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom", "OperatingRoom")
+                        .WithMany()
+                        .HasForeignKey("OperatingRoomId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

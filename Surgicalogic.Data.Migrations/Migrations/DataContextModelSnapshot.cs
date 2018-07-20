@@ -261,6 +261,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("OperatingRooms");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomCalendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperatingRoomId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperatingRoomId");
+
+                    b.ToTable("OperatingRoomCalendars");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
                 {
                     b.Property<int>("Id")
@@ -616,6 +645,14 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.EquipmentType", "EquipmentType")
                         .WithMany("Equipments")
                         .HasForeignKey("EquipmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomCalendar", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom", "OperatingRoom")
+                        .WithMany()
+                        .HasForeignKey("OperatingRoomId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -262,6 +262,32 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OperatingRoomCalendars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperatingRoomCalendars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomCalendars_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Personnels",
                 columns: table => new
                 {
@@ -522,6 +548,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "EquipmentTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OperatingRoomCalendars_OperatingRoomId",
+                table: "OperatingRoomCalendars",
+                column: "OperatingRoomId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OperatingRoomEquipments_EquipmentId",
                 table: "OperatingRoomEquipments",
                 column: "EquipmentId");
@@ -593,6 +624,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "OperatingRoomCalendars");
 
             migrationBuilder.DropTable(
                 name: "OperatingRoomEquipments");
