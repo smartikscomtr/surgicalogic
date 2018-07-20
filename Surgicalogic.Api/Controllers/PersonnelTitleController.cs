@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>PersonnelTitleModel</returns>
         [Route("PersonnelTitle/UpdatePersonnelTitle")]
         [HttpPost]
-        public async Task<ResultModel<PersonnelTitleModel>> UpdatePersonnelTitle([FromBody] PersonnelTitleInputModel item)
+        public async Task<ResultModel<PersonnelTitleOutputModel>> UpdatePersonnelTitle([FromBody] PersonnelTitleInputModel item)
         {
             var personnelTitleItem = new PersonnelTitleModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _personnelTitleStoreService.UpdateAndSaveAsync(personnelTitleItem);
+            return await _personnelTitleStoreService.UpdateAndSaveAsync<PersonnelTitleOutputModel>(personnelTitleItem);
         }
     }
 }

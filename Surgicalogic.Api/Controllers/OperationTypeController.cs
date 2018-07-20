@@ -70,7 +70,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>OperationTypeModel</returns>
         [Route("OperationType/UpdateOperationType")]
         [HttpPost]
-        public async Task<ResultModel<OperationTypeModel>> UpdateOperationType([FromBody] OperationTypeInputModel item)
+        public async Task<ResultModel<OperationTypeOutputModel>> UpdateOperationType([FromBody] OperationTypeInputModel item)
         {
             var operationTypeItem = new OperationTypeModel()
             {
@@ -80,7 +80,7 @@ namespace Surgicalogic.Api.Controllers
                 //Branch = item.BranchId
             };
 
-            return await _operationTypeStoreService.UpdateAndSaveAsync(operationTypeItem);
+            return await _operationTypeStoreService.UpdateAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
         }
     }
 }

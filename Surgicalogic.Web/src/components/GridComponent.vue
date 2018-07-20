@@ -152,7 +152,7 @@ export default {
   methods: {
     addNewItem() {
       const vm = this;
-      //When the add new button is clicked, the event is sent to the grid component
+      //When the add new button is clicked, the event is sent to the grid component      
       vm.$emit('newaction');
     },
 
@@ -171,9 +171,8 @@ export default {
 
     editItem(item) {
       const vm = this;
-
       //When the edit button is clicked, the event is sent to the grid component
-      vm.$emit('edit', item);
+      vm.$emit('edit', item, vm.items.indexOf(item));
     },
 
     deleteItem(item) {

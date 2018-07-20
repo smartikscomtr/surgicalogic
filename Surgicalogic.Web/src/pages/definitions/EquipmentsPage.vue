@@ -36,7 +36,10 @@
 
 <script>
 
+import {gridMixin} from './../../mixins/gridMixin'
+
 export default {
+   mixins: [gridMixin],
   data() {
     const vm = this;
 
@@ -121,46 +124,7 @@ export default {
     }
   },
 
-  methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
-    edit(payload){
-      const vm = this;
-
-      vm.editDialog = true;
-      vm.editedIndex = vm.equipments.indexOf(payload);
-      vm.editAction =   Object.assign({}, payload);
-    },
-
-    cancel() {
-      const vm = this;
-
-      vm.detailDialog = false;
-      vm.editDialog = false;
-      vm.deleteDialog = false;
-      setTimeout(() =>{
-        vm.editAction = Object.assign({}, {})
-      },300);      
-
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.editDialog = true;
-    },
-
-    deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
-      vm.deleteDialog = true;
-    },
+  methods: {   
     getMethodName(){
       return "getEquipments";
     },

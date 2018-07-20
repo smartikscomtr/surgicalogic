@@ -24,7 +24,12 @@ const personnelTitleModule = {
       state.personnelTitle.splice(index, 1);
     },
 
-    updatePersonnelTitle(state, payload) {}
+    updatePersonnelTitle(state, payload) {
+      state.personnelTitle.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
+    }
   },
 
   getters: {},
