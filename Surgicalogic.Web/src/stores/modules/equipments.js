@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const equipmentModule = {
   state: {
-    equipments: [],
     totalCount:0,
+    equipments: [],
     allEquipmentTypes: []
   },
 

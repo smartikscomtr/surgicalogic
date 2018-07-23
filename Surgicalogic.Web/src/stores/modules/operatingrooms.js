@@ -52,10 +52,8 @@ const operatingRoomModule = {
     insertOperatingRoom(context, payload) {
       axios.post('OperatingRoom/InsertOperatingRoom', payload)
         .then(response => {
-          if (response.statusText == 'OK') {
-            payload.id = response.data;
-
-            context.commit('insertOperatingRoom', { item: payload }) //Insert the Operating Rooms in the store
+          if (response.data.info.succeeded == true) {
+            context.commit('insertOperatingRoom', { item: response.data.result }) //Insert the Operating Rooms in the store
           }
         })
     },

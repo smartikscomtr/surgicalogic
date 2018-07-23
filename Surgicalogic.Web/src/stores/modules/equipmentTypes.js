@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const equipmentTypesModule = {
   state: {
-    equipmentTypes: [],
-    totalCount:0
+    totalCount:0,
+    equipmentTypes: []
   },
 
   mutations: {
