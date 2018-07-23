@@ -143,6 +143,7 @@ export default {
     getMethodName(){
       return "getPersonnels";
     },
+
     deleteMethodName(){
       return "deletePersonnel"
     }

@@ -3,14 +3,14 @@ import axios from 'axios';
 const branchesModule = {
   state: {
     branches: [],
+    allBranches: [],
     totalCount: 0,
-    allBranches: []
   },
 
   mutations: {
     setBranches(state, data) {
-        state.branches = data.result;
-        state.totalCount = data.totalCount;
+      state.branches = data.result;
+      state.totalCount = data.totalCount;
     },
 
     setAllBranches(state, data) {

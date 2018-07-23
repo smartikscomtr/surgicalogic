@@ -5,14 +5,6 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
@@ -20,7 +12,6 @@
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
@@ -59,15 +50,16 @@
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-select v-model="selectEquipment"
-                          :items="equipments"
-                          :label="$t('equipments.equipments')"
-                          multiple
-                          chips
-                          deletable-chips
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectEquipment"
+                                :items="equipments"
+                                :label="$t('equipments.equipments')"
+                                :filter="customFilter"
+                                multiple
+                                chips
+                                deletable-chips
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
                <v-flex xs12 sm6 md12>
@@ -90,7 +82,6 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -215,6 +206,13 @@ debugger;
   },
 
   methods: {
+    customFilter (item, queryText, itemText) {
+      const text = item.name.toLowerCase();
+      const searchText = queryText.toLowerCase();
+
+      return text.indexOf(searchText) > -1;
+    },
+
     cancel() {
       const vm = this;
 
