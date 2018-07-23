@@ -53,7 +53,10 @@ export default {
         return {};
       }
     },
-
+    editIndex: {
+      type: Number,
+      required: false
+    },
     deleteValue: {
       type: Object,
       required: false

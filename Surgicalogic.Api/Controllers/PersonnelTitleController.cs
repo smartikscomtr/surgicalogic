@@ -24,8 +24,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>PersonnelTitleOutputModel list</returns>
         [Route("PersonnelTitle/GetPersonnelTitles")]
-        [HttpPost]
-        public async Task<ResultModel<PersonnelTitleOutputModel>> GetPersonnelTitle([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<PersonnelTitleOutputModel>> GetPersonnelTitle(GridInputModel input)
         {
             return await _personnelTitleStoreService.GetAsync<PersonnelTitleOutputModel>(input);
         }
@@ -63,7 +63,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeletePersonnelTitle(int id)
         {
-            return await _personnelTitleStoreService.DeleteByIdAsync(id);
+            return await _personnelTitleStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>PersonnelTitleModel</returns>
         [Route("PersonnelTitle/UpdatePersonnelTitle")]
         [HttpPost]
-        public async Task<ResultModel<PersonnelTitleModel>> UpdatePersonnelTitle([FromBody] PersonnelTitleInputModel item)
+        public async Task<ResultModel<PersonnelTitleOutputModel>> UpdatePersonnelTitle([FromBody] PersonnelTitleInputModel item)
         {
             var personnelTitleItem = new PersonnelTitleModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _personnelTitleStoreService.UpdateAndSaveAsync(personnelTitleItem);
+            return await _personnelTitleStoreService.UpdateAndSaveAsync<PersonnelTitleOutputModel>(personnelTitleItem);
         }
     }
 }

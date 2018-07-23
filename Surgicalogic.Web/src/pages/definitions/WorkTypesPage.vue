@@ -8,7 +8,6 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -22,14 +21,16 @@
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
+                      :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
   </div>
 </template>
 
 <script>
-
+import {gridMixin} from './../../mixins/gridMixin'
 export default {
+  mixins: [gridMixin],
   data() {
     const vm = this;
 
@@ -40,7 +41,6 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
     };
@@ -85,36 +85,11 @@ export default {
   },
 
   methods: {
-    edit(payload){
-      const vm = this;
-
-      vm.editDialog = true;
-      vm.editedIndex = vm.workTypes.indexOf(payload);
-      vm.editAction = payload;
-    },
-
-    cancel() {
-      const vm = this;
-
-      vm.editDialog = false;
-      vm.deleteDialog = false;
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.editDialog = true;
-    },
-
-    deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
-	  vm.deleteDialog = true;
-    },
-
     getMethodName(){
       return "getWorkTypes"
+    },
+    deleteMethodName(){
+      return "deleteWorkType"
     }
   },
 

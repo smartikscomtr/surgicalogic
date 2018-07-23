@@ -19,6 +19,7 @@ namespace Surgicalogic.Data.Entities
         public Nullable<double> Height { get; set; }
         public Nullable<double> Length { get; set; }        
         public bool IsAvailable { get; set; } = true;        
-        public ICollection<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
+        public virtual ICollection<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
+        public virtual ICollection<OperatingRoomOperationType> OperatingRoomOperationTypes { get; set; }
     }
 }

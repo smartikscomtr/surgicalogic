@@ -2,7 +2,6 @@
   <div>
     <grid-component :headers="headers"
                     :items="personnels"
-                    :pagination.sync="pagination"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -29,8 +28,9 @@
 </template>
 
 <script>
-
+import {gridMixin} from './../../mixins/gridMixin'
 export default {
+  mixins: [gridMixin],
   data() {
     const vm = this;
 
@@ -41,7 +41,6 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination:{},
       totalRows:0,
       editedIndex: -1,
       personnelTitleLoadOnce: true,
@@ -141,40 +140,12 @@ export default {
   },
 
   methods: {
-    edit(payload){
-      const vm = this;
-
-      vm.editDialog = true;
-      vm.editedIndex = vm.personnels.indexOf(payload);
-      vm.editAction = payload;
-    },
-
-    cancel() {
-      const vm = this;
-
-      vm.editDialog = false;
-      vm.deleteDialog = false;
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.editDialog = true;
-    },
-
-    deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
-      vm.deleteDialog = true;
-    },
-
     getMethodName(){
       return "getPersonnels";
     },
 
     deleteMethodName(){
-      return "deleteEquipment"
+      return "deletePersonnel"
     }
   },
 

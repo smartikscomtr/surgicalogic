@@ -24,8 +24,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>BranchOutputModel list</returns>
         [Route("Branch/GetBranches")]
-        [HttpPost]
-        public async Task<ResultModel<BranchOutputModel>> GetBranch([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<BranchOutputModel>> GetBranch(GridInputModel input)
         {
             return await _branchStoreService.GetAsync<BranchOutputModel>(input);
         }
@@ -63,7 +63,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteBranch(int id)
         {
-            return await _branchStoreService.DeleteByIdAsync(id);
+            return await _branchStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>BranchModel</returns>
         [Route("Branch/UpdateBranch")]
         [HttpPost]
-        public async Task<ResultModel<BranchModel>> UpdateBranch([FromBody] BranchInputModel item)
+        public async Task<ResultModel<BranchOutputModel>> UpdateBranch([FromBody] BranchInputModel item)
         {
             var branchItem = new BranchModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _branchStoreService.UpdateAndSaveAsync(branchItem);
+            return await _branchStoreService.UpdateAndSaveAsync<BranchOutputModel>(branchItem);
         }
     }
 }

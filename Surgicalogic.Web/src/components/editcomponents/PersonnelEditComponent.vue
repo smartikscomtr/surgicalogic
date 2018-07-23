@@ -235,9 +235,9 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          personnelTitleId: vm.selectPersonnelTitle,
-          branchId: vm.selectBranch,
-          workTypeId: vm.selectWorkType
+          personnelTitleId: 1,// vm.selectPersonnelTitle,
+          branchId:  1,//vm.selectBranch,
+          workTypeId:  1//vm.selectWorkType
         });
       }
 

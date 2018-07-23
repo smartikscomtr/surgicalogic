@@ -26,6 +26,10 @@ const operatingRoomModule = {
     },
 
     updateOperatingRoom(state, payload) {
+      state.operatingRooms.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     },
 
     setNonPortableEquipments(state, data) {
@@ -36,8 +40,10 @@ const operatingRoomModule = {
   getters: {},
 
   actions: {
-    getOperatingRooms(context, payload) {
-      axios.post('OperatingRoom/GetOperatingRooms', payload)
+    getOperatingRooms(context, params) {
+      axios.get('OperatingRoom/GetOperatingRooms', {
+        params: params
+      })
         .then(response => {
           context.commit('setOperatingRooms', response.data) //Set the Operating Rooms in the store
       })
@@ -55,7 +61,7 @@ const operatingRoomModule = {
     },
 
     deleteOperatingRoom(context, payload) {
-      axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
+      axios.post('OperatingRoom/DeleteOperatingRoom' + payload.id)
         .then(response => {
           if (response.statusText == 'OK') {
             context.commit('deleteOperatingRoom', { payload }); //Delete the Operating Rooms in the store

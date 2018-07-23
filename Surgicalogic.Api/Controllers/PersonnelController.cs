@@ -24,8 +24,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>PersonnelOutputModel list</returns>
         [Route("Personnel/GetPersonnels")]
-        [HttpPost]
-        public async Task<ResultModel<PersonnelOutputModel>> GetPersonnel([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<PersonnelOutputModel>> GetPersonnel(GridInputModel input)
         {
             return await _personnelStoreService.GetAsync<PersonnelOutputModel>(input);
         }
@@ -67,7 +67,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeletePersonnel(int id)
         {
-            return await _personnelStoreService.DeleteByIdAsync(id);
+            return await _personnelStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>PersonnelModel</returns>
         [Route("Personnel/UpdatePersonnel")]
         [HttpPost]
-        public async Task<ResultModel<PersonnelModel>> UpdatePersonnel([FromBody] PersonnelInputModel item)
+        public async Task<ResultModel<PersonnelOutputModel>> UpdatePersonnel([FromBody] PersonnelInputModel item)
         {
             var personnelItem = new PersonnelModel()
             {
@@ -90,7 +90,7 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            return await _personnelStoreService.UpdateAndSaveAsync(personnelItem);
+            return await _personnelStoreService.UpdateAndSaveAsync<PersonnelOutputModel>(personnelItem);
         }
     }
 }

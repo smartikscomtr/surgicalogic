@@ -6,8 +6,10 @@ using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Services.Stores.Base;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores
@@ -15,56 +17,63 @@ namespace Surgicalogic.Services.Stores
     public class OperatingRoomStoreService : StoreService<OperatingRoom, OperatingRoomModel>, IOperatingRoomStoreService
     {
         private DataContext _context;
-        public OperatingRoomStoreService(DataContext context) : base(context)
+        private IOperatingRoomEquipmentStoreService _operatingRoomEquipmentStoreService;
+
+        public OperatingRoomStoreService(
+            DataContext context,
+            IOperatingRoomEquipmentStoreService operatingRoomEquipmentStoreService
+            ) : base(context)
         {
             _context = context;
+            _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
         }
 
-        public async Task<ResultModel<OperatingRoomModel>> UpdateAndSaveOperatingRoomAsync(OperatingRoomInputModel item)
+        public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)
         {
-            var model = new OperatingRoomModel()
+            var result = new ResultModel<OperatingRoomOutputModel>
             {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                Location = item.Location,
-                Width = item.Width,
-                Height = item.Height,
-                Length = item.Length
+                Info = new Info
+                {
+                    Succeeded = true
+                }
             };
 
-            #region OperatingRoom entity update
+            var currentEquipments = await _operatingRoomEquipmentStoreService.GetByOperatingRoomIdAsync(item.Id);
+            var equipmentIds = currentEquipments.Select(x => x.EquipmentId);
+            var addedEquipments = item.Equipments.Except(equipmentIds);
+            var removedEquipments = equipmentIds.Except(item.Equipments);
 
-            var entity = await _context.Set<OperatingRoom>().FirstAsync(e => e.Id == model.Id);
+            bool isEquipmentRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(addedEquipments.ToArray());
 
-            Mapper.Map(model, entity);
-
-            entity.ModifiedBy = 2;
-
-            entity.ModifiedDate = DateTime.Now;
-
-            #endregion
-
-            #region OperatingRommEquipments entity update
-            
-            if(item.Equipments.Count > 0)
+            if (isEquipmentRelatedToOperatingRoom)
             {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom
+                };
 
+                return result;
             }
 
-            #endregion
-
-            await _context.SaveChangesAsync();
-
-            return new ResultModel<OperatingRoomModel>
+            foreach (var equipmentId in addedEquipments)
             {
-                Result = model,
-                Info = new Info()
-            };
+                await _operatingRoomEquipmentStoreService.InsertAsync(new OperatingRoomEquipmentModel
+                {
+                    EquipmentId = equipmentId,
+                    OperatingRoomId = item.Id
+                });
+            }
 
-            
+            foreach (var equipment in removedEquipments)
+            {
+                await _operatingRoomEquipmentStoreService.DeleteByIdAsync(currentEquipments.First(x => x.OperatingRoomId == item.Id && x.EquipmentId == equipment).Id);
+            }
+
+            await _operatingRoomEquipmentStoreService.SaveChangesAsync();
+
+            return result;
         }
-
-
     }
 }

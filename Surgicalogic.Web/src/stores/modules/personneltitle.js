@@ -24,14 +24,21 @@ const personnelTitleModule = {
       state.personnelTitle.splice(index, 1);
     },
 
-    updatePersonnelTitle(state, payload) {}
+    updatePersonnelTitle(state, payload) {
+      state.personnelTitle.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
+    }
   },
 
   getters: {},
 
   actions: {
-    getPersonnelTitles(context, payload) {
-      axios.post('PersonnelTitle/GetPersonnelTitles', payload)
+    getPersonnelTitles(context, params) {
+      axios.get('PersonnelTitle/GetPersonnelTitles', {
+        params: params
+      })
         .then(response => {
           context.commit('setPersonnelTitles', response.data) //Set the Personnel Title in the store
         })

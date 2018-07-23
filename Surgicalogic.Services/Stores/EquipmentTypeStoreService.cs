@@ -17,36 +17,6 @@ namespace Surgicalogic.Services.Stores
         public EquipmentTypeStoreService(DataContext context) : base(context)
         {
             _context = context;
-        }
-
-        //public override async Task<ResultModel<int>> DeleteByIdAsync(int id)
-        //{
-        //    var info = new Info();
-        //    var hasEquipment = await _context.Set<Equipment>().Where(e => e.EquipmentTypeId == id).CountAsync() > 0;            
-
-        //    if(hasEquipment)
-        //    {
-        //        info.Message = "Bu tipe bağlı ekipman olduğundan silinememektedir.";
-        //        info.Succeeded = false;
-        //    }
-        //    else
-        //    {
-        //        var entity = await _context.Set<EquipmentType>().FirstAsync(e => e.Id == id);
-
-        //        entity.IsActive = false;
-        //        entity.ModifiedBy = 0;
-        //        entity.ModifiedDate = DateTime.Now;
-
-        //        await _context.SaveChangesAsync();
-        //    }
-            
-
-        //    return new ResultModel<int>
-        //    {
-        //        Result = null,
-        //        Info = info
-        //    };
-        //}
-
+        }        
     }
 }

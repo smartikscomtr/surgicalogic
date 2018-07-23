@@ -27,8 +27,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>OperationTypeOutputModel list</returns>
         [Route("OperationType/GetOperationTypes")]
-        [HttpPost]
-        public async Task<ResultModel<OperationTypeOutputModel>> GetOperationTypes([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<OperationTypeOutputModel>> GetOperationTypes(GridInputModel input)
         {
             return await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>(input);
         }
@@ -60,7 +60,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperationType(int id)
         {
-            return await _operationTypeStoreService.DeleteByIdAsync(id);
+            return await _operationTypeStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>OperationTypeModel</returns>
         [Route("OperationType/UpdateOperationType")]
         [HttpPost]
-        public async Task<ResultModel<OperationTypeModel>> UpdateOperationType([FromBody] OperationTypeInputModel item)
+        public async Task<ResultModel<OperationTypeOutputModel>> UpdateOperationType([FromBody] OperationTypeInputModel item)
         {
             var operationTypeItem = new OperationTypeModel()
             {
@@ -80,7 +80,7 @@ namespace Surgicalogic.Api.Controllers
                 //Branch = item.BranchId
             };
 
-            return await _operationTypeStoreService.UpdateAndSaveAsync(operationTypeItem);
+            return await _operationTypeStoreService.UpdateAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
         }
     }
 }

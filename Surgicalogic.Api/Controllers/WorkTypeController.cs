@@ -24,8 +24,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>WorkTypeOutputModel list</returns>
         [Route("WorkType/GetWorkTypes")]
-        [HttpPost]
-        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<WorkTypeOutputModel>> GetWorkTypes(GridInputModel input)
         {
             return await _workTypeStoreService.GetAsync<WorkTypeOutputModel>(input);
         }
@@ -63,7 +63,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteWorkType(int id)
         {
-            return await _workTypeStoreService.DeleteByIdAsync(id);
+            return await _workTypeStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>WorkTypeModel</returns>
         [Route("WorkType/UpdateWorkType")]
         [HttpPost]
-        public async Task<ResultModel<WorkTypeModel>> UpdateWorkType([FromBody] WorkTypeInputModel item)
+        public async Task<ResultModel<WorkTypeOutputModel>> UpdateWorkType([FromBody] WorkTypeInputModel item)
         {
             var workTypeItem = new WorkTypeModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _workTypeStoreService.UpdateAndSaveAsync(workTypeItem);
+            return await _workTypeStoreService.UpdateAndSaveAsync<WorkTypeOutputModel>(workTypeItem);
         }
     }
 }

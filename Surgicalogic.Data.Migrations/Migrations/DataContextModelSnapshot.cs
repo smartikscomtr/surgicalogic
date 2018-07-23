@@ -19,10 +19,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -43,7 +44,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,8 +54,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<int>("RoleId");
 
                     b.HasKey("Id");
 
@@ -63,7 +63,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,8 +73,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -83,7 +82,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -91,8 +90,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -101,11 +99,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<int>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -114,9 +112,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -240,8 +238,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<bool>("IsAvailable")
-                        .ValueGeneratedOnAdd();
+                    b.Property<bool>("IsAvailable");
 
                     b.Property<double?>("Length");
 
@@ -260,6 +257,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperatingRooms");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomCalendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperatingRoomId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperatingRoomId");
+
+                    b.ToTable("OperatingRoomCalendars");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
@@ -289,6 +315,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasIndex("OperatingRoomId");
 
                     b.ToTable("OperatingRoomEquipments");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomOperationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperatingRoomId");
+
+                    b.Property<int>("OperationTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperatingRoomId");
+
+                    b.HasIndex("OperationTypeId");
+
+                    b.ToTable("OperatingRoomOperationTypes");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationType", b =>
@@ -321,6 +376,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("OperationTypes");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperationTypeEquipment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("EquipmentId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperationTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.HasIndex("OperationTypeId");
+
+                    b.ToTable("OperationTypeEquipments");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
@@ -366,6 +450,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("Personnels");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelBranch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BranchId");
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("PersonnelId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("PersonnelBranches");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelTitle", b =>
                 {
                     b.Property<int>("Id")
@@ -396,8 +509,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccessFailedCount");
 
@@ -408,6 +522,10 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -473,15 +591,15 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("WorkTypes");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.User")
                         .WithMany()
@@ -489,7 +607,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.User")
                         .WithMany()
@@ -497,9 +615,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -510,7 +628,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.User")
                         .WithMany()
@@ -533,6 +651,14 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomCalendar", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom", "OperatingRoom")
+                        .WithMany()
+                        .HasForeignKey("OperatingRoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomEquipment", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.Equipment", "Equipment")
@@ -546,11 +672,37 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperatingRoomOperationType", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom", "OperatingRoom")
+                        .WithMany("OperatingRoomOperationTypes")
+                        .HasForeignKey("OperatingRoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.OperationType", "OperationType")
+                        .WithMany("OperatingRoomOperationTypes")
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationType", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.Branch", "Branch")
                         .WithMany("OperationTypes")
                         .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperationTypeEquipment", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.Equipment", "Equipment")
+                        .WithMany("OperationTypeEquipment")
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.OperationType", "OperationType")
+                        .WithMany("OperationTypeEquipment")
+                        .HasForeignKey("OperationTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -564,6 +716,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.WorkType", "WorkType")
                         .WithMany("Personnels")
                         .HasForeignKey("WorkTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelBranch", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.Branch", "Branch")
+                        .WithMany("PersonnelBranches")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.Personnel", "Personnel")
+                        .WithMany("PersonnelBranches")
+                        .HasForeignKey("PersonnelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -25,8 +25,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>OperatingRoomOutputModel list</returns>
         [Route("OperatingRoom/GetOperatingRooms")]
-        [HttpPost]
-        public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms(GridInputModel input)
         {
             return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
         }
@@ -68,7 +68,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperatingRoom(int id)
         {
-            return await _operatingRoomStoreService.DeleteByIdAsync(id);
+            return await _operatingRoomStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -78,9 +78,30 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>OperatingRoomModel</returns>
         [Route("OperatingRoom/UpdateOperatingRoom")]
         [HttpPost]
-        public async Task<ResultModel<OperatingRoomModel>> UpdateOperatingRoom([FromBody] OperatingRoomInputModel item)
-        {   
-            return await _operatingRoomStoreService.UpdateAndSaveOperatingRoomAsync(item);
+        public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoom([FromBody] OperatingRoomInputModel item)
+        {
+            var model = new OperatingRoomModel()
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Location = item.Location,
+                Width = item.Width,
+                Height = item.Height,
+                Length = item.Length
+            };
+
+            if (item.Equipments != null)
+            {
+               var result =  await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+
+                if (!result.Info.Succeeded)
+                {
+                    return result;
+                }
+            }
+
+            return await _operatingRoomStoreService.UpdateAndSaveAsync<OperatingRoomOutputModel>(model);
         }
     }
 }

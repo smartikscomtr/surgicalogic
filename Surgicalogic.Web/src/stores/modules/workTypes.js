@@ -37,8 +37,10 @@ const workTypesModule = {
   getters: {},
 
   actions: {
-    getWorkTypes(context,payload) {
-      axios.post('WorkType/GetWorkTypes', payload)
+    getWorkTypes(context,params) {
+      axios.get('WorkType/GetWorkTypes', {
+        params: params
+      })
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setWorkTypes', response.data) //Set the Work Type in the store

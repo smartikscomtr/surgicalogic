@@ -8,7 +8,6 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -35,8 +34,10 @@
 </template>
 
 <script>
+import {gridMixin} from './../../mixins/gridMixin'
 
 export default {
+  mixins: [gridMixin],
   data() {
     const vm = this;
 
@@ -49,7 +50,6 @@ export default {
       detailAction: {},
       editAction: { operatingRoomEquipments : [] },
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
@@ -133,42 +133,6 @@ export default {
   },
 
   methods: {
-    detail(payload) {
-      const vm = this;
-
-      vm.detailDialog = true;
-      vm.detailAction = payload;
-    },
-
-    edit(payload){
-      const vm = this;
-
-      vm.editDialog = true;
-      vm.editedIndex = vm.operatingRooms.indexOf(payload);
-      vm.editAction = payload;
-    },
-
-    cancel() {
-      const vm = this;
-
-      vm.detailDialog = false;
-      vm.editDialog = false;
-      vm.deleteDialog = false;
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.editDialog = true;
-    },
-
-    deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
-	    vm.deleteDialog = true;
-    },
-
     getMethodName(){
       return "getOperatingRooms";
     },

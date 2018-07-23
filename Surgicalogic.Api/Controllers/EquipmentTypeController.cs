@@ -24,8 +24,8 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <returns>EquipmentTypeOutputModel list</returns>
         [Route("EquipmentType/GetEquipmentTypes")]
-        [HttpPost]
-        public async Task<ResultModel<EquipmentTypeOutputModel>> GetEquipmentTypes([FromBody]GridInputModel input)
+        [HttpGet]
+        public async Task<ResultModel<EquipmentTypeOutputModel>> GetEquipmentTypes(GridInputModel input)
         {
             return await _equipmentTypeStoreService.GetAsync<EquipmentTypeOutputModel>(input);
         }
@@ -63,7 +63,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteEquipmentType(int id)
         {
-            return await _equipmentTypeStoreService.DeleteByIdAsync(id);
+            return await _equipmentTypeStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>EquipmentTypeModel</returns>
         [Route("EquipmentType/UpdateEquipmentType")]
         [HttpPost]
-        public async Task<ResultModel<EquipmentTypeModel>> UpdateEquipmentType([FromBody] EquipmentTypeInputModel item)
+        public async Task<ResultModel<EquipmentTypeOutputModel>> UpdateEquipmentType([FromBody] EquipmentTypeInputModel item)
         {
             var equipmentTypeItem = new EquipmentTypeModel()
             {
@@ -82,7 +82,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description
             };
 
-            return await _equipmentTypeStoreService.UpdateAndSaveAsync(equipmentTypeItem);
+            return await _equipmentTypeStoreService.UpdateAndSaveAsync<EquipmentTypeOutputModel>(equipmentTypeItem);
         }
     }
 }

@@ -12,7 +12,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -26,7 +27,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -40,7 +42,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,7 +138,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -155,7 +159,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -177,7 +181,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,8 +198,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -218,7 +222,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -257,6 +261,32 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_Equipments_EquipmentTypes_EquipmentTypeId",
                         column: x => x.EquipmentTypeId,
                         principalTable: "EquipmentTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OperatingRoomCalendars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperatingRoomCalendars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomCalendars_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -379,6 +409,99 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PersonnelBranches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    PersonnelId = table.Column<int>(nullable: false),
+                    BranchId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonnelBranches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonnelBranches_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonnelBranches_Personnels_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "Personnels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OperatingRoomOperationTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false),
+                    OperationTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperatingRoomOperationTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomOperationTypes_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomOperationTypes_OperationTypes_OperationTypeId",
+                        column: x => x.OperationTypeId,
+                        principalTable: "OperationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OperationTypeEquipments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OperationTypeId = table.Column<int>(nullable: false),
+                    EquipmentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationTypeEquipments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperationTypeEquipments_Equipments_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OperationTypeEquipments_OperationTypes_OperationTypeId",
+                        column: x => x.OperationTypeId,
+                        principalTable: "OperationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -429,6 +552,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "EquipmentTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OperatingRoomCalendars_OperatingRoomId",
+                table: "OperatingRoomCalendars",
+                column: "OperatingRoomId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OperatingRoomEquipments_EquipmentId",
                 table: "OperatingRoomEquipments",
                 column: "EquipmentId");
@@ -439,9 +567,39 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "OperatingRoomId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OperatingRoomOperationTypes_OperatingRoomId",
+                table: "OperatingRoomOperationTypes",
+                column: "OperatingRoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperatingRoomOperationTypes_OperationTypeId",
+                table: "OperatingRoomOperationTypes",
+                column: "OperationTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperationTypeEquipments_EquipmentId",
+                table: "OperationTypeEquipments",
+                column: "EquipmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperationTypeEquipments_OperationTypeId",
+                table: "OperationTypeEquipments",
+                column: "OperationTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OperationTypes_BranchId",
                 table: "OperationTypes",
                 column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonnelBranches_BranchId",
+                table: "PersonnelBranches",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonnelBranches_PersonnelId",
+                table: "PersonnelBranches",
+                column: "PersonnelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Personnels_PersonnelTitleId",
@@ -472,10 +630,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "OperatingRoomCalendars");
+
+            migrationBuilder.DropTable(
                 name: "OperatingRoomEquipments");
 
             migrationBuilder.DropTable(
-                name: "OperationTypes");
+                name: "OperatingRoomOperationTypes");
+
+            migrationBuilder.DropTable(
+                name: "OperationTypeEquipments");
+
+            migrationBuilder.DropTable(
+                name: "PersonnelBranches");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -484,16 +651,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Equipments");
-
-            migrationBuilder.DropTable(
                 name: "OperatingRooms");
 
             migrationBuilder.DropTable(
-                name: "Branches");
+                name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "OperationTypes");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTypes");
+
+            migrationBuilder.DropTable(
+                name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "Personnels");

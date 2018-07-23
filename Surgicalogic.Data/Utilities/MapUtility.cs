@@ -19,6 +19,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<Personnel, PersonnelModel>();
             config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
+            config.CreateMap<User, UserModel>();
             config.CreateMap<WorkType, WorkTypeModel>();
             #endregion
 
@@ -26,10 +27,12 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<BranchModel, Branch>();
             config.CreateMap<EquipmentModel, Equipment>();
             config.CreateMap<EquipmentTypeModel, EquipmentType>();
-            config.CreateMap<OperatingRoomModel, OperatingRoom>();
+            config.CreateMap<OperatingRoomModel, OperatingRoom>()
+                .ForMember(src => src.OperatingRoomEquipments, opt => opt.Ignore());
             config.CreateMap<OperationTypeModel, OperationType>();
             config.CreateMap<PersonnelModel, Personnel>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
+            config.CreateMap<UserModel, User>();
             config.CreateMap<WorkTypeModel, WorkType>();
             #endregion
 

@@ -171,9 +171,8 @@ export default {
 
     editItem(item) {
       const vm = this;
-
       //When the edit button is clicked, the event is sent to the grid component
-      vm.$emit('edit', item);
+      vm.$emit('edit', item, vm.items.indexOf(item));
     },
 
     deleteItem(item) {
@@ -200,13 +199,14 @@ export default {
     getSortByField(sortBy) {
       const vm = this;
 
-      for (let index = 0; index < vm.headers.length; index++) {
-        const element = vm.headers[index];
-
-        if (element.value == sortBy) {
-          return element.sortBy ? element.sortBy : sortBy;
+      vm.headers.forEach(element => {
+        if (element.value == sortBy && element.sortBy)
+        {
+          sortBy = element.sortBy;
         }
-      }
+      });
+
+      return sortBy;
     }
   }
 };

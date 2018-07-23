@@ -30,15 +30,20 @@ const branchesModule = {
     },
 
     updateBranch(state, payload) {
-      //state.branches.payload = payload;
+      state.branches.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     }
   },
 
   getters: {},
 
   actions: {
-    getBranches(context,payload) {
-      axios.post('Branch/GetBranches', payload)
+    getBranches(context,params) {
+      axios.get('Branch/GetBranches', {
+        params: params
+      })
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('setBranches', response.data) //Set the Branches in the store
@@ -74,7 +79,7 @@ const branchesModule = {
     updateBranch(context, payload) {
       axios.post('Branch/UpdateBranch', payload)
         .then(response => {
-          //context.commit('updateBranch', {payload}) //Update the Branches in the store
+          context.commit('updateBranch', response.data.result) //Update the Branches in the store
         })
     }
   }
