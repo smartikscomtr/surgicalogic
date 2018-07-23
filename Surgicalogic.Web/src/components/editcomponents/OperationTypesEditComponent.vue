@@ -25,37 +25,43 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranch"
-                          :items="branches"
-                          :label="$t('branches.branch')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectBranch"
+                                :items="branches"
+                                :label="$t('branches.branch')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipment"
-                          :items="equipments"
-                          :label="$t('equipments.equipment')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectEquipment"
+                                :items="equipments"
+                                :label="$t('equipments.equipment')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectOperatingRoom"
-                          :items="operatingRooms"
-                          :label="$t('operatingrooms.operatingRoom')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectOperatingRoom"
+                                :items="operatingRooms"
+                                :label="$t('operatingrooms.operatingRoom')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
+
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectPersonnel"
-                          :items="personnels"
-                          :label="$t('personnel.personnel')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectPersonnel"
+                                :items="personnels"
+                                :label="$t('personnel.personnel')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -236,6 +242,13 @@ export default {
   },
 
   methods: {
+    customFilter (item, queryText, itemText) {
+      const text = item.name.toLowerCase();
+      const searchText = queryText.toLowerCase();
+
+      return text.indexOf(searchText) > -1;
+    },
+
     cancel() {
       const vm = this;
 

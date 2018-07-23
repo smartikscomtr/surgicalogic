@@ -50,15 +50,16 @@
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-select v-model="selectEquipment"
-                          :items="equipments"
-                          :label="$t('equipments.equipments')"
-                          multiple
-                          chips
-                          deletable-chips
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectEquipment"
+                                :items="equipments"
+                                :label="$t('equipments.equipments')"
+                                :filter="customFilter"
+                                multiple
+                                chips
+                                deletable-chips
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
 
@@ -161,6 +162,13 @@ export default {
   },
 
   methods: {
+    customFilter (item, queryText, itemText) {
+      const text = item.name.toLowerCase();
+      const searchText = queryText.toLowerCase();
+
+      return text.indexOf(searchText) > -1;
+    },
+
     cancel() {
       const vm = this;
 

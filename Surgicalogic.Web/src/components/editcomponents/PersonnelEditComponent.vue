@@ -31,30 +31,33 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectPersonnelTitle"
-                          :items="personnelTitles"
-                          :label="$t('personneltitle.personnelTitle')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectPersonnelTitle"
+                                :items="personnelTitles"
+                                :label="$t('personneltitle.personnelTitle')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranch"
+                <v-autocomplete v-model="selectBranch"
                           :items="branches"
                           :label="$t('branches.branch')"
+                          :filter="customFilter"
                           item-text="name"
                           item-value="id">
-                </v-select>
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectWorkType"
-                          :items="workTypes"
-                          :label="$t('worktypes.workType')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectWorkType"
+                                :items="workTypes"
+                                :label="$t('worktypes.workType')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -206,6 +209,13 @@ export default {
   },
 
   methods: {
+    customFilter (item, queryText, itemText) {
+      const text = item.name.toLowerCase();
+      const searchText = queryText.toLowerCase();
+
+      return text.indexOf(searchText) > -1;
+    },
+
     cancel() {
       const vm = this;
 

@@ -20,12 +20,13 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipmentType"
-                          :items="equipmentTypes"
-                          :label="$t('equipmenttypes.equipmentType')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectEquipmentType"
+                                :items="equipmentTypes"
+                                :label="$t('equipmenttypes.equipmentType')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
@@ -142,6 +143,13 @@ export default {
   },
 
   methods: {
+    customFilter (item, queryText, itemText) {
+      const text = item.name.toLowerCase();
+      const searchText = queryText.toLowerCase();
+
+      return text.indexOf(searchText) > -1;
+    },
+
     cancel() {
       const vm = this;
 
