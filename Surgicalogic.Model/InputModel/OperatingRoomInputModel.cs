@@ -14,5 +14,6 @@ namespace Surgicalogic.Model.InputModel
         public Nullable<double> Height { get; set; }
         public Nullable<double> Length { get; set; }        
         public List<int> Equipments { get; set; }
+        public List<int> OperationTypes { get; set; }
     }
 }

@@ -13,10 +13,12 @@ namespace Surgicalogic.Api.Controllers
     public class PersonnelController : Controller
     {
         private readonly IPersonnelStoreService _personnelStoreService;
+        private readonly IPersonnelBranchStoreService _personnelBranchStoreService;
 
-        public PersonnelController(IPersonnelStoreService personnelStoreService)
+        public PersonnelController(IPersonnelStoreService personnelStoreService, IPersonnelBranchStoreService personnelBranchStoreService)
         {
             _personnelStoreService = personnelStoreService;
+            _personnelBranchStoreService = personnelBranchStoreService;
         }
 
         /// <summary>
@@ -55,7 +57,14 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            return await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
+            var result = await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
+
+            if (result.Info.Succeeded)
+            {
+                await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, new int[] { item.BranchId });
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -90,7 +99,14 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            return await _personnelStoreService.UpdateAndSaveAsync<PersonnelOutputModel>(personnelItem);
+            var result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, new int[] { item.BranchId }); 
+
+            if (result.Info.Succeeded)
+            {
+                result = await _personnelStoreService.UpdateAndSaveAsync<PersonnelOutputModel>(personnelItem);
+            }
+
+            return result;
         }
     }
 }

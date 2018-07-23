@@ -14,10 +14,12 @@ namespace Surgicalogic.Api.Controllers
     public class OperatingRoomController : Controller
     {
         private readonly IOperatingRoomStoreService _operatingRoomStoreService;
+        private readonly IOperatingRoomEquipmentStoreService _operatingRoomEquipmentStoreService;
 
-        public OperatingRoomController(IOperatingRoomStoreService operatingRoomStoreService)
+        public OperatingRoomController(IOperatingRoomStoreService operatingRoomStoreService, IOperatingRoomEquipmentStoreService operatingRoomEquipmentStoreService)
         {
             _operatingRoomStoreService = operatingRoomStoreService;
+            _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
         }
 
         /// <summary>
@@ -28,7 +30,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms(GridInputModel input)
         {
-            return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
+            var result = await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
+            return result;
         }
 
         [Route("OperatingRoom/GetAllOperatingRooms")]
@@ -56,7 +59,41 @@ namespace Surgicalogic.Api.Controllers
                 Length = item.Length
             };
 
-            return await _operatingRoomStoreService.InsertAndSaveAsync<OperatingRoomOutputModel>(operatingRoomItem);
+            if (item.Equipments != null && item.Equipments.Count > 0)
+            {
+                bool isEquipmentsRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(item.Equipments.ToArray());
+
+                if (isEquipmentsRelatedToOperatingRoom)
+                {
+                    return new ResultModel<OperatingRoomOutputModel> { Info = new Info { Succeeded = false, InfoType = Model.Enum.InfoType.Error, Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom } };
+                }
+            }            
+
+            var model = await _operatingRoomStoreService.InsertAndSaveAsync<OperatingRoomOutputModel>(operatingRoomItem);
+
+            item.Id = model.Result.Id;
+
+            if (model.Info.Succeeded && item.Equipments != null && item.Equipments.Count > 0)
+            {
+                var result = await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+
+                if (!result.Info.Succeeded)
+                {
+                    return result;
+                }
+            }
+
+            if (model.Info.Succeeded && item.OperationTypes != null && item.OperationTypes.Count > 0)
+            {
+                var result = await _operatingRoomStoreService.UpdateOperatingRoomOperationTypesAsync(item);
+
+                if (!result.Info.Succeeded)
+                {
+                    return result;
+                }
+            }
+
+            return model;
         }
 
         /// <summary>
@@ -93,7 +130,17 @@ namespace Surgicalogic.Api.Controllers
 
             if (item.Equipments != null)
             {
-               var result =  await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+                var result =  await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+
+                if (!result.Info.Succeeded)
+                {
+                    return result;
+                }
+            }
+
+            if (item.OperationTypes != null)
+            {
+                var result = await _operatingRoomStoreService.UpdateOperatingRoomOperationTypesAsync(item);
 
                 if (!result.Info.Succeeded)
                 {

@@ -17,5 +17,6 @@ namespace Surgicalogic.Model.EntityModel
         public Nullable<double> Length { get; set; }
         public bool IsAvailable { get; set; } = true;
         public ICollection<OperatingRoomEquipmentModel> OperatingRoomEquipments { get; set; }
+        public ICollection<OperatingRoomOperationTypeModel> OperatingRoomOperationTypes { get; set; }
     }
 }
