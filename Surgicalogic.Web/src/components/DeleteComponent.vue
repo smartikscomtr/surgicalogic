@@ -9,13 +9,11 @@
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
             <v-layout wrap>
               <div class="flex xs12 sm12 md12">
                 {{ deleteText }}
               </div>
             </v-layout>
-          </v-container>
         </v-card-text>
 
         <v-card-actions>

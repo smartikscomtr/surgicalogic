@@ -5,14 +5,6 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
@@ -20,7 +12,6 @@
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['userName']"
@@ -41,7 +32,6 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>

@@ -7,13 +7,12 @@
         </h2>
 
         <v-container>
-          <v-card-title>
+          <v-card-title class="search-wrap">
             <v-text-field v-model="search"
                           append-icon="search"
                           label="Search"
                           v-on:keyup.enter="filterGrid"
-                          single-line
-                          hide-details>
+                          single-line hide-details>
             </v-text-field>
 
             <v-spacer></v-spacer>
@@ -34,7 +33,8 @@
                         :total-items="totalCount"
                         :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
             <template slot="items" slot-scope="props">
-              <td v-for="(header, i) in headers" :key="i">
+              <td v-for="(header, i) in headers"
+                  :key="i">
                 <template v-if="!header.isAction">
                   {{ props.item[header.value] }}
                 </template>
@@ -50,7 +50,8 @@
                   </v-btn>
 
                   <v-btn v-if="showEdit"
-                         icon class="mx-0"
+                         icon
+                         class="mx-0"
                          @click="editItem(props.item)">
                     <v-icon color="#232222">
                       edit
@@ -83,9 +84,10 @@ export default {
       type: Array,
       required: false,
       default() {
-          return [];
+        return [];
       }
     },
+
     totalCount: {
       type: Number,
       required: false
@@ -119,7 +121,7 @@ export default {
     methodName: {
       type: Function,
       required: true
-    }    
+    }
   },
 
   data() {
@@ -137,12 +139,9 @@ export default {
       handler(newValue, oldValue) {
         const vm = this;
 
-        if (!oldValue.rowsPerPage || (oldValue.rowsPerPage && vm.pagingExecuted))
-        {
+        if (!oldValue.rowsPerPage || (oldValue.rowsPerPage && vm.pagingExecuted)) {
           vm.executeGridOperations();
-        }
-        else
-        {
+        } else {
           vm.pagingExecuted = true;
         }
       }
@@ -152,7 +151,8 @@ export default {
   methods: {
     addNewItem() {
       const vm = this;
-      //When the add new button is clicked, the event is sent to the grid component      
+
+      //When the add new button is clicked, the event is sent to the grid component
       vm.$emit('newaction');
     },
 
@@ -186,195 +186,240 @@ export default {
     executeGridOperations() {
       const vm = this;
 
-      const {
-        sortBy,
-        descending,
-        page,
-        rowsPerPage
-      } = vm.pagination;
+      const { sortBy, descending, page, rowsPerPage } = vm.pagination;
 
       vm.$store.dispatch(vm.methodName(), {
-        currentPage: page,
-        pageSize: rowsPerPage,
-        search: vm.search,
-        sortBy: vm.getSortByField(sortBy),
-        descending: descending
+          currentPage: page,
+          pageSize: rowsPerPage,
+          search: vm.search,
+          sortBy: vm.getSortByField(sortBy),
+          descending: descending
       });
     },
 
-    getSortByField(sortBy)
-    {
+    getSortByField(sortBy) {
       const vm = this;
 
       for (let index = 0; index < vm.headers.length; index++) {
         const element = vm.headers[index];
-        if (element.value == sortBy)
-        {
+
+        if (element.value == sortBy) {
           return element.sortBy ? element.sortBy : sortBy;
         }
-
       }
     }
   }
 };
+
 </script>
 
 <style>
 .grid-card.card {
-    box-shadow: inherit;
-    height: 100vh !important;
+  box-shadow: inherit;
+  height: 100vh !important;
 }
 .grid-card .page-title h2 {
-    padding-left: 16px;
-    padding-top: 20px;
+  padding-left: 24px;
+  padding-top: 20px;
 }
 .datatable__actions {
-    background-color: #f8f8f8 !important;
-    padding-top: 10px;
+  background-color: #f8f8f8 !important;
+  padding-top: 10px;
 }
 .table__overflow {
-    margin-top: 36px;
+  margin-top: 36px;
 }
-table.table thead tr {
-    height: 70px;
+table.v-table thead tr {
+  height: 70px;
 }
-table.table thead th {
-    font-weight: bold;
-    font-size: initial;
+table.v-table thead th {
+  font-weight: bold;
+  font-size: initial;
 }
-table.table thead td {
-    font-weight: 400;
-    font-size: 75%;
+table.v-table thead td {
+  font-weight: 400;
+  font-size: 75%;
 }
-table.table tbody td:last-child {
-    text-align: right;
+table.v-table tbody td:last-child {
+  text-align: right;
 }
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 .headline-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
-.card {
-    background-color: #fff;
-    position: relative;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 12px 42px;
+.v-card {
+  background-color: #fff;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: none;
 }
-.card__title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
+.grid-card.v-card {
+  padding: 0 20px;
 }
-.card__title .flex {
-    padding: 0 20px;
+.v-card__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
 }
-.card__text .flex {
-    padding: 0 20px !important;
+.v-card__title.search-wrap {
+  padding: 16px 0;
+}
+.v-card__title .flex {
+  padding: 0 16px;
+}
+.v-card__text .flex {
+  padding: 0 20px !important;
 }
 .text {
-    flex: 1;
-    font-size: 18px;
-    color: #000;
-    margin: 0;
+  flex: 1;
+  font-size: 18px;
+  color: #000;
+  margin: 0;
 }
 .orange {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    height: 40px;
-    font-size: 15px;
+  padding: 0;
+  margin: 0;
+  min-width: 140px;
+  background-color: #ff7107 !important;
+  height: 40px;
+  font-size: 15px;
 }
-.orange .btn__content {
-    color: #fff;
+.orange .v-btn__content {
+  color: #fff;
 }
 .headline-wrap .btn--active .btn__content:before,
 .headline-wrap .btn:focus .btn__content:before,
 .headline-wrap .btn:hover .btn__content:before {
-    background-color: transparent;
+  background-color: transparent;
 }
 .headline-wrap span.text {
-    margin: 0 10px;
+  /* margin: 0 10px; */
 }
 .headline-wrap .backBtn i {
-    color: #000 !important;
+  color: #000 !important;
 }
-.headline-wrap .btn__content {
-    will-change: box-shadow;
-    -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+.headline-wrap .v-btn__content {
+  will-change: box-shadow;
+  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .label {
-    font-size: 12px;
-    line-height: 1.33;
-    text-align: left;
-    color: #464646;
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: left;
+  color: #464646;
 }
 .value {
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: left;
-    color: #000;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  color: #000;
 }
-.dialog.dialog--active,
-.dialog:not(.dialog--fullscreen) {
-    max-width: 600px;
+.v-dialog.v-dialog--active,
+.v-dialog:not(.v-dialog--fullscreen) {
+  max-width: 600px;
 }
 a {
-    color: #009688;
+  color: #009688;
 }
 .primary {
-    background-color: #009688 !important;
-    border-color: #009688 !important;
+  background-color: #009688 !important;
+  border-color: #009688 !important;
 }
 .primary--text {
-    color: #009688 !important;
+  color: #009688 !important;
 }
 .primary--text input,
 .primary--text textarea {
-    caret-color: #009688 !important;
+  caret-color: #009688 !important;
 }
 .primary--after::after {
-    background: #009688 !important;
+  background: #009688 !important;
 }
 .input-group-checkbox {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .readonly-wrap {
-    flex-direction: column;
+  flex-direction: column;
 }
-.dialog:not(.dialog--fullscreen) {
-    max-height: inherit;
+.input-group.readonly-wrap {
+  margin-bottom: 10px;
 }
-.dialog:not(.dialog--fullscreen) .card__text {
-    max-height: 50vh;
-    overflow-y: auto;
+.v-dialog:not(.dialog--fullscreen) {
+  max-height: inherit;
+}
+.v-dialog:not(.v-dialog--fullscreen) .v-card__text {
+  max-height: 50vh;
+  overflow-y: auto;
 }
 .input-group__selections > div {
-    display: inline-block !important;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
+  display: inline-block !important;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
-table.table tbody td:first-child,
-table.table tbody td:not(:first-child),
-table.table tbody th:first-child,
-table.table tbody th:not(:first-child),
-table.table thead td:first-child,
-table.table thead td:not(:first-child),
-table.table thead th:first-child,
-table.table thead th:not(:first-child) {
-    padding: 0px 15px;
-    white-space: nowrap;
+table.v-table tbody td:first-child,
+table.v-table tbody td:not(:first-child),
+table.v-table tbody th:first-child,
+table.v-table tbody th:not(:first-child),
+table.v-table thead td:first-child,
+table.v-table thead td:not(:first-child),
+table.v-table thead th:first-child,
+table.v-table thead th:not(:first-child) {
+  padding: 0px 15px;
+  white-space: nowrap;
+}
+.navigation i,
+.navigation .v-list__tile__title {
+  color: #fff !important;
+}
+.application .theme--light.v-list .v-list__group__header:hover,
+.application .theme--light.v-list .v-list__tile--highlighted,
+.application .theme--light.v-list .v-list__tile--link:hover,
+.theme--light .v-list .v-list__group__header:hover,
+.theme--light .v-list .v-list__tile--highlighted,
+.theme--light .v-list .v-list__tile--link:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.v-navigation-drawer .v-list {
+  background: #333;
+}
+.v-list__group.v-list__group--active {
+  background: #262626;
+}
+.v-card__title .v-btn__content {
+  color: #fff;
+}
+
+.v-card__title .v-input__slot {
+  width: 80%;
+}
+.v-input__slot {
+  margin-bottom: 0;
+}
+.v-toolbar__content .v-input {
+  position: relative;
+}
+.v-toolbar__content .v-input .v-input__prepend-outer {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+.v-toolbar__content .v-toolbar__title button {
+  margin-left: -11px;
+}
+.v-toolbar__content .v-toolbar__title {
+  overflow: visible;
 }
 </style>
