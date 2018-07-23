@@ -87,7 +87,7 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>Int</returns>
         [Route("User/DeleteUser/{id:int}")]
         [HttpPost]
-        public async Task<ResultModel<int>> DeleteUser(string id)
+        public async Task<ResultModel<int>> DeleteUser(int id)
         {
             return await _userStoreService.DeleteByIdAsync(id);
         }

@@ -101,7 +101,7 @@ namespace Surgicalogic.Api.Controllers
                 }
             }
 
-            return await _operatingRoomStoreService.UpdateAndSaveAsync(model);
+            return await _operatingRoomStoreService.UpdateAndSaveAsync<OperatingRoomOutputModel>(model);
         }
     }
 }

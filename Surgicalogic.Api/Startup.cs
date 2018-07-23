@@ -42,12 +42,16 @@ namespace Surgicalogic.Api
                  builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-           .AddEntityFrameworkStores<DataContext>()
-           .AddDefaultTokenProviders();
+           // services.AddIdentity<User, IdentityRole>(options =>
+           // {
+           //     options.User.RequireUniqueEmail = true;
+           // })
+           //.AddEntityFrameworkStores<DataContext>()
+           //.AddDefaultTokenProviders();
+
+            services.AddIdentity<User, IdentityRole<int>>()
+   .AddEntityFrameworkStores<DataContext>()
+   .AddDefaultTokenProviders();
 
             //remove default claims
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

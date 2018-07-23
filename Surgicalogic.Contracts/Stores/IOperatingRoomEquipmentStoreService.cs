@@ -9,7 +9,7 @@ namespace Surgicalogic.Contracts.Stores
     public interface IOperatingRoomEquipmentStoreService : IStoreService<OperatingRoomEquipment, OperatingRoomEquipmentModel>
     {
         Task<List<OperatingRoomEquipmentModel>> GetByOperatingRoomIdAsync(int operatingRoomId);
-        Task<bool> CheckEquipmentsRelatedOperationRoom(int[] equipmentIds);
+        Task<bool> CheckEquipmentsRelatedToOperationRoom(int[] equipmentIds);
     }
 
 }

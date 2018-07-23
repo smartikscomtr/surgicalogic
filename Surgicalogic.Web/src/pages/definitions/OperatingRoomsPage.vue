@@ -8,7 +8,6 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -51,7 +50,6 @@ export default {
       detailAction: {},
       editAction: { operatingRoomEquipments : [] },
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
@@ -134,7 +132,7 @@ export default {
     }
   },
 
-  methods: {    
+  methods: {
     getMethodName(){
       return "getOperatingRooms";
     },

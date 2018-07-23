@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Surgicalogic.Data.Entities;
 
 namespace Surgicalogic.Data.DbContexts
 {
-    public class DataContext : IdentityDbContext<User>
+    public class DataContext : IdentityDbContext<User, IdentityRole<int>,int>
     {
         /// <summary>
         ///  The entity framework context with a Surgicalogic DbSet 

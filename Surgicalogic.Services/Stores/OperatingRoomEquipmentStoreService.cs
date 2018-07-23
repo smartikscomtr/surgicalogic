@@ -24,7 +24,7 @@ namespace Surgicalogic.Services.Stores
            return await GetQueryable().Where(x => x.OperatingRoomId == operatingRoomId).ProjectTo<OperatingRoomEquipmentModel>().ToListAsync();
         }
 
-        public async Task<bool> CheckEquipmentsRelatedOperationRoom(int[] equipmentIds)
+        public async Task<bool> CheckEquipmentsRelatedToOperationRoom(int[] equipmentIds)
         {
             return await GetQueryable().AnyAsync(x => equipmentIds.Contains(x.EquipmentId));
         }

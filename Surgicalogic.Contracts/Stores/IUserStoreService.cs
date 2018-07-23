@@ -13,7 +13,7 @@ namespace Surgicalogic.Contracts.Stores
         Task<ResultModel<UserOutputModel>> GetAsync<UserOutputModel>();
         Task<ResultModel<UserModel>> InsertAndSaveAsync(UserModel userModel);
         Task<ResultModel<UserOutputModel>> InsertAndSaveAsync<UserOutputModel>(UserModel userModel);
-        Task<ResultModel<int>> DeleteByIdAsync(string id);
+        Task<ResultModel<int>> DeleteByIdAsync(int id);
         Task<ResultModel<UserModel>> UpdateAndSaveAsync(UserModel userModel);
     }
 }

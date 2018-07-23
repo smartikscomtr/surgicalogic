@@ -6,6 +6,7 @@ using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Services.Stores.Base;
 using System;
 using System.Linq;
@@ -27,9 +28,9 @@ namespace Surgicalogic.Services.Stores
             _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
         }
 
-        public async Task<ResultModel<OperatingRoomModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)
+        public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)
         {
-            var result = new ResultModel<OperatingRoomModel>
+            var result = new ResultModel<OperatingRoomOutputModel>
             {
                 Info = new Info
                 {
@@ -42,9 +43,9 @@ namespace Surgicalogic.Services.Stores
             var addedEquipments = item.Equipments.Except(equipmentIds);
             var removedEquipments = equipmentIds.Except(item.Equipments);
 
-            bool isAnyEquipmentRelatedOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedOperationRoom(addedEquipments.ToArray());
+            bool isEquipmentRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(addedEquipments.ToArray());
 
-            if (isAnyEquipmentRelatedOperatingRoom)
+            if (isEquipmentRelatedToOperatingRoom)
             {
                 result.Info = new Info
                 {

@@ -8,7 +8,6 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -41,7 +40,6 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0
     };
@@ -95,9 +93,9 @@ export default {
       const vm = this;
 
       vm.editDialog = true;
-      vm.editedIndex = vm.equipmentTypes.indexOf(payload);      
+      vm.editedIndex = vm.equipmentTypes.indexOf(payload);
       vm.editAction =   Object.assign({}, payload);
-      
+
     },
 
     cancel() {
@@ -107,7 +105,7 @@ export default {
       vm.deleteDialog = false;
       setTimeout(() =>{
         vm.editAction = Object.assign({}, {})
-      },300); 
+      },300);
     },
 
     addNewItem(){

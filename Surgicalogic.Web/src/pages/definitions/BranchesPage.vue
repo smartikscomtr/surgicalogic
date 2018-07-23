@@ -8,7 +8,6 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -43,7 +42,6 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination:{},
       totalRowCount:0,
       editedIndex: -1,
       deletePath : 'deleteBranch'
@@ -90,7 +88,7 @@ export default {
     }
   },
 
-  methods: {    
+  methods: {
     getMethodName(){
      return "getBranches"
     },

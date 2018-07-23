@@ -2,7 +2,6 @@
   <div>
     <grid-component :headers="headers"
                     :items="personnels"
-                    :pagination.sync="pagination"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -42,7 +41,6 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination:{},
       totalRows:0,
       editedIndex: -1,
       personnelTitleLoadOnce: true,
@@ -141,7 +139,7 @@ export default {
     }
   },
 
-  methods: {    
+  methods: {
     getMethodName(){
       return "getPersonnels";
     },

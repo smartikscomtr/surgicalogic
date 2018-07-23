@@ -8,7 +8,6 @@
                     :show-delete="true"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -42,7 +41,6 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
     };
@@ -86,7 +84,7 @@ export default {
     }
   },
 
-  methods: {   
+  methods: {
     getMethodName(){
       return "getWorkTypes"
     },
