@@ -35,7 +35,17 @@
             <template slot="items" slot-scope="props">
               <td v-for="(header, i) in headers"
                   :key="i">
-                <template v-if="!header.isAction">
+                <template v-if="!header.isAction && header.isCheck">
+                  <div v-if="props.item[header.value]">
+                    <v-icon>check</v-icon>
+                  </div>
+
+                  <div v-else>
+                    <v-icon>close</v-icon>
+                  </div>
+                </template>
+
+                <template v-else-if="!header.isAction">
                   {{ props.item[header.value] }}
                 </template>
 

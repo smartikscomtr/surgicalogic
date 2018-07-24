@@ -20,6 +20,12 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['description']"
+                              :label="$t('equipments.description')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete v-model="selectEquipmentType"
                                 :items="equipmentTypes"
                                 :label="$t('equipmenttypes.equipmentType')"
@@ -29,16 +35,10 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('equipments.description')">
-                </v-text-field>
-              </v-flex>
-
               <v-flex xs12 sm6 md6 input-group-checkbox>
                 <v-checkbox v-model="editAction['isPortable']"
                             :label="$t('equipments.portable')"
-                            disabled
+                            :disabled="editIndex > -1"
                             color="primary">
                 </v-checkbox>
               </v-flex>
