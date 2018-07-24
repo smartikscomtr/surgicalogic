@@ -1,7 +1,7 @@
 {
   "addOperationType": "Add Operation Type",
+  "detailOperationType": "Detail Operation Type",
   "editOperationType": "Edit Operation Type",
-  "operationtype": "Operation Type",
-  "operationtypes": "Operation Types",
-  "detailOperationType": "Detail Operation Type"
+  "operationType": "Operation Type",
+  "operationTypes": "Operation Types"
 }

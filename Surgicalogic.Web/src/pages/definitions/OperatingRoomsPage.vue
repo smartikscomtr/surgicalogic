@@ -76,30 +76,6 @@ export default {
           align: 'left'
         },
         {
-          value: 'width',
-          text: vm.$i18n.t('operatingrooms.width'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'height',
-          text: vm.$i18n.t('operatingrooms.height'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'length',
-          text: vm.$i18n.t('operatingrooms.length'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'description',
-          text: vm.$i18n.t('common.description'),
-          sortable: true,
-          align: 'left'
-        },
-        {
           isAction: true,
           sortable: false,
           align: 'right'
@@ -127,7 +103,7 @@ export default {
     //We are accessing getNonPortableEquipments in vuex store
      if(vm.editLoadOnce){
         vm.$store.dispatch('getNonPortableEquipments');
-          vm.$store.dispatch('getAllOperationTypes');
+        vm.$store.dispatch('getAllOperationTypes');
         vm.editLoadOnce = false;
      }
     }

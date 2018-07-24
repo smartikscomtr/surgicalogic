@@ -16,11 +16,95 @@
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
+                    {{ $t('operatingrooms.operatingRoom') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['name'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operatingrooms.location') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['location'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operatingrooms.width') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['width'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operatingrooms.height') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['height'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operatingrooms.length') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['length'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('common.description') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['description'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
                     {{ $t('equipments.equipments') }}
                   </div>
 
                   <div class="value">
-                    {{ detailAction['operatingRoomEquipments.name'] }}
+                    {{ selectEquipment }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operationtypes.operationType') }}
+                  </div>
+
+                  <div class="value">
+                    {{ selectOperationType }}
                   </div>
                 </div>
               </v-flex>
@@ -74,6 +158,52 @@ export default {
         if (!value) {
           vm.$emit('cancel');
         }
+      }
+    },
+
+    selectEquipment: {
+      get() {
+        const vm = this;
+
+        let selectedEquipment = [];
+
+        if (vm.detailAction.operatingRoomEquipments)
+        {
+          vm.detailAction.operatingRoomEquipments.forEach(item => {
+            selectedEquipment.push(item.equipment.id);
+          });
+        }
+
+        return selectedEquipment;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.detailAction.equipmentId = val;
+      }
+    },
+
+    selectOperationType: {
+      get() {
+        const vm = this;
+
+        let selectedOperationTypes = [];
+
+        if (vm.detailAction.operatingRoomOperationTypes)
+        {
+          vm.detailAction.operatingRoomOperationTypes.forEach(item => {
+            selectedOperationTypes.push(item.operationType.id);
+          });
+        }
+
+        return selectedOperationTypes;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.detailAction.operationTypeId = val;
       }
     }
   },
