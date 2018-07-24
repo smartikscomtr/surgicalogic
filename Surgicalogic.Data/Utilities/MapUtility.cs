@@ -17,6 +17,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperatingRoom, OperatingRoomModel>()
                 .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.Equipment.IsPortable == false)); })
                 .ForMember(dest => dest.OperatingRoomOperationTypes, opt => { opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive && x.OperationType.IsActive)); });
+            config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarModel>();
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<OperatingRoomOperationType, OperatingRoomOperationTypeModel>();
             config.CreateMap<OperatingRoomEquipment, OperatingRoomEquipmentModel>();
@@ -34,6 +35,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperatingRoomModel, OperatingRoom>()
                 .ForMember(src => src.OperatingRoomEquipments, opt => opt.Ignore())
                 .ForMember(src => src.OperatingRoomOperationTypes, opt => opt.Ignore());
+            config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendar>();
             config.CreateMap<OperationTypeModel, OperationType>();
             config.CreateMap<OperatingRoomEquipmentModel, OperatingRoomEquipment>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationType>();
@@ -50,6 +52,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentType.Name));
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
+            config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();
             config.CreateMap<PersonnelModel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
