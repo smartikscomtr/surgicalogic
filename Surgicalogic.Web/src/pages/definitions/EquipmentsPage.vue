@@ -78,14 +78,9 @@ export default {
           align: 'left'
         },
         {
+          isCheck: true,
           value: 'isPortable',
           text: vm.$i18n.t('equipments.portable'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'description',
-          text: vm.$i18n.t('equipments.description'),
           sortable: true,
           align: 'left'
         },
