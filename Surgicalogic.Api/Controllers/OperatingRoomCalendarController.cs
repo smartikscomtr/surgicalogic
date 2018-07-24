@@ -19,7 +19,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("OperatingRoomCalendar/Get")]
         [HttpGet]
-        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> Get([FromBody] OperatingRoomCalendarInputModel item)
+        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> Get(OperatingRoomCalendarInputModel item)
         {
             return await _operatingRoomCalendarStoreService.GetByOperatingRoomIdAsync(item.OperatingRoomId);
         }
