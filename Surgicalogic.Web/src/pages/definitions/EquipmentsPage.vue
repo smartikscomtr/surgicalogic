@@ -35,10 +35,13 @@
 
 <script>
 
-import {gridMixin} from './../../mixins/gridMixin'
+import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-   mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -54,7 +57,7 @@ export default {
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
-      deletePath : 'deleteEquipment'
+      deletePath: 'deleteEquipment'
     };
   },
 
@@ -121,8 +124,9 @@ export default {
     getMethodName(){
       return "getEquipments";
     },
+
     deleteMethodName(){
-      return "deleteEquipment"
+      return "deleteEquipment";
     }
   }
 };

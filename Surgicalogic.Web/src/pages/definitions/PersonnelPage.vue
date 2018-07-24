@@ -28,9 +28,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -45,7 +50,8 @@ export default {
       editedIndex: -1,
       personnelTitleLoadOnce: true,
       workTypeLoadOnce: true,
-      branchLoadOnce: true
+      branchLoadOnce: true,
+      deletePath: 'deletePersonnel'
     };
   },
 
@@ -145,15 +151,8 @@ export default {
     },
 
     deleteMethodName(){
-      return "deletePersonnel"
+      return "deletePersonnel";
     }
-  },
-
-  created() {
-    // const vm = this;
-
-    // //We are accessing getPersonnels in vuex store
-    // vm.$store.dispatch('getPersonnels');
   }
 };
 

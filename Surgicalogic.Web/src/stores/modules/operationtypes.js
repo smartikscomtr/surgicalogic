@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const operatingTypeModule = {
+const operationTypeModule = {
   state: {
     totalCount: 0,
     operationTypes: [],
@@ -17,19 +17,19 @@ const operatingTypeModule = {
     },
 
     insertOperationType(state, { item }) {
-      state.operatingTypes.push(item);
+      state.operationTypes.push(item);
     },
 
     deleteOperationType(state, { payload }) {
-      let index = state.operatingTypes.findIndex((item) => {
+      let index = state.operationTypes.findIndex((item) => {
         return item.id === payload.id
       });
 
-      state.operatingTypes.splice(index, 1);
+      state.operationTypes.splice(index, 1);
     },
 
     updateOperationTypes(state, payload) {
-      state.operatingTypes.forEach(element => {
+      state.operationTypes.forEach(element => {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
@@ -77,7 +77,7 @@ const operatingTypeModule = {
     deleteOperationType(context, payload) {
       axios.post('OperationType/DeleteOperationType/' + payload.id)
         .then(response => {
-          if (response.statusText == 'OK') {
+          if (response.data.info.succeeded == true) {
             context.commit('deleteOperationType', { payload }); //Delete the Operation Types in the store
           }
         })
@@ -120,4 +120,4 @@ const operatingTypeModule = {
   }
 }
 
-export default operatingTypeModule;
+export default operationTypeModule;

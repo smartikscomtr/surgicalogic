@@ -29,7 +29,13 @@
 
 <script>
 
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -41,7 +47,8 @@ export default {
       editAction: {},
       deleteValue: {},
       editedIndex: -1,
-      totalRowCount:0
+      totalRowCount:0,
+      deletePath: 'deleteEquipmentType'
     };
   },
 
@@ -84,56 +91,15 @@ export default {
     }
   },
 
-   watch: {
-
-   },
-
   methods: {
-    edit(payload){
-      const vm = this;
-
-      vm.editDialog = true;
-      vm.editedIndex = vm.equipmentTypes.indexOf(payload);
-      vm.editAction =   Object.assign({}, payload);
-
-    },
-
-    cancel() {
-      const vm = this;
-
-      vm.editDialog = false;
-      vm.deleteDialog = false;
-      setTimeout(() =>{
-        vm.editAction = Object.assign({}, {})
-      },300);
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.editDialog = true;
-    },
-
-    deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
-	  vm.deleteDialog = true;
-     },
     getMethodName(){
-      return "getEquipmentTypes"
+      return "getEquipmentTypes";
     },
+
     deleteMethodName(){
-      return "deleteEquipmentType"
+      return "deleteEquipmentType";
     }
-  },
-
-    //created() {
-    // const vm = this;
-
-    // //We are accessing getEquipmentTypes in vuex store
-    // vm.$store.dispatch('getEquipmentTypes');
-  //}
+  }
 };
 
 </script>

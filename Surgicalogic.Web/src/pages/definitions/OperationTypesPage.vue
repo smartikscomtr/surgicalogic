@@ -34,10 +34,13 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -55,7 +58,8 @@ export default {
       branchesLoadOnce: true,
       equipmentsLoadOnce: true,
       operatingRoomsLoadOnce: true,
-      personnelLoadOnce: true
+      personnelLoadOnce: true,
+      deletePath: 'deleteOperationType'
     };
   },
 

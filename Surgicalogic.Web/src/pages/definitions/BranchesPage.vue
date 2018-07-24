@@ -28,10 +28,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -44,7 +48,7 @@ export default {
       deleteValue: {},
       totalRowCount:0,
       editedIndex: -1,
-      deletePath : 'deleteBranch'
+      deletePath: 'deleteBranch'
     };
   },
 
@@ -90,10 +94,11 @@ export default {
 
   methods: {
     getMethodName(){
-     return "getBranches"
+     return "getBranches";
     },
+
     deleteMethodName(){
-      return "deleteBranch"
+      return "deleteBranch";
     }
   }
 };

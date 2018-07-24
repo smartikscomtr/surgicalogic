@@ -28,9 +28,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -43,6 +48,7 @@ export default {
       deleteValue: {},
       editedIndex: -1,
       totalRowCount:0,
+      deletePath: 'deleteWorkType'
     };
   },
 
@@ -86,18 +92,11 @@ export default {
 
   methods: {
     getMethodName(){
-      return "getWorkTypes"
+      return "getWorkTypes";
     },
     deleteMethodName(){
-      return "deleteWorkType"
+      return "deleteWorkType";
     }
-  },
-
-  created() {
-    //const vm = this;
-
-    //We are accessing getWorkTypes in vuex store
-    //vm.$store.dispatch('getWorkTypes');
   }
 };
 
