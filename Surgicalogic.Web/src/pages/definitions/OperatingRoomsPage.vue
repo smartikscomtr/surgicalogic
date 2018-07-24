@@ -48,7 +48,7 @@ export default {
       editDialog: false,
       deleteDialog: false,
       detailAction: {},
-      editAction: { operatingRoomEquipments : [] },
+      editAction: { operatingRoomEquipments : [], operatingRoomOperationTypes:[] },
       deleteValue: {},
       editedIndex: -1,
       totalRowCount:0,
@@ -127,6 +127,7 @@ export default {
     //We are accessing getNonPortableEquipments in vuex store
      if(vm.editLoadOnce){
         vm.$store.dispatch('getNonPortableEquipments');
+          vm.$store.dispatch('getAllOperationTypes');
         vm.editLoadOnce = false;
      }
     }

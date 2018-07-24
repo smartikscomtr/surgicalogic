@@ -18,14 +18,17 @@ namespace Surgicalogic.Services.Stores
     {
         private DataContext _context;
         private IOperatingRoomEquipmentStoreService _operatingRoomEquipmentStoreService;
+        private IOperatingRoomOperationTypeStoreService _operatingRoomOperationTypeStoreService;
 
         public OperatingRoomStoreService(
             DataContext context,
-            IOperatingRoomEquipmentStoreService operatingRoomEquipmentStoreService
+            IOperatingRoomEquipmentStoreService operatingRoomEquipmentStoreService,
+            IOperatingRoomOperationTypeStoreService operatingRoomOperationTypeStoreService
             ) : base(context)
         {
             _context = context;
             _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
+            _operatingRoomOperationTypeStoreService = operatingRoomOperationTypeStoreService;
         }
 
         public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)
@@ -71,7 +74,49 @@ namespace Surgicalogic.Services.Stores
                 await _operatingRoomEquipmentStoreService.DeleteByIdAsync(currentEquipments.First(x => x.OperatingRoomId == item.Id && x.EquipmentId == equipment).Id);
             }
 
-            await _operatingRoomEquipmentStoreService.SaveChangesAsync();
+            try
+            {
+                await _operatingRoomEquipmentStoreService.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return result;
+        }
+
+        public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomOperationTypesAsync(OperatingRoomInputModel item)
+        {
+            var result = new ResultModel<OperatingRoomOutputModel>
+            {
+                Info = new Info
+                {
+                    Succeeded = true
+                }
+            };
+
+            var currentoperationTypes = await _operatingRoomOperationTypeStoreService.GetByOperatingRoomIdAsync(item.Id);
+            var operationTypeIds = currentoperationTypes.Select(x => x.OperationTypeId);
+            var addedOperationTypes = item.OperationTypes.Except(operationTypeIds);
+            var removedOperationTypes = operationTypeIds.Except(item.OperationTypes);
+
+            foreach (var operationTypeId in addedOperationTypes)
+            {
+                await _operatingRoomOperationTypeStoreService.InsertAsync(new OperatingRoomOperationTypeModel
+                {
+                    OperationTypeId = operationTypeId,
+                    OperatingRoomId = item.Id
+                });
+            }
+
+            foreach (var operationType in removedOperationTypes)
+            {
+                await _operatingRoomOperationTypeStoreService.DeleteByIdAsync(currentoperationTypes.First(x => x.OperatingRoomId == item.Id && x.OperationTypeId == operationType).Id);
+            }
+
+            await _operatingRoomOperationTypeStoreService.SaveChangesAsync();
 
             return result;
         }

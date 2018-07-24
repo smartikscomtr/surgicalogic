@@ -62,6 +62,18 @@
                 </v-autocomplete>
               </v-flex>
 
+               <v-flex xs12 sm6 md12>
+                <v-select v-model="selectOperationType"
+                          :items="operationTypes"
+                          :label="$t('operationtypes.operationtype')"
+                          multiple
+                          chips
+                          deletable-chips
+                          item-text="name"
+                          item-value="id">
+                </v-select>
+              </v-flex>
+
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
@@ -132,15 +144,24 @@ export default {
       return vm.$store.state.operatingRoomModule.nonPortableEquipments;
     },
 
+    operationTypes() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomModule.allOperationTypes;
+    },
+
     selectEquipment: {
       get() {
         const vm = this;
 
         let selectedEquipment = [];
-
-        vm.editAction.operatingRoomEquipments.forEach(item => {
-          selectedEquipment.push(item.equipment.id);
-        });
+debugger;
+        if (vm.editAction.operatingRoomEquipments)
+        {
+                vm.editAction.operatingRoomEquipments.forEach(item => {
+                  selectedEquipment.push(item.equipment.id);
+                });
+        }
 
         return selectedEquipment;
       },
@@ -156,6 +177,29 @@ export default {
         // ).name;
 
         vm.editAction.equipmentId = val;
+      }
+    },
+
+       selectOperationType: {
+      get() {
+        const vm = this;
+
+        let selectedOperationTypes = [];
+        debugger
+        if (vm.editAction.operatingRoomOperationTypes)
+        {
+                vm.editAction.operatingRoomOperationTypes.forEach(item => {
+                  selectedOperationTypes.push(item.operationType.id);
+                });
+        }
+
+        return selectedOperationTypes;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.operationTypeId = val;
       }
     }
 
@@ -181,7 +225,6 @@ export default {
       //Edit operating room
       if (vm.editIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
-
         vm.$store.dispatch('updateOperatingRoom', {
           id: vm.editAction.id,
           name: vm.editAction.name,
@@ -191,8 +234,11 @@ export default {
           height: vm.editAction.height,
           length: vm.editAction.length,
           equipments: vm.editAction.equipmentId,
-          operatingRoomEquipments: vm.selectEquipment
+          operatingRoomEquipments: vm.selectEquipment,
+          operationTypes: vm.editAction.operationTypeId,
+          operatingRoomOperationTypes: vm.selectOperationType
         });
+
       }
       //Add operating room
       else {
@@ -204,8 +250,12 @@ export default {
           width: vm.editAction.width,
           height: vm.editAction.height,
           length: vm.editAction.length,
-          operatingRoomEquipments: vm.selectEquipment
+          equipments: vm.editAction.equipmentId,
+          operatingRoomEquipments: vm.selectEquipment,
+          operationTypes: vm.editAction.operationTypeId,
+          operatingRoomOperationTypes: vm.selectOperationType
         });
+
       }
 
       vm.showModal = false;

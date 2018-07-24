@@ -4,13 +4,18 @@ const operatingRoomModule = {
   state: {
     operatingRooms: [],
     totalCount: 0,
-    nonPortableEquipments: []
+    nonPortableEquipments: [],
+    allOperationTypes: []
   },
 
   mutations: {
     setOperatingRooms(state, data) {
       state.operatingRooms = data.result;
       state.totalCount = data.totalCount;
+    },
+
+    setAllOperationTypes(state, data) {
+      state.allOperationTypes = data;
     },
 
     insertOperatingRoom(state, { item }) {
@@ -79,7 +84,14 @@ const operatingRoomModule = {
         .then(response => {
           context.commit("setNonPortableEquipments", response.data.result) //Set the Operating Rooms in the store
         })
-    }
+    },
+
+    getAllOperationTypes(context) {
+      axios.get('OperationType/GetAllOperationTypes')
+          .then(response => {
+            context.commit('setAllOperationTypes', response.data.result) //Set the Operation Types in the store
+        })
+    },
   }
 }
 
