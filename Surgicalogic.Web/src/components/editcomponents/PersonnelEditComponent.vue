@@ -7,6 +7,11 @@
             <span class="text">
               {{ formTitle }}
             </span>
+
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
         </v-card-title>
 

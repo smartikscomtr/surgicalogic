@@ -304,6 +304,9 @@ tr:nth-child(even) {
 .orange .v-btn__content {
   color: #fff;
 }
+.close-wrap{
+  color: #ff7107 !important;
+}
 .headline-wrap .btn--active .btn__content:before,
 .headline-wrap .btn:focus .btn__content:before,
 .headline-wrap .btn:hover .btn__content:before {
