@@ -17,6 +17,7 @@
 
     public enum MessageType
     {
-        EquipmentRelatedToOperatingRoom = 1
+        EquipmentRelatedToOperatingRoom = 1,
+        ModelHasRelationalData = 2
     }
 }

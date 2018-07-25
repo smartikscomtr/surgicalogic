@@ -74,15 +74,7 @@ namespace Surgicalogic.Services.Stores
                 await _operatingRoomEquipmentStoreService.DeleteByIdAsync(currentEquipments.First(x => x.OperatingRoomId == item.Id && x.EquipmentId == equipment).Id);
             }
 
-            try
-            {
-                await _operatingRoomEquipmentStoreService.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            await _operatingRoomEquipmentStoreService.SaveChangesAsync();
 
             return result;
         }

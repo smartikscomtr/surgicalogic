@@ -5,6 +5,7 @@ using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -47,6 +48,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<PersonnelOutputModel>> InsertPersonnel([FromBody] PersonnelInputModel item)
         {
+            var result = new ResultModel<PersonnelOutputModel>();
             var personnelItem = new PersonnelModel()
             {
                 PersonnelCode = item.PersonnelCode,
@@ -57,11 +59,16 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            var result = await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
-
-            if (result.Info.Succeeded)
+            using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {
-                await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, new int[] { item.BranchId });
+                result = await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
+
+                if (result.Info.Succeeded)
+                {
+                    await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, new int[] { item.BranchId });
+                }
+
+                ts.Complete();
             }
 
             return result;
@@ -88,6 +95,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<PersonnelOutputModel>> UpdatePersonnel([FromBody] PersonnelInputModel item)
         {
+            var result = new ResultModel<PersonnelOutputModel>();
+
             var personnelItem = new PersonnelModel()
             {
                 Id = item.Id,
@@ -99,11 +108,16 @@ namespace Surgicalogic.Api.Controllers
                 WorkTypeId = item.WorkTypeId
             };
 
-            var result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, new int[] { item.BranchId }); 
-
-            if (result.Info.Succeeded)
+            using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {
-                result = await _personnelStoreService.UpdateAndSaveAsync<PersonnelOutputModel>(personnelItem);
+                result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, new int[] { item.BranchId });
+
+                if (result.Info.Succeeded)
+                {
+                    result = await _personnelStoreService.UpdateAndSaveAsync<PersonnelOutputModel>(personnelItem);
+                }
+
+                ts.Complete();
             }
 
             return result;
