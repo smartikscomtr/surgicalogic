@@ -2,11 +2,16 @@ import axios from 'axios';
 
 const equipmentTypesModule = {
   state: {
+    loading: false,
     totalCount:0,
     equipmentTypes: []
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setEquipmentTypes(state, data) {
       state.equipmentTypes = data.result;
       state.totalCount = data.totalCount;
@@ -36,12 +41,18 @@ const equipmentTypesModule = {
 
   actions: {
     getEquipmentTypes(context, params) {
+      context.commit('setLoading', true);
+
       axios.get('EquipmentType/GetEquipmentTypes', {
         params: params
-      })
-        .then(response => {
+      }).then(response => {
+        if (response.data.info.succeeded == true){
           context.commit('setEquipmentTypes', response.data) //Set the Equipment Types in the store
-        })
+        }
+
+        context.commit('setLoading', false);
+      })
+
     },
 
     insertEquipmentType(context, payload) {

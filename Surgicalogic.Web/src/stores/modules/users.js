@@ -2,10 +2,16 @@ import axios from 'axios';
 
 const usersModule = {
   state: {
+    loading: false,
+    totalCount: 0,
     users: []
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setUsers(state, users) {
       state.users = users;
     },
@@ -31,12 +37,15 @@ const usersModule = {
 
   actions: {
     getUsers(context) {
-      axios.post('User/GetUsers')
-        .then(response => {
-          if (response.data.info.succeeded == true){
-            context.commit('setUsers', response.data.result) //Set the Users in the store
-          }
-        })
+      context.commit('setLoading', true);
+
+      axios.post('User/GetUsers').then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setUsers', response.data.result) //Set the Users in the store
+        }
+
+        context.commit('setLoading', false);
+      })
     },
 
     insertUser(context, payload) {
@@ -44,7 +53,6 @@ const usersModule = {
         .then(response => {
           if (response.statusText == 'OK') {
             payload.id = response.data;
-
             context.commit('insertUser', { item: response.data.result }) //Insert the User in the store
           }
         })

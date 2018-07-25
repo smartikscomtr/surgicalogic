@@ -29,9 +29,15 @@
 
           <v-data-table :headers="headers"
                         :items="items"
+                        :loading="loading"
                         :pagination.sync="pagination"
                         :total-items="totalCount"
                         :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
+            <v-progress-linear slot="progress"
+                               color="teal"
+                               indeterminate>
+            </v-progress-linear>
+
             <template slot="items" slot-scope="props">
               <td v-for="(header, i) in headers"
                   :key="i">
@@ -98,6 +104,11 @@ export default {
       }
     },
 
+    loading: {
+      type: Boolean,
+      required: false
+    },
+
     totalCount: {
       type: Number,
       required: false
@@ -137,7 +148,6 @@ export default {
   data() {
     return {
       search: '',
-      loading: true,
       dataRows: [],
       pagination: {},
       pagingExecuted: false
@@ -198,11 +208,11 @@ export default {
       const { sortBy, descending, page, rowsPerPage } = vm.pagination;
 
       vm.$store.dispatch(vm.methodName(), {
-          currentPage: page,
-          pageSize: rowsPerPage,
-          search: vm.search,
-          sortBy: vm.getSortByField(sortBy),
-          descending: descending
+        currentPage: page,
+        pageSize: rowsPerPage,
+        search: vm.search,
+        sortBy: vm.getSortByField(sortBy),
+        descending: descending
       });
     },
 
@@ -210,8 +220,7 @@ export default {
       const vm = this;
 
       vm.headers.forEach(element => {
-        if (element.value == sortBy && element.sortBy)
-        {
+        if (element.value == sortBy && element.sortBy) {
           sortBy = element.sortBy;
         }
       });

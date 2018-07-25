@@ -7,6 +7,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -82,6 +83,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.equipmentTypesModule.equipmentTypes;
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.equipmentTypesModule.loading;
     },
 
     getTotalCount() {
