@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const operationTypeModule = {
   state: {
+    loading: false,
     totalCount: 0,
     operationTypes: [],
     allBranches: [],
@@ -11,6 +12,10 @@ const operationTypeModule = {
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setOperationTypes(state, data) {
       state.operationTypes = data.result;
       state.totalCount = data.totalCount;
@@ -56,12 +61,18 @@ const operationTypeModule = {
 
   actions: {
     getOperationTypes(context, params) {
+      context.commit('setLoading', true);
+
       axios.get('OperationType/GetOperationTypes', {
         params: params
+      }).then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setOperationTypes', response.data) //Set the Operation Types in the store
+        }
+
+        context.commit('setLoading', false);
       })
-          .then(response => {
-            context.commit('setOperationTypes', response.data) //Set the Operation Types in the store
-        })
+
     },
 
     insertOperationType(context, payload) {

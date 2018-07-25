@@ -2,12 +2,17 @@ import axios from 'axios';
 
 const branchesModule = {
   state: {
+    loading: false,
+    totalCount: 0,
     branches: [],
     allBranches: [],
-    totalCount: 0,
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setBranches(state, data) {
       state.branches = data.result;
       state.totalCount = data.totalCount;
@@ -41,14 +46,17 @@ const branchesModule = {
 
   actions: {
     getBranches(context,params) {
+      context.commit('setLoading', true);
+
       axios.get('Branch/GetBranches', {
         params: params
+      }).then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setBranches', response.data) //Set the Branches in the store
+        }
+
+        context.commit('setLoading', false);
       })
-        .then(response => {
-          if (response.data.info.succeeded == true){
-            context.commit('setBranches', response.data) //Set the Branches in the store
-          }
-        })
     },
 
     getAllBranches(context) {

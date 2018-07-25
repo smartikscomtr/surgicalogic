@@ -7,6 +7,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -83,6 +84,13 @@ export default {
 
       return vm.$store.state.workTypesModule.workTypes;
     },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.workTypesModule.loading;
+    },
+
     getTotalCount() {
       const vm = this;
 
@@ -94,6 +102,7 @@ export default {
     getMethodName(){
       return "getWorkTypes";
     },
+
     deleteMethodName(){
       return "deleteWorkType";
     }

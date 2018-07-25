@@ -6,6 +6,7 @@
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
                     @detail="detail"
@@ -94,6 +95,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.operationTypeModule.operationTypes;
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.operationTypeModule.loading;
     },
 
     getTotalCount() {

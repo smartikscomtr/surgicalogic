@@ -3,12 +3,17 @@ import axios from 'axios';
 const operatingRoomModule = {
   state: {
     operatingRooms: [],
+    loading: false,
     totalCount: 0,
     nonPortableEquipments: [],
     allOperationTypes: []
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setOperatingRooms(state, data) {
       state.operatingRooms = data.result;
       state.totalCount = data.totalCount;
@@ -46,12 +51,18 @@ const operatingRoomModule = {
 
   actions: {
     getOperatingRooms(context, params) {
+      context.commit('setLoading', true);
+
       axios.get('OperatingRoom/GetOperatingRooms', {
         params: params
-      })
-        .then(response => {
+      }).then(response => {
+        if (response.data.info.succeeded == true){
           context.commit('setOperatingRooms', response.data) //Set the Operating Rooms in the store
+        }
+
+        context.commit('setLoading', false);
       })
+
     },
 
     insertOperatingRoom(context, payload) {

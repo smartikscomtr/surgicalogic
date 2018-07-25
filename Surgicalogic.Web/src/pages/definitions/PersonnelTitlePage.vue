@@ -7,6 +7,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -84,6 +85,12 @@ export default {
       return vm.$store.state.personnelTitleModule.personnelTitle;
     },
 
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.personnelTitleModule.loading;
+    },
+
     getTotalCount() {
       const vm = this;
 
@@ -95,6 +102,7 @@ export default {
     getMethodName(){
       return "getPersonnelTitles";
     },
+
     deleteMethodName(){
       return "deletePersonnelTitle";
     }

@@ -3,10 +3,15 @@ import axios from 'axios';
 const personnelTitleModule = {
   state: {
     personnelTitle: [],
+    loading: false,
     totalCount:0
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setPersonnelTitles(state, data) {
       state.personnelTitle = data.result;
       state.totalCount = data.totalCount;
@@ -36,12 +41,18 @@ const personnelTitleModule = {
 
   actions: {
     getPersonnelTitles(context, params) {
+      context.commit('setLoading', true);
+
       axios.get('PersonnelTitle/GetPersonnelTitles', {
         params: params
-      })
-        .then(response => {
+      }).then(response => {
+        if (response.data.info.succeeded == true){
           context.commit('setPersonnelTitles', response.data) //Set the Personnel Title in the store
-        })
+        }
+
+        context.commit('setLoading', false);
+      })
+
     },
 
     insertPersonnelTitle(context, payload) {

@@ -6,19 +6,23 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :methodName="getMethodName"
+                    :loading="getLoading"
+                    :totalCount="getTotalCount"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
     <users-edit-component :edit-action="editAction"
-                            :edit-visible="editDialog"
-                            :edit-index="editedIndex"
-                            @cancel="cancel">
+                          :edit-visible="editDialog"
+                          :edit-index="editedIndex"
+                          @cancel="cancel">
     </users-edit-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
+                      :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
   </div>
@@ -26,18 +30,29 @@
 
 <script>
 
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
     return {
       title: vm.$i18n.t('users.users'),
       search: '',
+      detailDialog: false,
       editDialog: false,
       deleteDialog: false,
+      detailAction: {},
       editAction: {},
       deleteValue: {},
-      editedIndex: -1
+      editedIndex: -1,
+      totalRowCount:0,
+      editLoadOnce: true,
+      deletePath: 'deleteUser'
     };
   },
 
@@ -71,44 +86,29 @@ export default {
       const vm = this;
 
       return vm.$store.state.usersModule.users;
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.usersModule.loading;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.usersModule.totalCount;
     }
   },
 
   methods: {
-    edit(payload){
-      const vm = this;
-
-      vm.editDialog = true;
-      vm.editedIndex = vm.users.indexOf(payload);
-      vm.editAction = payload;
+    getMethodName(){
+      return "getUsers";
     },
 
-    cancel() {
-      const vm = this;
-
-      vm.editDialog = false;
-      vm.deleteDialog = false;
-    },
-
-    addNewItem(){
-      const vm = this;
-
-      vm.editDialog = true;
-    },
-
-    deleteItem(payload) {
-      const vm = this;
-
-      vm.deleteValue = payload;
-      vm.deleteDialog = true;
+    deleteMethodName(){
+      return "deleteUser";
     }
-  },
-
-  created() {
-    const vm = this;
-
-    //We are accessing getUsers in vuex store
-    vm.$store.dispatch('getUsers');
   }
 }
 
