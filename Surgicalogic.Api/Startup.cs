@@ -123,6 +123,7 @@ namespace Surgicalogic.Api
             services.AddScoped<IOperatingRoomOperationTypeStoreService, OperatingRoomOperationTypeStoreService>();
             services.AddScoped<IOperatingRoomStoreService, OperatingRoomStoreService>();
             services.AddScoped<IOperationTypeStoreService, OperationTypeStoreService>();
+            services.AddScoped<IOperationTypeEquipmentStoreService, OperationTypeEquipmentStoreService>();
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelBranchStoreService, PersonnelBranchStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
