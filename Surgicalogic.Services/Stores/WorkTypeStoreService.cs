@@ -19,17 +19,17 @@ namespace Surgicalogic.Services.Stores
 
         public override async Task<ResultModel<int>> DeleteAndSaveByIdAsync(int id)
         {
-            if (_context.Personnels.Any(x => x.WorkTypeId == id && x.IsActive))
-            {
-                return new ResultModel<int>
-                {
-                    Info = new Info
-                    {
-                        InfoType = Model.Enum.InfoType.Error,
-                        Message = Model.Enum.MessageType.ModelHasRelationalData
-                    }
-                };
-            }
+            //if (_context.Personnels.Any(x => x.WorkTypeId == id && x.IsActive))
+            //{
+            //    return new ResultModel<int>
+            //    {
+            //        Info = new Info
+            //        {
+            //            InfoType = Model.Enum.InfoType.Error,
+            //            Message = Model.Enum.MessageType.ModelHasRelationalData
+            //        }
+            //    };
+            //}
 
             return await base.DeleteAndSaveByIdAsync(id);
         }

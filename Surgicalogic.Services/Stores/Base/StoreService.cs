@@ -182,15 +182,34 @@ namespace Surgicalogic.Services.Stores.Base
         /// </summary>
         /// <param name="id"></param>
         /// <returns>ResultModel</returns>
-        public virtual async Task<TEntity> DeleteByIdAsync(int id)
+        public virtual async Task<ResultModel<TEntity>> DeleteByIdAsync(int id)
         {
             var entity = await _context.Set<TEntity>().FirstAsync(e => e.Id == id);
+
+            var hasDependentData = await DependentDataService.CheckDependentAttributes(_context, entity.GetType(), id);
+
+            if (hasDependentData)
+            {
+                return new ResultModel<TEntity>
+                {
+                    Result = entity,
+                    Info = new Info {
+                        Succeeded = false,
+                        Message = Model.Enum.MessageType.ModelHasRelationalData,
+                        InfoType = Model.Enum.InfoType.Error
+                    }
+                };
+            }
 
             entity.IsActive = false;
             entity.ModifiedBy = 0;
             entity.ModifiedDate = DateTime.Now;
 
-            return entity;
+            return new ResultModel<TEntity>
+            {
+                Result = entity,
+                Info = new Info()
+            };
         }
 
         /// <summary>
@@ -200,15 +219,23 @@ namespace Surgicalogic.Services.Stores.Base
         /// <returns>ResultModel</returns>
         public virtual async Task<ResultModel<int>> DeleteAndSaveByIdAsync(int id)
         {
-            var entity = await DeleteByIdAsync(id);
-
-            await _context.SaveChangesAsync();
-
-            return new ResultModel<int>
+            var result = new ResultModel<int>
             {
                 Result = null,
                 Info = new Info()
             };
+
+            var entity = await DeleteByIdAsync(id);
+
+            if (!entity.Info.Succeeded)
+            {
+                result.Info = entity.Info;
+                return result;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return result;
         }
 
         /// <summary>
