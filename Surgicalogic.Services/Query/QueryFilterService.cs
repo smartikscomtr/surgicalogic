@@ -32,7 +32,7 @@ namespace Surgicalogic.Services.Query
                     property = Expression.Property(parameter, propertyName);
                 }
 
-                Expression target = Expression.Constant(searchText);
+                Expression target = Expression.Constant(searchText.Replace("İ","i").Replace("I","ı"));
                 var lambda = GetContainsLambdaExpression(property, target, parameter, propertyName);
                 result = CombineExpressionsByOr(result, lambda);
             }

@@ -210,11 +210,18 @@ export default {
   },
 
   methods: {
-    customFilter (item, queryText, itemText) {
-      const text = item.name.toLowerCase();
-      const searchText = queryText.toLowerCase();
+     customFilter (item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
 
       return text.indexOf(searchText) > -1;
+    },
+
+    replaceForAutoComplete(text)
+    {
+      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
     },
 
     cancel() {

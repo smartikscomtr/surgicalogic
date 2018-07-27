@@ -150,7 +150,6 @@ export default {
       search: '',
       dataRows: [],
       pagination: {},
-      pagingExecuted: false
     };
   },
 
@@ -159,11 +158,7 @@ export default {
       handler(newValue, oldValue) {
         const vm = this;
 
-        if (!oldValue.rowsPerPage || (oldValue.rowsPerPage && vm.pagingExecuted)) {
-          vm.executeGridOperations();
-        } else {
-          vm.pagingExecuted = true;
-        }
+        vm.executeGridOperations();
       }
     }
   },
@@ -179,7 +174,7 @@ export default {
     filterGrid() {
       const vm = this;
 
-      vm.executeGridOperations();
+      vm.executeGridOperations(true);
     },
 
     detailItem(item) {
@@ -202,8 +197,13 @@ export default {
       vm.$emit('deleteitem', item);
     },
 
-    executeGridOperations() {
+    executeGridOperations(resetPageCount) {
       const vm = this;
+
+      if(resetPageCount)
+      {
+        vm.pagination.page = 1;
+      }
 
       const { sortBy, descending, page, rowsPerPage } = vm.pagination;
 

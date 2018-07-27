@@ -19,6 +19,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.OperatingRoomOperationTypes, opt => { opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive && x.OperationType.IsActive)); });
             config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarModel>();
             config.CreateMap<OperationType, OperationTypeModel>();
+            config.CreateMap<OperationTypeEquipment, OperationTypeEquipmentModel>();
             config.CreateMap<OperatingRoomOperationType, OperatingRoomOperationTypeModel>();
             config.CreateMap<OperatingRoomEquipment, OperatingRoomEquipmentModel>();
             config.CreateMap<Personnel, PersonnelModel>();
@@ -37,6 +38,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(src => src.OperatingRoomOperationTypes, opt => opt.Ignore());
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendar>();
             config.CreateMap<OperationTypeModel, OperationType>();
+            config.CreateMap<OperationTypeEquipmentModel, OperationTypeEquipment>();
             config.CreateMap<OperatingRoomEquipmentModel, OperatingRoomEquipment>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationType>();
             config.CreateMap<PersonnelModel, Personnel>();

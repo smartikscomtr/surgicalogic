@@ -68,15 +68,16 @@
             </v-flex>
 
               <v-flex xs12 sm6 md12>
-              <v-select v-model="selectOperationType"
+              <v-autocomplete v-model="selectOperationType"
                         :items="operationTypes"
                         :label="$t('operationtypes.operationType')"
+                        :filter="customFilter"
                         multiple
                         chips
                         deletable-chips
                         item-text="name"
                         item-value="id">
-              </v-select>
+              </v-autocomplete>
             </v-flex>
 
 
@@ -211,11 +212,18 @@ export default {
   },
 
   methods: {
-    customFilter (item, queryText, itemText) {
-      const text = item.name.toLowerCase();
-      const searchText = queryText.toLowerCase();
+     customFilter (item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
 
       return text.indexOf(searchText) > -1;
+    },
+
+    replaceForAutoComplete(text)
+    {
+      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
     },
 
     cancel() {
