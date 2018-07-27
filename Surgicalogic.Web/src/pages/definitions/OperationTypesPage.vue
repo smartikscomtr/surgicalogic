@@ -35,6 +35,7 @@
 </template>
 
 <script>
+
 import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
@@ -56,10 +57,7 @@ export default {
       deleteValue: {},
       editedIndex: -1,
       totalRowCount:0,
-      branchesLoadOnce: true,
-      equipmentsLoadOnce: true,
-      operatingRoomsLoadOnce: true,
-      personnelLoadOnce: true,
+      editLoadOnce: true,
       deletePath: 'deleteOperationType'
     };
   },
@@ -114,28 +112,12 @@ export default {
    editDialog(){
      const vm = this;
 
-    //We are accessing getAllEquipments in vuex store
-     if(vm.branchesLoadOnce){
+    //We are accessing getAllEquipments, getAllBranches and getAllOperatingRooms in vuex store
+     if(vm.editLoadOnce){
         vm.$store.dispatch('getAllBranches');
-        vm.branchesLoadOnce = false;
-     }
-
-    //We are accessing getAllEquipments in vuex store
-     if(vm.equipmentsLoadOnce){
         vm.$store.dispatch('getAllEquipments');
-        vm.equipmentsLoadOnce = false;
-     }
-
-    //We are accessing getAllEquipmentTypes in vuex store
-     if(vm.operatingRoomsLoadOnce){
         vm.$store.dispatch('getAllOperatingRooms');
-        vm.operatingRoomsLoadOnce = false;
-     }
-
-    //We are accessing getAllPersonnels in vuex store
-     if(vm.personnelLoadOnce){
-        vm.$store.dispatch('getAllPersonnels');
-        vm.personnelLoadOnce = false;
+        vm.branchesLoadOnce = false;
      }
     }
   },
@@ -144,6 +126,7 @@ export default {
     getMethodName(){
       return "getOperationTypes";
     },
+
     deleteMethodName(){
       return "deleteOperationType";
     }

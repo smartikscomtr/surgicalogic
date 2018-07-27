@@ -7,8 +7,7 @@ const operationTypeModule = {
     operationTypes: [],
     allBranches: [],
     allEquipments: [],
-    allOperatingRooms: [],
-    allPersonnels: []
+    allOperatingRooms: []
   },
 
   mutations: {
@@ -50,10 +49,6 @@ const operationTypeModule = {
 
     setAllOperatingRooms(state, payload) {
       state.allOperatingRooms = payload;
-    },
-
-    setAllPersonnels(state, payload) {
-      state.allPersonnels = payload;
     }
   },
 
@@ -104,7 +99,9 @@ const operationTypeModule = {
     getAllBranches(context) {
       axios.get('Branch/GetAllBranches')
         .then(response => {
-          context.commit('setAllBranches', response.data.result) //Set the All Branches in the store
+          if (response.data.info.succeeded == true){
+            context.commit('setAllBranches', response.data.result) //Set the All Branches in the store
+          }
         })
     },
 
@@ -120,13 +117,6 @@ const operationTypeModule = {
         .then(response => {
           context.commit('setAllOperatingRooms', response.data.result) //Set the All Operating Rooms in the store
         })
-    },
-
-    getAllPersonnels(context) {
-      axios.get('Personnel/GetAllPersonnels')
-      .then(response => {
-        context.commit('setAllPersonnels', response.data.result) //Set the All Personnels in the store
-      })
     }
   }
 }

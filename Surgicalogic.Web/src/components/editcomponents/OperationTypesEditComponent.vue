@@ -18,18 +18,19 @@
 
         <v-card-text>
             <v-layout wrap>
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('operationtypes.operationtype')">
                 </v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
+
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete v-model="selectBranch"
                                 :items="branches"
                                 :label="$t('branches.branch')"
@@ -39,7 +40,7 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete v-model="selectEquipment"
                                 :items="equipments"
                                 :label="$t('equipments.equipment')"
@@ -49,20 +50,10 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-autocomplete v-model="selectOperatingRoom"
                                 :items="operatingRooms"
                                 :label="$t('operatingrooms.operatingRoom')"
-                                :filter="customFilter"
-                                item-text="name"
-                                items-value="id">
-                </v-autocomplete>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectPersonnel"
-                                :items="personnels"
-                                :label="$t('personnel.personnel')"
                                 :filter="customFilter"
                                 item-text="name"
                                 items-value="id">
@@ -143,7 +134,7 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.branchId;
+        return vm.editAction.branchName;
       },
 
       set(val) {
@@ -151,13 +142,13 @@ export default {
 
         vm.editAction.branchName = vm.$store.state.operationTypeModule.allBranches.find(
           item => {
-            if (item.id == val) {
+            if (item.name == val) {
               return item;
             }
           }
         ).name;
 
-        vm.editAction.branchId = val;
+        vm.editAction.branchName = val;
       }
     },
 
@@ -215,34 +206,6 @@ export default {
 
         vm.editAction.operatingRoomId = val;
       }
-    },
-
-    personnels() {
-      const vm = this;
-
-      return vm.$store.state.operationTypeModule.allPersonnels;
-    },
-
-    selectPersonnel: {
-      get() {
-        const vm = this;
-
-        return vm.editAction.personnelId;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.editAction.personnelName = vm.$store.state.operationTypeModule.allPersonnels.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
-
-        vm.editAction.personnelId = val;
-      }
     }
   },
 
@@ -274,10 +237,10 @@ export default {
           description: vm.editAction.description,
           branchId: vm.selectBranch,
           equipmentId: vm.selectEquipment,
-          operatingRoomId: vm.selectOperatingRoom,
-          personnelId: vm.selectPersonnel
+          operatingRoomId: vm.selectOperatingRoom
         });
       }
+
       //Add operation type
       else {
         //We are accessing insertOperationType in vuex store
@@ -289,8 +252,7 @@ export default {
           description: vm.editAction.description,
           branchId: vm.selectBranch,
           equipmentId: vm.selectEquipment,
-          operatingRoomId: vm.selectOperatingRoom,
-          personnelId: vm.selectPersonnel
+          operatingRoomId: vm.selectOperatingRoom
         });
       }
 

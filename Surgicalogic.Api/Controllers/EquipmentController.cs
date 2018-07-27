@@ -30,6 +30,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<EquipmentOutputModel>> GetEquipments(GridInputModel item)
         {
             var result = await _equipmentStoreService.GetAsync<EquipmentOutputModel>(item);
+
             return result;
         }
 

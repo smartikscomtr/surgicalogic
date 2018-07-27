@@ -57,7 +57,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 Name = item.Name,
                 Description = item.Description,
-                //Branch = item.BranchId
+                BranchId = item.BranchId
             };
 
             return await _operationTypeStoreService.InsertAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
@@ -89,7 +89,7 @@ namespace Surgicalogic.Api.Controllers
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
-                //Branch = item.BranchId
+                BranchId = item.BranchId
             };
 
             return await _operationTypeStoreService.UpdateAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);

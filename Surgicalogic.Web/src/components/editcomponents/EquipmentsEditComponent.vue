@@ -175,6 +175,7 @@ export default {
           equipmentTypeId: vm.selectEquipmentType
         });
       }
+
       //Add equipment
       else {
         //We are accessing insertEquipment in vuex store

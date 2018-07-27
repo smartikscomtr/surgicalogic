@@ -17,67 +17,55 @@
         </v-card-title>
 
         <v-card-text>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('operationTypes.operationType') }}
-                  </div>
-
-                  <div class="value">
-                    {{ detailAction['name'] }}
-                  </div>
+          <v-layout wrap>
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('operationTypes.operationType') }}
                 </div>
-              </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('branches.branch') }}
-                  </div>
-
-                  <div class="value">
-                    {{ detailAction['branchName'] }}
-                  </div>
+                <div class="value">
+                  {{ detailAction['name'] }}
                 </div>
-              </v-flex>
+              </div>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('equipments.equipment') }}
-                  </div>
-
-                  <div class="value">
-                    {{ detailAction['equipmentName'] }}
-                  </div>
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('branches.branch') }}
                 </div>
-              </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('operationrooms.operationRoom') }}
-                  </div>
-
-                  <div class="value">
-                    {{ detailAction['operationRoomName'] }}
-                  </div>
+                <div class="value">
+                  {{ detailAction['branchName'] }}
                 </div>
-              </v-flex>
+              </div>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('personnel.personnel') }}
-                  </div>
-
-                  <div class="value">
-                    {{ detailAction['personnelName'] }}
-                  </div>
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('equipments.equipment') }}
                 </div>
-              </v-flex>
-            </v-layout>
+
+                <div class="value">
+                  {{ detailAction['equipmentName'] }}
+                </div>
+              </div>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('operationrooms.operationRoom') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['operationRoomName'] }}
+                </div>
+              </div>
+            </v-flex>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>
