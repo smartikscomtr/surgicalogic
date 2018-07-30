@@ -3,14 +3,24 @@ import axios from 'axios';
 const operatingRoomModule = {
   state: {
     operatingRooms: [],
+    loading: false,
     totalCount: 0,
-    nonPortableEquipments: []
+    nonPortableEquipments: [],
+    allOperationTypes: []
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setOperatingRooms(state, data) {
       state.operatingRooms = data.result;
       state.totalCount = data.totalCount;
+    },
+
+    setAllOperationTypes(state, data) {
+      state.allOperationTypes = data;
     },
 
     insertOperatingRoom(state, { item }) {
@@ -41,22 +51,25 @@ const operatingRoomModule = {
 
   actions: {
     getOperatingRooms(context, params) {
+      context.commit('setLoading', true);
 
       axios.get('OperatingRoom/GetOperatingRooms', {
         params: params
-      })
-        .then(response => {
+      }).then(response => {
+        if (response.data.info.succeeded == true){
           context.commit('setOperatingRooms', response.data) //Set the Operating Rooms in the store
+        }
+
+        context.commit('setLoading', false);
       })
+
     },
 
     insertOperatingRoom(context, payload) {
       axios.post('OperatingRoom/InsertOperatingRoom', payload)
         .then(response => {
-          if (response.statusText == 'OK') {
-            payload.id = response.data;
-
-            context.commit('insertOperatingRoom', { item: payload }) //Insert the Operating Rooms in the store
+          if (response.data.info.succeeded == true) {
+            context.commit('insertOperatingRoom', { item: response.data.result }) //Insert the Operating Rooms in the store
           }
         })
     },
@@ -64,7 +77,7 @@ const operatingRoomModule = {
     deleteOperatingRoom(context, payload) {
       axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
         .then(response => {
-          if (response.statusText == 'OK') {
+          if (response.data.info.succeeded == true) {
             context.commit('deleteOperatingRoom', { payload }); //Delete the Operating Rooms in the store
           }
         })
@@ -82,7 +95,14 @@ const operatingRoomModule = {
         .then(response => {
           context.commit("setNonPortableEquipments", response.data.result) //Set the Operating Rooms in the store
         })
-    }
+    },
+
+    getAllOperationTypes(context) {
+      axios.get('OperationType/GetAllOperationTypes')
+          .then(response => {
+            context.commit('setAllOperationTypes', response.data.result) //Set the Operation Types in the store
+        })
+    },
   }
 }
 

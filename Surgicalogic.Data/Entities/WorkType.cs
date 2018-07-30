@@ -1,4 +1,5 @@
-﻿using Surgicalogic.Data.Entities.Base;
+﻿using Surgicalogic.Common.CustomAttributes;
+using Surgicalogic.Data.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,7 @@ namespace Surgicalogic.Data.Entities
         public string Name { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
+        [Dependent("WorkTypeId")]
         public virtual ICollection<Personnel> Personnels { get; set; }
     }
 }

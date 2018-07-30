@@ -42,12 +42,16 @@ namespace Surgicalogic.Api
                  builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-            })
-           .AddEntityFrameworkStores<DataContext>()
-           .AddDefaultTokenProviders();
+           // services.AddIdentity<User, IdentityRole>(options =>
+           // {
+           //     options.User.RequireUniqueEmail = true;
+           // })
+           //.AddEntityFrameworkStores<DataContext>()
+           //.AddDefaultTokenProviders();
+
+            services.AddIdentity<User, IdentityRole<int>>()
+   .AddEntityFrameworkStores<DataContext>()
+   .AddDefaultTokenProviders();
 
             //remove default claims
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -114,9 +118,14 @@ namespace Surgicalogic.Api
             services.AddScoped<IBranchStoreService, BranchStoreService>();
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
             services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
+            services.AddScoped<IOperatingRoomCalendarStoreService, OperatingRoomCalendarStoreService>();
+            services.AddScoped<IOperatingRoomEquipmentStoreService, OperatingRoomEquipmentStoreService>();
+            services.AddScoped<IOperatingRoomOperationTypeStoreService, OperatingRoomOperationTypeStoreService>();
             services.AddScoped<IOperatingRoomStoreService, OperatingRoomStoreService>();
             services.AddScoped<IOperationTypeStoreService, OperationTypeStoreService>();
+            services.AddScoped<IOperationTypeEquipmentStoreService, OperationTypeEquipmentStoreService>();
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
+            services.AddScoped<IPersonnelBranchStoreService, PersonnelBranchStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
             services.AddScoped<IUserStoreService, UserStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();

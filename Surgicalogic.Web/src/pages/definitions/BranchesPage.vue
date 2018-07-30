@@ -7,8 +7,8 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -29,10 +29,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -43,10 +47,9 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination:{},
       totalRowCount:0,
       editedIndex: -1,
-      deletePath : 'deleteBranch'
+      deletePath: 'deleteBranch'
     };
   },
 
@@ -87,15 +90,22 @@ export default {
      const vm = this;
 
       return vm.$store.state.branchesModule.totalCount;
-    }
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.branchesModule.loading;
+    },
   },
 
-  methods: {    
+  methods: {
     getMethodName(){
-     return "getBranches"
+     return "getBranches";
     },
+
     deleteMethodName(){
-      return "deleteBranch"
+      return "deleteBranch";
     }
   }
 };

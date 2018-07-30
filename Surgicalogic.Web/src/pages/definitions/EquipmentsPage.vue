@@ -7,8 +7,8 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"                    
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -36,10 +36,13 @@
 
 <script>
 
-import {gridMixin} from './../../mixins/gridMixin'
+import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-   mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -52,11 +55,10 @@ export default {
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
-      deletePath : 'deleteEquipment'
+      deletePath: 'deleteEquipment'
     };
   },
 
@@ -74,20 +76,15 @@ export default {
         },
         {
           value:'equipmentTypeName',
-          sortBy:'EquipmentType.Name',
+          sortable:'EquipmentType.Name',
           text: vm.$i18n.t('equipmenttypes.equipmentType'),
           sortable: true,
           align: 'left'
         },
         {
+          isCheck: true,
           value: 'isPortable',
           text: vm.$i18n.t('equipments.portable'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'description',
-          text: vm.$i18n.t('equipments.description'),
           sortable: true,
           align: 'left'
         },
@@ -103,6 +100,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.equipmentModule.equipments;
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.equipmentModule.loading;
     },
 
     getTotalCount() {
@@ -124,12 +127,13 @@ export default {
     }
   },
 
-  methods: {   
+  methods: {
     getMethodName(){
       return "getEquipments";
     },
+
     deleteMethodName(){
-      return "deleteEquipment"
+      return "deleteEquipment";
     }
   }
 };

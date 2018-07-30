@@ -5,27 +5,67 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
+
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-              </v-flex>
-            </v-layout>
-          </v-container>
+          <v-layout wrap>
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('operationTypes.operationType') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['name'] }}
+                </div>
+              </div>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('branches.branch') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['branchName'] }}
+                </div>
+              </div>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('equipments.equipment') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['equipmentName'] }}
+                </div>
+              </div>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6>
+              <div class="input-group readonly-wrap">
+                <div class="label">
+                  {{ $t('operationrooms.operationRoom') }}
+                </div>
+
+                <div class="value">
+                  {{ detailAction['operationRoomName'] }}
+                </div>
+              </div>
+            </v-flex>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>

@@ -7,8 +7,8 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -29,9 +29,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -42,9 +47,9 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
+      deletePath: 'deleteWorkType'
     };
   },
 
@@ -79,6 +84,13 @@ export default {
 
       return vm.$store.state.workTypesModule.workTypes;
     },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.workTypesModule.loading;
+    },
+
     getTotalCount() {
       const vm = this;
 
@@ -86,20 +98,14 @@ export default {
     }
   },
 
-  methods: {   
+  methods: {
     getMethodName(){
-      return "getWorkTypes"
+      return "getWorkTypes";
     },
+
     deleteMethodName(){
-      return "deleteWorkType"
+      return "deleteWorkType";
     }
-  },
-
-  created() {
-    //const vm = this;
-
-    //We are accessing getWorkTypes in vuex store
-    //vm.$store.dispatch('getWorkTypes');
   }
 };
 

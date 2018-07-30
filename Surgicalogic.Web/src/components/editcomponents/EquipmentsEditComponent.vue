@@ -5,22 +5,18 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
+
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
@@ -29,24 +25,25 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipmentType"
-                          :items="equipmentTypes"
-                          :label="$t('equipmenttypes.equipmentType')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('equipments.description')">
                 </v-text-field>
               </v-flex>
 
+              <v-flex xs12 sm6 md12>
+                <v-autocomplete v-model="selectEquipmentType"
+                                :items="equipmentTypes"
+                                :label="$t('equipmenttypes.equipmentType')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
               <v-flex xs12 sm6 md6 input-group-checkbox>
                 <v-checkbox v-model="editAction['isPortable']"
                             :label="$t('equipments.portable')"
-                            disabled
+                            :disabled="editIndex > -1"
                             color="primary">
                 </v-checkbox>
               </v-flex>
@@ -58,7 +55,6 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -90,6 +86,12 @@ export default {
 
   data() {
     return {};
+  },
+
+  watch: {
+    showModal (val) {
+      val || this.cancel()
+    }
   },
 
   computed: {
@@ -146,6 +148,20 @@ export default {
   },
 
   methods: {
+     customFilter (item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
+
+      return text.indexOf(searchText) > -1;
+    },
+
+    replaceForAutoComplete(text)
+    {
+      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
+    },
+
     cancel() {
       const vm = this;
 
@@ -166,6 +182,7 @@ export default {
           equipmentTypeId: vm.selectEquipmentType
         });
       }
+
       //Add equipment
       else {
         //We are accessing insertEquipment in vuex store

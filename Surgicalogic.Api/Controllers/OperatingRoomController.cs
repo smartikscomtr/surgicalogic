@@ -6,6 +6,7 @@ using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -14,10 +15,12 @@ namespace Surgicalogic.Api.Controllers
     public class OperatingRoomController : Controller
     {
         private readonly IOperatingRoomStoreService _operatingRoomStoreService;
+        private readonly IOperatingRoomEquipmentStoreService _operatingRoomEquipmentStoreService;
 
-        public OperatingRoomController(IOperatingRoomStoreService operatingRoomStoreService)
+        public OperatingRoomController(IOperatingRoomStoreService operatingRoomStoreService, IOperatingRoomEquipmentStoreService operatingRoomEquipmentStoreService)
         {
             _operatingRoomStoreService = operatingRoomStoreService;
+            _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
         }
 
         /// <summary>
@@ -28,7 +31,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperatingRoomOutputModel>> GetOperatingRooms(GridInputModel input)
         {
-            return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
+            var result = await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>(input);
+            return result;
         }
 
         [Route("OperatingRoom/GetAllOperatingRooms")]
@@ -46,6 +50,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperatingRoomOutputModel>> InsertOperatingRoom([FromBody] OperatingRoomInputModel item)
         {
+            var model = new ResultModel<OperatingRoomOutputModel>();
+
             var operatingRoomItem = new OperatingRoomModel()
             {
                 Name = item.Name,
@@ -56,7 +62,46 @@ namespace Surgicalogic.Api.Controllers
                 Length = item.Length
             };
 
-            return await _operatingRoomStoreService.InsertAndSaveAsync<OperatingRoomOutputModel>(operatingRoomItem);
+            if (item.Equipments != null && item.Equipments.Count > 0)
+            {
+                bool isEquipmentsRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(item.Equipments.ToArray());
+
+                if (isEquipmentsRelatedToOperatingRoom)
+                {
+                    return new ResultModel<OperatingRoomOutputModel> { Info = new Info { Succeeded = false, InfoType = Model.Enum.InfoType.Error, Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom } };
+                }
+            }
+
+            using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
+            {
+                model = await _operatingRoomStoreService.InsertAndSaveAsync<OperatingRoomOutputModel>(operatingRoomItem);
+
+                item.Id = model.Result.Id;
+
+                if (model.Info.Succeeded && item.Equipments != null && item.Equipments.Count > 0)
+                {
+                    var result = await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+
+                    if (!result.Info.Succeeded)
+                    {
+                        return result;
+                    }
+                }
+
+                if (model.Info.Succeeded && item.OperationTypes != null && item.OperationTypes.Count > 0)
+                {
+                    var result = await _operatingRoomStoreService.UpdateOperatingRoomOperationTypesAsync(item);
+
+                    if (!result.Info.Succeeded)
+                    {
+                        return result;
+                    }
+                }
+
+                ts.Complete();
+            }
+
+            return model;
         }
 
         /// <summary>
@@ -68,7 +113,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperatingRoom(int id)
         {
-            return await _operatingRoomStoreService.DeleteByIdAsync(id);
+            return await _operatingRoomStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>
@@ -80,6 +125,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoom([FromBody] OperatingRoomInputModel item)
         {
+            var result = new ResultModel<OperatingRoomOutputModel>();
             var model = new OperatingRoomModel()
             {
                 Id = item.Id,
@@ -91,10 +137,33 @@ namespace Surgicalogic.Api.Controllers
                 Length = item.Length
             };
 
-            if (item.Equipments != null)            
-                await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);            
-                                                                                          
-            return await _operatingRoomStoreService.UpdateAndSaveAsync<OperatingRoomOutputModel>(model);
+            using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
+            {
+                if (item.Equipments != null)
+                {
+                    result = await _operatingRoomStoreService.UpdateOperatingRoomEquipmentsAsync(item);
+
+                    if (!result.Info.Succeeded)
+                    {
+                        return result;
+                    }
+                }
+
+                if (item.OperationTypes != null)
+                {
+                    result = await _operatingRoomStoreService.UpdateOperatingRoomOperationTypesAsync(item);
+
+                    if (!result.Info.Succeeded)
+                    {
+                        return result;
+                    }
+                }
+
+                result = await _operatingRoomStoreService.UpdateAndSaveAsync<OperatingRoomOutputModel>(model);
+                ts.Complete();
+            }
+
+            return result;
         }
     }
 }

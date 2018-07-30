@@ -4,21 +4,19 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn" flat @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
+
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
+          <v-layout wrap>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['personnelCode']"
                               :label="$t('personnel.personnelCode')">
@@ -38,30 +36,33 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectPersonnelTitle"
-                          :items="personnelTitles"
-                          :label="$t('personneltitle.personnelTitle')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectPersonnelTitle"
+                                :items="personnelTitles"
+                                :label="$t('personneltitle.personnelTitle')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranch"
+                <v-autocomplete v-model="selectBranch"
                           :items="branches"
                           :label="$t('branches.branch')"
+                          :filter="customFilter"
                           item-text="name"
                           item-value="id">
-                </v-select>
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-select v-model="selectWorkType"
-                          :items="workTypes"
-                          :label="$t('worktypes.workType')"
-                          item-text="name"
-                          item-value="id">
-                </v-select>
+                <v-autocomplete v-model="selectWorkType"
+                                :items="workTypes"
+                                :label="$t('worktypes.workType')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -71,7 +72,6 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -214,6 +214,20 @@ export default {
   },
 
   methods: {
+    customFilter (item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
+
+      return text.indexOf(searchText) > -1;
+    },
+
+    replaceForAutoComplete(text)
+    {
+      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
+    },
+
     cancel() {
       const vm = this;
 

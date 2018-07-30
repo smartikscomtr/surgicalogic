@@ -7,6 +7,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
                     
                     @edit="edit"
@@ -29,9 +30,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -45,6 +51,7 @@ export default {
      
       editedIndex: -1,
       totalRowCount:0,
+      deletePath: 'deletePersonnelTitle'
     };
   },
 
@@ -80,6 +87,12 @@ export default {
       return vm.$store.state.personnelTitleModule.personnelTitle;
     },
 
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.personnelTitleModule.loading;
+    },
+
     getTotalCount() {
       const vm = this;
 
@@ -87,12 +100,13 @@ export default {
     }
   },
 
-  methods: {  
+  methods: {
     getMethodName(){
       return "getPersonnelTitles";
     },
+
     deleteMethodName(){
-      return "deletePersonnelTitle"
+      return "deletePersonnelTitle";
     }
   }
 };

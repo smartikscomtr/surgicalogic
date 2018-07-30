@@ -29,8 +29,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<EquipmentOutputModel>> GetEquipments(GridInputModel item)
         {
-            var result = await _equipmentStoreService.GetAsync<EquipmentOutputModel>(item);
-            return result;
+            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>(item);
         }
 
         [Route("Equipment/GetAllEquipments")]
@@ -74,7 +73,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteEquipmentType(int id)
         {
-            return await _equipmentStoreService.DeleteByIdAsync(id);
+            return await _equipmentStoreService.DeleteAndSaveByIdAsync(id);
         }
 
         /// <summary>

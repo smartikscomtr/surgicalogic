@@ -5,66 +5,59 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
+
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('operationtypes.operationtype')">
                 </v-text-field>
               </v-flex>
-              <v-flex xs12 sm6 md6>
+
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('common.description')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="selectBranch"
-                          :items="branches"
-                          :label="$t('branches.branch')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+              <v-flex xs12 sm6 md12>
+                <v-autocomplete v-model="selectBranch"
+                                :items="branches"
+                                :label="$t('branches.branch')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="selectEquipment"
-                          :items="equipments"
-                          :label="$t('equipments.equipment')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+              <v-flex xs12 sm6 md12>
+                <v-autocomplete v-model="selectEquipment"
+                                :items="equipments"
+                                :label="$t('equipments.equipment')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="selectOperatingRoom"
-                          :items="operatingRooms"
-                          :label="$t('operatingrooms.operatingRoom')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
-              </v-flex>
-              <v-flex xs12 sm6 md6>
-                <v-select v-model="selectPersonnel"
-                          :items="personnels"
-                          :label="$t('personnel.personnel')"
-                          item-text="name"
-                          items-value="id">
-                </v-select>
+
+              <v-flex xs12 sm6 md12>
+                <v-autocomplete v-model="selectOperatingRoom"
+                                :items="operatingRooms"
+                                :label="$t('operatingrooms.operatingRoom')"
+                                :filter="customFilter"
+                                item-text="name"
+                                items-value="id">
+                </v-autocomplete>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -74,7 +67,6 @@
                 </v-btn>
               </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -142,7 +134,7 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.branchId;
+        return vm.editAction.branchName;
       },
 
       set(val) {
@@ -150,13 +142,13 @@ export default {
 
         vm.editAction.branchName = vm.$store.state.operationTypeModule.allBranches.find(
           item => {
-            if (item.id == val) {
+            if (item.name == val) {
               return item;
             }
           }
         ).name;
 
-        vm.editAction.branchId = val;
+        vm.editAction.branchName = val;
       }
     },
 
@@ -214,38 +206,24 @@ export default {
 
         vm.editAction.operatingRoomId = val;
       }
-    },
-
-    personnels() {
-      const vm = this;
-
-      return vm.$store.state.operationTypeModule.allPersonnels;
-    },
-
-    selectPersonnel: {
-      get() {
-        const vm = this;
-
-        return vm.editAction.personnelId;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.editAction.personnelName = vm.$store.state.operationTypeModule.allPersonnels.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
-
-        vm.editAction.personnelId = val;
-      }
     }
   },
 
   methods: {
+     customFilter (item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
+
+      return text.indexOf(searchText) > -1;
+    },
+
+    replaceForAutoComplete(text)
+    {
+      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
+    },
+
     cancel() {
       const vm = this;
 
@@ -266,10 +244,10 @@ export default {
           description: vm.editAction.description,
           branchId: vm.selectBranch,
           equipmentId: vm.selectEquipment,
-          operatingRoomId: vm.selectOperatingRoom,
-          personnelId: vm.selectPersonnel
+          operatingRoomId: vm.selectOperatingRoom
         });
       }
+
       //Add operation type
       else {
         //We are accessing insertOperationType in vuex store
@@ -281,8 +259,7 @@ export default {
           description: vm.editAction.description,
           branchId: vm.selectBranch,
           equipmentId: vm.selectEquipment,
-          operatingRoomId: vm.selectOperatingRoom,
-          personnelId: vm.selectPersonnel
+          operatingRoomId: vm.selectOperatingRoom
         });
       }
 

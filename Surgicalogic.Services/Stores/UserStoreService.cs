@@ -113,7 +113,7 @@ namespace Surgicalogic.Services.Stores
         /// </summary>
         /// <param name="id"></param>
         /// <returns>ResultModel</returns>
-        public async Task<ResultModel<int>> DeleteByIdAsync(string id)
+        public async Task<ResultModel<int>> DeleteByIdAsync(int id)
         {
             var entity = await _context.Set<User>().FirstAsync(e => e.Id == id);
 

@@ -58,7 +58,7 @@
                             :key="i"
                             @click="changePages(child.route)">
                   <v-list-tile-action v-if="child.icon">
-                    <v-icon color="primary">
+                    <v-icon>
                       {{ child.icon }}
                     </v-icon>
                   </v-list-tile-action>
@@ -76,7 +76,7 @@
                           :key="item.text"
                           @click="changePages(item.route)">
                 <v-list-tile-action>
-                  <v-icon color="primary">
+                  <v-icon>
                     {{ item.icon }}
                   </v-icon>
                 </v-list-tile-action>
@@ -98,7 +98,7 @@
                   :clipped-left="$vuetify.breakpoint.mdAndUp"
                   fixed>
           <v-toolbar-title style="width: 300px"
-                          class="ml-0 pl-3">
+                          class="ml-0">
             <v-toolbar-side-icon @click.stop="drawer = !drawer">
             </v-toolbar-side-icon>
 
@@ -390,7 +390,6 @@ export default {
 </script>
 
 <style>
-
 .navigation {
   width: 275px;
   transform: translateX(5px);
@@ -411,6 +410,5 @@ export default {
 .grid-card .card__title {
   padding: 0;
 }
-
 </style>
 

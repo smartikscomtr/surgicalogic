@@ -14,4 +14,10 @@
         Warning = 2,
         Info = 3
     }
+
+    public enum MessageType
+    {
+        EquipmentRelatedToOperatingRoom = 1,
+        ModelHasRelationalData = 2
+    }
 }

@@ -5,80 +5,89 @@
       <v-card class="container fluid grid-list-md">
         <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
-            <a class="backBtn"
-               flat
-               @click="cancel">
-              <v-icon>
-                arrow_back
-              </v-icon>
-            </a>
-
             <span class="text">
               {{ formTitle }}
             </span>
+
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
         </v-card-title>
 
         <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('operatingrooms.operatingRoom')">
-                </v-text-field>
-              </v-flex>
+          <v-layout wrap>
+            <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['name']"
+                            :label="$t('operatingrooms.operatingRoom')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['location']"
-                              :label="$t('operatingrooms.location')">
-                </v-text-field>
-              </v-flex>
+            <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['location']"
+                            :label="$t('operatingrooms.location')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editAction['width']"
-                              :label="$t('operatingrooms.width')">
-                </v-text-field>
-              </v-flex>
+            <v-flex xs12 sm6 md4>
+              <v-text-field v-model="editAction['width']"
+                            :label="$t('operatingrooms.width')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editAction['height']"
-                              :label="$t('operatingrooms.height')">
-                </v-text-field>
-              </v-flex>
+            <v-flex xs12 sm6 md4>
+              <v-text-field v-model="editAction['height']"
+                            :label="$t('operatingrooms.height')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editAction['length']"
-                              :label="$t('operatingrooms.length')">
-                </v-text-field>
-              </v-flex>
+            <v-flex xs12 sm6 md4>
+              <v-text-field v-model="editAction['length']"
+                            :label="$t('operatingrooms.length')">
+              </v-text-field>
+            </v-flex>
+
+            <v-flex xs12 sm6 md12>
+              <v-text-field v-model="editAction['description']"
+                            :label="$t('common.description')">
+              </v-text-field>
+            </v-flex>
+
+            <v-flex xs12 sm6 md12>
+              <v-autocomplete v-model="selectEquipment"
+                              :items="equipments"
+                              :label="$t('equipments.equipments')"
+                              :filter="customFilter"
+                              multiple
+                              chips
+                              deletable-chips
+                              item-text="name"
+                              item-value="id">
+              </v-autocomplete>
+            </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('common.description')">
-                </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md12>
-                <v-select v-model="selectEquipment"
-                          :items="equipments"
-                          :label="$t('equipments.equipments')"
-                          multiple
-                          chips
-                          deletable-chips
-                          item-text="name"
-                          item-value="id">
-                </v-select>
-              </v-flex>
+              <v-autocomplete v-model="selectOperationType"
+                        :items="operationTypes"
+                        :label="$t('operationtypes.operationType')"
+                        :filter="customFilter"
+                        multiple
+                        chips
+                        deletable-chips
+                        item-text="name"
+                        item-value="id">
+              </v-autocomplete>
+            </v-flex>
 
 
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-                <v-btn class="btnSave orange"
-                       @click.native="save">
-                  Kaydet
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-container>
+              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+              <v-btn class="btnSave orange"
+                      @click.native="save">
+                Kaydet
+              </v-btn>
+            </v-flex>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -135,10 +144,17 @@ export default {
         }
       }
     },
+
     equipments() {
       const vm = this;
 
       return vm.$store.state.operatingRoomModule.nonPortableEquipments;
+    },
+
+    operationTypes() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomModule.allOperationTypes;
     },
 
     selectEquipment: {
@@ -147,9 +163,12 @@ export default {
 
         let selectedEquipment = [];
 
-        vm.editAction.operatingRoomEquipments.forEach(item => {
-          selectedEquipment.push(item.equipment.id);
-        });
+        if (vm.editAction.operatingRoomEquipments)
+        {
+          vm.editAction.operatingRoomEquipments.forEach(item => {
+            selectedEquipment.push(item.equipment.id);
+          });
+        }
 
         return selectedEquipment;
       },
@@ -166,11 +185,47 @@ export default {
 
         vm.editAction.equipmentId = val;
       }
-    }
+    },
 
+    selectOperationType: {
+      get() {
+        const vm = this;
+
+        let selectedOperationTypes = [];
+
+        if (vm.editAction.operatingRoomOperationTypes)
+        {
+          vm.editAction.operatingRoomOperationTypes.forEach(item => {
+            selectedOperationTypes.push(item.operationType.id);
+          });
+        }
+
+        return selectedOperationTypes;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.operationTypeId = val;
+      }
+    }
   },
 
   methods: {
+     customFilter (item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
+
+      return text.indexOf(searchText) > -1;
+    },
+
+    replaceForAutoComplete(text)
+    {
+      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
+    },
+
     cancel() {
       const vm = this;
 
@@ -183,7 +238,6 @@ export default {
       //Edit operating room
       if (vm.editIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
-
         vm.$store.dispatch('updateOperatingRoom', {
           id: vm.editAction.id,
           name: vm.editAction.name,
@@ -193,8 +247,11 @@ export default {
           height: vm.editAction.height,
           length: vm.editAction.length,
           equipments: vm.editAction.equipmentId,
-          operatingRoomEquipments: vm.selectEquipment
+          operatingRoomEquipments: vm.selectEquipment,
+          operationTypes: vm.editAction.operationTypeId,
+          operatingRoomOperationTypes: vm.selectOperationType
         });
+
       }
       //Add operating room
       else {
@@ -206,7 +263,10 @@ export default {
           width: vm.editAction.width,
           height: vm.editAction.height,
           length: vm.editAction.length,
-          operatingRoomEquipments: vm.selectEquipment
+          equipments: vm.editAction.equipmentId,
+          operatingRoomEquipments: vm.selectEquipment,
+          operationTypes: vm.editAction.operationTypeId,
+          operatingRoomOperationTypes: vm.selectOperationType
         });
       }
 

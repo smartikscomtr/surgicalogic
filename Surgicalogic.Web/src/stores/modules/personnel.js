@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const personnelModule = {
   state: {
+    loading: false,
     totalCount:0,
     personnel: [],
     allBranches: [],
@@ -10,6 +11,10 @@ const personnelModule = {
   },
 
   mutations: {
+    setLoading(state, data) {
+      state.loading = data;
+    },
+
     setPersonnels(state, data) {
       state.personnel = data.result;
       state.totalCount = data.totalCount;
@@ -50,14 +55,18 @@ const personnelModule = {
 
   actions: {
     getPersonnels(context, params) {
+      context.commit('setLoading', true);
+
       axios.get('Personnel/GetPersonnels', {
         params: params
+      }).then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setPersonnels', response.data) //Set the Personnel in the store
+        }
+
+        context.commit('setLoading', false);
       })
-        .then(response => {
-          if (response.data.info.succeeded == true){
-            context.commit('setPersonnels', response.data) //Set the Personnel in the store
-          }
-        })
+
     },
 
     insertPersonnel(context, payload) {

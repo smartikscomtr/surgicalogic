@@ -6,9 +6,9 @@
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
-                    :pagination.sync="pagination"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -35,10 +35,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -49,13 +53,16 @@ export default {
       editDialog: false,
       deleteDialog: false,
       detailAction: {},
-      editAction: { operatingRoomEquipments : [] },
+      editAction: {
+        operatingRoomEquipments : [],
+        operatingRoomOperationTypes:[]
+      },
       deleteValue: {},
-      pagination: {},
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
-      equipmentName: null
+      equipmentName: null,
+      deletePath: 'deleteOperatingRoom'
     }
   },
 
@@ -78,30 +85,6 @@ export default {
           align: 'left'
         },
         {
-          value: 'width',
-          text: vm.$i18n.t('operatingrooms.width'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'height',
-          text: vm.$i18n.t('operatingrooms.height'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'length',
-          text: vm.$i18n.t('operatingrooms.length'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          value: 'description',
-          text: vm.$i18n.t('common.description'),
-          sortable: true,
-          align: 'left'
-        },
-        {
           isAction: true,
           sortable: false,
           align: 'right'
@@ -113,6 +96,12 @@ export default {
       const vm = this;
 
       return vm.$store.state.operatingRoomModule.operatingRooms;
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.equipmentModule.loading;
     },
 
     getTotalCount() {
@@ -129,12 +118,13 @@ export default {
     //We are accessing getNonPortableEquipments in vuex store
      if(vm.editLoadOnce){
         vm.$store.dispatch('getNonPortableEquipments');
+        vm.$store.dispatch('getAllOperationTypes');
         vm.editLoadOnce = false;
      }
     }
   },
 
-  methods: {    
+  methods: {
     getMethodName(){
       return "getOperatingRooms";
     },

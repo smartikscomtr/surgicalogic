@@ -2,12 +2,12 @@
   <div>
     <grid-component :headers="headers"
                     :items="personnels"
-                    :pagination.sync="pagination"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
                     :methodName="getMethodName"
+                    :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
                     @newaction="addNewItem"
@@ -29,9 +29,14 @@
 </template>
 
 <script>
-import {gridMixin} from './../../mixins/gridMixin'
+
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
+
   data() {
     const vm = this;
 
@@ -42,12 +47,12 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-      pagination:{},
       totalRows:0,
       editedIndex: -1,
       personnelTitleLoadOnce: true,
       workTypeLoadOnce: true,
-      branchLoadOnce: true
+      branchLoadOnce: true,
+      deletePath: 'deletePersonnel'
     };
   },
 
@@ -110,6 +115,12 @@ export default {
       return vm.$store.state.personnelModule.personnel;
     },
 
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.personnelModule.loading;
+    },
+
     getTotalCount() {
       const vm = this;
 
@@ -141,20 +152,14 @@ export default {
     }
   },
 
-  methods: {    
+  methods: {
     getMethodName(){
       return "getPersonnels";
     },
+
     deleteMethodName(){
-      return "deletePersonnel"
+      return "deletePersonnel";
     }
-  },
-
-  created() {
-    // const vm = this;
-
-    // //We are accessing getPersonnels in vuex store
-    // vm.$store.dispatch('getPersonnels');
   }
 };
 

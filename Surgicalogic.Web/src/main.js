@@ -32,11 +32,9 @@ Vue.use(Authentication);
 
 // Registering Components
 import GridComponent from '@/components/GridComponent';
-import Loading from '@/components/Loading';
 import OperationDividerComponent from '@/components/OperationDividerComponent';
 
 Vue.component('grid-component', GridComponent);
-Vue.component('loading', Loading);
 Vue.component('operation-divider-component', OperationDividerComponent);
 
 
