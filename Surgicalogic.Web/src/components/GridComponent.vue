@@ -119,9 +119,8 @@ export default {
     methodName: {
       type: Function,
       required: true
-    }
+    }   
   },
-
   data() {
     return {
       search: '',
