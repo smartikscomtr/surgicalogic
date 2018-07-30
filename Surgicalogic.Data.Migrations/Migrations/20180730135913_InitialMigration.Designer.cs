@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180723064619_InitialMigration")]
+    [Migration("20180730135913_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,6 +166,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(100);
 
                     b.Property<int>("CreatedBy");
 
@@ -711,7 +714,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
-                        .WithMany()
+                        .WithMany("Personnels")
                         .HasForeignKey("PersonnelTitleId")
                         .OnDelete(DeleteBehavior.Cascade);
 

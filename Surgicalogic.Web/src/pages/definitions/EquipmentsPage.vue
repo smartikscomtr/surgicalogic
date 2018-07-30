@@ -69,6 +69,12 @@ export default {
       //Columns and actions
       return [
         {
+          value: 'code',
+          text: vm.$i18n.t('equipments.code'),
+          sortable: true,
+          align: 'left'
+        },
+        {
           value: 'name',
           text: vm.$i18n.t('equipments.name'),
           sortable: true,

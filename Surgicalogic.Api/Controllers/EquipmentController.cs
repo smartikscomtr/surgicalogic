@@ -56,6 +56,7 @@ namespace Surgicalogic.Api.Controllers
             var equipmentItem = new EquipmentModel()
             {
                 Name = item.Name,
+                Code = item.Code,
                 Description = item.Description,
                 IsPortable = item.IsPortable,
                 EquipmentTypeId = item.EquipmentTypeId
@@ -89,6 +90,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 Id = item.Id,
                 Name = item.Name,
+                Code = item.Code,
                 Description = item.Description,
                 IsPortable = item.IsPortable,
                 EquipmentTypeId = item.EquipmentTypeId

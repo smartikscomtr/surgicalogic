@@ -8,6 +8,8 @@ namespace Surgicalogic.Model.EntityModel
         [Searchable]
         public string Name { get; set; }
         [Searchable]
+        public string Code { get; set; }
+        [Searchable]
         public string Description { get; set; }
         public int EquipmentTypeId { get; set; }
         public bool IsPortable { get; set; }
