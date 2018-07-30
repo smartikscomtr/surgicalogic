@@ -200,7 +200,7 @@ export default {
     executeGridOperations(resetPageCount) {
       const vm = this;
 
-      if(resetPageCount)
+      if (resetPageCount)
       {
         vm.pagination.page = 1;
       }
