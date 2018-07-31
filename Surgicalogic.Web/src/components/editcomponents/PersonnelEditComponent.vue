@@ -49,6 +49,9 @@
                 <v-autocomplete v-model="selectBranch"
                           :items="branches"
                           :label="$t('branches.branch')"
+                           multiple
+                           chips
+                           deletable-chips
                           :filter="customFilter"
                           item-text="name"
                           item-value="id">
@@ -144,14 +147,6 @@ export default {
       set(val) {
         const vm = this;
 
-        vm.editAction.personnelTitleName = vm.$store.state.personnelModule.allPersonnelTitles.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
-
         vm.editAction.personnelTitleId = val;
       }
     },
@@ -166,19 +161,11 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.branchId;
+        return vm.editAction.branchIds;
       },
 
       set(val) {
         const vm = this;
-
-        vm.editAction.branchName = vm.$store.state.personnelModule.allBranches.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
 
         vm.editAction.branchId = val;
       }
@@ -199,14 +186,6 @@ export default {
 
       set(val) {
         const vm = this;
-
-        vm.editAction.workTypeName = vm.$store.state.personnelModule.allWorkTypes.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
 
         vm.editAction.workTypeId = val;
       }
@@ -245,9 +224,9 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          personnelTitleId: vm.selectPersonnelTitle,
-          branchId: vm.selectBranch,
-          workTypeId: vm.selectWorkType
+          personnelTitleId: vm.editAction.personnelTitleId,
+          branches: vm.editAction.branchId,
+          workTypeId: vm.editAction.workTypeId
         });
       }
       //Add personnel
@@ -257,9 +236,9 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          personnelTitleId: 1,// vm.selectPersonnelTitle,
-          branchId:  1,//vm.selectBranch,
-          workTypeId:  1//vm.selectWorkType
+          personnelTitleId: vm.editAction.personnelTitleId,
+          branches:  vm.editAction.branchId,
+          workTypeId:  vm.editAction.workTypeId
         });
       }
 

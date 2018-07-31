@@ -83,7 +83,7 @@ export default {
         {
           value: 'personnelTitleName',
           sortBy: 'PersonnelTitle.Name',
-          text: vm.$i18n.t('personneltitle.personnelTitle'),
+          text: vm.$i18n.t('personnel.personnelTitle'),
           sortable: true,
           align: "left"
         },

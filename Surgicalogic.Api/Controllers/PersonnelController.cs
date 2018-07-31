@@ -55,7 +55,7 @@ namespace Surgicalogic.Api.Controllers
                 FirstName = item.FirstName,
                 LastName = item.LastName,
                 PersonnelTitleId = item.PersonnelTitleId,
-                BranchId = item.BranchId,
+                BranchId = 1,
                 WorkTypeId = item.WorkTypeId
             };
 
@@ -63,9 +63,9 @@ namespace Surgicalogic.Api.Controllers
             {
                 result = await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
 
-                if (result.Info.Succeeded)
+                if (item.Branches != null && result.Info.Succeeded)
                 {
-                    await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, new int[] { item.BranchId });
+                    await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, item.Branches.ToArray());
                 }
 
                 ts.Complete();
@@ -95,7 +95,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<PersonnelOutputModel>> UpdatePersonnel([FromBody] PersonnelInputModel item)
         {
-            var result = new ResultModel<PersonnelOutputModel>();
+            var result = new ResultModel<PersonnelOutputModel>() { Info = new Info() };
 
             var personnelItem = new PersonnelModel()
             {
@@ -104,13 +104,16 @@ namespace Surgicalogic.Api.Controllers
                 FirstName = item.FirstName,
                 LastName = item.LastName,
                 PersonnelTitleId = item.PersonnelTitleId,
-                BranchId = item.BranchId,
+                BranchId = 1,
                 WorkTypeId = item.WorkTypeId
             };
 
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {
-                result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, new int[] { item.BranchId });
+                if (item.Branches != null)
+                {
+                    result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, item.Branches.ToArray());
+                }
 
                 if (result.Info.Succeeded)
                 {

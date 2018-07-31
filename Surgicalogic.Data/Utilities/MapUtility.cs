@@ -42,7 +42,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationTypeEquipmentModel, OperationTypeEquipment>();
             config.CreateMap<OperatingRoomEquipmentModel, OperatingRoomEquipment>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationType>();
-            config.CreateMap<PersonnelModel, Personnel>();
+            config.CreateMap<PersonnelModel, Personnel>()
+                .ForMember(src => src.PersonnelBranches, opt => opt.Ignore());
             config.CreateMap<PersonnelBranchModel, PersonnelBranch>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
             config.CreateMap<UserModel, User>();
@@ -62,9 +63,10 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.Equipments, opt => opt.MapFrom(src => src.OperationTypeEquipment.Where(x => x.IsActive).Select(x => x.EquipmentId)))
                 .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId)));
             config.CreateMap<PersonnelModel, PersonnelOutputModel>()
-                .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
+                //.ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => src.PersonnelBranches.Select(x => x.Branch.Name).)
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
-                .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name));
+                .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name))
+                .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)));
             config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();
             #endregion

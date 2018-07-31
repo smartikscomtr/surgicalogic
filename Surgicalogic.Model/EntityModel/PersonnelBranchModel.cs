@@ -8,5 +8,7 @@ namespace Surgicalogic.Model.EntityModel
     {
         public int PersonnelId { get; set; }
         public int BranchId { get; set; }
+
+        public BranchModel Branch { get; set; }
     }
 }

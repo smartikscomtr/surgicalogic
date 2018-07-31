@@ -36,6 +36,7 @@
                             :label="$t('equipments.portable')"
                             color="primary">
                 </v-checkbox>
+              </v-flex>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('equipments.description')">
