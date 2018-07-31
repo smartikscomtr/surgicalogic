@@ -1,4 +1,5 @@
 ﻿using Surgicalogic.Common.CustomAttributes;
+using System.Collections.Generic;
 
 namespace Surgicalogic.Model.EntityModel
 {
@@ -15,9 +16,9 @@ namespace Surgicalogic.Model.EntityModel
         public int WorkTypeId { get; set; }
         [Searchable]
         public PersonnelTitleModel PersonnelTitle { get; set; }
-       // [Searchable]
-        public BranchModel Branch { get; set; }
         [Searchable]
         public WorkTypeModel WorkType { get; set; }
+
+        public ICollection<PersonnelBranchModel> PersonnelBranches { get; set; }
     }
 }

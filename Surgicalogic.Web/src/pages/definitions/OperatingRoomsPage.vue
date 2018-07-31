@@ -6,7 +6,7 @@
                     :show-calendar="true"
                     :show-detail="true"
                     :show-edit="true"
-                    :show-delete="true"                    
+                    :show-delete="true"
                     :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
@@ -17,10 +17,10 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <!-- <operating-rooms-calendar-component :calendar-action="calendarAction"
+    <operating-rooms-calendar-component :calendar-action="calendarAction"
                                        :calendar-visible="calendarDialog"
                                        @cancel="cancel">
-    </operating-rooms-calendar-component> -->
+    </operating-rooms-calendar-component>
 
     <operating-rooms-detail-component :detail-action="detailAction"
                                        :detail-visible="detailDialog"
@@ -136,7 +136,7 @@ export default {
   methods: {
     calendar(payload) {
       const vm = this;
-      
+
 
       vm.calendarDialog = true;
       vm.calendarAction = Object.assign({}, payload);;
