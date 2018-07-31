@@ -161,18 +161,20 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.equipmentId;
+         let selectedEquipments = [];
+
+        if (vm.editAction.operatingRoomEquipments)
+        {
+          vm.editAction.operatingRoomEquipments.forEach(item => {
+            selectedEquipments.push(item.equipment.id);
+          });
+        }
+
+        return selectedEquipments;
       },
 
       set(val) {
         const vm = this;
-        // vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.nonPortableEquipments.find(
-        //   item => {
-        //     if (item.id == val) {
-        //       return item;
-        //     }
-        //   }
-        // ).name;
 
         vm.editAction.equipmentId = val;
       }

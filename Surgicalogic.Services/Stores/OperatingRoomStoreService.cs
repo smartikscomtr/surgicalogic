@@ -46,19 +46,19 @@ namespace Surgicalogic.Services.Stores
             var addedEquipments = item.Equipments.Except(equipmentIds);
             var removedEquipments = equipmentIds.Except(item.Equipments);
 
-            bool isEquipmentRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(addedEquipments.ToArray());
+            //bool isEquipmentRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(addedEquipments.ToArray());
 
-            if (isEquipmentRelatedToOperatingRoom)
-            {
-                result.Info = new Info
-                {
-                    Succeeded = false,
-                    InfoType = Model.Enum.InfoType.Error,
-                    Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom
-                };
+            //if (isEquipmentRelatedToOperatingRoom)
+            //{
+            //    result.Info = new Info
+            //    {
+            //        Succeeded = false,
+            //        InfoType = Model.Enum.InfoType.Error,
+            //        Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom
+            //    };
 
-                return result;
-            }
+            //    return result;
+            //}
 
             foreach (var equipmentId in addedEquipments)
             {

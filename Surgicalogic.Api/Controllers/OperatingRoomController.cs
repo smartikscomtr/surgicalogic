@@ -63,16 +63,6 @@ namespace Surgicalogic.Api.Controllers
                 Length = item.Length
             };
 
-            if (item.Equipments != null && item.Equipments.Count > 0)
-            {
-                bool isEquipmentsRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(item.Equipments.ToArray());
-
-                if (isEquipmentsRelatedToOperatingRoom)
-                {
-                    return new ResultModel<OperatingRoomOutputModel> { Info = new Info { Succeeded = false, InfoType = Model.Enum.InfoType.Error, Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom } };
-                }
-            }
-
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {
                 model = await _operatingRoomStoreService.InsertAndSaveAsync<OperatingRoomOutputModel>(operatingRoomItem);
