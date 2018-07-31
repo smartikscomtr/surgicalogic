@@ -9,29 +9,29 @@
               {{ formTitle }}
             </span>
 
-            <v-icon @click="cancel"
-                    class="close-wrap">
-              close
-            </v-icon>
+            <!-- // <v-icon @click="cancel"
+            //         class="close-wrap">
+            //   close
+            // </v-icon> -->
           </div>
         </v-card-title>
 
         <v-card-text>
             <v-layout wrap>
-              
-              
-              
+
+
+
                <v-data-table
-    :headers="headers"
-    :items="operatingRoomCalendar"
-    hide-actions
-    class="elevation-1"
-  >
-    <template slot="items" slot-scope="props">
-      <td>{{ props.item.startdate }}</td>
-      <td>{{ props.item.enddate }}</td>
-    </template>
-  </v-data-table>       
+                :headers="headers"
+                :items="operatingRoomCalendar"
+                hide-actions
+                class="elevation-1"
+              >
+                <template slot="items" slot-scope="props">
+                  <td>{{ props.item.startdate }}</td>
+                  <td>{{ props.item.enddate }}</td>
+                </template>
+              </v-data-table>
 
 
 
@@ -65,7 +65,7 @@ export default {
     return {
       title: vm.$i18n.t('operatingrooms.operatingRooms'),
       deleteValue: {}
-     
+
     };
   },
 
@@ -115,15 +115,15 @@ export default {
 
     operatingRoomCalendar() {
       const vm = this;
-      console.log("asfa")
+
       return vm.$store.state.operatingRoomCalendarModule.operatingRoomCalendar;
     }
 
-   
+
   },
 
   methods: {
-  
+
     getMethodName(){
       return "getOperatingRoomsCalendar";
     },

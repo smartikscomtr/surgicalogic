@@ -88,10 +88,10 @@ export default {
           align: "left"
         },
         {
-          value: 'branchName',
-          sortBy:'Branch.Name',
+          value: 'branchNames',
+          sortBy:'BranchNames',
           text: vm.$i18n.t('branches.branch'),
-          sortable: true,
+          sortable: false,
           align: 'left'
         },
         {
