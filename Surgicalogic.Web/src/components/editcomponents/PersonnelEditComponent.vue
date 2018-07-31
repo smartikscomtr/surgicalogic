@@ -24,6 +24,16 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectPersonnelTitle"
+                                :items="personnelTitles"
+                                :label="$t('personneltitle.personnelTitle')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['firstName']"
                               :label="$t('personnel.firstName')">
                 </v-text-field>
@@ -33,16 +43,6 @@
                 <v-text-field v-model="editAction['lastName']"
                               :label="$t('personnel.lastName')">
                 </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectPersonnelTitle"
-                                :items="personnelTitles"
-                                :label="$t('personneltitle.personnelTitle')"
-                                :filter="customFilter"
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>

@@ -154,7 +154,7 @@ export default {
     methodName: {
       type: Function,
       required: true
-    }   
+    }
   },
   data() {
     return {
@@ -460,5 +460,8 @@ table.v-table thead th:not(:first-child) {
 }
 .v-toolbar__content .v-toolbar__title {
   overflow: visible;
+}
+.v-select.v-select--chips .v-select__selections {
+    min-height: 32px;
 }
 </style>

@@ -6,8 +6,7 @@
   "equipment": "Equipment",
   "equipments": "Equipments",
   "name": "Name",
-  "code": "Code",
-  "equipmentCode":"Equipemt Code",
+  "equipmentCode":"Equipment Code",
   "portable" : "Portablity",
   "type": "Type"
 }

@@ -70,7 +70,7 @@ export default {
       return [
         {
           value: 'code',
-          text: vm.$i18n.t('equipments.code'),
+          text: vm.$i18n.t('equipments.equipmentCode'),
           sortable: true,
           align: 'left'
         },
