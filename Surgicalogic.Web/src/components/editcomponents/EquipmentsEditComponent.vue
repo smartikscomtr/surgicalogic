@@ -30,13 +30,13 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editAction['description']"
                               :label="$t('equipments.description')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm12 md12>
                 <v-autocomplete v-model="selectEquipmentType"
                                 :items="equipmentTypes"
                                 :label="$t('equipmenttypes.equipmentType')"

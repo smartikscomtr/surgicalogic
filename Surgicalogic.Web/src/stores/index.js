@@ -15,6 +15,7 @@ import personnelTitleModule from './modules/personnelTitle';
 import operatingRoomModule from './modules/operatingrooms';
 import usersModule from './modules/users';
 import workTypesModule from './modules/workTypes';
+import operatingRoomCalendarModule from './modules/operatingroomscalendar'
 
 //New Registeration Of Store
 export default new Vuex.Store({
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     personnelTitleModule,
     operatingRoomModule,
     usersModule,
-    workTypesModule
+    workTypesModule,
+    operatingRoomCalendarModule
   }
 });

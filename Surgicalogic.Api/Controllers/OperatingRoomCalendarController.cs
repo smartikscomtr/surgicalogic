@@ -17,16 +17,16 @@ namespace Surgicalogic.Api.Controllers
             _operatingRoomCalendarStoreService = operatingRoomCalendarStoreService;
         }
 
-        [Route("OperatingRoomCalendar/Get")]
+        [Route("OperatingRoomCalendar/GetOperatingRoomCalendar")]
         [HttpGet]
-        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> Get(OperatingRoomCalendarInputModel item)
+        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> GetOperatingRoomCalendar(OperatingRoomCalendarInputModel item)
         {
             return await _operatingRoomCalendarStoreService.GetByOperatingRoomIdAsync(item.OperatingRoomId);
         }
 
-        [Route("OperatingRoomCalendar/Insert")]
+        [Route("OperatingRoomCalendar/InsertOperatingRoomCalendar")]
         [HttpPost]
-        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> Insert([FromBody] OperatingRoomCalendarInputModel item)
+        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> InsertOperatingRoomCalendar([FromBody] OperatingRoomCalendarInputModel item)
         {
             var model = new OperatingRoomCalendarModel
             {
@@ -38,9 +38,9 @@ namespace Surgicalogic.Api.Controllers
             return await _operatingRoomCalendarStoreService.InsertAndSaveAsync<OperatingRoomCalendarOutputModel>(model);
         }
 
-        [Route("OperatingRoomCalendar/Update")]
+        [Route("OperatingRoomCalendar/UpdateOperatingRoomCalendar")]
         [HttpPost]
-        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> Update([FromBody] OperatingRoomCalendarInputModel item)
+        public async Task<ResultModel<OperatingRoomCalendarOutputModel>> UpdateOperatingRoomCalendar([FromBody] OperatingRoomCalendarInputModel item)
         {
             var model = new OperatingRoomCalendarModel
             {
@@ -53,9 +53,9 @@ namespace Surgicalogic.Api.Controllers
             return await _operatingRoomCalendarStoreService.UpdateAndSaveAsync<OperatingRoomCalendarOutputModel>(model);
         }
 
-        [Route("OperatingRoomCalendar/Delete/{id:int}")]
+        [Route("OperatingRoomCalendar/DeleteOperatingRoomCalendar/{id:int}")]
         [HttpPost]
-        public async Task<ResultModel<int>> DeleteOperatingRoom(int id)
+        public async Task<ResultModel<int>> DeleteOperatingRoomCalendar(int id)
         {
             return await _operatingRoomCalendarStoreService.DeleteAndSaveByIdAsync(id);
         }

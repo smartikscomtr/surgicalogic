@@ -37,6 +37,9 @@ import OperationDividerComponent from '@/components/OperationDividerComponent';
 Vue.component('grid-component', GridComponent);
 Vue.component('operation-divider-component', OperationDividerComponent);
 
+// Registering Calendar Rage Components
+import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
+Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent); 
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
