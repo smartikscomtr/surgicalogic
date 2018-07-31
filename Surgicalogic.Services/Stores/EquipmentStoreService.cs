@@ -19,7 +19,7 @@ namespace Surgicalogic.Services.Stores
         private DataContext _context;
         public EquipmentStoreService(DataContext context) : base(context)
         {
-            _context = context;
+            _context = context; 
         }
 
         public async Task<ResultModel<EquipmentOutputModel>> GetNonPortableEquipments()

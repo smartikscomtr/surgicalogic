@@ -6,7 +6,7 @@ namespace Surgicalogic.Model.OutputModel
 {
     public class OperatingRoomEquipmentOutputModel
     {
-        public EquipmentOutputModel Equipment { get; set; }        
+      
 
     }
 }

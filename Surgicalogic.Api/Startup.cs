@@ -159,7 +159,7 @@ namespace Surgicalogic.Api
 
             if (Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
             {
-                DbInitializer.Seed(context);
+               DbInitializer.Seed(context);
             }
 
             BuildAppSettings();

@@ -43,11 +43,11 @@
                   :key="i">
                 <template v-if="!header.isAction && header.isCheck">
                   <div v-if="props.item[header.value]">
-                    <v-icon>check</v-icon>
+                    <v-icon class="green--text">check</v-icon>
                   </div>
 
                   <div v-else>
-                    <v-icon>close</v-icon>
+                    <v-icon class="red--text">close</v-icon>
                   </div>
                 </template>
 
@@ -142,9 +142,8 @@ export default {
     methodName: {
       type: Function,
       required: true
-    }
+    }   
   },
-
   data() {
     return {
       search: '',

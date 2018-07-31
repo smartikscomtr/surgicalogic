@@ -19,18 +19,26 @@
         <v-card-text>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['code']"
+                              :label="$t('equipments.equipmentCode')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('equipments.name')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('equipments.description')">
-                </v-text-field>
+
+              <v-flex xs12 sm6 md6 input-group-checkbox>
+                <v-checkbox v-model="editAction['isPortable']"
+                            :label="$t('equipments.portable')"
+                            color="primary">
+                </v-checkbox>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectEquipmentType"
                                 :items="equipmentTypes"
                                 :label="$t('equipmenttypes.equipmentType')"
@@ -40,12 +48,24 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md6 input-group-checkbox>
-                <v-checkbox v-model="editAction['isPortable']"
-                            :label="$t('equipments.portable')"
-                            :disabled="editIndex > -1"
-                            color="primary">
-                </v-checkbox>
+              <v-flex v-if="!editAction['isPortable']" xs12 sm6 md6>
+                <v-autocomplete v-model="selectOperatingRoom"
+                                :items="operatingRooms"
+                                :label="$t('operatingrooms.operatingRoom')"
+                                :filter="customFilter"
+                                multiple
+                                chips
+                                deletable-chips
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['description']"
+                              :label="$t('equipments.description')">
+                </v-text-field>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -144,6 +164,26 @@ export default {
 
         vm.editAction.equipmentTypeId = val;
       }
+    },
+
+    operatingRooms() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomModule.allOperatingRooms;
+    },
+
+    selectOperatingRoom: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.operatingRoomIds;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.operatingRoomId = val;
+      }
     }
   },
 
@@ -177,9 +217,11 @@ export default {
         vm.$store.dispatch('updateEquipment', {
           id: vm.editAction.id,
           name: vm.editAction.name,
+          code: vm.editAction.code,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
-          equipmentTypeId: vm.selectEquipmentType
+          equipmentTypeId: vm.selectEquipmentType,
+          operatingRoomIds: vm.editAction.operatingRoomId
         });
       }
 
@@ -188,9 +230,11 @@ export default {
         //We are accessing insertEquipment in vuex store
         vm.$store.dispatch('insertEquipment', {
           name: vm.editAction.name,
+          code: vm.editAction.code,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
-          equipmentTypeId: vm.selectEquipmentType
+          equipmentTypeId: vm.selectEquipmentType,
+          operatingRoomIds: vm.editAction.operatingRoomId
         });
       }
 

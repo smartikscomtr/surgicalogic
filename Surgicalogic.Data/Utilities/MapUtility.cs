@@ -52,7 +52,8 @@ namespace Surgicalogic.Data.Utilities
             #region EntityModel to EntityOutputModel
             config.CreateMap<BranchModel, BranchOutputModel>();
             config.CreateMap<EquipmentModel, EquipmentOutputModel>()
-                .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentType.Name));
+                .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentType.Name))
+                .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive).Select(x => x.OperatingRoomId)));
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();

@@ -21,6 +21,18 @@
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
+                    {{ $t('equipments.equipmentCode') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['code'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
                     {{ $t('equipments.equipment') }}
                   </div>
 

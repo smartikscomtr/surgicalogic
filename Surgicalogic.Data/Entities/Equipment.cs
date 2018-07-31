@@ -11,6 +11,8 @@ namespace Surgicalogic.Data.Entities
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+        [StringLength(100)]
+        public string Code { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
         public int EquipmentTypeId { get; set; }
