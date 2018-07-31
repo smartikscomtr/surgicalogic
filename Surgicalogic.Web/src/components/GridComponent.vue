@@ -56,6 +56,15 @@
                 </template>
 
                 <template v-else>
+                  <v-btn v-if="showCalendar"
+                         icon
+                         class="mx-0"
+                         @click="calendarItem(props.item)">
+                    <v-icon color="#232222">
+                      date_range
+                    </v-icon>
+                  </v-btn>
+
                   <v-btn v-if="showDetail"
                          icon
                          class="mx-0"
@@ -123,7 +132,10 @@ export default {
       type: String,
       required: false
     },
-
+    showCalendar :{
+      type:Boolean,
+      required:false
+    },
     showDetail: {
       type: Boolean,
       required: false
@@ -175,7 +187,12 @@ export default {
 
       vm.executeGridOperations(true);
     },
+    calendarItem(item) {
+      const vm = this;
 
+      //When the date range button is clicked, the event is sent to the grid component
+      vm.$emit('calendar', item);
+    },
     detailItem(item) {
       const vm = this;
 
@@ -347,7 +364,8 @@ tr:nth-child(even) {
 }
 .v-dialog.v-dialog--active,
 .v-dialog:not(.v-dialog--fullscreen) {
-  max-width: 600px;
+  max-width: 960px;
+  width:98%;
 }
 a {
   color: #009688;

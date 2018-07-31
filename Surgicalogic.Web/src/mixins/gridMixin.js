@@ -1,5 +1,5 @@
 export const gridMixin = {
-  methods: {
+  methods: {        
     detail(payload) {
       const vm = this;
 
@@ -17,6 +17,7 @@ export const gridMixin = {
     cancel() {
       const vm = this;
 
+      vm.calendarDialog = false;
       vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;

@@ -8,5 +8,6 @@
   "operatingRoom": "Operating Room",
   "operatingRooms": "Operating Rooms",
   "size": "Size",
-  "width": "Width"
+  "width": "Width",
+  "operatingRoomsCalendar": "Operating Room Availability Calendar"
 }

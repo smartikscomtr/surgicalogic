@@ -114,7 +114,7 @@ const operatingRoomModule = {
           .then(response => {
             context.commit('setAllOperationTypes', response.data.result) //Set the Operation Types in the store
         })
-    },
+    }
   }
 }
 

@@ -3,17 +3,24 @@
     <grid-component :headers="headers"
                     :items="operatingRooms"
                     :title="title"
+                    :show-calendar="true"
                     :show-detail="true"
                     :show-edit="true"
-                    :show-delete="true"
+                    :show-delete="true"                    
                     :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
+                    @calendar="calendar"
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
+
+    <!-- <operating-rooms-calendar-component :calendar-action="calendarAction"
+                                       :calendar-visible="calendarDialog"
+                                       @cancel="cancel">
+    </operating-rooms-calendar-component> -->
 
     <operating-rooms-detail-component :detail-action="detailAction"
                                        :detail-visible="detailDialog"
@@ -49,9 +56,11 @@ export default {
     return {
       title: vm.$i18n.t('operatingrooms.operatingRooms'),
       search: '',
+      calendarDialog:false,
       detailDialog: false,
       editDialog: false,
       deleteDialog: false,
+      calendarAction:{},
       detailAction: {},
       editAction: {
         operatingRoomEquipments : [],
@@ -125,6 +134,13 @@ export default {
   },
 
   methods: {
+    calendar(payload) {
+      const vm = this;
+      
+
+      vm.calendarDialog = true;
+      vm.calendarAction = Object.assign({}, payload);;
+    },
     getMethodName(){
       return "getOperatingRooms";
     },
