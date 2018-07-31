@@ -18,19 +18,13 @@
 
         <v-card-text>
             <v-layout wrap>
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('operationtypes.operationtype')">
+                              :label="$t('operationtypes.operationType')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('common.description')">
-                </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectBranch"
                                 :items="branches"
                                 :label="$t('branches.branch')"
@@ -64,6 +58,12 @@
                                 item-text="name"
                                 item-value="id">
                 </v-autocomplete>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['description']"
+                              :label="$t('common.description')">
+                </v-text-field>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>

@@ -18,30 +18,23 @@
 
         <v-card-text>
             <v-layout wrap>
+              <v-flex xs12 sm6 md12>
+                <v-text-field v-model="editAction['name']"
+                              :label="$t('equipments.name')">
+                </v-text-field>
+              </v-flex>
+
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['code']"
                               :label="$t('equipments.equipmentCode')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('equipments.name')">
-                </v-text-field>
-              </v-flex>
-
-
               <v-flex xs12 sm6 md6 input-group-checkbox>
                 <v-checkbox v-model="editAction['isPortable']"
                             :label="$t('equipments.portable')"
                             color="primary">
                 </v-checkbox>
-              </v-flex>
-
-              <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('equipments.description')">
-                </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
