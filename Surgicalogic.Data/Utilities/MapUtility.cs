@@ -12,11 +12,12 @@ namespace Surgicalogic.Data.Utilities
         {
             #region Entity to EntityModel
             config.CreateMap<Branch, BranchModel>();
-            config.CreateMap<Equipment, EquipmentModel>();
+            config.CreateMap<Equipment, EquipmentModel>()
+                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.OperatingRoom.IsActive)); });
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
             config.CreateMap<OperatingRoom, OperatingRoomModel>()
-                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.Equipment.IsPortable == false)); })
-                .ForMember(dest => dest.OperatingRoomOperationTypes, opt => { opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive && x.OperationType.IsActive)); });
+                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.OperatingRoom.IsActive && x.Equipment.IsPortable == false)); })
+                .ForMember(dest => dest.OperatingRoomOperationTypes, opt => { opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive && x.OperationType.IsActive && x.OperatingRoom.IsActive)); });
             config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarModel>();
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<OperationTypeEquipment, OperationTypeEquipmentModel>();
@@ -56,6 +57,9 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();
+            config.CreateMap<OperationTypeModel, OperationTypeOutputModel>()
+                .ForMember(dest => dest.Equipments, opt => opt.MapFrom(src => src.OperationTypeEquipment.Where(x => x.IsActive).Select(x => x.EquipmentId)))
+                .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId)));
             config.CreateMap<PersonnelModel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name))

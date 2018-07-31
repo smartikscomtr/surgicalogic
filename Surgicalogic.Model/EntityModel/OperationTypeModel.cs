@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Surgicalogic.Common.CustomAttributes;
 
 namespace Surgicalogic.Model.EntityModel
@@ -13,5 +13,8 @@ namespace Surgicalogic.Model.EntityModel
         public int BranchId { get; set; }
         [Searchable]
         public BranchModel Branch { get; set; }
+        public ICollection<OperatingRoomOperationTypeModel> OperatingRoomOperationTypes { get; set; }
+
+        public ICollection<OperationTypeEquipmentModel> OperationTypeEquipment { get; set; }
     }
 }

@@ -32,7 +32,7 @@ const operationTypeModule = {
       state.operationTypes.splice(index, 1);
     },
 
-    updateOperationTypes(state, payload) {
+    updateOperationType(state, payload) {
       state.operationTypes.forEach(element => {
         if(element.id == payload.id)
           Object.assign(element, payload);
