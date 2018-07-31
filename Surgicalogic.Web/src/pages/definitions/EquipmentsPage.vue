@@ -122,6 +122,7 @@ export default {
     //We are accessing getAllEquipmentTypes in vuex store
      if(vm.editLoadOnce){
         vm.$store.dispatch('getAllEquipmentTypes');
+        vm.$store.dispatch('getAllOperatingRooms');
         vm.editLoadOnce = false;
      }
     }
