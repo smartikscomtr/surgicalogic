@@ -4,6 +4,6 @@
   "lastName": "Soyadı",
   "firstName" : "Adı",
   "personnel": "Personel",
-  "personnelCode": "Personel Kodu",
+  "personnelCode": "Kod",
   "personnels": "Personeller"
 }
