@@ -39,7 +39,7 @@ namespace Surgicalogic.Services.Stores.Base
         public virtual async Task<ResultModel<TModel>> FindByIdAsync(int id)
         {
             var query = GetQueryable();
-            var model = await query.FirstOrDefaultAsync(x => x.Id == id);
+            var model = await query.ProjectTo<TModel>().FirstOrDefaultAsync(x => x.Id == id);
 
             return new ResultModel<TModel>
             {

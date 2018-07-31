@@ -237,16 +237,18 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     "Stile 16 cm",
                     "KH Tırnak kesme pensi 11 cm"
                 };
-
+                int codeIndex = 1;
                 foreach (var item in equipments)
                 {
                     context.Equipments.Add(new Entities.Equipment
                     {
                         EquipmentTypeId = equipmentType.Id,
                         Name = item,
+                        Code = "A00" + codeIndex,
                         Description = item,
                         CreatedDate = DateTime.Now
                     });
+                    codeIndex++;
                 }
                 #endregion
 

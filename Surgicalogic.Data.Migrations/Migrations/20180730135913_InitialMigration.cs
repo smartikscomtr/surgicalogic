@@ -250,6 +250,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Code = table.Column<string>(maxLength: 100, nullable: true),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
                     EquipmentTypeId = table.Column<int>(nullable: false),
                     IsPortable = table.Column<bool>(nullable: false)

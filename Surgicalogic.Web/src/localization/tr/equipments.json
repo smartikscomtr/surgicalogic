@@ -6,6 +6,8 @@
   "equipment": "Ekipman",
   "equipments": "Ekipmanlar",
   "name": "Adı",
+  "code" : "Kodu",
+  "equipmentCode":"Ekipman Kodu",
   "portable" : "Taşınabilirlik",
   "type": "Tipi"
 }

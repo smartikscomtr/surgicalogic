@@ -19,6 +19,12 @@
         <v-card-text>
             <v-layout wrap>
               <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['code']"
+                              :label="$t('equipments.equipmentCode')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('equipments.name')">
                 </v-text-field>
@@ -211,6 +217,7 @@ export default {
         vm.$store.dispatch('updateEquipment', {
           id: vm.editAction.id,
           name: vm.editAction.name,
+          code: vm.editAction.code,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
           equipmentTypeId: vm.selectEquipmentType,
@@ -223,6 +230,7 @@ export default {
         //We are accessing insertEquipment in vuex store
         vm.$store.dispatch('insertEquipment', {
           name: vm.editAction.name,
+          code: vm.editAction.code,
           description: vm.editAction.description,
           isPortable: vm.editAction.isPortable,
           equipmentTypeId: vm.selectEquipmentType,

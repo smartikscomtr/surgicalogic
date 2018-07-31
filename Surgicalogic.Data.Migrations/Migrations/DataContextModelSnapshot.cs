@@ -165,6 +165,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Code")
+                        .HasMaxLength(100);
+
                     b.Property<int>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
@@ -709,7 +712,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
-                        .WithMany()
+                        .WithMany("Personnels")
                         .HasForeignKey("PersonnelTitleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
