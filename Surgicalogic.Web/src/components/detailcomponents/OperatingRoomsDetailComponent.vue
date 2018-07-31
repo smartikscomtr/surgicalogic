@@ -66,6 +66,8 @@
                 </div>
               </v-flex>
 
+              <span>&nbsp;</span>
+
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
@@ -81,11 +83,11 @@
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
-                    {{ $t('common.description') }}
+                    {{ $t('operationtypes.operationType') }}
                   </div>
 
                   <div class="value">
-                    {{ detailAction['description'] }}
+                    {{ selectOperationType }}
                   </div>
                 </div>
               </v-flex>
@@ -102,14 +104,14 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <div class="input-group readonly-wrap">
                   <div class="label">
-                    {{ $t('operationtypes.operationType') }}
+                    {{ $t('common.description') }}
                   </div>
 
                   <div class="value">
-                    {{ selectOperationType }}
+                    {{ detailAction['description'] }}
                   </div>
                 </div>
               </v-flex>
@@ -166,50 +168,34 @@ export default {
       }
     },
 
-    selectEquipment: {
-      get() {
-        const vm = this;
+    selectEquipment() {
+      const vm = this;
 
-        let selectedEquipment = [];
+      let selectedEquipment = [];
 
-        if (vm.detailAction.operatingRoomEquipments)
-        {
-          vm.detailAction.operatingRoomEquipments.forEach(item => {
-            selectedEquipment.push(item.equipment.id);
-          });
-        }
-
-        return selectedEquipment;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.detailAction.equipmentId = val;
+      if (vm.detailAction.operatingRoomEquipments)
+      {
+        vm.detailAction.operatingRoomEquipments.forEach(item => {
+          selectedEquipment.push(item.equipment.name);
+        });
       }
+
+      return selectedEquipment.join();
     },
 
-    selectOperationType: {
-      get() {
-        const vm = this;
+    selectOperationType() {
+      const vm = this;
 
-        let selectedOperationTypes = [];
+      let selectedOperationTypes = [];
 
-        if (vm.detailAction.operatingRoomOperationTypes)
-        {
-          vm.detailAction.operatingRoomOperationTypes.forEach(item => {
-            selectedOperationTypes.push(item.operationType.id);
-          });
-        }
-
-        return selectedOperationTypes;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.detailAction.operationTypeId = val;
+      if (vm.detailAction.operatingRoomOperationTypes)
+      {
+        vm.detailAction.operatingRoomOperationTypes.forEach(item => {
+          selectedOperationTypes.push(item.operationType.name);
+        });
       }
+
+      return selectedOperationTypes.join();
     }
   },
 

@@ -23,15 +23,7 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectPersonnelTitle"
-                                :items="personnelTitles"
-                                :label="$t('personneltitle.personnelTitle')"
-                                :filter="customFilter"
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+              <span>&nbsp;</span>
 
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['firstName']"
@@ -46,9 +38,9 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectBranch"
-                                :items="branches"
-                                :label="$t('branches.branch')"
+                <v-autocomplete v-model="selectPersonnelTitle"
+                                :items="personnelTitles"
+                                :label="$t('personneltitle.personnelTitle')"
                                 :filter="customFilter"
                                 item-text="name"
                                 item-value="id">
@@ -59,6 +51,16 @@
                 <v-autocomplete v-model="selectWorkType"
                                 :items="workTypes"
                                 :label="$t('worktypes.workType')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
+                <v-autocomplete v-model="selectBranch"
+                                :items="branches"
+                                :label="$t('branches.branch')"
                                 :filter="customFilter"
                                 item-text="name"
                                 item-value="id">
