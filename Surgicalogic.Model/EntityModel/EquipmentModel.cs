@@ -15,6 +15,6 @@ namespace Surgicalogic.Model.EntityModel
         public bool IsPortable { get; set; }
         [Searchable]
         public EquipmentTypeModel EquipmentType { get; set; }
-        public ICollection<OperatingRoomEquipmentModel> OperatingRoomEquipmens { get; set; }
+        public ICollection<OperatingRoomEquipmentModel> OperatingRoomEquipments { get; set; }
     }
 }

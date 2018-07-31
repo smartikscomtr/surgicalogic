@@ -36,7 +36,7 @@
                                 :label="$t('branches.branch')"
                                 :filter="customFilter"
                                 item-text="name"
-                                items-value="id">
+                                item-value="id">
                 </v-autocomplete>
               </v-flex>
 
@@ -44,9 +44,12 @@
                 <v-autocomplete v-model="selectEquipment"
                                 :items="equipments"
                                 :label="$t('equipments.equipment')"
+                                 multiple
+                                 chips
+                                 deletable-chips
                                 :filter="customFilter"
                                 item-text="name"
-                                items-value="id">
+                                item-value="id">
                 </v-autocomplete>
               </v-flex>
 
@@ -54,9 +57,12 @@
                 <v-autocomplete v-model="selectOperatingRoom"
                                 :items="operatingRooms"
                                 :label="$t('operatingrooms.operatingRoom')"
+                                 multiple
+                                 chips
+                                 deletable-chips
                                 :filter="customFilter"
                                 item-text="name"
-                                items-value="id">
+                                item-value="id">
                 </v-autocomplete>
               </v-flex>
 
@@ -134,21 +140,13 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.branchName;
+        return vm.editAction.branchId;
       },
 
       set(val) {
         const vm = this;
 
-        vm.editAction.branchName = vm.$store.state.operationTypeModule.allBranches.find(
-          item => {
-            if (item.name == val) {
-              return item;
-            }
-          }
-        ).name;
-
-        vm.editAction.branchName = val;
+        vm.editAction.branchId = val;
       }
     },
 
@@ -162,19 +160,11 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.equipmentId;
+        return vm.editAction.equipments;
       },
 
       set(val) {
         const vm = this;
-
-        vm.editAction.equipmentName = vm.$store.state.operationTypeModule.allEquipments.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
 
         vm.editAction.equipmentId = val;
       }
@@ -190,19 +180,11 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.operatingRoomId;
+        return vm.editAction.operatingRoomIds;
       },
 
       set(val) {
         const vm = this;
-
-        vm.editAction.operatingRoomName = vm.$store.state.operationTypeModule.allOperatingRooms.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
 
         vm.editAction.operatingRoomId = val;
       }
@@ -242,9 +224,9 @@ export default {
           type: vm.editAction.type,
           portable: vm.editAction.portable,
           description: vm.editAction.description,
-          branchId: vm.selectBranch,
-          equipmentId: vm.selectEquipment,
-          operatingRoomId: vm.selectOperatingRoom
+          branchId: vm.editAction.branchId,
+          equipments: vm.editAction.equipmentId,
+          operatingRoomIds: vm.editAction.operatingRoomId
         });
       }
 
@@ -257,9 +239,9 @@ export default {
           type: vm.editAction.type,
           portable: vm.editAction.portable,
           description: vm.editAction.description,
-          branchId: vm.selectBranch,
-          equipmentId: vm.selectEquipment,
-          operatingRoomId: vm.selectOperatingRoom
+          branchId: vm.editAction.branchId,
+          equipments: vm.editAction.equipmentId,
+          operatingRoomIds: vm.editAction.operatingRoomId
         });
       }
 

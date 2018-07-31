@@ -16,10 +16,17 @@ namespace Surgicalogic.Api.Controllers
     public class OperationTypeController : Controller
     {
         private readonly IOperationTypeStoreService _operationTypeStoreService;
-
-        public OperationTypeController(IOperationTypeStoreService operationTypeStoreService)
+        private readonly IOperationTypeEquipmentStoreService _operationTypeEquipmentStoreService;
+        private readonly IOperatingRoomOperationTypeStoreService _operatingRoomOperationTypeStoreService;
+        public OperationTypeController(
+            IOperationTypeStoreService operationTypeStoreService, 
+            IOperationTypeEquipmentStoreService operationTypeEquipmentStoreService,
+            IOperatingRoomOperationTypeStoreService operatingRoomOperationTypeStoreService
+            )
         {
             _operationTypeStoreService = operationTypeStoreService;
+            _operationTypeEquipmentStoreService = operationTypeEquipmentStoreService;
+            _operatingRoomOperationTypeStoreService = operatingRoomOperationTypeStoreService;
         }
 
         /// <summary>
@@ -60,7 +67,21 @@ namespace Surgicalogic.Api.Controllers
                 BranchId = item.BranchId
             };
 
-            return await _operationTypeStoreService.InsertAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
+            var result = await _operationTypeStoreService.InsertAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
+
+            item.Id = result.Result.Id;
+
+            if (item.Equipments != null && result.Info.Succeeded)
+            {
+                await _operationTypeEquipmentStoreService.UpdateOperationTypeEquipmentsAsync(item);
+            }
+
+            if (item.OperatingRoomIds != null && result.Info.Succeeded)
+            {
+                await _operatingRoomOperationTypeStoreService.UpdateOperationTypeOperatingRoomsAsync(item);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -92,7 +113,19 @@ namespace Surgicalogic.Api.Controllers
                 BranchId = item.BranchId
             };
 
-            return await _operationTypeStoreService.UpdateAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
+            var result = await _operationTypeStoreService.UpdateAndSaveAsync<OperationTypeOutputModel>(operationTypeItem);
+
+            if (item.Equipments != null && result.Info.Succeeded)
+            {
+               result = await _operationTypeEquipmentStoreService.UpdateOperationTypeEquipmentsAsync(item);
+            }
+
+            if (item.OperatingRoomIds != null && result.Info.Succeeded)
+            {
+                result = await _operatingRoomOperationTypeStoreService.UpdateOperationTypeOperatingRoomsAsync(item);
+            }
+
+            return result;
         }
     }
 }

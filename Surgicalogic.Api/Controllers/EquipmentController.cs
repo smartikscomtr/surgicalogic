@@ -15,10 +15,12 @@ namespace Surgicalogic.Api.Controllers
     public class EquipmentController : Controller
     {
         private readonly IEquipmentStoreService _equipmentStoreService;
+        private readonly IOperatingRoomEquipmentStoreService _operatingRoomEquipmentStoreService;
 
-        public EquipmentController(IEquipmentStoreService equipmentStoreService)
+        public EquipmentController(IEquipmentStoreService equipmentStoreService, IOperatingRoomEquipmentStoreService operatingRoomEquipmentStoreService)
         {
             _equipmentStoreService = equipmentStoreService;
+            _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
         }
 
         /// <summary>
@@ -29,7 +31,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<EquipmentOutputModel>> GetEquipments(GridInputModel item)
         {
-            return await _equipmentStoreService.GetAsync<EquipmentOutputModel>(item);
+            var result = await _equipmentStoreService.GetAsync<EquipmentOutputModel>(item);
+            return result;
         }
 
         [Route("Equipment/GetAllEquipments")]
@@ -62,7 +65,15 @@ namespace Surgicalogic.Api.Controllers
                 EquipmentTypeId = item.EquipmentTypeId
             };
 
-            return await _equipmentStoreService.InsertAndSaveAsync<EquipmentOutputModel>(equipmentItem);
+            var model = await _equipmentStoreService.InsertAndSaveAsync<EquipmentOutputModel>(equipmentItem);
+
+            if (!item.IsPortable && item.OperatingRoomIds != null && model.Info.Succeeded)
+            {
+                item.Id = model.Result.Id;
+                await _operatingRoomEquipmentStoreService.UpdateEquipmentOperatingRoomsAsync(item);
+            }
+
+            return model;
         }
 
         /// <summary>
@@ -74,7 +85,14 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteEquipmentType(int id)
         {
-            return await _equipmentStoreService.DeleteAndSaveByIdAsync(id);
+            var result = await _equipmentStoreService.DeleteAndSaveByIdAsync(id);
+
+            if (result.Result > 0)
+            {
+                await _operatingRoomEquipmentStoreService.DeleteByOperatingRoomIdAsync(id);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -86,6 +104,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<EquipmentOutputModel>> UpdateEquipments([FromBody] EquipmentInputModel item)
         {
+            var result = new ResultModel<EquipmentOutputModel>();
+
             var equipmentItem = new EquipmentModel()
             {
                 Id = item.Id,
@@ -96,7 +116,14 @@ namespace Surgicalogic.Api.Controllers
                 EquipmentTypeId = item.EquipmentTypeId
             };
 
-            return await _equipmentStoreService.UpdateAndSaveAsync<EquipmentOutputModel>(equipmentItem);
+            result = await _equipmentStoreService.UpdateAndSaveAsync<EquipmentOutputModel>(equipmentItem);
+
+            if (!item.IsPortable && item.OperatingRoomIds != null && result.Info.Succeeded)
+            {
+                await _operatingRoomEquipmentStoreService.UpdateEquipmentOperatingRoomsAsync(item);
+            }
+
+            return result;
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("OperatingRoom/GetAllOperatingRooms")]
+        [HttpGet]
         public async Task<ResultModel<OperatingRoomOutputModel>> GetAllOperatingRooms()
         {
             return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
@@ -61,16 +62,6 @@ namespace Surgicalogic.Api.Controllers
                 Height = item.Height,
                 Length = item.Length
             };
-
-            if (item.Equipments != null && item.Equipments.Count > 0)
-            {
-                bool isEquipmentsRelatedToOperatingRoom = await _operatingRoomEquipmentStoreService.CheckEquipmentsRelatedToOperationRoom(item.Equipments.ToArray());
-
-                if (isEquipmentsRelatedToOperatingRoom)
-                {
-                    return new ResultModel<OperatingRoomOutputModel> { Info = new Info { Succeeded = false, InfoType = Model.Enum.InfoType.Error, Message = Model.Enum.MessageType.EquipmentRelatedToOperatingRoom } };
-                }
-            }
 
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {

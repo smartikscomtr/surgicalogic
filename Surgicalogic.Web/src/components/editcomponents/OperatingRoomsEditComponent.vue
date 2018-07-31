@@ -161,27 +161,20 @@ export default {
       get() {
         const vm = this;
 
-        let selectedEquipment = [];
+         let selectedEquipments = [];
 
         if (vm.editAction.operatingRoomEquipments)
         {
           vm.editAction.operatingRoomEquipments.forEach(item => {
-            selectedEquipment.push(item.equipment.id);
+            selectedEquipments.push(item.equipment.id);
           });
         }
 
-        return selectedEquipment;
+        return selectedEquipments;
       },
 
       set(val) {
         const vm = this;
-        // vm.editAction.equipmentName = vm.$store.state.operatingRoomModule.nonPortableEquipments.find(
-        //   item => {
-        //     if (item.id == val) {
-        //       return item;
-        //     }
-        //   }
-        // ).name;
 
         vm.editAction.equipmentId = val;
       }
@@ -247,7 +240,7 @@ export default {
           height: vm.editAction.height,
           length: vm.editAction.length,
           equipments: vm.editAction.equipmentId,
-          operatingRoomEquipments: vm.selectEquipment,
+          operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
           operatingRoomOperationTypes: vm.selectOperationType
         });
@@ -264,7 +257,7 @@ export default {
           height: vm.editAction.height,
           length: vm.editAction.length,
           equipments: vm.editAction.equipmentId,
-          operatingRoomEquipments: vm.selectEquipment,
+          operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
           operatingRoomOperationTypes: vm.selectOperationType
         });
