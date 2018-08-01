@@ -6,6 +6,7 @@
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :show-search="true"
                     :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"

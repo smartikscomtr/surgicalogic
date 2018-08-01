@@ -7,6 +7,7 @@
                     :show-detail="true"
                     :show-edit="true"
                     :show-delete="true"
+                    :show-search="true"
                     :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
@@ -137,9 +138,13 @@ export default {
     calendar(payload) {
       const vm = this;
 
-
       vm.calendarDialog = true;
-      vm.calendarAction = Object.assign({}, payload);;
+      vm.calendarAction = Object.assign({}, payload);
+
+      vm.$store.dispatch('getOperatingRoomsCalendar', {
+          operatingRoomId:payload.id
+        }
+      );
     },
     getMethodName(){
       return "getOperatingRooms";

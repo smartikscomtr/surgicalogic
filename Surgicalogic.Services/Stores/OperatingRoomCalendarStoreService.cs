@@ -26,7 +26,7 @@ namespace Surgicalogic.Services.Stores
 
         public async Task<ResultModel<OperatingRoomCalendarOutputModel>> GetByOperatingRoomIdAsync(int operatingRoomId)
         {
-            var result = await _context.OperatingRoomCalendars.Where(x => x.OperatingRoomId == operatingRoomId).ProjectTo<OperatingRoomCalendarModel>().ToListAsync();
+            var result = await GetQueryable().Where(x => x.OperatingRoomId == operatingRoomId).ProjectTo<OperatingRoomCalendarModel>().ToListAsync();
 
             return new ResultModel<OperatingRoomCalendarOutputModel>
             {

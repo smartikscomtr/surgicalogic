@@ -6,6 +6,7 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :show-search="true"
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
@@ -96,7 +97,7 @@ export default {
       const vm = this;
 
       return vm.$store.state.branchesModule.loading;
-    },
+    }
   },
 
   methods: {

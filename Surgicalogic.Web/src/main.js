@@ -29,6 +29,7 @@ import store from './stores';
 Vue.use(Vuex);
 Vue.use(Vuetify);
 Vue.use(Authentication);
+Vue.use(require('vue-moment'));
 
 // Registering Components
 import GridComponent from '@/components/GridComponent';
@@ -39,7 +40,7 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 // Registering Calendar Rage Components
 import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
-Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent); 
+Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent);
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';

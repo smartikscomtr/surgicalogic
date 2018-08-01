@@ -6,10 +6,10 @@
                     :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
+                    :show-search="true"
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
-                    
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -48,7 +48,7 @@ export default {
       deleteDialog: false,
       editAction: {},
       deleteValue: {},
-     
+
       editedIndex: -1,
       totalRowCount:0,
       deletePath: 'deletePersonnelTitle'

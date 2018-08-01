@@ -8,7 +8,8 @@
 
         <v-container>
           <v-card-title class="search-wrap">
-            <v-text-field v-model="search"
+            <v-text-field v-if="showSearch"
+                          v-model="search"
                           append-icon="search"
                           label="Search"
                           v-on:keyup.enter="filterGrid"
@@ -31,7 +32,7 @@
                         :items="items"
                         :loading="loading"
                         :pagination.sync="pagination"
-                        :total-items="totalCount"
+                        :hide-actions="hideActions"
                         :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
             <v-progress-linear slot="progress"
                                color="teal"
@@ -49,6 +50,10 @@
                   <div v-else>
                     <v-icon class="red--text">close</v-icon>
                   </div>
+                </template>
+
+                <template v-else-if="!header.isAction && header.isDateTime">
+                  {{ props.item[header.value] | moment("DD.MM.YYYY HH:mm") }}
                 </template>
 
                 <template v-else-if="!header.isAction">
@@ -118,8 +123,8 @@ export default {
       required: false
     },
 
-    totalCount: {
-      type: Number,
+    hideActions: {
+      type: Boolean,
       required: false
     },
 
@@ -132,10 +137,12 @@ export default {
       type: String,
       required: false
     },
+
     showCalendar :{
       type:Boolean,
       required:false
     },
+
     showDetail: {
       type: Boolean,
       required: false
@@ -151,6 +158,11 @@ export default {
       required: false
     },
 
+    showSearch: {
+      type: Boolean,
+      required: false
+    },
+
     methodName: {
       type: Function,
       required: true
@@ -160,7 +172,7 @@ export default {
     return {
       search: '',
       dataRows: [],
-      pagination: {},
+      pagination: {}
     };
   },
 
@@ -187,12 +199,14 @@ export default {
 
       vm.executeGridOperations(true);
     },
+
     calendarItem(item) {
       const vm = this;
 
       //When the date range button is clicked, the event is sent to the grid component
       vm.$emit('calendar', item);
     },
+
     detailItem(item) {
       const vm = this;
 

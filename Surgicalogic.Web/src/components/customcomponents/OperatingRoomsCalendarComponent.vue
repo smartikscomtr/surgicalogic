@@ -3,39 +3,34 @@
     <v-dialog v-model="showModal"
               slot="activator">
       <v-card class="container fluid grid-list-md">
-        <v-card-title>
+        <!-- <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">
             <span class="text">
-              {{ formTitle }}
             </span>
 
-            <!-- // <v-icon @click="cancel"
-            //         class="close-wrap">
-            //   close
-            // </v-icon> -->
+            <v-icon @click="cancel"
+                    class="close-wrap">
+              close
+            </v-icon>
           </div>
-        </v-card-title>
+        </v-card-title> -->
 
         <v-card-text>
-            <v-layout wrap>
-
-
-
-               <v-data-table
-                :headers="headers"
-                :items="operatingRoomCalendar"
-                hide-actions
-                class="elevation-1"
-              >
-                <template slot="items" slot-scope="props">
-                  <td>{{ props.item.startdate }}</td>
-                  <td>{{ props.item.enddate }}</td>
-                </template>
-              </v-data-table>
-
-
-
-            </v-layout>
+          <v-layout wrap>
+            <grid-component :headers="headers"
+                            :items="operatingRoomCalendar"
+                            :title="title"
+                            :show-detail="false"
+                            :show-edit="false"
+                            :show-delete="false"
+                            :show-search="false"
+                            :hide-actions="true"
+                            :methodName="getMethodName"
+                            :loading="getLoading"
+                            @edit="edit"
+                            @newaction="addNewItem">
+            </grid-component>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -44,7 +39,13 @@
 
 <script>
 
+import { gridMixin } from './../../mixins/gridMixin';
+
 export default {
+  mixins: [
+    gridMixin
+  ],
+
   props: {
     calendarVisible: {
       type: Boolean,
@@ -63,19 +64,16 @@ export default {
   data() {
     const vm = this;
     return {
-      title: vm.$i18n.t('operatingrooms.operatingRooms'),
-      deleteValue: {}
-
+      title: vm.$i18n.t('operatingrooms.operatingRoomsCalendar'),
+      editDialog: false,
+      deleteDialog: false,
+      editAction: {},
+      deleteValue: {},
+      editedIndex: -1
     };
   },
 
   computed: {
-    formTitle() {
-      const vm = this;
-
-      return vm.$i18n.t('operatingrooms.operatingRoomsCalendar');
-    },
-
     showModal: {
       get() {
         const vm = this;
@@ -99,16 +97,18 @@ export default {
       //Columns and actions
       return [
         {
-          value: 'startdate',
+          value: 'startDate',
           text: "Başlangıç Tarihi", //vm.$i18n.t('operatingrooms.operatingRoom'),
           sortable: true,
-          align: 'left'
+          align: 'left',
+          isDateTime:true
         },
         {
-          value: 'enddate',
+          value: 'endDate',
           text: 'Bitiş Tarihi', //vm.$i18n.t('operatingrooms.location'),
           sortable: true,
-          align: 'left'
+          align: 'left',
+          isDateTime:true
         }
       ];
     },
@@ -117,13 +117,16 @@ export default {
       const vm = this;
 
       return vm.$store.state.operatingRoomCalendarModule.operatingRoomCalendar;
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomCalendarModule.loading;
     }
-
-
   },
 
   methods: {
-
     getMethodName(){
       return "getOperatingRoomsCalendar";
     },

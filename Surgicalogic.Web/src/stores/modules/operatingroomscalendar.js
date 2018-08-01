@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const operatingRoomCalenadarModule = {
+const operatingRoomCalendarModule = {
   state: {
     operatingRoomCalendar: [],
     loading: false,
@@ -79,8 +79,8 @@ const operatingRoomCalenadarModule = {
         })
     }
 
-   
+
   }
 }
 
-export default operatingRoomCalenadarModule;
+export default operatingRoomCalendarModule;
