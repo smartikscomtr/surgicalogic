@@ -35,7 +35,10 @@ const workTypesModule = {
     },
 
     updateWorkType(state, payload) {
-      //state.workTypes.payload = payload;
+      state.workTypes.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     }
   },
 
@@ -66,7 +69,6 @@ const workTypesModule = {
         })
     },
 
-
     insertWorkType(context, payload) {
       axios.post('WorkType/InsertWorkType', payload)
         .then(response => {
@@ -79,7 +81,7 @@ const workTypesModule = {
     deleteWorkType(context, payload) {
       axios.post('WorkType/DeleteWorkType/' + payload.id)
         .then(response => {
-          if (response.statusText == 'OK') {
+          if (response.data.info.succeeded == true) {
             context.commit('deleteWorkType', { payload }); //Delete the Work Type in the store
           }
         })
@@ -88,7 +90,9 @@ const workTypesModule = {
     updateWorkType(context, payload) {
       axios.post('WorkType/UpdateWorkType', payload)
         .then(response => {
-          //context.commit('updateWorkType', {payload}) //Update the Work Type in the store
+          if (response.data.info.succeeded == true){
+            context.commit('updateWorkType', payload) //Update the Work Type in the store
+          }            
         })
     }
   }
