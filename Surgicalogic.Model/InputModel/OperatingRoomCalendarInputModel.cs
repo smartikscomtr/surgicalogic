@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Surgicalogic.Model.InputModel
 {
-    public class OperatingRoomCalendarInputModel
+    public class OperatingRoomCalendarInputModel : GridInputModel
     {
         public int Id { get; set; }
         public int OperatingRoomId { get; set; }

@@ -61,6 +61,9 @@
                 <v-autocomplete v-model="selectBranch"
                                 :items="branches"
                                 :label="$t('branches.branch')"
+                                 multiple
+                                 chips
+                                 deletable-chips
                                 :filter="customFilter"
                                 item-text="name"
                                 item-value="id">
