@@ -3,6 +3,7 @@ import axios from 'axios';
 const operatingRoomCalendarModule = {
   state: {
     operatingRoomCalendar: [],
+    operatingRoomId:0,
     loading: false,
     totalCount: 0
   },
@@ -16,16 +17,18 @@ const operatingRoomCalendarModule = {
       state.operatingRoomCalendar = data.result;
       state.totalCount = data.totalCount;
     },
+
     insertOperatingRoomCalendar(state, { item }) {
-      state.operatingRoomsCalendar.push(item);
+      state.operatingRoomCalendar.push(item);
     },
 
     deleteOperatingRoomCalendar(state, { payload }) {
+      debugger;
       let index = state.operatingRoomCalendar.findIndex((item) => {
         return item.id === payload.id
       });
 
-      state.operatingRoomsCalenadar.splice(index, 1);
+      state.operatingRoomCalendar.splice(index, 1);
     },
 
     updateOperatingRoomCalendar(state, payload) {
@@ -40,17 +43,21 @@ const operatingRoomCalendarModule = {
 
   actions: {
     getOperatingRoomsCalendar(context, params) {
-      context.commit('setLoading', true);
+      debugger;
+      if (params.operatingRoomId)
+      {
+        context.commit('setLoading', true);
 
-      axios.get('OperatingRoomCalendar/GetOperatingRoomCalendar', {
-        params: params
-      }).then(response => {
-        if (response.data.info.succeeded == true){
-          context.commit('setOperatingRoomCalendar', response.data) //Set the Operating Rooms in the store
-        }
+          axios.get('OperatingRoomCalendar/GetOperatingRoomCalendar', {
+          params: params
+          }).then(response => {
+          if (response.data.info.succeeded == true){
+            context.commit('setOperatingRoomCalendar', response.data) //Set the Operating Rooms in the store
+          }
 
-        context.commit('setLoading', false);
-      })
+          context.commit('setLoading', false);
+        })
+    }
 
     },
 
@@ -73,9 +80,9 @@ const operatingRoomCalendarModule = {
     },
 
     updateOperatingRoomCalendar(context, payload) {
-      axios.post('OperatingRoomCalendar/UpdateOperatingRoom', payload)
+      axios.post('OperatingRoomCalendar/UpdateOperatingRoomCalendar', payload)
         .then(response => {
-          context.commit('updateOperatingRoom', response.data.result) //Update the Operating Rooms in the store
+          context.commit('updateOperatingRoomCalendar', response.data.result) //Update the Operating Rooms in the store
         })
     }
 

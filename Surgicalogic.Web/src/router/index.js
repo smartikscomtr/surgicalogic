@@ -17,6 +17,7 @@ import OperationTypesPage from "@/pages/definitions/OperationTypesPage";
 import PersonnelPage from "@/pages/definitions/PersonnelPage";
 import PersonnelTitlePage from "@/pages/definitions/PersonnelTitlePage";
 import OperatingRoomsPage from "@/pages/definitions/OperatingRoomsPage";
+import OperatingRoomCalendarPage from "@/pages/definitions/OperatingRoomCalendarPage";
 import WorkTypesPage from "@/pages/definitions/WorkTypesPage";
 
 
@@ -77,6 +78,11 @@ export default new VueRouter({
       path: '/personneltitlepage',
       name: 'PersonnelTitlePage',
       component: PersonnelTitlePage
+    },
+    {
+      path: '/operatingroomcalendarpage',
+      name: 'OperatingRoomCalendarPage',
+      component: OperatingRoomCalendarPage
     },
     {
       path: '/operatingroomspage',

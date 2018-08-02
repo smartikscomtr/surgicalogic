@@ -25,10 +25,12 @@ import Authentication from './plugins/authentication-plugin.js';
 
 import App from './App';
 import store from './stores';
+import DatetimePicker from 'vuetify-datetime-picker';
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
 Vue.use(Authentication);
+Vue.use(DatetimePicker);
 Vue.use(require('vue-moment'));
 
 // Registering Components
@@ -37,10 +39,6 @@ import OperationDividerComponent from '@/components/OperationDividerComponent';
 
 Vue.component('grid-component', GridComponent);
 Vue.component('operation-divider-component', OperationDividerComponent);
-
-// Registering Calendar Rage Components
-import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
-Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent);
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
@@ -61,6 +59,7 @@ import PersonnelTitleEditComponent from '@/components/editcomponents/PersonnelTi
 import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRoomsEditComponent';
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
+import OperatingRoomsCalendarEditComponent from '@/components/editcomponents/OperatingRoomsCalendarEditComponent';
 
 Vue.component('branches-edit-component', BranchesEditComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
@@ -71,6 +70,7 @@ Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
 Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('users-edit-component', UsersEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
+Vue.component('operating-rooms-calendar-edit-component', OperatingRoomsCalendarEditComponent);
 
 
 // Registering Delete Components
