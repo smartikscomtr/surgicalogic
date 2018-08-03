@@ -8,5 +8,6 @@
   "name": "Name",
   "no": "No",
   "yes": "Yes",
-  "all":"All"
+  "all": "All",
+  "close": "CLOSE"
 }

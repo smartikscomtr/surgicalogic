@@ -3,5 +3,6 @@
   "editBranchesInformation": "Branş Bilgileri Düzenleme",
   "branch": "Branş",
   "branchName": "Branş Adı",
-  "branches": "Branşlar"
+  "branches": "Branşlar",
+  "BranchSaved": "Branş kaydedildi."
 }
