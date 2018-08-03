@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="a"
+    <v-snackbar v-model="snackbarVisible"
                 :timeout="timeout"
                 :top="true">
       {{ savedMessage }}
@@ -31,19 +31,9 @@ export default Vue.extend({
     }
   },
 
-  methods: {
-    setSnackbarVisible() {
-      const vm = this;
-debugger
-      vm.a = vm.snackbarVisible;
-    }
-
-  },
-
   data() {
     return {
-      timeout: 2000,
-      a: false
+      timeout: 2000
     };
   }
 });
