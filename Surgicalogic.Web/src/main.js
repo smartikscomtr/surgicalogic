@@ -40,6 +40,7 @@ Vue.component('operation-divider-component', OperationDividerComponent);
 
 // Registering Calendar Rage Components
 import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
+
 Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent);
 
 // Registering Detail Components
@@ -50,6 +51,11 @@ import OperationTypesDetailComponent from '@/components/detailcomponents/Operati
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent);
 Vue.component('operation-types-detail-component', OperationTypesDetailComponent);
+
+// Registering Delete Components
+import DeleteComponent from '@/components/DeleteComponent';
+
+Vue.component('delete-component', DeleteComponent);
 
 // Registering Edit Components
 import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';
@@ -73,10 +79,10 @@ Vue.component('users-edit-component', UsersEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
 
 
-// Registering Delete Components
-import DeleteComponent from '@/components/DeleteComponent';
+// Registering Core Components
+import SnackbarComponent from '@/components/coreComponents/SnackbarComponent';
 
-Vue.component('delete-component', DeleteComponent);
+Vue.component('snackbar-component', SnackbarComponent);
 
 import {
   setupAxios,
