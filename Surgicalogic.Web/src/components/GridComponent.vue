@@ -163,6 +163,11 @@ export default {
       required: false
     },
 
+     customParameters: {
+      type: Object,
+      required: false
+    },
+
     methodName: {
       type: Function,
       required: true
@@ -178,7 +183,7 @@ export default {
 
   watch: {
     pagination: {
-      handler(newValue, oldValue) {
+      handler() {
         const vm = this;
 
         vm.executeGridOperations();
@@ -235,15 +240,22 @@ export default {
         vm.pagination.page = 1;
       }
 
+      var params = {};
+
+      if (vm.customParameters)
+      {
+        params = vm.customParameters;
+      }
+
       const { sortBy, descending, page, rowsPerPage } = vm.pagination;
 
-      vm.$store.dispatch(vm.methodName(), {
-        currentPage: page,
-        pageSize: rowsPerPage,
-        search: vm.search,
-        sortBy: vm.getSortByField(sortBy),
-        descending: descending
-      });
+      params.currentPage= page,
+      params.pageSize= rowsPerPage,
+      params.search= vm.search,
+      params.sortBy= vm.getSortByField(sortBy),
+      params.descending= descending
+
+      vm.$store.dispatch(vm.methodName(), params);
     },
 
     getSortByField(sortBy) {

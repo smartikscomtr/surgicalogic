@@ -193,7 +193,8 @@ namespace Surgicalogic.Services.Stores.Base
                 return new ResultModel<TEntity>
                 {
                     Result = entity,
-                    Info = new Info {
+                    Info = new Info
+                    {
                         Succeeded = false,
                         Message = Model.Enum.MessageType.ModelHasRelationalData,
                         InfoType = Model.Enum.InfoType.Error
@@ -284,7 +285,7 @@ namespace Surgicalogic.Services.Stores.Base
             var result = await UpdateAndSaveAsync(model);
             return new ResultModel<TOutputModel>
             {
-                Result = Mapper.Map<TOutputModel>(result.Result),                
+                Result = Mapper.Map<TOutputModel>(result.Result),
                 Info = result.Info
             };
         }

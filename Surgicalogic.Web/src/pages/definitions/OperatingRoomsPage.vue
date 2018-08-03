@@ -18,10 +18,10 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <operating-rooms-calendar-component :calendar-action="calendarAction"
+    <!-- <operating-rooms-calendar-component :calendar-action="calendarAction"
                                        :calendar-visible="calendarDialog"
                                        @cancel="cancel">
-    </operating-rooms-calendar-component>
+    </operating-rooms-calendar-component> -->
 
     <operating-rooms-detail-component :detail-action="detailAction"
                                        :detail-visible="detailDialog"
@@ -138,14 +138,12 @@ export default {
     calendar(payload) {
       const vm = this;
 
-      vm.calendarDialog = true;
-      vm.calendarAction = Object.assign({}, payload);
+      // vm.calendarDialog = true;
+      // vm.calendarAction = Object.assign({}, payload);
 
-      vm.$store.dispatch('getOperatingRoomsCalendar', {
-          operatingRoomId:payload.id
-        }
-      );
+      vm.$router.push('/operatingroomcalendarpage?roomId=' + payload.id);
     },
+
     getMethodName(){
       return "getOperatingRooms";
     },
