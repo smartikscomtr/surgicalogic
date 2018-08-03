@@ -19,50 +19,15 @@
         <v-card-text>
           <v-layout wrap>
             <v-flex xs6 sm6 md6>
-              <!-- <v-menu
-          ref="menu"
-          :close-on-content-click="false"
-          v-model="menu"
-          :nudge-right="40"
-          :return-value.sync="date"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          min-width="290px"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="editAction['startDate']"
-            label="Picker in menu"
-            prepend-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="date" no-title scrollable>
-            <v-spacer></v-spacer>
-            <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn flat color="primary" @click="$refs.menu.save(editAction['startDate'])">OK</v-btn>
-          </v-date-picker>
-        </v-menu> -->
-              <v-datetime-picker v-model="editAction['startDate']"
-                                :label="$t('operatingroomscalendar.startDate')"
-                                format="DD-MM-YYYY HH:mm"
-                                :okText="$t('operatingroomscalendar.ok')"
-                                :clearText="$t('operatingroomscalendar.clear')"
-                                :locale="$t('operatingroomscalendar.locale')"
-                                >
-              </v-datetime-picker>
+ <v-text-field v-model="editAction['startDate']"
+                            :label="$t('operatingroomscalendar.startDate')">
+              </v-text-field>
             </v-flex>
 
              <v-flex xs6 sm6 md6>
-              <v-datetime-picker v-model="editAction['endDate']"
-                                :label="$t('operatingroomscalendar.endDate')"
-                                format="DD-MM-YYYY HH:mm"
-                                :okText="$t('operatingroomscalendar.ok')"
-                                :clearText="$t('operatingroomscalendar.clear')"
-                                :locale="$t('operatingroomscalendar.locale')"
-                                >
-              </v-datetime-picker>
+ <v-text-field v-model="editAction['endDate']"
+                            :label="$t('operatingroomscalendar.endDate')">
+              </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>

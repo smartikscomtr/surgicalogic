@@ -2,6 +2,6 @@
   "startDate": "Start Date",
   "endDate": "End Date",
   "ok":"OK",
-  "clear":"Clear",
+  "cancel":"Cancel",
   "locale":"en-US"
 }

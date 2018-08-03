@@ -23,7 +23,6 @@ const operatingRoomCalendarModule = {
     },
 
     deleteOperatingRoomCalendar(state, { payload }) {
-      debugger;
       let index = state.operatingRoomCalendar.findIndex((item) => {
         return item.id === payload.id
       });
@@ -43,7 +42,6 @@ const operatingRoomCalendarModule = {
 
   actions: {
     getOperatingRoomsCalendar(context, params) {
-      debugger;
       if (params.operatingRoomId)
       {
         context.commit('setLoading', true);
