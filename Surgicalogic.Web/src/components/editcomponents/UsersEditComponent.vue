@@ -40,6 +40,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -67,7 +71,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('users.UserSaved')
+    };
   },
 
   computed: {
@@ -105,6 +112,8 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
+
       //Edit work type
       if (vm.editIndex > -1) {
         //We are accessing updateWorkType in vuex store
@@ -112,7 +121,15 @@ export default {
           id: vm.editAction.id,
           userName: vm.editAction.userName,
           email: vm.editAction.email
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
       //Add work type
       else {
@@ -120,7 +137,15 @@ export default {
         vm.$store.dispatch('insertUser', {
           userName: vm.editAction.userName,
           email: vm.editAction.email
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;

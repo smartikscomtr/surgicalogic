@@ -40,6 +40,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -68,12 +72,8 @@ export default {
 
   data() {
     return {
-      defaultItem : {
-        id: 0,
-        name: '',
-        description: ''
-      }
-
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('equipmettypes.EquipmetTypeSaved')
     };
   },
 
@@ -112,6 +112,8 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
+
       //Edit equipment type
       if (vm.editIndex > -1) {
         //We are accessing updateEquipmentType in vuex store
@@ -119,15 +121,32 @@ export default {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
+
       //Add equipment type
       else {
         //We are accessing insertEquipmentType in vuex store
         vm.$store.dispatch('insertEquipmentType', {
           name: vm.editAction.name,
           description: vm.editAction.description
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;

@@ -39,6 +39,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -69,7 +73,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('personneltitle.PersonnelTitleSaved')
+    };
   },
 
   computed: {
@@ -107,6 +114,8 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
+
       //Edit personnel title
       if (vm.editIndex > -1) {
         //We are accessing updatePersonnelTitle in vuex store
@@ -114,7 +123,15 @@ export default {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
       //Add personnel title
       else {
@@ -122,7 +139,15 @@ export default {
         vm.$store.dispatch('insertPersonnelTitle', {
           name: vm.editAction.name,
           description: vm.editAction.description
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;

@@ -90,6 +90,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -117,7 +121,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('operatingrooms.OperatingRoomSaved')
+    };
   },
 
   computed: {
@@ -227,6 +234,8 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
+
       //Edit operating room
       if (vm.editIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
@@ -242,8 +251,15 @@ export default {
           operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
           operatingRoomOperationTypes: vm.selectOperationType
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
 
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
       //Add operating room
       else {
@@ -259,7 +275,15 @@ export default {
           operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
           operatingRoomOperationTypes: vm.selectOperationType
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;

@@ -77,6 +77,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -104,7 +108,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('equipments.EquipmentSaved')
+    };
   },
 
   watch: {
@@ -210,6 +217,8 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
+
       //Edit equipment
       if (vm.editIndex > -1) {
         //We are accessing updateEquipment in vuex store
@@ -221,7 +230,15 @@ export default {
           isPortable: vm.editAction.isPortable,
           equipmentTypeId: vm.selectEquipmentType,
           operatingRoomIds: vm.editAction.operatingRoomId
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       //Add equipment
@@ -234,7 +251,15 @@ export default {
           isPortable: vm.editAction.isPortable,
           equipmentTypeId: vm.selectEquipmentType,
           operatingRoomIds: vm.editAction.operatingRoomId
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;

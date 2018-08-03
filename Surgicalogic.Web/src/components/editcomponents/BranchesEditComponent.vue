@@ -17,28 +17,32 @@
         </v-card-title>
 
         <v-card-text>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('branches.branchName')">
-                </v-text-field>
-              </v-flex>
+          <v-layout wrap>
+            <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['name']"
+                            :label="$t('branches.branchName')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('common.description')">
-                </v-text-field>
-              </v-flex>
-                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+            <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['description']"
+                            :label="$t('common.description')">
+              </v-text-field>
+            </v-flex>
+              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
-                       @click.native="save">
+                      @click.native="save">
                   Kaydet
                 </v-btn>
-              </v-flex>
-            </v-layout>
+            </v-flex>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -66,7 +70,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('branches.BranchSaved')
+    };
   },
 
   computed: {
@@ -104,6 +111,8 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
+
       //Edit branch
       if (vm.editIndex > -1) {
         //We are accessing updateBranch in vuex store
@@ -111,15 +120,32 @@ export default {
           id: vm.editAction.id,
           name: vm.editAction.name,
           description: vm.editAction.description
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
+
       //Add branch
       else {
         //We are accessing insertBranch in vuex store
         vm.$store.dispatch('insertBranch', {
           name: vm.editAction.name,
           description: vm.editAction.description
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;

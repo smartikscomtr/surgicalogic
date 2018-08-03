@@ -76,6 +76,10 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -103,7 +107,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('operationtype.OperationTypeSaved')
+    };
   },
 
   computed: {
@@ -215,6 +222,7 @@ export default {
     save() {
       const vm = this;
 
+      vm.snackbarVisible = false;
       //Edit operation type
       if (vm.editIndex > -1) {
         //We are accessing updateOperationType in vuex store
@@ -227,7 +235,15 @@ export default {
           branchId: vm.editAction.branchId,
           equipments: vm.editAction.equipmentId,
           operatingRoomIds: vm.editAction.operatingRoomId
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       //Add operation type
@@ -242,7 +258,15 @@ export default {
           branchId: vm.editAction.branchId,
           equipments: vm.editAction.equipmentId,
           operatingRoomIds: vm.editAction.operatingRoomId
-        });
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
       }
 
       vm.showModal = false;
