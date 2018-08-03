@@ -15,7 +15,8 @@ namespace Surgicalogic.Data.Entities
         public string Description {get;set;}
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
-
+        
+        public virtual ICollection<Operation> Operations { get; set; }
         public virtual ICollection<OperatingRoomOperationType> OperatingRoomOperationTypes { get; set; }
         public virtual ICollection<OperationTypeEquipment> OperationTypeEquipment { get; set; }
     }

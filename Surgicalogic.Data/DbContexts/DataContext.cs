@@ -18,6 +18,8 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+        public DbSet<OperationPersonnel> OperationPersonnels { get; set; }
         public DbSet<OperatingRoom> OperatingRooms { get; set; }
         public DbSet<OperatingRoomCalendar> OperatingRoomCalendars { get; set; }
         public DbSet<Personnel> Personnels { get; set; }
@@ -72,7 +74,15 @@ namespace Surgicalogic.Data.DbContexts
                 .WithMany(o => o.OperationTypeEquipment)
                 .HasForeignKey(o => o.EquipmentId);
 
+            modelBuilder.Entity<OperationPersonnel>()
+                .HasOne(o => o.Personnel)
+                .WithMany(o => o.OperationPersonels)
+                .HasForeignKey(o => o.OperationId);
 
+            modelBuilder.Entity<OperationPersonnel>()
+                .HasOne(o => o.Operation)
+                .WithMany(o => o.OperationPersonels)
+                .HasForeignKey(o => o.PersonnelId);
 
             base.OnModelCreating(modelBuilder);
         }

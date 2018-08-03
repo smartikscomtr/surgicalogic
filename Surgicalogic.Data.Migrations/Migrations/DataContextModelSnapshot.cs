@@ -349,6 +349,66 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("OperatingRoomOperationTypes");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.Operation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("OperationTypeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperationTypeId");
+
+                    b.ToTable("Operations");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperationPersonnel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperationId");
+
+                    b.Property<int>("PersonnelId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperationId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("OperationPersonnels");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationType", b =>
                 {
                     b.Property<int>("Id")
@@ -685,6 +745,27 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.OperationType", "OperationType")
                         .WithMany("OperatingRoomOperationTypes")
                         .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.Operation", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.OperationType", "OperationType")
+                        .WithMany("Operations")
+                        .HasForeignKey("OperationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperationPersonnel", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.Personnel", "Personnel")
+                        .WithMany("OperationPersonels")
+                        .HasForeignKey("OperationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.Operation", "Operation")
+                        .WithMany("OperationPersonels")
+                        .HasForeignKey("PersonnelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
