@@ -58,7 +58,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentType.Name))
                 .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive).Select(x => x.OperatingRoomId)));
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
-            config.CreateMap<OperationModel, OperationOutputModel>();
+            config.CreateMap<OperationModel, OperationOutputModel>()
+                 .ForMember(dest => dest.OperationTypeName, opt => opt.MapFrom(src => src.OperationType.Name));
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();

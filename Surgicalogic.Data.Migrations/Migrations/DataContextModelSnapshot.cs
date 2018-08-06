@@ -371,6 +371,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("OperationTime");
+
                     b.Property<int>("OperationTypeId");
 
                     b.HasKey("Id");

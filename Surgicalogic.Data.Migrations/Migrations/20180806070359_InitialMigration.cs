@@ -486,6 +486,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     OperationTypeId = table.Column<int>(nullable: false),
+                    OperationTime = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
