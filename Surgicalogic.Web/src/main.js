@@ -25,12 +25,10 @@ import Authentication from './plugins/authentication-plugin.js';
 
 import App from './App';
 import store from './stores';
-import DatetimePicker from 'vuetify-datetime-picker';
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
 Vue.use(Authentication);
-Vue.use(DatetimePicker);
 Vue.use(require('vue-moment'));
 
 // Registering Components
@@ -63,10 +61,11 @@ Vue.component('delete-component', DeleteComponent);
 import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';
 import EquipmentTypesEditComponent from '@/components/editcomponents/EquipmentTypesEditComponent';
+import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRoomsEditComponent';
+import OperationEditComponent from '@/components/editcomponents/OperationEditComponent';
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
 import PersonnelEditComponent from '@/components/editcomponents/PersonnelEditComponent';
 import PersonnelTitleEditComponent from '@/components/editcomponents/PersonnelTitleEditComponent';
-import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRoomsEditComponent';
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 import OperatingRoomsCalendarEditComponent from '@/components/editcomponents/OperatingRoomsCalendarEditComponent';
@@ -74,10 +73,11 @@ import OperatingRoomsCalendarEditComponent from '@/components/editcomponents/Ope
 Vue.component('branches-edit-component', BranchesEditComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
 Vue.component('equipment-types-edit-component', EquipmentTypesEditComponent);
+Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);
+Vue.component('operation-edit-component', OperationEditComponent);
 Vue.component('personnel-edit-component', PersonnelEditComponent);
 Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
-Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('users-edit-component', UsersEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
 Vue.component('operating-rooms-calendar-edit-component', OperatingRoomsCalendarEditComponent);

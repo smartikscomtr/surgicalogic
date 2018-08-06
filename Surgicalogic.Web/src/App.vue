@@ -182,8 +182,8 @@ export default {
           children: [
             {
               icon: "add_comment",
-              text: "Operasyonlar"
-              // route: "/CreatePlan"
+              text: "Operasyonlar",
+              route: "/operationpage"
             }
           ]
         },
