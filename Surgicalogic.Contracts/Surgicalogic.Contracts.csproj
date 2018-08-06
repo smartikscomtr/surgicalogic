@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Planning\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj" />
     <ProjectReference Include="..\Surgicalogic.Data\Surgicalogic.Data.csproj" />
     <ProjectReference Include="..\Surgicalogic.Model\Surgicalogic.Model.csproj" />
   </ItemGroup>

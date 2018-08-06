@@ -21,5 +21,6 @@ namespace Surgicalogic.Data.Entities
         public bool IsAvailable { get; set; } = true;        
         public virtual ICollection<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
         public virtual ICollection<OperatingRoomOperationType> OperatingRoomOperationTypes { get; set; }
+        public virtual ICollection<OperatingRoomCalendar> OperatingRoomCalendars { get; set; }
     }
 }

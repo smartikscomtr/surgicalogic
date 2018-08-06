@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.DbContexts;
@@ -7,8 +8,10 @@ using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
+using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Services.Stores.Base;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +32,12 @@ namespace Surgicalogic.Services.Stores
             _context = context;
             _operatingRoomEquipmentStoreService = operatingRoomEquipmentStoreService;
             _operatingRoomOperationTypeStoreService = operatingRoomOperationTypeStoreService;
+        }
+
+        public async Task<List<RoomInputModel>> GetAvailableRoomsAsync()
+        {
+            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+            return await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow)).ProjectTo<RoomInputModel>().ToListAsync();
         }
 
         public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)
@@ -112,5 +121,7 @@ namespace Surgicalogic.Services.Stores
 
             return result;
         }
+
+
     }
 }

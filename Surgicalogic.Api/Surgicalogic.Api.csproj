@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Planning\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj" />
     <ProjectReference Include="..\Surgicalogic.Contracts\Surgicalogic.Contracts.csproj" />
     <ProjectReference Include="..\Surgicalogic.Data.Migrations\Surgicalogic.Data.Migrations.csproj" />
     <ProjectReference Include="..\Surgicalogic.Data\Surgicalogic.Data.csproj" />

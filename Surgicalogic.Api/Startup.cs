@@ -119,6 +119,7 @@ namespace Surgicalogic.Api
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
             services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
             services.AddScoped<IOperationStoreService, OperationStoreService>();
+            services.AddScoped<IOperationPlanStoreService, OperationPlanStoreService>();
             services.AddScoped<IOperatingRoomCalendarStoreService, OperatingRoomCalendarStoreService>();
             services.AddScoped<IOperatingRoomEquipmentStoreService, OperatingRoomEquipmentStoreService>();
             services.AddScoped<IOperatingRoomOperationTypeStoreService, OperatingRoomOperationTypeStoreService>();
@@ -172,6 +173,9 @@ namespace Surgicalogic.Api
             AppSettings.TokenSecurityKey = Configuration["AppSettings:Token:SecurityKey"];
             AppSettings.TokenValidityPeriodInMinutes = Configuration["AppSettings:Token:ValidityPeriodInMinutes"].ToNCInt();
             AppSettings.Issuer = Configuration["AppSettings:Token:Issuer"];
+            AppSettings.ApiBaseUrl = Configuration["AppSettings:Planning:ApiBaseUrl"];
+            AppSettings.ApiPostUrl = Configuration["AppSettings:Planning:ApiPostUrl"];
+            AppSettings.PeriodInMinutes = Configuration["AppSettings:Planning:PeriodInMinutes"].ToNCInt();
         }
     }
 }

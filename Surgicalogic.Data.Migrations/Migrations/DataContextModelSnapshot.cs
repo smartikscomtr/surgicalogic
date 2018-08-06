@@ -411,6 +411,37 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("OperationPersonnels");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperationPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("OperatingRoomId");
+
+                    b.Property<DateTime>("OperationDate");
+
+                    b.Property<int>("OperationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperatingRoomId");
+
+                    b.HasIndex("OperationId");
+
+                    b.ToTable("OperationPlans");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationType", b =>
                 {
                     b.Property<int>("Id")
@@ -768,6 +799,19 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.Operation", "Operation")
                         .WithMany("OperationPersonels")
                         .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.OperationPlan", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.OperatingRoom", "OperatingRoom")
+                        .WithMany()
+                        .HasForeignKey("OperatingRoomId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.Operation", "Operation")
+                        .WithMany()
+                        .HasForeignKey("OperationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
