@@ -5,7 +5,8 @@ const operationModule = {
     loading: false,
     totalCount: 0,
     operation: [],
-    allOperations: []
+    allOperations: [],
+    allOperationTypes: []
   },
 
   mutations: {
@@ -39,6 +40,10 @@ const operationModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
+    },
+
+    setAllOperationType(state, payload) {
+      state.allOperationTypes = payload;
     }
   },
 
@@ -90,6 +95,14 @@ const operationModule = {
         .then(response => {
           context.commit('updateOperation', response.data.result) //Update the Operation in the store
         })
+    },
+
+    getAllOperationTypes(context) {
+      axios.get('OperationType/GetAllOperationTypes').then(response => {
+        if (response.data.info.succeeded == true) {
+          context.commit('setAllOperationType', response.data.result) //Set the Operation Types in the store
+        }
+      })
     }
   }
 }

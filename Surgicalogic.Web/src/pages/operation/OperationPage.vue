@@ -21,11 +21,11 @@
                                  @cancel="cancel">
     </operation-detail-component> -->
 
-    <!-- <operation-edit-component :edit-action="editAction"
+    <operation-edit-component :edit-action="editAction"
                                :edit-visible="editDialog"
                                :edit-index="editedIndex"
                                @cancel="cancel">
-    </operation-edit-component> -->
+    </operation-edit-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
@@ -38,8 +38,6 @@
 <script>
 
 import { gridMixin } from './../../mixins/gridMixin';
-
-import moment from 'moment';
 
 export default {
   mixins: [
@@ -91,6 +89,12 @@ export default {
           align: 'left'
         },
         {
+          value: 'operationTime',
+          text: vm.$i18n.t('operation.operationTime'),
+          sortable: true,
+          align: 'left'
+        },
+        {
           value: 'description',
           text: vm.$i18n.t('common.description'),
           sortable: true,
@@ -127,9 +131,9 @@ export default {
    editDialog(){
      const vm = this;
 
-    //We are accessing getAllEquipmentTypes in vuex store
+    //We are accessing getAllOperationTypes in vuex store
      if(vm.editLoadOnce){
-        vm.$store.dispatch('getAllOperations');
+        vm.$store.dispatch('getAllOperationTypes');
         vm.editLoadOnce = false;
      }
     }
@@ -143,12 +147,6 @@ export default {
     deleteMethodName(){
       return "deleteOperation";
     }
-  },
-
-  created () {
-    const vm = this;
-
-    vm.date = moment.utc('date');
   }
 };
 
