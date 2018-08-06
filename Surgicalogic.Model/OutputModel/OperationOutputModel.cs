@@ -9,8 +9,7 @@ namespace Surgicalogic.Model.OutputModel
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int OperationHour { get; set; }
-        public int OperationMinute { get; set; }
+        public string OperationTime { get; set; }
         public string OperationTypeName { get; set; }
         public int OperationTypeId { get; set; }
         public string Date { get; set; }

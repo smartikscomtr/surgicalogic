@@ -65,8 +65,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
             config.CreateMap<OperationModel, Model.OutputModel.OperationOutputModel>()
                  .ForMember(dest => dest.OperationTypeName, opt => opt.MapFrom(src => src.OperationType.Name))
-                 .ForMember(dest => dest.OperationHour, opt => opt.MapFrom(src => src.OperationTime / 60))
-                 .ForMember(dest => dest.OperationMinute, opt => opt.MapFrom(src => src.OperationTime % 60))
+                 .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => (src.OperationTime / 60) + ":" + (src.OperationTime % 60)))
                  .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("dd/MM/yyyy")));
             config.CreateMap<OperationPlanModel, OperationPlanOutputModel>()
                  .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))

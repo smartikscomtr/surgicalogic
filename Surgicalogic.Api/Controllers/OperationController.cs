@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -27,7 +28,8 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
-            return await _operationStoreService.GetAsync<OperationOutputModel>(input);
+            var result = await _operationStoreService.GetAsync<OperationOutputModel>(input);
+            return result;
         }
 
         [Route("Operation/GetAllOperations")]
@@ -45,12 +47,13 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperationOutputModel>> InsertOperation([FromBody] OperationInputModel item)
         {
+            var operationTimes = item.OperationTime.Split(':');
             var operationItem = new OperationModel()
             {
                 Name = item.Name,
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
-                OperationTime = (item.OperationHour * 60) + item.OperationMinute,
+                OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
                 Date = item.Date
             };
 
@@ -78,14 +81,14 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperationOutputModel>> UpdateOperation([FromBody] OperationInputModel item)
         {
-            
+            var operationTimes = item.OperationTime.Split(':');
             var operationItem = new OperationModel()
             {
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
-                OperationTime = (item.OperationHour * 60) + item.OperationMinute,
+                OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
                 Date = item.Date
             };
 
