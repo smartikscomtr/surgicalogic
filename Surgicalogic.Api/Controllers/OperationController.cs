@@ -50,6 +50,7 @@ namespace Surgicalogic.Api.Controllers
                 Name = item.Name,
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
+                OperationTime = (item.OperationHour * 60) + item.OperationMinute,
                 Date = item.Date
             };
 
@@ -77,13 +78,14 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperationOutputModel>> UpdateOperation([FromBody] OperationInputModel item)
         {
+            
             var operationItem = new OperationModel()
             {
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
-                OperationTime = item.OperationTime,
+                OperationTime = (item.OperationHour * 60) + item.OperationMinute,
                 Date = item.Date
             };
 

@@ -9,7 +9,8 @@ namespace Surgicalogic.Model.InputModel
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int OperationTime { get; set; }
+        public int OperationHour { get; set; }
+        public int OperationMinute { get; set; }
         public int OperationTypeId { get; set; }
         public DateTime Date { get; set; }
     }
