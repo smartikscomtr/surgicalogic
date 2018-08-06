@@ -35,8 +35,10 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['operationTime']"
-                              :label="$t('operation.operationTime')">
+                <v-text-field v-model="selectOperationTime"
+                              :label="$t('operation.operationTime')"
+                              :value="editAction['operationTime']"
+                              type="time">
                 </v-text-field>
               </v-flex>
 
@@ -185,6 +187,20 @@ export default {
         ).name;
 
         vm.editAction.operationTypeId = val;
+      }
+    },
+
+    selectOperationTime: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.operationTime;
+      },
+
+      set(val) {
+        const vm = this;
+
+        vm.editAction.operationTime = val;
       }
     }
   },
