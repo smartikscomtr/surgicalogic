@@ -25,12 +25,10 @@ import Authentication from './plugins/authentication-plugin.js';
 
 import App from './App';
 import store from './stores';
-import DatetimePicker from 'vuetify-datetime-picker';
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
 Vue.use(Authentication);
-Vue.use(DatetimePicker);
 Vue.use(require('vue-moment'));
 
 // Registering Components

@@ -9,6 +9,7 @@ import branchesModule from './modules/branches';
 import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmentTypes';
 import loginModule from './modules/login';
+import operationModule from './modules/operation';
 import operationTypeModule from './modules/operationtypes';
 import personnelModule from './modules/personnel';
 import personnelTitleModule from './modules/personnelTitle';
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     equipmentModule,
     equipmentTypesModule,
     loginModule,
+    operationModule,
     operationTypeModule,
     personnelModule,
     personnelTitleModule,

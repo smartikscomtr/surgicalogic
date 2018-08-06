@@ -33,6 +33,9 @@ import LoginPage from "@/pages/login/LoginPage";
 import UsersPage from "@/pages/management/UsersPage";
 
 
+//Registering Operation Pages
+import OperationPage from "@/pages/operation/OperationPage";
+
 export default new VueRouter({
   mode: 'history',
   routes: [
@@ -63,6 +66,11 @@ export default new VueRouter({
       meta: {
         fullPage: true
       }
+    },
+    {
+      path: '/operationpage',
+      name: 'OperationPage',
+      component: OperationPage
     },
     {
       path: '/operationtypespage',
