@@ -83,6 +83,7 @@ namespace Surgicalogic.Api.Controllers
                 Name = item.Name,
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
+                OperationTime = item.OperationTime,
                 Date = item.Date
             };
 
