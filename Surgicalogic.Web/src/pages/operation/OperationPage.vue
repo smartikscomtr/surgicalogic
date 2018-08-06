@@ -95,12 +95,6 @@ export default {
           align: 'left'
         },
         {
-          value: 'description',
-          text: vm.$i18n.t('common.description'),
-          sortable: true,
-          align: 'left'
-        },
-        {
           isAction: true,
           sortable: false,
           align: 'right'
