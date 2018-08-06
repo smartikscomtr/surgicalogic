@@ -1,6 +1,10 @@
 {
   "operation": "Operasyon",
-  "operationName": "Operation Adı",
+  "operationName": "Operasyon Adı",
+  "operationTime": "Operasyon Süresi",
   "operationType": "Operasyon Tipi",
-  "operationDate": "Operasyon Tarihi"
+  "operationDate": "Operasyon Tarihi",
+  "OperationSaved": "Operasyon kaydedildi.",
+  "addOperationInformation": "Yeni Operasyon Bilgisi Ekle",
+  "editOperationInformation": "Operasyon Bilgisi Düzenleme"
 }

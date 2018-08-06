@@ -1,6 +1,10 @@
 {
   "operation": "Operation",
   "operationName": "Operation Name",
+  "operationTime": "Operation Time",
   "operationType": "Operation Type",
-  "operationDate": "Operation Date"
+  "operationDate": "Operation Date",
+  "OperationSaved": "Operation saved.",
+  "addOperationInformation": "Add Operation Information",
+  "editOperationInformation": "Edit Operation Information"
 }
