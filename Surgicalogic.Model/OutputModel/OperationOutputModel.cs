@@ -12,6 +12,6 @@ namespace Surgicalogic.Model.OutputModel
         public int OperationTime { get; set; }
         public string OperationTypeName { get; set; }
         public int OperationTypeId { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }
