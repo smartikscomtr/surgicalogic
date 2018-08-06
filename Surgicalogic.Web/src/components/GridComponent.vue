@@ -221,6 +221,7 @@ export default {
 
     editItem(item) {
       const vm = this;
+
       //When the edit button is clicked, the event is sent to the grid component
       vm.$emit('edit', item, vm.items.indexOf(item));
     },
