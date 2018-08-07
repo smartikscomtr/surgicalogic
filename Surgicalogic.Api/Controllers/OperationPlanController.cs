@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
+using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
@@ -69,6 +70,23 @@ namespace Surgicalogic.Api.Controllers
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var apiResultModel = JsonConvert.DeserializeObject<DailyPlanOutputModel>(responseContent);
+
+                    foreach (var room in apiResultModel.Rooms)
+                    {
+                        foreach (var operation in room.Operations)
+                        {
+                            var model = new OperationPlanModel
+                            {
+                                OperatingRoomId = room.Id,
+                                OperationId = operation.Id,
+                                OperationDate = operation.StartDate
+                            };
+
+                            await _operationPlanStoreService.InsertAsync(model);
+                        }
+                    }
+
+                    await _operationPlanStoreService.SaveChangesAsync();
                     return apiResultModel;
                 }
             }
