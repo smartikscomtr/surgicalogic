@@ -43,31 +43,10 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-menu
-                  ref="menu"
-                  lazy
-                  :close-on-content-click="false"
-                  v-model="menu"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  :nudge-right="40"
-                  min-width="290px"
-                  :return-value.sync="date"
-                >
-                  <v-text-field
-                    slot="activator"
-                    label="Picker in menu"
-                    v-model="editAction['date']"
-                    prepend-icon="event"
-                    readonly
-                  ></v-text-field>
-                  <v-date-picker v-model="date" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
+                <v-text-field v-model="editAction['date']"
+                              type="date"
+                              :label="$t('operation.operationDate')">
+                </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md12>
@@ -119,23 +98,14 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('operation.OperationSaved'),
-      date: this.editAction.date,
-      menu: false,
-      modal: false,
-      datestring: this.editAction.date
+      savedMessage: this.$i18n.t('operation.operationSaved')
     };
   },
 
   watch: {
     showModal (val) {
       val || this.cancel()
-    },
-
-    date:function(val, oldVal) {
-      debugger;
-			this.datestring = this.gettanggal(val);
-	}
+    }
   },
 
   computed: {
@@ -206,7 +176,7 @@ export default {
   },
 
   methods: {
-     customFilter (item, queryText, itemText) {
+    customFilter (item, queryText, itemText) {
       const vm = this;
 
       const text = vm.replaceForAutoComplete(item.name);
@@ -273,15 +243,8 @@ export default {
       }
 
       vm.showModal = false;
-    },
-
-     gettanggal(str) {
-      if (str != null) {
-        return str.substring(8, 10)+'/'+str.substring(5, 7)+'/'+str.substring(0, 4);
-      }
-      return '';
     }
-  },
+  }
 };
 
 </script>
