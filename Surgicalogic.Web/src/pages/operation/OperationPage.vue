@@ -86,6 +86,7 @@ export default {
           value: 'date',
           text: vm.$i18n.t('operation.operationDate'),
           sortable: true,
+          isDate: true,
           align: 'left'
         },
         {

@@ -56,6 +56,10 @@
                   {{ props.item[header.value] | moment("DD.MM.YYYY HH:mm") }}
                 </template>
 
+                <template v-else-if="!header.isAction && header.isDate">
+                  {{ props.item[header.value] | moment("DD.MM.YYYY") }}
+                </template>
+
                 <template v-else-if="!header.isAction">
                   {{ props.item[header.value] }}
                 </template>
