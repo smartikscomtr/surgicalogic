@@ -87,7 +87,7 @@ namespace Surgicalogic.Data.Utilities
 
             #region CustomMapping
             config.CreateMap<Operation, OperationInputModel>()
-                .ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime / AppSettings.PeriodInMinutes))
+                .ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1))
                 .ForMember(dest => dest.DoctorId, opt => opt.MapFrom(src => src.Id));
             #endregion
         }
