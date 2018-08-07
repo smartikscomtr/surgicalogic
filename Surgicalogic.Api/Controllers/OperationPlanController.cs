@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
+using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
@@ -91,6 +93,21 @@ namespace Surgicalogic.Api.Controllers
             }
 
             return result;
+        }
+
+        [HttpPost]
+        [Route("OperationPlan/UpdateOperationPlan")]
+        public async Task<ResultModel<OperationPlanOutputModel>> UpdateOperationPlan([FromBody] OperationPlanInputModel item)
+        {
+            var operationPlan = new OperationPlanModel
+            {
+                Id = item.Id,
+                OperatingRoomId = item.OperatingRoomId,
+                OperationId = item.OperationId,
+                OperationDate = item.OperationDate
+            };
+
+            return await _operationPlanStoreService.UpdateAndSaveAsync<OperationPlanOutputModel>(operationPlan);
         }
     }
 }
