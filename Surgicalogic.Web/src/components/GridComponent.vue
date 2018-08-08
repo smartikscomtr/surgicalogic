@@ -18,7 +18,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn class="orange"
+            <v-btn v-if="showInsert"
+                   class="orange"
                    slot="activator"
                    @click="addNewItem">
               <v-icon color="white--text">
@@ -163,6 +164,11 @@ export default {
     },
 
     showSearch: {
+      type: Boolean,
+      required: false
+    },
+
+     showInsert: {
       type: Boolean,
       required: false
     },

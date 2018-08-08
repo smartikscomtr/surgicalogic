@@ -8,6 +8,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :show-search="false"
+                    :show-insert="true"
                     :hide-actions="true"
                     :methodName="getMethodName"
                     :custom-parameters="customParameters"

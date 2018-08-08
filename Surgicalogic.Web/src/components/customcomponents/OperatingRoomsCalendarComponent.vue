@@ -24,6 +24,7 @@
                             :show-edit="false"
                             :show-delete="false"
                             :show-search="false"
+                            :show-insert="false"
                             :hide-actions="true"
                             :methodName="getMethodName"
                             :loading="getLoading"
