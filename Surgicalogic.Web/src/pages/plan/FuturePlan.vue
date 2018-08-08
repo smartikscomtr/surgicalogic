@@ -8,7 +8,7 @@
                     :show-delete="false"
                     :show-search="false"
                     :show-insert="false"
-                    :hide-actions="true"
+                    :hide-actions="false"
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
