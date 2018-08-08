@@ -71,7 +71,7 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('operationtypes.operationtype'),
+          text: vm.$i18n.t('operationtypes.operationType'),
           sortable: true,
           align: 'left'
         },

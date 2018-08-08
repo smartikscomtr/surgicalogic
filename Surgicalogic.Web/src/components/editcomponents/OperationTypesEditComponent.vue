@@ -61,9 +61,10 @@
               </v-flex>
 
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="editAction['description']"
+                <v-textarea v-model="editAction['description']"
+                              rows="3"
                               :label="$t('common.description')">
-                </v-text-field>
+                </v-textarea>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>

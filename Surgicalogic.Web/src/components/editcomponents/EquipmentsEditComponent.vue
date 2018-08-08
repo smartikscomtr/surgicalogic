@@ -18,7 +18,7 @@
 
         <v-card-text>
             <v-layout wrap>
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('equipments.name')">
                 </v-text-field>
@@ -28,13 +28,6 @@
                 <v-text-field v-model="editAction['code']"
                               :label="$t('equipments.equipmentCode')">
                 </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6 input-group-checkbox>
-                <v-checkbox v-model="editAction['isPortable']"
-                            :label="$t('equipments.portable')"
-                            color="primary">
-                </v-checkbox>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
@@ -47,7 +40,14 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex v-if="!editAction['isPortable']" xs12 sm6 md6>
+              <v-flex xs12 sm6 md6 input-group-checkbox>
+                <v-checkbox v-model="editAction['isPortable']"
+                            :label="$t('equipments.portable')"
+                            color="primary">
+                </v-checkbox>
+              </v-flex>
+
+              <v-flex v-if="!editAction['isPortable']" xs12 sm6 md12>
                 <v-autocomplete v-model="selectOperatingRoom"
                                 :items="operatingRooms"
                                 :label="$t('operatingrooms.operatingRoom')"
@@ -62,9 +62,10 @@
 
 
               <v-flex xs12 sm6 md12>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('equipments.description')">
-                </v-text-field>
+                <v-textarea v-model="editAction['description']"
+                            rows="3"
+                            :label="$t('equipments.description')">
+                </v-textarea>
               </v-flex>
 
                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>

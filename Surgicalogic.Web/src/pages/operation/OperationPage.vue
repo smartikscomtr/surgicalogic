@@ -16,10 +16,10 @@
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <!-- <operation-detail-component :detail-action="detailAction"
+    <operation-detail-component :detail-action="detailAction"
                                  :detail-visible="detailDialog"
                                  @cancel="cancel">
-    </operation-detail-component> -->
+    </operation-detail-component>
 
     <operation-edit-component :edit-action="editAction"
                                :edit-visible="editDialog"

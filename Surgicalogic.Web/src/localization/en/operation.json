@@ -7,6 +7,7 @@
   "operationSaved": "Operation saved.",
   "operationHour": "Operation Hour",
   "operationMinute": "Operation Minute",
+  "detailOperation": "Detail Operation",
   "addOperationInformation": "Add Operation Information",
   "editOperationInformation": "Edit Operation Information"
 }

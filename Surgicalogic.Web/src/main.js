@@ -46,10 +46,12 @@ Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarCompon
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
 import OperatingRoomsDetailComponent from '@/components/detailcomponents/OperatingRoomsDetailComponent';
+import OperationDetailComponent from '@/components/detailcomponents/OperationDetailComponent';
 import OperationTypesDetailComponent from '@/components/detailcomponents/OperationTypesDetailComponent';
 
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent);
+Vue.component('operation-detail-component', OperationDetailComponent);
 Vue.component('operation-types-detail-component', OperationTypesDetailComponent);
 
 // Registering Delete Components

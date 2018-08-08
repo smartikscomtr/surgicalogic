@@ -423,7 +423,7 @@ a {
   flex-direction: column;
 }
 .input-group.readonly-wrap {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 .v-dialog:not(.dialog--fullscreen) {
   max-height: inherit;

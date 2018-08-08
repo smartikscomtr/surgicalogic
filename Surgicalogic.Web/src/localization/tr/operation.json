@@ -7,6 +7,7 @@
   "operationSaved": "Operasyon kaydedildi.",
   "operationHour": "Operasyon Saati",
   "operationMinute": "Operasyon Dakikası",
+  "detailOperation": "Operasyon Detayı",
   "addOperationInformation": "Yeni Operasyon Bilgisi Ekle",
   "editOperationInformation": "Operasyon Bilgisi Düzenleme"
 }

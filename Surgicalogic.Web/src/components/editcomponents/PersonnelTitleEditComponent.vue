@@ -18,17 +18,19 @@
 
         <v-card-text>
             <v-layout wrap>
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('personneltitle.personnelTitle')">
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['description']"
-                              :label="$t('common.description')">
-                </v-text-field>
+              <v-flex xs12 sm6 md12>
+                <v-textarea v-model="editAction['description']"
+                            rows="3"
+                            :label="$t('common.description')">
+                </v-textarea>
               </v-flex>
+
               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
                        @click.native="save">
