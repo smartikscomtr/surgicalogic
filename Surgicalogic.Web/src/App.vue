@@ -193,6 +193,11 @@ export default {
           text: "Plan Yönetimi",
           children: [
             {
+              icon: "assignment",
+              text: "Gelecek Plan",
+              route: "/futurePlan"
+            },
+            {
               icon: "add_alarm",
               text: "Plan Düzenlemeleri"
               // route: "/CreatePlan"

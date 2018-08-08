@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Surgicalogic.Model.CustomModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,6 +12,6 @@ namespace Surgicalogic.Model.EntityModel
         public DateTime OperationDate { get; set; }
 
         public OperationModel Operation { get; set; }
-        public OperatingRoomModel OperatingRoom { get; set; }
+        public OperatingRoomForOperationPlanModel OperatingRoom { get; set; }
     }
 }

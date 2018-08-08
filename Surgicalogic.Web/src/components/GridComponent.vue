@@ -18,7 +18,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn class="orange"
+            <v-btn v-if="showInsert"
+                   class="orange"
                    slot="activator"
                    @click="addNewItem">
               <v-icon color="white--text">
@@ -167,6 +168,11 @@ export default {
       required: false
     },
 
+     showInsert: {
+      type: Boolean,
+      required: false
+    },
+
      customParameters: {
       type: Object,
       required: false
@@ -267,6 +273,7 @@ export default {
       const vm = this;
 
       vm.headers.forEach(element => {
+        debugger;
         if (element.value == sortBy && element.sortBy) {
           sortBy = element.sortBy;
         }

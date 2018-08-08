@@ -7,6 +7,7 @@
                     :show-edit="true"
                     :show-delete="true"
                     :show-search="true"
+                    :show-insert="true"
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"

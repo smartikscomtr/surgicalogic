@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
+using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
@@ -34,6 +36,14 @@ namespace Surgicalogic.Api.Controllers
             _operationPlanStoreService = operationPlanStoreService;
         }
         #endregion
+
+        [Route("OperationPlan/GetOperationPlans")]
+        [HttpGet]
+        public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
+        {
+            var result = await _operationPlanStoreService.GetAsync<OperationPlanOutputModel>(input);
+            return result;
+        }
 
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
@@ -63,8 +73,7 @@ namespace Surgicalogic.Api.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(AppSettings.ApiBaseUrl);
-
-                HttpResponseMessage response = client.PostAsync(AppSettings.ApiPostUrl, new StringContent(req, Encoding.Default, "application/json")).Result;
+                HttpResponseMessage response = await client.PostAsync(AppSettings.ApiPostUrl, new StringContent(req, Encoding.Default, "application/json"));
 
                 if (response.Content != null)
                 {
@@ -92,6 +101,21 @@ namespace Surgicalogic.Api.Controllers
             }
 
             return result;
+        }
+
+        [HttpPost]
+        [Route("OperationPlan/UpdateOperationPlan")]
+        public async Task<ResultModel<OperationPlanOutputModel>> UpdateOperationPlan([FromBody] OperationPlanInputModel item)
+        {
+            var operationPlan = new OperationPlanModel
+            {
+                Id = item.Id,
+                OperatingRoomId = item.OperatingRoomId,
+                OperationId = item.OperationId,
+                OperationDate = item.OperationDate
+            };
+
+            return await _operationPlanStoreService.UpdateAndSaveAsync<OperationPlanOutputModel>(operationPlan);
         }
     }
 }
