@@ -14,6 +14,7 @@ import * as operatingrooms from './operatingrooms.json';
 import * as operationtypes from './operationtypes.json';
 import * as personnel from './personnel.json';
 import * as personneltitle from './personneltitle.json';
+import * as plan from './plan.json';
 import * as users from './users.json';
 import * as worktypes from './worktypes.json';
 
@@ -28,6 +29,7 @@ export default {
   operationtypes,
   personnel,
   personneltitle,
+  plan,
   users,
   worktypes
 };

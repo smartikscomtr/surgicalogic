@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Data.Entities;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
@@ -21,8 +22,9 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Operation, OperationModel>();
             config.CreateMap<OperationPlan, OperationPlanModel>();
             config.CreateMap<OperatingRoom, OperatingRoomModel>()
-                .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.OperatingRoom.IsActive && x.Equipment.IsPortable == false)); })
-                .ForMember(dest => dest.OperatingRoomOperationTypes, opt => { opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive && x.OperationType.IsActive && x.OperatingRoom.IsActive)); });
+                 .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.OperatingRoom.IsActive && x.Equipment.IsPortable == false)); })
+                 .ForMember(dest => dest.OperatingRoomOperationTypes, opt => { opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive && x.OperationType.IsActive && x.OperatingRoom.IsActive)); });
+            config.CreateMap<OperatingRoom, OperatingRoomForOperationPlanModel>();
             config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarModel>();
             config.CreateMap<OperationType, OperationTypeModel>();
             config.CreateMap<OperationTypeEquipment, OperationTypeEquipmentModel>();

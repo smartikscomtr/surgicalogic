@@ -88,7 +88,6 @@ namespace Surgicalogic.Services.Stores.Base
                 projectQuery = projectQuery.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
             }
 
-
             var result = await projectQuery.ToListAsync();
 
             return new ResultModel<TModel>

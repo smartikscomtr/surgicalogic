@@ -36,6 +36,9 @@ import UsersPage from "@/pages/management/UsersPage";
 //Registering Operation Pages
 import OperationPage from "@/pages/operation/OperationPage";
 
+//Registering Future Plan Pages
+import FuturePlan from "@/pages/plan/FuturePlan";
+
 export default new VueRouter({
   mode: 'history',
   routes: [
@@ -71,6 +74,11 @@ export default new VueRouter({
       path: '/operationpage',
       name: 'OperationPage',
       component: OperationPage
+    },
+    {
+      path: '/futurePlan',
+      name: 'FuturePlan',
+      component: FuturePlan
     },
     {
       path: '/operationtypespage',

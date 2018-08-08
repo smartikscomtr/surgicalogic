@@ -37,6 +37,14 @@ namespace Surgicalogic.Api.Controllers
         }
         #endregion
 
+        [Route("OperationPlan/GetOperationPlans")]
+        [HttpGet]
+        public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
+        {
+            var result = await _operationPlanStoreService.GetAsync<OperationPlanOutputModel>(input);
+            return result;
+        }
+
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
         public async Task<DailyPlanOutputModel> GenerateOperationPlan()
