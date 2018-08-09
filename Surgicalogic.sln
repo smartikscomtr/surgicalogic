@@ -56,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Abstr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Extensions", "Smartiks.Framework\Smartiks.Framework.IO.Extensions\Smartiks.Framework.IO.Extensions.csproj", "{0D6955A8-43D9-4D82-A3A6-7953AA319A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Test", "Surgicalogic.Test\Surgicalogic.Test.csproj", "{ED8B6175-760D-46A4-AB87-54890C6A34E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Test", "Surgicalogic.Test\Surgicalogic.Test.csproj", "{ED8B6175-760D-46A4-AB87-54890C6A34E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
