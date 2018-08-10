@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -21,18 +22,18 @@ namespace Surgicalogic.Api.Controllers
     {
 
         #region Ctor
-        private readonly IOperationStoreService _operationService;
-        private readonly IOperatingRoomStoreService _operatingRoomService;
+        private readonly IOperationStoreService _operationStoreService;
+        private readonly IOperatingRoomStoreService _operatingRoomStoreService;
         private readonly IOperationPlanStoreService _operationPlanStoreService;
 
         public OperationPlanController(
-            IOperationStoreService operationService,
-            IOperatingRoomStoreService operatingRoomService,
+            IOperationStoreService operationStoreService,
+            IOperatingRoomStoreService operatingRoomStoreService,
             IOperationPlanStoreService operationPlanStoreService
             )
         {
-            _operationService = operationService;
-            _operatingRoomService = operatingRoomService;
+            _operationStoreService = operationStoreService;
+            _operatingRoomStoreService = operatingRoomStoreService;
             _operationPlanStoreService = operationPlanStoreService;
         }
         #endregion
@@ -41,7 +42,15 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
         {
-            var result = await _operationPlanStoreService.GetAsync<OperationPlanOutputModel>(input);
+            var plans = await _operationPlanStoreService.GetAsync<OperationPlanOutputModel>(input);
+            var rooms = await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
+
+            var result = new ResultModel<OperationPlanOutputModel>
+            {
+                Info = new Info(),
+                Result = new OperationTimelineOutputModel(plans.Result, rooms.Result)
+            };
+
             return result;
         }
 
@@ -51,8 +60,8 @@ namespace Surgicalogic.Api.Controllers
         {
             var result = new DailyPlanOutputModel();
 
-            var operations = await _operationService.GetTomorrowOperationsAsync();
-            var rooms = await _operatingRoomService.GetAvailableRoomsAsync();
+            var operations = await _operationStoreService.GetTomorrowOperationsAsync();
+            var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync();
 
             var surgeryPlan = new DailyPlanInputModel
             {
