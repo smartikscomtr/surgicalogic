@@ -70,8 +70,12 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => (src.OperationTime / 60 < 10 ? ("0" + src.OperationTime / 60) : (src.OperationTime / 60 + "")) + ":" + (src.OperationTime % 60 < 10 ? ("0" + src.OperationTime % 60) : (src.OperationTime % 60 + ""))))
                  .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")));
             config.CreateMap<OperationPlanModel, OperationPlanOutputModel>()
-                 .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
-                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name));             
+                 .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.OperationId))
+                 .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.OperatingRoomId))
+                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Operation.Name))
+                 .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.OperatingRoom.Name))
+                 .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate))
+                 .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)));
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();
@@ -84,6 +88,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)));
             config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
+            config.CreateMap<UserModel, UserOutputModel>()
+                .ForMember(src => src.IsAdmin, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();
             #endregion
 
