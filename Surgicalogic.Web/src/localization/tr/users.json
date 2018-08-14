@@ -6,5 +6,6 @@
   "familyName": "Soyadı",
   "givenName": "Adı",
   "password": "Şifre",
-  "users": "Kullanıcılar"
+  "users": "Kullanıcılar",
+  "userSaved": "Kullanıcı kaydedildi."
 }
