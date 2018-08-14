@@ -56,11 +56,6 @@ Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent)
 Vue.component('operation-detail-component', OperationDetailComponent);
 Vue.component('operation-types-detail-component', OperationTypesDetailComponent);
 
-// Registering Delete Components
-import DeleteComponent from '@/components/DeleteComponent';
-
-Vue.component('delete-component', DeleteComponent);
-
 // Registering Reset Password Components
 import ResetPasswordComponent from '@/components/customcomponents/ResetPasswordComponent';
 
