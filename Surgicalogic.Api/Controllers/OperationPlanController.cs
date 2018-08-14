@@ -63,9 +63,6 @@ namespace Surgicalogic.Api.Controllers
                         
                 }
             };
-
-
-            return result;
         }
 
         [HttpPost]

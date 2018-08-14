@@ -19,13 +19,5 @@ namespace Surgicalogic.Model.CustomModel
         public string MaxDate { get; set; }
         public string EndDate { get; set; }
         public int Period { get; set; }
-
-        public string MinDate { get; set; }
-
-        public string MaxDate{ get; set; }
-
-        public string EndDate { get; set; }
-
-        public int Period { get; set; }
     }
 }
