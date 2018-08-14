@@ -11,5 +11,6 @@
   "blockedOperatingRooms": "Operasyon Yapılamayacak Odalar",
   "width": "Genişlik",
   "operatingRoomsCalendar": "Operasyon Odası Uygunluk Takvimi",
-  "isAvailable": "Uygun"
+  "isAvailable": "Uygun",
+  "operatingRoomSaved": "Operasyon odası kaydedildi."
 }

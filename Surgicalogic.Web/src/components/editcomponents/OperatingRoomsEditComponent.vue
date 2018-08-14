@@ -131,7 +131,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('operatingrooms.OperatingRoomSaved')
+      savedMessage: this.$i18n.t('operatingrooms.operatingRoomSaved')
     };
   },
 

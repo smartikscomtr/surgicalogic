@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('branches.BranchSaved')
+      savedMessage: this.$i18n.t('branches.branchSaved')
     };
   },
 

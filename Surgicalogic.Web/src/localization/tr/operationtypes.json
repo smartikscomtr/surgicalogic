@@ -3,5 +3,6 @@
   "editOperationType": "Operasyon Tipi Düzenleme",
   "operationType": "Operasyon Tipi",
   "operationtypes": "Operasyon Tipleri",
-  "detailOperationType": "Operasyon Tipi Detayları"
+  "detailOperationType": "Operasyon Tipi Detayları",
+  "operationTypeSaved": "Operasyon tipi kaydedildi."
 }

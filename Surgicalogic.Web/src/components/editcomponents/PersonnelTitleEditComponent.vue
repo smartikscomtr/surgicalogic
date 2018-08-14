@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('personneltitle.PersonnelTitleSaved')
+      savedMessage: this.$i18n.t('personneltitle.personnelTitleSaved')
     };
   },
 

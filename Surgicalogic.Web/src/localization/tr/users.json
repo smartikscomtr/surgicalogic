@@ -8,5 +8,6 @@
   "password": "Şifre",
   "users": "Kullanıcılar",
   "userName": "Kullanıcı Adı",
-  "isAdmin":"Yönetici"
+  "isAdmin":"Yönetici",
+  "userSaved": "Kullanıcı kaydedildi."
 }
