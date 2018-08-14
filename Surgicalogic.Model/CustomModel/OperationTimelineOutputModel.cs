@@ -16,5 +16,12 @@ namespace Surgicalogic.Model.CustomModel
         public List<OperationPlanOutputModel> Plan { get { return this.Item1; } }
         public List<OperatingRoomOutputModel> Rooms { get { return this.Item2; } }
 
+        public string MinDate { get; set; }
+
+        public string MaxDate{ get; set; }
+
+        public string EndDate { get; set; }
+
+        public int Period { get; set; }
     }
 }

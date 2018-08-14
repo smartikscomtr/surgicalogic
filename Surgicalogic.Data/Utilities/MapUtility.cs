@@ -74,9 +74,11 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.OperatingRoomId))
                  .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Operation.Name))
                  .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.OperatingRoom.Name))
-                 .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate))
-                 .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)));
-            config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
+                 .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
+                 .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));
+            config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>()
+                 .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
+                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();
             config.CreateMap<OperationTypeModel, OperationTypeOutputModel>()
