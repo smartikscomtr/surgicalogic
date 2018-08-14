@@ -81,6 +81,13 @@
               </v-textarea>
             </v-flex>
 
+             <v-flex xs12 sm6 md12>
+              <v-checkbox v-model="editAction['isAvailable']"
+                            rows="3"
+                            :label="$t('operatingrooms.isAvailable')">
+              </v-checkbox>
+            </v-flex>
+
             <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
               <v-btn class="btnSave orange"
                       @click.native="save">
@@ -251,6 +258,7 @@ export default {
           equipments: vm.editAction.equipmentId,
           operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
+          isAvailable:vm.editAction.isAvailable,
           operatingRoomOperationTypes: vm.selectOperationType
         }).then(() => {
           setTimeout(() => {
@@ -275,6 +283,7 @@ export default {
           equipments: vm.editAction.equipmentId,
           operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
+          isAvailable:vm.editAction.isAvailable,
           operatingRoomOperationTypes: vm.selectOperationType
         }).then(() => {
           setTimeout(() => {

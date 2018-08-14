@@ -19,7 +19,7 @@ namespace Surgicalogic.Api.Controllers
         private readonly IOperationTypeEquipmentStoreService _operationTypeEquipmentStoreService;
         private readonly IOperatingRoomOperationTypeStoreService _operatingRoomOperationTypeStoreService;
         public OperationTypeController(
-            IOperationTypeStoreService operationTypeStoreService, 
+            IOperationTypeStoreService operationTypeStoreService,
             IOperationTypeEquipmentStoreService operationTypeEquipmentStoreService,
             IOperatingRoomOperationTypeStoreService operatingRoomOperationTypeStoreService
             )
@@ -50,6 +50,13 @@ namespace Surgicalogic.Api.Controllers
         {
             var result = await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>();
             return result;
+        }
+
+        [Route("OperationType/GetOperationTypesByBranchId/{branchId:int}")]
+        [HttpGet]
+        public async Task<List<OperationTypeOutputModel>> GetOperationTypesByBranchId(int branchId)
+        {
+            return await _operationTypeStoreService.GetByBranchIdAsync(branchId);
         }
 
         /// <summary>
@@ -117,7 +124,7 @@ namespace Surgicalogic.Api.Controllers
 
             if (item.Equipments != null && result.Info.Succeeded)
             {
-               result = await _operationTypeEquipmentStoreService.UpdateOperationTypeEquipmentsAsync(item);
+                result = await _operationTypeEquipmentStoreService.UpdateOperationTypeEquipmentsAsync(item);
             }
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)

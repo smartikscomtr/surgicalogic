@@ -14,10 +14,18 @@ namespace Surgicalogic.Api.Controllers
     public class OperationController : Controller
     {
         private readonly IOperationStoreService _operationStoreService;
+        private readonly IOperationPersonnelStoreService _operationPersonnelStoreService;
+        private readonly IOperationBlockedOperatingRoomStoreService _operationBlockedOperatingRoomStoreService;
 
-        public OperationController(IOperationStoreService operationStoreService)
+        public OperationController(
+            IOperationStoreService operationStoreService, 
+            IOperationPersonnelStoreService operationPersonnelStoreService,
+            IOperationBlockedOperatingRoomStoreService operationBlockedOperatingRoomStoreService
+            )
         {
             _operationStoreService = operationStoreService;
+            _operationPersonnelStoreService = operationPersonnelStoreService;
+            _operationBlockedOperatingRoomStoreService = operationBlockedOperatingRoomStoreService;
         }
 
         /// <summary>
@@ -56,7 +64,22 @@ namespace Surgicalogic.Api.Controllers
                 Date = item.Date
             };
 
-            return await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
+            var result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
+
+            item.Id = result.Result.Id;
+
+            if (item.DoctorIds != null && result.Info.Succeeded)
+            {
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+            }
+
+            if (item.OperatingRoomIds != null && result.Info.Succeeded)
+            {
+                await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
+            }
+
+
+            return result;
         }
 
         /// <summary>
@@ -91,7 +114,19 @@ namespace Surgicalogic.Api.Controllers
                 Date = item.Date
             };
 
-            return await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
+            var result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
+
+            if (item.DoctorIds != null && result.Info.Succeeded)
+            {
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+            }
+
+            if (item.OperatingRoomIds != null && result.Info.Succeeded)
+            {
+                await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
+            }
+
+            return result;
         }
     }
 }

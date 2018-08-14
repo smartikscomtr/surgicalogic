@@ -13,5 +13,9 @@ namespace Surgicalogic.Model.EntityModel
         public DateTime Date { get; set; }
 
         public OperationTypeModel OperationType { get; set; }
+        public ICollection<OperationPersonnelModel> OperationPersonels { get; set; }
+        public virtual ICollection<OperationBlockedOperatingRoomModel> OperationBlockedOperatingRooms { get; set; }
+
+
     }
 }

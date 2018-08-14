@@ -19,18 +19,20 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
         public DbSet<Operation> Operations { get; set; }
+        public DbSet<OperationBlockedOperatingRoom> OperationBlockedOperatingRooms { get; set; }
         public DbSet<OperationPlan> OperationPlans { get; set; }
         public DbSet<OperationPersonnel> OperationPersonnels { get; set; }
         public DbSet<OperatingRoom> OperatingRooms { get; set; }
         public DbSet<OperatingRoomCalendar> OperatingRoomCalendars { get; set; }
-        public DbSet<Personnel> Personnels { get; set; }
-        public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
-        public DbSet<WorkType> WorkTypes { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
         public DbSet<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
         public DbSet<OperatingRoomOperationType> OperatingRoomOperationTypes { get; set; }
-        public DbSet<PersonnelBranch> PersonnelBranches { get; set; }
         public DbSet<OperationTypeEquipment> OperationTypeEquipments { get; set; }
+        public DbSet<Personnel> Personnels { get; set; }
+        public DbSet<PersonnelBranch> PersonnelBranches { get; set; }
+        public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
+        public DbSet<WorkType> WorkTypes { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -78,12 +80,24 @@ namespace Surgicalogic.Data.DbContexts
             modelBuilder.Entity<OperationPersonnel>()
                 .HasOne(o => o.Personnel)
                 .WithMany(o => o.OperationPersonels)
-                .HasForeignKey(o => o.OperationId);
+                .HasForeignKey(o => o.PersonnelId);
 
             modelBuilder.Entity<OperationPersonnel>()
                 .HasOne(o => o.Operation)
                 .WithMany(o => o.OperationPersonels)
-                .HasForeignKey(o => o.PersonnelId);
+                .HasForeignKey(o => o.OperationId);
+
+            modelBuilder.Entity<OperationBlockedOperatingRoom>()
+                .HasOne(o => o.OperatingRoom)
+                .WithMany(o => o.OperationBlockedOperatingRooms)
+                .HasForeignKey(o => o.OperatingRoomId);
+
+            modelBuilder.Entity<OperationBlockedOperatingRoom>()
+                .HasOne(o => o.Operation)
+                .WithMany(o => o.OperationBlockedOperatingRooms)
+                .HasForeignKey(o => o.OperationId);
+
+
 
             base.OnModelCreating(modelBuilder);
         }

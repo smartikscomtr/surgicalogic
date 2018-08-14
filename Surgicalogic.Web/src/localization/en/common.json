@@ -5,6 +5,8 @@
   "deleteOperation": "Delete Operation",
   "description": "Description",
   "doYouWantToDeleteTheRecord": "Do you want to delete the record?",
+  "resetPassword": "Reset Password",
+  "doYouWantToResetPassword": "Do you want to reset password?",
   "name": "Name",
   "no": "No",
   "yes": "Yes",

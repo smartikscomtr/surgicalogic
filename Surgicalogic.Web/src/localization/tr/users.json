@@ -7,5 +7,7 @@
   "givenName": "Adı",
   "password": "Şifre",
   "users": "Kullanıcılar",
+  "userName": "Kullanıcı Adı",
+  "isAdmin":"Yönetici",
   "userSaved": "Kullanıcı kaydedildi."
 }

@@ -6,7 +6,7 @@
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
               <v-toolbar-title>
-                Login form
+                Reset Password Form
               </v-toolbar-title>
 
               <v-spacer></v-spacer>
@@ -14,13 +14,6 @@
 
             <v-card-text>
               <v-form>
-                <v-text-field v-model="email"
-                              prepend-icon="person"
-                              name="login"
-                              label="Login"
-                              type="text">
-                </v-text-field>
-
                 <v-text-field v-model="password"
                               prepend-icon="lock"
                               name="password"
@@ -28,26 +21,28 @@
                               id="password"
                               type="password">
                 </v-text-field>
+
+                 <v-text-field v-model="confirmPassword"
+                              prepend-icon="lock"
+                              name="confirmPassword"
+                              label="Confirm Password"
+                              id="confirmPassword"
+                              type="password">
+                </v-text-field>
               </v-form>
             </v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="btnReset"
-                     @click="forgotPassword()">
-                Forgot Password
-              </v-btn>
 
-              <v-btn class="btnSave"
-                     @click="login()">
-                Login
+              <v-btn class="btnSave btn--flat"
+                     @click="updatePassword()">
+                Update
               </v-btn>
             </v-card-actions>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-
-
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -60,26 +55,29 @@
 
 export default {
   data() {
-  return {};
+  return {
+    password:null,
+    confirmPassword:null
+  };
   },
 
   methods: {
-  login() {
-  const vm = this;
+    updatePassword() {
+      const vm = this;
 
       //We are accessing userLogin in vuex store
-      vm.$store.dispatch("userLogin", {
-        email: vm.email,
-        password: vm.password
+      vm.$store.dispatch("updatePassword", {
+        email: vm.$route.query.email,
+        password: vm.password,
+        confirmPassword: vm.confirmPassword,
+        code: vm.$route.query.code
       });
+
+      setTimeout(function () {
+        vm.$router.push("loginpage");
+      }, 1000)
+
     },
-
-  forgotPassword() {
-  const vm = this;
-
-      //We are accessing userLogout in vuex store
-      vm.$router.push("ForgotPassword");
-    }
   },
 
   created(){
@@ -118,17 +116,6 @@ export default {
     font-size: 15px;
 }
 .btnSave .btn__content {
-    color: #fff;
-}
-.btnReset {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    height: 40px;
-    font-size: 15px;
-}
-.btnReset .btn__content {
     color: #fff;
 }
 .btn__content {

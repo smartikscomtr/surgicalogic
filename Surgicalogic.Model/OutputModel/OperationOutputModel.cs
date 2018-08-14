@@ -12,6 +12,12 @@ namespace Surgicalogic.Model.OutputModel
         public string OperationTime { get; set; }
         public string OperationTypeName { get; set; }
         public int OperationTypeId { get; set; }
+        public int BranchId { get; set; }
+        public string BranchName { get; set; }
+        public int[] DoctorIds { get; set; }
+        public string DoctorNames { get; set; }
+        public int[] OperatingRoomIds { get; set; }
+        public string OperatingRoomNames { get; set; }
         public string Date { get; set; }
     }
 }

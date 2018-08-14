@@ -532,6 +532,37 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OperationBlockedOperatingRooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OperationId = table.Column<int>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationBlockedOperatingRooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperationBlockedOperatingRooms_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OperationBlockedOperatingRooms_Operations_OperationId",
+                        column: x => x.OperationId,
+                        principalTable: "Operations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OperationPersonnels",
                 columns: table => new
                 {
@@ -549,15 +580,15 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     table.PrimaryKey("PK_OperationPersonnels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OperationPersonnels_Personnels_OperationId",
+                        name: "FK_OperationPersonnels_Operations_OperationId",
                         column: x => x.OperationId,
-                        principalTable: "Personnels",
+                        principalTable: "Operations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OperationPersonnels_Operations_PersonnelId",
+                        name: "FK_OperationPersonnels_Personnels_PersonnelId",
                         column: x => x.PersonnelId,
-                        principalTable: "Operations",
+                        principalTable: "Personnels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -669,6 +700,16 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "OperationTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OperationBlockedOperatingRooms_OperatingRoomId",
+                table: "OperationBlockedOperatingRooms",
+                column: "OperatingRoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OperationBlockedOperatingRooms_OperationId",
+                table: "OperationBlockedOperatingRooms",
+                column: "OperationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OperationPersonnels_OperationId",
                 table: "OperationPersonnels",
                 column: "OperationId");
@@ -754,6 +795,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "OperatingRoomOperationTypes");
+
+            migrationBuilder.DropTable(
+                name: "OperationBlockedOperatingRooms");
 
             migrationBuilder.DropTable(
                 name: "OperationPersonnels");

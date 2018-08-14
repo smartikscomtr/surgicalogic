@@ -11,6 +11,8 @@ namespace Surgicalogic.Model.EntityModel
         public string FirstName { get; set; }
         [Searchable]
         public string LastName { get; set; }
+        public string FullName { get; set; }
+
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }

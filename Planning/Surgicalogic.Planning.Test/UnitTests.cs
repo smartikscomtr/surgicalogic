@@ -32,7 +32,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds = new int[] { 1 },
                 Period = 4,
             };
 
@@ -41,7 +41,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 3,
             };
 
@@ -98,7 +98,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 4,
             };
 
@@ -107,7 +107,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 3,
             };
 
@@ -162,7 +162,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 1, 3 }
             };
@@ -172,7 +172,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -231,7 +231,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 2,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -241,7 +241,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 1,
             };
 
@@ -250,7 +250,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 3,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 3,
             };
 
@@ -259,7 +259,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 4,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 2,
             };
 
@@ -268,7 +268,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 5,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 6,
             };
 
@@ -277,7 +277,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 6,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 7,
             };
 
@@ -286,7 +286,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 7,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 5,
             };
 
@@ -295,7 +295,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 8,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 3,
             };
 
@@ -304,7 +304,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 9,
-                DoctorId = 4,
+                DoctorIds =new int[] { 4 },
                 Period = 6,
             };
 
@@ -313,7 +313,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 10,
-                DoctorId = 4,
+                DoctorIds =new int[] { 4 },
                 Period = 10,
                 UnavailableRooms = new List<int> { 2, 3 }
             };
@@ -381,7 +381,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 2,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -391,7 +391,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 1,
             };
 
@@ -400,7 +400,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 3,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 7,
                 UnavailableRooms = new List<int> { 3 }
             };
@@ -410,7 +410,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 4,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 2,
             };
 
@@ -419,7 +419,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 5,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 2,
                 UnavailableRooms = new List<int> { 2 }
             };
@@ -429,7 +429,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 6,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 1,
             };
 
@@ -438,7 +438,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 7,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 2, 3 }
             };
@@ -448,7 +448,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 8,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 3,
             };
 
@@ -513,7 +513,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 6,
                 UnavailableRooms = new List<int> { 2 }
             };
@@ -523,7 +523,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 1 }
             };
@@ -533,7 +533,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 8,
                 UnavailableRooms = new List<int> { 1 }
             };
@@ -574,7 +574,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 2,
                 UnavailableRooms = new List<int> { 1, 3 }
             };
@@ -584,7 +584,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -594,7 +594,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 3,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 1,
             };
 
@@ -603,7 +603,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 4,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 3, 4 }
             };
@@ -613,7 +613,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 5,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 8,
                 UnavailableRooms = new List<int> { 1, 4 }
             };
@@ -678,7 +678,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 3, 4 }
             };
@@ -688,7 +688,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 6,
                 UnavailableRooms = new List<int> { 1, 2, 5 }
             };
@@ -698,7 +698,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 3,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 5,
                 UnavailableRooms = new List<int> { 2, 3 }
             };
@@ -708,7 +708,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 4,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 7,
                 UnavailableRooms = new List<int> { 1, 2, 3, 5 }
             };
@@ -718,7 +718,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 5,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 2,
                 UnavailableRooms = new List<int> { 1, 4 }
             };
@@ -728,7 +728,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 6,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 1, 3, 4, 5 }
             };
@@ -738,7 +738,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 7,
-                DoctorId = 5,
+                DoctorIds =new int[] { 5 },
                 Period = 6,
                 UnavailableRooms = new List<int> { 1, 2, 3, 5 }
             };
@@ -748,7 +748,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 8,
-                DoctorId = 5,
+                DoctorIds =new int[] { 5 },
                 Period = 6,
                 UnavailableRooms = new List<int> { 1, 2, 3 }
 
@@ -759,7 +759,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 9,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 1, 2, 3, 5 }
             };
@@ -769,7 +769,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 10,
-                DoctorId = 2,
+                DoctorIds =new int[] { 2 },
                 Period = 8,
                 UnavailableRooms = new List<int> { 3, 4 }
             };
@@ -842,7 +842,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 9,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 2, 1 }
             };
@@ -852,7 +852,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 36,
-                DoctorId = 10,
+                DoctorIds =new int[] { 10 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 4, 1 }
             };
@@ -862,7 +862,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 4,
+                DoctorIds =new int[] { 4 },
                 Period = 7,
                 UnavailableRooms = new List<int> { 1, 3 }
             };
@@ -872,7 +872,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 4,
-                DoctorId = 7,
+                DoctorIds =new int[] { 7 },
                 Period = 6,
                 UnavailableRooms = new List<int> { 4, 2 }
             };
@@ -882,7 +882,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 11,
-                DoctorId = 7,
+                DoctorIds =new int[] { 7 },
                 Period = 6,
                 UnavailableRooms = new List<int> { 3, 2 }
             };
@@ -892,7 +892,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 8,
-                DoctorId = 8,
+                DoctorIds =new int[] { 8 },
                 Period = 5,
                 UnavailableRooms = new List<int> { 1, 2, 3 }
             };
@@ -902,7 +902,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 7,
-                DoctorId = 10,
+                DoctorIds =new int[] { 10 },
                 Period = 7,
                 UnavailableRooms = new List<int> { 3, 4 }
             };
@@ -912,7 +912,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 20,
-                DoctorId = 10,
+                DoctorIds =new int[] { 10 },
                 Period = 2,
                 UnavailableRooms = new List<int> { 4 }
             };
@@ -922,7 +922,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -932,7 +932,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 26,
-                DoctorId = 10,
+                DoctorIds =new int[] { 10 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 3 }
             };
@@ -942,7 +942,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 3,
-                DoctorId = 3,
+                DoctorIds =new int[] { 3 },
                 Period = 9,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -952,7 +952,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 100,
-                DoctorId = 1,
+                DoctorIds =new int[] { 1 },
                 Period = 9,
                 UnavailableRooms = new List<int> { 2, 1 }
             };
@@ -962,7 +962,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 16,
-                DoctorId = 10,
+                DoctorIds =new int[] { 10 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -972,7 +972,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 37,
-                DoctorId = 7,
+                DoctorIds =new int[] { 7 },
                 Period = 10,
                 UnavailableRooms = new List<int> { 2, 3, 4 }
             };
@@ -1047,7 +1047,7 @@ namespace Surgicalogic.Planning.Test
             var operation = new OperationInputModel
             {
                 Id = 1,
-                DoctorId = 1,
+                DoctorIds = new int[] { 1 },
                 Period = 3,
                 UnavailableRooms = new List<int> { 2 }
             };
@@ -1057,7 +1057,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 2,
-                DoctorId = 1,
+                DoctorIds = new int[] { 1 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 2, 3 }
             };
@@ -1067,7 +1067,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 3,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 5,
                 UnavailableRooms = new List<int> { 3 }
             };
@@ -1077,7 +1077,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 4,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 5,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -1087,7 +1087,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 5,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -1097,7 +1097,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 6,
-                DoctorId = 1,
+                DoctorIds = new int[] { 1 },
                 Period = 5,
                 UnavailableRooms = new List<int> { 1, 1 }
             };
@@ -1107,7 +1107,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 7,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 5,
                 UnavailableRooms = new List<int> { 2, 2 }
             };
@@ -1117,7 +1117,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 8,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 1, 2 }
             };
@@ -1127,7 +1127,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 9,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 3 }
             };
@@ -1137,7 +1137,7 @@ namespace Surgicalogic.Planning.Test
             operation = new OperationInputModel
             {
                 Id = 10,
-                DoctorId = 2,
+                DoctorIds = new int[] { 2 },
                 Period = 4,
                 UnavailableRooms = new List<int> { 3 }
             };

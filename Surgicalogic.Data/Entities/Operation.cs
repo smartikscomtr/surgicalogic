@@ -14,5 +14,6 @@ namespace Surgicalogic.Data.Entities
         public DateTime Date { get; set; }        
         public virtual OperationType OperationType { get; set; }
         public virtual ICollection<OperationPersonnel> OperationPersonels { get; set; }
+        public virtual ICollection<OperationBlockedOperatingRoom> OperationBlockedOperatingRooms { get; set; }
     }
 }

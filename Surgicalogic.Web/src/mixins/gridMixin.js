@@ -1,5 +1,5 @@
 export const gridMixin = {
-  methods: {        
+  methods: {
     detail(payload) {
       const vm = this;
 
@@ -21,6 +21,7 @@ export const gridMixin = {
       vm.detailDialog = false;
       vm.editDialog = false;
       vm.deleteDialog = false;
+      vm.resetPasswordDialog = false;
 
       setTimeout(() =>{
         vm.editAction = Object.assign({}, {})
@@ -39,6 +40,13 @@ export const gridMixin = {
 
       vm.deleteValue = payload;
       vm.deleteDialog = true;
+    },
+
+    resetPassword(payload) {
+      const vm = this;
+
+      vm.resetPasswordValue = payload;
+      vm.resetPasswordDialog = true;
     }
   }
 }

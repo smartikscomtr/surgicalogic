@@ -8,5 +8,8 @@
         public static string ApiBaseUrl { get; set; }
         public static string ApiPostUrl { get; set; }
         public static int PeriodInMinutes { get; set; }
+        public static string AdminRole { get; set; }
+        public static string MemberRole { get; set; }
+        public static int DoctorId { get; set; }
     }
 }

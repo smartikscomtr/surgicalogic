@@ -76,7 +76,7 @@ namespace Surgicalogic.Planning.ORTools
 
             for (int i = 0; i < input.Operations.Count; i++)
             {
-                int doctorId = input.Operations[i].DoctorId;
+                int[] doctorIds = input.Operations[i].DoctorIds;
 
                 //Bir ameliyat bir odada veya bir zamanda yapılamaz bilgisi bu değişkende tutuluyor.
                 int[] blockedTimes = GetBlockedTimes(input.Operations[i].UnavailableRooms, input.Rooms, input.Settings.MaximumPeriod, validStatus);
@@ -98,7 +98,7 @@ namespace Surgicalogic.Planning.ORTools
                 for (int ad = 0; ad < input.Operations.Count; ad++)
                 {
                     //Eğer sonraki ameliyatı yapacak doktorlardan birisi, bu ameliyatı yapan doktor ise.
-                    if (input.Operations[ad].DoctorId == doctorId && ad != i)
+                    if (input.Operations[ad].DoctorIds.Intersect(doctorIds).Count() > 0 && ad != i)
                     {
                         //Bir sonraki ameliyat süresi kadar dön.
                         for (int ml = 0; ml < input.Operations[ad].Period; ml++)
@@ -215,7 +215,7 @@ namespace Surgicalogic.Planning.ORTools
                             //Console.Write(surgeryRoom.Id + ". Oda, Saat: " + dateTime.ToShortTimeString());
                             operationTimes.Add(dateTime.Hour);
 
-                            surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorId = input.Operations[i].DoctorId, Period = input.Operations[i].Period, StartDate = dateTime });
+                            surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorIds = input.Operations[i].DoctorIds, Period = input.Operations[i].Period, StartDate = dateTime });
                         }
                         roomUsage.Add(v);
                     }

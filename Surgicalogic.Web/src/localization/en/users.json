@@ -6,5 +6,7 @@
   "familyName": "Family Name",
   "givenName": "Given Name",
   "password": "Password",
-  "users": "Users"
+  "users": "Users",
+  "userName": "User Name",
+  "isAdmin":"Administrator"
 }

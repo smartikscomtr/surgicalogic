@@ -25,10 +25,48 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectBranch"
+                                :items="branches"
+                                :label="$t('operation.branch')"
+                                :filter="customFilter"
+                                @change="branchChanged()"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectOperationType"
-                                :items="operationTypes"
+                                :items="filteredOperationTypes"
                                 :label="$t('operation.operationType')"
                                 :filter="customFilter"
+                                @change="operationTypeChanged()"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+               <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectDoctor"
+                                :items="filteredDoctors"
+                                :label="$t('personnel.personnel')"
+                                :filter="customFilter"
+                                multiple
+                                chips
+                                deletable-chips
+                                item-text="fullName"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+               <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectOperatingRoom"
+                                :items="filteredOperatingRooms"
+                                :label="$t('operatingrooms.blockedOperatingRooms')"
+                                :filter="customFilter"
+                                multiple
+                                chips
+                                deletable-chips
                                 item-text="name"
                                 item-value="id">
                 </v-autocomplete>
@@ -45,6 +83,8 @@
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['date']"
                               type="date"
+                              :min="getMinDate()"
+                              onkeydown="return false"
                               :label="$t('operation.operationDate')">
                 </v-text-field>
               </v-flex>
@@ -98,6 +138,9 @@ export default {
 
   data() {
     return {
+      filteredOperationTypes: [],
+      filteredDoctors: [],
+      filteredOperatingRooms:[],
       snackbarVisible: null,
       savedMessage: this.$i18n.t('operation.operationSaved')
     };
@@ -161,6 +204,48 @@ export default {
       }
     },
 
+    selectBranch: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.branchId;
+      },
+
+       set(val) {
+        const vm = this;
+
+        vm.editAction.branchId = val;
+      }
+    },
+
+    selectDoctor: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.doctorIds;
+      },
+
+       set(val) {
+        const vm = this;
+
+        vm.editAction.doctorIds = val;
+      }
+    },
+
+    selectOperatingRoom: {
+      get() {
+        const vm = this;
+
+        return vm.editAction.operatingRoomIds;
+      },
+
+       set(val) {
+        const vm = this;
+
+        vm.editAction.operatingRoomIds = val;
+      }
+    },
+
     selectOperationTime: {
       get() {
         const vm = this;
@@ -173,7 +258,13 @@ export default {
 
         vm.editAction.operationTime = val;
       }
-    }
+    },
+
+    branches() {
+      const vm = this;
+
+      return vm.$store.state.operationModule.allBranches;
+    },
   },
 
   methods: {
@@ -185,6 +276,7 @@ export default {
 
       return text.indexOf(searchText) > -1;
     },
+
 
     replaceForAutoComplete(text)
     {
@@ -211,7 +303,9 @@ export default {
           date: vm.editAction.date,
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
-          operationTypeId: vm.selectOperationType
+          operationTypeId: vm.selectOperationType,
+          doctorIds: vm.selectDoctor,
+          operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
@@ -231,7 +325,9 @@ export default {
           date: vm.editAction.date,
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
-          operationTypeId: vm.selectOperationType
+          operationTypeId: vm.selectOperationType,
+          doctorIds: vm.selectDoctor,
+          operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
@@ -244,8 +340,57 @@ export default {
       }
 
       vm.showModal = false;
+    },
+
+    getMinDate () {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let tomorrow = new Date();
+
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      let year = tomorrow.getFullYear();
+      let month = toTwoDigits(tomorrow.getMonth() + 1);
+      let day = toTwoDigits(tomorrow.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
+
+    branchChanged() {
+      const vm = this;
+
+      if (vm.editAction.branchId)
+      {
+        vm.$store.dispatch('getOperationTypesByBranchId', {
+          branchId: vm.editAction.branchId}).then(() => {
+            setTimeout(function(){
+              vm.filteredOperationTypes = vm.$store.state.operationModule.filteredOperationTypes;
+            },1500)
+          });
+
+        vm.$store.dispatch('getDoctorsByBranchId', {
+            branchId: vm.editAction.branchId }).then(() => {
+              setTimeout(function(){
+                vm.filteredDoctors = vm.$store.state.operationModule.filteredDoctors;
+          }, 1000)
+        });
+      }
+    },
+
+    operationTypeChanged()
+    {
+      const vm = this;
+
+      if (vm.editAction.operationTypeId)
+      {
+        vm.$store.dispatch('getOperatingRoomsByOperationTypeId', {
+          operationTypeId: vm.editAction.operationTypeId}).then(() => {
+            setTimeout(function(){
+              vm.filteredOperatingRooms = vm.$store.state.operationModule.filteredOperatingRooms;
+            }, 2000)
+          });
+      }
     }
   }
-};
+}
 
 </script>

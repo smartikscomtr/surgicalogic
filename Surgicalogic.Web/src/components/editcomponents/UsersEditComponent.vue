@@ -30,6 +30,19 @@
                 </v-text-field>
               </v-flex>
 
+               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+               <v-checkbox v-model="editAction['isAdmin']"
+                              :label="$t('users.isAdmin')">
+                </v-checkbox>
+              </v-flex>
+
+              <!-- <v-flex xs6 sm6 md6 text-lg-left text-md-left text-sm-left text-xs-left>
+                <v-btn class="btnSave blue"
+                      @click="resetPassword(editAction['email'])">
+                   Şifreyi Sıfırla
+                  </v-btn>
+              </v-flex> -->
+
               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
                 <v-btn class="btnSave orange"
                        @click.native="save">
@@ -120,7 +133,8 @@ export default {
         vm.$store.dispatch('updateUser', {
           id: vm.editAction.id,
           userName: vm.editAction.userName,
-          email: vm.editAction.email
+          email: vm.editAction.email,
+          isAdmin: vm.editAction.isAdmin
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
@@ -136,7 +150,8 @@ export default {
         //We are accessing insertWorkType in vuex store
         vm.$store.dispatch('insertUser', {
           userName: vm.editAction.userName,
-          email: vm.editAction.email
+          email: vm.editAction.email,
+          isAdmin: vm.editAction.isAdmin
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
@@ -149,7 +164,24 @@ export default {
       }
 
       vm.showModal = false;
-    }
+    },
+
+    resetPassword(item) {
+      const vm = this;
+
+      //When the reset password button is clicked, the event is sent to the grid component
+        vm.$store.dispatch('resetPassword', {
+          email: item
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
+    },
   }
 }
 
