@@ -33,11 +33,47 @@
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
+                    {{ $t('operation.branch') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['branchName'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
                     {{ $t('operation.operationType') }}
                   </div>
 
                   <div class="value">
                     {{ detailAction['operationTypeName'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+               <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('personnel.personnel') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['doctorNames'] }}
+                  </div>
+                </div>
+              </v-flex>
+
+               <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operatingrooms.blockedOperatingRooms') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['operatingRoomNames'] }}
                   </div>
                 </div>
               </v-flex>

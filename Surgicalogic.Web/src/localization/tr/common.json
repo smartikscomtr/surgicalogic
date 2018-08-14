@@ -5,6 +5,8 @@
   "deleteOperation": "Silme İşlemi",
   "description": "Açıklama",
   "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz?",
+  "resetPassword": "Şifreyi Sıfırla",
+  "doYouWantToResetPassword": "Kullanıcının şifresini sıfırlamak istiyor musunuz?",
   "name": "Ad",
   "no": "Hayır",
   "yes": "Evet",

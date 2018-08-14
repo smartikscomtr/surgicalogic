@@ -306,6 +306,22 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
+                #region OperationTypes
+                for (int i = 1; i <= 8; i++)
+                {
+
+                        context.OperationTypes.Add(new Entities.OperationType
+                        {
+                            Name = "Tip " + i,
+                            Description = "Tip " + i,
+                            BranchId = i,
+                            CreatedDate = DateTime.Now,
+                            CreatedBy = 1,
+                            IsActive = true
+                        });
+                }
+                #endregion
+
                 #region SaveChanges
                 context.SaveChanges();
                 #endregion
@@ -314,7 +330,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
                 for (int i = 1; i <= 8; i++)
                 {
-
                     for (int k = 0; k < _random.Next(1, 5); k++)
                     {
                         context.OperatingRoomEquipments.Add(new Entities.OperatingRoomEquipment
@@ -326,6 +341,22 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     }
 
                 }
+
+                for (int i = 1; i <= 8; i++)
+                {
+                    context.Operations.Add(new Entities.Operation
+                    {
+                        Name = "Operasyon " + i,
+                        Description = "Operasyon " + i,
+                        OperationTypeId = i,
+                        OperationTime = _random.Next(5, 25) * 5,
+                        Date = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day),
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = 1,
+                        IsActive = true
+                    });
+                }
+
                 #endregion
 
                 #region SaveChanges

@@ -101,6 +101,15 @@
                       delete
                     </v-icon>
                   </v-btn>
+
+                   <v-btn v-if="showResetPassword"
+                         icon
+                         class="mx-0"
+                         @click="resetPassword(props.item)">
+                    <v-icon color="#232222">
+                      lock_open
+                    </v-icon>
+                  </v-btn>
                 </template>
               </td>
             </template>
@@ -169,6 +178,11 @@ export default {
     },
 
      showInsert: {
+      type: Boolean,
+      required: false
+    },
+
+    showResetPassword: {
       type: Boolean,
       required: false
     },
@@ -243,6 +257,14 @@ export default {
       vm.$emit('deleteitem', item);
     },
 
+
+    resetPassword(item) {
+      const vm = this;
+
+      //When the reset password button is clicked, the event is sent to the grid component
+      vm.$emit('resetpassword', item);
+    },
+
     executeGridOperations(resetPageCount) {
       const vm = this;
 
@@ -273,7 +295,6 @@ export default {
       const vm = this;
 
       vm.headers.forEach(element => {
-        debugger;
         if (element.value == sortBy && element.sortBy) {
           sortBy = element.sortBy;
         }
@@ -501,5 +522,10 @@ table.v-table thead th:not(:first-child) {
 }
 .v-select.v-select--chips .v-select__selections {
     min-height: 32px;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
 }
 </style>

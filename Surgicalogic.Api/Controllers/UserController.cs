@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.Entities;
@@ -11,6 +12,7 @@ using Surgicalogic.Model.User;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -59,7 +61,16 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<UserOutputModel>> GetUsers()
         {
-            return await _userStoreService.GetAsync<UserOutputModel>();
+            var users = await _userStoreService.GetAsync<UserOutputModel>();
+
+            foreach (var item in users.Result)
+            {
+                var email = (string)item.Email;
+                var user = _userManager.Users.SingleOrDefault(r => r.Email == email);
+                item.IsAdmin = await _userManager.IsInRoleAsync(user, AppSettings.AdminRole);
+            }
+
+            return users;
         }
 
         /// <summary>
@@ -74,10 +85,14 @@ namespace Surgicalogic.Api.Controllers
             var userItem = new UserModel()
             {
                 UserName = item.UserName,
-                Email = item.Email
+                Email = item.Email,
             };
 
-            return await _userStoreService.InsertAndSaveAsync<UserOutputModel>(userItem);
+            var result =  await _userStoreService.InsertAndSaveAsync<UserOutputModel>(userItem);
+
+            await SetUserRolesAsync(item.Email, item.IsAdmin);
+
+            return result;
         }
 
         /// <summary>
@@ -108,60 +123,112 @@ namespace Surgicalogic.Api.Controllers
                 Email = item.Email
             };
 
-            return await _userStoreService.UpdateAndSaveAsync(userItem);
+            var updateResult = await _userStoreService.UpdateAndSaveAsync(userItem);
+
+            await SetUserRolesAsync(item.Email, item.IsAdmin);
+
+            return updateResult;
         }
 
-        [Route("Login/ForgotPassword")]
-        [HttpPost]
-        public async Task<ActionResult> ForgotPassword([FromBody]ForgotPasswordViewModel model)
+        private async Task SetUserRolesAsync(string email, bool isAdmin)
         {
-            if (ModelState.IsValid)
+            var user = _userManager.Users.SingleOrDefault(r => r.Email == email);
+
+            if (isAdmin)
             {
-                var user = await _userManager.FindByNameAsync(model.Email);
+                var isAlreadyAdmin = await _userManager.IsInRoleAsync(user, AppSettings.AdminRole);
 
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (!isAlreadyAdmin)
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    try
+                    {
+                        await _userManager.AddToRoleAsync(user, AppSettings.AdminRole);
+                        await _userManager.RemoveFromRoleAsync(user, AppSettings.MemberRole);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
                 }
+            }
+            else
+            {
+                var isMember = await _userManager.IsInRoleAsync(user, AppSettings.MemberRole);
 
-                // For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "User");
+                if (!isMember)
+                {
+                    await _userManager.AddToRoleAsync(user, AppSettings.MemberRole);
+                    await _userManager.RemoveFromRoleAsync(user, AppSettings.AdminRole);
+                }
             }
 
-            // If we got this far, something failed, redisplay form
-            throw new ApplicationException("UNKNOWN_ERROR");
+        }
+
+        [Route("User/ForgotPassword")]
+        [HttpPost]
+        public async Task<ResultModel<User>> ForgotPassword([FromBody]ForgotPasswordViewModel model)
+        {
+            var result = new ResultModel<User>() { Info = new Info { Succeeded = false } };
+
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+
+                if (user == null)
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return result;
+                }
+
+                //For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                //Send an email with this link
+                string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+                //TODO: Send Email
+                // await UserManager<User>.SendEmailAsync(user, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                result.Result = user;
+                result.Info.Succeeded = true;
+            }
+
+            return result;
         }
 
         [Route("User/ResetPassword")]
         [HttpPost]
-        public async Task<ActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
+        public async Task<ResultModel<bool>> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
+            var returnResult = new ResultModel<bool> { Info = new Info { Succeeded = false } };
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return returnResult;
             }
 
-            var user = await _userManager.FindByNameAsync(model.Email);
+            var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
 
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return BadRequest();
+                return returnResult;
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if(!model.Password.Equals(model.ConfirmPassword))
+            {
+                return returnResult;
+            }
+
+            var code = model.Code.Replace(" ", "+");
+            var result = await _userManager.ResetPasswordAsync(user, code, model.Password);
 
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "User");
+                returnResult.Info.Succeeded = true;
+            }
+            else if (result.Errors.Any())
+            {
+                returnResult.Result = result.Errors.FirstOrDefault().Description;
             }
 
-            return View();
+            return returnResult;
         }
 
 

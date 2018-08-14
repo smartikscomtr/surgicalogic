@@ -5,6 +5,7 @@ using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -60,7 +61,8 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
-                Length = item.Length
+                Length = item.Length,
+                IsAvailable = item.IsAvailable
             };
 
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
@@ -125,6 +127,7 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
+                IsAvailable = item.IsAvailable,
                 Length = item.Length
             };
 
@@ -155,6 +158,13 @@ namespace Surgicalogic.Api.Controllers
             }
 
             return result;
+        }
+
+        [Route("OperatingRoom/GetOperatingRoomsByOperationTypeId/{operationTypeId:int}")]
+        [HttpGet]
+        public async Task<List<OperatingRoomOutputModel>> GetPersonnelsByBranchId(int operationTypeId)
+        {
+            return  await _operatingRoomStoreService.GetByOperationTypeIdAsync(operationTypeId);
         }
     }
 }

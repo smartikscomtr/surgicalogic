@@ -4,6 +4,7 @@ using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -37,6 +38,13 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<PersonnelOutputModel>> GetAllPersonnels()
         {
             return await _personnelStoreService.GetAsync<PersonnelOutputModel>();
+        }
+
+        [Route("Personnel/GetDoctorsByBranchIdAsync/{branchId:int}")]
+        [HttpGet]
+        public async Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId)
+        {
+            return await _personnelStoreService.GetDoctorsByBranchIdAsync(branchId);
         }
 
         /// <summary>

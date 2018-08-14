@@ -50,8 +50,8 @@ namespace Surgicalogic.Api
            //.AddDefaultTokenProviders();
 
             services.AddIdentity<User, IdentityRole<int>>()
-   .AddEntityFrameworkStores<DataContext>()
-   .AddDefaultTokenProviders();
+               .AddEntityFrameworkStores<DataContext>()
+               .AddDefaultTokenProviders();
 
             //remove default claims
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -119,6 +119,8 @@ namespace Surgicalogic.Api
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
             services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
             services.AddScoped<IOperationStoreService, OperationStoreService>();
+            services.AddScoped<IOperationBlockedOperatingRoomStoreService, OperationBlockedOperatingRoomStoreService>();
+            services.AddScoped<IOperationPersonnelStoreService, OperationPersonnelStoreService>();
             services.AddScoped<IOperationPlanStoreService, OperationPlanStoreService>();
             services.AddScoped<IOperatingRoomCalendarStoreService, OperatingRoomCalendarStoreService>();
             services.AddScoped<IOperatingRoomEquipmentStoreService, OperatingRoomEquipmentStoreService>();
@@ -176,6 +178,9 @@ namespace Surgicalogic.Api
             AppSettings.ApiBaseUrl = Configuration["AppSettings:Planning:ApiBaseUrl"];
             AppSettings.ApiPostUrl = Configuration["AppSettings:Planning:ApiPostUrl"];
             AppSettings.PeriodInMinutes = Configuration["AppSettings:Planning:PeriodInMinutes"].ToNCInt();
+            AppSettings.AdminRole = Configuration["AppSettings:Role:Admin"];
+            AppSettings.MemberRole = Configuration["AppSettings:Role:Member"];
+            AppSettings.DoctorId = Configuration["AppSettings:General:DoctorId"].ToNCInt();
         }
     }
 }

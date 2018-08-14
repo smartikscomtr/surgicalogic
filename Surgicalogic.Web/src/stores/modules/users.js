@@ -72,7 +72,21 @@ const usersModule = {
         .then(response => {
           //context.commit('updateUser', {payload}) //Update the User in the store
         })
-    }
+    },
+
+    resetPassword(context, payload) {
+      axios.post('User/ForgotPassword', payload)
+        .then(response => {
+          //context.commit('updateUser', {payload}) //Update the User in the store
+        })
+    },
+
+    updatePassword(context, payload) {
+      axios.post('User/ResetPassword', payload)
+        .then(response => {
+          //context.commit('updateUser', {payload}) //Update the User in the store
+        })
+    },
   }
 }
 

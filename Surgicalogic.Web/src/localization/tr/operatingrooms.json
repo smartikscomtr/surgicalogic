@@ -8,6 +8,8 @@
   "location": "Konum",
   "operatingRoom": "Operasyon Odası",
   "operatingRooms": "Operasyon Odaları",
+  "blockedOperatingRooms": "Operasyon Yapılamayacak Odalar",
   "width": "Genişlik",
-  "operatingRoomsCalendar": "Operasyon Odası Uygunluk Takvimi"
+  "operatingRoomsCalendar": "Operasyon Odası Uygunluk Takvimi",
+  "isAvailable": "Uygun"
 }

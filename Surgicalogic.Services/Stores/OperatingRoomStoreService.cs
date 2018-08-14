@@ -122,6 +122,10 @@ namespace Surgicalogic.Services.Stores
             return result;
         }
 
+        public async Task<List<OperatingRoomOutputModel>> GetByOperationTypeIdAsync(int operationTypeId)
+        {
+            return await GetQueryable().Where(x => x.OperatingRoomOperationTypes.Any(t => t.IsActive && t.OperationTypeId == operationTypeId)).ProjectTo<OperatingRoomOutputModel>().ToListAsync();
+        }
 
     }
 }

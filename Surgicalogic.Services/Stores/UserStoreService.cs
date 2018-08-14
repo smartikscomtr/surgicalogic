@@ -6,6 +6,7 @@ using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,19 @@ namespace Surgicalogic.Services.Stores
         public virtual IQueryable<User> GetQueryable()
         {
             return _context.Set<User>().AsNoTracking();
+        }
+
+
+        public virtual async Task<ResultModel<UserModel>> FindByIdAsync(int id)
+        {
+            var query = GetQueryable();
+            var model = await query.ProjectTo<UserModel>().FirstOrDefaultAsync(x => x.Id == id);
+
+            return new ResultModel<UserModel>
+            {
+                Result = model,
+                Info = new Info()
+            };
         }
 
         /// <summary>
@@ -80,6 +94,7 @@ namespace Surgicalogic.Services.Stores
             entity.TwoFactorEnabled = false;
             entity.LockoutEnabled = false;
             entity.AccessFailedCount = 0;
+            entity.SecurityStamp = Guid.NewGuid().ToString();
 
             await _context.Set<User>().AddAsync(entity);
             await _context.SaveChangesAsync();

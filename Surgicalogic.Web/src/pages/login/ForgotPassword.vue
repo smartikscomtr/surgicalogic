@@ -6,7 +6,7 @@
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
               <v-toolbar-title>
-                Login form
+                Forgot Password Form
               </v-toolbar-title>
 
               <v-spacer></v-spacer>
@@ -17,37 +17,23 @@
                 <v-text-field v-model="email"
                               prepend-icon="person"
                               name="login"
-                              label="Login"
+                              label="Email"
                               type="text">
-                </v-text-field>
-
-                <v-text-field v-model="password"
-                              prepend-icon="lock"
-                              name="password"
-                              label="Password"
-                              id="password"
-                              type="password">
                 </v-text-field>
               </v-form>
             </v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn class="btnReset"
-                     @click="forgotPassword()">
-                Forgot Password
-              </v-btn>
 
-              <v-btn class="btnSave"
-                     @click="login()">
-                Login
+              <v-btn class="btnSave btn--flat"
+                     @click="resetPassword()">
+                Reset Password
               </v-btn>
             </v-card-actions>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-
-
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -60,35 +46,29 @@
 
 export default {
   data() {
-  return {};
+  return {
+    email:null
+  };
   },
 
   methods: {
-  login() {
-  const vm = this;
+    resetPassword() {
+      const vm = this;
 
-      //We are accessing userLogin in vuex store
-      vm.$store.dispatch("userLogin", {
-        email: vm.email,
-        password: vm.password
-      });
+      //When the reset password button is clicked, the event is sent to the grid component
+        vm.$store.dispatch('resetPassword', {
+          email: vm.email
+        }).then(() => {
+          setTimeout(() => {
+            vm.snackbarVisible = true;
+          }, 200)
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
+        })
     },
-
-  forgotPassword() {
-  const vm = this;
-
-      //We are accessing userLogout in vuex store
-      vm.$router.push("ForgotPassword");
-    }
   },
-
-  created(){
-    const vm = this;
-
-     if (vm.auth.isAuthenticated()) {
-      vm.$router.push("DashboardPage");
-     }
-  }
   };
 
 </script>
@@ -118,17 +98,6 @@ export default {
     font-size: 15px;
 }
 .btnSave .btn__content {
-    color: #fff;
-}
-.btnReset {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    height: 40px;
-    font-size: 15px;
-}
-.btnReset .btn__content {
     color: #fff;
 }
 .btn__content {

@@ -130,6 +130,7 @@ export default {
     //We are accessing getAllOperationTypes in vuex store
      if(vm.editLoadOnce){
         vm.$store.dispatch('getAllOperationTypes');
+        vm.$store.dispatch('getAllBranches');
         vm.editLoadOnce = false;
      }
     }

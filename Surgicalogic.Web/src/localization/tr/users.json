@@ -6,5 +6,7 @@
   "familyName": "Soyadı",
   "givenName": "Adı",
   "password": "Şifre",
-  "users": "Kullanıcılar"
+  "users": "Kullanıcılar",
+  "userName": "Kullanıcı Adı",
+  "isAdmin":"Yönetici"
 }

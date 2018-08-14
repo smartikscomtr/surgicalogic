@@ -28,6 +28,11 @@ import DashboardPage from "@/pages/index/DashboardPage";
 //Registering Login Pages
 import LoginPage from "@/pages/login/LoginPage";
 
+//Registering reset password Pages
+import ResetPassword from "@/pages/login/ResetPassword"
+
+//Registering forgot password Pages
+import ForgotPassword from "@/pages/login/ForgotPassword"
 
 //Registering Management Pages
 import UsersPage from "@/pages/management/UsersPage";
@@ -66,6 +71,22 @@ export default new VueRouter({
       path: '/loginpage',
       name: 'LoginPage',
       component: LoginPage,
+      meta: {
+        fullPage: true
+      }
+    },
+    {
+      path: '/resetPassword',
+      name: 'ResetPassword',
+      component: ResetPassword,
+      meta: {
+        fullPage: true
+      }
+    },
+    {
+      path: '/forgotPassword',
+      name: 'ForgotPassword',
+      component: ForgotPassword,
       meta: {
         fullPage: true
       }

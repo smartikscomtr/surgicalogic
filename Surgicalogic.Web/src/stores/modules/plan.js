@@ -47,7 +47,7 @@ const planModule = {
   actions: {
     getOperationPlans(context, params) {
       context.commit('setLoading', true);
-debugger;
+
       axios.get('OperationPlan/GetOperationPlans', {
         params: params
       }).then(response => {

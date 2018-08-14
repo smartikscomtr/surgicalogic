@@ -96,6 +96,13 @@ export default {
           align: 'left'
         },
         {
+          value: 'isAvailable',
+          text: vm.$i18n.t('operatingrooms.isAvailable'),
+          sortable: true,
+          isCheck: true,
+          align: 'left'
+        },
+        {
           isAction: true,
           sortable: false,
           align: 'right'

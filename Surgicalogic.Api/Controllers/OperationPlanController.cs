@@ -45,13 +45,15 @@ namespace Surgicalogic.Api.Controllers
             var plans = await _operationPlanStoreService.GetAsync<OperationPlanOutputModel>(input);
             var rooms = await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
 
-            var result = new ResultModel<OperationPlanOutputModel>
+            var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms.Result);
+
+            var result = new OperationTimelineOutputModel(plans.Result, roomTimelineModel);
+
+            return new ResultModel<OperationPlanOutputModel>
             {
                 Info = new Info(),
-                Result = new OperationTimelineOutputModel(plans.Result, rooms.Result)
+                Result = result
             };
-
-            return result;
         }
 
         [HttpPost]
@@ -76,6 +78,11 @@ namespace Surgicalogic.Api.Controllers
                 Rooms = rooms,
                 Operations = operations
             };
+
+            foreach (var item in operations)
+            {
+                //item.UnavailableRooms = item
+            }
 
             string req = JsonConvert.SerializeObject(surgeryPlan);
 

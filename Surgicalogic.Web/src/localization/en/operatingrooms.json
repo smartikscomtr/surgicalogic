@@ -7,7 +7,9 @@
   "location": "Location",
   "operatingRoom": "Operating Room",
   "operatingRooms": "Operating Rooms",
+  "blockedOperatingRooms": "Blocked Operating Rooms",
   "size": "Size",
   "width": "Width",
-  "operatingRoomsCalendar": "Operating Room Availability Calendar"
+  "operatingRoomsCalendar": "Operating Room Availability Calendar",
+  "isAvailable":"Available"
 }

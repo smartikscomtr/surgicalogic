@@ -12,7 +12,8 @@ namespace Surgicalogic.Model.InputModel
         public string Location { get; set; }
         public Nullable<double> Width { get; set; }
         public Nullable<double> Height { get; set; }
-        public Nullable<double> Length { get; set; }        
+        public Nullable<double> Length { get; set; }
+        public bool IsAvailable { get; set; }
         public List<int> Equipments { get; set; }
         public List<int> OperationTypes { get; set; }
     }

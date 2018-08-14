@@ -9,6 +9,7 @@ namespace Surgicalogic.Contracts.Stores
     public interface IUserStoreService
     {
         IQueryable<User> GetQueryable();
+        Task<ResultModel<UserModel>> FindByIdAsync(int id);
         Task<ResultModel<UserModel>> GetAsync();
         Task<ResultModel<UserOutputModel>> GetAsync<UserOutputModel>();
         Task<ResultModel<UserModel>> InsertAndSaveAsync(UserModel userModel);
