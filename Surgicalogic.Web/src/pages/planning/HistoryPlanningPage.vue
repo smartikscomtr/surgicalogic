@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="futurePlans"
+                    :items="historyPlannings"
                     :title="title"
                     :show-detail="false"
                     :show-edit="false"
@@ -101,22 +101,22 @@ export default {
       ];
     },
 
-    futurePlans() {
+    historyPlannings() {
       const vm = this;
 
-      return vm.$store.state.planModule.plan;
+      return vm.$store.state.historyPlanningModule.plan;
     },
 
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.planModule.loading;
+      return vm.$store.state.historyPlanningModule.loading;
     },
 
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.planModule.totalCount;
+      return vm.$store.state.historyPlanningModule.totalCount;
     }
   },
 

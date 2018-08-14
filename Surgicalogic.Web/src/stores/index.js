@@ -7,17 +7,18 @@ import getters from './getters'; // root's getters
 //Module import
 import branchesModule from './modules/branches';
 import equipmentModule from './modules/equipments';
-import equipmentTypesModule from './modules/equipmentTypes';
+import equipmentTypesModule from './modules/equipmenttypes';
+import historyPlanningModule from './modules/historyplanning';
 import loginModule from './modules/login';
 import operationModule from './modules/operation';
 import operationTypeModule from './modules/operationtypes';
-import personnelModule from './modules/personnel';
-import personnelTitleModule from './modules/personnelTitle';
-import planModule from './modules/plan';
-import operatingRoomModule from './modules/operatingrooms';
-import usersModule from './modules/users';
-import workTypesModule from './modules/workTypes';
 import operatingRoomCalendarModule from './modules/operatingroomscalendar'
+import operatingRoomModule from './modules/operatingrooms';
+import personnelModule from './modules/personnel';
+import personnelTitleModule from './modules/personneltitle';
+import planArrangementsModule from './modules/planarrangements';
+import usersModule from './modules/users';
+import workTypesModule from './modules/worktypes';
 
 //New Registeration Of Store
 export default new Vuex.Store({
@@ -29,15 +30,16 @@ export default new Vuex.Store({
     branchesModule,
     equipmentModule,
     equipmentTypesModule,
+    historyPlanningModule,
     loginModule,
     operationModule,
     operationTypeModule,
-    personnelModule,
+    operatingRoomCalendarModule,
     personnelTitleModule,
-    planModule,
+    personnelModule,
+    planArrangementsModule,
     operatingRoomModule,
     usersModule,
-    workTypesModule,
-    operatingRoomCalendarModule
+    workTypesModule
   }
 });

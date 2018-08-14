@@ -1,18 +1,27 @@
 <template>
   <div>
-    <v-container grid-list-md text-xs-center>
-      <v-layout row wrap>
-        <v-date-picker v-model="date"
-                      width="340"
-                      class="mt-1">
-        </v-date-picker>
-
-        <operation-divider-component v-for="room in rooms"
-                                    :key="room.id"
-                                    :room="room">
-        </operation-divider-component>
-      </v-layout>
-    </v-container>
+    <v-layout row>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card>
+        <v-container
+          fluid
+          grid-list-md
+        >
+          <v-card-media
+            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+            height="200px"
+          >
+          </v-card-media>
+          <v-card-title primary-title>
+            <div>
+              <div class="headline">Top western road trips</div>
+              <span class="grey--text">1,000 miles of wonder</span>
+            </div>
+          </v-card-title>
+        </v-container>
+      </v-card>
+    </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -21,22 +30,7 @@
 export default {
   data() {
     return {
-      date: '2018-03-02'
     }
-  },
-
-  computed: {
-    rooms() {
-      const vm = this;
-
-      return vm.$store.state.rooms;
-    }
-  },
-
-  created() {
-    const vm = this;
-
-    vm.$store.dispatch('fetchRooms');
   }
 }
 </script>

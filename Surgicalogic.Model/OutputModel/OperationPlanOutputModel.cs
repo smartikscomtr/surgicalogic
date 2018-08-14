@@ -11,7 +11,7 @@ namespace Surgicalogic.Model.OutputModel
         public int group { get; set; }
         public string content { get; set; }
         public string title { get; set; }
-        public DateTime start { get; set; }
-        public DateTime end { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
     }
 }
