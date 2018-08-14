@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const planModule = {
+const planArrangementsModule = {
   state: {
     loading: false,
     totalCount: 0,
-    plan: [],
+    model: [],
     allPlans: []
   },
 
@@ -13,9 +13,10 @@ const planModule = {
       state.loading = data;
     },
 
-    setOperationPlan(state, data) {
-      state.plan = data.result;
+    setPlanArrangements(state, data) {
+      state.model = data.result;
       state.totalCount = data.totalCount;
+
     },
 
     // setAllOperationPlans(state, data) {
@@ -34,8 +35,8 @@ const planModule = {
     //   state.plan.splice(index, 1);
     // },
 
-    updateOperationPlan(state, payload) {
-      state.plan.forEach(element => {
+    updatePlanArrangements(state, payload) {
+      state.model.plan.forEach(element => {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
@@ -45,14 +46,14 @@ const planModule = {
   getters: {},
 
   actions: {
-    getOperationPlans(context, params) {
+    getPlanArrangements(context, params) {
       context.commit('setLoading', true);
-debugger;
+
       axios.get('OperationPlan/GetOperationPlans', {
         params: params
       }).then(response => {
         if (response.data.info.succeeded == true){
-          context.commit('setOperationPlan', response.data) //Set the OperationPlanPlan in the store
+          context.commit('setPlanArrangements', response.data) //Set the OperationPlanPlan in the store
         }
 
         context.commit('setLoading', false);
@@ -85,13 +86,13 @@ debugger;
     //     })
     // },
 
-    updateOperationPlan(context, payload) {
+    updatePlanArrangements(context, payload) {
       axios.post('OperationPlanPlan/UpdateOperationPlan', payload)
         .then(response => {
-          context.commit('updateOperationPlan', response.data.result) //Update the OperationPlanPlan in the store
+          context.commit('updatePlanArrangements', response.data.result) //Update the OperationPlanPlan in the store
         })
     }
   }
 }
 
-export default planModule;
+export default planArrangementsModule;

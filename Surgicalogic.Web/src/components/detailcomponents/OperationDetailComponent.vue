@@ -123,7 +123,7 @@ export default {
       set(value) {
         const vm = this;
 
-        //When the cancel button is clicked, the event is sent to the equipments detail component
+        //When the cancel button is clicked, the event is sent to the operation detail component
         if (!value) {
           vm.$emit('cancel');
         }

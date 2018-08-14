@@ -32,9 +32,11 @@ Vue.use(Authentication);
 Vue.use(require('vue-moment'));
 
 // Registering Components
+import DeleteComponent from '@/components/DeleteComponent';
 import GridComponent from '@/components/GridComponent';
 import OperationDividerComponent from '@/components/OperationDividerComponent';
 
+Vue.component('delete-component', DeleteComponent);
 Vue.component('grid-component', GridComponent);
 Vue.component('operation-divider-component', OperationDividerComponent);
 
@@ -53,11 +55,6 @@ Vue.component('equipments-detail-component', EquipmentsDetailComponent);
 Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent);
 Vue.component('operation-detail-component', OperationDetailComponent);
 Vue.component('operation-types-detail-component', OperationTypesDetailComponent);
-
-// Registering Delete Components
-import DeleteComponent from '@/components/DeleteComponent';
-
-Vue.component('delete-component', DeleteComponent);
 
 // Registering Edit Components
 import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';

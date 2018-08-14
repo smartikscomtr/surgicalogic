@@ -193,19 +193,14 @@ export default {
           text: "Plan Yönetimi",
           children: [
             {
-              icon: "assignment",
-              text: "Gelecek Plan",
-              route: "/futurePlan"
-            },
-            {
               icon: "add_alarm",
-              text: "Plan Düzenlemeleri"
-              // route: "/CreatePlan"
+              text: "Plan Düzenlemeleri",
+              route: "/planarrangementspage"
             },
             {
               icon: "history",
-              text: "Plan Tarihçesi"
-              // route: "/CreatePlan"
+              text: "Plan Tarihçesi",
+              route: "/historyplanningpage"
             }
           ]
         },

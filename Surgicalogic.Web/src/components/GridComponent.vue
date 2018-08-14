@@ -273,7 +273,6 @@ export default {
       const vm = this;
 
       vm.headers.forEach(element => {
-        debugger;
         if (element.value == sortBy && element.sortBy) {
           sortBy = element.sortBy;
         }
