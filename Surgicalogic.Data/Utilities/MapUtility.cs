@@ -88,8 +88,9 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
                  .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
-                 //.ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
-                 //.ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
+            config.CreateMap<OperatingRoomModel, OperatingRoomForTimelineModel>()
+                 .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
+                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>();
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();
             config.CreateMap<OperationTypeModel, OperationTypeOutputModel>()
@@ -109,9 +110,6 @@ namespace Surgicalogic.Data.Utilities
             #region CustomMapping
             config.CreateMap<Operation, OperationInputModel>()
                 .ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
-            config.CreateMap<OperatingRoomOutputModel, OperatingRoomForTimelineModel>()
-                .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
             config.CreateMap<Personnel, PersonnelOutputModel>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             config.CreateMap<OperatingRoom, OperatingRoomOutputModel>();
