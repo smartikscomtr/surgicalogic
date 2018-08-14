@@ -58,7 +58,6 @@ namespace Surgicalogic.Api.Controllers
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
                     EndDate = tomorrow.ToString("yyyy-MM-dd 14:00:00"),
                     Period = AppSettings.PeriodInMinutes
-
                 }
             };
 
@@ -71,8 +70,26 @@ namespace Surgicalogic.Api.Controllers
         {
             var result = new DailyPlanOutputModel();
 
-            var operations = await _operationStoreService.GetTomorrowOperationsAsync();
+            var tomorrowOperations = await _operationStoreService.GetTomorrowOperationsAsync();
             var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync();
+
+            var operations = new List<Planning.Model.InputModel.OperationInputModel>();
+
+            foreach (var operation in tomorrowOperations)
+            {
+                var operatingRoomIds = operation.OperationType.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId);
+
+                var outputModel = AutoMapper.Mapper.Map<Model.OutputModel.OperationOutputModel>(operation);
+
+                operations.Add(new Planning.Model.InputModel.OperationInputModel
+                {
+                    Id = operation.Id,
+                    Name = operation.Name,
+                    Period = outputModel.Period,
+                    DoctorIds = outputModel.DoctorIds.ToArray(),
+                    UnavailableRooms = rooms.Select(x => x.Id).Except(operatingRoomIds.Except(outputModel.OperatingRoomIds)).ToList()
+                });
+            }
 
             var surgeryPlan = new DailyPlanInputModel
             {
@@ -87,11 +104,6 @@ namespace Surgicalogic.Api.Controllers
                 Rooms = rooms,
                 Operations = operations
             };
-
-            foreach (var item in operations)
-            {
-                //item.UnavailableRooms = item
-            }
 
             string req = JsonConvert.SerializeObject(surgeryPlan);
 
