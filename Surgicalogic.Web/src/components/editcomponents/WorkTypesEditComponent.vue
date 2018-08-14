@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('worktypes.WorkTypeSaved')
+      savedMessage: this.$i18n.t('worktypes.workTypeSaved')
     };
   },
 

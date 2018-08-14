@@ -1,23 +1,47 @@
 <template>
   <div>
     <v-layout row>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-card>
-        <v-container
-          fluid
-          grid-list-md
-        >
-          <v-card-media
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            height="200px"
-          >
-          </v-card-media>
-          <v-card-title primary-title>
-            <div>
-              <div class="headline">Top western road trips</div>
-              <span class="grey--text">1,000 miles of wonder</span>
-            </div>
+    <v-flex xs12 sm6 md6>
+      <v-card class="operation-wrap">
+        <v-container>
+          <v-card-title>
+              <v-icon x-large>add_comment</v-icon>
+              <p class="headline">{{ 'Operasyonlar' }} </p>
           </v-card-title>
+
+        <v-card-actions>
+          <v-btn flat @click="$router.push('/operationpage')">Operasyonlara Git</v-btn>
+        </v-card-actions>
+        </v-container>
+      </v-card>
+    </v-flex>
+
+    <v-flex xs12 sm6 md6>
+      <v-card class="plan-wrap">
+        <v-container>
+          <v-card-title>
+              <v-icon x-large>add_alarm</v-icon>
+              <p class="headline">{{ 'Planlar' }} </p>
+          </v-card-title>
+
+        <v-card-actions>
+          <v-btn flat @click="$router.push('/planarrangementspage')">Plan Düzenlemelerine Git</v-btn>
+        </v-card-actions>
+        </v-container>
+      </v-card>
+    </v-flex>
+
+    <v-flex xs12 sm6 md6>
+      <v-card class="klinik-wrap">
+        <v-container>
+          <v-card-title>
+              <v-icon x-large>domain</v-icon>
+              <p class="headline">{{ 'Klinik Yönetimleri' }} </p>
+          </v-card-title>
+
+        <v-card-actions>
+          <v-btn flat @click="">Klinik Yönetimine Git</v-btn>
+        </v-card-actions>
         </v-container>
       </v-card>
     </v-flex>
@@ -34,3 +58,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.layout.row {
+  border: 9px solid #fff;
+  padding: 1% 1%;
+  margin: 1%;
+}
+</style>

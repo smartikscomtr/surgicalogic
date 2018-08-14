@@ -110,7 +110,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('operationtype.OperationTypeSaved')
+      savedMessage: this.$i18n.t('operationtypes.operationTypeSaved')
     };
   },
 

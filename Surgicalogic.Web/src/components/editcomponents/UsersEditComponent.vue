@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('users.UserSaved')
+      savedMessage: this.$i18n.t('users.userSaved')
     };
   },
 

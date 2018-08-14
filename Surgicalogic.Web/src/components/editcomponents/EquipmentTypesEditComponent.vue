@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('equipmettypes.EquipmetTypeSaved')
+      savedMessage: this.$i18n.t('equipmenttypes.equipmentTypeSaved')
     };
   },
 
