@@ -236,13 +236,13 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.operatingRoomIds;
+        return vm.editAction.blockedOperatingRoomIds;
       },
 
        set(val) {
         const vm = this;
 
-        vm.editAction.operatingRoomIds = val;
+        vm.editAction.blockedOperatingRoomIds = val;
       }
     },
 

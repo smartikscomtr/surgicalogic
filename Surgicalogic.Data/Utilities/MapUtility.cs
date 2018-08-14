@@ -76,7 +76,7 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.OperationType.Branch.Name))
                  .ForMember(dest => dest.DoctorIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive).Select(t => t.PersonnelId).ToArray()))
                  .ForMember(dest => dest.DoctorNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationPersonels.Select(x => x.Personnel.FullName))))
-                 .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperationBlockedOperatingRooms.Where(x => x.IsActive).Select(t => t.OperatingRoomId).ToArray()))
+                 .ForMember(dest => dest.BlockedOperatingRoomIds, opt => opt.MapFrom(src => src.OperationBlockedOperatingRooms.Where(x => x.IsActive).Select(t => t.OperatingRoomId).ToArray()))
                  .ForMember(dest => dest.OperatingRoomNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationBlockedOperatingRooms.Select(x => x.OperatingRoom.Name))))
                  .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => (src.OperationTime / 60 < 10 ? ("0" + src.OperationTime / 60) : (src.OperationTime / 60 + "")) + ":" + (src.OperationTime % 60 < 10 ? ("0" + src.OperationTime % 60) : (src.OperationTime % 60 + ""))))
                  .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
