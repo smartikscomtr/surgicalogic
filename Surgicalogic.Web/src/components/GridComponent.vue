@@ -521,11 +521,11 @@ table.v-table thead th:not(:first-child) {
   overflow: visible;
 }
 .v-select.v-select--chips .v-select__selections {
-    min-height: 32px;
+  min-height: 32px;
 }
 
 input[type="date"]::-webkit-inner-spin-button {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
 }
 </style>
