@@ -10,7 +10,8 @@ const operationModule = {
     allBranches: [],
     filteredOperationTypes:[],
     filteredDoctors:[],
-    filteredOperatingRooms: []
+    filteredOperatingRooms: [],
+    globalDate: null
   },
 
   mutations: {
@@ -67,7 +68,11 @@ const operationModule = {
 
     setAllBranches(state, payload) {
       state.allBranches = payload;
-    }
+    },
+
+    saveGlobalDate(state, newValue){
+      state.globalDate = newValue;
+  },
   },
 
   getters: {},
