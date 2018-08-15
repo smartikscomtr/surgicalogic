@@ -17,6 +17,7 @@ namespace Surgicalogic.Model.CustomModel
         public List<OperatingRoomForTimelineModel> Rooms { get { return this.Item2; } }
         public string MinDate { get; set; }
         public string MaxDate { get; set; }
+        public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int Period { get; set; }
     }

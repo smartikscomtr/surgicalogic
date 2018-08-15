@@ -16,7 +16,6 @@ const planArrangementsModule = {
     setPlanArrangements(state, data) {
       state.model = data.result;
       state.totalCount = data.totalCount;
-
     },
 
     // setAllOperationPlans(state, data) {

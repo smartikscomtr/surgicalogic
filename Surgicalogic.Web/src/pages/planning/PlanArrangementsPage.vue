@@ -40,6 +40,7 @@ export default {
         horizontalScroll: true,
         min: vm.$store.state.planArrangementsModule.model.minDate,
         max:vm.$store.state.planArrangementsModule.model.maxDate,
+        start: vm.$store.state.planArrangementsModule.model.startDate,
         end: vm.$store.state.planArrangementsModule.model.endDate,
         editable: {
           updateTime: true,

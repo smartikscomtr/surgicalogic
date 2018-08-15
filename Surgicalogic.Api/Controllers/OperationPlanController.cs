@@ -42,7 +42,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
         {
-            var plans = await _operationPlanStoreService.GetAsync<OperationPlanOutputModel>(input);
+            var plans = await _operationPlanStoreService.GetTomorrowOperationsAsync();
             var rooms = await _operatingRoomStoreService.GetAsync<OperatingRoomForTimelineModel>();
             var tomorrow = DateTime.Now.AddDays(1) ;
             var twoDaysLater= DateTime.Now.AddDays(2);
@@ -52,10 +52,11 @@ namespace Surgicalogic.Api.Controllers
             var result = new ResultModel<OperationPlanOutputModel>
             {
                 Info = new Info(),
-                Result = new OperationTimelineOutputModel(plans.Result, rooms.Result)
+                Result = new OperationTimelineOutputModel(plans, rooms.Result)
                 {
                     MinDate = tomorrow.ToString("yyyy-MM-dd 00:00:00"),
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
+                    StartDate = tomorrow.ToString("yyyy-MM-dd 09:00:00"),
                     EndDate = tomorrow.ToString("yyyy-MM-dd 14:00:00"),
                     Period = AppSettings.PeriodInMinutes
                 }
