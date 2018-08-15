@@ -11,7 +11,7 @@
             <v-text-field v-if="showSearch"
                           v-model="search"
                           append-icon="search"
-                          label="Search"
+                          :label="$t('common.search')"
                           v-on:keyup.enter="filterGrid"
                           single-line hide-details>
             </v-text-field>
@@ -34,6 +34,8 @@
                         :loading="loading"
                         :pagination.sync="pagination"
                         :hide-actions="hideActions"
+                        :rows-per-page-text="$t('common.rowsPerPage')"
+                        :no-data-text="$t('common.noDataAvailable')"
                         :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
             <v-progress-linear slot="progress"
                                color="teal"

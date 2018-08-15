@@ -81,12 +81,7 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <!-- <v-text-field v-model="editAction['date']"
-                              type="date"
-                              :min="getMinDate()"
-                              onkeydown="return false"
-                              :label="$t('operation.operationDate')">
-                </v-text-field> -->
+
                 <v-menu
                     ref="menu"
                     :close-on-content-click="false"
@@ -169,7 +164,7 @@ export default {
       snackbarVisible: null,
       savedMessage: this.$i18n.t('operation.operationSaved'),
       menu:false,
-      dateFormatted: null,
+      dateFormatted: null
     };
   },
 
@@ -313,9 +308,6 @@ export default {
         set(newValue){
           const vm = this;
 
-          // vm.editAction.date = newValue;
-          // vm.$store.commit('saveGlobalDate',  vm.editAction.date);
-
           if (newValue)
           {
             vm.editAction.date = newValue;
@@ -453,7 +445,7 @@ export default {
 
       const [year, month, day] = date.split('-')
       return `${day}.${month}.${year}`
-    },
+    }
   }
 }
 

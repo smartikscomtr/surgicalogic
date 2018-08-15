@@ -120,7 +120,7 @@
           <v-text-field flat
                         solo-inverted
                         prepend-icon="search"
-                        label="Search"
+                        :label="$i18n.t('common.search')"
                         class="hidden-sm-and-down">
           </v-text-field>
 
@@ -178,11 +178,11 @@ export default {
           icon: "keyboard_arrow_up",
           "icon-alt": "keyboard_arrow_down",
           // model: true,
-          text: "Operasyon Yönetimi",
+          text: vm.$i18n.t('menu.operationManagement'),
           children: [
             {
               icon: "add_comment",
-              text: "Operasyonlar",
+              text: vm.$i18n.t('menu.operations'),
               route: "/operationpage"
             }
           ]
@@ -190,58 +190,58 @@ export default {
         {
           icon: "keyboard_arrow_up",
           "icon-alt": "keyboard_arrow_down",
-          text: "Plan Yönetimi",
+          text: vm.$i18n.t('menu.planManagement'),
           children: [
             {
               icon: "add_alarm",
-              text: "Plan Düzenlemeleri",
+              text: vm.$i18n.t('menu.planArrangements'),
               route: "/planarrangementspage"
             },
             {
               icon: "history",
-              text: "Plan Tarihçesi",
+              text: vm.$i18n.t('menu.planningHistory'),
               route: "/historyplanningpage"
             }
           ]
         },
         {
           icon: "domain",
-          text: "Klinik Yönetimi"
+          text: vm.$i18n.t('menu.clinicManagement'),
           // route: "/eventcalendarpage"
         },
         {
           icon: "content_copy",
-          text: "Raporlar"
+          text: vm.$i18n.t('menu.reports'),
           // route: "/eventcalendarpage"
         },
         {
           icon: "event",
-          text: "Simülasyon"
+          text: vm.$i18n.t('menu.simulation'),
           // route: "/eventcalendarpage"
         },
         {
           icon: "keyboard_arrow_up",
           "icon-alt": "keyboard_arrow_down",
-          text: "Yönetim Paneli",
+          text: vm.$i18n.t('menu.managementPanel'),
           children: [
             {
               icon: "group",
-              text: vm.$i18n.t("users.users"),
+              text: vm.$i18n.t("menu.users"),
               route: "/userspage"
             },
             {
               icon: "chat_bubble",
-              text: "Geri Bildirim"
+              text: vm.$i18n.t("menu.feedback"),
               // route: "/CreatePlan"
             },
             {
               icon: "help",
-              text: "Yardım"
+              text: vm.$i18n.t("menu.help"),
               // route: "/CreatePlan"
             },
             {
               icon: "settings",
-              text: "Ayarlar"
+              text: vm.$i18n.t("menu.settings"),
               // route: "/CreatePlan"
             }
           ]
@@ -249,46 +249,46 @@ export default {
         {
           icon: "keyboard_arrow_up",
           "icon-alt": "keyboard_arrow_down",
-          text: "Tanımlar",
+          text: vm.$i18n.t("menu.definitions"),
           children: [
             {
               icon: "storage",
-              text: vm.$i18n.t("equipments.equipments"),
+              text: vm.$i18n.t("menu.equipments"),
               route: "/equipmentspage"
             },
             {
               icon: "group",
-              text: vm.$i18n.t("personnel.personnel"),
+              text: vm.$i18n.t("menu.personnel"),
               route: "/personnelpage"
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("operatingrooms.operatingRooms"),
+              text: vm.$i18n.t("menu.operatingRooms"),
               route: "/operatingroomspage"
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("branches.branches"),
+              text: vm.$i18n.t("menu.branches"),
               route: "/branchespage"
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("personneltitle.personnelTitles"),
+              text: vm.$i18n.t("menu.personnelTitles"),
               route: "/personneltitlepage"
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("equipmenttypes.equipmentTypes"),
+              text: vm.$i18n.t("menu.equipmentTypes"),
               route: "/equipmenttypespage"
             },
             {
               icon: "announcement",
-              text: vm.$i18n.t("operationtypes.operationtypes"),
+              text: vm.$i18n.t("menu.operationTypes"),
               route: "/operationtypespage"
             },
             {
               icon: "assignment",
-              text: vm.$i18n.t("worktypes.workTypes"),
+              text: vm.$i18n.t("menu.workTypes"),
               route: "/worktypespage"
             }
             // {
@@ -396,18 +396,18 @@ export default {
   margin-top: 60px;
   background-color: #333 !important;
 }
-.navigation .list__tile__title,
-.navigation .list__tile__action i,
-.navigation .list__group__header i {
+.navigation .v-list__tile__title,
+.navigation .v-list__tile__action i,
+.navigation .v-list__group__header i {
   color: #fff !important;
 }
-.list__group--active {
+.v-list__group--active {
   background-color: #262626;
 }
-.list__group--active .list__group__header--active {
+.v-list__group--active .v-list__group__header--active {
   background-color: #232222;
 }
-.grid-card .card__title {
+.v-grid-card .v-card__title {
   padding: 0;
 }
 </style>

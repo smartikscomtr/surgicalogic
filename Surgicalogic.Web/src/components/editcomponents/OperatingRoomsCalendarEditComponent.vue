@@ -19,15 +19,59 @@
         <v-card-text>
           <v-layout wrap>
             <v-flex xs6 sm6 md6>
- <v-text-field v-model="editAction['startDate']"
-                            :label="$t('operatingroomscalendar.startDate')">
-              </v-text-field>
+                <v-menu
+                    ref="menu1"
+                    :close-on-content-click="false"
+                    v-model="menu1"
+                    :nudge-right="40"
+                    :return-value.sync="startDate"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                  <v-text-field
+                    readonly
+                    slot="activator"
+                    v-model="startDateFormatted"
+                    :label="$t('operation.operationDate')"
+                  ></v-text-field>
+                  <v-date-picker v-model="startDate"
+                                 no-title
+                                 @input="$refs.menu1.save(startDate);"
+                                 :min="getMinDate()"
+                                 ></v-date-picker>
+
+                </v-menu>
             </v-flex>
 
              <v-flex xs6 sm6 md6>
- <v-text-field v-model="editAction['endDate']"
-                            :label="$t('operatingroomscalendar.endDate')">
-              </v-text-field>
+                <v-menu
+                    ref="menu2"
+                    :close-on-content-click="false"
+                    v-model="menu2"
+                    :nudge-right="40"
+                    :return-value.sync="endDate"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                  >
+                  <v-text-field
+                    readonly
+                    slot="activator"
+                    v-model="endDateFormatted"
+                    :label="$t('operation.operationDate')"
+                  ></v-text-field>
+                  <v-date-picker v-model="endDate"
+                                 no-title
+                                 @input="$refs.menu2.save(endDate);"
+                                 :min="getMinDate()"
+                                 ></v-date-picker>
+
+                </v-menu>
             </v-flex>
 
             <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
@@ -67,7 +111,12 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      menu1: false,
+      menu2: false,
+      startDateFormatted: null,
+      endDateFormatted: null
+    };
   },
 
   computed: {
@@ -93,6 +142,62 @@ export default {
         }
       }
     },
+
+    startDate:{
+        get(){
+          const vm = this;
+
+           if (vm.editAction.startDate)
+           {
+              vm.$store.commit('saveStartDate',  vm.editAction.startDate);
+           }
+
+           return vm.$store.state.operatingRoomCalendarModule.startDate;
+        },
+
+        set(newValue){
+          const vm = this;
+
+          if (newValue)
+          {
+            vm.editAction.startDate = newValue;
+            vm.$store.commit('saveStartDate',  vm.editAction.startDate);
+          }
+        },
+    },
+
+     endDate:{
+                get(){
+          const vm = this;
+
+           if (vm.editAction.endDate)
+           {
+              vm.$store.commit('saveEndDate',  vm.editAction.endDate);
+           }
+
+           return vm.$store.state.operatingRoomCalendarModule.endDate;
+        },
+
+        set(newValue){
+          const vm = this;
+
+          if (newValue)
+          {
+            vm.editAction.endDate = newValue;
+            vm.$store.commit('saveEndDate',  vm.editAction.endDate);
+          }
+        },
+     }
+  },
+
+  watch:{
+    startDate (val) {
+      this.startDateFormatted = this.formatDate(this.startDate)
+    },
+
+    endDate (val) {
+      this.endDateFormatted = this.formatDate(this.endDate)
+    }
   },
 
   methods: {
@@ -111,8 +216,8 @@ export default {
         vm.$store.dispatch('updateOperatingRoomCalendar', {
           id: vm.editAction.id,
           operatingRoomId: vm.$route.query.roomId,
-          startDate: vm.editAction.startDate,
-          endDate: vm.editAction.endDate,
+          startDate: vm.startDate,
+          endDate: vm.endDate,
         });
 
       }
@@ -121,12 +226,30 @@ export default {
         //We are accessing insertOperatingRoom in vuex store
         vm.$store.dispatch('insertOperatingRoomCalendar', {
           operatingRoomId: vm.$route.query.roomId,
-          startDate: vm.editAction.startDate,
-          endDate: vm.editAction.endDate,
+          startDate: vm.startDate,
+          endDate: vm.endDate,
         });
       }
 
       vm.showModal = false;
+    },
+
+    getMinDate () {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let today = new Date();
+
+      let year = today.getFullYear();
+      let month = toTwoDigits(today.getMonth() + 1);
+      let day = toTwoDigits(today.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
+
+     formatDate (date) {
+      if (!date || date.indexOf('.')> -1) return null
+
+      const [year, month, day] = date.split('-')
+      return `${day}.${month}.${year}`
     }
   }
 }

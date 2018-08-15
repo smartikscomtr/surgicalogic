@@ -58,7 +58,7 @@ export default {
       };
 
       var timeline = new Vis.Timeline(container, items, groups, options);
-    });
+    },500);
   }
 }
 </script>

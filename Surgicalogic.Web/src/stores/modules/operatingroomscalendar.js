@@ -5,6 +5,8 @@ const operatingRoomCalendarModule = {
     operatingRoomCalendar: [],
     operatingRoomId:0,
     loading: false,
+    startDate: null,
+    endDate: null,
     totalCount: 0
   },
 
@@ -35,6 +37,14 @@ const operatingRoomCalendarModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
+    },
+
+    saveStartDate(state, newValue){
+      state.startDate = newValue;
+    },
+
+    saveEndDate(state, newValue){
+      state.endDate = newValue;
     }
   },
 

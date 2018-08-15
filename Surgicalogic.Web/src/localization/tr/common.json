@@ -13,5 +13,8 @@
   "no": "Hayır",
   "yes": "Evet",
   "all": "Hepsi",
-  "close": "KAPAT"
+  "close": "KAPAT",
+  "search": "Ara",
+  "rowsPerPage":"Sayfa başına öğe:",
+  "noDataAvailable" : "Hiç kayıt yok"
 }
