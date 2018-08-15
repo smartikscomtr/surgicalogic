@@ -7,10 +7,11 @@
           <v-card-title>
               <v-icon x-large>add_comment</v-icon>
               <p class="headline">{{ 'Operasyonlar' }} </p>
+              <p>{{ 'Yeni Operasyonlarınızı Hızlıca Yönetebilirsiniz' }} </p>
           </v-card-title>
 
         <v-card-actions>
-          <v-btn flat @click="$router.push('/operationpage')">Operasyonlara Git</v-btn>
+          <v-btn flat @click="$router.push('/operationpage')">Git</v-btn>
         </v-card-actions>
         </v-container>
       </v-card>
@@ -22,10 +23,11 @@
           <v-card-title>
               <v-icon x-large>add_alarm</v-icon>
               <p class="headline">{{ 'Planlar' }} </p>
+              <p>{{ 'Yeni Planlarınızı Hızlıca Yönetebilirsiniz' }} </p>
           </v-card-title>
 
         <v-card-actions>
-          <v-btn flat @click="$router.push('/planarrangementspage')">Plan Düzenlemelerine Git</v-btn>
+          <v-btn flat @click="$router.push('/planarrangementspage')">Git</v-btn>
         </v-card-actions>
         </v-container>
       </v-card>
@@ -37,10 +39,11 @@
           <v-card-title>
               <v-icon x-large>domain</v-icon>
               <p class="headline">{{ 'Klinik Yönetimleri' }} </p>
+              <p>{{ 'Kliniklerinizi Hızlıca Yönetebilirsiniz' }} </p>
           </v-card-title>
 
         <v-card-actions>
-          <v-btn flat @click="">Klinik Yönetimine Git</v-btn>
+          <v-btn flat @click="">Git</v-btn>
         </v-card-actions>
         </v-container>
       </v-card>

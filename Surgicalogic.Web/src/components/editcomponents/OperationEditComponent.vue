@@ -18,90 +18,119 @@
 
         <v-card-text>
             <v-layout wrap edit-layout>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('operation.operationName')">
-                </v-text-field>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <v-text-field v-model="editAction['name']"
+                                  :label="$t('operation.operationName')">
+                    </v-text-field>
+                </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectBranch"
-                                :items="branches"
-                                :label="$t('operation.branch')"
-                                :filter="customFilter"
-                                @change="branchChanged()"
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <v-autocomplete v-model="selectBranch"
+                                    :items="branches"
+                                    :label="$t('operation.branch')"
+                                    :filter="customFilter"
+                                    @change="branchChanged()"
+                                    item-text="name"
+                                    item-value="id">
+                    </v-autocomplete>
+                </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectOperationType"
-                                :items="filteredOperationTypes"
-                                :label="$t('operation.operationType')"
-                                :filter="customFilter"
-                                @change="operationTypeChanged()"
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <v-autocomplete v-model="selectOperationType"
+                                    :items="filteredOperationTypes"
+                                    :label="$t('operation.operationType')"
+                                    :filter="customFilter"
+                                    @change="operationTypeChanged()"
+                                    item-text="name"
+                                    item-value="id">
+                    </v-autocomplete>
+                </v-flex>
 
-               <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectDoctor"
-                                :items="filteredDoctors"
-                                :label="$t('personnel.personnel')"
-                                :filter="customFilter"
-                                multiple
-                                chips
-                                deletable-chips
-                                item-text="fullName"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>                             
+                <v-flex xs12 sm6 md6>
+                    <v-autocomplete v-model="selectDoctor"
+                                    :items="filteredDoctors"
+                                    :label="$t('personnel.personnel')"
+                                    :filter="customFilter"
+                                    multiple
+                                    chips
+                                    deletable-chips
+                                    item-text="fullName"
+                                    item-value="id">
+                    </v-autocomplete>
+                </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['date']"
-                              type="date"
-                              :min="getMinDate()"
-                              onkeydown="return false"
-                              :label="$t('operation.operationDate')">
-                </v-text-field>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <v-text-field v-model="editAction['date']"
+                                  type="date"
+                                  :min="getMinDate()"
+                                  onkeydown="return false"
+                                  :label="$t('operation.operationDate')">
+                    </v-text-field>
+                </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="selectOperationTime"
-                              :label="$t('operation.operationTime')"
-                              :value="editAction['operationTime']"
-                              type="time">
-                </v-text-field>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <v-text-field v-model="selectOperationTime"
+                                  :label="$t('operation.operationTime')"
+                                  :value="editAction['operationTime']"
+                                  type="time">
+                    </v-text-field>
+                </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectOperatingRoom"
-                                :items="filteredOperatingRooms"
-                                :label="$t('operatingrooms.blockedOperatingRooms')"
-                                :filter="customFilter"
-                                multiple
-                                chips
-                                deletable-chips
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <!-- <v-text-field v-model="editAction['date']"
+                      type="date"
+                      :min="getMinDate()"
+                      onkeydown="return false"
+                      :label="$t('operation.operationDate')">
+        </v-text-field> -->
+                    <v-menu ref="menu"
+                            :close-on-content-click="false"
+                            v-model="menu"
+                            :nudge-right="40"
+                            :return-value.sync="date"
+                            lazy
+                            transition="scale-transition"
+                            offset-y
+                            full-width
+                            min-width="290px">
+                        <v-text-field readonly
+                                      slot="activator"
+                                      v-model="dateFormatted"
+                                      :label="$t('operation.operationDate')"></v-text-field>
+                        <v-date-picker v-model="date"
+                                       no-title
+                                       @input="$refs.menu.save(date);"
+                                       :min="getMinDate()"></v-date-picker>
 
-              <v-flex xs12 sm6 md12>
-                <v-textarea v-model="editAction['description']"
-                            rows="3"
-                            :label="$t('common.description')">
-                </v-textarea>
-              </v-flex>
+                    </v-menu>
+                </v-flex>
 
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-                <v-btn class="btnSave orange"
-                       @click.native="save">
-                  Kaydet
-                </v-btn>
-              </v-flex>
+                <v-flex xs12 sm6 md6>
+                    <v-autocomplete v-model="selectOperatingRoom"
+                                    :items="filteredOperatingRooms"
+                                    :label="$t('operatingrooms.blockedOperatingRooms')"
+                                    :filter="customFilter"
+                                    multiple
+                                    chips
+                                    deletable-chips
+                                    item-text="name"
+                                    item-value="id">
+                    </v-autocomplete>
+                </v-flex>
+
+                <v-flex xs12 sm6 md12>
+                    <v-textarea v-model="editAction['description']"
+                                rows="3"
+                                :label="$t('common.description')">
+                    </v-textarea>
+                </v-flex>
+
+                <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
+                    <v-btn class="btnSave orange"
+                           @click.native="save">
+                        Kaydet
+                    </v-btn>
+                </v-flex>
             </v-layout>
         </v-card-text>
       </v-card>
@@ -142,13 +171,19 @@ export default {
       filteredDoctors: [],
       filteredOperatingRooms:[],
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('operation.operationSaved')
+      savedMessage: this.$i18n.t('operation.operationSaved'),
+      menu:false,
+      dateFormatted: null,
     };
   },
 
   watch: {
     showModal (val) {
       val || this.cancel()
+    },
+
+    date (val) {
+      this.dateFormatted = this.formatDate(this.date)
     }
   },
 
@@ -265,6 +300,33 @@ export default {
 
       return vm.$store.state.operationModule.allBranches;
     },
+
+    date:{
+
+        get(){
+          const vm = this;
+
+           if (vm.editAction.date)
+           {
+              vm.$store.commit('saveGlobalDate',  vm.editAction.date);
+           }
+
+           return vm.$store.state.operationModule.globalDate;
+        },
+
+        set(newValue){
+          const vm = this;
+
+          // vm.editAction.date = newValue;
+          // vm.$store.commit('saveGlobalDate',  vm.editAction.date);
+
+          if (newValue)
+          {
+            vm.editAction.date = newValue;
+            vm.$store.commit('saveGlobalDate',  vm.editAction.date);
+          }
+        },
+     }
   },
 
   methods: {
@@ -276,7 +338,6 @@ export default {
 
       return text.indexOf(searchText) > -1;
     },
-
 
     replaceForAutoComplete(text)
     {
@@ -389,7 +450,14 @@ export default {
             }, 2000)
           });
       }
-    }
+    },
+
+    formatDate (date) {
+      if (!date || date.indexOf('.')> -1) return null
+
+      const [year, month, day] = date.split('-')
+      return `${day}.${month}.${year}`
+    },
   }
 }
 

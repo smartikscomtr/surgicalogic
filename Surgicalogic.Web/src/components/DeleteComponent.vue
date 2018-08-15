@@ -69,7 +69,17 @@ export default {
     deleteText() {
       const vm = this;
 
-      return vm.$i18n.t('common.doYouWantToDeleteTheRecord');
+      if (vm.deleteValue.code) {
+        return vm.deleteValue.code + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheCode');
+      } else if (vm.deleteValue.name){
+        return vm.deleteValue.name + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+      } else if (vm.deleteValue.firstName && vm.deleteValue.lastName) {
+        return vm.deleteValue.firstName + ' ' + vm.deleteValue.lastName + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+      } else if (vm.deleteValue.userName) {
+        return vm.deleteValue.userName + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+      } else {
+        return vm.$i18n.t('common.doYouWantToDeleteTheRecord');
+      }
     },
 
     showModal: {

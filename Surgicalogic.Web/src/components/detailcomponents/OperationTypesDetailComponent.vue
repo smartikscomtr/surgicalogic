@@ -21,7 +21,7 @@
             <v-flex xs12 sm6 md6>
               <div class="input-group readonly-wrap">
                 <div class="label">
-                  {{ $t('operationTypes.operationType') }}
+                  {{ $t('operationtypes.operationType') }}
                 </div>
 
                 <div class="value">
@@ -57,11 +57,11 @@
             <v-flex xs12 sm6 md6>
               <div class="input-group readonly-wrap">
                 <div class="label">
-                  {{ $t('operationrooms.operationRoom') }}
+                  {{ $t('operatingrooms.operatingRoom') }}
                 </div>
 
                 <div class="value">
-                  {{ detailAction['operationRoomName'] }}
+                  {{ detailAction['operatingRoomName'] }}
                 </div>
               </div>
             </v-flex>
