@@ -17,7 +17,7 @@
         </v-card-title>
 
         <v-card-text>
-            <v-layout wrap>
+            <v-layout wrap edit-layout>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['userName']"
                               :label="$t('users.userName')">
@@ -43,7 +43,7 @@
                   </v-btn>
               </v-flex> -->
 
-              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
                 <v-btn class="btnSave orange"
                        @click.native="save">
                   Kaydet

@@ -17,7 +17,7 @@
         </v-card-title>
 
         <v-card-text>
-            <v-layout wrap>
+            <v-layout wrap edit-layout>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
                               :label="$t('operation.operationName')">
@@ -57,9 +57,26 @@
                                 item-text="fullName"
                                 item-value="id">
                 </v-autocomplete>
+              </v-flex>                             
+
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['date']"
+                              type="date"
+                              :min="getMinDate()"
+                              onkeydown="return false"
+                              :label="$t('operation.operationDate')">
+                </v-text-field>
               </v-flex>
 
-               <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="selectOperationTime"
+                              :label="$t('operation.operationTime')"
+                              :value="editAction['operationTime']"
+                              type="time">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectOperatingRoom"
                                 :items="filteredOperatingRooms"
                                 :label="$t('operatingrooms.blockedOperatingRooms')"
@@ -72,23 +89,6 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="selectOperationTime"
-                              :label="$t('operation.operationTime')"
-                              :value="editAction['operationTime']"
-                              type="time">
-                </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['date']"
-                              type="date"
-                              :min="getMinDate()"
-                              onkeydown="return false"
-                              :label="$t('operation.operationDate')">
-                </v-text-field>
-              </v-flex>
-
               <v-flex xs12 sm6 md12>
                 <v-textarea v-model="editAction['description']"
                             rows="3"
@@ -96,7 +96,7 @@
                 </v-textarea>
               </v-flex>
 
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
                 <v-btn class="btnSave orange"
                        @click.native="save">
                   Kaydet
