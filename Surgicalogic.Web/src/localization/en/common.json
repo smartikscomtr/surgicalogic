@@ -11,5 +11,8 @@
   "no": "No",
   "yes": "Yes",
   "all": "All",
-  "close": "CLOSE"
+  "close": "CLOSE",
+  "search":"Search",
+  "rowsPerPage":"Rows per page:",
+  "noDataAvailable" : "No data available"
 }

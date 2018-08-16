@@ -8,8 +8,8 @@ namespace Surgicalogic.Model.OutputModel
     {
         public int Id { get; set; }
         public int OperatingRoomId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
 
     }
 }

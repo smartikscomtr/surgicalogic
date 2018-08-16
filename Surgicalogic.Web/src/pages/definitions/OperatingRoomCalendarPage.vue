@@ -99,14 +99,14 @@ export default {
           text: "Başlangıç Tarihi", //vm.$i18n.t('operatingrooms.operatingRoom'),
           sortable: true,
           align: 'left',
-          isDateTime:true
+          isDate:true
         },
         {
           value: 'endDate',
           text: 'Bitiş Tarihi', //vm.$i18n.t('operatingrooms.location'),
           sortable: true,
           align: 'left',
-          isDateTime:true
+          isDate:true
         },
         {
           isAction: true,

@@ -14,5 +14,8 @@
   "yes": "Evet",
   "all": "Hepsi",
   "close": "KAPAT",
+  "search": "Ara",
+  "rowsPerPage":"Sayfa başına öğe:",
+  "noDataAvailable" : "Hiç kayıt yok",
   "go": "Git"
 }
