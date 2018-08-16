@@ -365,13 +365,13 @@ tr:nth-child(even) {
   flex-direction: row;
 }
 .v-card__title.search-wrap {
-  padding: 16px 0;
+  padding: 15px 0;
 }
 .v-card__title .flex {
-  padding: 0 16px;
+  padding: 0 10px;
 }
 .v-card__text .flex {
-  padding: 0 20px !important;
+  padding: 0 15px !important;
 }
 .text {
   flex: 1;
@@ -415,7 +415,8 @@ tr:nth-child(even) {
   font-size: 12px;
   line-height: 1.33;
   text-align: left;
-  color: #464646;
+  color: #464646;  
+  margin-bottom: 5px;
 }
 .value {
   font-size: 16px;
@@ -454,6 +455,8 @@ a {
 }
 .input-group.readonly-wrap {
   margin-bottom: 30px;
+  background-color: #f7f7f7;
+  padding: 10px;
 }
 .v-dialog:not(.dialog--fullscreen) {
   max-height: inherit;
@@ -529,5 +532,21 @@ table.v-table thead th:not(:first-child) {
 input[type="date"]::-webkit-inner-spin-button {
   display: none;
   -webkit-appearance: none;
+}
+.v-icon.close-wrap{
+    background-color:#ff7107;
+    color: #fff !important;
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 18px;
+    position: relative;
+    top: -20px;
+    right: -30px;
+}
+.edit-layout .flex{
+  margin-bottom:10px; 
+}
+.margin-bottom-none{
+  margin-bottom: 0 !important;
 }
 </style>

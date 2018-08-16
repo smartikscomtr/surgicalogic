@@ -16,14 +16,7 @@
         </v-card-title>
 
         <v-card-text>
-          <v-layout wrap>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['personnelCode']"
-                              :label="$t('personnel.personnelCode')">
-                </v-text-field>
-              </v-flex>
-
-              <span>&nbsp;</span>
+          <v-layout wrap edit-layout>
 
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['firstName']"
@@ -35,12 +28,31 @@
                 <v-text-field v-model="editAction['lastName']"
                               :label="$t('personnel.lastName')">
                 </v-text-field>
-              </v-flex>
+              </v-flex>              
 
               <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectPersonnelTitle"
                                 :items="personnelTitles"
                                 :label="$t('personneltitle.personnelTitle')"
+                                :filter="customFilter"
+                                item-text="name"
+                                item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['personnelCode']"
+                              :label="$t('personnel.personnelCode')">
+                </v-text-field>
+              </v-flex> 
+
+              <v-flex xs12 sm12 md12>
+                <v-autocomplete v-model="selectBranch"
+                                :items="branches"
+                                :label="$t('branches.branch')"
+                                 multiple
+                                 chips
+                                 deletable-chips
                                 :filter="customFilter"
                                 item-text="name"
                                 item-value="id">
@@ -57,20 +69,9 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
-                <v-autocomplete v-model="selectBranch"
-                                :items="branches"
-                                :label="$t('branches.branch')"
-                                 multiple
-                                 chips
-                                 deletable-chips
-                                :filter="customFilter"
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+              
 
-              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
+              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
                 <v-btn class="btnSave orange"
                        @click.native="save">
                   Kaydet
