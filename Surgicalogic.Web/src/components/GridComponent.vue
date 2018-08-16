@@ -413,7 +413,7 @@ tr:nth-child(even) {
   font-size: 12px;
   line-height: 1.33;
   text-align: left;
-  color: #464646;  
+  color: #464646;
   margin-bottom: 5px;
 }
 .value {
@@ -542,7 +542,7 @@ input[type="date"]::-webkit-inner-spin-button {
     right: -30px;
 }
 .edit-layout .flex{
-  margin-bottom:10px; 
+  margin-bottom:10px;
 }
 .margin-bottom-none{
   margin-bottom: 0 !important;

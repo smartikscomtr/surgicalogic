@@ -56,8 +56,8 @@ namespace Surgicalogic.Api.Controllers
                 {
                     MinDate = tomorrow.ToString("yyyy-MM-dd 00:00:00"),
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
-                    StartDate = tomorrow.ToString("yyyy-MM-dd 09:00:00"),
-                    EndDate = tomorrow.ToString("yyyy-MM-dd 14:00:00"),
+                    StartDate = plans.Select(x => x.start).Min(),
+                    EndDate = plans.Select(x => x.end).Max(),
                     Period = AppSettings.PeriodInMinutes
                 }
             };

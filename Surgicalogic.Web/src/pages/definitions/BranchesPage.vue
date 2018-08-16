@@ -44,7 +44,7 @@ export default {
 
     return {
       title: vm.$i18n.t('branches.branches'),
-      search: '',
+      search: 'Ara',
       editDialog: false,
       deleteDialog: false,
       editAction: {},

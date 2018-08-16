@@ -175,17 +175,9 @@ export default {
 
       return [
         {
-          icon: "keyboard_arrow_up",
-          "icon-alt": "keyboard_arrow_down",
-          // model: true,
-          text: "Operasyon Yönetimi",
-          children: [
-            {
-              icon: "add_comment",
-              text: "Operasyonlar",
-              route: "/operationpage"
-            }
-          ]
+          icon: "add_comment",
+          text: "Operasyonlar",
+          route: "/operationpage"
         },
         {
           icon: "keyboard_arrow_up",

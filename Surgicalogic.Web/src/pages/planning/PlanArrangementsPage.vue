@@ -33,10 +33,11 @@ export default {
         orientation: {
           axis: 'top'
         },
-        timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
+        // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
         // locale: 'tr-TR',
         moveable: true,
-        zoomable: true,
+        zoomMax: 86400000,
+        zoomMin: 3600000,
         horizontalScroll: true,
         min: vm.$store.state.planArrangementsModule.model.minDate,
         max:vm.$store.state.planArrangementsModule.model.maxDate,
@@ -58,7 +59,7 @@ export default {
       };
 
       var timeline = new Vis.Timeline(container, items, groups, options);
-    });
+    }, 500);
   }
 }
 </script>
