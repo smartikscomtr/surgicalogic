@@ -426,7 +426,7 @@ tr:nth-child(even) {
 }
 .v-dialog.v-dialog--active,
 .v-dialog:not(.v-dialog--fullscreen) {
-  max-width: 960px;
+  max-width: 800px;
   width:98%;
 }
 a {

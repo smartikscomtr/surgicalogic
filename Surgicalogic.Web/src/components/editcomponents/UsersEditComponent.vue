@@ -24,16 +24,17 @@
                 </v-text-field>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+               <v-flex xs12 sm6 md6 input-group-checkbox>
+               <v-checkbox v-model="editAction['isAdmin']"
+                           :label="$t('users.isAdmin')"
+                           color="primary">
+                </v-checkbox>
+              </v-flex>
+
+              <v-flex xs12 sm6 md12>
                 <v-text-field v-model="editAction['email']"
                               :label="$t('users.email')">
                 </v-text-field>
-              </v-flex>
-
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right>
-               <v-checkbox v-model="editAction['isAdmin']"
-                              :label="$t('users.isAdmin')">
-                </v-checkbox>
               </v-flex>
 
               <!-- <v-flex xs6 sm6 md6 text-lg-left text-md-left text-sm-left text-xs-left>

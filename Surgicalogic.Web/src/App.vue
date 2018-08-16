@@ -175,7 +175,7 @@ export default {
 
       return [
         {
-          icon: "add_comment",
+          icon: "add_alarm",
           text: "Operasyonlar",
           route: "/operationpage"
         },
@@ -185,7 +185,7 @@ export default {
           text: vm.$i18n.t('menu.planManagement'),
           children: [
             {
-              icon: "add_alarm",
+              icon: "timeline",
               text: vm.$i18n.t('menu.planArrangements'),
               route: "/planarrangementspage"
             },
@@ -244,7 +244,7 @@ export default {
           text: vm.$i18n.t("menu.definitions"),
           children: [
             {
-              icon: "storage",
+              icon: "build",
               text: vm.$i18n.t("menu.equipments"),
               route: "/equipmentspage"
             },
@@ -254,32 +254,32 @@ export default {
               route: "/personnelpage"
             },
             {
-              icon: "assignment",
+              icon: "meeting_room",
               text: vm.$i18n.t("menu.operatingRooms"),
               route: "/operatingroomspage"
             },
             {
-              icon: "assignment",
+              icon: "bookmarks",
               text: vm.$i18n.t("menu.branches"),
               route: "/branchespage"
             },
             {
-              icon: "assignment",
+              icon: "person_pin",
               text: vm.$i18n.t("menu.personnelTitles"),
               route: "/personneltitlepage"
             },
             {
-              icon: "assignment",
+              icon: "business_center",
               text: vm.$i18n.t("menu.equipmentTypes"),
               route: "/equipmenttypespage"
             },
             {
-              icon: "announcement",
+              icon: "work_outline",
               text: vm.$i18n.t("menu.operationTypes"),
               route: "/operationtypespage"
             },
             {
-              icon: "assignment",
+              icon: "group_work",
               text: vm.$i18n.t("menu.workTypes"),
               route: "/worktypespage"
             }

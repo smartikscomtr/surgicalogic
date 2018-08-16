@@ -33,6 +33,18 @@
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
+                    {{ $t('operatingrooms.isAvailable') }}
+                  </div>
+
+                  <div class="value">
+                    {{ getAvailability() }}
+                  </div>
+                </div>
+              </v-flex>
+
+              <v-flex xs12 sm3 md3>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
                     {{ $t('operatingrooms.location') }}
                   </div>
 
@@ -42,7 +54,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm3 md3>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.width') }}
@@ -54,7 +66,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm3 md3>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.height') }}
@@ -66,9 +78,7 @@
                 </div>
               </v-flex>
 
-              <span>&nbsp;</span>
-
-              <v-flex xs12 sm6 md6>
+              <v-flex xs12 sm3 md3>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.length') }}
@@ -112,18 +122,6 @@
 
                   <div class="value">
                     {{ detailAction['description'] }}
-                  </div>
-                </div>
-              </v-flex>
-
-              <v-flex xs12 sm6 md12>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('operatingrooms.isAvailable') }}
-                  </div>
-
-                  <div class="value">
-                    {{ getAvailability() }}
                   </div>
                 </div>
               </v-flex>

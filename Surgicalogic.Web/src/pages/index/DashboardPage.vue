@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-layout row wrap>
+    <v-layout row wrap class="cards-wrap">
       <v-flex xs12 sm6 md6>
         <v-card class="operation-wrap">
           <v-container>
             <v-card-title>
               <div>
-                <v-icon dark x-large>add_comment</v-icon>
+                <v-icon dark x-large>add_alarm</v-icon>
                 <p class="headline">{{ 'Operasyonlar' }} </p>
               </div>
               <p>{{ 'Operasyonlarınızı Yönetebilirsiniz' }} </p>
@@ -24,7 +24,7 @@
           <v-container>
             <v-card-title>
               <div>
-                <v-icon dark x-large>add_alarm</v-icon>
+                <v-icon dark x-large>timeline</v-icon>
                 <p class="headline">{{ 'Planlar' }} </p>
               </div>
               <p>{{ 'Planlarınızı Yönetebilirsiniz' }} </p>
@@ -86,7 +86,6 @@ export default {
 
 <style>
 .layout.row {
-    border: 9px solid #fff;
     padding: 1%;
     margin: 1%;
 }
@@ -108,22 +107,22 @@ export default {
 .v-card__actions {
     justify-content: flex-end;
 }
-.v-card__title > div {
+.cards-wrap .v-card__title > div {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
 }
-.v-card__title > div p {
+.cards-wrap .v-card__title > div p {
     margin-left: 10px;
 }
-.v-card__title p {
+.cards-wrap .v-card__title p {
     margin: 0;
     color:#fff;
 }
-.v-card__title {
-    flex-direction: column;
-    align-items: flex-start;
+.cards-wrap .v-card__title {
+    flex-direction: column !important;
+    align-items: flex-start !important;
 }
 
 </style>

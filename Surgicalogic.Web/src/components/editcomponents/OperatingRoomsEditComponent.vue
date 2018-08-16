@@ -24,25 +24,32 @@
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm6 md6>
+             <v-flex xs12 sm4 md4 input-group-checkbox>
+              <v-checkbox v-model="editAction['isAvailable']"
+                           :label="$t('operatingrooms.isAvailable')"
+                           color="primary">
+              </v-checkbox>
+            </v-flex>
+
+            <v-flex xs12 sm3 md3>
               <v-text-field v-model="editAction['location']"
                             :label="$t('operatingrooms.location')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm6 md4>
+            <v-flex xs12 sm3 md3>
               <v-text-field v-model="editAction['width']"
                             :label="$t('operatingrooms.width')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm6 md4>
+            <v-flex xs12 sm3 md3>
               <v-text-field v-model="editAction['height']"
                             :label="$t('operatingrooms.height')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm6 md4>
+            <v-flex xs12 sm3 md3>
               <v-text-field v-model="editAction['length']"
                             :label="$t('operatingrooms.length')">
               </v-text-field>
@@ -79,13 +86,6 @@
                             rows="3"
                             :label="$t('common.description')">
               </v-textarea>
-            </v-flex>
-
-             <v-flex xs12 sm6 md12>
-              <v-checkbox v-model="editAction['isAvailable']"
-                            rows="3"
-                            :label="$t('operatingrooms.isAvailable')">
-              </v-checkbox>
             </v-flex>
 
             <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
