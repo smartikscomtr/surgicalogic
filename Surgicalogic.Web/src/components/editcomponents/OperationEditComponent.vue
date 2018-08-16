@@ -60,15 +60,6 @@
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                    <v-text-field v-model="editAction['date']"
-                                  type="date"
-                                  :min="getMinDate()"
-                                  onkeydown="return false"
-                                  :label="$t('operation.operationDate')">
-                    </v-text-field>
-                </v-flex>
-
-                <v-flex xs12 sm6 md6>
                     <v-text-field v-model="selectOperationTime"
                                   :label="$t('operation.operationTime')"
                                   :value="editAction['operationTime']"
