@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="value">
-                    {{ detailAction['isPortable'] }}
+                    {{ isPortable }}
                   </div>
                 </div>
               </v-flex>
@@ -127,6 +127,16 @@ export default {
         if (!value) {
           vm.$emit('cancel');
         }
+      }
+    },
+
+    isPortable() {
+      const vm = this;
+
+      if (vm.detailAction['isPortable']) {
+        return vm.$i18n.t('common.yes');
+      } else {
+        return vm.$i18n.t('common.no');
       }
     }
   },
