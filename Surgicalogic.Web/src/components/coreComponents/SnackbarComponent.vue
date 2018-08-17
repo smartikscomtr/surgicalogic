@@ -5,7 +5,7 @@
                 :top="true">
       {{ savedMessage }}
 
-      <v-btn color="pink"
+      <v-btn class="close-wrap"
              flat
              @click="snackbar = false">
         {{ $t('common.close') }}

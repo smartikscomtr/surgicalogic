@@ -56,7 +56,8 @@ export default new VueRouter({
     {
       path: '/dashboardpage',
       name: 'DashboardPage',
-      component: DashboardPage
+      component: DashboardPage,
+      alias: ['']
     },
     {
       path: '/equipmentspage',

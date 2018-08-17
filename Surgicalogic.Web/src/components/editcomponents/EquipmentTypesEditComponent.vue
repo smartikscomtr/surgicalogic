@@ -26,8 +26,8 @@
 
               <v-flex xs12 sm6 md12>
                 <v-textarea v-model="editAction['description']"
-                              rows="3"
-                              :label="$t('common.description')">
+                            rows="3"
+                            :label="$t('common.description')">
                 </v-textarea>
               </v-flex>
 
@@ -115,7 +115,7 @@ export default {
 
       vm.snackbarVisible = false;
 
-      //Edit equipment type
+//Edit equipment type
       if (vm.editIndex > -1) {
         //We are accessing updateEquipmentType in vuex store
         vm.$store.dispatch('updateEquipmentType', {

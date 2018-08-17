@@ -117,11 +117,12 @@
           </v-btn>
 
           <!-- Search -->
-          <v-text-field flat
+          <v-text-field class="search-wrap"
+                        flat
                         solo-inverted
-                        prepend-icon="search"
+                        append-icon="search"
                         :label="$i18n.t('common.search')"
-                        class="hidden-sm-and-down">
+                        single-line hide-details>
           </v-text-field>
 
           <v-spacer></v-spacer>
