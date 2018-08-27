@@ -114,7 +114,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm12 md12>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('common.description') }}

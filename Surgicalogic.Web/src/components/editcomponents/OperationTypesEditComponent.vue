@@ -34,7 +34,7 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm12 md12>
                 <v-autocomplete v-model="selectEquipment"
                                 :items="equipments"
                                 :label="$t('equipments.equipment')"
@@ -47,7 +47,7 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm12 md12>
                 <v-autocomplete v-model="selectOperatingRoom"
                                 :items="operatingRooms"
                                 :label="$t('operatingrooms.operatingRoom')"
@@ -60,7 +60,7 @@
                 </v-autocomplete>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm12 md12>
                 <v-textarea v-model="editAction['description']"
                               rows="3"
                               :label="$t('common.description')">

@@ -31,7 +31,7 @@
                 </v-checkbox>
               </v-flex>
 
-              <v-flex xs12 sm6 md12>
+              <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editAction['email']"
                               :label="$t('users.email')">
                 </v-text-field>

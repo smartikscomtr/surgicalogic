@@ -18,13 +18,13 @@
 
         <v-card-text>
           <v-layout wrap edit-layout>
-            <v-flex xs12 sm6 md12>
+            <v-flex xs12 sm12 md12>
               <v-text-field v-model="editAction['name']"
                             :label="$t('branches.branchName')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm6 md12>
+            <v-flex xs12 sm12 md12>
               <v-textarea v-model="editAction['description']"
                           rows="3"
                           :label="$t('common.description')">
