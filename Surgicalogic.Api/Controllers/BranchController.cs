@@ -5,6 +5,10 @@ using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System.Threading.Tasks;
+using Smartiks.Framework.IO;
+using System.IO;
+using System;
+using System.Collections.Generic;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -34,6 +38,20 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<BranchOutputModel>> GetAllBranches()
         {
             return await _branchStoreService.GetAsync<BranchOutputModel>();
+        }
+
+        [Route("Branch/ExcelExport")]
+        //Write(Stream excelStream, string worksheetName, Type type, IEnumerable items, IFormatProvider formatProvider)
+        public async Task ExcelExport()
+        {
+            FileStream fs = new FileStream(Path.Combine(Environment.CurrentDirectory, "App_Data", "Migration", "InitialData4.xlsx"), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items =await _branchStoreService.GetAsync<BranchOutputModel>();
+            
+            excelService.Write(fs, "Worksheet", typeof(BranchOutputModel), items.Result, System.Globalization.CultureInfo.CurrentCulture);
+
+            return 
         }
 
         /// <summary>

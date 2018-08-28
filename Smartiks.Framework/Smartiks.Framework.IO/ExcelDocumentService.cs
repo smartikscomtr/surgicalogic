@@ -128,7 +128,7 @@ namespace Smartiks.Framework.IO
 
         public void Write(Stream excelStream, string worksheetName, Type type, IEnumerable items, IFormatProvider formatProvider)
         {
-            using (var package = new ExcelPackage(excelStream))
+            using (var package = new ExcelPackage())
             {
                 package.Compatibility.IsWorksheets1Based = true;
 
@@ -184,7 +184,7 @@ namespace Smartiks.Framework.IO
                     rowNo++;
                 }
 
-                package.Save();
+                package.SaveAs(excelStream);
             }
         }
     }
