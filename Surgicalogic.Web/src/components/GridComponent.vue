@@ -435,7 +435,7 @@ a {
   border-color: #009688 !important;
 }
 .primary--text {
-  color: #009688 !important;
+  color: #ff7107 !important;
 }
 .primary--text input,
 .primary--text textarea {
@@ -546,5 +546,9 @@ input[type="date"]::-webkit-inner-spin-button {
 }
 .margin-bottom-none{
   margin-bottom: 0 !important;
+}
+.v-chip__content {
+  background-color: #ee8b41;
+  color: #fff !important;
 }
 </style>

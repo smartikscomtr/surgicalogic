@@ -93,16 +93,16 @@ export default {
     padding: 1%;
 }
 .operation-wrap.v-card {
-    background-color: #f67171;
+    background-color: #ff6767;
 }
 .plan-wrap.v-card {
-    background-color: #f6bb7f;
+    background-color: #ffba75;
 }
 .clinic-wrap.v-card {
-    background-color: #36a157b5;
+    background-color: #56d67d;
 }
 .personnel-wrap {
-  background-color: #8754b5d1 !important;
+  background-color: #9b63cd !important;
 }
 .v-card__actions {
     justify-content: flex-end;
