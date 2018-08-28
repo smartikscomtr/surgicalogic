@@ -35,7 +35,7 @@
                     readonly
                     slot="activator"
                     v-model="startDateFormatted"
-                    :label="$t('operation.operationDate')"
+                    :label="$t('operatingroomscalendar.startDate')"
                   ></v-text-field>
                   <v-date-picker v-model="startDate"
                                  no-title
@@ -63,7 +63,7 @@
                     readonly
                     slot="activator"
                     v-model="endDateFormatted"
-                    :label="$t('operation.operationDate')"
+                    :label="$t('operatingroomscalendar.endDate')"
                   ></v-text-field>
                   <v-date-picker v-model="endDate"
                                  no-title
