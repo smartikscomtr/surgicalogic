@@ -106,11 +106,12 @@ namespace Surgicalogic.Planning.ORTools
                             //Mevcut ameliyatın süresi kadar dön.
                             for (int t = 0; t < input.Operations[i].Period; t++)
                             {
+                                var div = solver.MakeDiv(x[i, t], input.Rooms.Count);
+                                var prod = solver.MakeProd(div, input.Rooms.Count);
+
                                 //Ameliyat odası sayısı kadar dön.
                                 for (int r = 0; r < input.Rooms.Count; r++)
                                 {
-                                    var div = solver.MakeDiv(x[i, t], input.Rooms.Count);
-                                    var prod = solver.MakeProd(div, input.Rooms.Count);
                                     solver.Add(x[ad, ml] != solver.MakeSum(prod, r));
                                 }
                             }
