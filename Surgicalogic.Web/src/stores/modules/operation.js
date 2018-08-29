@@ -72,7 +72,7 @@ const operationModule = {
 
     saveGlobalDate(state, newValue){
       state.globalDate = newValue;
-  },
+    }
   },
 
   getters: {},
@@ -163,6 +163,17 @@ const operationModule = {
           context.commit('setAllBranches', response.data.result) //Set the Operation Types in the store
         }
       })
+    },
+
+    excelExportOperation(context) {
+      axios.get('Operation/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
   }
 }

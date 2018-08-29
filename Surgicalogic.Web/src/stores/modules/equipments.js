@@ -99,6 +99,17 @@ const equipmentModule = {
       .then(response => {
         context.commit('setAllEquipmentTypes', response.data.result) //Set the All Equipment Types in the store
       })
+    },
+
+    excelExportEquipments(context) {
+      axios.get('Equipment/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
   }
 }

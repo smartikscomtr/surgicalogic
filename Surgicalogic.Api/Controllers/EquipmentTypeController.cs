@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
@@ -34,6 +38,23 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<EquipmentTypeOutputModel>> GetAllEquipmentTypes()
         {
             return await _equipmentTypeStoreService.GetAsync<EquipmentTypeOutputModel>();
+        }
+
+
+        [Route("EquipmentType/ExcelExport")]
+        public async Task<string> ExcelExport()
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("EquipmentTypes_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _equipmentTypeStoreService.GetExportAsync<EquipmentTypeExportModel>();
+
+            excelService.Write(fs, "Worksheet", typeof(EquipmentTypeExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
         }
 
         /// <summary>

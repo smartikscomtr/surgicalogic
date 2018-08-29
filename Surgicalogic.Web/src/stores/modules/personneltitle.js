@@ -78,6 +78,17 @@ const personnelTitleModule = {
         .then(response => {
           context.commit('updatePersonnelTitle', response.data.result) //Update the Personnel Title in the store
         })
+    },
+
+    excelExportPersonnelTitle(context) {
+      axios.get('PersonnelTitle/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
   }
 }

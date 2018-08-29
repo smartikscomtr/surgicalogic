@@ -5,7 +5,7 @@ const branchesModule = {
     loading: false,
     totalCount: 0,
     branches: [],
-    allBranches: [],
+    allBranches: []
   },
 
   mutations: {
@@ -88,6 +88,17 @@ const branchesModule = {
       axios.post('Branch/UpdateBranch', payload)
         .then(response => {
           context.commit('updateBranch', response.data.result) //Update the Branches in the store
+        })
+    },
+
+    excelExportBranches(context) {
+      axios.get('Branch/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
         })
     }
   }

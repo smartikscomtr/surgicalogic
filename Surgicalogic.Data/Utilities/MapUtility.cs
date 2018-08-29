@@ -3,6 +3,7 @@ using Surgicalogic.Common.Settings;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.OutputModel;
@@ -110,6 +111,23 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();
             #endregion
 
+            #region Entitiy to EntityExportModel
+            config.CreateMap<Branch, BranchExportModel>();
+            config.CreateMap<Equipment, EquipmentExportModel>()
+                .ForMember(dest => dest.IsPortable, opt => opt.MapFrom(src => src.IsPortable ? "Evet" : "Hayır"));
+            config.CreateMap<EquipmentType, EquipmentTypeExportModel>();
+            config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarExportModel>()
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy")))
+                .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy")));
+            config.CreateMap<OperatingRoom, OperatingRoomExportModel>()
+                .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.IsAvailable ? "Evet" : "Hayır"));
+            config.CreateMap<Personnel, PersonnelExportModel>();
+            config.CreateMap<PersonnelTitle, PersonnelTitleExportModel>();
+            config.CreateMap<WorkType, WorkTypeExportModel>();
+            config.CreateMap<Operation, OperationExportModel>()
+                .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => (src.OperationTime / 60 < 10 ? ("0" + src.OperationTime / 60) : (src.OperationTime / 60 + "")) + ":" + (src.OperationTime % 60 < 10 ? ("0" + src.OperationTime % 60) : (src.OperationTime % 60 + ""))));
+            #endregion
+
             #region CustomMapping
             config.CreateMap<Operation, OperationInputModel>()
                 .ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
@@ -123,6 +141,7 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.OperatingRoom.Name))
                  .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
                  .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));
+            config.CreateMap<User, UserExportModel>();
             #endregion
         }
     }

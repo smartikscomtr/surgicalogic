@@ -14,6 +14,7 @@
                     :custom-parameters="customParameters"
                     :loading="getLoading"
                     @edit="edit"
+                    @exportToExcel="exportOperatingRoomCalendarToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -149,6 +150,12 @@ export default {
 
     deleteMethodName(){
       return "deleteOperatingRoomCalendar";
+    },
+
+    exportOperatingRoomCalendarToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportOperatingRoomCalendar', {id: vm.$route.query.roomId});
     }
   },
 

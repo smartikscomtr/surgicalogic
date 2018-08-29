@@ -92,9 +92,18 @@ const operatingRoomCalendarModule = {
         .then(response => {
           context.commit('updateOperatingRoomCalendar', response.data.result) //Update the Operating Rooms in the store
         })
+    },
+
+    excelExportOperatingRoomCalendar(context, payload) {
+      axios.get('OperatingRoomCalendar/ExcelExport/' +  payload.id)
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
-
-
   }
 }
 

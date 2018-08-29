@@ -87,6 +87,17 @@ const usersModule = {
           //context.commit('updateUser', {payload}) //Update the User in the store
         })
     },
+
+    excelExportUser(context) {
+      axios.get('User/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
+    }
   }
 }
 

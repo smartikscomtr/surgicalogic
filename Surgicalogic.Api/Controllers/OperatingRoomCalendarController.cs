@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
@@ -22,6 +25,23 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperatingRoomCalendarOutputModel>> GetOperatingRoomCalendar(OperatingRoomCalendarInputModel item)
         {
             return await _operatingRoomCalendarStoreService.GetByOperatingRoomIdAsync(item.OperatingRoomId);
+        }
+
+
+        [Route("OperatingRoomCalendar/ExcelExport/{id:int}")]
+        public async Task<string> ExcelExport(int id)
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("OperatingRoomCalendars_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _operatingRoomCalendarStoreService.GetExportAsync<OperatingRoomCalendarExportModel>(id);
+
+            excelService.Write(fs, "Worksheet", typeof(OperatingRoomCalendarExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
         }
 
         [Route("OperatingRoomCalendar/InsertOperatingRoomCalendar")]

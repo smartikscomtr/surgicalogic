@@ -12,6 +12,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
+                    @exportToExcel="exportWorkTypeToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -107,6 +108,12 @@ export default {
 
     deleteMethodName(){
       return "deleteWorkType";
+    },
+
+    exportWorkTypeToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportWorkType');
     }
   }
 };

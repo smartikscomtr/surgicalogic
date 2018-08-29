@@ -12,6 +12,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
+                    @exportToExcel="exportBranchesToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -91,7 +92,7 @@ export default {
     getTotalCount() {
      const vm = this;
 
-      return vm.$store.state.branchesModule.totalCount;
+      return  vm.$store.state.branchesModule.totalCount;
     },
 
     getLoading() {
@@ -108,6 +109,12 @@ export default {
 
     deleteMethodName(){
       return "deleteBranch";
+    },
+
+    exportBranchesToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportBranches');
     }
   }
 };

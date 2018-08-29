@@ -92,7 +92,18 @@ const workTypesModule = {
         .then(response => {
           if (response.data.info.succeeded == true){
             context.commit('updateWorkType', payload) //Update the Work Type in the store
-          }            
+          }
+        })
+    },
+
+    excelExportWorkType(context) {
+      axios.get('WorkType/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
         })
     }
   }

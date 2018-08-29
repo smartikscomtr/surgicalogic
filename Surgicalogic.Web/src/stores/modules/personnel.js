@@ -119,6 +119,17 @@ const personnelModule = {
           context.commit('setAllWorkTypes', response.data.result) //Set the Work Types in the store
         }
       })
+    },
+
+    excelExportPersonnel(context) {
+      axios.get('Personnel/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
   }
 }

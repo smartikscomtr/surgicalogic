@@ -117,6 +117,17 @@ const operationTypeModule = {
         .then(response => {
           context.commit('setAllOperatingRooms', response.data.result) //Set the All Operating Rooms in the store
         })
+    },
+
+    exportOperationTypeToExcel(context) {
+      axios.get('OperationType/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
   }
 }

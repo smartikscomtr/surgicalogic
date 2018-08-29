@@ -78,6 +78,17 @@ const equipmentTypesModule = {
         .then(response => {
           context.commit('updateEquipmentType', payload) //Update the Equipment Types in the store
         })
+    },
+
+    excelExportEquipmentTypes(context) {
+      axios.get('EquipmentType/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
     }
   }
 }

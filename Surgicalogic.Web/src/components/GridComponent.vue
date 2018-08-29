@@ -18,6 +18,14 @@
 
             <v-spacer></v-spacer>
 
+            <v-btn class="export-wrap"
+                   @click="exportExcel">
+              <v-icon color="white--text">
+                arrow_downward
+              </v-icon>
+              {{ $t('common.export') }}
+            </v-btn>
+
             <v-btn v-if="showInsert"
                    class="orange"
                    slot="activator"
@@ -33,6 +41,7 @@
                         :items="items"
                         :loading="loading"
                         :pagination.sync="pagination"
+                        :total-items="totalCount"
                         :hide-actions="hideActions"
                         :rows-per-page-text="$t('common.rowsPerPage')"
                         :no-data-text="$t('common.noDataAvailable')"
@@ -197,6 +206,11 @@ export default {
     methodName: {
       type: Function,
       required: true
+    },
+
+    totalCount: {
+      type: Number,
+      required: false
     }
   },
   data() {
@@ -223,6 +237,13 @@ export default {
 
       //When the add new button is clicked, the event is sent to the grid component
       vm.$emit('newaction');
+    },
+
+    exportExcel() {
+      const vm = this;
+
+      //When the add new button is clicked, the event is sent to the grid component
+      vm.$emit('exportToExcel');
     },
 
     filterGrid() {
@@ -384,6 +405,15 @@ tr:nth-child(even) {
   background-color: #ff7107 !important;
   height: 40px;
   font-size: 15px;
+}
+.export-wrap {
+  padding: 0;
+  margin: 0;
+  min-width: 140px;
+  background-color: #ff7107 !important;
+  height: 40px;
+  font-size: 15px;
+  margin-right: 1%;
 }
 .orange .v-btn__content {
   color: #fff;

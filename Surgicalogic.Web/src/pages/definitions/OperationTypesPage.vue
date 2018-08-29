@@ -13,6 +13,7 @@
                     :totalCount="getTotalCount"
                     @detail="detail"
                     @edit="edit"
+                    @exportToExcel="exportOperationTypeToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -131,6 +132,12 @@ export default {
 
     deleteMethodName(){
       return "deleteOperationType";
+    },
+
+    exportOperationTypeToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('exportOperationTypeToExcel');
     }
   }
 };
