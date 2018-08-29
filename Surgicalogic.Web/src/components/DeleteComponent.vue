@@ -10,8 +10,8 @@
 
         <v-card-text>
             <v-layout wrap>
-              <div class="flex xs12 sm12 md12">
-                {{ deleteText }}
+              <div class="flex xs12 sm12 md12"
+                   v-html="deleteText">
               </div>
             </v-layout>
         </v-card-text>
@@ -70,13 +70,13 @@ export default {
       const vm = this;
 
       if (vm.deleteValue.code) {
-        return vm.deleteValue.code + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheCode');
+        return '<b>' + vm.deleteValue.code + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheCode');
       } else if (vm.deleteValue.name){
-        return vm.deleteValue.name + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+        return '<b>' + vm.deleteValue.name + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
       } else if (vm.deleteValue.firstName && vm.deleteValue.lastName) {
-        return vm.deleteValue.firstName + ' ' + vm.deleteValue.lastName + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+        return '<b>' + vm.deleteValue.firstName + ' ' + vm.deleteValue.lastName + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
       } else if (vm.deleteValue.userName) {
-        return vm.deleteValue.userName + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+        return '<b>' + vm.deleteValue.userName + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
       } else {
         return vm.$i18n.t('common.doYouWantToDeleteTheRecord');
       }
