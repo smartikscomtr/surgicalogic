@@ -47,18 +47,19 @@ export default {
           updateTime: true,
           updateGroup: true
         },
-        selectable:true
+        selectable:true,
 
-        // onMove(item, callback) {
-        //   console.log('hellö');
-        //     //  item.content = prompt('Edit items text:', item.content);
-        //     // if (item.content != null) {
-        //     //   callback(item); // send back adjusted item
-        //     // }
-        // }
+        onMove(item, callback) {
+          console.log(item);
+            //  item.content = prompt('Edit items text:', item.content);
+            // if (item.content != null) {
+            //   callback(item); // send back adjusted item
+            // }
+        }
       };
 
       var timeline = new Vis.Timeline(container, items, groups, options);
+
     }, 500);
   }
 }
