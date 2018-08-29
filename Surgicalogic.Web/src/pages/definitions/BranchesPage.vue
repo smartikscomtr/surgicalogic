@@ -115,14 +115,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportBranches');
-
-      setTimeout(() => {
-        const link = document.createElement('a');
-
-        link.href = vm.$store.state.branchesModule.excelUrl;
-        document.body.appendChild(link);
-        link.click();
-      }, 1000);
     }
   }
 };

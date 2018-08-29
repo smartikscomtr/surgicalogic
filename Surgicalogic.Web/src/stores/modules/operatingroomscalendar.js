@@ -7,8 +7,7 @@ const operatingRoomCalendarModule = {
     loading: false,
     startDate: null,
     endDate: null,
-    totalCount: 0,
-    excelUrl: null
+    totalCount: 0
   },
 
   mutations: {
@@ -46,10 +45,6 @@ const operatingRoomCalendarModule = {
 
     saveEndDate(state, newValue){
       state.endDate = newValue;
-    },
-
-    excelExport(state, data) {
-      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -102,7 +97,11 @@ const operatingRoomCalendarModule = {
     excelExportOperatingRoomCalendar(context, payload) {
       axios.get('OperatingRoomCalendar/ExcelExport/' +  payload.id)
         .then(response => {
-          context.commit('excelExport', response.data) //Excel Export the Operating Room Calendar in the store
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
         })
     }
   }

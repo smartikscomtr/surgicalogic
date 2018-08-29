@@ -165,14 +165,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('exportOperatingRoomToExcel');
-
-      setTimeout(() => {
-        const link = document.createElement('a');
-
-        link.href = vm.$store.state.operatingRoomModule.excelUrl;
-        document.body.appendChild(link);
-        link.click();
-      }, 2000);
     }
   }
 };

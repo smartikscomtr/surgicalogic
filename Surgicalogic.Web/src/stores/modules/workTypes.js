@@ -5,8 +5,7 @@ const workTypesModule = {
     workTypes: [],
     loading: false,
     totalCount: 0,
-    allWorkTypes:[],
-    excelUrl: null
+    allWorkTypes:[]
   },
 
   mutations: {
@@ -40,10 +39,6 @@ const workTypesModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
-    },
-
-    excelExport(state, data) {
-      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -104,7 +99,11 @@ const workTypesModule = {
     excelExportWorkType(context) {
       axios.get('WorkType/ExcelExport')
         .then(response => {
-          context.commit('excelExport', response.data) //Excel Export the Work Type in the store
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
         })
     }
   }

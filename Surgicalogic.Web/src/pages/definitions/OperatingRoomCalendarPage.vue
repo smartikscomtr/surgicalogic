@@ -156,14 +156,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportOperatingRoomCalendar', {id: vm.$route.query.roomId});
-
-      setTimeout(() => {
-        const link = document.createElement('a');
-
-        link.href = vm.$store.state.operatingRoomCalendarModule.excelUrl;
-        document.body.appendChild(link);
-        link.click();
-      }, 2000);
     }
   },
 

@@ -138,14 +138,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('exportOperationTypeToExcel');
-
-      setTimeout(() => {
-        const link = document.createElement('a');
-
-        link.href = vm.$store.state.operationTypeModule.excelUrl;
-        document.body.appendChild(link);
-        link.click();
-      }, 2000);
     }
   }
 };

@@ -11,8 +11,7 @@ const operationModule = {
     filteredOperationTypes:[],
     filteredDoctors:[],
     filteredOperatingRooms: [],
-    globalDate: null,
-    excelUrl: null
+    globalDate: null
   },
 
   mutations: {
@@ -73,10 +72,6 @@ const operationModule = {
 
     saveGlobalDate(state, newValue){
       state.globalDate = newValue;
-    },
-
-    excelExport(state, data) {
-      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -173,7 +168,11 @@ const operationModule = {
     excelExportOperation(context) {
       axios.get('Operation/ExcelExport')
         .then(response => {
-          context.commit('excelExport', response.data) //Excel Export the Operation in the store
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
         })
     }
   }
