@@ -17,6 +17,7 @@ import * as operationtypes from './operationtypes.json';
 import * as personnel from './personnel.json';
 import * as personneltitle from './personneltitle.json';
 import * as plan from './plan.json';
+import * as planarrangements from './planarrangements.json';
 import * as users from './users.json';
 import * as worktypes from './worktypes.json';
 
@@ -33,6 +34,7 @@ export default {
   personnel,
   personneltitle,
   plan,
+  planarrangements,
   users,
   worktypes
 };

@@ -13,8 +13,7 @@ export default {
   data() {
     const vm = this;
 
-    return {
-    };
+    return {};
   },
   mounted () {
 

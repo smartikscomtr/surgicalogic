@@ -72,11 +72,11 @@ export default {
       if (vm.deleteValue.code) {
         return '<b>' + vm.deleteValue.code + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheCode');
       } else if (vm.deleteValue.name){
-        return vm.deleteValue.name + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+        return '<b>' + vm.deleteValue.name + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
       } else if (vm.deleteValue.firstName && vm.deleteValue.lastName) {
-        return vm.deleteValue.firstName + ' ' + vm.deleteValue.lastName + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+        return '<b>' + vm.deleteValue.firstName + ' ' + vm.deleteValue.lastName + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
       } else if (vm.deleteValue.userName) {
-        return vm.deleteValue.userName + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
+        return '<b>' + vm.deleteValue.userName + '</b>' + ' ' + vm.$i18n.t('common.doYouWantToDeleteTheName');
       } else {
         return vm.$i18n.t('common.doYouWantToDeleteTheRecord');
       }
