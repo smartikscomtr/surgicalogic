@@ -5,7 +5,8 @@ const equipmentModule = {
     totalCount: 0,
     loading: false,
     equipments: [],
-    allEquipmentTypes: []
+    allEquipmentTypes: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -39,6 +40,10 @@ const equipmentModule = {
 
     setAllEquipmentTypes(state, payload) {
       state.allEquipmentTypes = payload;
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -99,6 +104,13 @@ const equipmentModule = {
       .then(response => {
         context.commit('setAllEquipmentTypes', response.data.result) //Set the All Equipment Types in the store
       })
+    },
+
+    excelExportEquipments(context) {
+      axios.get('Equipment/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Equipments in the store
+        })
     }
   }
 }

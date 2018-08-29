@@ -108,6 +108,18 @@ namespace Surgicalogic.Services.Stores.Base
         }
 
         /// <summary>
+        /// This methode returns list of specifed type model list.
+        /// </summary>       
+        /// <returns>TOutputModel</returns>
+        public virtual async Task<List<TExportModel>> GetExportAsync<TExportModel>()
+        {
+            var query = GetQueryable();
+            var projectQuery = query.ProjectTo<TExportModel>();
+
+            return await projectQuery.ToListAsync();
+        }
+
+        /// <summary>
         ///This methode returns list of specifed type model list.
         /// </summary>
         /// <typeparam name="TOutputModel"></typeparam>

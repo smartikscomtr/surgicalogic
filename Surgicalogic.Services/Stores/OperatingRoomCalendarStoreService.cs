@@ -36,5 +36,16 @@ namespace Surgicalogic.Services.Stores
                 Info = new Info { Succeeded = true }
             };
         }
+
+        public async Task<List<OperationRoomCalendarExportModel>> GetExportAsync<OperationRoomCalendarExportModel>(int id)
+        {
+            var query = GetQueryable();
+            var today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+
+            query = query.Where(x => x.OperatingRoomId == id && x.EndDate > today);
+
+            var projectQuery = query.ProjectTo<OperationRoomCalendarExportModel>();
+            return await projectQuery.ToListAsync();
+        }
     }
 }

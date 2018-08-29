@@ -12,6 +12,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
+                    @exportToExcel="exportPersonnelsToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -161,6 +162,20 @@ export default {
 
     deleteMethodName(){
       return "deletePersonnel";
+    },
+
+    exportPersonnelsToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportPersonnel');
+
+      setTimeout(() => {
+        const link = document.createElement('a');
+
+        link.href = vm.$store.state.personnelModule.excelUrl;
+        document.body.appendChild(link);
+        link.click();
+      }, 2000);
     }
   }
 };

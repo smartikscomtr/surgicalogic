@@ -4,7 +4,8 @@ const equipmentTypesModule = {
   state: {
     loading: false,
     totalCount:0,
-    equipmentTypes: []
+    equipmentTypes: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -34,6 +35,10 @@ const equipmentTypesModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -77,6 +82,13 @@ const equipmentTypesModule = {
       axios.post('EquipmentType/UpdateEquipmentType', payload)
         .then(response => {
           context.commit('updateEquipmentType', payload) //Update the Equipment Types in the store
+        })
+    },
+
+    excelExportEquipmentTypes(context) {
+      axios.get('EquipmentType/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Equipment Types in the store
         })
     }
   }

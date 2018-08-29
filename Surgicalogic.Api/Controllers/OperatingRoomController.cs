@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -41,6 +44,23 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperatingRoomOutputModel>> GetAllOperatingRooms()
         {
             return await _operatingRoomStoreService.GetAsync<OperatingRoomOutputModel>();
+        }
+
+
+        [Route("OperatingRoom/ExcelExport")]
+        public async Task<string> ExcelExport()
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("OperatingRooms_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _operatingRoomStoreService.GetExportAsync<OperatingRoomExportModel>();
+
+            excelService.Write(fs, "Worksheet", typeof(OperatingRoomExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
         }
 
         /// <summary>

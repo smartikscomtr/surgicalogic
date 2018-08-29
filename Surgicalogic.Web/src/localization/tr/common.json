@@ -17,5 +17,6 @@
   "search": "Ara",
   "rowsPerPage":"Sayfa başına öğe:",
   "noDataAvailable" : "Hiç kayıt yok",
-  "go": "Git"
+  "go": "Git",
+  "export": "Dışa Aktar"
 }

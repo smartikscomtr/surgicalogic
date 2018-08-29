@@ -7,7 +7,8 @@ const operationTypeModule = {
     operationTypes: [],
     allBranches: [],
     allEquipments: [],
-    allOperatingRooms: []
+    allOperatingRooms: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -49,6 +50,10 @@ const operationTypeModule = {
 
     setAllOperatingRooms(state, payload) {
       state.allOperatingRooms = payload;
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -116,6 +121,13 @@ const operationTypeModule = {
       axios.get('OperatingRoom/GetAllOperatingRooms')
         .then(response => {
           context.commit('setAllOperatingRooms', response.data.result) //Set the All Operating Rooms in the store
+        })
+    },
+
+    exportOperationTypeToExcel(context) {
+      axios.get('OperationType/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Operating Type in the store
         })
     }
   }

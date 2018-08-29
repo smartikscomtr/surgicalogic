@@ -7,7 +7,8 @@ const personnelModule = {
     personnel: [],
     allBranches: [],
     allPersonnelTitles: [],
-    allWorkTypes: []
+    allWorkTypes: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -48,6 +49,10 @@ const personnelModule = {
 
     setAllWorkTypes(state, payload) {
       state.allWorkTypes = payload;
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -119,6 +124,13 @@ const personnelModule = {
           context.commit('setAllWorkTypes', response.data.result) //Set the Work Types in the store
         }
       })
+    },
+
+    excelExportPersonnel(context) {
+      axios.get('Personnel/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Personnel in the store
+        })
     }
   }
 }

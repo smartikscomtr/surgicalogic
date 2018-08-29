@@ -4,7 +4,8 @@ const personnelTitleModule = {
   state: {
     personnelTitle: [],
     loading: false,
-    totalCount:0
+    totalCount:0,
+    excelUrl: null
   },
 
   mutations: {
@@ -34,6 +35,10 @@ const personnelTitleModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -77,6 +82,13 @@ const personnelTitleModule = {
       axios.post('PersonnelTitle/UpdatePersonnelTitle', payload)
         .then(response => {
           context.commit('updatePersonnelTitle', response.data.result) //Update the Personnel Title in the store
+        })
+    },
+
+    excelExportPersonnelTitle(context) {
+      axios.get('PersonnelTitle/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Personnel Title in the store
         })
     }
   }

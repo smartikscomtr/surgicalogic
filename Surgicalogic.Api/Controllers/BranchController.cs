@@ -9,6 +9,7 @@ using Smartiks.Framework.IO;
 using System.IO;
 using System;
 using System.Collections.Generic;
+using Surgicalogic.Model.ExportModel;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -41,17 +42,19 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("Branch/ExcelExport")]
-        //Write(Stream excelStream, string worksheetName, Type type, IEnumerable items, IFormatProvider formatProvider)
-        public async Task ExcelExport()
+        public async Task<string> ExcelExport()
         {
-            FileStream fs = new FileStream(Path.Combine(Environment.CurrentDirectory, "App_Data", "Migration", "InitialData4.xlsx"), FileMode.CreateNew);
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("Branches_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
             var excelService = new ExcelDocumentService();
 
-            var items =await _branchStoreService.GetAsync<BranchOutputModel>();
+            var items = await _branchStoreService.GetExportAsync<BranchExportModel>();
             
-            excelService.Write(fs, "Worksheet", typeof(BranchOutputModel), items.Result, System.Globalization.CultureInfo.CurrentCulture);
+            excelService.Write(fs, "Worksheet", typeof(BranchExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
 
-            return 
+            return fileName;
         }
 
         /// <summary>

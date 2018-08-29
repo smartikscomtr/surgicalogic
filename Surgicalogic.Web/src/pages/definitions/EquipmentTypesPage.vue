@@ -12,6 +12,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
+                    @exportToExcel="exportEquipmentTypesToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -107,6 +108,20 @@ export default {
 
     deleteMethodName(){
       return "deleteEquipmentType";
+    },
+
+    exportEquipmentTypesToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportEquipmentTypes');
+
+      setTimeout(() => {
+        const link = document.createElement('a');
+
+        link.href = vm.$store.state.equipmentTypesModule.excelUrl;
+        document.body.appendChild(link);
+        link.click();
+      }, 2000);
     }
   }
 };

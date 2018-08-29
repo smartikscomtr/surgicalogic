@@ -4,7 +4,8 @@ const usersModule = {
   state: {
     loading: false,
     totalCount: 0,
-    users: []
+    users: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -30,6 +31,10 @@ const usersModule = {
 
     updateUsers(state, payload) {
       //state.users.payload = payload;
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -87,6 +92,13 @@ const usersModule = {
           //context.commit('updateUser', {payload}) //Update the User in the store
         })
     },
+
+    excelExportUser(context) {
+      axios.get('User/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the User in the store
+        })
+    }
   }
 }
 

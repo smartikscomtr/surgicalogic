@@ -6,6 +6,7 @@ const branchesModule = {
     totalCount: 0,
     branches: [],
     allBranches: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -39,6 +40,10 @@ const branchesModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -88,6 +93,13 @@ const branchesModule = {
       axios.post('Branch/UpdateBranch', payload)
         .then(response => {
           context.commit('updateBranch', response.data.result) //Update the Branches in the store
+        })
+    },
+
+    excelExportBranches(context) {
+      axios.get('Branch/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Branches in the store
         })
     }
   }

@@ -30,6 +30,17 @@ namespace Surgicalogic.Services.Stores
             return _context.Set<User>().AsNoTracking();
         }
 
+        /// <summary>
+        /// This methode returns list of specifed type model list.
+        /// </summary>       
+        /// <returns>TOutputModel</returns>
+        public virtual async Task<List<UserExportModel>> GetExportAsync<UserExportModel>()
+        {
+            var query = GetQueryable();
+            var projectQuery = query.ProjectTo<UserExportModel>();
+
+            return await projectQuery.ToListAsync();
+        }
 
         public virtual async Task<ResultModel<UserModel>> FindByIdAsync(int id)
         {

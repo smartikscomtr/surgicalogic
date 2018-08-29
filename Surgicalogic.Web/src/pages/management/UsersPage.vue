@@ -12,6 +12,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
+                    @exportToExcel="exportUserToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem"
                     @resetpassword="resetPassword">
@@ -123,6 +124,20 @@ export default {
 
     resetPasswordMethodName(){
       return "resetPassword";
+    },
+
+    exportUserToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportUser');
+
+      setTimeout(() => {
+        const link = document.createElement('a');
+
+        link.href = vm.$store.state.usersModule.excelUrl;
+        document.body.appendChild(link);
+        link.click();
+      }, 2000);
     }
   }
 }

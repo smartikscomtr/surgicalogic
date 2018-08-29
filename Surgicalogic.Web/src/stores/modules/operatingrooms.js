@@ -7,7 +7,8 @@ const operatingRoomModule = {
     operatingRooms: [],
     allOperatingRooms: [],
     nonPortableEquipments: [],
-    allOperationTypes: []
+    allOperationTypes: [],
+    excelUrl: null
   },
 
   mutations: {
@@ -49,6 +50,10 @@ const operatingRoomModule = {
 
     setNonPortableEquipments(state, data) {
       state.nonPortableEquipments = data;
+    },
+
+    excelExport(state, data) {
+      state.excelUrl = "/static/" + data;
     }
   },
 
@@ -113,6 +118,13 @@ const operatingRoomModule = {
       axios.get('OperationType/GetAllOperationTypes')
           .then(response => {
             context.commit('setAllOperationTypes', response.data.result) //Set the Operation Types in the store
+        })
+    },
+
+    exportOperatingRoomToExcel(context) {
+      axios.get('OperatingRoom/ExcelExport')
+        .then(response => {
+          context.commit('excelExport', response.data) //Excel Export the Operating Room in the store
         })
     }
   }

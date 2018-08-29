@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Smartiks.Framework.IO;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Model.User;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -72,7 +75,22 @@ namespace Surgicalogic.Api.Controllers
 
             return users;
         }
+        
+        [Route("User/ExcelExport")]
+        public async Task<string> ExcelExport()
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("Users_{0}.xlsx", Guid.NewGuid().ToString());
 
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _userStoreService.GetExportAsync<UserExportModel>();
+
+            excelService.Write(fs, "Worksheet", typeof(UserExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
+        }
         /// <summary>
         /// Add user methode
         /// </summary>

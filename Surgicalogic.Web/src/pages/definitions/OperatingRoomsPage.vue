@@ -15,6 +15,7 @@
                     @calendar="calendar"
                     @detail="detail"
                     @edit="edit"
+                    @exportToExcel="exportOperatingRoomToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -158,6 +159,20 @@ export default {
 
     deleteMethodName(){
       return "deleteOperatingRoom";
+    },
+
+    exportOperatingRoomToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('exportOperatingRoomToExcel');
+
+      setTimeout(() => {
+        const link = document.createElement('a');
+
+        link.href = vm.$store.state.operatingRoomModule.excelUrl;
+        document.body.appendChild(link);
+        link.click();
+      }, 2000);
     }
   }
 };
