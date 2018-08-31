@@ -9,7 +9,7 @@ const operationModule = {
     allOperationTypes: [],
     allBranches: [],
     filteredOperationTypes:[],
-    filteredDoctors:[],
+    filteredPersonnels:[],
     filteredOperatingRooms: [],
     globalDate: null
   },
@@ -56,9 +56,9 @@ const operationModule = {
       state.filteredOperationTypes = payload;
     },
 
-    setDoctorsByBranchId(state,payload)
+    setPersonnelsByBranchId(state,payload)
     {
-      state.filteredDoctors = payload;
+      state.filteredPersonnels = payload;
     },
 
     setOperatingRoomsByOperationTypeId(state, payload)
@@ -141,10 +141,10 @@ const operationModule = {
       })
     },
 
-    getDoctorsByBranchId(context, payload) {
-      axios.get('Personnel/GetDoctorsByBranchIdAsync/'+ payload.branchId).then(response => {
+    getPersonnelsByBranchId(context, payload) {
+      axios.get('Personnel/GetPersonnelsByBranchIdAsync/'+ payload.branchId).then(response => {
         if (response.data) {
-          context.commit('setDoctorsByBranchId', response.data) //Set the Operation Types in the store
+          context.commit('setPersonnelsByBranchId', response.data) //Set the Operation Types in the store
         }
       })
     },

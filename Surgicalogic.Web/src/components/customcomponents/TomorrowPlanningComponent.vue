@@ -1,7 +1,7 @@
 <template>
   <div>
     <grid-component :headers="headers"
-                    :items="historyPlannings"
+                    :items="tomorrowList"
                     :title="title"
                     :show-detail="false"
                     :show-edit="false"
@@ -9,11 +9,11 @@
                     :show-search="false"
                     :show-insert="false"
                     :hide-actions="false"
+                    :hide-export="true"
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @detail="detail"
-                    @exportToExcel="exportPlanningHistoryToExcel"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -34,7 +34,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('plan.planningHistory'),
+      title: vm.$i18n.t('plan.operations'),
       search: '',
       detailDialog: false,
       editDialog: false,
@@ -71,10 +71,16 @@ export default {
         },
         {
           value: 'operationStartDate',
-          sortBy:'OperationDate',
-          text: vm.$i18n.t('plan.operationDate'),
+          text: vm.$i18n.t('plan.operationStartDate'),
           isDateTime: true,
-          sortable: true,
+          sortable: false,
+          align: 'left'
+        },
+        {
+          value: 'operationEndDate',
+          text: vm.$i18n.t('plan.operationEndDate'),
+          isDateTime: true,
+          sortable: false,
           align: 'left'
         },
         {
@@ -85,10 +91,10 @@ export default {
       ];
     },
 
-    historyPlannings() {
+    tomorrowList() {
       const vm = this;
 
-      return vm.$store.state.historyPlanningModule.plan;
+      return vm.$store.state.planArrangementsModule.tomorrowList;
     },
 
     getLoading() {
@@ -100,7 +106,7 @@ export default {
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.historyPlanningModule.totalCount;
+      return vm.$store.state.planArrangementsModule.tomorrowListTotalCount;
     }
   },
 
@@ -118,17 +124,11 @@ export default {
 
   methods: {
     getMethodName(){
-      return "getOperationPlanHistory";
+      return "getTomorrowOperationList";
     },
 
     deleteMethodName(){
       return "";
-    },
-
-    exportPlanningHistoryToExcel() {
-      const vm = this;
-
-      vm.$store.dispatch('excelExportPlanningHistory');
     }
   }
 };

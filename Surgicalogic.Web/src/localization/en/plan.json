@@ -2,6 +2,9 @@
   "roomName": "Room Name",
   "operationName": "Operation Name",
   "operationDate": "Operation Date",
+  "operationStartDate": "Start Date",
+  "operationEndDate": "End Date",
+  "operations": "Operations",
   "futurePlan": "Future Plan",
   "planningHistory": "Operation History"
 }

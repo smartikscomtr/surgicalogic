@@ -47,8 +47,8 @@
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                    <v-autocomplete v-model="selectDoctor"
-                                    :items="filteredDoctors"
+                    <v-autocomplete v-model="selectPersonnel"
+                                    :items="filteredPersonnels"
                                     :label="$t('personnel.personnel')"
                                     :filter="customFilter"
                                     multiple
@@ -155,7 +155,7 @@ export default {
   data() {
     return {
       filteredOperationTypes: [],
-      filteredDoctors: [],
+      filteredPersonnels: [],
       filteredOperatingRooms:[],
       snackbarVisible: null,
       savedMessage: this.$i18n.t('operation.operationSaved'),
@@ -240,17 +240,17 @@ export default {
       }
     },
 
-    selectDoctor: {
+    selectPersonnel: {
       get() {
         const vm = this;
-
-        return vm.editAction.doctorIds;
+debugger;
+        return vm.editAction.personnelIds;
       },
 
        set(val) {
         const vm = this;
 
-        vm.editAction.doctorIds = val;
+        vm.editAction.personnelIds = val;
       }
     },
 
@@ -349,7 +349,7 @@ export default {
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
           operationTypeId: vm.selectOperationType,
-          doctorIds: vm.selectDoctor,
+          personnelIds: vm.selectPersonnel,
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           setTimeout(() => {
@@ -371,7 +371,7 @@ export default {
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
           operationTypeId: vm.selectOperationType,
-          doctorIds: vm.selectDoctor,
+          personnelIds: vm.selectPersonnel,
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           setTimeout(() => {
@@ -412,10 +412,10 @@ export default {
             },1500)
           });
 
-        vm.$store.dispatch('getDoctorsByBranchId', {
+        vm.$store.dispatch('getPersonnelsByBranchId', {
             branchId: vm.editAction.branchId }).then(() => {
               setTimeout(function(){
-                vm.filteredDoctors = vm.$store.state.operationModule.filteredDoctors;
+                vm.filteredPersonnels = vm.$store.state.operationModule.filteredPersonnels;
           }, 1000)
         });
       }

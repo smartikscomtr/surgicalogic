@@ -2,10 +2,13 @@
   <div>
     <div id="visualization" class="vis">
     </div>
+
+    <tomorrow-planning-component>
+    </tomorrow-planning-component>
   </div>
 </template>
 
-<script>
+ <script>
 
 import Vis from 'vis/dist/vis.js';
 
@@ -62,7 +65,7 @@ export default {
     }, 500);
   }
 }
-</script>
+ </script>
 
 <style>
 .vis {

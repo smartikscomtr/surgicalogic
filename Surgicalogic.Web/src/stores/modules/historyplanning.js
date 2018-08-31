@@ -5,6 +5,7 @@ const historyPlanningModule = {
     loading: false,
     totalCount: 0,
     plan: [],
+    tomorrowPlan: [],
     allPlans: []
   },
 
@@ -15,6 +16,11 @@ const historyPlanningModule = {
 
     setOperationPlan(state, data) {
       state.plan = data.result;
+      state.totalCount = data.totalCount;
+    },
+
+    setTomorrowOperationPlans(state, data) {
+      state.tomorrowPlan = data.result;
       state.totalCount = data.totalCount;
     },
 
@@ -58,6 +64,13 @@ const historyPlanningModule = {
         context.commit('setLoading', false);
       })
 
+    },
+
+    getTomorrowOperations(context){
+      axios.get('OperationPlan/GetTomorrowOperationPlans')
+          .then(response => {
+            context.commit('setTomorrowOperationPlans', response.data) //Set the OperationPlanPlan in the store
+        })
     },
 
     // getAllOperationPlans(context) {

@@ -9,6 +9,6 @@ namespace Surgicalogic.Contracts.Stores
 {
     public interface IPersonnelStoreService : IStoreService<Personnel, PersonnelModel>
     {
-        Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId);
+        Task<List<PersonnelOutputModel>> GetPersonnelsByBranchIdAsync(int branchId);
     }
 }
