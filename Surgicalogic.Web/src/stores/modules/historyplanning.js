@@ -45,10 +45,10 @@ const historyPlanningModule = {
   getters: {},
 
   actions: {
-    getOperationPlans(context, params) {
+    getOperationPlanHistory(context, params) {
       context.commit('setLoading', true);
 
-      axios.get('OperationPlan/GetOperationPlans', {
+      axios.get('OperationPlan/GetOperationPlanHistory', {
         params: params
       }).then(response => {
         if (response.data.info.succeeded == true){
@@ -86,9 +86,20 @@ const historyPlanningModule = {
     // },
 
     updateOperationPlan(context, payload) {
-      axios.post('OperationPlanPlan/UpdateOperationPlan', payload)
+      axios.post('OperationPlan/UpdateOperationPlan', payload)
         .then(response => {
           context.commit('updateOperationPlan', response.data.result) //Update the OperationPlanPlan in the store
+        })
+    },
+
+    excelExportPlanningHistory(context) {
+      axios.get('OperationPlan/ExcelExport')
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href =  "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
         })
     }
   }

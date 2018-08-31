@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Smartiks.Framework.IO;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
@@ -63,6 +66,13 @@ namespace Surgicalogic.Api.Controllers
             };
 
             return result;
+        }
+
+        [Route("OperationPlan/GetOperationPlanHistory")]
+        [HttpGet]
+        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationPlanHistory(GridInputModel input)
+        {
+            return await _operationPlanStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
         }
 
         [HttpPost]
@@ -143,6 +153,22 @@ namespace Surgicalogic.Api.Controllers
             }
 
             return result;
+        }
+
+        [Route("OperationPlan/ExcelExport")]
+        public async Task<string> ExcelExport()
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("OperationHistory_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _operationPlanStoreService.GetExportAsync<OperationPlanExportModel>();
+
+            excelService.Write(fs, "Worksheet", typeof(OperationPlanExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
         }
 
         [HttpPost]

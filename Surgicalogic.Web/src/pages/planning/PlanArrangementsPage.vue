@@ -61,7 +61,7 @@ export default {
           selectable:true
 
           // onMove(item, callback) {
-          //   console.log('hellÃ¶');
+          //   console.log('hellö');
           //     //  item.content = prompt('Edit items text:', item.content);
           //     // if (item.content != null) {
           //     //   callback(item); // send back adjusted item
@@ -69,8 +69,9 @@ export default {
           // }
         };
 
-        var timeline = new Vis.Timeline(container, items, groups, options);
-      }, 3000);
+      var timeline = new Vis.Timeline(container, items, groups, options);
+
+    }, 500);
   }
 }
 </script>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Surgicalogic.Common.CustomAttributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,7 @@ namespace Surgicalogic.Model.EntityModel
 {
     public class OperationModel: Base.EntityModel
     {
+        [Searchable(true)]
         public string Name { get; set; }
         public string Description { get; set; }
         public int OperationTime { get; set; }

@@ -13,6 +13,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @detail="detail"
+                    @exportToExcel="exportPlanningHistoryToExcel"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
@@ -45,7 +46,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('plan.futurePlan'),
+      title: vm.$i18n.t('plan.planningHistory'),
       search: '',
       detailDialog: false,
       editDialog: false,
@@ -67,32 +68,26 @@ export default {
       //Columns and actions
       return [
         {
-          value:'operatingRoomName',
-          sortBy: 'OperatingRoom.Name',
-          text: vm.$i18n.t('plan.roomName'),
+          value:'operationName',
+          sortBy: 'Operation.Name',
+          text: vm.$i18n.t('plan.operationName'),
           sortable: false,
           align: 'left'
          },
         {
-          value:'operationName',
-          sortBy:'Operation.Name',
-          text: vm.$i18n.t('plan.operationName'),
+          value:'operatingRoomName',
+          sortBy:'OperatingRoom.Name',
+          text: vm.$i18n.t('plan.roomName'),
           sortable: false,
           align: 'left'
         },
         {
           value: 'operationDate',
           text: vm.$i18n.t('plan.operationDate'),
-          sortable: false,
           isDateTime: true,
+          sortable: true,
           align: 'left'
         },
-        // {
-        //   value: 'operationTime',
-        //   text: vm.$i18n.t('operation.operationTime'),
-        //   sortable: true,
-        //   align: 'left'
-        // },
         {
           isAction: true,
           sortable: false,
@@ -134,11 +129,17 @@ export default {
 
   methods: {
     getMethodName(){
-      return "getOperationPlans";
+      return "getOperationPlanHistory";
     },
 
     deleteMethodName(){
       return "";
+    },
+
+    exportPlanningHistoryToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportPlanningHistory');
     }
   }
 };
