@@ -67,7 +67,7 @@ const personnelTitleModule = {
     deletePersonnelTitle(context, payload) {
       axios.post('PersonnelTitle/DeletePersonnelTitle/' + payload.id)
         .then(response => {
-          if (response.statusText == 'OK') {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
             context.commit('deletePersonnelTitle', { payload }); //Delete the Personnel Title in the store
           }
         })

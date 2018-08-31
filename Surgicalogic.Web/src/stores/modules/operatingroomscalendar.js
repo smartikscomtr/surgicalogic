@@ -81,7 +81,7 @@ const operatingRoomCalendarModule = {
     deleteOperatingRoomCalendar(context, payload) {
       axios.post('OperatingRoomCalendar/DeleteOperatingRoomCalendar/' + payload.id)
         .then(response => {
-          if (response.data.info.succeeded == true) {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
             context.commit('deleteOperatingRoomCalendar', { payload }); //Delete the Operating Rooms in the store
           }
         })
@@ -95,7 +95,7 @@ const operatingRoomCalendarModule = {
     },
 
     excelExportOperatingRoomCalendar(context, payload) {
-      axios.get('OperatingRoomCalendar/ExcelExport/' +  payload.id)
+      axios.get('OperatingRoomCalendar/ExcelExport/' + payload.id)
         .then(response => {
           const link = document.createElement('a');
 

@@ -83,7 +83,7 @@ const operationTypeModule = {
     deleteOperationType(context, payload) {
       axios.post('OperationType/DeleteOperationType/' + payload.id)
         .then(response => {
-          if (response.data.info.succeeded == true) {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
             context.commit('deleteOperationType', { payload }); //Delete the Operation Types in the store
           }
         })

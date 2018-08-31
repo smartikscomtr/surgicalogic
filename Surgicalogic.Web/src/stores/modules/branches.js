@@ -78,7 +78,7 @@ const branchesModule = {
     deleteBranch(context, payload) {
       axios.post('Branch/DeleteBranch/' + payload.id)
         .then(response => {
-          if (response.statusText == 'OK') {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
             context.commit('deleteBranch', { payload }); //Delete the Branches in the store
           }
         })
@@ -96,7 +96,7 @@ const branchesModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })
