@@ -10,5 +10,6 @@ namespace Surgicalogic.Contracts.Stores
     public interface IOperationPlanStoreService : IStoreService<OperationPlan, OperationPlanModel>
     {
         Task<List<OperationPlanOutputModel>> GetTomorrowOperationsAsync();
+        Task DeleteTomorrowPlanAsync();
     }
 }

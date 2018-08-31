@@ -21,6 +21,21 @@ namespace Surgicalogic.Services.Stores
             _context = context;
         }
 
+        public async Task DeleteTomorrowPlanAsync()
+        {
+            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+            var twoDaysLater = tomorrow.AddDays(1);
+
+            var items = await GetQueryable().Where(x => x.OperationDate > tomorrow && x.OperationDate < twoDaysLater).ToListAsync();
+
+            foreach (var item in items)
+            {
+                await DeleteByIdAsync(item.Id);
+            }
+
+            await SaveChangesAsync();
+        }
+
         public async Task<List<OperationPlanOutputModel>> GetTomorrowOperationsAsync()
         {
             var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);

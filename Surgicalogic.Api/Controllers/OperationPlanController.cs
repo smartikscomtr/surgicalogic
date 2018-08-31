@@ -117,6 +117,8 @@ namespace Surgicalogic.Api.Controllers
 
                 if (response.Content != null)
                 {
+                    await _operationPlanStoreService.DeleteTomorrowPlanAsync();
+
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var apiResultModel = JsonConvert.DeserializeObject<DailyPlanOutputModel>(responseContent);
 
