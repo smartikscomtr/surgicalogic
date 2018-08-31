@@ -76,7 +76,8 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.OperationTypeName, opt => opt.MapFrom(src => src.OperationType.Name))
                  .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.OperationType.BranchId))
                  .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.OperationType.Branch.Name))
-                 .ForMember(dest => dest.DoctorIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive).Select(t => t.PersonnelId).ToArray()))
+                 .ForMember(dest => dest.PersonnelIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive).Select(t => t.PersonnelId).ToArray()))
+                 .ForMember(dest => dest.DoctorIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive && x.Personnel.PersonnelTitleId == AppSettings.DoctorId).Select(t => t.PersonnelId).ToArray()))
                  .ForMember(dest => dest.DoctorNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationPersonels.Select(x => x.Personnel.FullName))))
                  .ForMember(dest => dest.BlockedOperatingRoomIds, opt => opt.MapFrom(src => src.OperationBlockedOperatingRooms.Where(x => x.IsActive).Select(t => t.OperatingRoomId).ToArray()))
                  .ForMember(dest => dest.OperatingRoomNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationBlockedOperatingRooms.Select(x => x.OperatingRoom.Name))))
@@ -137,8 +138,15 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Operation, OperationInputModel>()
                 .ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
             config.CreateMap<OperationPlan, OperationPlanHistoryOutputModel>()
+                .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
-                 .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name));
+                .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name));
+            config.CreateMap<OperationPlanModel, OperationPlanHistoryOutputModel>()
+                .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
+                .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
+                .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name));
             config.CreateMap<Personnel, PersonnelOutputModel>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name + " " + src.FirstName + " " + src.LastName));

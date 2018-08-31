@@ -41,6 +41,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
             return await _operationStoreService.GetAsync<OperationOutputModel>(input);
+
         }
 
         [Route("Operation/GetAllOperations")]
@@ -89,7 +90,7 @@ namespace Surgicalogic.Api.Controllers
 
             item.Id = result.Result.Id;
 
-            if (item.DoctorIds != null && result.Info.Succeeded)
+            if (item.PersonnelIds != null && result.Info.Succeeded)
             {
                 await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
             }
@@ -137,7 +138,7 @@ namespace Surgicalogic.Api.Controllers
 
             var result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
 
-            if (item.DoctorIds != null && result.Info.Succeeded)
+            if (item.PersonnelIds != null && result.Info.Succeeded)
             {
                 await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
             }

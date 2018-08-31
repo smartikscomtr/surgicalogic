@@ -75,6 +75,21 @@ namespace Surgicalogic.Api.Controllers
             return await _operationPlanStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
         }
 
+        [Route("OperationPlan/GetTomorrowOperationPlans")]
+        [HttpGet]
+        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationPlans(GridInputModel input)
+        {
+            return await _operationPlanStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
+        }
+
+        [Route("OperationPlan/GetTomorrowOperationList")]
+        [HttpGet]
+        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationList(GridInputModel input)
+        {
+            return await _operationPlanStoreService.GetTomorrowOperationListAsync(input);
+        }
+       
+
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
         public async Task<DailyPlanOutputModel> GenerateOperationPlan()

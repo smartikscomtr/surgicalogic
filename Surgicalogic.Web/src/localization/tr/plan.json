@@ -2,6 +2,9 @@
   "roomName": "Oda Adı",
   "operationName": "Operasyon Adı",
   "operationDate": "Operasyon Tarihi",
+  "operations":"Operasyonlar",
+  "operationStartDate": "Başlangıç Tarihi",
+  "operationEndDate": "Bitiş Tarihi",
   "futurePlan": "Gelecek Plan",
   "planningHistory": "Operasyon Tarihçesi"
 }

@@ -59,6 +59,11 @@ import ResetPasswordComponent from '@/components/customcomponents/ResetPasswordC
 
 Vue.component('reset-password-component', ResetPasswordComponent);
 
+// Registering Tomorrow Planning Components
+import TomorrowPlanningComponent from '@/components/customcomponents/TomorrowPlanningComponent';
+
+Vue.component('tomorrow-planning-component', TomorrowPlanningComponent);
+
 // Registering Edit Components
 import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';

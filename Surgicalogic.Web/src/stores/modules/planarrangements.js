@@ -6,7 +6,9 @@ const planArrangementsModule = {
     totalCount: 0,
     model: [],
     allPlans: [],
-    generateOperationPlan: []
+    generateOperationPlan: [],
+    tomorrowList:[],
+    tomorrowListTotalCount:0
   },
 
   mutations: {
@@ -19,6 +21,10 @@ const planArrangementsModule = {
       state.totalCount = data.totalCount;
     },
 
+    setTomorrowOperationList(state, data) {
+      state.tomorrowList = data.result;
+      state.tomorrowListTotalCount = data.totalCount;
+    },
     // setAllOperationPlans(state, data) {
     //   state.allPlans = data;
     // },
@@ -95,6 +101,14 @@ const planArrangementsModule = {
         .then(response => {
           context.commit('updatePlanArrangements', response.data.result) //Update the OperationPlanPlan in the store
         })
+    },
+
+      
+    getTomorrowOperationList(context){
+        axios.get('OperationPlan/GetTomorrowOperationList')
+            .then(response => {
+                context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
+            })
     },
 
     getGenerateOperationPlan(context) {

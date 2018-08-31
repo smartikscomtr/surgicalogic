@@ -18,7 +18,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn class="export-wrap"
+            <v-btn v-if="!hideExport"
+                   class="export-wrap"
                    @click="exportExcel">
               <v-icon color="white--text">
                 arrow_downward
@@ -189,6 +190,11 @@ export default {
     },
 
      showInsert: {
+      type: Boolean,
+      required: false
+    },
+
+     hideExport: {
       type: Boolean,
       required: false
     },

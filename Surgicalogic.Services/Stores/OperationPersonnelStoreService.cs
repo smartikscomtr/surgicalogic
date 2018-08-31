@@ -39,22 +39,22 @@ namespace Surgicalogic.Services.Stores
             };
 
             var currentOperations = await GetByOperationIdAsync(item.Id);
-            var doctors = currentOperations.Select(x => x.PersonnelId);
-            var addedDoctors = item.DoctorIds.Except(doctors);
-            var removedDoctors = doctors.Except(item.DoctorIds);
+            var personnels = currentOperations.Select(x => x.PersonnelId);
+            var addedPersonnels = item.PersonnelIds.Except(personnels);
+            var removedPersonnels = personnels.Except(item.PersonnelIds);
 
-            foreach (var doctorId in addedDoctors)
+            foreach (var personnelId in addedPersonnels)
             {
                 await InsertAsync(new OperationPersonnelModel
                 {
-                    PersonnelId = doctorId,
+                    PersonnelId = personnelId,
                     OperationId = item.Id
                 });
             }
 
-            foreach (var doctorId in removedDoctors)
+            foreach (var personnelId in removedPersonnels)
             {
-                await DeleteByIdAsync(currentOperations.First(x => x.OperationId == item.Id && x.PersonnelId == doctorId).Id);
+                await DeleteByIdAsync(currentOperations.First(x => x.OperationId == item.Id && x.PersonnelId == personnelId).Id);
             }
 
             await SaveChangesAsync();

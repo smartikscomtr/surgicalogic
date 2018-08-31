@@ -102,22 +102,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
                 #region PersonnelTitles
                 string[] personnelTitles = new string[] {
-                    "Çocuk Gelişimcisi",
-                    "Diyetisyen",
-                    "Ebe",
-                    "Eczacı",
-                    "Fizyoterapist",
-                    "Güvenlik",
-                    "Hastane Müdür Yardımcısı",
+                    "Anestezi Uzmanı",
                     "Hemşire",
-                    "Hizmetli",
-                    "İmam",
-                    "Kimyager",
-                    "Memur",
-                    "Şoför",
-                    "Tekniker",
-                    "Teknisyen",
-                    "Terzi",
                     "Doktor"
                 };
 
