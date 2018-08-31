@@ -140,7 +140,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
                  .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name));
             config.CreateMap<Personnel, PersonnelOutputModel>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+                .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name + " " + src.FirstName + " " + src.LastName));
             config.CreateMap<OperatingRoom, OperatingRoomOutputModel>();
             config.CreateMap<OperationPlan, OperationPlanOutputModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.OperationId))
