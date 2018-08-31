@@ -13,5 +13,6 @@ namespace Surgicalogic.Contracts.Stores
     {
         Task<List<OperationPlanOutputModel>> GetTomorrowOperationsAsync();
         Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationListAsync(GridInputModel input);
+        Task DeleteTomorrowPlanAsync();
     }
 }

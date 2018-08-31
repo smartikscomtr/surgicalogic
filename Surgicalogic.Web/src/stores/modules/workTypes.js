@@ -81,7 +81,7 @@ const workTypesModule = {
     deleteWorkType(context, payload) {
       axios.post('WorkType/DeleteWorkType/' + payload.id)
         .then(response => {
-          if (response.data.info.succeeded == true) {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
             context.commit('deleteWorkType', { payload }); //Delete the Work Type in the store
           }
         })

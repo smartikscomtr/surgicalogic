@@ -89,7 +89,7 @@ const operatingRoomModule = {
     deleteOperatingRoom(context, payload) {
       axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
         .then(response => {
-          if (response.data.info.succeeded == true) {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
             context.commit('deleteOperatingRoom', { payload }); //Delete the Operating Rooms in the store
           }
         })

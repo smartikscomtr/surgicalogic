@@ -6,6 +6,7 @@ const planArrangementsModule = {
     totalCount: 0,
     model: [],
     allPlans: [],
+    generateOperationPlan: [],
     tomorrowList:[],
     tomorrowListTotalCount:0
   },
@@ -45,7 +46,11 @@ const planArrangementsModule = {
         if(element.id == payload.id)
           Object.assign(element, payload);
       });
-    }
+    },
+
+    setGenerateOperationPlan(state, data) {
+      state.generateOperationPlan = data;
+    },
   },
 
   getters: {},
@@ -57,7 +62,7 @@ const planArrangementsModule = {
       axios.get('OperationPlan/GetOperationPlans', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.statusText == 'OK' && response.data.info.succeeded == true){
           context.commit('setPlanArrangements', response.data) //Set the OperationPlanPlan in the store
         }
 
@@ -92,18 +97,26 @@ const planArrangementsModule = {
     // },
 
     updatePlanArrangements(context, payload) {
-      axios.post('OperationPlanPlan/UpdateOperationPlan', payload)
+      axios.post('OperationPlan/UpdateOperationPlan', payload)
         .then(response => {
           context.commit('updatePlanArrangements', response.data.result) //Update the OperationPlanPlan in the store
         })
     },
 
+      
     getTomorrowOperationList(context){
-      axios.get('OperationPlan/GetTomorrowOperationList')
-          .then(response => {
-            context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
-        })
+        axios.get('OperationPlan/GetTomorrowOperationList')
+            .then(response => {
+                context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
+            })
     },
+
+    getGenerateOperationPlan(context) {
+      axios.post('OperationPlan/GenerateOperationPlan')
+        .then(response => {
+          context.commit('setGenerateOperationPlan', response.data)
+        });
+    }
   }
 }
 

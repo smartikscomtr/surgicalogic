@@ -1,6 +1,7 @@
 {
   "branch":"Branş",
   "operation": "Operasyon",
+  "operations": "Operasyonlar",
   "operationName": "Operasyon Adı",
   "operationTime": "Operasyon Süresi",
   "operationType": "Operasyon Tipi",

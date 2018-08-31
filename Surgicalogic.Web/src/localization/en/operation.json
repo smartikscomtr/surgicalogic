@@ -1,6 +1,7 @@
 {
   "branch":"Branch",
   "operation": "Operation",
+  "operations": "Operations",
   "operationName": "Operation Name",
   "operationTime": "Operation Time",
   "operationType": "Operation Type",
