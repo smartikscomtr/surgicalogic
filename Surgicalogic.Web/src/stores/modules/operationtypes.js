@@ -81,12 +81,16 @@ const operationTypeModule = {
     },
 
     deleteOperationType(context, payload) {
-      axios.post('OperationType/DeleteOperationType/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deleteOperationType', { payload }); //Delete the Operation Types in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('OperationType/DeleteOperationType/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteOperationType', { payload }); //Delete the Operation Types in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     updateOperationType(context, payload) {

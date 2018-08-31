@@ -15,5 +15,7 @@
   "search":"Search",
   "rowsPerPage":"Rows per page:",
   "noDataAvailable" : "No data available",
-  "export": "Export"
+  "export": "Export",
+  "theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData": "The item can not be deleted because it is associated with another data.",
+  "theDataWasSuccessfullyDeleted": "The data was successfully deleted."
 }

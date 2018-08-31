@@ -79,12 +79,16 @@ const operatingRoomCalendarModule = {
     },
 
     deleteOperatingRoomCalendar(context, payload) {
-      axios.post('OperatingRoomCalendar/DeleteOperatingRoomCalendar/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deleteOperatingRoomCalendar', { payload }); //Delete the Operating Rooms in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('OperatingRoomCalendar/DeleteOperatingRoomCalendar/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteOperatingRoomCalendar', { payload }); //Delete the Operating Rooms in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     updateOperatingRoomCalendar(context, payload) {
