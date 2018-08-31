@@ -50,7 +50,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('operation.operation'),
+      title: vm.$i18n.t('operation.operations'),
       search: '',
       detailDialog: false,
       editDialog: false,
