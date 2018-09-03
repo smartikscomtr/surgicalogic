@@ -72,42 +72,42 @@ export default {
           selectable:true,
 
           onMove(item, callback) {
-            var oldItem = null;
+          //   var oldItem = null;
 
-            items.forEach(element => {
-                if (element.id == item.id)
-                {
-                  oldItem = element;
-                }
-            });
+          //   items.forEach(element => {
+          //       if (element.id == item.id)
+          //       {
+          //         oldItem = element;
+          //       }
+          //   });
 
-            var overtime = 10;
-            var moreThanOvertime = parseInt(document.getElementById("overtime").innerHTML);
+          //   var overtime = 10;
+          //   var moreThanOvertime = parseInt(document.getElementById("overtime").innerHTML);
 
-            var newStart = new Date(item.start);
-            var newEnd = new Date(item.end);
-            var oldStart = new Date(oldItem.start);
-            var oldEnd = new Date(oldItem.end);
+          //   var newStart = new Date(item.start);
+          //   var newEnd = new Date(item.end);
+          //   var oldStart = new Date(oldItem.start);
+          //   var oldEnd = new Date(oldItem.end);
 
-            if(oldStart !=newStart)
-            {
-                if (newStart.getHours() >= overtime)
-                {
-                    setOvertime(parseInt(moreThanOvertime + newStart.getMinutes()));
-                }
-            }
+          //   if(oldStart !=newStart)
+          //   {
+          //       if (newStart.getHours() >= overtime)
+          //       {
+          //           setOvertime(parseInt(moreThanOvertime + newStart.getMinutes()));
+          //       }
+          //   }
 
-            if(oldEnd != newEnd)
-            {
-                if (newEnd.getHours() >= overtime)
-                {
-                    setOvertime(parseInt(moreThanOvertime + newEnd.getMinutes()));
-                }
-            }
+          //   if(oldEnd != newEnd)
+          //   {
+          //       if (newEnd.getHours() >= overtime)
+          //       {
+          //           setOvertime(parseInt(moreThanOvertime + newEnd.getMinutes()));
+          //       }
+          //   }
 
-            debugger;
-            setUtilization("very good")
-           // setOvertime("very good")
+          //   debugger;
+          //   setUtilization("very good")
+          //  // setOvertime("very good")
           }
         };
 
