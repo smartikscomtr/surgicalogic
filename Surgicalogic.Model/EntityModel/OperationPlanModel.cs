@@ -11,6 +11,9 @@ namespace Surgicalogic.Model.EntityModel
         public int OperatingRoomId { get; set; }
         public int OperationId { get; set; }
         public DateTime OperationDate { get; set; }
+        public DateTime RealizedStartDate { get; set; }
+        public DateTime RealizedEndDate { get; set; }
+
 
         [Searchable]
         public OperationModel Operation { get; set; }

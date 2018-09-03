@@ -606,7 +606,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     OperatingRoomId = table.Column<int>(nullable: false),
                     OperationId = table.Column<int>(nullable: false),
-                    OperationDate = table.Column<DateTime>(nullable: false)
+                    OperationDate = table.Column<DateTime>(nullable: false),
+                    RealizedStartDate = table.Column<DateTime>(nullable: false),
+                    RealizedEndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

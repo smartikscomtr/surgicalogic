@@ -8,6 +8,14 @@
     <div id="visualization" class="vis">
     </div>
 
+    <div id="overtime">
+
+    </div>
+
+    <div id="utilization">
+
+    </div>
+
     <tomorrow-planning-component>
     </tomorrow-planning-component>
   </div>
@@ -19,8 +27,6 @@ import Vis from 'vis/dist/vis.js';
 
 export default {
   data() {
-    const vm = this;
-
     return {};
   },
 
@@ -43,6 +49,8 @@ export default {
         var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
         var groups = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.rooms);
 
+        setOvertime(vm.$store.state.planArrangementsModule.model.overtime);
+
         var options = {
           orientation: {
             axis: 'top'
@@ -61,21 +69,62 @@ export default {
             updateTime: true,
             updateGroup: true
           },
-          selectable:true
+          selectable:true,
 
-          // onMove(item, callback) {
-          //   console.log('hellö');
-          //     //  item.content = prompt('Edit items text:', item.content);
-          //     // if (item.content != null) {
-          //     //   callback(item); // send back adjusted item
-          //     // }
-          // }
+          onMove(item, callback) {
+            var oldItem = null;
+
+            items.forEach(element => {
+                if (element.id == item.id)
+                {
+                  oldItem = element;
+                }
+            });
+
+            var overtime = 10;
+            var moreThanOvertime = parseInt(document.getElementById("overtime").innerHTML);
+
+            var newStart = new Date(item.start);
+            var newEnd = new Date(item.end);
+            var oldStart = new Date(oldItem.start);
+            var oldEnd = new Date(oldItem.end);
+
+            if(oldStart !=newStart)
+            {
+                if (newStart.getHours() >= overtime)
+                {
+                    setOvertime(parseInt(moreThanOvertime + newStart.getMinutes()));
+                }
+            }
+
+            if(oldEnd != newEnd)
+            {
+                if (newEnd.getHours() >= overtime)
+                {
+                    setOvertime(parseInt(moreThanOvertime + newEnd.getMinutes()));
+                }
+            }
+
+            debugger;
+            setUtilization("very good")
+           // setOvertime("very good")
+          }
         };
 
       var timeline = new Vis.Timeline(container, items, groups, options);
 
     }, 500);
   }
+}
+
+function setUtilization(value)
+{
+   document.getElementById("utilization").innerHTML = value;
+}
+
+function setOvertime(value)
+{
+   document.getElementById("overtime").innerHTML = value;
 }
  </script>
 

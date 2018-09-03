@@ -103,7 +103,7 @@ const planArrangementsModule = {
         })
     },
 
-      
+
     getTomorrowOperationList(context){
         axios.get('OperationPlan/GetTomorrowOperationList')
             .then(response => {

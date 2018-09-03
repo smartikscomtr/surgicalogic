@@ -51,8 +51,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationTypeOutputModel>> GetAllOperationTypes()
         {
-            var result = await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>();
-            return result;
+            return await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>();
         }
 
         [Route("OperationType/GetOperationTypesByBranchId/{branchId:int}")]

@@ -462,6 +462,10 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<int>("OperationId");
 
+                    b.Property<DateTime>("RealizedEndDate");
+
+                    b.Property<DateTime>("RealizedStartDate");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OperatingRoomId");

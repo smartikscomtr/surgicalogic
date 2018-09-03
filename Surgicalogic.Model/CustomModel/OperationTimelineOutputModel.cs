@@ -20,5 +20,6 @@ namespace Surgicalogic.Model.CustomModel
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int Period { get; set; }
+        public double Overtime { get; set; }
     }
 }
