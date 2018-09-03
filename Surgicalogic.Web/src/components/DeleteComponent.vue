@@ -33,6 +33,10 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="showDeleteMessage">
+    </snackbar-component>
   </div>
 </template>
 
@@ -56,7 +60,10 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      snackbarVisible: null,
+      showDeleteMessage: null
+    };
   },
 
   computed: {
@@ -104,11 +111,32 @@ export default {
     btnYesDelete() {
       const vm = this;
 
-      //We are accessing deleteEquipment in vuex store
+      //We are accessing delete in vuex store
 
       vm.$store.dispatch(vm.deleteMethode(), {
         id: vm.deleteValue.id
-      });
+      }).then(response => {
+        switch (response.data.info.message) {
+          case 2: {
+            setTimeout(() => {
+              vm.snackbarVisible = true;
+            }, 200)
+
+            return vm.showDeleteMessage = vm.$i18n.t('common.theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData');
+          }
+          default: {
+            setTimeout(() => {
+              vm.snackbarVisible = true;
+            }, 200)
+
+            return vm.showDeleteMessage = vm.$i18n.t('common.theDataWasSuccessfullyDeleted');
+          }
+        }
+      })
+
+      setTimeout(() => {
+        vm.snackbarVisible = false;
+      }, 2300)
 
       vm.showModal = false;
     },

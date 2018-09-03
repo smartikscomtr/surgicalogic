@@ -65,12 +65,16 @@ const equipmentTypesModule = {
     },
 
     deleteEquipmentType(context, payload) {
-      axios.post('EquipmentType/DeleteEquipmentType/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deleteEquipmentType', { payload }); //Delete the Equipment Types in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('EquipmentType/DeleteEquipmentType/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteEquipmentType', { payload }); //Delete the Equipment Types in the store
+            }
+
+            resolve(response);
+          })
+        });
     },
 
     updateEquipmentType(context, payload) {

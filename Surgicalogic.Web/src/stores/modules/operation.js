@@ -110,12 +110,16 @@ const operationModule = {
     },
 
     deleteOperation(context, payload) {
-      axios.post('Operation/DeleteOperation/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deleteOperation', { payload }); //Delete the Operation in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('Operation/DeleteOperation/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteOperation', { payload }); //Delete the Operation in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     updateOperation(context, payload) {

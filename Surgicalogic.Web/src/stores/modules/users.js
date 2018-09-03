@@ -59,12 +59,16 @@ const usersModule = {
     },
 
     deleteUser(context, payload) {
-      axios.post('User/DeleteUser/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deleteUser', { payload }); //Delete the User in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('User/DeleteUser/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteUser', { payload }); //Delete the User in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     updateUser(context, payload) {

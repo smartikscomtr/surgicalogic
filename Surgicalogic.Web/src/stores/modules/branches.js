@@ -76,12 +76,16 @@ const branchesModule = {
     },
 
     deleteBranch(context, payload) {
-      axios.post('Branch/DeleteBranch/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deleteBranch', { payload }); //Delete the Branches in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('Branch/DeleteBranch/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteBranch', { payload }); //Delete the Branches in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     updateBranch(context, payload) {

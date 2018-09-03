@@ -18,5 +18,7 @@
   "rowsPerPage":"Sayfa başına öğe:",
   "noDataAvailable" : "Hiç kayıt yok",
   "go": "Git",
-  "export": "Dışa Aktar"
+  "export": "Dışa Aktar",
+  "theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData": "Başka bir veri ile ilişkilendirildiği için öğe silinemez.",
+  "theDataWasSuccessfullyDeleted": "Veri başarıyla silindi."
 }

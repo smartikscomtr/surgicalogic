@@ -79,12 +79,16 @@ const personnelModule = {
     },
 
     deletePersonnel(context, payload) {
-      axios.post('Personnel/DeletePersonnel/' + payload.id)
-        .then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-            context.commit('deletePersonnel', { payload }); //Delete the Personnel in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('Personnel/DeletePersonnel/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deletePersonnel', { payload }); //Delete the Personnel in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     updatePersonnel(context, payload) {
