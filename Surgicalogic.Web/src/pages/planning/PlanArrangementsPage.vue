@@ -77,7 +77,7 @@ export default {
           },
           selectable:true,
 
-          onMove(item, callback) {
+          onMoving(item, callback) {
             var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
 
             timelineItems._data[item.id].start = new Date(item.start);
@@ -86,6 +86,8 @@ export default {
             document.getElementById("serializedTimeline").innerHTML = JSON.stringify(timelineItems);
 
             calcuteOvertimeAndUtilization(options.start, groups.length);
+
+            callback(item);
           }
         };
 
