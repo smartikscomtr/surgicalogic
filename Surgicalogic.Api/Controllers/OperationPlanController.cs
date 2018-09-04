@@ -50,18 +50,6 @@ namespace Surgicalogic.Api.Controllers
 
             var tomorrow = DateTime.Now.AddDays(1) ;
             var twoDaysLater= DateTime.Now.AddDays(2);
-            var overtime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
-
-            double moreThanOvertime = 0;
-
-            var overtimeOperations = plans.Where(x => Convert.ToDateTime(x.end) > overtime);
-
-            foreach (var item in overtimeOperations)
-            {
-                var itemEnd = Convert.ToDateTime(item.end);
-                TimeSpan span = itemEnd.Subtract(overtime);
-                moreThanOvertime = moreThanOvertime + span.TotalMinutes;
-            }
 
             var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms.Result);
 
@@ -74,8 +62,7 @@ namespace Surgicalogic.Api.Controllers
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
                     StartDate = plans.Select(x => x.start).Min(),
                     EndDate = plans.Select(x => x.end).Max(),
-                    Period = AppSettings.PeriodInMinutes,
-                    Overtime = moreThanOvertime
+                    Period = AppSettings.PeriodInMinutes
                 }
             };
 
