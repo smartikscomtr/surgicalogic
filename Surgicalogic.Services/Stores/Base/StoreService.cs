@@ -302,15 +302,6 @@ namespace Surgicalogic.Services.Stores.Base
         }
 
         /// <summary>
-        /// This method saves changes synchronous.
-        /// </summary>
-        /// <returns>int</returns>
-        public virtual int SaveChanges()
-        {
-            return _context.SaveChanges();
-        }
-
-        /// <summary>
         /// This method saves changes asynchronous.
         /// </summary>
         /// <returns></returns>
