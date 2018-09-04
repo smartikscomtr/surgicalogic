@@ -7,7 +7,7 @@
         </h2>
 
         <v-container>
-          <v-card-title class="search-wrap">
+          <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
             <v-text-field v-if="showSearch"
                           v-model="search"
                           append-icon="search"

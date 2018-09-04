@@ -57,6 +57,11 @@ namespace Surgicalogic.Services.Stores
             return result;
         }
 
+        public async Task<List<int>> GetPersonnelIdsByBranchIdAsync(int branchId)
+        {
+            return await GetQueryable().Where(x => x.BranchId == branchId).Select(x => x.PersonnelId).ToListAsync();
+        }
+
         private async Task<List<PersonnelBranchModel>> GetCurrentBranchesByPersonnelIdAsync(int personnelId)
         {
             return await GetQueryable().Where(x => x.PersonnelId == personnelId).ProjectTo<PersonnelBranchModel>().ToListAsync();

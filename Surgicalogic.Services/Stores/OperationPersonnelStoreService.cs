@@ -18,9 +18,11 @@ namespace Surgicalogic.Services.Stores
     public class OperationPersonnelStoreService : StoreService<OperationPersonnel, OperationPersonnelModel>, IOperationPersonnelStoreService
     {
         private DataContext _context;
-        public OperationPersonnelStoreService(DataContext context) : base(context)
+        private IPersonnelBranchStoreService _personnelBranchStoreService;
+        public OperationPersonnelStoreService(DataContext context, IPersonnelBranchStoreService personnelBranchStoreService) : base(context)
         {
             _context = context;
+            _personnelBranchStoreService = personnelBranchStoreService;
         }
 
         public async Task<List<OperationPersonnelModel>> GetByOperationIdAsync(int operationId)
@@ -40,7 +42,9 @@ namespace Surgicalogic.Services.Stores
 
             var currentOperations = await GetByOperationIdAsync(item.Id);
             var personnels = currentOperations.Select(x => x.PersonnelId);
+            var branchPersonnelIds = await _personnelBranchStoreService.GetPersonnelIdsByBranchIdAsync(item.BranchId);
             var addedPersonnels = item.PersonnelIds.Except(personnels);
+            addedPersonnels = branchPersonnelIds.Intersect(addedPersonnels);
             var removedPersonnels = personnels.Except(item.PersonnelIds);
 
             foreach (var personnelId in addedPersonnels)
