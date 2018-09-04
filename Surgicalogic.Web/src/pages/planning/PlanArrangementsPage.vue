@@ -48,7 +48,7 @@ export default {
             axis: 'top'
           },
           // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
-          // locale: 'tr-TR',
+          locale: 'tr',
           moveable: true,
           zoomMax: 86400000,
           zoomMin: 3600000,
@@ -61,10 +61,10 @@ export default {
             updateTime: true,
             updateGroup: true
           },
-          selectable:true
+          selectable: true
 
           // onMove(item, callback) {
-          //   console.log('hellö');
+          //   console.log('hellï¿½');
           //     //  item.content = prompt('Edit items text:', item.content);
           //     // if (item.content != null) {
           //     //   callback(item); // send back adjusted item
@@ -83,22 +83,16 @@ export default {
 .vis {
   padding: 25px;
 }
-.vis-item {
-    border-color: teal;
-    background-color: #2eb1b1;
-}
 .vis-item.vis-range .vis-item-content {
   color: #fff;
 }
-.vis-item .vis-item-overflow {
-  background-color: #ea9759;
+.vis-item.vis-range.vis-selected.vis-editable {
+  background-color: #ff7107 !important
 }
 .vis-time-axis .vis-text {
   font-size: 11px;
 }
-.vis-timeline {
-  border: 1px solid #60beb5;
-}
+
 .drawplan-wrap {
   left: 25px;
   top: 11px;
@@ -111,5 +105,17 @@ export default {
 }
 .drawplan-wrap .v-btn__content {
   color: #fff;
+}
+.vis-item.vis-range.vis-editable {
+  position: absolute;
+  background-color: #ea9759;
+}
+div.vis-tooltip{
+  background: #616161 !important;
+  border-radius: 2px !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  display: inline-block !important;
+  padding: 5px 8px !important;
 }
 </style>
