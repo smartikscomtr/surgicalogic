@@ -4,6 +4,8 @@
   "operationDate": "Operation Date",
   "operationStartDate": "Start Date",
   "operationEndDate": "End Date",
+  "realizedStartDate":"Realized Start",
+  "realizedEndDate": "Realized End",
   "operations": "Operations",
   "futurePlan": "Future Plan",
   "planningHistory": "Operation History"

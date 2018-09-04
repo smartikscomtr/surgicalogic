@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180814085300_InitialMigration")]
+    [Migration("20180831104638_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -463,6 +463,10 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<DateTime>("OperationDate");
 
                     b.Property<int>("OperationId");
+
+                    b.Property<DateTime>("RealizedEndDate");
+
+                    b.Property<DateTime>("RealizedStartDate");
 
                     b.HasKey("Id");
 

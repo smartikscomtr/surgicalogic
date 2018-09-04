@@ -243,7 +243,7 @@ export default {
     selectPersonnel: {
       get() {
         const vm = this;
-debugger;
+
         return vm.editAction.personnelIds;
       },
 

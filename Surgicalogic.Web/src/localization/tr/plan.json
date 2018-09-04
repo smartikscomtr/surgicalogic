@@ -5,6 +5,8 @@
   "operations":"Operasyonlar",
   "operationStartDate": "Başlangıç Tarihi",
   "operationEndDate": "Bitiş Tarihi",
+  "realizedStartDate":"Gerçekleşen Başlangıç",
+  "realizedEndDate":"Gerçekleşen Bitiş",
   "futurePlan": "Gelecek Plan",
   "planningHistory": "Operasyon Tarihçesi"
 }

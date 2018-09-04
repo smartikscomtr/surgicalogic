@@ -64,8 +64,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<List<PersonnelOutputModel>> GetPersonnelsByBranchIdAsync(int branchId)
         {
-            var result = await _personnelStoreService.GetPersonnelsByBranchIdAsync(branchId);
-            return result;
+            return await _personnelStoreService.GetPersonnelsByBranchIdAsync(branchId);
         }
 
         /// <summary>
