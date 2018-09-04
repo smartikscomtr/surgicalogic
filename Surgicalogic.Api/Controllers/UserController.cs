@@ -43,7 +43,6 @@ namespace Surgicalogic.Api.Controllers
                 return BadRequest();
             }
 
-
             // This doesn't count login failures towards user lockout
             // To enable password failures to trigger user lockout, change to shouldLockout: true
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
