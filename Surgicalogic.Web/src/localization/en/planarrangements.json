@@ -2,5 +2,6 @@
   "drawPlan": "Draw Plan",
   "overtime": "Overtime",
   "utilization": "Utilization",
-  "minute": "min"
+  "minute": "min",
+  "updatePlan":"Update"
 }

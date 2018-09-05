@@ -4,6 +4,10 @@
            @click.native="drawPlan()">
       {{ $t('planarrangements.drawPlan')}}
     </v-btn>
+        <v-btn class="updateplan-wrap"
+           @click.native="updatePlan()">
+      {{ $t('planarrangements.updatePlan')}}
+    </v-btn>
 
     <div id="visualization" class="vis">
     </div>
@@ -39,6 +43,36 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('getGenerateOperationPlan');
+    },
+
+    updatePlan() {
+      const vm = this;
+
+       var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
+
+       var operations = [];
+
+      for (var data in timelineItems._data)
+      {
+          var item = timelineItems._data[data];
+          //ilk ve son başlangıç ve bitiş tarihleri
+          var newStart = new Date(item.start);
+          var newEnd = new Date(item.end);
+
+          var operationLength = (newEnd.getTime() - newStart.getTime()) / 60000;
+
+          var operation = {
+             id: item.operationPlanId,
+             operationId: data,
+             start:newStart,
+             roomId: item.group,
+             length:operationLength
+             };
+
+          operations.push(operation);
+      }
+
+      vm.$store.dispatch('updatePlanArrangements', JSON.stringify(operations));
     }
   },
 
@@ -53,9 +87,12 @@ export default {
         var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
         var groups = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.rooms);
 
+        var workingHourStart = new Date(vm.$store.state.planArrangementsModule.model.workingHourStart);
+        var workingHourEnd = new Date(vm.$store.state.planArrangementsModule.model.workingHourEnd);
+
         document.getElementById("serializedTimeline").innerHTML = JSON.stringify(items);
 
-        calcuteOvertimeAndUtilization(vm.$store.state.planArrangementsModule.model.startDate, groups.length);
+        calcuteOvertimeAndUtilization(vm.$store.state.planArrangementsModule.model.startDate, groups.length, workingHourStart, workingHourEnd);
 
         var options = {
           orientation: {
@@ -82,10 +119,11 @@ export default {
 
             timelineItems._data[item.id].start = new Date(item.start);
             timelineItems._data[item.id].end = new Date(item.end);
+            timelineItems._data[item.id].group = item.group;
 
             document.getElementById("serializedTimeline").innerHTML = JSON.stringify(timelineItems);
 
-            calcuteOvertimeAndUtilization(options.start, groups.length);
+            calcuteOvertimeAndUtilization(options.start, groups.length, workingHourStart, workingHourEnd);
 
             callback(item);
           }
@@ -107,7 +145,7 @@ function setOvertime(value)
    document.getElementById("overtime").innerHTML = value;
 }
 
-function calcuteOvertimeAndUtilization(start, roomsCount)
+function calcuteOvertimeAndUtilization(start, roomsCount, workingHourStart, workingHourEnd)
 {
       var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
 
@@ -116,9 +154,9 @@ function calcuteOvertimeAndUtilization(start, roomsCount)
 
       var startDate = new Date(start);
       //mesai başlangıcı
-      var firstOvertime = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 9,0,0);
+      var firstOvertime = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), workingHourStart.getHours(),workingHourStart.getMinutes(),0);
       //mesai bitişi
-      var lastOvertime = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 10,0,0);
+      var lastOvertime = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), workingHourEnd.getHours(),workingHourEnd.getMinutes(),0);
 
       for (var data in timelineItems._data)
       {
@@ -169,6 +207,20 @@ function calcuteOvertimeAndUtilization(start, roomsCount)
   font-size: 15px;
 }
 .drawplan-wrap .v-btn__content {
+  color: #fff;
+}
+.updateplan-wrap {
+  left: 25px;
+  top: 11px;
+  padding: 0;
+  float:right;
+  margin: 0 5% 0 0;
+  min-width: 140px;
+  background-color: #ff7107 !important;
+  height: 40px;
+  font-size: 15px;
+}
+.updateplan-wrap .v-btn__content {
   color: #fff;
 }
 .vis-item.vis-range.vis-editable {

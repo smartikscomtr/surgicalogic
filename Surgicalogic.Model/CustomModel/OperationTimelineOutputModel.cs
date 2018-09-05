@@ -21,5 +21,7 @@ namespace Surgicalogic.Model.CustomModel
         public string EndDate { get; set; }
         public int Period { get; set; }
         public double Overtime { get; set; }
+        public DateTime WorkingHourStart { get; set; }
+        public DateTime WorkingHourEnd { get; set; }
     }
 }
