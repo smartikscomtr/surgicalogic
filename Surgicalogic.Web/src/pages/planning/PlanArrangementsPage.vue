@@ -215,7 +215,7 @@ function calcuteOvertimeAndUtilization(start, roomsCount, workingHourStart, work
   padding: 0;
   float:right;
   margin: 0 5% 0 0;
-  min-width: 140px;
+  min-width: 200px;
   background-color: #ff7107 !important;
   height: 40px;
   font-size: 15px;
