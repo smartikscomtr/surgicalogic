@@ -38,19 +38,18 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<object> Login([FromBody]LoginViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
 
-            // This doesn't count login failures towards user lockout
-            // To enable password failures to trigger user lockout, change to shouldLockout: true
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-            if (result.Succeeded)
+            if (appUser != null)
             {
-                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return _tokenService.GenerateToken(model.Email, appUser);
+                // This doesn't count login failures towards user lockout
+                // To enable password failures to trigger user lockout, change to shouldLockout: true
+                var result = await _signInManager.PasswordSignInAsync(appUser, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+                if (result.Succeeded)
+                {
+                    return _tokenService.GenerateToken(model.Email, appUser);
+                }
             }
 
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
@@ -158,15 +157,8 @@ namespace Surgicalogic.Api.Controllers
 
                 if (!isAlreadyAdmin)
                 {
-                    try
-                    {
-                        await _userManager.AddToRoleAsync(user, AppSettings.AdminRole);
-                        await _userManager.RemoveFromRoleAsync(user, AppSettings.MemberRole);
-                    }
-                    catch (Exception ex)
-                    {
-                        
-                    }
+                    await _userManager.AddToRoleAsync(user, AppSettings.AdminRole);
+                    await _userManager.RemoveFromRoleAsync(user, AppSettings.MemberRole);
                 }
             }
             else
@@ -188,26 +180,23 @@ namespace Surgicalogic.Api.Controllers
         {
             var result = new ResultModel<User>() { Info = new Info { Succeeded = false } };
 
-            if (ModelState.IsValid)
+            var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+
+            if (user == null)
             {
-                var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-
-                if (user == null)
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return result;
-                }
-
-                //For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                //Send an email with this link
-                string code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-
-                //TODO: Send Email
-                // await UserManager<User>.SendEmailAsync(user, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                result.Result = user;
-                result.Info.Succeeded = true;
+                // Don't reveal that the user does not exist or is not confirmed
+                return result;
             }
+
+            //For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+            //Send an email with this link
+            string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+            //TODO: Send Email
+            // await UserManager<User>.SendEmailAsync(user, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            result.Result = user;
+            result.Info.Succeeded = true;
 
             return result;
         }
