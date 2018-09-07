@@ -71,6 +71,25 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Feedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OperatingRooms",
                 columns: table => new
                 {
@@ -788,6 +807,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Feedbacks");
 
             migrationBuilder.DropTable(
                 name: "OperatingRoomCalendars");

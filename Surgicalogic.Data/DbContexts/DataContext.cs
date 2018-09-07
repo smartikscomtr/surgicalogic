@@ -18,6 +18,7 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Operation> Operations { get; set; }
         public DbSet<OperationBlockedOperatingRoom> OperationBlockedOperatingRooms { get; set; }
         public DbSet<OperationPlan> OperationPlans { get; set; }
