@@ -37,7 +37,7 @@
 
                 <v-flex xs12 sm6 md6>
                     <v-autocomplete v-model="selectOperationType"
-                                    :items="filteredOperationTypes"
+                                    :items="filterOperationTypes"
                                     :label="$t('operation.operationType')"
                                     :filter="customFilter"
                                     @change="operationTypeChanged()"
@@ -48,7 +48,7 @@
 
                 <v-flex xs12 sm6 md6>
                     <v-autocomplete v-model="selectPersonnel"
-                                    :items="filteredPersonnels"
+                                    :items="filterPersonnels"
                                     :label="$t('personnel.personnel')"
                                     :filter="customFilter"
                                     multiple
@@ -154,8 +154,8 @@ export default {
 
   data() {
     return {
-      filteredOperationTypes: [],
-      filteredPersonnels: [],
+      filterOperationTypes: [],
+      filterPersonnels: [],
       filteredOperatingRooms:[],
       snackbarVisible: null,
       savedMessage: this.$i18n.t('operation.operationSaved'),
@@ -213,14 +213,6 @@ export default {
 
       set(val) {
         const vm = this;
-
-        vm.editAction.operationTypeName = vm.$store.state.operationModule.allOperationTypes.find(
-          item => {
-            if (item.id == val) {
-              return item;
-            }
-          }
-        ).name;
 
         vm.editAction.operationTypeId = val;
       }
@@ -288,13 +280,11 @@ export default {
       return vm.$store.state.operationModule.allBranches;
     },
 
-    date:{
-
+    date: {
         get(){
           const vm = this;
 
-           if (vm.editAction.date)
-           {
+           if (vm.editAction.date) {
               vm.$store.commit('saveGlobalDate',  vm.editAction.date);
            }
 
@@ -304,12 +294,11 @@ export default {
         set(newValue){
           const vm = this;
 
-          if (newValue)
-          {
+          if (newValue) {
             vm.editAction.date = newValue;
-            vm.$store.commit('saveGlobalDate',  vm.editAction.date);
+            vm.$store.commit('saveGlobalDate', vm.editAction.date);
           }
-        },
+        }
      }
   },
 
@@ -346,10 +335,11 @@ export default {
           id: vm.editAction.id,
           name: vm.editAction.name,
           date: vm.editAction.date,
+          branchId: vm.editAction.branchId,
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
-          operationTypeId: vm.selectOperationType,
-          personnelIds: vm.selectPersonnel,
+          operationTypeId: vm.editAction.operationTypeId,
+          personnelIds: vm.editAction.personnelIds,
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           setTimeout(() => {
@@ -368,10 +358,11 @@ export default {
         vm.$store.dispatch('insertOperation', {
           name: vm.editAction.name,
           date: vm.editAction.date,
+          branchId: vm.editAction.branchId,
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
-          operationTypeId: vm.selectOperationType,
-          personnelIds: vm.selectPersonnel,
+          operationTypeId: vm.editAction.operationTypeId,
+          personnelIds: vm.editAction.personnelIds,
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           setTimeout(() => {
@@ -403,44 +394,43 @@ export default {
     branchChanged() {
       const vm = this;
 
-      if (vm.editAction.branchId)
-      {
+      if (vm.editAction.branchId) {
         vm.$store.dispatch('getOperationTypesByBranchId', {
           branchId: vm.editAction.branchId}).then(() => {
             setTimeout(function(){
-              vm.filteredOperationTypes = vm.$store.state.operationModule.filteredOperationTypes;
-            },1500)
-          });
+              vm.filterOperationTypes = vm.$store.state.operationModule.filteredOperationTypes;
+          }, 1500)
+        });
 
         vm.$store.dispatch('getPersonnelsByBranchId', {
-            branchId: vm.editAction.branchId }).then(() => {
-              setTimeout(function(){
-                vm.filteredPersonnels = vm.$store.state.operationModule.filteredPersonnels;
+          branchId: vm.editAction.branchId }).then(() => {
+            setTimeout(function(){
+              vm.filterPersonnels = vm.$store.state.operationModule.filteredPersonnels;
           }, 1000)
         });
       }
     },
 
-    operationTypeChanged()
-    {
+    operationTypeChanged() {
       const vm = this;
 
-      if (vm.editAction.operationTypeId)
-      {
+      if (vm.editAction.operationTypeId) {
         vm.$store.dispatch('getOperatingRoomsByOperationTypeId', {
           operationTypeId: vm.editAction.operationTypeId}).then(() => {
             setTimeout(function(){
               vm.filteredOperatingRooms = vm.$store.state.operationModule.filteredOperatingRooms;
             }, 2000)
-          });
+        });
       }
     },
 
     formatDate (date) {
-      if (!date || date.indexOf('.')> -1) return null
+      if (!date || date.indexOf('.')> -1)
+        return null;
 
-      const [year, month, day] = date.split('-')
-      return `${day}.${month}.${year}`
+      const [year, month, day] = date.split('-');
+
+      return `${day}.${month}.${year}`;
     }
   }
 }

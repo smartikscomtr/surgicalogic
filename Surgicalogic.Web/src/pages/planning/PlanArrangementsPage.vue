@@ -4,16 +4,24 @@
            @click.native="drawPlan()">
       {{ $t('planarrangements.drawPlan')}}
     </v-btn>
+        <v-btn class="updateplan-wrap"
+           @click.native="updatePlan()">
+      {{ $t('planarrangements.updatePlan')}}
+    </v-btn>
 
     <div id="visualization" class="vis">
     </div>
 
-    <div id="overtime">
+    <div id="serializedTimeline" style="display:none;">
 
     </div>
 
-    <div id="utilization">
+    <div class="overtimeInfo">
+     {{ $t('planarrangements.overtime')}}: <span id="overtime"></span> {{ $t('planarrangements.minute')}}
+    </div>
 
+    <div class="utilizationInfo">
+      {{ $t('planarrangements.utilization')}}: %<span id="utilization"></span>
     </div>
 
     <tomorrow-planning-component>
@@ -35,6 +43,36 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('getGenerateOperationPlan');
+    },
+
+    updatePlan() {
+      const vm = this;
+
+       var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
+
+       var operations = [];
+
+      for (var data in timelineItems._data)
+      {
+          var item = timelineItems._data[data];
+          //ilk ve son başlangıç ve bitiş tarihleri
+          var newStart = new Date(item.start);
+          var newEnd = new Date(item.end);
+
+          var operationLength = (newEnd.getTime() - newStart.getTime()) / 60000;
+
+          var operation = {
+             id: item.operationPlanId,
+             operationId: data,
+             start:newStart,
+             roomId: item.group,
+             length:operationLength
+             };
+
+          operations.push(operation);
+      }
+
+      vm.$store.dispatch('updatePlanArrangements', JSON.stringify(operations));
     }
   },
 
@@ -49,7 +87,12 @@ export default {
         var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
         var groups = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.rooms);
 
-        setOvertime(vm.$store.state.planArrangementsModule.model.overtime);
+        var workingHourStart = new Date(vm.$store.state.planArrangementsModule.model.workingHourStart);
+        var workingHourEnd = new Date(vm.$store.state.planArrangementsModule.model.workingHourEnd);
+
+        document.getElementById("serializedTimeline").innerHTML = JSON.stringify(items);
+
+        calcuteOvertimeAndUtilization(vm.$store.state.planArrangementsModule.model.startDate, groups.length, workingHourStart, workingHourEnd);
 
         var options = {
           orientation: {
@@ -71,42 +114,18 @@ export default {
           },
           selectable:true,
 
-          onMove(item, callback) {
-            var oldItem = null;
+          onMoving(item, callback) {
+            var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
 
-            items.forEach(element => {
-                if (element.id == item.id)
-                {
-                  oldItem = element;
-                }
-            });
+            timelineItems._data[item.id].start = new Date(item.start);
+            timelineItems._data[item.id].end = new Date(item.end);
+            timelineItems._data[item.id].group = item.group;
 
-            var overtime = 10;
-            var moreThanOvertime = parseInt(document.getElementById("overtime").innerHTML);
+            document.getElementById("serializedTimeline").innerHTML = JSON.stringify(timelineItems);
 
-            var newStart = new Date(item.start);
-            var newEnd = new Date(item.end);
-            var oldStart = new Date(oldItem.start);
-            var oldEnd = new Date(oldItem.end);
+            calcuteOvertimeAndUtilization(options.start, groups.length, workingHourStart, workingHourEnd);
 
-            if(oldStart !=newStart)
-            {
-                if (newStart.getHours() >= overtime)
-                {
-                    setOvertime(parseInt(moreThanOvertime + newStart.getMinutes()));
-                }
-            }
-
-            if(oldEnd != newEnd)
-            {
-                if (newEnd.getHours() >= overtime)
-                {
-                    setOvertime(parseInt(moreThanOvertime + newEnd.getMinutes()));
-                }
-            }
-
-            setUtilization("very good")
-           // setOvertime("very good")
+            callback(item);
           }
         };
 
@@ -118,12 +137,48 @@ export default {
 
 function setUtilization(value)
 {
-   document.getElementById("utilization").innerHTML = value;
+   document.getElementById("utilization").innerHTML = parseInt(value);
 }
 
 function setOvertime(value)
 {
    document.getElementById("overtime").innerHTML = value;
+}
+
+function calcuteOvertimeAndUtilization(start, roomsCount, workingHourStart, workingHourEnd)
+{
+      var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
+
+      var moreThanOvertime = 0;
+      var totalOperationLengths = 0;
+
+      var startDate = new Date(start);
+      //mesai başlangıcı
+      var firstOvertime = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), workingHourStart.getHours(),workingHourStart.getMinutes(),0);
+      //mesai bitişi
+      var lastOvertime = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), workingHourEnd.getHours(),workingHourEnd.getMinutes(),0);
+
+      for (var data in timelineItems._data)
+      {
+          var operation = timelineItems._data[data];
+          //ilk ve son başlangıç ve bitiş tarihleri
+          var newStart = new Date(operation.start);
+          var newEnd = new Date(operation.end);
+
+          var operationLength = (newEnd.getTime() - newStart.getTime()) / 60000;
+
+          totalOperationLengths += operationLength;
+
+          var newFirstOverTime = newStart < firstOvertime ? ((firstOvertime - newStart.getTime()) / 60000) > operationLength ? operationLength : ((firstOvertime - newStart.getTime()) / 60000): 0;
+          var newLastOverTime = newEnd > lastOvertime ? ((newEnd.getTime() - lastOvertime) / 60000) > operationLength ? operationLength : ((newEnd.getTime() - lastOvertime) / 60000): 0;
+
+          moreThanOvertime += (newFirstOverTime + newLastOverTime);
+      }
+
+      var totalAvailableDuration = roomsCount * ((lastOvertime - firstOvertime) / 60000);
+
+      setUtilization((totalOperationLengths / totalAvailableDuration) * 100);
+      setOvertime(moreThanOvertime);
 }
  </script>
 
@@ -154,6 +209,20 @@ function setOvertime(value)
 .drawplan-wrap .v-btn__content {
   color: #fff;
 }
+.updateplan-wrap {
+  left: 25px;
+  top: 11px;
+  padding: 0;
+  float:right;
+  margin: 0 5% 0 0;
+  min-width: 200px;
+  background-color: #ff7107 !important;
+  height: 40px;
+  font-size: 15px;
+}
+.updateplan-wrap .v-btn__content {
+  color: #fff;
+}
 .vis-item.vis-range.vis-editable {
   position: absolute;
   background-color: #ea9759;
@@ -165,5 +234,11 @@ div.vis-tooltip{
   font-size: 12px !important;
   display: inline-block !important;
   padding: 5px 8px !important;
+}
+.overtimeInfo {
+margin-left: 2%
+}
+.utilizationInfo {
+margin-left: 2%
 }
 </style>

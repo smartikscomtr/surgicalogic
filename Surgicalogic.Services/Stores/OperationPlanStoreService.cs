@@ -65,5 +65,10 @@ namespace Surgicalogic.Services.Stores
                 Info = new Info()
             };
         }
+
+        public async Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds)
+        {
+            return await GetQueryable().Where(x => updatedItemIds.Contains(x.Id)).ProjectTo<OperationPlanModel>().ToListAsync();
+        }
     }
 }

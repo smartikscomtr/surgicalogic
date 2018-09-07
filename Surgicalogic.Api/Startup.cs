@@ -182,6 +182,9 @@ namespace Surgicalogic.Api
             AppSettings.AdminRole = Configuration["AppSettings:Role:Admin"];
             AppSettings.MemberRole = Configuration["AppSettings:Role:Member"];
             AppSettings.DoctorId = Configuration["AppSettings:General:DoctorId"].ToNCInt();
+            AppSettings.WorkingHourStart = Configuration["AppSettings:Planning:WorkingHourStart"].HourToDateTime();
+            AppSettings.WorkingHourEnd = Configuration["AppSettings:Planning:WorkingHourEnd"].HourToDateTime();
+
         }
     }
 }

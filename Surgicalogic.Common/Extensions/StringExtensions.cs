@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -63,6 +64,20 @@ namespace Surgicalogic.Common.Extensions
             int.TryParse(text, out int result);
 
             return result;
+        }
+
+        public static DateTime HourToDateTime(this string text)
+        {
+            var now = DateTime.Now;
+            if (text.Split(':').Length < 1)
+            {
+                return now;
+            }
+
+            var hour = text.Split(':')[0].ToNCInt();
+            var minute = text.Split(':')[1].ToNCInt();
+
+            return new DateTime(now.Year, now.Month, now.Day, hour, minute, 0);
         }
     }
 }

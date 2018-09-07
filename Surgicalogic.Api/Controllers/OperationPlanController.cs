@@ -50,18 +50,6 @@ namespace Surgicalogic.Api.Controllers
 
             var tomorrow = DateTime.Now.AddDays(1) ;
             var twoDaysLater= DateTime.Now.AddDays(2);
-            var overtime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0);
-
-            double moreThanOvertime = 0;
-
-            var overtimeOperations = plans.Where(x => Convert.ToDateTime(x.end) > overtime);
-
-            foreach (var item in overtimeOperations)
-            {
-                var itemEnd = Convert.ToDateTime(item.end);
-                TimeSpan span = itemEnd.Subtract(overtime);
-                moreThanOvertime = moreThanOvertime + span.TotalMinutes;
-            }
 
             var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms.Result);
 
@@ -75,7 +63,8 @@ namespace Surgicalogic.Api.Controllers
                     StartDate = plans.Select(x => x.start).Min(),
                     EndDate = plans.Select(x => x.end).Max(),
                     Period = AppSettings.PeriodInMinutes,
-                    Overtime = moreThanOvertime
+                    WorkingHourStart = AppSettings.WorkingHourStart,
+                    WorkingHourEnd = AppSettings.WorkingHourEnd
                 }
             };
 
@@ -137,10 +126,10 @@ namespace Surgicalogic.Api.Controllers
             {
                 Settings = new SettingsInputModel
                 {
-                    RoomsPeriod = 32,
-                    MaximumPeriod = 64,
-                    StartingHour = 9,
-                    StartingMinute = 0,
+                    RoomsPeriod = Convert.ToInt32(AppSettings.WorkingHourEnd.Subtract(AppSettings.WorkingHourStart).TotalMinutes) / AppSettings.PeriodInMinutes,
+                    MaximumPeriod = 1440 / AppSettings.PeriodInMinutes,
+                    StartingHour = AppSettings.WorkingHourStart.Hour,
+                    StartingMinute = AppSettings.WorkingHourStart.Minute,
                     PeriodInMinutes = AppSettings.PeriodInMinutes,
                 },
                 Rooms = rooms,
@@ -204,17 +193,32 @@ namespace Surgicalogic.Api.Controllers
 
         [HttpPost]
         [Route("OperationPlan/UpdateOperationPlan")]
-        public async Task<ResultModel<OperationPlanOutputModel>> UpdateOperationPlan([FromBody] OperationPlanInputModel item)
+        public async Task UpdateOperationPlan([FromBody] List<OperationPlanInputModel> items)
         {
-            var operationPlan = new OperationPlanModel
-            {
-                Id = item.Id,
-                OperatingRoomId = item.OperatingRoomId,
-                OperationId = item.OperationId,
-                OperationDate = item.OperationDate
-            };
+            var updatedItemIds = items.Select(x => x.Id).ToArray();
+            var updatedOperationIds = items.Select(x => x.OperationId).ToArray();
 
-            return await _operationPlanStoreService.UpdateAndSaveAsync<OperationPlanOutputModel>(operationPlan);
+            var updatedPlanItems = await _operationPlanStoreService.GetByIdListAsync(updatedItemIds);
+            var updatedOperationItems = await _operationStoreService.GetByIdListAsync(updatedOperationIds);
+
+            foreach (var plan in updatedPlanItems)
+            {
+                var item = items.First(x => x.Id == plan.Id);
+                plan.OperationDate = item.Start.AddHours(3);
+                plan.RealizedStartDate = plan.OperationDate;
+                plan.OperatingRoomId = item.RoomId;
+                plan.RealizedEndDate = plan.RealizedStartDate.AddMinutes(item.Length);
+                await _operationPlanStoreService.UpdateAsync(plan);
+            }
+
+            foreach (var operation in updatedOperationItems)
+            {
+                var item = items.First(x => x.OperationId == operation.Id);
+                operation.OperationTime = item.Length;
+                await _operationStoreService.UpdateAsync(operation);
+            }
+
+            await _operationPlanStoreService.SaveChangesAsync();
         }
     }
 }

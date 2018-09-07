@@ -100,7 +100,6 @@ namespace Surgicalogic.Api.Controllers
                 await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
             }
 
-
             return result;
         }
 

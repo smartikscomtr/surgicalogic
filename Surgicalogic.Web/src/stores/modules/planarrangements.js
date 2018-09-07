@@ -41,12 +41,12 @@ const planArrangementsModule = {
     //   state.plan.splice(index, 1);
     // },
 
-    updatePlanArrangements(state, payload) {
-      state.model.plan.forEach(element => {
-        if(element.id == payload.id)
-          Object.assign(element, payload);
-      });
-    },
+    // updatePlanArrangements(state, payload) {
+    //   state.model.plan.forEach(element => {
+    //     if(element.id == payload.id)
+    //       Object.assign(element, payload);
+    //   });
+    // },
 
     setGenerateOperationPlan(state, data) {
       state.generateOperationPlan = data;
@@ -97,12 +97,12 @@ const planArrangementsModule = {
     // },
 
     updatePlanArrangements(context, payload) {
-      axios.post('OperationPlan/UpdateOperationPlan', payload)
-        .then(response => {
-          context.commit('updatePlanArrangements', response.data.result) //Update the OperationPlanPlan in the store
-        })
+      axios.post('OperationPlan/UpdateOperationPlan', payload,{
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }})
     },
-
 
     getTomorrowOperationList(context){
         axios.get('OperationPlan/GetTomorrowOperationList')
