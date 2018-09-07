@@ -9,6 +9,7 @@ import * as branches from './branches.json';
 import * as common from './common.json';
 import * as equipments from './equipments.json';
 import * as equipmenttypes from './equipmenttypes.json';
+import * as feedbacks from './feedbacks.json';
 import * as menu from './menu.json';
 import * as operation from './operation.json';
 import * as operatingrooms from './operatingrooms.json';
@@ -26,6 +27,7 @@ export default {
   common,
   equipments,
   equipmenttypes,
+  feedbacks,
   menu,
   operation,
   operatingrooms,

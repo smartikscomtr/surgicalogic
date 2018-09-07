@@ -8,6 +8,7 @@ import getters from './getters'; // root's getters
 import branchesModule from './modules/branches';
 import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmenttypes';
+import feedbackModule from './modules/feedback';
 import historyPlanningModule from './modules/historyplanning';
 import loginModule from './modules/login';
 import operationModule from './modules/operation';
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     branchesModule,
     equipmentModule,
     equipmentTypesModule,
+    feedbackModule,
     historyPlanningModule,
     loginModule,
     operationModule,
