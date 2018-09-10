@@ -17,28 +17,29 @@
         </v-card-title>
 
         <v-card-text>
-            <v-layout wrap edit-layout>
-              <v-flex xs12 sm12 md12>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('equipmenttypes.equipmentType')">
-                </v-text-field>
-              </v-flex>
+          <v-layout wrap edit-layout>
+            <v-flex xs12 sm12 md12>
+              <v-text-field v-model="editAction['name']"
+                            :label="$t('equipmenttypes.equipmentType')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm12 md12>
-                <v-textarea v-model="editAction['description']"
-                            rows="3"
-                            :label="$t('common.description')">
-                </v-textarea>
-              </v-flex>
-
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-               <v-btn class="btnSave orange"
-                      @click.native="save">
-                  Kaydet
-               </v-btn>
-              </v-flex>
-            </v-layout>
+            <v-flex xs12 sm12 md12>
+              <v-textarea v-model="editAction['description']"
+                          rows="3"
+                          :label="$t('common.description')">
+              </v-textarea>
+            </v-flex>
+          </v-layout>
         </v-card-text>
+
+        <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none
+                class="btn-wrap">
+          <v-btn class="btnSave orange"
+                @click.native="save">
+            Kaydet
+          </v-btn>
+        </v-flex>
       </v-card>
     </v-dialog>
 

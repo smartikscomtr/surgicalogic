@@ -335,6 +335,9 @@ export default {
 </script>
 
 <style>
+.v-card__text+.btn-wrap{
+  margin-top: 40px;
+}
 .grid-card.card {
   box-shadow: inherit;
   height: 100vh !important;
@@ -491,6 +494,7 @@ a {
   margin-bottom: 30px;
   background-color: #f7f7f7;
   padding: 10px;
+  min-height: 64px;
 }
 .v-dialog:not(.dialog--fullscreen) {
   max-height: inherit;
