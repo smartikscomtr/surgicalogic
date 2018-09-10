@@ -10,6 +10,7 @@ import * as common from './common.json';
 import * as equipments from './equipments.json';
 import * as equipmenttypes from './equipmenttypes.json';
 import * as feedbacks from './feedbacks.json';
+import * as login from './login.json';
 import * as menu from './menu.json';
 import * as operation from './operation.json';
 import * as operatingrooms from './operatingrooms.json';
@@ -28,6 +29,7 @@ export default {
   equipments,
   equipmenttypes,
   feedbacks,
+  login,
   menu,
   operation,
   operatingrooms,

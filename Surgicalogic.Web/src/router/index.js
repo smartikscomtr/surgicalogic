@@ -83,7 +83,7 @@ export default new VueRouter({
       }
     },
     {
-      path: '/resetPassword',
+      path: '/resetpassword',
       name: 'ResetPassword',
       component: ResetPassword,
       meta: {
@@ -91,7 +91,7 @@ export default new VueRouter({
       }
     },
     {
-      path: '/forgotPassword',
+      path: '/forgotpassword',
       name: 'ForgotPassword',
       component: ForgotPassword,
       meta: {
