@@ -20,7 +20,7 @@ const usersModule = {
       state.users.push(item);
     },
 
-    deleteUsers(state, { payload }) {
+    deleteUser(state, { payload }) {
       let index = state.users.findIndex((item) => {
         return item.id === payload.id
       });
@@ -28,8 +28,11 @@ const usersModule = {
       state.users.splice(index, 1);
     },
 
-    updateUsers(state, payload) {
-      //state.users.payload = payload;
+    updateUser(state, payload) {
+      state.users.forEach(element => {
+        if(element.id == payload.id)
+          Object.assign(element, payload);
+      });
     }
   },
 
@@ -73,8 +76,8 @@ const usersModule = {
 
     updateUser(context, payload) {
       axios.post('User/UpdateUser', payload)
-        .then(response => {
-          //context.commit('updateUser', {payload}) //Update the User in the store
+        .then(response => {debugger
+          context.commit('updateUser', response.data.result) //Update the User in the store
         })
     },
 

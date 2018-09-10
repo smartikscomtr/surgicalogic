@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbarVisible"
+    <v-snackbar v-model="snackbar"
                 :timeout="timeout"
                 :top="true">
       {{ savedMessage }}
@@ -33,8 +33,21 @@ export default Vue.extend({
 
   data() {
     return {
-      timeout: 2000
+      timeout: 2000,
+      snackbar: null
     };
+  },
+
+  mounted () {
+    const vm = this;
+
+    vm.$watch('snackbarVisible', (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+
+        vm.snackbar = vm.snackbarVisible
+        // vm.$emit('snackbarVisible', newValue);
+      }
+    });
   }
 });
 

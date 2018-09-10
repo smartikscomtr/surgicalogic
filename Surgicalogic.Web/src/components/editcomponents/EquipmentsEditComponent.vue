@@ -17,65 +17,66 @@
         </v-card-title>
 
         <v-card-text>
-            <v-layout wrap edit-layout>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']"
-                              :label="$t('equipments.name')">
-                </v-text-field>
-              </v-flex>
+          <v-layout wrap edit-layout>
+            <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['name']"
+                            :label="$t('equipments.name')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['code']"
-                              :label="$t('equipments.equipmentCode')">
-                </v-text-field>
-              </v-flex>
+            <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['code']"
+                            :label="$t('equipments.equipmentCode')">
+              </v-text-field>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectEquipmentType"
-                                :items="equipmentTypes"
-                                :label="$t('equipmenttypes.equipmentType')"
-                                :filter="customFilter"
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+            <v-flex xs12 sm6 md6>
+              <v-autocomplete v-model="selectEquipmentType"
+                              :items="equipmentTypes"
+                              :label="$t('equipmenttypes.equipmentType')"
+                              :filter="customFilter"
+                              item-text="name"
+                              item-value="id">
+              </v-autocomplete>
+            </v-flex>
 
-              <v-flex xs12 sm6 md6 input-group-checkbox>
-                <v-checkbox v-model="editAction['isPortable']"
-                            :label="$t('equipments.portable')"
-                            color="primary">
-                </v-checkbox>
-              </v-flex>
+            <v-flex xs12 sm6 md6 input-group-checkbox>
+              <v-checkbox v-model="editAction['isPortable']"
+                          :label="$t('equipments.portable')"
+                          color="primary">
+              </v-checkbox>
+            </v-flex>
 
-              <v-flex v-if="!editAction['isPortable']" xs12 sm12 md12>
-                <v-autocomplete v-model="selectOperatingRoom"
-                                :items="operatingRooms"
-                                :label="$t('operatingrooms.operatingRoom')"
-                                :filter="customFilter"
-                                multiple
-                                chips
-                                deletable-chips
-                                item-text="name"
-                                item-value="id">
-                </v-autocomplete>
-              </v-flex>
+            <v-flex v-if="!editAction['isPortable']" xs12 sm12 md12>
+              <v-autocomplete v-model="selectOperatingRoom"
+                              :items="operatingRooms"
+                              :label="$t('operatingrooms.operatingRoom')"
+                              :filter="customFilter"
+                              multiple
+                              chips
+                              deletable-chips
+                              item-text="name"
+                              item-value="id">
+              </v-autocomplete>
+            </v-flex>
 
 
-              <v-flex xs12 sm12 md12>
-                <v-textarea v-model="editAction['description']"
-                            rows="3"
-                            :label="$t('equipments.description')">
-                </v-textarea>
-              </v-flex>
-
-               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-                <v-btn class="btnSave orange"
-                       @click.native="save">
-                  Kaydet
-                </v-btn>
-              </v-flex>
-            </v-layout>
+            <v-flex xs12 sm12 md12>
+              <v-textarea v-model="editAction['description']"
+                          rows="3"
+                          :label="$t('equipments.description')">
+              </v-textarea>
+            </v-flex>
+          </v-layout>
         </v-card-text>
+
+        <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none
+                class="btn-wrap">
+          <v-btn class="btnSave orange"
+                  @click.native="save">
+            Kaydet
+          </v-btn>
+        </v-flex>
       </v-card>
     </v-dialog>
 

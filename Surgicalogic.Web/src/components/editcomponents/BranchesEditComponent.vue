@@ -1,49 +1,51 @@
 <template>
   <div>
-    <v-dialog v-model="showModal"
-              slot="activator">
-      <v-card class="container fluid grid-list-md">
-        <v-card-title>
-          <div class="headline-wrap flex xs12 sm12 md12">
-            <span class="text">
-              {{ formTitle }}
-            </span>
+  <v-dialog v-model="showModal"
+            slot="activator">
+    <v-card class="container fluid grid-list-md">
+      <v-card-title>
+        <div class="headline-wrap flex xs12 sm12 md12">
+          <span class="text">
+            {{ formTitle }}
+          </span>
 
-            <v-icon @click="cancel"
-                    class="close-wrap">
-              close
-            </v-icon>
-          </div>
-        </v-card-title>
+          <v-icon @click="cancel"
+                  class="close-wrap">
+            close
+          </v-icon>
+        </div>
+      </v-card-title>
 
-        <v-card-text>
-          <v-layout wrap edit-layout>
-            <v-flex xs12 sm12 md12>
-              <v-text-field v-model="editAction['name']"
-                            :label="$t('branches.branchName')">
-              </v-text-field>
-            </v-flex>
+      <v-card-text>
+        <v-layout wrap edit-layout>
+          <v-flex xs12 sm12 md12>
+            <v-text-field v-model="editAction['name']"
+                          :label="$t('branches.branchName')">
+            </v-text-field>
+          </v-flex>
 
-            <v-flex xs12 sm12 md12>
-              <v-textarea v-model="editAction['description']"
-                          rows="3"
-                          :label="$t('common.description')">
-              </v-textarea>
-            </v-flex>
-              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-                <v-btn class="btnSave orange"
-                      @click.native="save">
-                  Kaydet
-                </v-btn>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+          <v-flex xs12 sm12 md12>
+            <v-textarea v-model="editAction['description']"
+                        rows="3"
+                        :label="$t('common.description')">
+            </v-textarea>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
 
-    <snackbar-component :snackbar-visible="snackbarVisible"
-                        :savedMessage="savedMessage">
-    </snackbar-component>
+      <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none
+              class="btn-wrap">
+        <v-btn class="btnSave orange"
+              @click.native="save">
+          Kaydet
+        </v-btn>
+      </v-flex>
+    </v-card>
+  </v-dialog>
+
+  <snackbar-component :snackbar-visible="snackbarVisible"
+                      :savedMessage="savedMessage">
+  </snackbar-component>
   </div>
 </template>
 

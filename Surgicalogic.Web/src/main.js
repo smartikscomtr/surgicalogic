@@ -33,9 +33,11 @@ Vue.use(require('vue-moment'));
 
 // Registering Components
 import DeleteComponent from '@/components/DeleteComponent';
+import FeedbackComponent from '@/components/FeedbackComponent';
 import GridComponent from '@/components/GridComponent';
 
 Vue.component('delete-component', DeleteComponent);
+Vue.component('feedback-component', FeedbackComponent);
 Vue.component('grid-component', GridComponent);
 
 // Registering Calendar Rage Components
@@ -45,11 +47,13 @@ Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarCompon
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
+import FeedbackDetailComponent from '@/components/detailcomponents/FeedbackDetailComponent';
 import OperatingRoomsDetailComponent from '@/components/detailcomponents/OperatingRoomsDetailComponent';
 import OperationDetailComponent from '@/components/detailcomponents/OperationDetailComponent';
 import OperationTypesDetailComponent from '@/components/detailcomponents/OperationTypesDetailComponent';
 
 Vue.component('equipments-detail-component', EquipmentsDetailComponent);
+Vue.component('feedback-detail-component', FeedbackDetailComponent);
 Vue.component('operating-rooms-detail-component', OperatingRoomsDetailComponent);
 Vue.component('operation-detail-component', OperationDetailComponent);
 Vue.component('operation-types-detail-component', OperationTypesDetailComponent);

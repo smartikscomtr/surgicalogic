@@ -44,14 +44,16 @@
                   </v-btn>
               </v-flex> -->
 
-              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-                <v-btn class="btnSave orange"
-                       @click.native="save">
-                  Kaydet
-                </v-btn>
-              </v-flex>
-            </v-layout>
+          </v-layout>
         </v-card-text>
+
+        <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none
+                class="btn-wrap">
+          <v-btn class="btnSave orange"
+                  @click.native="save">
+            Kaydet
+          </v-btn>
+        </v-flex>
       </v-card>
     </v-dialog>
 

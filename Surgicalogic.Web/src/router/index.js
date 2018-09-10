@@ -36,7 +36,7 @@ import ForgotPassword from "@/pages/login/ForgotPassword"
 
 //Registering Management Pages
 import UsersPage from "@/pages/management/UsersPage";
-
+import FeedbackPage from "@/pages/management/FeedbackPage";
 
 //Registering Operation Pages
 import OperationPage from "@/pages/operation/OperationPage";
@@ -70,6 +70,11 @@ export default new VueRouter({
       component: EquipmentTypesPage
     },
     {
+      path: '/feedbackpage',
+      name: 'FeedbackPage',
+      component: FeedbackPage
+    },
+    {
       path: '/loginpage',
       name: 'LoginPage',
       component: LoginPage,
@@ -78,7 +83,7 @@ export default new VueRouter({
       }
     },
     {
-      path: '/resetPassword',
+      path: '/resetpassword',
       name: 'ResetPassword',
       component: ResetPassword,
       meta: {
@@ -86,7 +91,7 @@ export default new VueRouter({
       }
     },
     {
-      path: '/forgotPassword',
+      path: '/forgotpassword',
       name: 'ForgotPassword',
       component: ForgotPassword,
       meta: {

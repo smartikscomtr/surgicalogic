@@ -129,15 +129,25 @@
 
           <v-btn icon>
             <v-icon>
-              apps
-            </v-icon>
-          </v-btn>
-
-          <v-btn icon>
-            <v-icon>
               notifications
             </v-icon>
           </v-btn>
+
+          <v-tooltip bottom>
+            <v-btn icon
+                  @click="showFeedback = true"
+                  slot="activator">
+              <v-icon>
+                chat_bubble
+              </v-icon>
+            </v-btn>
+
+            <span>{{ $t('feedbacks.feedback') }}</span>
+          </v-tooltip>
+
+          <feedback-component v-if="showFeedback"
+                              @showModal="showFeedbackMethod">
+          </feedback-component>
 
           <v-btn icon>
             <v-icon>
@@ -164,11 +174,14 @@ export default {
     source: String
   },
 
-  data: () => ({
-    dialog: false,
-    isMounted: false,
-    drawer: null
-  }),
+  data() {
+    return {
+      dialog: false,
+      isMounted: false,
+      drawer: null,
+      showFeedback: false
+    }
+  },
 
   computed: {
     items() {
@@ -225,7 +238,7 @@ export default {
             {
               icon: "chat_bubble",
               text: vm.$i18n.t("menu.feedback"),
-              // route: "/CreatePlan"
+              route: "/feedbackpage"
             },
             {
               icon: "help",
@@ -291,81 +304,17 @@ export default {
             // }
           ]
         }
-        // {
-        //   icon: "event",
-        //   text: "Event Calendar",
-        //   route: "/eventcalendarpage"
-        // },
-        // {
-        //   icon: "history",
-        //   text: "Operations Database",
-        //   route: "History"
-        // },
-        // {
-        //   icon: "content_copy",
-        //   text: "Reports",
-        //   route: "/reportspage"
-        // },
-        // {
-        //   icon: "keyboard_arrow_up",
-        //   "icon-alt": "keyboard_arrow_down",
-        //   text: "Planning",
-        //   children: [
-        //     {
-        //       icon: "add_alarm",
-        //       text: "Create New Plan",
-        //       route: "/CreatePlan"
-        //     }
-        //   ]
-        // },
-        // {
-        //   icon: "keyboard_arrow_up",
-        //   "icon-alt": "keyboard_arrow_down",
-        //   text: "Inventory",
-        //   children: [
-        //     {
-        //       icon: "domain",
-        //       text: "Operation Room",
-        //       route: "/operationroompage"
-        //     },
-        //     // { icon: "", text: "Operation Type", route: "/operationtypepage" },
-        //     {
-        //       icon: "storage",
-        //       text: "Items",
-        //       route: "itemspage"
-        //     }
-        //   ]
-        // },
-        // {
-        //   icon: "group",
-        //   text: "Users",
-        //   route: "/userspage"
-        //   // children: [
-        //   //   { icon: "pageview", text: "View", route: "/viewpage" },
-        //   //   { icon: "person_add", text: "Add New User", route: "/addnewuserpage" },
-        //   //   { icon: "delete", text: "Delete User", route: "/deleteuserpage" }
-        //   // ]
-        // },
-        // {
-        //   icon: "settings",
-        //   text: "Settings",
-        //   route: "/settingspage"
-        // },
-        // {
-        //   icon: "chat_bubble",
-        //   text: "Send feedback",
-        //   route: "SendFeedback"
-        // },
-        // {
-        //   icon: "help",
-        //   text: "Help",
-        //   route: "/Help"
-        // }
       ];
     }
   },
 
   methods: {
+    showFeedbackMethod() {
+      const vm = this;
+
+      return vm.showFeedback = false;
+    },
+
     changePages(route) {
       const vm = this;
 

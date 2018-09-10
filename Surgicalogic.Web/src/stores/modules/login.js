@@ -20,9 +20,11 @@ const loginModule = {
 
   actions: {
     userLogin(context, payload) {
-      axios.post('Account/Login', payload)
+      axios.post('User/Login', payload)
         .then(response => {
+          debugger;
           if (response.statusText == "OK") {
+            debugger;
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("refreshToken", response.data.refreshToken);
             localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
@@ -39,7 +41,7 @@ const loginModule = {
     },
 
     userLogout(context, payload) {
-      axios.post('Account/LogOff')
+      axios.post('User/LogOff')
         .then(response => {
           if (response.statusText == "OK") {
             localStorage.removeItem("token");

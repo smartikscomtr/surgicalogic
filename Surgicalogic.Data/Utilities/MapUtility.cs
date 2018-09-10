@@ -20,6 +20,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Equipment, EquipmentModel>()
                 .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.OperatingRoom.IsActive)); });
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
+            config.CreateMap<Feedback, FeedbackModel>();
             config.CreateMap<Operation, OperationModel>();
             config.CreateMap<Operation, OperationForOperationPlanModel>();
             config.CreateMap<OperationPersonnel, OperationPersonnelModel>();
@@ -47,6 +48,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<BranchModel, Branch>();
             config.CreateMap<EquipmentModel, Equipment>();
             config.CreateMap<EquipmentTypeModel, EquipmentType>();
+            config.CreateMap<FeedbackModel, Feedback>();
             config.CreateMap<OperationModel, Operation>()
                 .ForMember(src => src.OperationType, opt => opt.Ignore())
                 .ForMember(src => src.OperationPersonels, opt => opt.Ignore())
@@ -78,6 +80,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.EquipmentTypeName, opt => opt.MapFrom(src => src.EquipmentType.Name))
                 .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive).Select(x => x.OperatingRoomId)));
             config.CreateMap<EquipmentTypeModel, EquipmentTypeOutputModel>();
+            config.CreateMap<FeedbackModel, FeedbackOutputModel>();
             config.CreateMap<OperationModel, Model.OutputModel.OperationOutputModel>()
                  .ForMember(dest => dest.OperationTypeName, opt => opt.MapFrom(src => src.OperationType.Name))
                  .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.OperationType.BranchId))
@@ -125,6 +128,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Equipment, EquipmentExportModel>()
                 .ForMember(dest => dest.IsPortable, opt => opt.MapFrom(src => src.IsPortable ? "Evet" : "Hayır"));
             config.CreateMap<EquipmentType, EquipmentTypeExportModel>();
+            config.CreateMap<Feedback, FeedbackExportModel>();
             config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarExportModel>()
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy")))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy")));

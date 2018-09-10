@@ -102,7 +102,7 @@ const personnelModule = {
       axios.get('Branch/GetAllBranches')
       .then(response => {
         if (response.data.info.succeeded == true){
-          context.commit('setAllBranches', response.data.result) //Set the All Branches in the store
+          context.commit('setAllBranches', response.data.result) //Set the All Personnel in the store
         }
       })
     },
