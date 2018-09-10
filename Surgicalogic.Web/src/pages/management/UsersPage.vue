@@ -123,7 +123,7 @@ export default {
     },
 
     resetPasswordMethodName(){
-      return "/resetpassword";
+      return "resetPassword";
     },
 
     exportUserToExcel() {

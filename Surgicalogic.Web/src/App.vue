@@ -133,12 +133,17 @@
             </v-icon>
           </v-btn>
 
-          <v-btn icon
-                 @click="showFeedback = true">
-            <v-icon>
-              chat_bubble
-            </v-icon>
-          </v-btn>
+          <v-tooltip bottom>
+            <v-btn icon
+                  @click="showFeedback = true"
+                  slot="activator">
+              <v-icon>
+                chat_bubble
+              </v-icon>
+            </v-btn>
+
+            <span>{{ $t('feedbacks.feedback') }}</span>
+          </v-tooltip>
 
           <feedback-component v-if="showFeedback"
                               @showModal="showFeedbackMethod">

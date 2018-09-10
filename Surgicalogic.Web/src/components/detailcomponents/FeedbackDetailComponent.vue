@@ -30,7 +30,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm3 md3>
+              <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('feedbacks.body') }}

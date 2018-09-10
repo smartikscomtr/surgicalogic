@@ -20,5 +20,8 @@
   "go": "Git",
   "export": "Dışa Aktar",
   "theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData": "Başka bir veri ile ilişkilendirildiği için öğe silinemez.",
-  "theDataWasSuccessfullyDeleted": "Veri başarıyla silindi."
+  "theDataWasSuccessfullyDeleted": "Veri başarıyla silindi.",
+  "viewRecord": "Kayıt Detayı",
+  "editRecord": "Kaydı Düzenle",
+  "deleteRecord": "Kaydı Sil"
 }

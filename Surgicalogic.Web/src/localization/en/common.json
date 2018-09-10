@@ -17,5 +17,8 @@
   "noDataAvailable" : "No data available",
   "export": "Export",
   "theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData": "The item can not be deleted because it is associated with another data.",
-  "theDataWasSuccessfullyDeleted": "The data was successfully deleted."
+  "theDataWasSuccessfullyDeleted": "The data was successfully deleted.",
+  "viewRecord": "View Record",
+  "editRecord": "Edit Record",
+  "deleteRecord": "Delete Record"
 }
