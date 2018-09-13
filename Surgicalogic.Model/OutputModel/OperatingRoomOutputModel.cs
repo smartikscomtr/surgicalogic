@@ -14,7 +14,7 @@ namespace Surgicalogic.Model.OutputModel
         public Nullable<double> Height { get; set; }
         public Nullable<double> Length { get; set; }
         public bool IsAvailable { get; set; }
-        //public ICollection<OperatingRoomEquipmentOutputModel> OperatingRoomEquipments { get; set; }
-        //public ICollection<OperatingRoomOperationTypeOutputModel> OperatingRoomOperationTypes { get; set; }
+        public ICollection<OperatingRoomEquipmentOutputModel> OperatingRoomEquipments { get; set; }
+        public ICollection<OperatingRoomOperationTypeOutputModel> OperatingRoomOperationTypes { get; set; }
     }
 }

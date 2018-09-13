@@ -6,7 +6,7 @@
                     :show-detail="false"
                     :show-edit="false"
                     :show-delete="false"
-                    :show-search="false"
+                    :show-search="true"
                     :show-insert="false"
                     :hide-actions="false"
                     :methodName="getMethodName"
@@ -59,14 +59,14 @@ export default {
           value:'operationName',
           sortBy: 'Operation.Name',
           text: vm.$i18n.t('plan.operationName'),
-          sortable: false,
+          sortable: true,
           align: 'left'
          },
         {
           value:'operatingRoomName',
           sortBy:'OperatingRoom.Name',
           text: vm.$i18n.t('plan.roomName'),
-          sortable: false,
+          sortable: true,
           align: 'left'
         },
         {

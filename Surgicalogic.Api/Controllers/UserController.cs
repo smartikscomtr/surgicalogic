@@ -188,10 +188,10 @@ namespace Surgicalogic.Api.Controllers
                 return result;
             }
 
-            //For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-            //Send an email with this link
-            string code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.Action("ResetPassword", "User", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                //For more information on how to enable user confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                //Send an email with this link
+                string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "User", new { email = user.Email, code = code }, protocol: HttpContext.Request.Scheme);
 
             //TODO: Send Email
             // await UserManager<User>.SendEmailAsync(user, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
@@ -206,10 +206,6 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<bool>> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
             var returnResult = new ResultModel<bool> { Info = new Info { Succeeded = false } };
-            if (!ModelState.IsValid)
-            {
-                return returnResult;
-            }
 
             var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
 
@@ -218,7 +214,7 @@ namespace Surgicalogic.Api.Controllers
                 return returnResult;
             }
 
-            if(!model.Password.Equals(model.ConfirmPassword))
+            if (!model.Password.Equals(model.ConfirmPassword))
             {
                 return returnResult;
             }

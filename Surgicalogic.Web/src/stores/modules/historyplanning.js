@@ -66,13 +66,6 @@ const historyPlanningModule = {
 
     },
 
-    getTomorrowOperations(context){
-      axios.get('OperationPlan/GetTomorrowOperationPlans')
-          .then(response => {
-            context.commit('setTomorrowOperationPlans', response.data) //Set the OperationPlanPlan in the store
-        })
-    },
-
     // getAllOperationPlans(context) {
     //   axios.get('OperationPlanPlan/GetAllOperationPlans')
     //       .then(response => {

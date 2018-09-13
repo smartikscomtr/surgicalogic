@@ -28,16 +28,19 @@ namespace Surgicalogic.Api.Controllers
         private readonly IOperationStoreService _operationStoreService;
         private readonly IOperatingRoomStoreService _operatingRoomStoreService;
         private readonly IOperationPlanStoreService _operationPlanStoreService;
+        private readonly IOperationPlanHistoryStoreService _operationPlanHistoryStoreService;
 
         public OperationPlanController(
             IOperationStoreService operationStoreService,
             IOperatingRoomStoreService operatingRoomStoreService,
-            IOperationPlanStoreService operationPlanStoreService
+            IOperationPlanStoreService operationPlanStoreService,
+            IOperationPlanHistoryStoreService operationPlanHistoryStoreService
             )
         {
             _operationStoreService = operationStoreService;
             _operatingRoomStoreService = operatingRoomStoreService;
             _operationPlanStoreService = operationPlanStoreService;
+            _operationPlanHistoryStoreService = operationPlanHistoryStoreService;
         }
         #endregion
 
@@ -75,24 +78,16 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationPlanHistory(GridInputModel input)
         {
-            return await _operationPlanStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
-        }
-
-        [Route("OperationPlan/GetTomorrowOperationPlans")]
-        [HttpGet]
-        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationPlans(GridInputModel input)
-        {
-            return await _operationPlanStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
+            return await _operationPlanHistoryStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
         }
 
         [Route("OperationPlan/GetTomorrowOperationList")]
         [HttpGet]
         public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationList(GridInputModel input)
         {
-            return await _operationPlanStoreService.GetTomorrowOperationListAsync(input);
+            return await _operationPlanHistoryStoreService.GetTomorrowOperationListAsync(input);
         }
        
-
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
         public async Task<DailyPlanOutputModel> GenerateOperationPlan()
