@@ -22,5 +22,7 @@ namespace Surgicalogic.Model.EntityModel
         public WorkTypeModel WorkType { get; set; }
 
         public ICollection<PersonnelBranchModel> PersonnelBranches { get; set; }
+        public ICollection<DoctorCalendarModel> DoctorCalendars { get; set; }
+        public ICollection<AppointmentCalendarModel> AppointmentCalendars { get; set; }
     }
 }

@@ -11,5 +11,7 @@ namespace Surgicalogic.Model.InputModel
         public int PersonnelTitleId { get; set; }
         public List<int> Branches { get; set; }
         public int WorkTypeId { get; set; }
+        public List<int> DoctorCalendars { get; set; }
+        public List<int> AppointmentCalendars { get; set; }
     }
 }

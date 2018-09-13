@@ -67,6 +67,13 @@ namespace Surgicalogic.Api.Controllers
             return await _personnelStoreService.GetPersonnelsByBranchIdAsync(branchId);
         }
 
+        [Route("Personnel/GetDoctorsByBranchIdAsync/{branchId:int}")]
+        [HttpGet]
+        public async Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId)
+        {
+            return await _personnelStoreService.GetDoctorsByBranchIdAsync(branchId);
+        }
+
         /// <summary>
         /// Add personnel methode
         /// </summary>
