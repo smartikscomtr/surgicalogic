@@ -692,6 +692,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<int>("PersonnelTitleId");
 
+                    b.Property<string>("PictureUrl");
+
                     b.Property<int>("WorkTypeId");
 
                     b.HasKey("Id");

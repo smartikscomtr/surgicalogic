@@ -188,7 +188,7 @@ namespace Surgicalogic.Api
             AppSettings.DoctorId = Configuration["AppSettings:General:DoctorId"].ToNCInt();
             AppSettings.WorkingHourStart = Configuration["AppSettings:Planning:WorkingHourStart"].HourToDateTime();
             AppSettings.WorkingHourEnd = Configuration["AppSettings:Planning:WorkingHourEnd"].HourToDateTime();
-
+            AppSettings.DoctorPicture = Configuration["AppSettings:DoctorPicture:Url"];
         }
     }
 }

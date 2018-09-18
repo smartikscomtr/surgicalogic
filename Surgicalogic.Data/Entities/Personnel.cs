@@ -17,6 +17,7 @@ namespace Surgicalogic.Data.Entities
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
+        public string PictureUrl { get; set; }
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }

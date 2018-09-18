@@ -9,6 +9,7 @@ namespace Surgicalogic.Model.OutputModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
+        public string PictureUrl { get; set; }
         public int PersonnelTitleId { get; set; }
         public string BranchNames { get; set; }
         public List<int> BranchIds { get; set; }

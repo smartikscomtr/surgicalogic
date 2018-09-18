@@ -31,7 +31,7 @@ namespace Surgicalogic.Services.Stores
             var query = GetQueryable().Where(x => x.PersonnelBranches.Any(t => t.IsActive && t.Personnel.PersonnelTitleId == AppSettings.DoctorId));
 
             if(branchId > 0)
-            {
+            { 
                 query = query.Where(x => x.PersonnelBranches.Any(y => y.BranchId == branchId));
             }
 
