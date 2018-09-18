@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Surgicalogic.Planning.ORTools
 {
-    public static class Planner
+    public static class CPPlanner
     {
         /// <summary>
         /// Çözümlemeyi yapan ana metot.

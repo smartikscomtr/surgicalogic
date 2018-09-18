@@ -14,7 +14,7 @@ namespace Surgicalogic.Planning.Api.Controllers
                 return null;
             }
 
-            var result = Planner.Solve(input);
+            var result = MIPPlanner.Solve(input);
             return result;
         }
     }

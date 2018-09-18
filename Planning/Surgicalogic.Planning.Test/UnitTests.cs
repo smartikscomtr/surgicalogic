@@ -57,7 +57,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 2, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 9, 0, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 2, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -121,7 +121,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 2, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 1, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -190,7 +190,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 2, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 3, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -340,7 +340,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 8, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 11, 0, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 3, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -472,7 +472,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 4, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 09, 00, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 3, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -541,7 +541,7 @@ namespace Surgicalogic.Planning.Test
             surgeryPlan.Operations.Add(operation);
             #endregion
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             foreach (var item in actual.Rooms)
             {
@@ -637,7 +637,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 1, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 30, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 4, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -800,7 +800,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 8, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 8, 15, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 5, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -1005,7 +1005,7 @@ namespace Surgicalogic.Planning.Test
             operations.Add(new OperationOutputModel { Id = 2, StartDate = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, 11, 00, 0) });
             expected.Rooms.Add(new RoomOutputModel { Id = 4, Operations = operations });
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {
@@ -1166,7 +1166,7 @@ namespace Surgicalogic.Planning.Test
             expected.Rooms.Add(new RoomOutputModel { Id = 3, Operations = operations });
             operations = new List<OperationOutputModel>();
 
-            var actual = Planner.Solve(surgeryPlan);
+            var actual = CPPlanner.Solve(surgeryPlan);
 
             if (actual.Rooms.Count == 0)
             {

@@ -136,6 +136,7 @@ namespace Surgicalogic.Api.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(AppSettings.ApiBaseUrl);
+                client.Timeout = TimeSpan.FromMinutes(10);
                 HttpResponseMessage response = await client.PostAsync(AppSettings.ApiPostUrl, new StringContent(req, Encoding.Default, "application/json"));
 
                 if (response.Content != null)

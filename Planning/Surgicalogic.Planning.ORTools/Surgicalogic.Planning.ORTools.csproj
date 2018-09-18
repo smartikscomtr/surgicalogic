@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinearPlanner.cs" />
-    <Compile Include="Planner.cs" />
+    <Compile Include="MIPPlanner.cs" />
+    <Compile Include="CPPlanner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
