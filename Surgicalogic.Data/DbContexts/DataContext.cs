@@ -15,7 +15,9 @@ namespace Surgicalogic.Data.DbContexts
         {
         }
 
+        public DbSet<AppointmentCalendar> AppointmentCalendars { get; set; }
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<DoctorCalendar> DoctorCalendars { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
@@ -29,6 +31,7 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<OperatingRoomEquipment> OperatingRoomEquipments { get; set; }
         public DbSet<OperatingRoomOperationType> OperatingRoomOperationTypes { get; set; }
         public DbSet<OperationTypeEquipment> OperationTypeEquipments { get; set; }
+        public DbSet<Patient> Patients { get; set; }
         public DbSet<Personnel> Personnels { get; set; }
         public DbSet<PersonnelBranch> PersonnelBranches { get; set; }
         public DbSet<PersonnelTitle> PersonnelTitles { get; set; }

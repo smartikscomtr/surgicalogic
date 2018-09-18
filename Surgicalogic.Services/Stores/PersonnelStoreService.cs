@@ -25,5 +25,17 @@ namespace Surgicalogic.Services.Stores
         {
             return await GetQueryable().Where(x => x.PersonnelBranches.Any(t => t.BranchId == branchId && t.IsActive)).ProjectTo<PersonnelOutputModel>().ToListAsync();
         }
+
+        public async Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId)
+        {
+            var query = GetQueryable().Where(x => x.PersonnelBranches.Any(t => t.IsActive && t.Personnel.PersonnelTitleId == AppSettings.DoctorId));
+
+            if(branchId > 0)
+            { 
+                query = query.Where(x => x.PersonnelBranches.Any(y => y.BranchId == branchId));
+            }
+
+            return await query.ProjectTo<PersonnelOutputModel>().ToListAsync();
+        }
     }
 }

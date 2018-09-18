@@ -5,9 +5,11 @@ const personnelModule = {
     loading: false,
     totalCount:0,
     personnel: [],
+    allPersonnels: [],
     allBranches: [],
     allPersonnelTitles: [],
-    allWorkTypes: []
+    allWorkTypes: [],
+    filteredDoctor: []
   },
 
   mutations: {
@@ -18,6 +20,10 @@ const personnelModule = {
     setPersonnels(state, data) {
       state.personnel = data.result;
       state.totalCount = data.totalCount;
+    },
+
+    setAllPersonnels(state, data) {
+      state.allPersonnels = data;
     },
 
     insertPersonnel(state, { item }) {
@@ -48,6 +54,10 @@ const personnelModule = {
 
     setAllWorkTypes(state, payload) {
       state.allWorkTypes = payload;
+    },
+
+    setDoctorsByBranchIdAsync(state, payload) {
+      state.filteredDoctor = payload;
     }
   },
 
@@ -66,7 +76,15 @@ const personnelModule = {
 
         context.commit('setLoading', false);
       })
+    },
 
+    getAllPersonnels(context) {
+      axios.get('Personnel/GetAllPersonnels')
+        .then(response => {
+          if (response.data.info.succeeded == true){
+            context.commit('setAllPersonnels', response.data.result) //Set the Personnels in the store
+          }
+        })
     },
 
     insertPersonnel(context, payload) {
@@ -121,6 +139,21 @@ const personnelModule = {
       .then(response => {
         if (response.data.info.succeeded == true){
           context.commit('setAllWorkTypes', response.data.result) //Set the Work Types in the store
+        }
+      })
+    },
+    getPersonnelsByBranchId(context, payload) {
+      axios.get('Personnel/GetPersonnelsByBranchIdAsync/'+ payload.branchId).then(response => {
+        if (response.data) {
+          context.commit('setPersonnelsByBranchId', response.data) //Set the Operation Types in the store
+        }
+      })
+    },
+
+    getDoctorsByBranchIdAsync(context, payload) {
+      axios.get('Personnel/GetDoctorsByBranchIdAsync/' + payload.branchId).then(response => {
+        if (response.data) {
+          context.commit('setDoctorsByBranchIdAsync', response.data)
         }
       })
     },

@@ -127,6 +127,37 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.AppointmentCalendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AppointmentDate");
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("PatientId");
+
+                    b.Property<int>("PersonnelId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("AppointmentCalendars");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.Branch", b =>
                 {
                     b.Property<int>("Id")
@@ -157,6 +188,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasIndex("PersonnelId");
 
                     b.ToTable("Branches");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.DoctorCalendar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("PersonnelId");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonnelId");
+
+                    b.ToTable("DoctorCalendars");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Equipment", b =>
@@ -562,6 +622,44 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("OperationTypeEquipments");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<int>("IdentityNumber")
+                        .HasMaxLength(11);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("Phone")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patients");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
                 {
                     b.Property<int>("Id")
@@ -593,6 +691,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .HasMaxLength(100);
 
                     b.Property<int>("PersonnelTitleId");
+
+                    b.Property<string>("PictureUrl");
 
                     b.Property<int>("WorkTypeId");
 
@@ -791,11 +891,32 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.AppointmentCalendar", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.Patient", "Patient")
+                        .WithMany("AppointmentCalendars")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.Personnel", "Personnel")
+                        .WithMany("AppointmentCalendars")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.Branch", b =>
                 {
                     b.HasOne("Surgicalogic.Data.Entities.Personnel")
                         .WithMany("Branches")
                         .HasForeignKey("PersonnelId");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.DoctorCalendar", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.Personnel", "Personnel")
+                        .WithMany("DoctorCalendars")
+                        .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Equipment", b =>

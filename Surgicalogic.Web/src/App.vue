@@ -213,7 +213,7 @@ export default {
         {
           icon: "domain",
           text: vm.$i18n.t('menu.clinicManagement'),
-          // route: "/eventcalendarpage"
+          route: "/clinicpage"
         },
         {
           icon: "content_copy",

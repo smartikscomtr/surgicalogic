@@ -15,5 +15,6 @@ namespace Surgicalogic.Common.Settings
         public static int DoctorId { get; set; }
         public static DateTime WorkingHourStart { get; set; }
         public static DateTime WorkingHourEnd { get; set; }
+        public static string DoctorPicture { get; set; }
     }
 }

@@ -115,7 +115,9 @@ namespace Surgicalogic.Api
             services.AddTransient<IAppServiceProvider, AppServiceProvider>();
 
             #region StoreService Registeration
+            services.AddScoped<IAppointmentCalendarStoreService, AppointmentCalendarStoreService>();
             services.AddScoped<IBranchStoreService, BranchStoreService>();
+            services.AddScoped<IDoctorCalendarStoreService, DoctorCalendarStoreService>();
             services.AddScoped<IEquipmentStoreService, EquipmentStoreService>();
             services.AddScoped<IEquipmentTypeStoreService, EquipmentTypeStoreService>();
             services.AddScoped<IFeedbackStoreService, FeedbackStoreService>();
@@ -130,6 +132,7 @@ namespace Surgicalogic.Api
             services.AddScoped<IOperatingRoomStoreService, OperatingRoomStoreService>();
             services.AddScoped<IOperationTypeStoreService, OperationTypeStoreService>();
             services.AddScoped<IOperationTypeEquipmentStoreService, OperationTypeEquipmentStoreService>();
+            services.AddScoped<IPatientStoreService, PatientStoreService>();
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelBranchStoreService, PersonnelBranchStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
@@ -185,7 +188,7 @@ namespace Surgicalogic.Api
             AppSettings.DoctorId = Configuration["AppSettings:General:DoctorId"].ToNCInt();
             AppSettings.WorkingHourStart = Configuration["AppSettings:Planning:WorkingHourStart"].HourToDateTime();
             AppSettings.WorkingHourEnd = Configuration["AppSettings:Planning:WorkingHourEnd"].HourToDateTime();
-
+            AppSettings.DoctorPicture = Configuration["AppSettings:DoctorPicture:Url"];
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Surgicalogic.Data.Entities
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
+        public string PictureUrl { get; set; }
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }
@@ -25,5 +26,7 @@ namespace Surgicalogic.Data.Entities
         public virtual ICollection<Branch> Branches { get; set; }
         public virtual ICollection<OperationPersonnel> OperationPersonels { get; set; }
         public virtual ICollection<PersonnelBranch> PersonnelBranches { get; set; }
+        public virtual ICollection<DoctorCalendar> DoctorCalendars { get; set; }
+        public virtual ICollection<AppointmentCalendar> AppointmentCalendars { get; set; }
     }
 }

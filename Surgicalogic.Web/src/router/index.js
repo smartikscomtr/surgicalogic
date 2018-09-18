@@ -45,13 +45,27 @@ import OperationPage from "@/pages/operation/OperationPage";
 import HistoryPlanningPage from "@/pages/planning/HistoryPlanningPage";
 import PlanArrangementsPage from "@/pages/planning/PlanArrangementsPage";
 
+//Registering Clinic Pages
+import ClinicPage from "@/pages/clinic/ClinicPage";
+import AppointmentCalendarPage from "@/pages/clinic/AppointmentCalendarPage";
+
 export default new VueRouter({
   mode: 'history',
   routes: [
     {
+      path: '/appointmentcalendarpage',
+      name: 'AppointmentCalendarPage',
+      component: AppointmentCalendarPage
+    },
+    {
       path: '/branchespage',
       name: 'BranchesPage',
       component: BranchesPage
+    },
+    {
+      path: '/clinicpage',
+      name: 'ClinicPage',
+      component: ClinicPage
     },
     {
       path: '/dashboardpage',

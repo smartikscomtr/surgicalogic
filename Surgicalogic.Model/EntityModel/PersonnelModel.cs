@@ -12,6 +12,7 @@ namespace Surgicalogic.Model.EntityModel
         [Searchable]
         public string LastName { get; set; }
         public string FullName { get; set; }
+        public string PictureUrl { get; set; }
 
         public int PersonnelTitleId { get; set; }
         public int BranchId { get; set; }
@@ -22,5 +23,7 @@ namespace Surgicalogic.Model.EntityModel
         public WorkTypeModel WorkType { get; set; }
 
         public ICollection<PersonnelBranchModel> PersonnelBranches { get; set; }
+        public ICollection<DoctorCalendarModel> DoctorCalendars { get; set; }
+        public ICollection<AppointmentCalendarModel> AppointmentCalendars { get; set; }
     }
 }
