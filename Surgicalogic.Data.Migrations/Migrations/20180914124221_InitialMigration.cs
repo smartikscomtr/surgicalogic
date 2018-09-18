@@ -347,6 +347,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     PersonnelCode = table.Column<string>(maxLength: 100, nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    PictureUrl = table.Column<string>(nullable: true),
                     PersonnelTitleId = table.Column<int>(nullable: false),
                     BranchId = table.Column<int>(nullable: false),
                     WorkTypeId = table.Column<int>(nullable: false)

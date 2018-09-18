@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180911063543_InitialMigration")]
+    [Migration("20180914124221_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -693,6 +693,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .HasMaxLength(100);
 
                     b.Property<int>("PersonnelTitleId");
+
+                    b.Property<string>("PictureUrl");
 
                     b.Property<int>("WorkTypeId");
 
