@@ -26,39 +26,39 @@
           </v-autocomplete>
         </v-flex>
       </v-layout>
-    </v-card>
 
-    <v-container
-                fluid
-                grid-list-md
-                grey
-                lighten-4>
-
+    <v-container grid-list-md
+                 grey
+                 lighten-4>
       <v-layout row wrap>
-        <v-spacer></v-spacer>
-
         <v-flex v-for="(doctorCard, i) in doctorCards"
                 :key="i"
-                xs12
-                sm6
-                md4>
+                xs2 sm2 m2>
           <v-card>
-            <img :src="`https://picsum.photos/200/300?image=${getImage()}`"
-                   height="300px">
+            <img :src="doctorCard.pictureUrl"
+                  height="300px"
+                  width="250px">
 
-              <span class="headline black--text pl-3 pt-3"
-                    v-text="doctorCard.fullName">
+              <span class="doctorName-wrap"
+                    v-text="doctorCard.personnelTitleName">
+              </span>
+
+              <v-spacer></v-spacer>
+
+              <span class="branchName-wrap"
+                    v-text="doctorCard.branchNames">
               </span>
             </img>
 
-            <!-- <v-card-actions class="white justify-center">
-            <v-input> {{ doctorCard.fullName }} </v-input>
-            </v-card-actions> -->
+            <v-spacer></v-spacer>
 
+            <v-btn @click="$router.push('/appointmentcalendarpage')"> Randevu Al
+            </v-btn>
           </v-card>
         </v-flex>
       </v-layout>
     </v-container>
+    </v-card>
   </div>
 </template>
 
@@ -174,8 +174,8 @@ export default {
             vm.doctorCards.push(vm.filteredDoctors[index]);
         }
       }
-      },
-},
+    }
+  },
 
   created () {
     const vm = this;
@@ -194,3 +194,30 @@ export default {
 };
 
 </script>
+
+<style>
+.doctorName-wrap {
+  color: #cd5e15;
+  font-family: serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 20px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+.branchName-wrap {
+  color: #cd5e15;
+  font-family: serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+  background-color: #fff;
+  padding: 1.5px 3px;
+  display: inline-block;
+  min-width: 100px;
+  width: auto;
+  max-width: 180px;
+  border-radius: 4px;
+  -webkit-box-decoration-break: clone;
+}
+</style>

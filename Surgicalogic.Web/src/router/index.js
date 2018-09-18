@@ -47,10 +47,16 @@ import PlanArrangementsPage from "@/pages/planning/PlanArrangementsPage";
 
 //Registering Clinic Pages
 import ClinicPage from "@/pages/clinic/ClinicPage";
+import AppointmentCalendarPage from "@/pages/clinic/AppointmentCalendarPage";
 
 export default new VueRouter({
   mode: 'history',
   routes: [
+    {
+      path: '/appointmentcalendarpage',
+      name: 'AppointmentCalendarPage',
+      component: AppointmentCalendarPage
+    },
     {
       path: '/branchespage',
       name: 'BranchesPage',
