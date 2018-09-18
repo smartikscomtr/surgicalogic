@@ -38,36 +38,36 @@ namespace Surgicalogic.Planning.ORTools
             Variable[,,] production = new Variable[operationsCount, roomsCount, totalPeriod];
             for (int i = 0; i < operationsCount; i++)
             {
-                for (int j = 0; j < roomsCount; j++)
+                for (int r = 0; r < roomsCount; r++)
                 {
-                    for (int k = 0; k < totalPeriod; k++)
+                    for (int t = 0; t < totalPeriod; t++)
                     {
-                        production[i, j, k] = solver.MakeIntVar(0, 1, string.Format("{0}-{1}-{2}", i, j, k));
+                        production[i, r, t] = solver.MakeIntVar(0, 1, string.Format("{0}-{1}-{2}", i, r, t));
                     }
                 }
             }
 
             //Overlap olmaması için
-            for (int o1 = 0; o1 < operationsCount; o1++)
+            for (int i1 = 0; i1 < operationsCount; i1++)
             {
-                for (int o2 = 0; o2 < operationsCount; o2++)
+                for (int i2 = 0; i2 < operationsCount; i2++)
                 {
-                    if (o2 != o1)
+                    if (i2 != i1)
                     {
                         for (int r = 0; r < roomsCount; r++)
                         {
-                            var longer = operationTimes[o1] > operationTimes[o2] ? operationTimes[o1] : operationTimes[o2];
+                            var longer = operationTimes[i1] > operationTimes[i2] ? operationTimes[i1] : operationTimes[i2];
 
-                            for (int p = 0; p <= totalPeriod - longer; p++)
+                            for (int t = 0; t <= totalPeriod - longer; t++)
                             {
-                                var timeList = Enumerable.Range(p, longer);
+                                var timeList = Enumerable.Range(t, longer);
 
-                                var c1 = (from p1 in timeList
-                                          select production[o1, r, p1])
+                                var c1 = (from t1 in timeList
+                                          select production[i1, r, t1])
                                           .ToArray().Sum();
 
-                                var c2 = (from p2 in timeList
-                                          select production[o2, r, p2])
+                                var c2 = (from t2 in timeList
+                                          select production[i2, r, t2])
                                           .ToArray().Sum();
 
                                 solver.Add(c1 + c2 <= 1);
@@ -78,26 +78,26 @@ namespace Surgicalogic.Planning.ORTools
             }
 
             //Aynı doktora birden fazla ameliyat programlanmaması için
-            for (int o1 = 0; o1 < operationsCount; o1++)
+            for (int i1 = 0; i1 < operationsCount; i1++)
             {
-                for (int o2 = 0; o2 < operationsCount; o2++)
+                for (int i2 = 0; i2 < operationsCount; i2++)
                 {
-                    if (o2 != o1 && input.Operations[o1].DoctorIds.Intersect(input.Operations[o2].DoctorIds).Count() > 0)
+                    if (i2 != i1 && input.Operations[i1].DoctorIds.Intersect(input.Operations[i2].DoctorIds).Count() > 0)
                     {
-                        var longer = operationTimes[o1] > operationTimes[o2] ? operationTimes[o1] : operationTimes[o2];
+                        var longer = operationTimes[i1] > operationTimes[i2] ? operationTimes[i1] : operationTimes[i2];
 
-                        for (int p = 0; p <= totalPeriod - longer; p++)
+                        for (int t = 0; t <= totalPeriod - longer; t++)
                         {
-                            var timeList = Enumerable.Range(p, longer);
+                            var timeList = Enumerable.Range(t, longer);
 
-                            var c1 = (from p1 in timeList
+                            var c1 = (from t1 in timeList
                                       from r in rooms
-                                      select production[o1, r, p1])
+                                      select production[i1, r, t1])
                                       .ToArray().Sum();
 
-                            var c2 = (from p2 in timeList
+                            var c2 = (from t2 in timeList
                                       from r in rooms
-                                      select production[o2, r, p2])
+                                      select production[i2, r, t2])
                                       .ToArray().Sum();
 
                             solver.Add(c1 + c2 <= 1);
@@ -109,12 +109,12 @@ namespace Surgicalogic.Planning.ORTools
             //Uygun olmayan odalarda ameliyat yapılamasın.
             for (int i = 0; i < operationsCount; i++)
             {
-                for (int j = 0; j < roomsCount; j++)
+                for (int r = 0; r < roomsCount; r++)
                 {
-                    if (input.Operations[i].UnavailableRooms.Any(x => x == input.Rooms[j].Id))
+                    if (input.Operations[i].UnavailableRooms.Any(x => x == input.Rooms[r].Id))
                     {
-                        solver.Add((from p in periods
-                                    select production[i, j, p])
+                        solver.Add((from t in periods
+                                    select production[i, r, t])
                                     .ToArray().Sum() == 0);
                     }
                 }
@@ -123,19 +123,19 @@ namespace Surgicalogic.Planning.ORTools
             //Her ameliyat bir kez yapılsın. 
             for (int i = 0; i < operationsCount; i++)
             {
-                solver.Add((from rt in rooms
-                            from p in periods
-                            select production[i, rt, p])
+                solver.Add((from r in rooms
+                            from t in periods
+                            select production[i, r, t])
                             .ToArray().Sum() == 1);
             }
 
             //aynı odada aynı anda 2 ameliyat olmasın
-            for (int j = 0; j < roomsCount; j++)
+            for (int r = 0; r < roomsCount; r++)
             {
-                for (int k = 0; k < totalPeriod; k++)
+                for (int t = 0; t < totalPeriod; t++)
                 {
-                    solver.Add((from p in operations
-                                select production[p, j, k])
+                    solver.Add((from i in operations
+                                select production[i, r, t])
                                 .ToArray().Sum() <= 1);
                 }
             }
@@ -149,16 +149,16 @@ namespace Surgicalogic.Planning.ORTools
                     var tList = Enumerable.Range(totalPeriod - operationTime + 1, operationTime - 1);
 
                     solver.Add((from r in rooms
-                                from tt in tList
-                                select production[i, r, tt])
+                                from t in tList
+                                select production[i, r, t])
                                 .ToArray().Sum() == 0);
                 }
             }
 
-            solver.Minimize((from rt in rooms
-                             from ot in overtimes
-                             from o in operations
-                             select production[o, rt, ot])
+            solver.Minimize((from i in operations
+                             from r in rooms
+                             from t in overtimes
+                             select production[i, r, t])
                              .ToArray().Sum());
 
             if (solver.Solve() != Solver.OPTIMAL)
@@ -168,16 +168,16 @@ namespace Surgicalogic.Planning.ORTools
 
             for (int i = 0; i < operationsCount; i++)
             {
-                for (int j = 0; j < roomsCount; j++)
+                for (int r = 0; r < roomsCount; r++)
                 {
-                    for (int k = 0; k < totalPeriod; k++)
+                    for (int t = 0; t < totalPeriod; t++)
                     {
-                        if (production[i, j, k].SolutionValue() == 1)
+                        if (production[i, r, t].SolutionValue() == 1)
                         {
-                            var surgeryRoom = result.Rooms[j];
+                            var surgeryRoom = result.Rooms[r];
                             var tomorrow = DateTime.Now.AddDays(1);
                             var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
-                            dateTime = dateTime.AddMinutes(k * input.Settings.PeriodInMinutes);
+                            dateTime = dateTime.AddMinutes(t * input.Settings.PeriodInMinutes);
                             surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorIds = input.Operations[i].DoctorIds, Period = input.Operations[i].Period, StartDate = dateTime });
                         }
                     }
