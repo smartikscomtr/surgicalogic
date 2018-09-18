@@ -137,7 +137,14 @@ export default {
 
 function setUtilization(value)
 {
-   document.getElementById("utilization").innerHTML = parseInt(value);
+  var result = parseInt(value);
+
+  if (isNaN(result))
+  {
+    result = 0;
+  }
+
+   document.getElementById("utilization").innerHTML = result;
 }
 
 function setOvertime(value)
