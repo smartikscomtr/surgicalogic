@@ -27,7 +27,7 @@ namespace Surgicalogic.Services.Stores
         /// <returns>IQueryable</returns>
         public virtual IQueryable<User> GetQueryable()
         {
-            return _context.Set<User>().AsNoTracking();
+            return _context.Set<User>().Where(x => x.IsActive).AsNoTracking();
         }
 
         /// <summary>
@@ -104,6 +104,7 @@ namespace Surgicalogic.Services.Stores
             entity.PhoneNumberConfirmed = false;
             entity.TwoFactorEnabled = false;
             entity.LockoutEnabled = false;
+            entity.IsActive = true;
             entity.AccessFailedCount = 0;
             entity.SecurityStamp = Guid.NewGuid().ToString();
 
@@ -143,7 +144,8 @@ namespace Surgicalogic.Services.Stores
         {
             var entity = await _context.Set<User>().FirstAsync(e => e.Id == id);
 
-            //entity.IsActive = false;
+            entity.IsActive = false;
+            entity.LockoutEnd = DateTime.MaxValue;
             //entity.ModifiedBy = 0;
             //entity.ModifiedDate = DateTime.Now;
 
