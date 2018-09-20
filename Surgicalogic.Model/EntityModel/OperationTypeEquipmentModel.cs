@@ -4,5 +4,6 @@
     {
         public int OperationTypeId { get; set; }
         public int EquipmentId { get; set; }
+        public EquipmentModel Equipment { get; set; }
     }
 }

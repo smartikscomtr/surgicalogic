@@ -9,5 +9,6 @@ namespace Surgicalogic.Model.EntityModel
         public int OperatingRoomId { get; set; }
         public int OperationTypeId { get; set; }
         public OperationTypeModel OperationType { get; set; }
+        public OperatingRoomModel OperatingRoom { get; set; }
     }
 }
