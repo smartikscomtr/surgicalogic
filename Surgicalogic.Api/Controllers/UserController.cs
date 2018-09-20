@@ -38,7 +38,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<object> Login([FromBody]LoginViewModel model)
         {
-            var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+            var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email && r.IsActive);
 
             if (appUser != null)
             {
@@ -180,7 +180,7 @@ namespace Surgicalogic.Api.Controllers
         {
             var result = new ResultModel<User>() { Info = new Info { Succeeded = false } };
 
-            var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+            var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email && r.IsActive);
 
             if (user == null)
             {
@@ -207,7 +207,7 @@ namespace Surgicalogic.Api.Controllers
         {
             var returnResult = new ResultModel<bool> { Info = new Info { Succeeded = false } };
 
-            var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+            var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email && r.IsActive);
 
             if (user == null)
             {
@@ -254,7 +254,7 @@ namespace Surgicalogic.Api.Controllers
             var email = _tokenService.GetEmailFromExpiredToken(model.Token);
             var user = await _userManager.FindByEmailAsync(email);
 
-            if (user == null)
+            if (user == null || !user.IsActive)
             {
                 return BadRequest();
             }
