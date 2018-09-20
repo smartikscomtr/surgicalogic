@@ -49,7 +49,7 @@
             </v-card-title>
 
             <v-card-actions>
-              <v-btn small @click="">{{ $t('common.go') }}</v-btn>
+              <v-btn small @click="$router.push('/clinicpage')">{{ $t('common.go') }}</v-btn>
             </v-card-actions>
           </v-container>
         </v-card>
@@ -67,7 +67,7 @@
             </v-card-title>
 
             <v-card-actions>
-              <v-btn small @click="">{{ $t('common.go') }}</v-btn>
+              <v-btn small @click="$router.push('/personnelpage')">{{ $t('common.go') }}</v-btn>
             </v-card-actions>
           </v-container>
         </v-card>
@@ -91,6 +91,9 @@ export default {
 }
 .layout.row.wrap > div {
     padding: 1%;
+}
+.cards-wrap .v-btn__content{
+    color: rgba(0,0,0,.87) !important;
 }
 .operation-wrap.v-card {
     background-color: #ff6767;
