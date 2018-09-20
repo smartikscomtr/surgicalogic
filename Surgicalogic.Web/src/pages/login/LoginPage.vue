@@ -84,9 +84,9 @@ export default {
     const vm = this;
 
      if (vm.auth.isAuthenticated()) {
-      vm.$router.push("DashboardPage");
+      // vm.$router.push("dashboardpage");
      }
-  }
+    }
   };
 
 </script>
