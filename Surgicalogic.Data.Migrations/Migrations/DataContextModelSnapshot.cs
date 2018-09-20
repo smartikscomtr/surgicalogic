@@ -780,6 +780,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
