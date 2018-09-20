@@ -78,14 +78,14 @@
                 </template>
 
                 <template v-else>
-                  <v-btn v-if="showCalendar"
+                  <!-- <v-btn v-if="showCalendar"
                          icon
                          class="mx-0"
                          @click="calendarItem(props.item)">
                     <v-icon color="#232222">
                       date_range
                     </v-icon>
-                  </v-btn>
+                  </v-btn> -->
 
                   <v-tooltip top>
                     <v-btn v-if="showDetail"
