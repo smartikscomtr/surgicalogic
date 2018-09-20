@@ -141,6 +141,7 @@ export default {
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
+            vm.$store.dispatch('getUsers');
           }, 200)
 
           setTimeout(() => {
@@ -158,6 +159,7 @@ export default {
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
+            vm.$store.dispatch('getUsers');
           }, 200)
 
           setTimeout(() => {
