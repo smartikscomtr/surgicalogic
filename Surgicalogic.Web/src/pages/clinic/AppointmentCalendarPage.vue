@@ -1,15 +1,214 @@
 <template>
   <div>
-    AppointmentCalendarPage
+    <v-container class="container-wrap layout row wrap">
+      <v-flex xs12 sm12 md8>
+        <div xs12 sm12 md12 class="profession">
+          <b> Uzmanlık Alanları:</b>
+          <span> Psikiyatri</span>
+        </div>
+        <v-tabs show-arrows>
+          <v-tabs-slider color="white">
+          </v-tabs-slider>
+
+          <v-tab v-for="item in items"
+                :href="'#tab-' + item"
+                :key="item">
+            {{ item }}
+          </v-tab>
+
+          <v-tabs-items v-model="currentItem">
+            <v-tab-item v-for="item in items.concat(more)"
+                        :id="'tab-' + item"
+                        :key="item">
+              <v-card flat>
+                <v-card-text>
+                  <h2>{{ item }}</h2>
+                    {{ text }}
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+      </v-flex>
+
+      <v-flex xs12 sm12 md4 block-container>
+        <div xs12 sm4 md4 class="doctor-detail">
+          <h4>Tuba Bayraktutar</h4>
+
+          <h5>Acil Tıp</h5>
+        </div>
+
+        <v-expansion-panel>
+          <v-expansion-panel-content v-for="(item,i) in 5"
+                                     :key="i"
+                                     popout>
+            <div slot="header">19.09.2018
+            </div>
+
+            <v-card>
+              <input class="appointment-input-wrap"
+                     id="time-1"
+                     type="text"
+                     aria-label=""
+                     placeholder="Lütfen randevu almak istediğiniz saati seçiniz">
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-flex>
+    </v-container>
   </div>
 </template>
 
-<script>
-export default {
+<script src="js/appointment-picker.min.js"></script>
 
-}
+<script>
+
+export default {
+  data() {
+    return {
+      currentItem: 'tab-Web',
+      items: [ 'Hekim Özgeçmişi', 'Bilimsel Yayınları', 'Sağlık Rehberi' ],
+      more: [ 'News', 'Maps', 'Books', 'Flights', 'Apps' ],
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    };
+  },
+
+  mounted() {
+    const AppointmentPicker = require('appointment-picker');
+
+    require(['appointment-picker'], function(AppointmentPicker) {
+      var picker = new AppointmentPicker(
+        document.getElementById('time-1'),
+        {
+            interval: '30', //Randevu aralık dakikaları
+            minTime: '09', //Min seçilebilir saat
+            maxTime: '17', //Max seçilebilir saat
+            mode: '24h', //24 saat ya da 12 saat kullanılıp kullanılmayacağı
+            startTime: '09', //Gürntülenen saat başlangıcı
+            endTime: '23', //Görüntülenen saat bitişi
+            disabled: ['1:30 pm', '2:00 pm', '7:30 pm'], //Disabled
+            large: true, //Görünümün büyüklük kontrolü
+            static: true, // Statik pop-up durumu (Her zaman açık)
+            leadingZero: true, // Whether to zero pad hour (i.e. 07:15)
+            allowReset: true, // Whether a time can be resetted once entered
+            title: 'Randevu Saatleri' //Başlık
+        }
+      );
+
+      picker.open();
+    });
+  }
+};
 </script>
 
 <style>
+.container-wrap {
+    min-height: 904px;
+    padding: 20px 50px;
+}
 
+.doctor-detail,
+.profession {
+    margin-bottom: 30px;
+    border-radius: 5px;
+    background-color: #ff7107;
+    color: #fff;
+    padding: 10px;
+}
+.doctor-detail h4 {
+    font-size: 24px;
+}
+.doctor-detail h5 {
+    font-size: 16px;
+    font-weight: 400;
+}
+.appointment-input-wrap {
+    background-color: white;
+    padding: 10px 20px;
+    width: 100%;
+    margin-bottom: 10px;
+    border: solid 1px #e8e5e5;
+    border-radius: 5px;
+}
+.appo-picker {
+    position: absolute;
+    display: none;
+    background-color: white;
+    max-width: 240px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    z-index: 9999;
+    /* Large variation */
+}
+.appo-picker.is-open {
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+.appo-picker.is-position-static {
+    display: flex;
+    flex-direction: column;
+    position: static;
+}
+.appo-picker.is-large {
+    max-width: 100%;
+    padding: 20px;
+    border: solid 1px #e8e5e5;
+    border-radius: 5px;
+}
+.appo-picker-title {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+.appo-picker-list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0 -5px;
+}
+.appo-picker-list li input {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+.appo-picker-list li {
+    margin: 5px;
+}
+.appo-picker-list-item input[type='button'].is-selected {
+    background-color: #29a79b;
+    color: #fff;
+}
+.appo-picker-list-item input:hover,
+.appo-picker-list-item input:active,
+.appo-picker-list-item input:focus {
+    color: #fff;
+    background-color: #ff7107;
+    outline: none;
+}
+.appo-picker-list-item input:disabled {
+    background-color: #d3d3d3;
+    opacity: 0.3;
+    color: #666;
+    cursor: auto;
+}
+.v-tabs__bar {
+    background-color: #ff7107 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.theme--light .v-tabs__bar .v-tabs__div {
+    color: rgb(250, 250, 250);
+}
+@media (min-width: 960px) {
+    .block-container {
+        padding-left: 40px;
+    }
+}
+@media (max-width: 960px) {
+    .block-container {
+        margin-top: 20px;
+    }
+}
 </style>

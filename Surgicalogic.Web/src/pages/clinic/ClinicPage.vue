@@ -38,7 +38,6 @@
             <img :src="doctorCard.pictureUrl"
                   height="300px"
                   width="250px">
-
               <span class="doctorName-wrap"
                     v-text="doctorCard.personnelTitleName">
               </span>
