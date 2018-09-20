@@ -167,7 +167,7 @@ export default {
 
         if (vm.editAction.endDate)
         {
-          vm.$store.commit('saveEndDate',  vm.editAction.endDate);
+          vm.$store.commit('saveEndDate', vm.editAction.endDate);
         }
 
         return vm.$store.state.operatingRoomCalendarModule.endDate;
@@ -186,11 +186,15 @@ export default {
 
   watch:{
     startDate (val) {
-      this.startDateFormatted = this.formatDate(this.startDate)
+      const vm = this;
+
+      vm.startDateFormatted = vm.formatDate(vm.editAction.startDate)
     },
 
     endDate (val) {
-      this.endDateFormatted = this.formatDate(this.endDate)
+      const vm = this;
+
+      vm.endDateFormatted = vm.formatDate(vm.editAction.endDate)
     }
   },
 
@@ -246,7 +250,20 @@ export default {
 
       return `${day}.${month}.${year}`
     }
-  }
+  },
+
+  // mounted () {
+  //   const vm = this;
+  //     debugger
+  //   vm.$watch('startDate', (newValue) => {
+
+  //       vm.startDateFormatted = vm.formatDate(newValue)
+  //   });
+
+  //   vm.$watch('endDate', (newValue) => {
+  //       vm.endDateFormatted = vm.formatDate(newValue)
+  //   });
+  // }
 }
 
 </script>
