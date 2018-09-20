@@ -240,6 +240,7 @@ export default {
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
+            vm.$store.dispatch('getOperationTypes');
           }, 200)
 
           setTimeout(() => {
@@ -263,6 +264,7 @@ export default {
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
+            vm.$store.dispatch('getOperationTypes');
           }, 200)
 
           setTimeout(() => {
