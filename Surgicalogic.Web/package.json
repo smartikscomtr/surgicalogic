@@ -12,6 +12,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "appointment-picker": "^1.2.0",
     "axios": "^0.18.0",
     "jshint": "^2.9.5",
     "vis": "^4.21.0",
