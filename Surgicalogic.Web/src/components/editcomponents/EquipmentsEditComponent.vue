@@ -235,6 +235,7 @@ export default {
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
+            vm.$store.dispatch('getEquipments');
           }, 200)
 
           setTimeout(() => {
@@ -256,6 +257,7 @@ export default {
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
+            vm.$store.dispatch('getEquipments');
           }, 200)
 
           setTimeout(() => {

@@ -66,6 +66,18 @@
                 </div>
               </v-flex>
 
+              <v-flex xs12 sm6 md12>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operatingrooms.operatingRoom') }}
+                  </div>
+
+                  <div class="value">
+                    {{ detailAction['operatingRoomName'] }}
+                  </div>
+                </div>
+              </v-flex>
+
               <v-flex xs12 sm12 md12>
                 <div class="input-group readonly-wrap">
                   <div class="label">
