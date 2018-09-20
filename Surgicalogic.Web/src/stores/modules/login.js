@@ -22,13 +22,11 @@ const loginModule = {
     userLogin(context, payload) {
       axios.post('User/Login', payload)
         .then(response => {
-          debugger;
           if (response.statusText == "OK") {
-            debugger;
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("refreshToken", response.data.refreshToken);
             localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
-            router.push("DashboardPage");
+            router.push("dashboardpage");
           }
           else
           {

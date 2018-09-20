@@ -76,7 +76,7 @@ const usersModule = {
 
     updateUser(context, payload) {
       axios.post('User/UpdateUser', payload)
-        .then(response => {debugger
+        .then(response => {
           context.commit('updateUser', response.data.result) //Update the User in the store
         })
     },
