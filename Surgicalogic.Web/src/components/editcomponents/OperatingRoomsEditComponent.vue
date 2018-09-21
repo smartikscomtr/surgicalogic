@@ -180,16 +180,16 @@ export default {
       get() {
         const vm = this;
 
-//          let selectedEquipments = [];
+         let selectedEquipments = [];
 
-//         if (vm.editAction.operatingRoomEquipments)
-//         {
-//           vm.editAction.operatingRoomEquipments.forEach(item => {
-//             selectedEquipments.push(item.equipment.id);
-//           });
-//         }
+        if (vm.editAction.operatingRoomEquipments)
+        {
+          vm.editAction.operatingRoomEquipments.forEach(item => {
+            selectedEquipments.push(item.equipment.id);
+          });
+        }
 
-        return vm.editAction.operatingRoomEquipments;
+        return selectedEquipments;
       },
 
       set(val) {
@@ -203,16 +203,16 @@ export default {
       get() {
         const vm = this;
 
-       // let selectedOperationTypes = [];
+        let selectedOperationTypes = [];
 
-        // if (vm.editAction.operatingRoomOperationTypes)
-        // {
-        //   vm.editAction.operatingRoomOperationTypes.forEach(item => {
-        //     selectedOperationTypes.push(item.operationType.id);
-        //   });
-        // }
+        if (vm.editAction.operatingRoomOperationTypes)
+        {
+          vm.editAction.operatingRoomOperationTypes.forEach(item => {
+            selectedOperationTypes.push(item.operationType.id);
+          });
+        }
 
-        return vm.editAction.operatingRoomOperationTypes;
+        return selectedOperationTypes;
       },
 
       set(val) {
