@@ -97,11 +97,16 @@ const planArrangementsModule = {
     // },
 
     updatePlanArrangements(context, payload) {
-      axios.post('OperationPlan/UpdateOperationPlan', payload,{
+      context.commit('setLoading', true);
+
+      axios.post('OperationPlan/UpdateOperationPlan', payload, {
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }})
+        .then(response => {
+          context.commit('setLoading', false);
+        });
     },
 
     getTomorrowOperationList(context){
@@ -112,9 +117,12 @@ const planArrangementsModule = {
     },
 
     getGenerateOperationPlan(context) {
+      context.commit('setLoading', true);
+
       axios.post('OperationPlan/GenerateOperationPlan')
         .then(response => {
           context.commit('setGenerateOperationPlan', response.data)
+          context.commit('setLoading', false);
         });
     }
   }
