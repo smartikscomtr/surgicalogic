@@ -49,17 +49,17 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
         {
             var plans = await _operationPlanStoreService.GetTomorrowOperationsAsync();
-            var rooms = await _operatingRoomStoreService.GetAsync<OperatingRoomForTimelineModel>();
+            var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync();
 
             var tomorrow = DateTime.Now.AddDays(1);
             var twoDaysLater = DateTime.Now.AddDays(2);
 
-            var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms.Result);
+            var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms);
 
             var result = new ResultModel<OperationPlanOutputModel>
             {
                 Info = new Info(),
-                Result = new OperationTimelineOutputModel(plans, rooms.Result)
+                Result = new OperationTimelineOutputModel(plans, roomTimelineModel)
                 {
                     MinDate = tomorrow.ToString("yyyy-MM-dd 00:00:00"),
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
