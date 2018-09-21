@@ -144,7 +144,7 @@ export default {
     padding: 16px 45px;
 }
 .container.fill-height {
-  background-image: url(../../images/doctor.jpg);
+  background-image: url(../../images/login.jpg);
   background-size: 100% auto;
   background-repeat: no-repeat;
 }

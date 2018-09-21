@@ -8,29 +8,19 @@
 
         <v-container>
           <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
-            <v-text-field v-if="showSearch"
-                          v-model="search"
-                          append-icon="search"
-                          :label="$t('common.search')"
-                          v-on:keyup.enter="filterGrid"
-                          single-line hide-details>
+            <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
             </v-text-field>
 
             <v-spacer></v-spacer>
 
-            <v-btn v-if="!hideExport"
-                   class="export-wrap"
-                   @click="exportExcel">
+            <v-btn v-if="!hideExport" class="export-wrap" @click="exportExcel">
               <v-icon color="white--text">
                 arrow_downward
               </v-icon>
               {{ $t('common.export') }}
             </v-btn>
 
-            <v-btn v-if="showInsert"
-                   class="orange"
-                   slot="activator"
-                   @click="addNewItem">
+            <v-btn v-if="showInsert" class="orange" slot="activator" @click="addNewItem">
               <v-icon color="white--text">
                 add
               </v-icon>
@@ -38,23 +28,12 @@
             </v-btn>
           </v-card-title>
 
-          <v-data-table :headers="headers"
-                        :items="items"
-                        :loading="loading"
-                        :pagination.sync="pagination"
-                        :total-items="totalCount"
-                        :hide-actions="hideActions"
-                        :rows-per-page-text="$t('common.rowsPerPage')"
-                        :no-data-text="$t('common.noDataAvailable')"
-                        :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
-            <v-progress-linear slot="progress"
-                               color="teal"
-                               indeterminate>
+          <v-data-table :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
+            <v-progress-linear slot="progress" color="teal" indeterminate>
             </v-progress-linear>
 
             <template slot="items" slot-scope="props">
-              <td v-for="(header, i) in headers"
-                  :key="i">
+              <td v-for="(header, i) in headers" :key="i">
                 <template v-if="!header.isAction && header.isCheck">
                   <div v-if="props.item[header.value]">
                     <v-icon class="green--text">check</v-icon>
@@ -88,12 +67,8 @@
                   </v-btn> -->
 
                   <v-tooltip top>
-                    <v-btn v-if="showDetail"
-                           slot="activator"
-                           icon
-                           class="mx-0"
-                           @click="detailItem(props.item)">
-                      <v-icon color="#232222">
+                    <v-btn v-if="showDetail" slot="activator" icon class="mx-0" @click="detailItem(props.item)">
+                      <v-icon>
                         visibility
                       </v-icon>
                     </v-btn>
@@ -101,12 +76,8 @@
                   </v-tooltip>
 
                   <v-tooltip top>
-                    <v-btn v-if="showEdit"
-                           slot="activator"
-                           icon
-                           class="mx-0"
-                           @click="editItem(props.item)">
-                      <v-icon color="#232222">
+                    <v-btn v-if="showEdit" slot="activator" icon class="mx-0" @click="editItem(props.item)">
+                      <v-icon>
                         edit
                       </v-icon>
                     </v-btn>
@@ -114,23 +85,16 @@
                   </v-tooltip>
 
                   <v-tooltip top>
-                    <v-btn v-if="showDelete"
-                          slot="activator"
-                          icon
-                          class="mx-0"
-                          @click="deleteItem(props.item)">
-                      <v-icon color="#232222">
+                    <v-btn v-if="showDelete" slot="activator" icon class="mx-0" @click="deleteItem(props.item)">
+                      <v-icon>
                         delete
                       </v-icon>
                     </v-btn>
                     <span>{{ $t('common.deleteRecord') }}</span>
                   </v-tooltip>
 
-                   <v-btn v-if="showResetPassword"
-                         icon
-                         class="mx-0"
-                         @click="resetPassword(props.item)">
-                    <v-icon color="#232222">
+                  <v-btn v-if="showResetPassword" icon class="mx-0" @click="resetPassword(props.item)">
+                    <v-icon>
                       lock_open
                     </v-icon>
                   </v-btn>
@@ -145,382 +109,382 @@
 </template>
 
 <script>
-
 export default {
-  props: {
-    items: {
-      type: Array,
-      required: false,
-      default() {
-        return [];
-      }
-    },
+    props: {
+        items: {
+            type: Array,
+            required: false,
+            default() {
+                return [];
+            }
+        },
 
-    loading: {
-      type: Boolean,
-      required: false
-    },
+        loading: {
+            type: Boolean,
+            required: false
+        },
 
-    hideActions: {
-      type: Boolean,
-      required: false
-    },
+        hideActions: {
+            type: Boolean,
+            required: false
+        },
 
-    headers: {
-      type: Array,
-      required: false
-    },
+        headers: {
+            type: Array,
+            required: false
+        },
 
-    title: {
-      type: String,
-      required: false
-    },
+        title: {
+            type: String,
+            required: false
+        },
 
-    showCalendar :{
-      type:Boolean,
-      required:false
-    },
+        showCalendar: {
+            type: Boolean,
+            required: false
+        },
 
-    showDetail: {
-      type: Boolean,
-      required: false
-    },
+        showDetail: {
+            type: Boolean,
+            required: false
+        },
 
-    showEdit: {
-      type: Boolean,
-      required: false
-    },
+        showEdit: {
+            type: Boolean,
+            required: false
+        },
 
-    showDelete: {
-      type: Boolean,
-      required: false
-    },
+        showDelete: {
+            type: Boolean,
+            required: false
+        },
 
-    showSearch: {
-      type: Boolean,
-      required: false
-    },
+        showSearch: {
+            type: Boolean,
+            required: false
+        },
 
-     showInsert: {
-      type: Boolean,
-      required: false
-    },
+        showInsert: {
+            type: Boolean,
+            required: false
+        },
 
-     hideExport: {
-      type: Boolean,
-      required: false
-    },
+        hideExport: {
+            type: Boolean,
+            required: false
+        },
 
-    showResetPassword: {
-      type: Boolean,
-      required: false
-    },
+        showResetPassword: {
+            type: Boolean,
+            required: false
+        },
 
-     customParameters: {
-      type: Object,
-      required: false
-    },
+        customParameters: {
+            type: Object,
+            required: false
+        },
 
-    methodName: {
-      type: Function,
-      required: true
-    },
+        methodName: {
+            type: Function,
+            required: true
+        },
 
-    totalCount: {
-      type: Number,
-      required: false
-    }
-  },
-  data() {
-    return {
-      search: '',
-      dataRows: [],
-      pagination: {}
-    };
-  },
-
-  watch: {
-    pagination: {
-      handler() {
-        const vm = this;
-
-        vm.executeGridOperations();
-      }
-    }
-  },
-
-  methods: {
-    addNewItem() {
-      const vm = this;
-
-      //When the add new button is clicked, the event is sent to the grid component
-      vm.$emit('newaction');
-    },
-
-    exportExcel() {
-      const vm = this;
-
-      //When the add new button is clicked, the event is sent to the grid component
-      vm.$emit('exportToExcel');
-    },
-
-    filterGrid() {
-      const vm = this;
-
-      vm.executeGridOperations(true);
-    },
-
-    calendarItem(item) {
-      const vm = this;
-
-      //When the date range button is clicked, the event is sent to the grid component
-      vm.$emit('calendar', item);
-    },
-
-    detailItem(item) {
-      const vm = this;
-
-      //When the detail button is clicked, the event is sent to the grid component
-      vm.$emit('detail', item);
-    },
-
-    editItem(item) {
-      const vm = this;
-
-      //When the edit button is clicked, the event is sent to the grid component
-      vm.$emit('edit', item, vm.items.indexOf(item));
-    },
-
-    deleteItem(item) {
-      const vm = this;
-
-      //When the delete button is clicked, the event is sent to the grid component
-      vm.$emit('deleteitem', item);
-    },
-
-
-    resetPassword(item) {
-      const vm = this;
-
-      //When the reset password button is clicked, the event is sent to the grid component
-      vm.$emit('resetpassword', item);
-    },
-
-    executeGridOperations(resetPageCount) {
-      const vm = this;
-
-      if (resetPageCount) {
-        vm.pagination.page = 1;
-      }
-
-      var params = {};
-
-      if (vm.customParameters) {
-        params = vm.customParameters;
-      }
-
-      const { sortBy, descending, page, rowsPerPage } = vm.pagination;
-
-      params.currentPage= page,
-      params.pageSize= rowsPerPage,
-      params.search= vm.search,
-      params.sortBy= vm.getSortByField(sortBy),
-      params.descending= descending
-
-      vm.$store.dispatch(vm.methodName(), params);
-    },
-
-    getSortByField(sortBy) {
-      const vm = this;
-
-      vm.headers.forEach(element => {
-        if (element.value == sortBy && element.sortBy) {
-          sortBy = element.sortBy;
+        totalCount: {
+            type: Number,
+            required: false
         }
-      });
+    },
+    data() {
+        return {
+            search: '',
+            dataRows: [],
+            pagination: {}
+        };
+    },
 
-      return sortBy;
+    watch: {
+        pagination: {
+            handler() {
+                const vm = this;
+
+                vm.executeGridOperations();
+            }
+        }
+    },
+
+    methods: {
+        addNewItem() {
+            const vm = this;
+
+            //When the add new button is clicked, the event is sent to the grid component
+            vm.$emit('newaction');
+        },
+
+        exportExcel() {
+            const vm = this;
+
+            //When the add new button is clicked, the event is sent to the grid component
+            vm.$emit('exportToExcel');
+        },
+
+        filterGrid() {
+            const vm = this;
+
+            vm.executeGridOperations(true);
+        },
+
+        calendarItem(item) {
+            const vm = this;
+
+            //When the date range button is clicked, the event is sent to the grid component
+            vm.$emit('calendar', item);
+        },
+
+        detailItem(item) {
+            const vm = this;
+
+            //When the detail button is clicked, the event is sent to the grid component
+            vm.$emit('detail', item);
+        },
+
+        editItem(item) {
+            const vm = this;
+
+            //When the edit button is clicked, the event is sent to the grid component
+            vm.$emit('edit', item, vm.items.indexOf(item));
+        },
+
+        deleteItem(item) {
+            const vm = this;
+
+            //When the delete button is clicked, the event is sent to the grid component
+            vm.$emit('deleteitem', item);
+        },
+
+        resetPassword(item) {
+            const vm = this;
+
+            //When the reset password button is clicked, the event is sent to the grid component
+            vm.$emit('resetpassword', item);
+        },
+
+        executeGridOperations(resetPageCount) {
+            const vm = this;
+
+            if (resetPageCount) {
+                vm.pagination.page = 1;
+            }
+
+            var params = {};
+
+            if (vm.customParameters) {
+                params = vm.customParameters;
+            }
+
+            const { sortBy, descending, page, rowsPerPage } = vm.pagination;
+
+            (params.currentPage = page),
+                (params.pageSize = rowsPerPage),
+                (params.search = vm.search),
+                (params.sortBy = vm.getSortByField(sortBy)),
+                (params.descending = descending);
+
+            vm.$store.dispatch(vm.methodName(), params);
+        },
+
+        getSortByField(sortBy) {
+            const vm = this;
+
+            vm.headers.forEach(element => {
+                if (element.value == sortBy && element.sortBy) {
+                    sortBy = element.sortBy;
+                }
+            });
+
+            return sortBy;
+        }
     }
-  }
 };
-
 </script>
 
 <style>
-.v-card__text+.btn-wrap{
-  margin-top: 40px;
+.v-table__overflow .v-btn__content .v-icon {
+    color: #000;
+}
+.v-card__text + .btn-wrap {
+    margin-top: 40px;
 }
 .grid-card.card {
-  box-shadow: inherit;
-  height: 100vh !important;
+    box-shadow: inherit;
+    height: 100vh !important;
 }
 .grid-card .page-title h2 {
-  padding-left: 24px;
-  padding-top: 20px;
+    padding-left: 24px;
+    padding-top: 20px;
 }
 .datatable__actions {
-  background-color: #f8f8f8 !important;
-  padding-top: 10px;
+    background-color: #f8f8f8 !important;
+    padding-top: 10px;
 }
 .table__overflow {
-  margin-top: 36px;
+    margin-top: 36px;
 }
 table.v-table thead tr {
-  height: 70px;
+    height: 70px;
 }
 table.v-table thead th {
-  font-weight: bold;
-  font-size: initial;
+    font-weight: bold;
+    font-size: initial;
 }
 table.v-table thead td {
-  font-weight: 400;
-  font-size: 75%;
+    font-weight: 400;
+    font-size: 75%;
 }
 table.v-table tbody td:last-child {
-  text-align: right;
+    text-align: right;
 }
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 .headline-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 .v-card {
-  background-color: #fff;
-  position: relative;
-  margin-top: 0;
-  margin-bottom: 0;
-  box-shadow: none;
+    background-color: #fff;
+    position: relative;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: none;
 }
 .grid-card.v-card {
-  padding: 0 20px;
+    padding: 0 20px;
 }
 .v-card__title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
 }
 .v-card__title.search-wrap {
-  padding: 15px 0;
+    padding: 15px 0;
 }
 .v-card__title .flex {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 .v-card__text .flex {
-  padding: 0 15px !important;
+    padding: 0 15px !important;
 }
 .text {
-  flex: 1;
-  font-size: 18px;
-  color: #000;
-  margin: 0;
+    flex: 1;
+    font-size: 18px;
+    color: #000;
+    margin: 0;
 }
 .orange {
-  padding: 0;
-  margin: 0;
-  min-width: 140px;
-  background-color: #ff7107 !important;
-  height: 40px;
-  font-size: 15px;
+    padding: 0;
+    margin: 0;
+    min-width: 140px;
+    background-color: #ff7107 !important;
+    height: 40px;
+    font-size: 15px;
 }
 .export-wrap {
-  padding: 0;
-  margin: 0;
-  min-width: 140px;
-  background-color: #ff7107 !important;
-  height: 40px;
-  font-size: 15px;
-  margin-right: 1%;
+    padding: 0;
+    margin: 0;
+    min-width: 140px;
+    background-color: #ff7107 !important;
+    height: 40px;
+    font-size: 15px;
+    margin-right: 1%;
 }
 .orange .v-btn__content {
-  color: #fff;
+    color: #fff;
 }
-.close-wrap{
-  color: #ff7107 !important;
+.close-wrap {
+    color: #ff7107 !important;
 }
 .headline-wrap .btn--active .btn__content:before,
 .headline-wrap .btn:focus .btn__content:before,
 .headline-wrap .btn:hover .btn__content:before {
-  background-color: transparent;
+    background-color: transparent;
 }
 .headline-wrap span.text {
-  /* margin: 0 10px; */
+    /* margin: 0 10px; */
 }
 .headline-wrap .backBtn i {
-  color: #000 !important;
+    color: #000 !important;
 }
 .headline-wrap .v-btn__content {
-  will-change: box-shadow;
-  -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    will-change: box-shadow;
+    -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .label {
-  font-size: 12px;
-  line-height: 1.33;
-  text-align: left;
-  color: #464646;
-  margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.33;
+    text-align: left;
+    color: #464646;
+    margin-bottom: 5px;
 }
 .value {
-  font-size: 16px;
-  line-height: 1.5;
-  text-align: left;
-  color: #000;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: left;
+    color: #000;
 }
 .v-dialog.v-dialog--active,
 .v-dialog:not(.v-dialog--fullscreen) {
-  max-width: 800px;
-  width:98%;
+    max-width: 800px;
+    width: 98%;
 }
 a {
-  color: #009688;
+    color: #009688;
 }
 .primary {
-  background-color: #009688 !important;
-  border-color: #009688 !important;
+    background-color: #009688 !important;
+    border-color: #009688 !important;
 }
 .primary--text {
-  color: #ff7107 !important;
+    color: #ff7107 !important;
 }
 .primary--text input,
 .primary--text textarea {
-  caret-color: #009688 !important;
+    caret-color: #009688 !important;
 }
 .primary--after::after {
-  background: #009688 !important;
+    background: #009688 !important;
 }
 .input-group-checkbox {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .readonly-wrap {
-  flex-direction: column;
+    flex-direction: column;
 }
 .input-group.readonly-wrap {
-  margin-bottom: 30px;
-  background-color: #f7f7f7;
-  padding: 10px;
-  min-height: 64px;
+    margin-bottom: 30px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    min-height: 64px;
 }
 .v-dialog:not(.dialog--fullscreen) {
-  max-height: inherit;
+    max-height: inherit;
 }
 .v-dialog:not(.v-dialog--fullscreen) .v-card__text {
-  max-height: 50vh;
-  overflow-y: auto;
+    max-height: 50vh;
+    overflow-y: auto;
 }
 .input-group__selections > div {
-  display: inline-block !important;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden !important;
-  text-overflow: ellipsis;
+    display: inline-block !important;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
 table.v-table tbody td:first-child,
 table.v-table tbody td:not(:first-child),
@@ -530,12 +494,12 @@ table.v-table thead td:first-child,
 table.v-table thead td:not(:first-child),
 table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
-  padding: 0px 15px;
-  white-space: nowrap;
+    padding: 0px 15px;
+    white-space: nowrap;
 }
 .navigation i,
 .navigation .v-list__tile__title {
-  color: #fff !important;
+    color: #fff !important;
 }
 .application .theme--light.v-list .v-list__group__header:hover,
 .application .theme--light.v-list .v-list__tile--highlighted,
@@ -543,48 +507,48 @@ table.v-table thead th:not(:first-child) {
 .theme--light .v-list .v-list__group__header:hover,
 .theme--light .v-list .v-list__tile--highlighted,
 .theme--light .v-list .v-list__tile--link:hover {
-  background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 .v-navigation-drawer .v-list {
-  background: #333;
+    background: #333;
 }
 .v-list__group.v-list__group--active {
-  background: #262626;
+    background: #262626;
 }
 .v-card__title .v-btn__content {
-  color: #fff;
+    color: #fff;
 }
 
 .v-card__title .v-input__slot {
-  width: 80%;
+    width: 80%;
 }
 .v-input__slot {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 .v-toolbar__content .v-input {
-  position: relative;
+    position: relative;
 }
 .v-toolbar__content .v-input .v-input__prepend-outer {
-  position: absolute;
-  right: 10px;
-  top: 0;
+    position: absolute;
+    right: 10px;
+    top: 0;
 }
 .v-toolbar__content .v-toolbar__title button {
-  margin-left: -11px;
+    margin-left: -11px;
 }
 .v-toolbar__content .v-toolbar__title {
-  overflow: visible;
+    overflow: visible;
 }
 .v-select.v-select--chips .v-select__selections {
-  min-height: 32px;
+    min-height: 32px;
 }
 
-input[type="date"]::-webkit-inner-spin-button {
-  display: none;
-  -webkit-appearance: none;
+input[type='date']::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
 }
-.v-icon.close-wrap{
-    background-color:#ff7107;
+.v-icon.close-wrap {
+    background-color: #ff7107;
     color: #fff !important;
     border-radius: 3px;
     padding: 5px;
@@ -593,14 +557,14 @@ input[type="date"]::-webkit-inner-spin-button {
     top: -20px;
     right: -30px;
 }
-.edit-layout .flex{
-  margin-bottom:10px;
+.edit-layout .flex {
+    margin-bottom: 10px;
 }
-.margin-bottom-none{
-  margin-bottom: 0 !important;
+.margin-bottom-none {
+    margin-bottom: 0 !important;
 }
 .v-chip__content {
-  background-color: #ee8b41;
-  color: #fff !important;
+    background-color: #ee8b41;
+    color: #fff !important;
 }
 </style>

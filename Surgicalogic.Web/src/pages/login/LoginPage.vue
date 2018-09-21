@@ -113,9 +113,6 @@ export default {
   color: #ff7107 !important;
   font-size: 15px;
 }
-.v-btn__content {
-  color: #fff;
-}
 .primary {
   background-color: #009688 !important;
   border-color: #009688 !important;
@@ -169,7 +166,7 @@ export default {
     padding: 16px 45px;
 }
 .container.fill-height {
-  background-image: url(../../images/doctor.jpg);
+  background-image: url(../../images/login.jpg);
   background-size: 100% auto;
   background-repeat: no-repeat;
 }
