@@ -110,13 +110,16 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.operationPlanId, opt => opt.MapFrom(src => src.Id))
                  .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
                  .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));
-            config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>();
+            config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>()
+                 .ForMember(dest => dest.EquipmentIds, opt => opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive).Select(x => x.EquipmentId)))
+                 .ForMember(dest => dest.OperationTypeIds, opt => opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperationTypeId)));
             config.CreateMap<OperatingRoomModel, OperatingRoomForTimelineModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
                  .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
             config.CreateMap<Planning.Model.InputModel.RoomInputModel, OperatingRoomForTimelineModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
-                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
+                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name))
+                 .ForMember(dest => dest.className, opt => opt.MapFrom(src => src.ClassName));
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>()
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("yyyy-MM-dd")))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("yyyy-MM-dd")));
@@ -180,7 +183,9 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name + " " + src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)))
                 .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => AppSettings.DoctorPicture + src.PictureUrl));
-            config.CreateMap<OperatingRoom, OperatingRoomOutputModel>();
+            config.CreateMap<OperatingRoom, OperatingRoomOutputModel>()
+                 .ForMember(dest => dest.EquipmentIds, opt => opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive).Select(x => x.EquipmentId)))
+                 .ForMember(dest => dest.OperationTypeIds, opt => opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperationTypeId)));
             config.CreateMap<OperationPlan, OperationPlanOutputModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.OperationId))
                  .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.OperatingRoomId))

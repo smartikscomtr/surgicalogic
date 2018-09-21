@@ -5,6 +5,7 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -125,6 +126,21 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<OperatingRoomOutputModel>> GetByOperationTypeIdAsync(int operationTypeId)
         {
             return await GetQueryable().Where(x => x.OperatingRoomOperationTypes.Any(t => t.IsActive && t.OperationTypeId == operationTypeId)).ProjectTo<OperatingRoomOutputModel>().ToListAsync();
+        }
+
+        public async Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync()
+        {
+            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+            var result =  await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow)).ProjectTo<RoomInputModel>().ToListAsync();
+            var unavailableRooms = await _context.OperatingRooms.Where(x => x.IsActive && (!x.IsAvailable || x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow))).ProjectTo<RoomInputModel>().ToListAsync();
+
+            foreach (var item in unavailableRooms)
+            {
+                item.ClassName = "unavailable";
+            }
+
+            result.AddRange(unavailableRooms);
+            return result;
         }
 
     }

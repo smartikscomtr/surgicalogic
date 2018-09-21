@@ -258,4 +258,7 @@ margin-left: 2%
 .utilizationInfo {
 margin-left: 2%
 }
+.unavailable {
+  background-color:darkgray;
+}
 </style>

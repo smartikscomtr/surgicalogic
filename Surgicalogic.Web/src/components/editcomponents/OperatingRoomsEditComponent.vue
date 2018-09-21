@@ -180,16 +180,7 @@ export default {
       get() {
         const vm = this;
 
-         let selectedEquipments = [];
-
-        if (vm.editAction.operatingRoomEquipments)
-        {
-          vm.editAction.operatingRoomEquipments.forEach(item => {
-            selectedEquipments.push(item.equipment.id);
-          });
-        }
-
-        return selectedEquipments;
+        return vm.editAction.equipmentIds;
       },
 
       set(val) {
@@ -203,16 +194,7 @@ export default {
       get() {
         const vm = this;
 
-        let selectedOperationTypes = [];
-
-        if (vm.editAction.operatingRoomOperationTypes)
-        {
-          vm.editAction.operatingRoomOperationTypes.forEach(item => {
-            selectedOperationTypes.push(item.operationType.id);
-          });
-        }
-
-        return selectedOperationTypes;
+        return vm.editAction.operationTypeIds;
       },
 
       set(val) {
@@ -264,12 +246,12 @@ export default {
           operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
           isAvailable:vm.editAction.isAvailable,
-          operatingRoomOperationTypes: vm.selectOperationType
+          operatingRoomOperationTypes: vm.editAction.operationTypeId
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
             vm.$store.dispatch('getOperatingRooms');
-          }, 200)
+          }, 500)
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -290,12 +272,12 @@ export default {
           operatingRoomEquipments: vm.editAction.equipmentId,
           operationTypes: vm.editAction.operationTypeId,
           isAvailable:vm.editAction.isAvailable,
-          operatingRoomOperationTypes: vm.selectOperationType
+          operatingRoomOperationTypes: vm.editAction.operationTypeId
         }).then(() => {
           setTimeout(() => {
             vm.snackbarVisible = true;
             vm.$store.dispatch('getOperatingRooms');
-          }, 200)
+          }, 500)
 
           setTimeout(() => {
             vm.snackbarVisible = false;

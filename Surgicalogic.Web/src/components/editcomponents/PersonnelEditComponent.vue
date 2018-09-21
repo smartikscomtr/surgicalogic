@@ -169,8 +169,8 @@ export default {
     selectBranch: {
       get() {
         const vm = this;
-debugger;
-        return vm.editAction.branchIds;
+
+      return vm.editAction.branchIds;
       },
 
       set(val) {

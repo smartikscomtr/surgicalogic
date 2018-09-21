@@ -49,7 +49,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
         {
             var plans = await _operationPlanStoreService.GetTomorrowOperationsAsync();
-            var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync();
+            var rooms = await _operatingRoomStoreService.GetOperatingRoomsForTimelineModelAsync();
 
             var tomorrow = DateTime.Now.AddDays(1);
             var twoDaysLater = DateTime.Now.AddDays(2);
