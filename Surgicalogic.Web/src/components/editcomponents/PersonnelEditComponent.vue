@@ -241,7 +241,7 @@ export default {
           setTimeout(() => {
             vm.snackbarVisible = true;
             vm.$store.dispatch('getPersonnels');
-          }, 200)
+          }, 500)
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -262,7 +262,7 @@ export default {
           setTimeout(() => {
             vm.snackbarVisible = true;
             vm.$store.dispatch('getPersonnels');
-          }, 200)
+          }, 500)
 
           setTimeout(() => {
             vm.snackbarVisible = false;
