@@ -51,8 +51,8 @@ namespace Surgicalogic.Api.Controllers
             var plans = await _operationPlanStoreService.GetTomorrowOperationsAsync();
             var rooms = await _operatingRoomStoreService.GetAsync<OperatingRoomForTimelineModel>();
 
-            var tomorrow = DateTime.Now.AddDays(1) ;
-            var twoDaysLater= DateTime.Now.AddDays(2);
+            var tomorrow = DateTime.Now.AddDays(1);
+            var twoDaysLater = DateTime.Now.AddDays(2);
 
             var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms.Result);
 
@@ -87,7 +87,7 @@ namespace Surgicalogic.Api.Controllers
         {
             return await _operationPlanHistoryStoreService.GetTomorrowOperationListAsync(input);
         }
-       
+
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
         public async Task<DailyPlanOutputModel> GenerateOperationPlan()
@@ -133,10 +133,8 @@ namespace Surgicalogic.Api.Controllers
 
             string req = JsonConvert.SerializeObject(surgeryPlan);
 
-            using (var client = new HttpClient())
+            using (var client = new HttpClient() { BaseAddress = new Uri(AppSettings.ApiBaseUrl), Timeout = TimeSpan.FromMinutes(10) })
             {
-                client.BaseAddress = new Uri(AppSettings.ApiBaseUrl);
-                client.Timeout = TimeSpan.FromMinutes(10);
                 HttpResponseMessage response = await client.PostAsync(AppSettings.ApiPostUrl, new StringContent(req, Encoding.Default, "application/json"));
 
                 if (response.Content != null)
