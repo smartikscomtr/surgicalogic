@@ -113,9 +113,6 @@ export default {
   color: #ff7107 !important;
   font-size: 15px;
 }
-.v-btn__content {
-  color: #fff;
-}
 .primary {
   background-color: #009688 !important;
   border-color: #009688 !important;
