@@ -95,9 +95,11 @@ Vue.component('operating-rooms-calendar-edit-component', OperatingRoomsCalendarE
 
 
 // Registering Core Components
+import LoadingComponent from '@/components/coreComponents/LoadingComponent';
 import SnackbarComponent from '@/components/coreComponents/SnackbarComponent';
 
 Vue.component('snackbar-component', SnackbarComponent);
+Vue.component('loading-component', LoadingComponent);
 
 import {
   setupAxios,

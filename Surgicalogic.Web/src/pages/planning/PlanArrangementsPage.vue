@@ -1,5 +1,8 @@
 <template>
   <div>
+    <loading-component :loading="getLoading">
+    </loading-component>
+
     <v-btn class="drawplan-wrap"
            @click.native="drawPlan()">
       {{ $t('planarrangements.drawPlan')}}
@@ -36,6 +39,14 @@ import Vis from 'vis/dist/vis.js';
 export default {
   data() {
     return {};
+  },
+
+  computed: {
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.planArrangementsModule.loading;
+    }
   },
 
   methods: {
@@ -202,7 +213,6 @@ function calcuteOvertimeAndUtilization(start, roomsCount, workingHourStart, work
 .vis-time-axis .vis-text {
   font-size: 11px;
 }
-
 .drawplan-wrap {
   left: 25px;
   top: 11px;
