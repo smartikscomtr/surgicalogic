@@ -1,222 +1,211 @@
 <template>
   <div>
-    <v-card class="container fluid grid-list-md">
+    <div class="container fluid grid-list-md clinic-page">
       <v-layout wrap edit-layout>
-        <v-flex xs12 sm3 md3>
-          <v-autocomplete v-model="selectBranch"
-                          :items="branches"
-                          :label="$t('branches.branch')"
-                          box
-                          :filter="customFilter"
-                          @change="filterBranch()"
-                          item-text="name"
-                          item-value="id">
+        <v-flex lg4 md3 sm6 xs12>
+          <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box :filter="customFilter" @change="filterBranch()" item-text="name" item-value="id">
           </v-autocomplete>
         </v-flex>
 
-        <v-flex xs12 sm3 md3>
-          <v-autocomplete v-model="selectDoctor"
-                          :items="doctors"
-                          :label="$t('personnel.doctor')"
-                          box
-                          :filter="customFilter"
-                           @change="filterDoctor()"
-                          item-text="personnelTitleName"
-                          item-value="id">
+        <v-flex lg4 md3 sm6 xs12>
+          <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilter" @change="filterDoctor()" item-text="personnelTitleName" item-value="id">
           </v-autocomplete>
         </v-flex>
       </v-layout>
 
-    <v-container grid-list-md
-                 grey
-                 lighten-4>
       <v-layout row wrap>
-        <v-flex v-for="(doctorCard, i) in doctorCards"
-                :key="i"
-                xs2 sm2 m2>
+        <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg2 md3 sm6 xs12>
           <v-card>
-            <img :src="doctorCard.pictureUrl"
-                  height="300px"
-                  width="250px">
-              <span class="doctorName-wrap"
-                    v-text="doctorCard.personnelTitleName">
-              </span>
-
-              <v-spacer></v-spacer>
-
-              <span class="branchName-wrap"
-                    v-text="doctorCard.branchNames">
-              </span>
-            </img>
-
-            <v-spacer></v-spacer>
-
+            <img :src="doctorCard.pictureUrl" height="150px" />
+            <span class="doctorName-wrap" v-text="doctorCard.personnelTitleName">
+            </span>
+            <span class="branchName-wrap" v-text="doctorCard.branchNames">
+            </span>
             <v-btn @click="$router.push('/appointmentcalendarpage')"> Randevu Al
             </v-btn>
           </v-card>
         </v-flex>
       </v-layout>
-    </v-container>
-    </v-card>
+    </div>
   </div>
 </template>
 
 <script>
-
 export default {
-
-  data() {
-    const vm = this;
-
-    return {
-      branchId: null,
-      doctorId: null,
-      filteredDoctors: [],
-      doctorCards: []
-    };
-  },
-
-  computed: {
-    branches() {
-      const vm = this;
-
-      return vm.$store.state.branchesModule.allBranches;
-    },
-
-    selectBranch: {
-      get() {
+    data() {
         const vm = this;
 
-        return vm.branchId;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.branchId = val;
-      }
+        return {
+            branchId: null,
+            doctorId: null,
+            filteredDoctors: [],
+            doctorCards: []
+        };
     },
 
-    doctors: {
-       get() {
-        const vm = this;
+    computed: {
+        branches() {
+            const vm = this;
 
-        return vm.filteredDoctors;
+            return vm.$store.state.branchesModule.allBranches;
+        },
 
-      },
+        selectBranch: {
+            get() {
+                const vm = this;
 
-      set(val) {
-        const vm = this;
+                return vm.branchId;
+            },
 
-        vm.filteredDoctors = val;
-      }
-    },
+            set(val) {
+                const vm = this;
 
-    selectDoctor: {
-      get() {
-        const vm = this;
+                vm.branchId = val;
+            }
+        },
 
-        return vm.doctorId;
-      },
+        doctors: {
+            get() {
+                const vm = this;
 
-      set(val) {
-        const vm = this;
+                return vm.filteredDoctors;
+            },
 
-        vm.doctorId = val;
-      }
-    }
-  },
+            set(val) {
+                const vm = this;
 
-  methods: {
-    getImage () {
-      const min = 550
-      const max = 560
+                vm.filteredDoctors = val;
+            }
+        },
 
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    },
+        selectDoctor: {
+            get() {
+                const vm = this;
 
-    customFilter (item, queryText, itemText) {
-      const vm = this;
+                return vm.doctorId;
+            },
 
-      const text = vm.replaceForAutoComplete(item.name);
-      const searchText = vm.replaceForAutoComplete(queryText);
+            set(val) {
+                const vm = this;
 
-      return text.indexOf(searchText) > -1;
-    },
-
-    replaceForAutoComplete(text) {
-      return text.replace(/İ/g, 'i').replace(/I/g, 'ı').toLowerCase();
-    },
-
-    filterBranch() {
-      const vm = this;
-
-      vm.$store.dispatch('getDoctorsByBranchIdAsync',
-      {
-        branchId: vm.branchId
-      }).then(() => {
-          setTimeout(() => {
-            vm.filteredDoctors = vm.$store.state.personnelModule.filteredDoctor;
-            vm.doctorCards = vm.filteredDoctors;
-        }, 1000)
-      });
-    },
-
-    filterDoctor() {
-      const vm = this;
-      var doctor = [];
-      vm.doctorCards = [];
-      for (let index = 0; index < vm.filteredDoctors.length; index++) {
-        const element = vm.filteredDoctors[index];
-
-        if (element.id == vm.doctorId){
-            vm.doctorCards.push(vm.filteredDoctors[index]);
+                vm.doctorId = val;
+            }
         }
-      }
+    },
+
+    methods: {
+        getImage() {
+            const min = 550;
+            const max = 560;
+
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+
+        customFilter(item, queryText, itemText) {
+            const vm = this;
+
+            const text = vm.replaceForAutoComplete(item.name);
+            const searchText = vm.replaceForAutoComplete(queryText);
+
+            return text.indexOf(searchText) > -1;
+        },
+
+        replaceForAutoComplete(text) {
+            return text
+                .replace(/İ/g, 'i')
+                .replace(/I/g, 'ı')
+                .toLowerCase();
+        },
+
+        filterBranch() {
+            const vm = this;
+
+            vm.$store
+                .dispatch('getDoctorsByBranchIdAsync', {
+                    branchId: vm.branchId
+                })
+                .then(() => {
+                    setTimeout(() => {
+                        vm.filteredDoctors =
+                            vm.$store.state.personnelModule.filteredDoctor;
+                        vm.doctorCards = vm.filteredDoctors;
+                    }, 1000);
+                });
+        },
+
+        filterDoctor() {
+            const vm = this;
+            var doctor = [];
+            vm.doctorCards = [];
+            for (let index = 0; index < vm.filteredDoctors.length; index++) {
+                const element = vm.filteredDoctors[index];
+
+                if (element.id == vm.doctorId) {
+                    vm.doctorCards.push(vm.filteredDoctors[index]);
+                }
+            }
+        }
+    },
+
+    created() {
+        const vm = this;
+
+        vm.$store
+            .dispatch('getDoctorsByBranchIdAsync', {
+                branchId: 0
+            })
+            .then(() => {
+                setTimeout(() => {
+                    vm.filteredDoctors =
+                        vm.$store.state.personnelModule.filteredDoctor;
+                    vm.doctorCards = vm.filteredDoctors;
+                }, 1000);
+            });
+
+        vm.$store.dispatch('getAllBranches');
     }
-  },
-
-  created () {
-    const vm = this;
-
-    vm.$store.dispatch('getDoctorsByBranchIdAsync', {
-      branchId: 0
-    }).then(() => {
-        setTimeout(() => {
-          vm.filteredDoctors = vm.$store.state.personnelModule.filteredDoctor;
-          vm.doctorCards = vm.filteredDoctors;
-      }, 1000)
-    });
-
-    vm.$store.dispatch('getAllBranches');
-  }
 };
-
 </script>
 
 <style>
-.doctorName-wrap {
-  color: #cd5e15;
-  font-family: serif;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 20px;
-  padding-left: 10px !important;
-  padding-right: 10px !important;
+.clinic-page .layout > div .v-card {
+    height: 100%;
+    text-align: center;
 }
-.branchName-wrap {
-  color: #cd5e15;
-  font-family: serif;
-  font-size: 10px;
-  text-transform: uppercase;
-  font-weight: 600;
-  background-color: #fff;
-  padding: 1.5px 3px;
-  display: inline-block;
-  min-width: 100px;
-  width: auto;
-  max-width: 180px;
-  border-radius: 4px;
-  -webkit-box-decoration-break: clone;
+.clinic-page .layout > div .v-card img {
+    margin: 0 auto;
+    display: block;
+}
+.clinic-page .layout > div .v-card span {
+    display: block;
+    margin-bottom: 10px;
+}
+.clinic-page .layout > div .v-card img + span {
+    margin-top: 20px;
+}
+.clinic-page .layout > div .v-btn {
+    margin: 10px;
+    background-color: #ff7107 !important;
+}
+.clinic-page .layout > div .v-btn {
+    color: #fff;
+}
+.clinic-page .v-input__slot {
+    background-color: #fff !important;
+    color: #ff7107 !important;
+}
+.clinic-page .v-input__slot:before {
+    border-color: rgba(0, 0, 0, 0.42) !important;
+}
+.clinic-page .v-menu__activator label.primary--text,
+.clinic-page .v-menu__activator .v-input__icon i.primary--text {
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+.clinic-page .v-menu__activator--active .v-select__slot label.primary--text,
+.clinic-page .v-menu__activator--active .v-input__icon i {
+    color: #ff7107 !important;
+}
+.v-list .primary--text {
+    color: inherit !important;
 }
 </style>
