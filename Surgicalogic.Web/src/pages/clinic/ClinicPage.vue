@@ -125,11 +125,9 @@ export default {
                     branchId: vm.branchId
                 })
                 .then(() => {
-                    setTimeout(() => {
                         vm.filteredDoctors =
                             vm.$store.state.personnelModule.filteredDoctor;
                         vm.doctorCards = vm.filteredDoctors;
-                    }, 1000);
                 });
         },
 
@@ -155,11 +153,9 @@ export default {
                 branchId: 0
             })
             .then(() => {
-                setTimeout(() => {
                     vm.filteredDoctors =
                         vm.$store.state.personnelModule.filteredDoctor;
                     vm.doctorCards = vm.filteredDoctors;
-                }, 1000);
             });
 
         vm.$store.dispatch('getAllBranches');

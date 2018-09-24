@@ -77,7 +77,6 @@ const workTypesModule = {
               context.commit('insertWorkType', {
                 item: response.data.result
               }) //Insert the Work Type in the store
-              resolve(response);
             }
 
             resolve(response);
@@ -106,7 +105,6 @@ const workTypesModule = {
           .then(response => {
             if (response.data.info.succeeded == true) {
               context.commit('updateWorkType', payload) //Update the Work Type in the store
-              resolve(response);
             }
 
             resolve(response);

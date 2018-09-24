@@ -155,12 +155,17 @@ const personnelModule = {
     },
 
     getDoctorsByBranchIdAsync(context, payload) {
-      axios.get('Personnel/GetDoctorsByBranchIdAsync/' + payload.branchId).then(response => {
-        if (response.data) {
-          context.commit('setDoctorsByBranchIdAsync', response.data)
-        }
-      })
+      return new Promise((resolve, reject) => {
+        axios.get('Personnel/GetDoctorsByBranchIdAsync/' + payload.branchId).then(response => {
+          if (response.data) {
+            context.commit('setDoctorsByBranchIdAsync', response.data)
+          }
+
+          resolve(response);
+        })
+      });
     },
+
 
     excelExportPersonnel(context) {
       axios.get('Personnel/ExcelExport')
