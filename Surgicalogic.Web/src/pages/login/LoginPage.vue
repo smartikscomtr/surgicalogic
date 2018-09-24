@@ -135,8 +135,8 @@ export default {
   height: 40px;
   font-size: 15px;
 }
-.btnSave .btn__content {
-    color: #fff;
+.btnSave .v-btn__content {
+  color: #fff;
 }
 .btnReset {
   padding: 0;
