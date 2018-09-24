@@ -34,20 +34,20 @@ const operationTypeModule = {
 
     updateOperationType(state, payload) {
       state.operationTypes.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     },
 
-    setAllBranches(state, payload) {
+    setAllBranchesForOperationType(state, payload) {
       state.allBranches = payload;
     },
 
-    setAllEquipments(state, payload) {
+    setAllEquipmentsForOperationType(state, payload) {
       state.allEquipments = payload;
     },
 
-    setAllOperatingRooms(state, payload) {
+    setAllOperatingRoomsForOperationType(state, payload) {
       state.allOperatingRooms = payload;
     }
   },
@@ -61,7 +61,7 @@ const operationTypeModule = {
       axios.get('OperationType/GetOperationTypes', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setOperationTypes', response.data) //Set the Operation Types in the store
         }
 
@@ -71,13 +71,19 @@ const operationTypeModule = {
     },
 
     insertOperationType(context, payload) {
-      axios.post('OperationType/InsertOperationType', payload)
-        .then(response => {
-          if (response.statusText == 'OK') {
-            payload.id = response.data;
-            context.commit('insertOperationType', { item: payload }) //Insert the Operation Types in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('OperationType/InsertOperationType', payload)
+          .then(response => {
+            if (response.statusText == 'OK') {
+              payload.id = response.data;
+              context.commit('insertOperationType', {
+                item: payload
+              }) //Insert the Operation Types in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deleteOperationType(context, payload) {
@@ -85,7 +91,9 @@ const operationTypeModule = {
         axios.post('OperationType/DeleteOperationType/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteOperationType', { payload }); //Delete the Operation Types in the store
+              context.commit('deleteOperationType', {
+                payload
+              }); //Delete the Operation Types in the store
             }
 
             resolve(response);
@@ -94,32 +102,35 @@ const operationTypeModule = {
     },
 
     updateOperationType(context, payload) {
-      axios.post('OperationType/UpdateOperationType',  payload)
-        .then(response => {
-          context.commit('updateOperationType', response.data.result) //Update the OperationTypes in the store
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('OperationType/UpdateOperationType', payload)
+          .then(response => {
+            context.commit('updateOperationType', response.data.result) //Update the OperationTypes in the store
+            resolve(response);
+          })
+      });
     },
 
-    getAllBranches(context) {
+    getAllBranchesForOperationType(context) {
       axios.get('Branch/GetAllBranches')
         .then(response => {
-          if (response.data.info.succeeded == true){
-            context.commit('setAllBranches', response.data.result) //Set the All Branches in the store
+          if (response.data.info.succeeded == true) {
+            context.commit('setAllBranchesForOperationType', response.data.result) //Set the All Branches in the store
           }
         })
     },
 
-    getAllEquipments(context) {
+    getAllEquipmentsForOperationType(context) {
       axios.get('Equipment/GetAllEquipments')
         .then(response => {
-          context.commit('setAllEquipments', response.data.result) //Set the All Equipments in the store
+          context.commit('setAllEquipmentsForOperationType', response.data.result) //Set the All Equipments in the store
         })
     },
 
-    getAllOperatingRooms(context) {
+    getAllOperatingRoomsForOperationType(context) {
       axios.get('OperatingRoom/GetAllOperatingRooms')
         .then(response => {
-          context.commit('setAllOperatingRooms', response.data.result) //Set the All Operating Rooms in the store
+          context.commit('setAllOperatingRoomsForOperationType', response.data.result) //Set the All Operating Rooms in the store
         })
     },
 
@@ -128,7 +139,7 @@ const operationTypeModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })

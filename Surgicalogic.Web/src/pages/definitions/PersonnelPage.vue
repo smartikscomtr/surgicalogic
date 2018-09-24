@@ -137,19 +137,19 @@ export default {
 
      //We are accessing getWorkTypes in vuex store
      if(vm.workTypeLoadOnce){
-        vm.$store.dispatch('getAllWorkTypes');
+        vm.$store.dispatch('getAllWorkTypesForPersonnel');
         vm.workTypeLoadOnce = false;
      }
 
      //We are accessing getPersonnelTitles in vuex store
      if(vm.personnelTitleLoadOnce){
-        vm.$store.dispatch('getAllPersonnelTitles');
+        vm.$store.dispatch('getAllPersonnelTitlesForPersonnel');
         vm.personnelTitleLoadOnce = false;
      }
 
      //We are accessing getBranches in vuex store
      if(vm.branchLoadOnce){
-        vm.$store.dispatch('getAllBranches');
+        vm.$store.dispatch('getAllBranchesForPersonnel');
         vm.branchLoadOnce = false;
      }
     }

@@ -32,7 +32,7 @@ const equipmentModule = {
 
     updateEquipment(state, payload) {
       state.equipments.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     },
@@ -49,32 +49,25 @@ const equipmentModule = {
       context.commit('setLoading', true);
 
       axios.get('Equipment/GetEquipments', {
-        params: params
-      })
-      .then(response => {
-        if (response.data.info.succeeded == true){
-          context.commit('setEquipments', response.data) //Set the Equipments in the store
-        }
-
-        context.commit('setLoading', false);
-      })
-    },
-
-    insertEquipment(context, payload) {
-      axios.post('Equipment/InsertEquipment', payload)
+          params: params
+        })
         .then(response => {
           if (response.data.info.succeeded == true) {
-            context.commit('insertEquipment', { item: response.data.result }) //Insert the Equipments in the store
+            context.commit('setEquipments', response.data) //Set the Equipments in the store
           }
+
+          context.commit('setLoading', false);
         })
     },
 
-    deleteEquipment(context, payload) {
+    insertEquipment(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('Equipment/DeleteEquipment/' + payload.id)
+        axios.post('Equipment/InsertEquipment', payload)
           .then(response => {
-            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteEquipment', { payload }); //Delete the Equipments in the store
+            if (response.data.info.succeeded == true) {
+              context.commit('insertEquipment', {
+                item: response.data.result
+              }) //Insert the Equipments in the store
             }
 
             resolve(response);
@@ -82,17 +75,35 @@ const equipmentModule = {
       });
     },
 
-    updateEquipment(context, payload){
-      axios.post('Equipment/UpdateEquipment', payload)
+    deleteEquipment(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('Equipment/DeleteEquipment/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteEquipment', {
+                payload
+              }); //Delete the Equipments in the store
+            }
+
+            resolve(response);
+          })
+      });
+    },
+
+    updateEquipment(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('Equipment/UpdateEquipment', payload)
           .then(response => {
             context.commit('updateEquipment', response.data.result) //Update the Equipments in the store
-      })
+            resolve(response);
+          })
+      });
     },
 
     getAllEquipments(context) {
       axios.post('Equipment/GetAllEquipments')
         .then(response => {
-          if (response.data.info.succeeded == true){
+          if (response.data.info.succeeded == true) {
             context.commit('setAllEquipments', response.data.result) //Set the Equipments in the store
           }
         })
@@ -100,9 +111,9 @@ const equipmentModule = {
 
     getAllEquipmentTypes(context) {
       axios.get('EquipmentType/GetAllEquipmentTypes')
-      .then(response => {
-        context.commit('setAllEquipmentTypes', response.data.result) //Set the All Equipment Types in the store
-      })
+        .then(response => {
+          context.commit('setAllEquipmentTypes', response.data.result) //Set the All Equipment Types in the store
+        })
     },
 
     excelExportEquipments(context) {
@@ -110,7 +121,7 @@ const equipmentModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })

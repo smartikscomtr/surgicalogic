@@ -42,7 +42,7 @@ const operatingRoomModule = {
 
     updateOperatingRoom(state, payload) {
       state.operatingRooms.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     },
@@ -61,7 +61,7 @@ const operatingRoomModule = {
       axios.get('OperatingRoom/GetOperatingRooms', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setOperatingRooms', response.data) //Set the Operating Rooms in the store
         }
 
@@ -72,18 +72,24 @@ const operatingRoomModule = {
 
     getAllOperatingRooms(context) {
       axios.get('OperatingRoom/GetAllOperatingRooms')
-          .then(response => {
-            context.commit('setAllOperatingRooms', response.data.result) //Set the Operating Rooms in the store
+        .then(response => {
+          context.commit('setAllOperatingRooms', response.data.result) //Set the Operating Rooms in the store
         })
     },
 
     insertOperatingRoom(context, payload) {
-      axios.post('OperatingRoom/InsertOperatingRoom', payload)
-        .then(response => {
-          if (response.data.info.succeeded == true) {
-            context.commit('insertOperatingRoom', { item: response.data.result }) //Insert the Operating Rooms in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('OperatingRoom/InsertOperatingRoom', payload)
+          .then(response => {
+            if (response.data.info.succeeded == true) {
+              context.commit('insertOperatingRoom', {
+                item: response.data.result
+              }) //Insert the Operating Rooms in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deleteOperatingRoom(context, payload) {
@@ -91,7 +97,9 @@ const operatingRoomModule = {
         axios.post('OperatingRoom/DeleteOperatingRoom/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteOperatingRoom', { payload }); //Delete the Operating Rooms in the store
+              context.commit('deleteOperatingRoom', {
+                payload
+              }); //Delete the Operating Rooms in the store
             }
 
             resolve(response);
@@ -100,10 +108,13 @@ const operatingRoomModule = {
     },
 
     updateOperatingRoom(context, payload) {
-      axios.post('OperatingRoom/UpdateOperatingRoom', payload)
-        .then(response => {
-          context.commit('updateOperatingRoom', response.data.result) //Update the Operating Rooms in the store
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('OperatingRoom/UpdateOperatingRoom', payload)
+          .then(response => {
+            context.commit('updateOperatingRoom', response.data.result) //Update the Operating Rooms in the store
+            resolve(response);
+          })
+      });
     },
 
     getNonPortableEquipments(context) {
@@ -115,8 +126,8 @@ const operatingRoomModule = {
 
     getAllOperationTypes(context) {
       axios.get('OperationType/GetAllOperationTypes')
-          .then(response => {
-            context.commit('setAllOperationTypes', response.data.result) //Set the Operation Types in the store
+        .then(response => {
+          context.commit('setAllOperationTypes', response.data.result) //Set the Operation Types in the store
         })
     },
 
@@ -125,7 +136,7 @@ const operatingRoomModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })

@@ -8,8 +8,8 @@ const operationModule = {
     allOperations: [],
     allOperationTypes: [],
     allBranches: [],
-    filteredOperationTypes:[],
-    filteredPersonnels:[],
+    filteredOperationTypes: [],
+    filteredPersonnels: [],
     filteredOperatingRooms: [],
     globalDate: null
   },
@@ -42,35 +42,32 @@ const operationModule = {
 
     updateOperation(state, payload) {
       state.operation.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     },
 
-    setAllOperationType(state, payload) {
+    setAllOperationTypeForOperation(state, payload) {
       state.allOperationTypes = payload;
     },
 
-    setOperationTypesByBranchId(state,payload)
-    {
+    setOperationTypesByBranchId(state, payload) {
       state.filteredOperationTypes = payload;
     },
 
-    setPersonnelsByBranchId(state,payload)
-    {
+    setPersonnelsByBranchId(state, payload) {
       state.filteredPersonnels = payload;
     },
 
-    setOperatingRoomsByOperationTypeId(state, payload)
-    {
+    setOperatingRoomsByOperationTypeId(state, payload) {
       state.filteredOperatingRooms = payload;
     },
 
-    setAllBranches(state, payload) {
+    setAllBranchesForOperation(state, payload) {
       state.allBranches = payload;
     },
 
-    saveGlobalDate(state, newValue){
+    saveGlobalDate(state, newValue) {
       state.globalDate = newValue;
     }
   },
@@ -84,7 +81,7 @@ const operationModule = {
       axios.get('Operation/GetOperations', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setOperation', response.data) //Set the Operation in the store
         }
 
@@ -95,8 +92,8 @@ const operationModule = {
 
     getAllOperations(context) {
       axios.get('Operation/GetAllOperations')
-          .then(response => {
-            context.commit('setAllOperations', response.data.result) //Set the Operation in the store
+        .then(response => {
+          context.commit('setAllOperations', response.data.result) //Set the Operation in the store
         })
     },
 
@@ -104,7 +101,9 @@ const operationModule = {
       axios.post('Operation/InsertOperation', payload)
         .then(response => {
           if (response.data.info.succeeded == true) {
-            context.commit('insertOperation', { item: response.data.result }) //Insert the Operation in the store
+            context.commit('insertOperation', {
+              item: response.data.result
+            }) //Insert the Operation in the store
           }
         })
     },
@@ -114,7 +113,9 @@ const operationModule = {
         axios.post('Operation/DeleteOperation/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteOperation', { payload }); //Delete the Operation in the store
+              context.commit('deleteOperation', {
+                payload
+              }); //Delete the Operation in the store
             }
 
             resolve(response);
@@ -129,42 +130,52 @@ const operationModule = {
         })
     },
 
-    getAllOperationTypes(context) {
+    getAllOperationTypesForOperation(context) {
       axios.get('OperationType/GetAllOperationTypes').then(response => {
         if (response.data.info.succeeded == true) {
-          context.commit('setAllOperationType', response.data.result) //Set the Operation Types in the store
+          context.commit('setAllOperationTypeForOperation', response.data.result) //Set the Operation Types in the store
         }
       })
     },
 
     getOperationTypesByBranchId(context, payload) {
-      axios.get('OperationType/GetOperationTypesByBranchId/'+ payload.branchId).then(response => {
-        if (response.data) {
-          context.commit('setOperationTypesByBranchId', response.data) //Set the Operation Types in the store
-        }
+      return new Promise((resolve, reject) => {
+        axios.get('OperationType/GetOperationTypesByBranchId/' + payload.branchId).then(response => {
+          if (response.data) {
+            context.commit('setOperationTypesByBranchId', response.data) //Set the Operation Types in the store
+          }
+          resolve(response);
+        }, error => {
+          reject(error);
+        })
       })
     },
 
     getPersonnelsByBranchId(context, payload) {
-      axios.get('Personnel/GetPersonnelsByBranchIdAsync/'+ payload.branchId).then(response => {
-        if (response.data) {
-          context.commit('setPersonnelsByBranchId', response.data) //Set the Operation Types in the store
-        }
+      return new Promise((resolve, reject) => {
+        axios.get('Personnel/GetPersonnelsByBranchIdAsync/' + payload.branchId).then(response => {
+          if (response.data) {
+            context.commit('setPersonnelsByBranchId', response.data)
+          }
+          resolve(response);
+        }, error => {
+          reject(error);
+        })
       })
     },
 
     getOperatingRoomsByOperationTypeId(context, payload) {
-      axios.get('OperatingRoom/GetOperatingRoomsByOperationTypeId/'+ payload.operationTypeId).then(response => {
+      axios.get('OperatingRoom/GetOperatingRoomsByOperationTypeId/' + payload.operationTypeId).then(response => {
         if (response.data) {
           context.commit('setOperatingRoomsByOperationTypeId', response.data) //Set the Operation Types in the store
         }
       })
     },
 
-    getAllBranches(context) {
+    getAllBranchesForOperation(context) {
       axios.get('Branch/GetAllBranches').then(response => {
         if (response.data.info.succeeded == true) {
-          context.commit('setAllBranches', response.data.result) //Set the Operation Types in the store
+          context.commit('setAllBranchesForOperation', response.data.result) //Set the Operation Types in the store
         }
       })
     },
@@ -174,7 +185,7 @@ const operationModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })

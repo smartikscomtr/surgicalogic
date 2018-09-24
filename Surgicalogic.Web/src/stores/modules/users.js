@@ -30,7 +30,7 @@ const usersModule = {
 
     updateUser(state, payload) {
       state.users.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     }
@@ -43,7 +43,7 @@ const usersModule = {
       context.commit('setLoading', true);
 
       axios.post('User/GetUsers').then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setUsers', response.data.result) //Set the Users in the store
         }
 
@@ -52,13 +52,19 @@ const usersModule = {
     },
 
     insertUser(context, payload) {
-      axios.post('User/InsertUser', payload)
-        .then(response => {
-          if (response.statusText == 'OK') {
-            payload.id = response.data;
-            context.commit('insertUser', { item: response.data.result }) //Insert the User in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('User/InsertUser', payload)
+          .then(response => {
+            if (response.statusText == 'OK') {
+              payload.id = response.data;
+              context.commit('insertUser', {
+                item: response.data.result
+              }) //Insert the User in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deleteUser(context, payload) {
@@ -66,7 +72,9 @@ const usersModule = {
         axios.post('User/DeleteUser/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteUser', { payload }); //Delete the User in the store
+              context.commit('deleteUser', {
+                payload
+              }); //Delete the User in the store
             }
 
             resolve(response);
@@ -75,10 +83,13 @@ const usersModule = {
     },
 
     updateUser(context, payload) {
-      axios.post('User/UpdateUser', payload)
-        .then(response => {
-          context.commit('updateUser', response.data.result) //Update the User in the store
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('User/UpdateUser', payload)
+          .then(response => {
+            context.commit('updateUser', response.data.result) //Update the User in the store
+            resolve(response);
+          })
+      });
     },
 
     resetPassword(context, payload) {
@@ -100,7 +111,7 @@ const usersModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })

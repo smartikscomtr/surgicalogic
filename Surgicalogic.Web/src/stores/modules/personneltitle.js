@@ -4,7 +4,7 @@ const personnelTitleModule = {
   state: {
     personnelTitle: [],
     loading: false,
-    totalCount:0
+    totalCount: 0
   },
 
   mutations: {
@@ -31,7 +31,7 @@ const personnelTitleModule = {
 
     updatePersonnelTitle(state, payload) {
       state.personnelTitle.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     }
@@ -46,7 +46,7 @@ const personnelTitleModule = {
       axios.get('PersonnelTitle/GetPersonnelTitles', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setPersonnelTitles', response.data) //Set the Personnel Title in the store
         }
 
@@ -56,12 +56,18 @@ const personnelTitleModule = {
     },
 
     insertPersonnelTitle(context, payload) {
-      axios.post('PersonnelTitle/InsertPersonnelTitle', payload)
-        .then(response => {
-          if (response.statusText == 'OK') {
-            context.commit('insertPersonnelTitle', { item: response.data.result }) //Insert the Personnel Title in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('PersonnelTitle/InsertPersonnelTitle', payload)
+          .then(response => {
+            if (response.statusText == 'OK') {
+              context.commit('insertPersonnelTitle', {
+                item: response.data.result
+              }) //Insert the Personnel Title in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deletePersonnelTitle(context, payload) {
@@ -69,7 +75,9 @@ const personnelTitleModule = {
         axios.post('PersonnelTitle/DeletePersonnelTitle/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deletePersonnelTitle', { payload }); //Delete the Personnel Title in the store
+              context.commit('deletePersonnelTitle', {
+                payload
+              }); //Delete the Personnel Title in the store
             }
 
             resolve(response);
@@ -78,10 +86,13 @@ const personnelTitleModule = {
     },
 
     updatePersonnelTitle(context, payload) {
-      axios.post('PersonnelTitle/UpdatePersonnelTitle', payload)
-        .then(response => {
-          context.commit('updatePersonnelTitle', response.data.result) //Update the Personnel Title in the store
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('PersonnelTitle/UpdatePersonnelTitle', payload)
+          .then(response => {
+            context.commit('updatePersonnelTitle', response.data.result) //Update the Personnel Title in the store
+            resolve(response);
+          })
+      });
     },
 
     excelExportPersonnelTitle(context) {
@@ -89,7 +100,7 @@ const personnelTitleModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })
