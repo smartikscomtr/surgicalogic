@@ -59,6 +59,7 @@ const planArrangementsModule = {
     getPlanArrangements(context, params) {
       context.commit('setLoading', true);
 
+      return new Promise((resolve, reject) => {
       axios.get('OperationPlan/GetOperationPlans', {
         params: params
       }).then(response => {
@@ -67,8 +68,12 @@ const planArrangementsModule = {
         }
 
         context.commit('setLoading', false);
-      })
-
+        resolve(response);
+      }, error => {
+        // http failed, let the calling function know that action did not work out
+        reject(error);
+    })
+    })
     },
 
     // getAllOperationPlans(context) {

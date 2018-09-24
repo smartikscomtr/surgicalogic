@@ -92,9 +92,7 @@ export default {
 
       var container = document.getElementById('visualization');
 
-      vm.$store.dispatch('getPlanArrangements');
-
-      setTimeout(() => {
+      vm.$store.dispatch('getPlanArrangements').then(response => {
         var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
         var groups = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.rooms);
 
@@ -142,7 +140,7 @@ export default {
 
       var timeline = new Vis.Timeline(container, items, groups, options);
 
-    }, 500);
+    });
   }
 }
 
