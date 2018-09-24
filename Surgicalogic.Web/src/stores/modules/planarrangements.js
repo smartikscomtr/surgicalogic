@@ -104,6 +104,7 @@ const planArrangementsModule = {
     updatePlanArrangements(context, payload) {
       context.commit('setLoading', true);
 
+      return new Promise((resolve, reject) => {
       axios.post('OperationPlan/UpdateOperationPlan', payload, {
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +112,9 @@ const planArrangementsModule = {
         }})
         .then(response => {
           context.commit('setLoading', false);
+         resolve(response);
         });
+      })
     },
 
     getTomorrowOperationList(context){

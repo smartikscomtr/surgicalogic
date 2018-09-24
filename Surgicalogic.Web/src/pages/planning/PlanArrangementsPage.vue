@@ -86,7 +86,9 @@ export default {
           operations.push(operation);
       }
 
-      vm.$store.dispatch('updatePlanArrangements', JSON.stringify(operations));
+      vm.$store.dispatch('updatePlanArrangements', JSON.stringify(operations)).then(response => {
+        vm.$store.dispatch('getTomorrowOperationList');
+      });;
     },
 
     getOperationPlan() {
