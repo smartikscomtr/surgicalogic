@@ -95,7 +95,6 @@ export default {
       const vm = this;
 
       var container = document.getElementById('visualization');
-      container.innerHTML = "";
 
       vm.$store.dispatch('getPlanArrangements').then(response => {
       var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
@@ -143,6 +142,7 @@ export default {
         }
       };
 
+      container.innerHTML = "";
       var timeline = new Vis.Timeline(container, items, groups, options);
 
       });
