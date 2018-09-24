@@ -37,7 +37,7 @@
 
               <v-btn class="btnSave btn--flat"
                      @click="updatePassword()">
-                Update
+                Yenile
               </v-btn>
             </v-card-actions>
 

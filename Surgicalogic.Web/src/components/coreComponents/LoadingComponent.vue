@@ -1,14 +1,10 @@
 <template>
   <div>
-    <v-layout row justify-center>
-      <v-dialog v-model="loading"  persistent content-class="loading-dialog">
-        <v-container fill-height>
-          <v-layout row justify-center align-center>
-            <v-progress-linear :indeterminate="true"></v-progress-linear>
-          </v-layout>
-        </v-container>
-      </v-dialog>
-    </v-layout>
+    <v-progress-circular v-model="loading"
+                         :size="150"
+                         :width="15"
+                         indeterminate>
+    </v-progress-circular>
   </div>
 </template>
 
@@ -19,17 +15,18 @@ export default {
       type: Boolean,
       required: false
     }
-  },
-
-  data() {
-    return {
-    };
   }
 }
 </script>
 
 <style>
-.loading-dialog{
-  background-color: #232222;
+.v-progress-circular{
+    margin: 172px 0 0px -124px;
+    color: #80cbc4;
+    background-color: #fafafa;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    border-radius: 50%;
 }
 </style>
