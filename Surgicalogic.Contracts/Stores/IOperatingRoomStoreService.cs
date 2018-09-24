@@ -17,6 +17,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomOperationTypesAsync(OperatingRoomInputModel item);
         Task<List<RoomInputModel>> GetAvailableRoomsAsync();
         Task<List<OperatingRoomOutputModel>> GetByOperationTypeIdAsync(int operationTypeId);
-        Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync();
+        Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync(bool activeOnly = true);
     }
 }

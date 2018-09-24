@@ -98,6 +98,7 @@ const operationModule = {
     },
 
     insertOperation(context, payload) {
+      return new Promise((resolve, reject) => {
       axios.post('Operation/InsertOperation', payload)
         .then(response => {
           if (response.data.info.succeeded == true) {
@@ -105,8 +106,11 @@ const operationModule = {
               item: response.data.result
             }) //Insert the Operation in the store
           }
+
+          resolve(response);
         })
-    },
+    });
+  },
 
     deleteOperation(context, payload) {
       return new Promise((resolve, reject) => {
@@ -124,11 +128,14 @@ const operationModule = {
     },
 
     updateOperation(context, payload) {
+      return new Promise((resolve, reject) => {
       axios.post('Operation/UpdateOperation', payload)
         .then(response => {
           context.commit('updateOperation', response.data.result) //Update the Operation in the store
+          resolve(response);
         })
-    },
+    });
+  },
 
     getAllOperationTypesForOperation(context) {
       axios.get('OperationType/GetAllOperationTypes').then(response => {

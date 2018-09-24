@@ -128,18 +128,23 @@ namespace Surgicalogic.Services.Stores
             return await GetQueryable().Where(x => x.OperatingRoomOperationTypes.Any(t => t.IsActive && t.OperationTypeId == operationTypeId)).ProjectTo<OperatingRoomOutputModel>().ToListAsync();
         }
 
-        public async Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync()
+        public async Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync(bool activeOnly = true)
         {
             var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
             var result =  await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow)).ProjectTo<RoomInputModel>().ToListAsync();
-            var unavailableRooms = await _context.OperatingRooms.Where(x => x.IsActive && (!x.IsAvailable || x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow))).ProjectTo<RoomInputModel>().ToListAsync();
 
-            foreach (var item in unavailableRooms)
+            if (!activeOnly)
             {
-                item.ClassName = "unavailable";
+                var unavailableRooms = await _context.OperatingRooms.Where(x => x.IsActive && (!x.IsAvailable || x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow))).ProjectTo<RoomInputModel>().ToListAsync();
+
+                foreach (var item in unavailableRooms)
+                {
+                    item.ClassName = "unavailable";
+                }
+
+                result.AddRange(unavailableRooms);
             }
 
-            result.AddRange(unavailableRooms);
             return result;
         }
 

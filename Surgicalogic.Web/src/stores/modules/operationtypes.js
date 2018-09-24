@@ -34,7 +34,7 @@ const operationTypeModule = {
 
     updateOperationType(state, payload) {
       state.operationTypes.forEach(element => {
-        if (element.id == payload.id)
+        if (payload && element.id == payload.id)
           Object.assign(element, payload);
       });
     },
