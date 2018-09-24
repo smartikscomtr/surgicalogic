@@ -140,6 +140,7 @@ export default {
 
     startDate: {
       get(){
+
         const vm = this;
 
         if (vm.editAction.startDate)
@@ -147,6 +148,7 @@ export default {
           vm.$store.commit('saveStartDate', vm.editAction.startDate);
         }
 
+        vm.startDateFormatted = vm.formatDate(vm.$store.state.operatingRoomCalendarModule.startDate)
         return vm.$store.state.operatingRoomCalendarModule.startDate;
       },
 
@@ -170,6 +172,7 @@ export default {
           vm.$store.commit('saveEndDate', vm.editAction.endDate);
         }
 
+        vm.endDateFormatted = vm.formatDate(vm.$store.state.operatingRoomCalendarModule.endDate)
         return vm.$store.state.operatingRoomCalendarModule.endDate;
       },
 
@@ -254,7 +257,7 @@ export default {
 
   // mounted () {
   //   const vm = this;
-  //     debugger
+
   //   vm.$watch('startDate', (newValue) => {
 
   //       vm.startDateFormatted = vm.formatDate(newValue)

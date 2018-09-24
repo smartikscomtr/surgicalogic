@@ -150,14 +150,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportOperation');
-
-      setTimeout(() => {
-        const link = document.createElement('a');
-
-        link.href = vm.$store.state.operationModule.excelUrl;
-        document.body.appendChild(link);
-        link.click();
-      }, 2000);
     }
   }
 };
