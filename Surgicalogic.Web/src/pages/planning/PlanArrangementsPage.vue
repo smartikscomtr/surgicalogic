@@ -53,7 +53,10 @@ export default {
     drawPlan() {
       const vm = this;
 
-      vm.$store.dispatch('getGenerateOperationPlan');
+      vm.$store.dispatch('getGenerateOperationPlan').then(response => {
+        vm.getOperationPlan();
+        vm.$store.dispatch('getTomorrowOperationList');
+      });
     },
 
     updatePlan() {
@@ -84,63 +87,70 @@ export default {
       }
 
       vm.$store.dispatch('updatePlanArrangements', JSON.stringify(operations));
+    },
+
+    getOperationPlan() {
+      const vm = this;
+
+      var container = document.getElementById('visualization');
+      container.innerHTML = "";
+
+      vm.$store.dispatch('getPlanArrangements').then(response => {
+      var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
+      var groups = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.rooms);
+
+      var workingHourStart = new Date(vm.$store.state.planArrangementsModule.model.workingHourStart);
+      var workingHourEnd = new Date(vm.$store.state.planArrangementsModule.model.workingHourEnd);
+
+      document.getElementById("serializedTimeline").innerHTML = JSON.stringify(items);
+
+      calcuteOvertimeAndUtilization(vm.$store.state.planArrangementsModule.model.startDate, groups.length, workingHourStart, workingHourEnd);
+
+      var options = {
+        orientation: {
+          axis: 'top'
+        },
+        // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
+        locale: 'tr',
+        moveable: true,
+        zoomMax: 86400000,
+        zoomMin: 3600000,
+        horizontalScroll: true,
+        min: vm.$store.state.planArrangementsModule.model.minDate,
+        max:vm.$store.state.planArrangementsModule.model.maxDate,
+        start: vm.$store.state.planArrangementsModule.model.startDate,
+        end: vm.$store.state.planArrangementsModule.model.endDate,
+        editable: {
+          updateTime: true,
+          updateGroup: true
+        },
+        selectable:true,
+
+        onMoving(item, callback) {
+          var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
+
+          timelineItems._data[item.id].start = new Date(item.start);
+          timelineItems._data[item.id].end = new Date(item.end);
+          timelineItems._data[item.id].group = item.group;
+
+          document.getElementById("serializedTimeline").innerHTML = JSON.stringify(timelineItems);
+
+          calcuteOvertimeAndUtilization(options.start, groups.length, workingHourStart, workingHourEnd);
+
+          callback(item);
+        }
+      };
+
+      var timeline = new Vis.Timeline(container, items, groups, options);
+
+      });
     }
   },
 
   mounted () {
     const vm = this;
 
-      var container = document.getElementById('visualization');
-
-      vm.$store.dispatch('getPlanArrangements').then(response => {
-        var items = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.plan);
-        var groups = new Vis.DataSet(vm.$store.state.planArrangementsModule.model.rooms);
-
-        var workingHourStart = new Date(vm.$store.state.planArrangementsModule.model.workingHourStart);
-        var workingHourEnd = new Date(vm.$store.state.planArrangementsModule.model.workingHourEnd);
-
-        document.getElementById("serializedTimeline").innerHTML = JSON.stringify(items);
-
-        calcuteOvertimeAndUtilization(vm.$store.state.planArrangementsModule.model.startDate, groups.length, workingHourStart, workingHourEnd);
-
-        var options = {
-          orientation: {
-            axis: 'top'
-          },
-          // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
-          locale: 'tr',
-          moveable: true,
-          zoomMax: 86400000,
-          zoomMin: 3600000,
-          horizontalScroll: true,
-          min: vm.$store.state.planArrangementsModule.model.minDate,
-          max:vm.$store.state.planArrangementsModule.model.maxDate,
-          start: vm.$store.state.planArrangementsModule.model.startDate,
-          end: vm.$store.state.planArrangementsModule.model.endDate,
-          editable: {
-            updateTime: true,
-            updateGroup: true
-          },
-          selectable:true,
-
-          onMoving(item, callback) {
-            var timelineItems = JSON.parse(document.getElementById("serializedTimeline").innerHTML);
-
-            timelineItems._data[item.id].start = new Date(item.start);
-            timelineItems._data[item.id].end = new Date(item.end);
-            timelineItems._data[item.id].group = item.group;
-
-            document.getElementById("serializedTimeline").innerHTML = JSON.stringify(timelineItems);
-
-            calcuteOvertimeAndUtilization(options.start, groups.length, workingHourStart, workingHourEnd);
-
-            callback(item);
-          }
-        };
-
-      var timeline = new Vis.Timeline(container, items, groups, options);
-
-    });
+    vm.getOperationPlan();
   }
 }
 

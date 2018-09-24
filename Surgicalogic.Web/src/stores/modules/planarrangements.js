@@ -122,13 +122,16 @@ const planArrangementsModule = {
     },
 
     getGenerateOperationPlan(context) {
+      return new Promise((resolve, reject) => {
       context.commit('setLoading', true);
 
       axios.post('OperationPlan/GenerateOperationPlan')
         .then(response => {
           context.commit('setGenerateOperationPlan', response.data)
           context.commit('setLoading', false);
+          resolve(response);
         });
+      })
     }
   }
 }
