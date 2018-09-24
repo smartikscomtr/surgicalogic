@@ -8,5 +8,6 @@ namespace Surgicalogic.Model.CustomModel
     {
         public int id { get; set; }
         public string content { get; set; }
+        public string className { get; set; }
     }
 }

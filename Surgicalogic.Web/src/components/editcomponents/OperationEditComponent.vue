@@ -400,16 +400,12 @@ export default {
       if (vm.editAction.branchId) {
         vm.$store.dispatch('getOperationTypesByBranchId', {
           branchId: vm.editAction.branchId}).then(() => {
-            setTimeout(function(){
-              vm.filterOperationTypes = vm.$store.state.operationModule.filteredOperationTypes;
-          }, 1500)
+          vm.filterOperationTypes = vm.$store.state.operationModule.filteredOperationTypes;
         });
 
         vm.$store.dispatch('getPersonnelsByBranchId', {
           branchId: vm.editAction.branchId }).then(() => {
-            setTimeout(function(){
-              vm.filterPersonnels = vm.$store.state.operationModule.filteredPersonnels;
-          }, 1000)
+          vm.filterPersonnels = vm.$store.state.operationModule.filteredPersonnels;
         });
       }
     },

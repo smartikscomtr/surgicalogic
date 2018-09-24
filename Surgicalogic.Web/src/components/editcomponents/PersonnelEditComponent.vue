@@ -170,7 +170,7 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.branchIds;
+      return vm.editAction.branchIds;
       },
 
       set(val) {

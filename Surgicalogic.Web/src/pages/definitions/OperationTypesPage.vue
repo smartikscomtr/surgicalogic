@@ -117,9 +117,9 @@ export default {
 
     //We are accessing getAllEquipments, getAllBranches and getAllOperatingRooms in vuex store
      if(vm.editLoadOnce){
-        vm.$store.dispatch('getAllBranches');
-        vm.$store.dispatch('getAllEquipments');
-        vm.$store.dispatch('getAllOperatingRooms');
+        vm.$store.dispatch('getAllBranchesForOperationType');
+        vm.$store.dispatch('getAllEquipmentsForOperationType');
+        vm.$store.dispatch('getAllOperatingRoomsForOperationType');
         vm.branchesLoadOnce = false;
      }
     }

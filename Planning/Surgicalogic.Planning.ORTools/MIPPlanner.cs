@@ -155,6 +155,7 @@ namespace Surgicalogic.Planning.ORTools
                 }
             }
 
+            //Overtime'ı minimize ediyoruz.
             solver.Minimize((from i in operations
                              from r in rooms
                              from t in overtimes

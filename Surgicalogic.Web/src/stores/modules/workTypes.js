@@ -5,7 +5,7 @@ const workTypesModule = {
     workTypes: [],
     loading: false,
     totalCount: 0,
-    allWorkTypes:[]
+    allWorkTypes: []
   },
 
   mutations: {
@@ -36,7 +36,7 @@ const workTypesModule = {
 
     updateWorkType(state, payload) {
       state.workTypes.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     }
@@ -45,13 +45,13 @@ const workTypesModule = {
   getters: {},
 
   actions: {
-    getWorkTypes(context,params) {
+    getWorkTypes(context, params) {
       context.commit('setLoading', true);
 
       axios.get('WorkType/GetWorkTypes', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setWorkTypes', response.data) //Set the Work Type in the store
         }
 
@@ -63,19 +63,25 @@ const workTypesModule = {
     getAllWorkTypes(context) {
       axios.get('WorkType/GetAllWorkTypes')
         .then(response => {
-          if (response.data.info.succeeded == true){
+          if (response.data.info.succeeded == true) {
             context.commit('setAllWorkTypes', response.data.result) //Set the Work Type in the store
           }
         })
     },
 
     insertWorkType(context, payload) {
-      axios.post('WorkType/InsertWorkType', payload)
-        .then(response => {
-          if (response.data.info.succeeded == true) {
-            context.commit('insertWorkType', { item: response.data.result }) //Insert the Work Type in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('WorkType/InsertWorkType', payload)
+          .then(response => {
+            if (response.data.info.succeeded == true) {
+              context.commit('insertWorkType', {
+                item: response.data.result
+              }) //Insert the Work Type in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deleteWorkType(context, payload) {
@@ -83,7 +89,9 @@ const workTypesModule = {
         axios.post('WorkType/DeleteWorkType/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteWorkType', { payload }); //Delete the Work Type in the store
+              context.commit('deleteWorkType', {
+                payload
+              }); //Delete the Work Type in the store
             }
 
             resolve(response);
@@ -92,12 +100,16 @@ const workTypesModule = {
     },
 
     updateWorkType(context, payload) {
-      axios.post('WorkType/UpdateWorkType', payload)
-        .then(response => {
-          if (response.data.info.succeeded == true){
-            context.commit('updateWorkType', payload) //Update the Work Type in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('WorkType/UpdateWorkType', payload)
+          .then(response => {
+            if (response.data.info.succeeded == true) {
+              context.commit('updateWorkType', payload) //Update the Work Type in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     excelExportWorkType(context) {
@@ -105,7 +117,7 @@ const workTypesModule = {
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })

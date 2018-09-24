@@ -279,7 +279,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 #endregion
 
                 #region OperatingRooms
-                for (int i = 0; i <= 10; i++)
+                for (int i = 0; i <= 4; i++)
                 {
                     context.OperatingRooms.Add(new Entities.OperatingRoom
                     {

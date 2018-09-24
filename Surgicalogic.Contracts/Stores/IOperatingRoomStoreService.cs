@@ -1,6 +1,7 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -16,5 +17,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomOperationTypesAsync(OperatingRoomInputModel item);
         Task<List<RoomInputModel>> GetAvailableRoomsAsync();
         Task<List<OperatingRoomOutputModel>> GetByOperationTypeIdAsync(int operationTypeId);
+        Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync();
     }
 }

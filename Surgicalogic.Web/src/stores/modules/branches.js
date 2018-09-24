@@ -36,7 +36,7 @@ const branchesModule = {
 
     updateBranch(state, payload) {
       state.branches.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     }
@@ -45,13 +45,13 @@ const branchesModule = {
   getters: {},
 
   actions: {
-    getBranches(context,params) {
+    getBranches(context, params) {
       context.commit('setLoading', true);
 
       axios.get('Branch/GetBranches', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setBranches', response.data) //Set the Branches in the store
         }
 
@@ -67,12 +67,18 @@ const branchesModule = {
     },
 
     insertBranch(context, payload) {
-      axios.post('Branch/InsertBranch', payload)
-        .then(response => {
-          if (response.data.info.succeeded == true) {
-            context.commit('insertBranch', { item: response.data.result }) //Insert the Branches in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('Branch/InsertBranch', payload)
+          .then(response => {
+            if (response.data.info.succeeded == true) {
+              context.commit('insertBranch', {
+                item: response.data.result
+              }) //Insert the Branches in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deleteBranch(context, payload) {
@@ -80,7 +86,9 @@ const branchesModule = {
         axios.post('Branch/DeleteBranch/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deleteBranch', { payload }); //Delete the Branches in the store
+              context.commit('deleteBranch', {
+                payload
+              }); //Delete the Branches in the store
             }
 
             resolve(response);
@@ -89,10 +97,13 @@ const branchesModule = {
     },
 
     updateBranch(context, payload) {
-      axios.post('Branch/UpdateBranch', payload)
-        .then(response => {
-          context.commit('updateBranch', response.data.result) //Update the Branches in the store
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('Branch/UpdateBranch', payload)
+          .then(response => {
+            context.commit('updateBranch', response.data.result) //Update the Branches in the store
+            resolve(response);
+          })
+      });
     },
 
     excelExportBranches(context) {

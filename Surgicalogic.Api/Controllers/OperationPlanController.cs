@@ -49,22 +49,22 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
         {
             var plans = await _operationPlanStoreService.GetTomorrowOperationsAsync();
-            var rooms = await _operatingRoomStoreService.GetAsync<OperatingRoomForTimelineModel>();
+            var rooms = await _operatingRoomStoreService.GetOperatingRoomsForTimelineModelAsync();
 
-            var tomorrow = DateTime.Now.AddDays(1) ;
-            var twoDaysLater= DateTime.Now.AddDays(2);
+            var tomorrow = DateTime.Now.AddDays(1);
+            var twoDaysLater = DateTime.Now.AddDays(2);
 
-            var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms.Result);
+            var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms);
 
             var result = new ResultModel<OperationPlanOutputModel>
             {
                 Info = new Info(),
-                Result = new OperationTimelineOutputModel(plans, rooms.Result)
+                Result = new OperationTimelineOutputModel(plans, roomTimelineModel)
                 {
                     MinDate = tomorrow.ToString("yyyy-MM-dd 00:00:00"),
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
-                    StartDate = plans.Select(x => x.start).Min(),
-                    EndDate = plans.Select(x => x.end).Max(),
+                    StartDate = plans.Select(x => x.start).Min() ?? tomorrow.ToString("yyyy-MM-dd 00:00:00"),
+                    EndDate = plans.Select(x => x.end).Max() ?? twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
                     Period = AppSettings.PeriodInMinutes,
                     WorkingHourStart = AppSettings.WorkingHourStart,
                     WorkingHourEnd = AppSettings.WorkingHourEnd
@@ -87,7 +87,7 @@ namespace Surgicalogic.Api.Controllers
         {
             return await _operationPlanHistoryStoreService.GetTomorrowOperationListAsync(input);
         }
-       
+
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
         public async Task<DailyPlanOutputModel> GenerateOperationPlan()
@@ -133,10 +133,8 @@ namespace Surgicalogic.Api.Controllers
 
             string req = JsonConvert.SerializeObject(surgeryPlan);
 
-            using (var client = new HttpClient())
+            using (var client = new HttpClient() { BaseAddress = new Uri(AppSettings.ApiBaseUrl), Timeout = TimeSpan.FromMinutes(10) })
             {
-                client.BaseAddress = new Uri(AppSettings.ApiBaseUrl);
-                client.Timeout = TimeSpan.FromMinutes(10);
                 HttpResponseMessage response = await client.PostAsync(AppSettings.ApiPostUrl, new StringContent(req, Encoding.Default, "application/json"));
 
                 if (response.Content != null)

@@ -3,7 +3,7 @@ import axios from 'axios';
 const personnelModule = {
   state: {
     loading: false,
-    totalCount:0,
+    totalCount: 0,
     personnel: [],
     allPersonnels: [],
     allBranches: [],
@@ -39,20 +39,20 @@ const personnelModule = {
 
     updatePersonnel(state, payload) {
       state.personnel.forEach(element => {
-        if(element.id == payload.id)
+        if (element.id == payload.id)
           Object.assign(element, payload);
       });
     },
 
-    setAllBranches(state, payload) {
+    setAllBranchesForPersonnel(state, payload) {
       state.allBranches = payload;
     },
 
-    setAllPersonnelTitles(state, payload) {
+    setAllPersonnelTitlesForPersonnel(state, payload) {
       state.allPersonnelTitles = payload;
     },
 
-    setAllWorkTypes(state, payload) {
+    setAllWorkTypesForPersonnel(state, payload) {
       state.allWorkTypes = payload;
     },
 
@@ -70,7 +70,7 @@ const personnelModule = {
       axios.get('Personnel/GetPersonnels', {
         params: params
       }).then(response => {
-        if (response.data.info.succeeded == true){
+        if (response.data.info.succeeded == true) {
           context.commit('setPersonnels', response.data) //Set the Personnel in the store
         }
 
@@ -81,19 +81,25 @@ const personnelModule = {
     getAllPersonnels(context) {
       axios.get('Personnel/GetAllPersonnels')
         .then(response => {
-          if (response.data.info.succeeded == true){
+          if (response.data.info.succeeded == true) {
             context.commit('setAllPersonnels', response.data.result) //Set the Personnels in the store
           }
         })
     },
 
     insertPersonnel(context, payload) {
-      axios.post('Personnel/InsertPersonnel', payload)
-        .then(response => {
-          if (response.data.info.succeeded == true) {
-            context.commit('insertPersonnel', { item: response.data.result }) //Insert the Personnel in the store
-          }
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('Personnel/InsertPersonnel', payload)
+          .then(response => {
+            if (response.data.info.succeeded == true) {
+              context.commit('insertPersonnel', {
+                item: response.data.result
+              }) //Insert the Personnel in the store
+            }
+
+            resolve(response);
+          })
+      });
     },
 
     deletePersonnel(context, payload) {
@@ -101,7 +107,9 @@ const personnelModule = {
         axios.post('Personnel/DeletePersonnel/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deletePersonnel', { payload }); //Delete the Personnel in the store
+              context.commit('deletePersonnel', {
+                payload
+              }); //Delete the Personnel in the store
             }
 
             resolve(response);
@@ -110,60 +118,61 @@ const personnelModule = {
     },
 
     updatePersonnel(context, payload) {
-      axios.post('Personnel/UpdatePersonnel', payload)
+      return new Promise((resolve, reject) => {
+        axios.post('Personnel/UpdatePersonnel', payload)
+          .then(response => {
+            context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
+            resolve(response);
+          })
+      });
+    },
+
+    getAllBranchesForPersonnel(context) {
+      axios.get('Branch/GetAllBranches')
         .then(response => {
-          context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
+          if (response.data.info.succeeded == true) {
+            context.commit('setAllBranchesForPersonnel', response.data.result) //Set the All Personnel in the store
+          }
         })
     },
 
-    getAllBranches(context) {
-      axios.get('Branch/GetAllBranches')
-      .then(response => {
-        if (response.data.info.succeeded == true){
-          context.commit('setAllBranches', response.data.result) //Set the All Personnel in the store
-        }
-      })
-    },
-
-    getAllPersonnelTitles(context) {
+    getAllPersonnelTitlesForPersonnel(context) {
       axios.get('PersonnelTitle/GetAllPersonnelTitles')
-      .then(response => {
-        if (response.data.info.succeeded == true){
-          context.commit('setAllPersonnelTitles', response.data.result) //Set the All Personnel Titles in the store
-        }
-      })
+        .then(response => {
+          if (response.data.info.succeeded == true) {
+            context.commit('setAllPersonnelTitlesForPersonnel', response.data.result) //Set the All Personnel Titles in the store
+          }
+        })
     },
 
-    getAllWorkTypes(context) {
+    getAllWorkTypesForPersonnel(context) {
       axios.get('WorkType/GetAllWorkTypes')
-      .then(response => {
-        if (response.data.info.succeeded == true){
-          context.commit('setAllWorkTypes', response.data.result) //Set the Work Types in the store
-        }
-      })
-    },
-    getPersonnelsByBranchId(context, payload) {
-      axios.get('Personnel/GetPersonnelsByBranchIdAsync/'+ payload.branchId).then(response => {
-        if (response.data) {
-          context.commit('setPersonnelsByBranchId', response.data) //Set the Operation Types in the store
-        }
-      })
+        .then(response => {
+          if (response.data.info.succeeded == true) {
+            context.commit('setAllWorkTypesForPersonnel', response.data.result) //Set the Work Types in the store
+          }
+        })
     },
 
     getDoctorsByBranchIdAsync(context, payload) {
-      axios.get('Personnel/GetDoctorsByBranchIdAsync/' + payload.branchId).then(response => {
-        if (response.data) {
-          context.commit('setDoctorsByBranchIdAsync', response.data)
-        }
-      })
+      return new Promise((resolve, reject) => {
+        axios.get('Personnel/GetDoctorsByBranchIdAsync/' + payload.branchId).then(response => {
+          if (response.data) {
+            context.commit('setDoctorsByBranchIdAsync', response.data)
+          }
+
+          resolve(response);
+        })
+      });
     },
+
 
     excelExportPersonnel(context) {
       axios.get('Personnel/ExcelExport')
         .then(response => {
           const link = document.createElement('a');
 
-          link.href =  "/static/" + response.data;
+          link.href = "/static/" + response.data;
           document.body.appendChild(link);
           link.click();
         })
