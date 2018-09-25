@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-dialog v-model="showModal"
-              slot="activator">
+              slot="activator"
+              persistent>
       <v-card class="container fluid grid-list-md">
         <!-- <v-card-title>
           <div class="headline-wrap flex xs12 sm12 md12">

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-dialog v-model="showModal">
+    <v-dialog v-model="showModal"
+              persistent>
       <v-card class="container fluid grid-list-md">
         <v-card-title class="headline">
            <div class="flex xs12 sm12 md12">
