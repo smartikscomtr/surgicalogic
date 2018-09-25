@@ -29,12 +29,6 @@
                       :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
-
-    <reset-password-component :reset-password-value="resetPasswordValue"
-                              :reset-password-visible="resetPasswordDialog"
-                              :resetPasswordMethod="resetPasswordMethodName"
-                              @cancel="cancel">
-    </reset-password-component>
   </div>
 </template>
 
@@ -56,11 +50,9 @@ export default {
       detailDialog: false,
       editDialog: false,
       deleteDialog: false,
-      resetPasswordDialog:false,
       detailAction: {},
       editAction: {},
       deleteValue: {},
-      resetPasswordValue:{},
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
@@ -120,10 +112,6 @@ export default {
 
     deleteMethodName(){
       return "deleteUser";
-    },
-
-    resetPasswordMethodName(){
-      return "resetPassword";
     },
 
     exportUserToExcel() {
