@@ -107,21 +107,17 @@ export default {
         }, 2300)
 
       });
-      // setTimeout(function () {
-      //   vm.$router.push("loginpage");
-      // }, 1000)
-
-    },
+    }
   },
 
   created(){
     const vm = this;
 
-     if (vm.auth.isAuthenticated()) {
-      vm.$router.push("/dashboardpage");
-     }
+    if (vm.auth.isAuthenticated()) {
+    vm.$router.push("/dashboardpage");
+    }
   }
-  };
+};
 
 </script>
 

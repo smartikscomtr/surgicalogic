@@ -139,10 +139,8 @@ export default {
           email: vm.editAction.email,
           isAdmin: vm.editAction.isAdmin
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getUsers');
-          }, 200)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getUsers');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -157,10 +155,8 @@ export default {
           email: vm.editAction.email,
           isAdmin: vm.editAction.isAdmin
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getUsers');
-          }, 200)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getUsers');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -178,9 +174,7 @@ export default {
         vm.$store.dispatch('resetPassword', {
           email: item
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-          }, 200)
+          vm.snackbarVisible = true;
 
           setTimeout(() => {
             vm.snackbarVisible = false;

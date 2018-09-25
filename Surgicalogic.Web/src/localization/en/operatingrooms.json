@@ -10,6 +10,6 @@
   "blockedOperatingRooms": "Blocked Operating Rooms",
   "size": "Size",
   "width": "Width",
-  "operatingRoomsCalendar": "Operating Room Availability Calendar",
+  "operatingRoomsCalendar": "Operating Room Unavailability Calendar",
   "isAvailable":"Available"
 }

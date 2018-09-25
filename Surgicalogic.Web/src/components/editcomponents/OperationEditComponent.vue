@@ -78,7 +78,7 @@
 
                 <v-date-picker v-model="date"
                                 no-title
-                                @input="$refs.menu.save(date);"
+                                @input="$refs.menu.save(date)"
                                 :min="getMinDate()">
                 </v-date-picker>
                 </v-menu>
@@ -343,10 +343,8 @@ export default {
           personnelIds: vm.editAction.personnelIds,
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getOperations');
-          }, 200)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getOperations');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -367,10 +365,8 @@ export default {
           personnelIds: vm.editAction.personnelIds,
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getOperations');
-          }, 200)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getOperations');
 
           setTimeout(() => {
             vm.snackbarVisible = false;

@@ -86,9 +86,7 @@ export default {
         email: vm.email,
         body: vm.body
       }).then(() => {
-        setTimeout(() => {
-          vm.snackbarVisible = true;
-        }, 500)
+        vm.snackbarVisible = true;
 
         setTimeout(() => {
           vm.snackbarVisible = false;

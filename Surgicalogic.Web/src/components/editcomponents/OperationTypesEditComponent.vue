@@ -238,10 +238,8 @@ export default {
           equipments: vm.editAction.equipmentId,
           operatingRoomIds: vm.editAction.operatingRoomId
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getOperationTypes');
-          }, 200)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getOperationTypes');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -261,10 +259,8 @@ export default {
           equipments: vm.editAction.equipmentId,
           operatingRoomIds: vm.editAction.operatingRoomId
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getOperationTypes');
-          }, 200)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getOperationTypes');
 
           setTimeout(() => {
             vm.snackbarVisible = false;

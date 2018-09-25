@@ -118,16 +118,12 @@ export default {
       }).then(response => {
         switch (response.data.info.message) {
           case 2: {
-            setTimeout(() => {
-              vm.snackbarVisible = true;
-            }, 200)
+            vm.snackbarVisible = true;
 
             return vm.showDeleteMessage = vm.$i18n.t('common.theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData');
           }
           default: {
-            setTimeout(() => {
-              vm.snackbarVisible = true;
-            }, 200)
+            vm.snackbarVisible = true;
 
             return vm.showDeleteMessage = vm.$i18n.t('common.theDataWasSuccessfullyDeleted');
           }

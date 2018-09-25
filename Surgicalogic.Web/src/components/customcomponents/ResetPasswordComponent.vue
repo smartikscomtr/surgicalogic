@@ -110,9 +110,7 @@ export default {
       vm.$store.dispatch('resetPassword', {
           email: vm.resetPasswordValue.email
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-          }, 200)
+          vm.snackbarVisible = true;
 
           setTimeout(() => {
             vm.snackbarVisible = false;

@@ -237,10 +237,8 @@ export default {
           branches: vm.editAction.branchId,
           workTypeId: vm.editAction.workTypeId
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getPersonnels');
-          }, 500)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getPersonnels');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -255,13 +253,11 @@ export default {
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
           personnelTitleId: vm.editAction.personnelTitleId,
-          branches:  vm.editAction.branchId,
-          workTypeId:  vm.editAction.workTypeId
+          branches: vm.editAction.branchId,
+          workTypeId: vm.editAction.workTypeId
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getPersonnels');
-          }, 500)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getPersonnels');
 
           setTimeout(() => {
             vm.snackbarVisible = false;

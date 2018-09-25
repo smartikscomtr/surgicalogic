@@ -82,9 +82,9 @@ export default {
         email: vm.email,
         password: vm.password
       }).then(() => {
-          if (vm.$store.state.loginModule.loginError) {
-            vm.snackbarVisible = true;
-          }
+        if (vm.$store.state.loginModule.loginError) {
+          vm.snackbarVisible = true;
+        }
 
         setTimeout(() => {
           vm.snackbarVisible = false;

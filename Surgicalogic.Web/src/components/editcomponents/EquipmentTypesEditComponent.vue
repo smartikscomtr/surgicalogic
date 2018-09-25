@@ -124,9 +124,7 @@ export default {
           name: vm.editAction.name,
           description: vm.editAction.description
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-          }, 200)
+          vm.snackbarVisible = true;
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -141,9 +139,7 @@ export default {
           name: vm.editAction.name,
           description: vm.editAction.description
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-          }, 200)
+          vm.snackbarVisible = true;
 
           setTimeout(() => {
             vm.snackbarVisible = false;

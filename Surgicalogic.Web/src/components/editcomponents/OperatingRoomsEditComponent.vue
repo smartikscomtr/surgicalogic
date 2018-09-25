@@ -248,10 +248,8 @@ export default {
           isAvailable:vm.editAction.isAvailable,
           operatingRoomOperationTypes: vm.editAction.operationTypeId
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getOperatingRooms');
-          }, 500)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getOperatingRooms');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -274,10 +272,8 @@ export default {
           isAvailable:vm.editAction.isAvailable,
           operatingRoomOperationTypes: vm.editAction.operationTypeId
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-            vm.$store.dispatch('getOperatingRooms');
-          }, 500)
+          vm.snackbarVisible = true;
+          vm.$store.dispatch('getOperatingRooms');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
