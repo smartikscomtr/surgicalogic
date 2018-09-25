@@ -7,5 +7,10 @@
   "resetPasswordForm": "Şifre Yenileme",
   "confirmPassword": "Şifre Onaylama",
   "forgotPasswordForm": "Şifremi Unuttum",
-  "resetPassword": "Şifreyi Yenile"
+  "resetPassword": "Şifreyi Yenile",
+  "loginError": "Kullanıcı adı veya şifre hatalı.",
+  "forgotPasswordMailInfo": "Mail adresiniz geçerliyse şifre sıfırlama bağlantısı gönderilmiştir.",
+  "userNotFound": "Kullanıcı bulunamadı.",
+  "invalidCode": "Geçersiz kod. Lütfen yeniden şifre sıfırlama adımlarını izleyiniz.",
+  "passwordsDoNotMatch": "Şifreler eşleşmiyor"
 }

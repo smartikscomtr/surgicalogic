@@ -35,6 +35,10 @@
             <v-card-actions>
               <v-spacer></v-spacer>
             </v-card-actions>
+
+            <snackbar-component :snackbar-visible="snackbarVisible"
+                                :savedMessage="savedMessage">
+            </snackbar-component>
           </v-card>
         </v-flex>
       </v-layout>
@@ -46,9 +50,11 @@
 
 export default {
   data() {
-  return {
-    email:null
-  };
+    return {
+      email:null,
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('login.forgotPasswordMailInfo')
+    };
   },
 
   methods: {
@@ -59,17 +65,17 @@ export default {
         vm.$store.dispatch('resetPassword', {
           email: vm.email
         }).then(() => {
-          setTimeout(() => {
-            vm.snackbarVisible = true;
-          }, 200)
+          if (vm.email.indexOf('@') > 0) {
+             vm.snackbarVisible = true;
 
-          setTimeout(() => {
-            vm.snackbarVisible = false;
-          }, 2300)
+            setTimeout(() => {
+              vm.snackbarVisible = false;
+            }, 2300)
+          }
         })
-    },
-  },
-  };
+    }
+  }
+};
 
 </script>
 

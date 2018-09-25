@@ -7,5 +7,10 @@
   "resetPasswordForm": "Reset Password",
   "confirmPassword": "Confirm Password",
   "forgotPasswordForm": "Forgot Password",
-  "resetPassword": "Reset Password"
+  "resetPassword": "Reset Password",
+  "loginError": "Invalid user name or password.",
+  "forgotPasswordMailInfo": "Password reset link is sent if your e-mail address is valid.",
+  "userNotFound": "User not found.",
+  "invalidCode": "Invalid code. Please follow the password reset steps again.",
+  "passwordsDoNotMatch": "Passwords Do Not Match"
 }

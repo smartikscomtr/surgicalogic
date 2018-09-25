@@ -16,18 +16,24 @@
               <v-form>
                 <v-text-field v-model="password"
                               prepend-icon="lock"
+                              :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                               name="password"
                               :label="$t('login.password')"
                               id="password"
-                              type="password">
+                              :type="showPassword ? 'text' : 'password'"
+                              @click:append="showPassword = !showPassword"
+                              >
                 </v-text-field>
 
                  <v-text-field v-model="confirmPassword"
                               prepend-icon="lock"
+                              :append-icon="showConfirmPassword ? 'visibility_off' : 'visibility'"
                               name="confirmPassword"
                               :label="$t('login.confirmPassword')"
                               id="confirmPassword"
-                              type="password">
+                              :type="showConfirmPassword ? 'text' : 'password'"
+                              @click:append="showConfirmPassword = !showConfirmPassword"
+                              >
                 </v-text-field>
               </v-form>
             </v-card-text>
@@ -44,6 +50,10 @@
             <v-card-actions>
               <v-spacer></v-spacer>
             </v-card-actions>
+
+            <snackbar-component :snackbar-visible="snackbarVisible"
+                                :savedMessage="savedMessage">
+            </snackbar-component>
           </v-card>
         </v-flex>
       </v-layout>
@@ -57,7 +67,11 @@ export default {
   data() {
   return {
     password:null,
-    confirmPassword:null
+    confirmPassword:null,
+    showPassword:false,
+    showConfirmPassword:false,
+    snackbarVisible: null,
+    savedMessage: null
   };
   },
 
@@ -71,11 +85,31 @@ export default {
         password: vm.password,
         confirmPassword: vm.confirmPassword,
         code: vm.$route.query.code
-      });
+      }).then(response => {
+        switch (response.data.info.message) {
+          case 3:
+            vm.savedMessage = vm.$i18n.t('login.userNotFound');
+          break;
+          case 4:
+            vm.savedMessage = vm.$i18n.t('login.invalidCode');
+          break;
+          case 5:
+            vm.savedMessage = vm.$i18n.t('login.passwordsDoNotMatch');
+          break;
+          default:
+            break;
+        };
 
-      setTimeout(function () {
-        vm.$router.push("loginpage");
-      }, 1000)
+        vm.snackbarVisible = true;
+
+        setTimeout(() => {
+          vm.snackbarVisible = false;
+        }, 2300)
+
+      });
+      // setTimeout(function () {
+      //   vm.$router.push("loginpage");
+      // }, 1000)
 
     },
   },

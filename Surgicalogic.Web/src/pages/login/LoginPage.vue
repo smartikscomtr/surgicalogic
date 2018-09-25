@@ -22,10 +22,12 @@
 
                 <v-text-field v-model="password"
                               prepend-icon="lock"
+                              :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                               name="password"
                               :label="$t('login.password')"
                               id="password"
-                              type="password"
+                              :type="showPassword ? 'text' : 'password'"
+                              @click:append="showPassword = !showPassword"
                               >
                 </v-text-field>
               </v-form>
@@ -47,6 +49,10 @@
             <v-card-actions>
               <v-spacer></v-spacer>
             </v-card-actions>
+
+            <snackbar-component :snackbar-visible="snackbarVisible"
+                                :savedMessage="savedMessage">
+            </snackbar-component>
           </v-card>
         </v-flex>
       </v-layout>
@@ -58,7 +64,13 @@
 
 export default {
   data() {
-  return {};
+  return {
+    email:null,
+    password:null,
+    showPassword: false,
+    snackbarVisible: null,
+    savedMessage: this.$i18n.t('login.loginError')
+    };
   },
 
   methods: {
@@ -69,6 +81,14 @@ export default {
       vm.$store.dispatch("userLogin", {
         email: vm.email,
         password: vm.password
+      }).then(() => {
+          if (vm.$store.state.loginModule.loginError) {
+            vm.snackbarVisible = true;
+          }
+
+        setTimeout(() => {
+          vm.snackbarVisible = false;
+        }, 2300)
       });
     },
 

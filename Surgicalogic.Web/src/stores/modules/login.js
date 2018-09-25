@@ -3,7 +3,8 @@ import router from '../../router/index';
 
 const loginModule = {
   state: {
-    loginBody: []
+    loginBody: [],
+    loginError: null
   },
 
   mutations: {
@@ -20,22 +21,27 @@ const loginModule = {
 
   actions: {
     userLogin(context, payload) {
-      axios.post('User/Login', payload)
-        .then(response => {
-          if (response.statusText == "OK") {
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
-            localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
-            router.push("dashboardpage");
-          }
-          else
-          {
-            router.push("LoginPage");
-          }
-        })
-        .catch(error => {
-          router.push("LoginPage");
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('User/Login', payload)
+          .then(response => {
+            if (response.statusText == "OK") {
+              if (response.data) {
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("refreshToken", response.data.refreshToken);
+                localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
+                router.push("dashboardpage");
+              }
+              else {
+                  context.state.loginError = true;
+              }
+            }
+            else {
+              router.push("LoginPage");
+            }
+
+            resolve(response);
+          })
+      })
     },
 
     userLogout(context, payload) {

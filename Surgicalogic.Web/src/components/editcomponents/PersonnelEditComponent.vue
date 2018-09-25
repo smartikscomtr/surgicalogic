@@ -17,7 +17,6 @@
 
       <v-card-text>
         <v-layout wrap edit-layout>
-
             <v-flex xs12 sm6 md6>
               <v-text-field v-model="editAction['firstName']"
                             :label="$t('personnel.firstName')">

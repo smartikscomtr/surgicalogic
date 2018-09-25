@@ -52,7 +52,7 @@ namespace Surgicalogic.Api.Controllers
                 }
             }
 
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+            return string.Empty;
         }
 
         /// <summary>
@@ -211,11 +211,13 @@ namespace Surgicalogic.Api.Controllers
 
             if (user == null)
             {
+                returnResult.Info.Message = Model.Enum.MessageType.UserNotFound;
                 return returnResult;
             }
 
-            if (!model.Password.Equals(model.ConfirmPassword))
+            if (string.IsNullOrEmpty(model.Password) || string.IsNullOrEmpty(model.ConfirmPassword) || !model.Password.Equals(model.ConfirmPassword))
             {
+                returnResult.Info.Message = Model.Enum.MessageType.PasswordsDoNotMatch;
                 return returnResult;
             }
 
@@ -228,6 +230,7 @@ namespace Surgicalogic.Api.Controllers
             }
             else if (result.Errors.Any())
             {
+                returnResult.Info.Message = Model.Enum.MessageType.InvalidCode;
                 returnResult.Result = result.Errors.FirstOrDefault().Description;
             }
 

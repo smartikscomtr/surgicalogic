@@ -75,7 +75,7 @@ const operationTypeModule = {
         axios.post('OperationType/InsertOperationType', payload)
           .then(response => {
             if (response.statusText == 'OK') {
-              payload.id = response.data;
+              payload.id = response.data.result.id;
               context.commit('insertOperationType', {
                 item: payload
               }) //Insert the Operation Types in the store

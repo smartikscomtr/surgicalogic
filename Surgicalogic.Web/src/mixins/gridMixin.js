@@ -33,6 +33,8 @@ export const gridMixin = {
 
       vm.editedIndex = -1;
       vm.editDialog = true;
+
+      vm.editAction = {};
     },
 
     deleteItem(payload) {

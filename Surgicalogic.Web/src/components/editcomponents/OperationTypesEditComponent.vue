@@ -253,7 +253,6 @@ export default {
       else {
         //We are accessing insertOperationType in vuex store
         vm.$store.dispatch('insertOperationType', {
-          id: vm.editAction.id,
           name: vm.editAction.name,
           type: vm.editAction.type,
           portable: vm.editAction.portable,

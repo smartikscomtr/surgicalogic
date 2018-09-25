@@ -93,18 +93,24 @@ const usersModule = {
     },
 
     resetPassword(context, payload) {
-      axios.post('User/ForgotPassword', payload)
-        .then(response => {
-          //context.commit('updateUser', {payload}) //Update the User in the store
-        })
+      return new Promise((resolve, reject) => {
+        axios.post('User/ForgotPassword', payload)
+          .then(response => {
+            //context.commit('updateUser', {payload}) //Update the User in the store
+            resolve(response);
+          })
+      });
     },
 
     updatePassword(context, payload) {
+      return new Promise((resolve, reject) => {
       axios.post('User/ResetPassword', payload)
         .then(response => {
           //context.commit('updateUser', {payload}) //Update the User in the store
+          resolve(response);
         })
-    },
+    });
+  },
 
     excelExportUser(context) {
       axios.get('User/ExcelExport')

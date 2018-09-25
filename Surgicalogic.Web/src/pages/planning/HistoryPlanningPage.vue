@@ -78,6 +78,20 @@ export default {
           align: 'left'
         },
         {
+          value: 'realizedStartDate',
+          text: vm.$i18n.t('plan.realizedStartDate'),
+          isDateTime: true,
+          sortable: false,
+          align: 'left'
+        },
+        {
+          value: 'realizedEndDate',
+          text: vm.$i18n.t('plan.realizedEndDate'),
+          isDateTime: true,
+          sortable: false,
+          align: 'left'
+        },
+        {
           isAction: true,
           sortable: false,
           align: 'right'

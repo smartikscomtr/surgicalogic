@@ -49,7 +49,13 @@ namespace Surgicalogic.Api
            //.AddEntityFrameworkStores<DataContext>()
            //.AddDefaultTokenProviders();
 
-            services.AddIdentity<User, IdentityRole<int>>()
+            services.AddIdentity<User, IdentityRole<int>>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
                .AddEntityFrameworkStores<DataContext>()
                .AddDefaultTokenProviders();
 
