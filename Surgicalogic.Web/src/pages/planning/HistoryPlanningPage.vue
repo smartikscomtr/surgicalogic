@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container fluid grid-list-md">
     <grid-component :headers="headers"
                     :items="historyPlannings"
                     :title="title"

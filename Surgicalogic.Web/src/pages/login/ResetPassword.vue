@@ -65,14 +65,14 @@
 
 export default {
   data() {
-  return {
-    password:null,
-    confirmPassword:null,
-    showPassword:false,
-    showConfirmPassword:false,
-    snackbarVisible: null,
-    savedMessage: null
-  };
+    return {
+      password:null,
+      confirmPassword:null,
+      showPassword:false,
+      showConfirmPassword:false,
+      snackbarVisible: null,
+      savedMessage: null
+    };
   },
 
   methods: {
@@ -122,6 +122,9 @@ export default {
 </script>
 
 <style>
+.close-wrap{
+  color: #ff7107 !important;
+}
 .primary {
   background-color: #009688 !important;
   border-color: #009688 !important;
