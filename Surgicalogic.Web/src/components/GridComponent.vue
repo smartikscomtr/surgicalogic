@@ -1,111 +1,105 @@
 <template>
-  <div>
-    <v-card class="grid-card">
-      <div class="page-title">
-        <h2>
-          {{ title }}
-        </h2>
+  <v-card class="grid-card">
+    <div class="page-title">
+      <h2>
+        {{ title }}
+      </h2>
+    </div>
+    <div class="container">
+      <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
+        <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
+        </v-text-field>
 
-        <v-container>
-          <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
-            <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
-            </v-text-field>
+        <v-spacer></v-spacer>
 
-            <v-spacer></v-spacer>
+        <v-btn v-if="!hideExport" class="export-wrap" @click="exportExcel">
+          <v-icon color="white--text">
+            arrow_downward
+          </v-icon>
+          {{ $t('common.export') }}
+        </v-btn>
 
-            <v-btn v-if="!hideExport" class="export-wrap" @click="exportExcel">
-              <v-icon color="white--text">
-                arrow_downward
-              </v-icon>
-              {{ $t('common.export') }}
-            </v-btn>
+        <v-btn v-if="showInsert" class="orange" slot="activator" @click="addNewItem">
+          <v-icon color="white--text">
+            add
+          </v-icon>
+          {{ $t('common.add') }}
+        </v-btn>
+      </v-card-title>
 
-            <v-btn v-if="showInsert" class="orange" slot="activator" @click="addNewItem">
-              <v-icon color="white--text">
-                add
-              </v-icon>
-              {{ $t('common.add') }}
-            </v-btn>
-          </v-card-title>
+      <v-data-table :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
+        <v-progress-linear slot="progress" color="teal" indeterminate>
+        </v-progress-linear>
 
-          <v-data-table :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
-            <v-progress-linear slot="progress" color="teal" indeterminate>
-            </v-progress-linear>
+        <template slot="items" slot-scope="props">
+          <td v-for="(header, i) in headers" :key="i">
+            <template v-if="!header.isAction && header.isCheck">
+              <div v-if="props.item[header.value]">
+                <v-icon class="green--text">check</v-icon>
+              </div>
 
-            <template slot="items" slot-scope="props">
-              <td v-for="(header, i) in headers" :key="i">
-                <template v-if="!header.isAction && header.isCheck">
-                  <div v-if="props.item[header.value]">
-                    <v-icon class="green--text">check</v-icon>
-                  </div>
-
-                  <div v-else>
-                    <v-icon class="red--text">close</v-icon>
-                  </div>
-                </template>
-
-                <template v-else-if="!header.isAction && header.isDateTime">
-                  {{ props.item[header.value] | moment("DD.MM.YYYY HH:mm") }}
-                </template>
-
-                <template v-else-if="!header.isAction && header.isDate">
-                  {{ props.item[header.value] | moment("DD.MM.YYYY") }}
-                </template>
-
-                <template v-else-if="!header.isAction">
-                  {{ props.item[header.value] }}
-                </template>
-
-                <template v-else>
-                  <v-btn v-if="showCalendar"
-                         icon
-                         class="mx-0"
-                         @click="calendarItem(props.item)">
-                    <v-icon color="#232222">
-                      date_range
-                    </v-icon>
-                  </v-btn>
-
-                  <v-tooltip top>
-                    <v-btn v-if="showDetail" slot="activator" icon class="mx-0" @click="detailItem(props.item)">
-                      <v-icon>
-                        visibility
-                      </v-icon>
-                    </v-btn>
-                    <span>{{ $t('common.viewRecord') }}</span>
-                  </v-tooltip>
-
-                  <v-tooltip top>
-                    <v-btn v-if="showEdit" slot="activator" icon class="mx-0" @click="editItem(props.item)">
-                      <v-icon>
-                        edit
-                      </v-icon>
-                    </v-btn>
-                    <span>{{ $t('common.editRecord') }}</span>
-                  </v-tooltip>
-
-                  <v-tooltip top>
-                    <v-btn v-if="showDelete" slot="activator" icon class="mx-0" @click="deleteItem(props.item)">
-                      <v-icon>
-                        delete
-                      </v-icon>
-                    </v-btn>
-                    <span>{{ $t('common.deleteRecord') }}</span>
-                  </v-tooltip>
-
-                  <v-btn v-if="showResetPassword" icon class="mx-0" @click="resetPassword(props.item)">
-                    <v-icon>
-                      lock_open
-                    </v-icon>
-                  </v-btn>
-                </template>
-              </td>
+              <div v-else>
+                <v-icon class="red--text">close</v-icon>
+              </div>
             </template>
-          </v-data-table>
-        </v-container>
-      </div>
-    </v-card>
-  </div>
+
+            <template v-else-if="!header.isAction && header.isDateTime">
+              {{ props.item[header.value] | moment("DD.MM.YYYY HH:mm") }}
+            </template>
+
+            <template v-else-if="!header.isAction && header.isDate">
+              {{ props.item[header.value] | moment("DD.MM.YYYY") }}
+            </template>
+
+            <template v-else-if="!header.isAction">
+              {{ props.item[header.value] }}
+            </template>
+
+            <template v-else>
+              <v-btn v-if="showCalendar" icon class="mx-0" @click="calendarItem(props.item)">
+                <v-icon color="#232222">
+                  date_range
+                </v-icon>
+              </v-btn>
+
+              <v-tooltip top>
+                <v-btn v-if="showDetail" slot="activator" icon class="mx-0" @click="detailItem(props.item)">
+                  <v-icon>
+                    visibility
+                  </v-icon>
+                </v-btn>
+                <span>{{ $t('common.viewRecord') }}</span>
+              </v-tooltip>
+
+              <v-tooltip top>
+                <v-btn v-if="showEdit" slot="activator" icon class="mx-0" @click="editItem(props.item)">
+                  <v-icon>
+                    edit
+                  </v-icon>
+                </v-btn>
+                <span>{{ $t('common.editRecord') }}</span>
+              </v-tooltip>
+
+              <v-tooltip top>
+                <v-btn v-if="showDelete" slot="activator" icon class="mx-0" @click="deleteItem(props.item)">
+                  <v-icon>
+                    delete
+                  </v-icon>
+                </v-btn>
+                <span>{{ $t('common.deleteRecord') }}</span>
+              </v-tooltip>
+
+              <v-btn v-if="showResetPassword" icon class="mx-0" @click="resetPassword(props.item)">
+                <v-icon>
+                  lock_open
+                </v-icon>
+              </v-btn>
+            </template>
+          </td>
+        </template>
+      </v-data-table>
+    </div>
+  </v-card>
 </template>
 
 <script>
@@ -361,6 +355,7 @@ tr:nth-child(even) {
 }
 .grid-card.v-card {
     padding: 0 20px;
+    margin-bottom: 20px;
 }
 .v-card__title {
     display: flex;
@@ -476,7 +471,7 @@ a {
     max-height: inherit;
 }
 .v-dialog:not(.v-dialog--fullscreen) .v-card__text {
-    max-height: 50vh;
+    max-height: 60vh;
     overflow-y: auto;
 }
 .input-group__selections > div {
