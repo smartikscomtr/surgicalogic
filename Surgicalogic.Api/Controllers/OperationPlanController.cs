@@ -19,7 +19,7 @@ using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
 
-namespace Surgicalogic.Api.Controllers
+namespace Surgicalogic.Api.Controllers 
 {
     public class OperationPlanController : Controller
     {

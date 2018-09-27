@@ -38,7 +38,7 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<RoomInputModel>> GetAvailableRoomsAsync()
         {
             var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-            return await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow)).ProjectTo<RoomInputModel>().ToListAsync();
+            return await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow && t.IsActive)).ProjectTo<RoomInputModel>().ToListAsync();
         }
 
         public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)
@@ -131,11 +131,11 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync(bool activeOnly = true)
         {
             var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-            var result =  await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow)).ProjectTo<RoomInputModel>().ToListAsync();
+            var result =  await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow && t.IsActive)).ProjectTo<RoomInputModel>().ToListAsync();
 
             if (!activeOnly)
             {
-                var unavailableRooms = await _context.OperatingRooms.Where(x => x.IsActive && (!x.IsAvailable || x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow))).ProjectTo<RoomInputModel>().ToListAsync();
+                var unavailableRooms = await _context.OperatingRooms.Where(x => x.IsActive && (!x.IsAvailable || x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow && t.IsActive))).ProjectTo<RoomInputModel>().ToListAsync();
 
                 foreach (var item in unavailableRooms)
                 {

@@ -53,7 +53,6 @@ namespace Surgicalogic.Planning.ORTools
 
             if (input.Operations.Any(t => t.Period > input.Settings.MaximumPeriod))
             {
-                Console.WriteLine("Çözüm bulunamadı");
                 return result;
             }
 
@@ -236,6 +235,7 @@ namespace Surgicalogic.Planning.ORTools
                 //We just show 1 solution
                 if (num_solutions > 0)
                 {
+                    result.HasSolution = true;
                     break;
                 }
             }
