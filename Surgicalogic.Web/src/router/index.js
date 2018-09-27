@@ -37,6 +37,7 @@ import ForgotPassword from "@/pages/login/ForgotPassword"
 //Registering Management Pages
 import UsersPage from "@/pages/management/UsersPage";
 import FeedbackPage from "@/pages/management/FeedbackPage";
+import SettingsPage from "@/pages/management/SettingsPage";
 
 //Registering Operation Pages
 import OperationPage from "@/pages/operation/OperationPage";
@@ -156,6 +157,11 @@ export default new VueRouter({
       path: '/userspage',
       name: 'UsersPage',
       component: UsersPage
+    },
+    {
+      path: '/settingspage',
+      name: 'SettingsPage',
+      component: SettingsPage
     },
     {
       path: '/worktypespage',

@@ -248,7 +248,7 @@ export default {
             {
               icon: "settings",
               text: vm.$i18n.t("menu.settings"),
-              // route: "/CreatePlan"
+              route: "/settingspage"
             }
           ]
         },

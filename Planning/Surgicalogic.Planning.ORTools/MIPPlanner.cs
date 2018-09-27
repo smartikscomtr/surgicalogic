@@ -11,7 +11,7 @@ namespace Surgicalogic.Planning.ORTools
     {
         public static DailyPlanOutputModel Solve(DailyPlanInputModel input)
         {
-            var result = new DailyPlanOutputModel() { Rooms = new List<RoomOutputModel>() };
+            var result = new DailyPlanOutputModel() { Rooms = new List<RoomOutputModel>(), HasSolution = true };
 
             foreach (var item in input.Rooms)
             {
@@ -164,6 +164,7 @@ namespace Surgicalogic.Planning.ORTools
 
             if (solver.Solve() != Solver.OPTIMAL)
             {
+                result.HasSolution = false;
                 return result;
             }
 

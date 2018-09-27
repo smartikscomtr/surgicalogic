@@ -43,6 +43,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             config.CreateMap<PersonnelBranch, PersonnelBranchModel>();
             config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
+            config.CreateMap<Setting, SettingModel>();
             config.CreateMap<User, UserModel>();
             config.CreateMap<WorkType, WorkTypeModel>();
             #endregion
@@ -76,6 +77,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(src => src.PersonnelBranches, opt => opt.Ignore());
             config.CreateMap<PersonnelBranchModel, PersonnelBranch>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
+            config.CreateMap<SettingModel, Setting>();
             config.CreateMap<UserModel, User>();
             config.CreateMap<WorkTypeModel, WorkType>();
             #endregion
@@ -136,6 +138,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)));
             config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
+            config.CreateMap<SettingModel, SettingOutputModel>();
             config.CreateMap<UserModel, UserOutputModel>()
                 .ForMember(src => src.IsAdmin, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();

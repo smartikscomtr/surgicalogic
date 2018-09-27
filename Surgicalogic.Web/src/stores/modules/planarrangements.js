@@ -130,6 +130,7 @@ const planArrangementsModule = {
 
       axios.post('OperationPlan/GenerateOperationPlan')
         .then(response => {
+          debugger;
           context.commit('setGenerateOperationPlan', response.data)
           context.commit('setLoading', false);
           resolve(response);
