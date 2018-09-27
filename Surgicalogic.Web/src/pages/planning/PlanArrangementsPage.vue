@@ -5,7 +5,43 @@
         <loading-component :loading="getLoading">
         </loading-component>
 
-        <v-btn class="drawplan-wrap" @click.native="drawPlan()">
+        <v-dialog v-model="drawPlanConfirm"
+                  persistent>
+          <v-card class="container fluid grid-list-md">
+            <v-card-title class="headline">
+              <div class="flex xs12 sm12 md12">
+                {{ $t('planarrangements.drawPlanConfirmTitle') }}
+              </div>
+            </v-card-title>
+
+            <v-card-text>
+              <v-layout wrap>
+                <div class="flex xs12 sm12 md12">
+                  {{ $t('planarrangements.drawPlanConfirmText') }}
+                </div>
+              </v-layout>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn color="darken-1"
+                    flat="flat"
+                     @click="drawPlan">
+                    {{ $t('common.yes') }}
+              </v-btn>
+
+              <v-btn color="red darken-1"
+                    flat="flat"
+                     @click="drawPlanConfirm = false">
+                {{ $t('common.no') }}
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-btn class="drawplan-wrap"
+               @click.native="drawPlanConfirm = true">
           {{ $t('planarrangements.drawPlan')}}
         </v-btn>
 
@@ -24,6 +60,7 @@
         </div>
       </div>
     </div>
+
     <tomorrow-planning-component>
     </tomorrow-planning-component>
   </div>
@@ -33,158 +70,161 @@
 import Vis from 'vis/dist/vis.js';
 
 export default {
-    data() {
-        return {};
-    },
+  data() {
+    return {
+      drawPlanConfirm: false
+    };
+  },
 
-    computed: {
-        getLoading() {
-            const vm = this;
-
-            return vm.$store.state.planArrangementsModule.loading;
-        }
-    },
-
-    methods: {
-        drawPlan() {
-            const vm = this;
-
-            vm.$store.dispatch('getGenerateOperationPlan').then(response => {
-                vm.getOperationPlan();
-                vm.$store.dispatch('getTomorrowOperationList');
-            });
-        },
-
-        updatePlan() {
-            const vm = this;
-
-            var timelineItems = JSON.parse(
-                document.getElementById('serializedTimeline').innerHTML
-            );
-
-            var operations = [];
-
-            for (var data in timelineItems._data) {
-                var item = timelineItems._data[data];
-                //ilk ve son başlangıç ve bitiş tarihleri
-                var newStart = new Date(item.start);
-                var newEnd = new Date(item.end);
-
-                var operationLength =
-                    (newEnd.getTime() - newStart.getTime()) / 60000;
-
-                var operation = {
-                    id: item.operationPlanId,
-                    operationId: data,
-                    start: newStart,
-                    roomId: item.group,
-                    length: operationLength
-                };
-
-                operations.push(operation);
-            }
-
-            vm.$store
-                .dispatch('updatePlanArrangements', JSON.stringify(operations))
-                .then(response => {
-                    vm.$store.dispatch('getTomorrowOperationList');
-                });
-        },
-
-        getOperationPlan() {
-            const vm = this;
-
-            var container = document.getElementById('visualization');
-
-            vm.$store.dispatch('getPlanArrangements').then(response => {
-                var items = new Vis.DataSet(
-                    vm.$store.state.planArrangementsModule.model.plan
-                );
-                var groups = new Vis.DataSet(
-                    vm.$store.state.planArrangementsModule.model.rooms
-                );
-
-                var workingHourStart = new Date(
-                    vm.$store.state.planArrangementsModule.model.workingHourStart
-                );
-                var workingHourEnd = new Date(
-                    vm.$store.state.planArrangementsModule.model.workingHourEnd
-                );
-
-                document.getElementById(
-                    'serializedTimeline'
-                ).innerHTML = JSON.stringify(items);
-
-                calcuteOvertimeAndUtilization(
-                    vm.$store.state.planArrangementsModule.model.startDate,
-                    groups.length,
-                    workingHourStart,
-                    workingHourEnd
-                );
-
-                var options = {
-                    orientation: {
-                        axis: 'top'
-                    },
-                    // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
-                    locale: 'tr',
-                    moveable: true,
-                    zoomMax: 86400000,
-                    zoomMin: 3600000,
-                    horizontalScroll: true,
-                    min: vm.$store.state.planArrangementsModule.model.minDate,
-                    max: vm.$store.state.planArrangementsModule.model.maxDate,
-                    start:
-                        vm.$store.state.planArrangementsModule.model.startDate,
-                    end: vm.$store.state.planArrangementsModule.model.endDate,
-                    editable: {
-                        updateTime: true,
-                        updateGroup: true
-                    },
-                    selectable: true,
-
-                    onMoving(item, callback) {
-                        var timelineItems = JSON.parse(
-                            document.getElementById('serializedTimeline')
-                                .innerHTML
-                        );
-
-                        timelineItems._data[item.id].start = new Date(
-                            item.start
-                        );
-                        timelineItems._data[item.id].end = new Date(item.end);
-                        timelineItems._data[item.id].group = item.group;
-
-                        document.getElementById(
-                            'serializedTimeline'
-                        ).innerHTML = JSON.stringify(timelineItems);
-
-                        calcuteOvertimeAndUtilization(
-                            options.start,
-                            groups.length,
-                            workingHourStart,
-                            workingHourEnd
-                        );
-
-                        callback(item);
-                    }
-                };
-
-                container.innerHTML = '';
-                var timeline = new Vis.Timeline(
-                    container,
-                    items,
-                    groups,
-                    options
-                );
-            });
-        }
-    },
-
-    mounted() {
+  computed: {
+    getLoading() {
         const vm = this;
 
-        vm.getOperationPlan();
+        return vm.$store.state.planArrangementsModule.loading;
+    }
+  },
+
+  methods: {
+    drawPlan() {
+      const vm = this;
+
+      vm.drawPlanConfirm = false;
+      vm.$store.dispatch('getGenerateOperationPlan').then(response => {
+          vm.getOperationPlan();
+          vm.$store.dispatch('getTomorrowOperationList');
+      });
+    },
+
+    updatePlan() {
+      const vm = this;
+
+      var timelineItems = JSON.parse(
+          document.getElementById('serializedTimeline').innerHTML
+      );
+
+      var operations = [];
+
+      for (var data in timelineItems._data) {
+          var item = timelineItems._data[data];
+          //ilk ve son başlangıç ve bitiş tarihleri
+          var newStart = new Date(item.start);
+          var newEnd = new Date(item.end);
+
+          var operationLength =
+              (newEnd.getTime() - newStart.getTime()) / 60000;
+
+          var operation = {
+              id: item.operationPlanId,
+              operationId: data,
+              start: newStart,
+              roomId: item.group,
+              length: operationLength
+          };
+
+          operations.push(operation);
+      }
+
+      vm.$store
+          .dispatch('updatePlanArrangements', JSON.stringify(operations))
+          .then(response => {
+              vm.$store.dispatch('getTomorrowOperationList');
+          });
+  },
+
+    getOperationPlan() {
+      const vm = this;
+
+      var container = document.getElementById('visualization');
+
+      vm.$store.dispatch('getPlanArrangements').then(response => {
+          var items = new Vis.DataSet(
+              vm.$store.state.planArrangementsModule.model.plan
+          );
+          var groups = new Vis.DataSet(
+              vm.$store.state.planArrangementsModule.model.rooms
+          );
+
+          var workingHourStart = new Date(
+              vm.$store.state.planArrangementsModule.model.workingHourStart
+          );
+          var workingHourEnd = new Date(
+              vm.$store.state.planArrangementsModule.model.workingHourEnd
+          );
+
+          document.getElementById(
+              'serializedTimeline'
+          ).innerHTML = JSON.stringify(items);
+
+          calcuteOvertimeAndUtilization(
+              vm.$store.state.planArrangementsModule.model.startDate,
+              groups.length,
+              workingHourStart,
+              workingHourEnd
+          );
+
+          var options = {
+              orientation: {
+                  axis: 'top'
+              },
+              // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
+              locale: 'tr',
+              moveable: true,
+              zoomMax: 86400000,
+              zoomMin: 3600000,
+              horizontalScroll: true,
+              min: vm.$store.state.planArrangementsModule.model.minDate,
+              max: vm.$store.state.planArrangementsModule.model.maxDate,
+              start:
+                  vm.$store.state.planArrangementsModule.model.startDate,
+              end: vm.$store.state.planArrangementsModule.model.endDate,
+              editable: {
+                  updateTime: true,
+                  updateGroup: true
+              },
+              selectable: true,
+
+              onMoving(item, callback) {
+                  var timelineItems = JSON.parse(
+                      document.getElementById('serializedTimeline')
+                          .innerHTML
+                  );
+
+                  timelineItems._data[item.id].start = new Date(
+                      item.start
+                  );
+                  timelineItems._data[item.id].end = new Date(item.end);
+                  timelineItems._data[item.id].group = item.group;
+
+                  document.getElementById(
+                      'serializedTimeline'
+                  ).innerHTML = JSON.stringify(timelineItems);
+
+                  calcuteOvertimeAndUtilization(
+                      options.start,
+                      groups.length,
+                      workingHourStart,
+                      workingHourEnd
+                  );
+
+                  callback(item);
+              }
+          };
+
+          container.innerHTML = '';
+          var timeline = new Vis.Timeline(
+              container,
+              items,
+              groups,
+              options
+          );
+      });
+    }
+  },
+
+  mounted() {
+      const vm = this;
+
+      vm.getOperationPlan();
     }
 };
 
