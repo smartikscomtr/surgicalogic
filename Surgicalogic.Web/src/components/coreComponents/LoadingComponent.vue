@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-progress-circular v-show="loading"
-                         :size="150"
-                         :width="15"
+                         :size="40"
                          indeterminate>
     </v-progress-circular>
   </div>
@@ -22,11 +21,12 @@ export default {
 <style>
 .v-progress-circular{
     margin: 172px 0 0px -124px;
-    color: #80cbc4;
-    background-color: #fafafa;
+    color: #009688;
+    /* background-color: #fafafa; */
     position: absolute;
     left: 50%;
     right: 50%;
     border-radius: 50%;
+    z-index: 100
 }
 </style>
