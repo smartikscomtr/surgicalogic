@@ -345,7 +345,8 @@ export default {
           operatingRoomIds: vm.editAction.blockedOperatingRoomIds
         }).then(() => {
           vm.snackbarVisible = true;
-          vm.$store.dispatch('getOperations');
+          debugger;
+          vm.$emit('hello');
 
           setTimeout(() => {
             vm.snackbarVisible = false;

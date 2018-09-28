@@ -10,6 +10,6 @@ namespace Surgicalogic.Contracts.Stores
 {
     public interface IOperationTypeStoreService : IStoreService<OperationType, OperationTypeModel>
     {
-        Task<List<OperationTypeOutputModel>> GetByBranchIdAsync(int branchId);
+        Task<List<OperationTypeForOperationOutputModel>> GetByBranchIdAsync(int branchId);
     }
 }

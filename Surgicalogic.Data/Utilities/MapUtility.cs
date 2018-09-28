@@ -173,6 +173,8 @@ namespace Surgicalogic.Data.Utilities
             #region Entity To InputOutputModel
             config.CreateMap<Operation, OperationInputModel>()
                 .ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
+            config.CreateMap<OperationType, OperationTypeForOperationOutputModel>()
+                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name + " - " + src.Branch.Name));
             config.CreateMap<OperationPlan, OperationPlanHistoryOutputModel>()
                 .ForMember(dest => dest.RealizedStartDate, opt => opt.MapFrom(src => src.OperationDate))
                 .ForMember(dest => dest.RealizedEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
