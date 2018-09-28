@@ -122,7 +122,7 @@ namespace Surgicalogic.Api.Controllers
                 Settings = new SettingsInputModel
                 {
                     RoomsPeriod = Convert.ToInt32(AppSettings.WorkingHourEnd.Subtract(AppSettings.WorkingHourStart).TotalMinutes) / AppSettings.PeriodInMinutes,
-                    MaximumPeriod = 1440 / AppSettings.PeriodInMinutes,
+                    MaximumPeriod = Convert.ToInt32((new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day) - AppSettings.WorkingHourStart).TotalMinutes) / AppSettings.PeriodInMinutes,
                     StartingHour = AppSettings.WorkingHourStart.Hour,
                     StartingMinute = AppSettings.WorkingHourStart.Minute,
                     PeriodInMinutes = AppSettings.PeriodInMinutes,
