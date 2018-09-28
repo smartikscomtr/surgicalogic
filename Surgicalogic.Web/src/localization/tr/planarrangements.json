@@ -3,5 +3,7 @@
   "overtime": "Fazla Mesai",
   "utilization": "Kullanım Oranı",
   "minute": "dk",
-  "updatePlan": "DEĞİŞİKLİKLERİ KAYDET"
+  "updatePlan": "DEĞİŞİKLİKLERİ KAYDET",
+  "drawPlanConfirmTitle": "Plan Çiz",
+  "drawPlanConfirmText": "Yarın için yeni bir operasyon planı oluşturulacaktır. Onaylıyor musunuz?"
 }

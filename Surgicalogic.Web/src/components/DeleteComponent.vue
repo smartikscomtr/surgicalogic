@@ -23,13 +23,13 @@
           <v-btn color="darken-1"
                  flat="flat"
                  @click.native="btnYesDelete">
-            Evet
+            {{ $t('common.yes') }}
           </v-btn>
 
           <v-btn color="red darken-1"
                  flat="flat"
                  @click.native="btnNoDelete">
-            Hayır
+            {{ $t('common.no') }}
           </v-btn>
         </v-card-actions>
       </v-card>
