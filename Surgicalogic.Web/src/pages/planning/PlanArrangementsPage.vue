@@ -58,6 +58,10 @@
           <b>{{ $t('planarrangements.overtime')}} :</b> <span id="overtime"></span> {{ $t('planarrangements.minute')}} <br/>
           <b>{{ $t('planarrangements.utilization')}} :</b> %<span id="utilization"></span>
         </div>
+
+        <snackbar-component :snackbar-visible="snackbarVisible"
+                            :savedMessage="savedMessage">
+        </snackbar-component>
       </div>
     </div>
 
@@ -72,7 +76,9 @@ import Vis from 'vis/dist/vis.js';
 export default {
   data() {
     return {
-      drawPlanConfirm: false
+      drawPlanConfirm: false,
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('planarrangements.notGenerated')
     };
   },
 
@@ -90,8 +96,16 @@ export default {
 
       vm.drawPlanConfirm = false;
       vm.$store.dispatch('getGenerateOperationPlan').then(response => {
+        if (response.data.hasSolution) {
           vm.getOperationPlan();
           vm.$store.dispatch('getTomorrowOperationList');
+        } else {
+          vm.snackbarVisible = true;
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 5000)
+        }
       });
     },
 

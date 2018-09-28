@@ -5,5 +5,6 @@
   "minute": "min",
   "updatePlan":"SAVE CHANGES",
   "drawPlanConfirmTitle": "Plan Draw",
-  "drawPlanConfirmText": "Yarın için yeni bir operasyon planı oluşturulacaktır. Onaylıyor musunuz?"
+  "drawPlanConfirmText": "Yarın için yeni bir operasyon planı oluşturulacaktır. Onaylıyor musunuz?",
+  "notGenerated": "Plan has not been generated."
 }
