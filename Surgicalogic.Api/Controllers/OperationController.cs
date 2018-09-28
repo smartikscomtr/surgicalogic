@@ -83,7 +83,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
-                Date = item.Date
+                Date = item.Date < new DateTime(2000,01,01) ? DateTime.Now.AddDays(1) : item.Date //TODO: Çakma çözüm
             };
 
             var result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
@@ -132,7 +132,7 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
-                Date = item.Date
+                Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date //TODO: Çakma çözüm
             };
 
             var result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
