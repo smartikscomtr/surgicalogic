@@ -342,7 +342,7 @@ export default {
           description: vm.editAction.description,
           operationTypeId: vm.editAction.operationTypeId,
           personnelIds: vm.editAction.personnelIds,
-          operatingRoomIds: vm.selectOperatingRoom
+          operatingRoomIds: vm.editAction.blockedOperatingRoomIds
         }).then(() => {
           vm.snackbarVisible = true;
           vm.$store.dispatch('getOperations');
@@ -364,7 +364,7 @@ export default {
           description: vm.editAction.description,
           operationTypeId: vm.editAction.operationTypeId,
           personnelIds: vm.editAction.personnelIds,
-          operatingRoomIds: vm.selectOperatingRoom
+          operatingRoomIds: vm.editAction.blockedOperatingRoomIds
         }).then(() => {
           vm.snackbarVisible = true;
           vm.$store.dispatch('getOperations');
