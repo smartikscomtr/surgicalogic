@@ -150,11 +150,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportOperation');
-    },
-
-    hello()
-    {
-      debugger;
     }
   }
 };

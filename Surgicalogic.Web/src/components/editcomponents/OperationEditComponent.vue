@@ -345,8 +345,7 @@ export default {
           operatingRoomIds: vm.selectOperatingRoom
         }).then(() => {
           vm.snackbarVisible = true;
-          debugger;
-          vm.$emit('hello');
+          vm.$store.dispatch('getOperations');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
