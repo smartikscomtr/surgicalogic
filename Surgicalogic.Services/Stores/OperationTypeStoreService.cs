@@ -21,9 +21,9 @@ namespace Surgicalogic.Services.Stores
             _context = context;
         }
 
-        public async Task<List<OperationTypeForOperationOutputModel>> GetByBranchIdAsync(int branchId)
+        public async Task<List<OperationTypeForOperationOutputModel>> GetByBranchIdAsync()
         {
-            return await GetQueryable().Where(x => x.BranchId == branchId).ProjectTo<OperationTypeForOperationOutputModel>().ToListAsync();
+            return await GetQueryable().ProjectTo<OperationTypeForOperationOutputModel>().ToListAsync();
         }
     }
 }

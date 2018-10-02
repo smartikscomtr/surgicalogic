@@ -54,11 +54,11 @@ namespace Surgicalogic.Api.Controllers
             return await _operationTypeStoreService.GetAsync<OperationTypeOutputModel>();
         }
 
-        [Route("OperationType/GetOperationTypesByBranchId/{branchId:int}")]
+        [Route("OperationType/GetOperationTypesByBranchId")]
         [HttpGet]
-        public async Task<List<OperationTypeForOperationOutputModel>> GetOperationTypesByBranchId(int branchId)
+        public async Task<List<OperationTypeForOperationOutputModel>> GetOperationTypesByBranchId()
         {
-            return await _operationTypeStoreService.GetByBranchIdAsync(branchId);
+            return await _operationTypeStoreService.GetByBranchIdAsync();
         }
 
         [Route("OperationType/ExcelExport")]
