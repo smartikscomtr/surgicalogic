@@ -130,8 +130,8 @@ export default {
 
     //We are accessing getAllOperationTypes in vuex store
      if(vm.editLoadOnce){
-        vm.$store.dispatch('getAllOperationTypesForOperation');
-        vm.$store.dispatch('getAllBranchesForOperation');
+         vm.$store.dispatch('getOperationTypesByBranchId');
+         vm.$store.dispatch('getPersonnelsByOperationTypeId');
         vm.editLoadOnce = false;
      }
     }
@@ -150,11 +150,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportOperation');
-    },
-
-    hello()
-    {
-      debugger;
     }
   }
 };

@@ -26,19 +26,8 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectBranch"
-                              :items="branches"
-                              :label="$t('operation.branch')"
-                              :filter="customFilter"
-                              @change="branchChanged()"
-                              item-text="name"
-                              item-value="id">
-              </v-autocomplete>
-            </v-flex>
-
-            <v-flex xs12 sm6 md6>
               <v-autocomplete v-model="selectOperationType"
-                              :items="filterOperationTypes"
+                              :items="operationTypes"
                               :label="$t('operation.operationType')"
                               :filter="customFilter"
                               @change="operationTypeChanged()"
@@ -155,13 +144,15 @@ export default {
   },
 
   data() {
+    const vm = this;
+
     return {
       filterOperationTypes: [],
       filterPersonnels: [],
       filteredOperatingRooms:[],
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('operation.operationSaved'),
-      menu:false,
+      savedMessage: vm.$i18n.t('operation.operationSaved'),
+      menu: false,
       dateFormatted: null
     };
   },
@@ -203,7 +194,7 @@ export default {
     operationTypes() {
       const vm = this;
 
-      return vm.$store.state.operationModule.allOperationTypes;
+      return vm.$store.state.operationModule.filteredOperationTypes;
     },
 
     selectOperationType: {
@@ -217,20 +208,6 @@ export default {
         const vm = this;
 
         vm.editAction.operationTypeId = val;
-      }
-    },
-
-    selectBranch: {
-      get() {
-        const vm = this;
-
-        return vm.editAction.branchId;
-      },
-
-       set(val) {
-        const vm = this;
-
-        vm.editAction.branchId = val;
       }
     },
 
@@ -283,24 +260,24 @@ export default {
     },
 
     date: {
-        get(){
-          const vm = this;
+      get(){
+        const vm = this;
 
-           if (vm.editAction.date) {
-              vm.$store.commit('saveGlobalDate',  vm.editAction.date);
-           }
-
-           return vm.$store.state.operationModule.globalDate;
-        },
-
-        set(newValue){
-          const vm = this;
-
-          if (newValue) {
-            vm.editAction.date = newValue;
-            vm.$store.commit('saveGlobalDate', vm.editAction.date);
+          if (vm.editAction.date) {
+            vm.$store.commit('saveGlobalDate',  vm.editAction.date);
           }
+
+          return vm.$store.state.operationModule.globalDate;
+      },
+
+      set(newValue){
+        const vm = this;
+
+        if (newValue) {
+          vm.editAction.date = newValue;
+          vm.$store.commit('saveGlobalDate', vm.editAction.date);
         }
+      }
      }
   },
 
@@ -337,7 +314,6 @@ export default {
           id: vm.editAction.id,
           name: vm.editAction.name,
           date: vm.editAction.date,
-          branchId: vm.editAction.branchId,
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
           operationTypeId: vm.editAction.operationTypeId,
@@ -345,8 +321,6 @@ export default {
           operatingRoomIds: vm.editAction.blockedOperatingRoomIds
         }).then(() => {
           vm.snackbarVisible = true;
-          debugger;
-          vm.$emit('hello');
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -360,7 +334,6 @@ export default {
         vm.$store.dispatch('insertOperation', {
           name: vm.editAction.name,
           date: vm.editAction.date,
-          branchId: vm.editAction.branchId,
           operationTime: vm.editAction.operationTime,
           description: vm.editAction.description,
           operationTypeId: vm.editAction.operationTypeId,
@@ -392,31 +365,22 @@ export default {
       return `${year}-${month}-${day}`;
     },
 
-    branchChanged() {
-      const vm = this;
-
-      if (vm.editAction.branchId) {
-        vm.$store.dispatch('getOperationTypesByBranchId', {
-          branchId: vm.editAction.branchId}).then(() => {
-          vm.filterOperationTypes = vm.$store.state.operationModule.filteredOperationTypes;
-        });
-
-        vm.$store.dispatch('getPersonnelsByBranchId', {
-          branchId: vm.editAction.branchId }).then(() => {
-          vm.filterPersonnels = vm.$store.state.operationModule.filteredPersonnels;
-        });
-      }
-    },
-
     operationTypeChanged() {
       const vm = this;
 
       if (vm.editAction.operationTypeId) {
+        vm.$store.dispatch('getPersonnelsByOperationTypeId', {
+          operationTypeId: vm.editAction.operationTypeId
+        }).then(() => {
+          vm.filterPersonnels = vm.$store.state.operationModule.filteredPersonnels;
+        });
+      }
+
+      if (vm.editAction.operationTypeId) {
         vm.$store.dispatch('getOperatingRoomsByOperationTypeId', {
-          operationTypeId: vm.editAction.operationTypeId}).then(() => {
-            setTimeout(function(){
-              vm.filteredOperatingRooms = vm.$store.state.operationModule.filteredOperatingRooms;
-            }, 2000)
+          operationTypeId: vm.editAction.operationTypeId
+        }).then(() => {
+          vm.filteredOperatingRooms = vm.$store.state.operationModule.filteredOperatingRooms;
         });
       }
     },

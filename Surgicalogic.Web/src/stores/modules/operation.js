@@ -55,7 +55,7 @@ const operationModule = {
       state.filteredOperationTypes = payload;
     },
 
-    setPersonnelsByBranchId(state, payload) {
+    setPersonnelsByOperationTypeId(state, payload) {
       state.filteredPersonnels = payload;
     },
 
@@ -77,7 +77,6 @@ const operationModule = {
   actions: {
     getOperations(context, params) {
       context.commit('setLoading', true);
-
       axios.get('Operation/GetOperations', {
         params: params
       }).then(response => {
@@ -145,9 +144,9 @@ const operationModule = {
       })
     },
 
-    getOperationTypesByBranchId(context, payload) {
+    getOperationTypesByBranchId(context) {
       return new Promise((resolve, reject) => {
-        axios.get('OperationType/GetOperationTypesByBranchId/' + payload.branchId).then(response => {
+        axios.get('OperationType/GetOperationTypesByBranchId').then(response => {
           if (response.data) {
             context.commit('setOperationTypesByBranchId', response.data) //Set the Operation Types in the store
           }
@@ -158,11 +157,11 @@ const operationModule = {
       })
     },
 
-    getPersonnelsByBranchId(context, payload) {
+    getPersonnelsByOperationTypeId(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.get('Personnel/GetPersonnelsByBranchIdAsync/' + payload.branchId).then(response => {
+        axios.get('Personnel/GetPersonnelsByOperationTypeIdAsync/' + payload.operationTypeId).then(response => {
           if (response.data) {
-            context.commit('setPersonnelsByBranchId', response.data)
+            context.commit('setPersonnelsByOperationTypeId', response.data)
           }
           resolve(response);
         }, error => {
@@ -172,10 +171,15 @@ const operationModule = {
     },
 
     getOperatingRoomsByOperationTypeId(context, payload) {
-      axios.get('OperatingRoom/GetOperatingRoomsByOperationTypeId/' + payload.operationTypeId).then(response => {
-        if (response.data) {
-          context.commit('setOperatingRoomsByOperationTypeId', response.data) //Set the Operation Types in the store
-        }
+      return new Promise((resolve, reject) => {
+        axios.get('OperatingRoom/GetOperatingRoomsByOperationTypeId/' + payload.operationTypeId).then(response => {
+          if (response.data) {
+            context.commit('setOperatingRoomsByOperationTypeId', response.data) //Set the Operation Types in the store
+          }
+          resolve(response);
+        }, error => {
+          reject(error);
+        })
       })
     },
 

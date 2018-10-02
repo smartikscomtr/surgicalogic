@@ -263,7 +263,6 @@ export default {
         },
 
         executeGridOperations(resetPageCount) {
-          debugger;
             const vm = this;
 
             if (resetPageCount) {
