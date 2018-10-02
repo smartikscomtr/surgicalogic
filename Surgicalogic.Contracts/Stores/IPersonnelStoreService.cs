@@ -11,5 +11,6 @@ namespace Surgicalogic.Contracts.Stores
     {
         Task<List<PersonnelOutputModel>> GetPersonnelsByBranchIdAsync(int branchId);
         Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId);
+        Task<List<PersonnelOutputModel>> GetPersonnelsByOperationTypeIdAsync(int operationTypeId);
     }
 }

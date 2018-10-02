@@ -67,6 +67,13 @@ namespace Surgicalogic.Api.Controllers
             return await _personnelStoreService.GetPersonnelsByBranchIdAsync(branchId);
         }
 
+        [Route("Personnel/GetPersonnelsByOperationTypeIdAsync/{operationTypeId:int}")]
+        [HttpGet]
+        public async Task<List<PersonnelOutputModel>> GetPersonnelsByOperationTypeIdAsync(int operationTypeId)
+        {
+            return await _personnelStoreService.GetPersonnelsByOperationTypeIdAsync(operationTypeId);
+        }
+
         [Route("Personnel/GetDoctorsByBranchIdAsync/{branchId:int}")]
         [HttpGet]
         public async Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId)

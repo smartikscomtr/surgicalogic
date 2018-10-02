@@ -18,11 +18,11 @@ namespace Surgicalogic.Services.Stores
     public class OperationPersonnelStoreService : StoreService<OperationPersonnel, OperationPersonnelModel>, IOperationPersonnelStoreService
     {
         private DataContext _context;
-        private IPersonnelBranchStoreService _personnelBranchStoreService;
-        public OperationPersonnelStoreService(DataContext context, IPersonnelBranchStoreService personnelBranchStoreService) : base(context)
+        private IPersonnelStoreService _personnelStoreService;
+        public OperationPersonnelStoreService(DataContext context, IPersonnelStoreService personnelStoreService) : base(context)
         {
             _context = context;
-            _personnelBranchStoreService = personnelBranchStoreService;
+            _personnelStoreService = personnelStoreService;
         }
 
         public async Task<List<OperationPersonnelModel>> GetByOperationIdAsync(int operationId)
@@ -40,11 +40,12 @@ namespace Surgicalogic.Services.Stores
                 }
             };
 
-            var currentOperations = await GetByOperationIdAsync(item.Id);
-            var personnels = currentOperations.Select(x => x.PersonnelId);
-            var branchPersonnelIds = await _personnelBranchStoreService.GetPersonnelIdsByBranchIdAsync(item.BranchId);
+            var currentPersonnels = await GetByOperationIdAsync(item.Id);
+            var personnels = currentPersonnels.Select(x => x.PersonnelId);
+            var branchPersonnels = await _personnelStoreService.GetPersonnelsByOperationTypeIdAsync(item.OperationTypeId);
             var addedPersonnels = item.PersonnelIds.Except(personnels);
-            addedPersonnels = branchPersonnelIds.Intersect(addedPersonnels);
+
+            addedPersonnels = branchPersonnels.Select(x => x.Id).Intersect(addedPersonnels);
             var removedPersonnels = personnels.Except(item.PersonnelIds);
 
             foreach (var personnelId in addedPersonnels)
@@ -58,7 +59,7 @@ namespace Surgicalogic.Services.Stores
 
             foreach (var personnelId in removedPersonnels)
             {
-                await DeleteByIdAsync(currentOperations.First(x => x.OperationId == item.Id && x.PersonnelId == personnelId).Id);
+                await DeleteByIdAsync(currentPersonnels.First(x => x.OperationId == item.Id && x.PersonnelId == personnelId).Id);
             }
 
             await SaveChangesAsync();
