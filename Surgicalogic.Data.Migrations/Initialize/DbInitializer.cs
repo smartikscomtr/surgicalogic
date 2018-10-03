@@ -296,15 +296,15 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 for (int i = 1; i <= 8; i++)
                 {
 
-                        context.OperationTypes.Add(new Entities.OperationType
-                        {
-                            Name = "Tip " + i,
-                            Description = "Tip " + i,
-                            BranchId = i,
-                            CreatedDate = DateTime.Now,
-                            CreatedBy = 1,
-                            IsActive = true
-                        });
+                    context.OperationTypes.Add(new Entities.OperationType
+                    {
+                        Name = "Tip " + i,
+                        Description = "Tip " + i,
+                        BranchId = i,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = 1,
+                        IsActive = true
+                    });
                 }
                 #endregion
 
@@ -343,6 +343,24 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     });
                 }
 
+                #endregion
+
+                #region OperatingRoomOperationTypes
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    for (int k = 1; k <= 8; k++)
+                    {
+                        context.OperatingRoomOperationTypes.Add(new Entities.OperatingRoomOperationType
+                        {
+                            OperationTypeId = k,
+                            OperatingRoomId = i,
+                            CreatedDate = DateTime.Now,
+                            CreatedBy = 1,
+                            IsActive = true
+                        });
+                    }
+                }
                 #endregion
 
                 #region SaveChanges
