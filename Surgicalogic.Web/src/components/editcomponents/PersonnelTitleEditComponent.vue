@@ -25,6 +25,13 @@
                 </v-text-field>
               </v-flex>
 
+              <v-flex xs12 sm12 md12 input-group-checkbox>
+                <v-checkbox v-model="editAction['suitableForMultipleOperation']"
+                            :label="$t('personneltitle.suitableForMultipleOperation')"
+                            color="primary">
+                </v-checkbox>
+              </v-flex>
+
               <v-flex xs12 sm12 md12>
                 <v-textarea v-model="editAction['description']"
                             rows="3"
@@ -126,6 +133,7 @@ export default {
         vm.$store.dispatch('updatePersonnelTitle', {
           id: vm.editAction.id,
           name: vm.editAction.name,
+          suitableForMultipleOperation: vm.editAction.suitableForMultipleOperation,
           description: vm.editAction.description
         }).then(() => {
           vm.snackbarVisible = true;
@@ -140,6 +148,7 @@ export default {
         //We are accessing insertPersonnelTitle in vuex store
         vm.$store.dispatch('insertPersonnelTitle', {
           name: vm.editAction.name,
+          suitableForMultipleOperation: vm.editAction.suitableForMultipleOperation,
           description: vm.editAction.description
         }).then(() => {
           vm.snackbarVisible = true;

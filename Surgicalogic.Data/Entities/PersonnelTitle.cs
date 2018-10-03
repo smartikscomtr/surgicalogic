@@ -12,10 +12,10 @@ namespace Surgicalogic.Data.Entities
         [Required]
         [StringLength(250)]
         public string Name { get; set; }
+        public bool SuitableForMultipleOperation { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
         [Dependent("PersonnelTitleId")]
         public virtual ICollection<Personnel> Personnels { get; set; }
-
     }
 }

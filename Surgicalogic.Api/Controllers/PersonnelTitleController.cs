@@ -68,6 +68,7 @@ namespace Surgicalogic.Api.Controllers
             var personnelTitleItem = new PersonnelTitleModel()
             {
                 Name = item.Name,
+                SuitableForMultipleOperation = item.SuitableForMultipleOperation,
                 Description = item.Description
             };
 
@@ -99,6 +100,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 Id = item.Id,
                 Name = item.Name,
+                SuitableForMultipleOperation = item.SuitableForMultipleOperation,
                 Description = item.Description
             };
 

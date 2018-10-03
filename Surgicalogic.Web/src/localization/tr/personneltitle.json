@@ -3,5 +3,6 @@
   "editPersonnelTitlesInformation": "Personel Ünvanı Düzenleme",
   "personnelTitles": "Personel Ünvanları",
   "personnelTitle": "Personel Ünvanı",
-  "personnelTitleSaved": "Personel tipi kaydedildi."
+  "personnelTitleSaved": "Personel tipi kaydedildi.",
+  "suitableForMultipleOperation": "Aynı anda birden fazla operasyona dahil olabilir mi?"
 }

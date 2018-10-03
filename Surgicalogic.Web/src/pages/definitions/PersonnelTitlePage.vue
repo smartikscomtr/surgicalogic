@@ -70,8 +70,9 @@ export default {
           align: 'left'
         },
         {
-          value: 'description',
-          text: vm.$i18n.t('common.description'),
+          isCheck: true,
+          value: 'suitableForMultipleOperation',
+          text: vm.$i18n.t('personneltitle.suitableForMultipleOperation'),
           sortable: true,
           align: 'left'
         },
