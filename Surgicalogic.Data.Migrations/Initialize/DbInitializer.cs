@@ -249,6 +249,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
+                    PictureUrl = "tuba.jpg",
                     CreatedDate = DateTime.Now
                   },
 
@@ -260,17 +261,79 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
+                    PictureUrl = "gurkan.jpg",
                     CreatedDate = DateTime.Now
                   },
 
                    new Personnel
                    {
-                    PersonnelCode = "HC01",
-                    FirstName = "Hasan",
-                    LastName = "Çolak",
+                    PersonnelCode = "BK01",
+                    FirstName = "Berk",
+                    LastName = "Kuğu",
                     PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
+                    PictureUrl = "berk.jpg",
+                    CreatedDate = DateTime.Now
+                   },
+
+                   new Personnel
+                   {
+                    PersonnelCode = "DD01",
+                    FirstName = "Deniz",
+                    LastName = "Dara",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    PictureUrl = "deniz.jpg",
+                    CreatedDate = DateTime.Now
+                   },
+
+                   new Personnel
+                   {
+                    PersonnelCode = "KS01",
+                    FirstName = "Kenan",
+                    LastName = "Su",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    PictureUrl = "kenan.jpg",
+                    CreatedDate = DateTime.Now
+                   },
+
+                   new Personnel
+                   {
+                    PersonnelCode = "MB01",
+                    FirstName = "Mehmet",
+                    LastName = "Bal",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    PictureUrl = "mehmet.jpg",
+                    CreatedDate = DateTime.Now
+                   },
+
+                   new Personnel
+                   {
+                    PersonnelCode = "SU01",
+                    FirstName = "Selim",
+                    LastName = "Ural",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    PictureUrl = "selim.jpg",
+                    CreatedDate = DateTime.Now
+                   },
+
+                   new Personnel
+                   {
+                    PersonnelCode = "UK01",
+                    FirstName = "Uğur",
+                    LastName = "Kara",
+                    PersonnelTitleId = title.Id,
+                    BranchId = branch.Id,
+                    WorkTypeId = workType.Id,
+                    PictureUrl = "ugur.jpg",
                     CreatedDate = DateTime.Now
                    }
                 };
