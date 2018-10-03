@@ -103,6 +103,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 //Bu operasyonun yapılabileceği odaları, operasyonun tipi üzerinden giderek buluyorum.
                 var operatingRoomIds = operation.OperationType.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId);
+                var personnelIds = operation.OperationPersonels.Where(x => x.Personnel.PersonnelTitle.SuitableForMultipleOperation != true);
 
                 var outputModel = AutoMapper.Mapper.Map<Model.OutputModel.OperationOutputModel>(operation);
 
@@ -111,7 +112,7 @@ namespace Surgicalogic.Api.Controllers
                     Id = operation.Id,
                     Name = operation.Name,
                     Period = outputModel.Period,
-                    DoctorIds = outputModel.DoctorIds.ToArray(),
+                    DoctorIds = personnelIds.Select(x => x.PersonnelId).ToArray(),
                     //Bu operasyonun yapılamayacağı odaları, tüm odalardan yapılabileceği odaları çıkartarak buluyorum.
                     UnavailableRooms = rooms.Select(x => x.Id).Except(operatingRoomIds.Except(outputModel.BlockedOperatingRoomIds)).ToList()
                 });
