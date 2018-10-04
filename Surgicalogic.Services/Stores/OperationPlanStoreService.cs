@@ -41,7 +41,15 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<OperationPlanOutputModel>> GetTomorrowOperationsAsync()
         {
             var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+
             return await GetQueryable().Where(x => x.OperationDate > tomorrow && x.OperationDate < tomorrow.AddDays(1)).ProjectTo<OperationPlanOutputModel>().ToListAsync();
+        }
+
+        public async Task<List<OperationPlanOutputModel>> GetDashboardTimelineOperationsAsync(DateTime selectDate)
+        {
+            var date = new DateTime(selectDate.Year, selectDate.Month, selectDate.Day, 0, 0, 0);
+
+            return await GetQueryable().Where(x => x.OperationDate == date).ProjectTo<OperationPlanOutputModel>().ToListAsync();
         }
 
         //public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationListAsync(GridInputModel input)
