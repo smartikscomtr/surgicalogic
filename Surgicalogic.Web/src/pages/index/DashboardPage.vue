@@ -171,52 +171,58 @@ export default {
   mounted() {
     const vm = this;
 
-    var container = document.getElementById('visualization');
+    vm.$watch('date', (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        var container = document.getElementById('visualization');
 
-    vm.$store.dispatch('getDashboardTimelinePlans').then(response => {
-        var items = new Vis.DataSet(
-            vm.$store.state.planArrangementsModule.model.plan
-        );
-        var groups = new Vis.DataSet(
-            vm.$store.state.planArrangementsModule.model.rooms
-        );
+          vm.$store.dispatch('getDashboardTimelinePlans', {
+            selectDate: vm.date
+          }).then(response => {
+              var items = new Vis.DataSet(
+                  vm.$store.state.planArrangementsModule.date.plan
+              );
+              var groups = new Vis.DataSet(
+                  vm.$store.state.planArrangementsModule.date.rooms
+              );
 
-        var workingHourStart = new Date(
-            vm.$store.state.planArrangementsModule.model.workingHourStart
-        );
-        var workingHourEnd = new Date(
-            vm.$store.state.planArrangementsModule.model.workingHourEnd
-        );
+              var workingHourStart = new Date(
+                  vm.$store.state.planArrangementsModule.date.workingHourStart
+              );
+              var workingHourEnd = new Date(
+                  vm.$store.state.planArrangementsModule.date.workingHourEnd
+              );
 
-        var options = {
-            orientation: {
-                axis: 'top'
-            },
-            // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
-            locale: 'tr',
-            moveable: true,
-            zoomMax: 86400000,
-            zoomMin: 3600000,
-            horizontalScroll: true,
-            min: vm.$store.state.planArrangementsModule.model.minDate,
-            max: vm.$store.state.planArrangementsModule.model.maxDate,
-            start:
-                vm.$store.state.planArrangementsModule.model.startDate,
-            end: vm.$store.state.planArrangementsModule.model.endDate,
-            editable: {
-                updateTime: true,
-                updateGroup: true
-            },
-            selectable: true
-        };
+              var options = {
+                  orientation: {
+                      axis: 'top'
+                  },
+                  // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.date.period },
+                  locale: 'tr',
+                  moveable: true,
+                  zoomMax: 86400000,
+                  zoomMin: 3600000,
+                  horizontalScroll: true,
+                  min: vm.$store.state.planArrangementsModule.date.minDate,
+                  max: vm.$store.state.planArrangementsModule.date.maxDate,
+                  start:
+                      vm.$store.state.planArrangementsModule.date.startDate,
+                  end: vm.$store.state.planArrangementsModule.date.endDate,
+                  editable: {
+                      updateTime: true,
+                      updateGroup: true
+                  },
+                  selectable: true
+              };
 
-        container.innerHTML = '';
-        var timeline = new Vis.Timeline(
-            container,
-            items,
-            groups,
-            options
-        );
+              container.innerHTML = '';
+              var timeline = new Vis.Timeline(
+                  container,
+                  items,
+                  groups,
+                  options
+              );
+          });
+      }
     });
   }
 }

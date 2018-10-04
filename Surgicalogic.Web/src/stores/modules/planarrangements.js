@@ -8,7 +8,8 @@ const planArrangementsModule = {
     allPlans: [],
     generateOperationPlan: [],
     tomorrowList:[],
-    tomorrowListTotalCount:0
+    tomorrowListTotalCount: 0,
+    date: []
   },
 
   mutations: {
@@ -21,6 +22,9 @@ const planArrangementsModule = {
       state.totalCount = data.totalCount;
     },
 
+    setDashboardTimelinePlans(state, payload) {
+      state.date = payload;
+    },
     setTomorrowOperationList(state, data) {
       state.tomorrowList = data.result;
       state.tomorrowListTotalCount = data.totalCount;
@@ -60,22 +64,40 @@ const planArrangementsModule = {
       context.commit('setLoading', true);
 
       return new Promise((resolve, reject) => {
-      axios.get('OperationPlan/GetOperationPlans', {
-        params: params
-      }).then(response => {
-        if (response.statusText == 'OK' && response.data.info.succeeded == true){
-          context.commit('setPlanArrangements', response.data) //Set the OperationPlanPlan in the store
-        }
+        axios.get('OperationPlan/GetOperationPlans', {
+          params: params
+        }).then(response => {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true){
+            context.commit('setPlanArrangements', response.data) //Set the OperationPlanPlan in the store
+          }
 
-        context.commit('setLoading', false);
-        resolve(response);
-      }, error => {
-        // http failed, let the calling function know that action did not work out
-        reject(error);
-    })
-    })
+          context.commit('setLoading', false);
+          resolve(response);
+        }, error => {
+          // http failed, let the calling function know that action did not work out
+          reject(error);
+        })
+      })
     },
 
+    getDashboardTimelinePlans(context, payload) {
+      context.commit('setLoading', true);
+
+      return new Promise((resolve, reject) => {
+        axios.get('OperationPlan/GetDashboardTimelinePlans/' + payload.selectDate, {
+        }).then(response => {
+          if (response.statusText == 'OK' && response.data.info.succeeded == true){
+            context.commit('setDashboardTimelinePlans', response.data.result) //Set the OperationPlanPlan in the store
+          }
+
+          context.commit('setLoading', false);
+          resolve(response);
+        }, error => {
+          // http failed, let the calling function know that action did not work out
+          reject(error);
+        })
+      })
+    },
     // getAllOperationPlans(context) {
     //   axios.get('OperationPlanPlan/GetAllOperationPlans')
     //       .then(response => {
