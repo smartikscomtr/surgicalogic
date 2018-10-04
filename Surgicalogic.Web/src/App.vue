@@ -104,34 +104,13 @@
 
             <!-- Toolbar text-->
             <span class="hidden-sm-and-down"
+                  style="cursor: pointer;"
                   @click="changePages('/dashboardpage')">
                   Surgicalogic
             </span>
           </v-toolbar-title>
 
-          <!-- Dashboard icon -->
-          <v-btn icon @click="changePages('/dashboardpage')">
-            <v-icon>
-              home
-            </v-icon>
-          </v-btn>
-
-          <!-- Search -->
-          <v-text-field class="search-wrap"
-                        flat
-                        solo-inverted
-                        append-icon="search"
-                        :label="$i18n.t('common.search')"
-                        single-line hide-details>
-          </v-text-field>
-
           <v-spacer></v-spacer>
-
-          <v-btn icon>
-            <v-icon>
-              notifications
-            </v-icon>
-          </v-btn>
 
           <v-tooltip bottom>
             <v-btn icon
