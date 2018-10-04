@@ -32,9 +32,9 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectPersonnelTitle"
-                              :items="personnelTitles"
-                              :label="$t('personneltitle.personnelTitle')"
+              <v-autocomplete v-model="selectPersonnelCategory"
+                              :items="PersonnelCategories"
+                              :label="$t('PersonnelCategory.PersonnelCategory')"
                               :filter="customFilter"
                               item-text="name"
                               item-value="id">
@@ -142,22 +142,22 @@ export default {
         }
     },
 
-    personnelTitles() {
+    PersonnelCategories() {
       const vm = this;
-      return vm.$store.state.personnelModule.allPersonnelTitles;
+      return vm.$store.state.personnelModule.allPersonnelCategories;
     },
 
-    selectPersonnelTitle: {
+    selectPersonnelCategory: {
       get() {
         const vm = this;
 
-        return vm.editAction.personnelTitleId;
+        return vm.editAction.PersonnelCategoryId;
       },
 
       set(val) {
         const vm = this;
 
-        vm.editAction.personnelTitleId = val;
+        vm.editAction.PersonnelCategoryId = val;
       }
     },
 
@@ -235,7 +235,7 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          personnelTitleId: vm.editAction.personnelTitleId,
+          PersonnelCategoryId: vm.editAction.PersonnelCategoryId,
           branches: vm.editAction.branchId,
           workTypeId: vm.editAction.workTypeId
         }).then(() => {
@@ -254,7 +254,7 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          personnelTitleId: vm.editAction.personnelTitleId,
+          PersonnelCategoryId: vm.editAction.PersonnelCategoryId,
           branches: vm.editAction.branchId,
           workTypeId: vm.editAction.workTypeId
         }).then(() => {

@@ -14,7 +14,7 @@
       </v-flex>
 
       <v-flex lg4 md3 sm6 xs12>
-        <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilter" @change="filterDoctor()" item-text="personnelTitleName" item-value="id">
+        <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilter" @change="filterDoctor()" item-text="PersonnelCategoryName" item-value="id">
         </v-autocomplete>
       </v-flex>
     </v-layout>
@@ -23,7 +23,7 @@
       <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg2 md3 sm6 xs12>
         <v-card>
           <img :src="doctorCard.pictureUrl" height="150px" />
-          <span class="doctorName-wrap" v-text="doctorCard.personnelTitleName">
+          <span class="doctorName-wrap" v-text="doctorCard.PersonnelCategoryName">
           </span>
           <span class="branchName-wrap" v-text="doctorCard.branchNames">
           </span>

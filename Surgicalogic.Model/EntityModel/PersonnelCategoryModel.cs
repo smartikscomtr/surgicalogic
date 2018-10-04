@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Surgicalogic.Model.EntityModel
 {
-    public class PersonnelTitleModel : Base.EntityModel
+    public class PersonnelCategoryModel : Base.EntityModel
     {
         [Searchable]
         public string Name { get; set; }

@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Surgicalogic.Data.Entities
 {
-    [Table("PersonnelTitles")]
-    public class PersonnelTitle : Entity
+    [Table("PersonnelCategories")]
+    public class PersonnelCategory : Entity
     {
         [Required]
         [StringLength(250)]
@@ -15,7 +15,7 @@ namespace Surgicalogic.Data.Entities
         public bool SuitableForMultipleOperation { get; set; }
         [StringLength(1000)]
         public string Description { get; set; }
-        [Dependent("PersonnelTitleId")]
+        [Dependent("PersonnelCategoryId")]
         public virtual ICollection<Personnel> Personnels { get; set; }
     }
 }

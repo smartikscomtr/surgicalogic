@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Contracts.Stores
 {
-    public interface IPersonnelTitleStoreService : IStoreService<PersonnelTitle, PersonnelTitleModel>
+    public interface IPersonnelCategoryStoreService : IStoreService<PersonnelCategory, PersonnelCategoryModel>
     {
     }
 }

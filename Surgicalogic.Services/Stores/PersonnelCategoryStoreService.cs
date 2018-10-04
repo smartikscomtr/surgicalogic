@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores
 {
-    public class PersonnelTitleStoreService : StoreService<PersonnelTitle, PersonnelTitleModel>, IPersonnelTitleStoreService
+    public class PersonnelCategoryStoreService : StoreService<PersonnelCategory, PersonnelCategoryModel>, IPersonnelCategoryStoreService
     {
         private DataContext _context;
-        public PersonnelTitleStoreService(DataContext context) : base(context)
+        public PersonnelCategoryStoreService(DataContext context) : base(context)
         {
             _context = context;
         }

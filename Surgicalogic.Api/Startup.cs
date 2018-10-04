@@ -142,7 +142,7 @@ namespace Surgicalogic.Api
             services.AddScoped<IPatientStoreService, PatientStoreService>();
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelBranchStoreService, PersonnelBranchStoreService>();
-            services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
+            services.AddScoped<IPersonnelCategoryStoreService, PersonnelCategoryStoreService>();
             services.AddScoped<ISettingStoreService, SettingStoreService>();
             services.AddScoped<ISettingDataTypeStoreService, SettingDataTypeStoreService>();
             services.AddScoped<IUserStoreService, UserStoreService>();

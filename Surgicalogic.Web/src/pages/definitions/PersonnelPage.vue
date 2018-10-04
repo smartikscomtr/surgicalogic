@@ -52,7 +52,7 @@ export default {
       deleteValue: {},
       totalRows:0,
       editedIndex: -1,
-      personnelTitleLoadOnce: true,
+      PersonnelCategoryLoadOnce: true,
       workTypeLoadOnce: true,
       branchLoadOnce: true,
       deletePath: 'deletePersonnel'
@@ -84,9 +84,9 @@ export default {
           align: 'left'
         },
         {
-          value: 'personnelTitleName',
-          sortBy: 'PersonnelTitle.Name',
-          text: vm.$i18n.t('personnel.personnelTitle'),
+          value: 'PersonnelCategoryName',
+          sortBy: 'PersonnelCategory.Name',
+          text: vm.$i18n.t('personnel.PersonnelCategory'),
           sortable: true,
           align: "left"
         },
@@ -141,10 +141,10 @@ export default {
         vm.workTypeLoadOnce = false;
      }
 
-     //We are accessing getPersonnelTitles in vuex store
-     if(vm.personnelTitleLoadOnce){
-        vm.$store.dispatch('getAllPersonnelTitlesForPersonnel');
-        vm.personnelTitleLoadOnce = false;
+     //We are accessing getPersonnelCategories in vuex store
+     if(vm.PersonnelCategoryLoadOnce){
+        vm.$store.dispatch('getAllPersonnelCategoriesForPersonnel');
+        vm.PersonnelCategoryLoadOnce = false;
      }
 
      //We are accessing getBranches in vuex store

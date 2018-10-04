@@ -37,7 +37,7 @@ namespace Surgicalogic.Services.Stores
 
         public async Task<List<PersonnelOutputModel>> GetDoctorsByBranchIdAsync(int branchId)
         {
-            var query = GetQueryable().Where(x => x.PersonnelBranches.Any(t => t.IsActive && t.Personnel.PersonnelTitleId == AppSettings.DoctorId));
+            var query = GetQueryable().Where(x => x.PersonnelBranches.Any(t => t.IsActive && t.Personnel.PersonnelCategoryId == AppSettings.DoctorId));
 
             if(branchId > 0)
             { 

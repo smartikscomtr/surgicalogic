@@ -21,13 +21,13 @@
             <v-layout wrap edit-layout>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('personneltitle.personnelTitle')">
+                              :label="$t('PersonnelCategory.PersonnelCategory')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm12 md12 input-group-checkbox>
                 <v-checkbox v-model="editAction['suitableForMultipleOperation']"
-                            :label="$t('personneltitle.suitableForMultipleOperation')"
+                            :label="$t('PersonnelCategory.suitableForMultipleOperation')"
                             color="primary">
                 </v-checkbox>
               </v-flex>
@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('personneltitle.personnelTitleSaved')
+      savedMessage: this.$i18n.t('PersonnelCategory.PersonnelCategorySaved')
     };
   },
 
@@ -94,7 +94,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t('personneltitle.addPersonnelTitlesInformation') : vm.$i18n.t('personneltitle.editPersonnelTitlesInformation');
+      return vm.editIndex === -1 ? vm.$i18n.t('PersonnelCategory.addPersonnelCategoriesInformation') : vm.$i18n.t('PersonnelCategory.editPersonnelCategoriesInformation');
     },
 
     showModal: {
@@ -129,8 +129,8 @@ export default {
 
       //Edit personnel title
       if (vm.editIndex > -1) {
-        //We are accessing updatePersonnelTitle in vuex store
-        vm.$store.dispatch('updatePersonnelTitle', {
+        //We are accessing updatePersonnelCategory in vuex store
+        vm.$store.dispatch('updatePersonnelCategory', {
           id: vm.editAction.id,
           name: vm.editAction.name,
           suitableForMultipleOperation: vm.editAction.suitableForMultipleOperation,
@@ -145,8 +145,8 @@ export default {
       }
       //Add personnel title
       else {
-        //We are accessing insertPersonnelTitle in vuex store
-        vm.$store.dispatch('insertPersonnelTitle', {
+        //We are accessing insertPersonnelCategory in vuex store
+        vm.$store.dispatch('insertPersonnelCategory', {
           name: vm.editAction.name,
           suitableForMultipleOperation: vm.editAction.suitableForMultipleOperation,
           description: vm.editAction.description

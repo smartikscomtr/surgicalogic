@@ -128,7 +128,7 @@ namespace Surgicalogic.Api.Controllers
         /// Update User methode
         /// </summary>
         /// <param name="item"></param>
-        /// <returns>PersonnelTitleModel</returns>
+        /// <returns>PersonnelCategoryModel</returns>
         [Route("User/UpdateUser")]
         [HttpPost]
         public async Task<ResultModel<UserModel>> UpdateUser([FromBody] UserInputModel item)

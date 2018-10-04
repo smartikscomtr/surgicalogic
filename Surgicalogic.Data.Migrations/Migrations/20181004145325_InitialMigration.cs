@@ -137,7 +137,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonnelTitles",
+                name: "PersonnelCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -153,7 +153,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonnelTitles", x => x.Id);
+                    table.PrimaryKey("PK_PersonnelCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -397,7 +397,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     PictureUrl = table.Column<string>(nullable: true),
-                    PersonnelTitleId = table.Column<int>(nullable: false),
+                    PersonnelCategoryId = table.Column<int>(nullable: false),
                     BranchId = table.Column<int>(nullable: false),
                     WorkTypeId = table.Column<int>(nullable: false)
                 },
@@ -405,9 +405,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     table.PrimaryKey("PK_Personnels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Personnels_PersonnelTitles_PersonnelTitleId",
-                        column: x => x.PersonnelTitleId,
-                        principalTable: "PersonnelTitles",
+                        name: "FK_Personnels_PersonnelCategories_PersonnelCategoryId",
+                        column: x => x.PersonnelCategoryId,
+                        principalTable: "PersonnelCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -926,9 +926,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "PersonnelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Personnels_PersonnelTitleId",
+                name: "IX_Personnels_PersonnelCategoryId",
                 table: "Personnels",
-                column: "PersonnelTitleId");
+                column: "PersonnelCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Personnels_WorkTypeId",
@@ -1028,7 +1028,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "Personnels");
 
             migrationBuilder.DropTable(
-                name: "PersonnelTitles");
+                name: "PersonnelCategories");
 
             migrationBuilder.DropTable(
                 name: "WorkTypes");

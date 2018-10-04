@@ -14,11 +14,11 @@ namespace Surgicalogic.Model.EntityModel
         public string FullName { get; set; }
         public string PictureUrl { get; set; }
 
-        public int PersonnelTitleId { get; set; }
+        public int PersonnelCategoryId { get; set; }
         public int BranchId { get; set; }
         public int WorkTypeId { get; set; }
         [Searchable]
-        public PersonnelTitleModel PersonnelTitle { get; set; }
+        public PersonnelCategoryModel PersonnelCategory { get; set; }
         [Searchable]
         public WorkTypeModel WorkType { get; set; }
 

@@ -34,7 +34,7 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Personnel> Personnels { get; set; }
         public DbSet<PersonnelBranch> PersonnelBranches { get; set; }
-        public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
+        public DbSet<PersonnelCategory> PersonnelCategories { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<SettingDataType> SettingDataTypes { get; set; }
         public DbSet<WorkType> WorkTypes { get; set; }

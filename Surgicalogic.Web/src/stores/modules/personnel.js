@@ -7,7 +7,7 @@ const personnelModule = {
     personnel: [],
     allPersonnels: [],
     allBranches: [],
-    allPersonnelTitles: [],
+    allPersonnelCategories: [],
     allWorkTypes: [],
     filteredDoctor: []
   },
@@ -48,8 +48,8 @@ const personnelModule = {
       state.allBranches = payload;
     },
 
-    setAllPersonnelTitlesForPersonnel(state, payload) {
-      state.allPersonnelTitles = payload;
+    setAllPersonnelCategoriesForPersonnel(state, payload) {
+      state.allPersonnelCategories = payload;
     },
 
     setAllWorkTypesForPersonnel(state, payload) {
@@ -136,11 +136,11 @@ const personnelModule = {
         })
     },
 
-    getAllPersonnelTitlesForPersonnel(context) {
-      axios.get('PersonnelTitle/GetAllPersonnelTitles')
+    getAllPersonnelCategoriesForPersonnel(context) {
+      axios.get('PersonnelCategory/GetAllPersonnelCategories')
         .then(response => {
           if (response.data.info.succeeded == true) {
-            context.commit('setAllPersonnelTitlesForPersonnel', response.data.result) //Set the All Personnel Titles in the store
+            context.commit('setAllPersonnelCategoriesForPersonnel', response.data.result) //Set the All Personnel Titles in the store
           }
         })
     },

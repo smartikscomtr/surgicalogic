@@ -1,7 +1,7 @@
 <template>
   <div class="container fluid grid-list-md">
     <grid-component :headers="headers"
-                    :items="personnelTitles"
+                    :items="PersonnelCategories"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -12,7 +12,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
-                    @exportToExcel="exportPersonnelTitleToExcel"
+                    @exportToExcel="exportPersonnelCategoryToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
@@ -44,7 +44,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('personneltitle.personnelTitles'),
+      title: vm.$i18n.t('PersonnelCategory.PersonnelCategories'),
       search: '',
       editDialog: false,
       deleteDialog: false,
@@ -53,7 +53,7 @@ export default {
 
       editedIndex: -1,
       totalRowCount:0,
-      deletePath: 'deletePersonnelTitle'
+      deletePath: 'deletePersonnelCategory'
     };
   },
 
@@ -65,14 +65,14 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('personneltitle.personnelTitles'),
+          text: vm.$i18n.t('PersonnelCategory.PersonnelCategories'),
           sortable: true,
           align: 'left'
         },
         {
           isCheck: true,
           value: 'suitableForMultipleOperation',
-          text: vm.$i18n.t('personneltitle.suitableForMultipleOperation'),
+          text: vm.$i18n.t('PersonnelCategory.suitableForMultipleOperation'),
           sortable: true,
           align: 'left'
         },
@@ -84,38 +84,38 @@ export default {
       ];
     },
 
-    personnelTitles() {
+    PersonnelCategories() {
       const vm = this;
 
-      return vm.$store.state.personnelTitleModule.personnelTitle;
+      return vm.$store.state.PersonnelCategoryModule.PersonnelCategory;
     },
 
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.personnelTitleModule.loading;
+      return vm.$store.state.PersonnelCategoryModule.loading;
     },
 
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.personnelTitleModule.totalCount;
+      return vm.$store.state.PersonnelCategoryModule.totalCount;
     }
   },
 
   methods: {
     getMethodName(){
-      return "getPersonnelTitles";
+      return "getPersonnelCategories";
     },
 
     deleteMethodName(){
-      return "deletePersonnelTitle";
+      return "deletePersonnelCategory";
     },
 
-    exportPersonnelTitleToExcel() {
+    exportPersonnelCategoryToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportPersonnelTitle');
+      vm.$store.dispatch('excelExportPersonnelCategory');
     }
   }
 };

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const personnelTitleModule = {
+const PersonnelCategoryModule = {
   state: {
-    personnelTitle: [],
+    PersonnelCategory: [],
     loading: false,
     totalCount: 0
   },
@@ -12,25 +12,25 @@ const personnelTitleModule = {
       state.loading = data;
     },
 
-    setPersonnelTitles(state, data) {
-      state.personnelTitle = data.result;
+    setPersonnelCategories(state, data) {
+      state.PersonnelCategory = data.result;
       state.totalCount = data.totalCount;
     },
 
-    insertPersonnelTitle(state, { item }) {
-      state.personnelTitle.push(item);
+    insertPersonnelCategory(state, { item }) {
+      state.PersonnelCategory.push(item);
     },
 
-    deletePersonnelTitle(state, { payload }) {
-      let index = state.personnelTitle.findIndex((item) => {
+    deletePersonnelCategory(state, { payload }) {
+      let index = state.PersonnelCategory.findIndex((item) => {
         return item.id === payload.id
       });
 
-      state.personnelTitle.splice(index, 1);
+      state.PersonnelCategory.splice(index, 1);
     },
 
-    updatePersonnelTitle(state, payload) {
-      state.personnelTitle.forEach(element => {
+    updatePersonnelCategory(state, payload) {
+      state.PersonnelCategory.forEach(element => {
         if (element.id == payload.id)
           Object.assign(element, payload);
       });
@@ -40,14 +40,14 @@ const personnelTitleModule = {
   getters: {},
 
   actions: {
-    getPersonnelTitles(context, params) {
+    getPersonnelCategories(context, params) {
       context.commit('setLoading', true);
 
-      axios.get('PersonnelTitle/GetPersonnelTitles', {
+      axios.get('PersonnelCategory/GetPersonnelCategories', {
         params: params
       }).then(response => {
         if (response.data.info.succeeded == true) {
-          context.commit('setPersonnelTitles', response.data) //Set the Personnel Title in the store
+          context.commit('setPersonnelCategories', response.data) //Set the Personnel Title in the store
         }
 
         context.commit('setLoading', false);
@@ -55,12 +55,12 @@ const personnelTitleModule = {
 
     },
 
-    insertPersonnelTitle(context, payload) {
+    insertPersonnelCategory(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('PersonnelTitle/InsertPersonnelTitle', payload)
+        axios.post('PersonnelCategory/InsertPersonnelCategory', payload)
           .then(response => {
             if (response.statusText == 'OK') {
-              context.commit('insertPersonnelTitle', {
+              context.commit('insertPersonnelCategory', {
                 item: response.data.result
               }) //Insert the Personnel Title in the store
             }
@@ -70,12 +70,12 @@ const personnelTitleModule = {
       });
     },
 
-    deletePersonnelTitle(context, payload) {
+    deletePersonnelCategory(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('PersonnelTitle/DeletePersonnelTitle/' + payload.id)
+        axios.post('PersonnelCategory/DeletePersonnelCategory/' + payload.id)
           .then(response => {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-              context.commit('deletePersonnelTitle', {
+              context.commit('deletePersonnelCategory', {
                 payload
               }); //Delete the Personnel Title in the store
             }
@@ -85,18 +85,18 @@ const personnelTitleModule = {
       });
     },
 
-    updatePersonnelTitle(context, payload) {
+    updatePersonnelCategory(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('PersonnelTitle/UpdatePersonnelTitle', payload)
+        axios.post('PersonnelCategory/UpdatePersonnelCategory', payload)
           .then(response => {
-            context.commit('updatePersonnelTitle', response.data.result) //Update the Personnel Title in the store
+            context.commit('updatePersonnelCategory', response.data.result) //Update the Personnel Title in the store
             resolve(response);
           })
       });
     },
 
-    excelExportPersonnelTitle(context) {
-      axios.get('PersonnelTitle/ExcelExport')
+    excelExportPersonnelCategory(context) {
+      axios.get('PersonnelCategory/ExcelExport')
         .then(response => {
           const link = document.createElement('a');
 
@@ -108,4 +108,4 @@ const personnelTitleModule = {
   }
 }
 
-export default personnelTitleModule;
+export default PersonnelCategoryModule;

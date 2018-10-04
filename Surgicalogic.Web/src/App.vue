@@ -258,8 +258,8 @@ export default {
             },
             {
               icon: "person_pin",
-              text: vm.$i18n.t("menu.personnelTitles"),
-              route: "/personneltitlepage"
+              text: vm.$i18n.t("menu.PersonnelCategories"),
+              route: "/PersonnelCategorypage"
             },
             {
               icon: "business_center",

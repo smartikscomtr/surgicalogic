@@ -15,7 +15,7 @@ import EquipmentsPage from "@/pages/definitions/EquipmentsPage";
 import EquipmentTypesPage from "@/pages/definitions/EquipmentTypesPage";
 import OperationTypesPage from "@/pages/definitions/OperationTypesPage";
 import PersonnelPage from "@/pages/definitions/PersonnelPage";
-import PersonnelTitlePage from "@/pages/definitions/PersonnelTitlePage";
+import PersonnelCategoryPage from "@/pages/definitions/PersonnelCategoryPage";
 import OperatingRoomsPage from "@/pages/definitions/OperatingRoomsPage";
 import OperatingRoomCalendarPage from "@/pages/definitions/OperatingRoomCalendarPage";
 import WorkTypesPage from "@/pages/definitions/WorkTypesPage";
@@ -134,9 +134,9 @@ export default new VueRouter({
       component: PersonnelPage
     },
     {
-      path: '/personneltitlepage',
-      name: 'PersonnelTitlePage',
-      component: PersonnelTitlePage
+      path: '/PersonnelCategorypage',
+      name: 'PersonnelCategoryPage',
+      component: PersonnelCategoryPage
     },
     {
       path: '/operatingroomcalendarpage',

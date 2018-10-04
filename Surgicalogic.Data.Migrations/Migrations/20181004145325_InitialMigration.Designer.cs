@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181004134158_InitialMigration")]
+    [Migration("20181004145325_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -688,11 +688,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime?>("ModifiedDate");
 
+                    b.Property<int>("PersonnelCategoryId");
+
                     b.Property<string>("PersonnelCode")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<int>("PersonnelTitleId");
 
                     b.Property<string>("PictureUrl");
 
@@ -700,7 +700,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonnelTitleId");
+                    b.HasIndex("PersonnelCategoryId");
 
                     b.HasIndex("WorkTypeId");
 
@@ -736,7 +736,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("PersonnelBranches");
                 });
 
-            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelTitle", b =>
+            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -763,7 +763,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PersonnelTitles");
+                    b.ToTable("PersonnelCategories");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Setting", b =>
@@ -1095,9 +1095,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.Personnel", b =>
                 {
-                    b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
+                    b.HasOne("Surgicalogic.Data.Entities.PersonnelCategory", "PersonnelCategory")
                         .WithMany("Personnels")
-                        .HasForeignKey("PersonnelTitleId")
+                        .HasForeignKey("PersonnelCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Surgicalogic.Data.Entities.WorkType", "WorkType")

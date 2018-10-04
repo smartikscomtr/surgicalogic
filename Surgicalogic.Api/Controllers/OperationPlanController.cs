@@ -157,7 +157,7 @@ namespace Surgicalogic.Api.Controllers
             {
                 //Bu operasyonun yapılabileceği odaları, operasyonun tipi üzerinden giderek buluyorum.
                 var operatingRoomIds = operation.OperationType.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId);
-                var personnelIds = operation.OperationPersonels.Where(x => x.Personnel.PersonnelTitle.SuitableForMultipleOperation != true);
+                var personnelIds = operation.OperationPersonels.Where(x => x.Personnel.PersonnelCategory.SuitableForMultipleOperation != true);
 
                 var outputModel = AutoMapper.Mapper.Map<Model.OutputModel.OperationOutputModel>(operation);
 

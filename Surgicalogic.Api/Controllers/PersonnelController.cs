@@ -96,7 +96,7 @@ namespace Surgicalogic.Api.Controllers
                 PersonnelCode = item.PersonnelCode,
                 FirstName = item.FirstName,
                 LastName = item.LastName,
-                PersonnelTitleId = item.PersonnelTitleId,
+                PersonnelCategoryId = item.PersonnelCategoryId,
                 BranchId = 1,
                 WorkTypeId = item.WorkTypeId
             };
@@ -145,7 +145,7 @@ namespace Surgicalogic.Api.Controllers
                 PersonnelCode = item.PersonnelCode,
                 FirstName = item.FirstName,
                 LastName = item.LastName,
-                PersonnelTitleId = item.PersonnelTitleId,
+                PersonnelCategoryId = item.PersonnelCategoryId,
                 BranchId = 1,
                 WorkTypeId = item.WorkTypeId
             };

@@ -43,7 +43,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Personnel, PersonnelModel>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             config.CreateMap<PersonnelBranch, PersonnelBranchModel>();
-            config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
+            config.CreateMap<PersonnelCategory, PersonnelCategoryModel>();
             config.CreateMap<Setting, SettingModel>();
             config.CreateMap<SettingDataType, SettingDataTypeModel>();
             config.CreateMap<User, UserModel>();
@@ -78,7 +78,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<PersonnelModel, Personnel>()
                 .ForMember(src => src.PersonnelBranches, opt => opt.Ignore());
             config.CreateMap<PersonnelBranchModel, PersonnelBranch>();
-            config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
+            config.CreateMap<PersonnelCategoryModel, PersonnelCategory>();
             config.CreateMap<SettingModel, Setting>()
                 .ForMember(src => src.Key, opt => opt.Ignore());
             config.CreateMap<SettingDataTypeModel, SettingDataType>();
@@ -101,7 +101,7 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.OperationType.BranchId))
                  .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.OperationType.Branch.Name))
                  .ForMember(dest => dest.PersonnelIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive).Select(t => t.PersonnelId).ToArray()))
-                 .ForMember(dest => dest.DoctorIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive && x.Personnel.PersonnelTitleId == AppSettings.DoctorId).Select(t => t.PersonnelId).ToArray()))
+                 .ForMember(dest => dest.DoctorIds, opt => opt.MapFrom(src => src.OperationPersonels.Where(x => x.IsActive && x.Personnel.PersonnelCategoryId == AppSettings.DoctorId).Select(t => t.PersonnelId).ToArray()))
                  .ForMember(dest => dest.DoctorNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationPersonels.Where(x => x.IsActive).Select(x => x.Personnel.FullName))))
                  .ForMember(dest => dest.BlockedOperatingRoomIds, opt => opt.MapFrom(src => src.OperationBlockedOperatingRooms.Where(x => x.IsActive).Select(t => t.OperatingRoomId).ToArray()))
                  .ForMember(dest => dest.OperatingRoomNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationBlockedOperatingRooms.Where(x => x.IsActive).Select(x => x.OperatingRoom.Name))))
@@ -138,10 +138,10 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<PatientModel, PatientOutputModel>();
             config.CreateMap<PersonnelModel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Where(x => x.IsActive && x.Branch.IsActive).Select(x => x.Branch.Name))))
-                .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
+                .ForMember(dest => dest.PersonnelCategoryName, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
                 .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)));
-            config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
+            config.CreateMap<PersonnelCategoryModel, PersonnelCategoryOutputModel>();
             config.CreateMap<SettingModel, SettingOutputModel>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.SettingDataTypeId == (int)SettingDataTypeNames.Int ? src.IntValue.ToString() : src.SettingDataTypeId == (int)SettingDataTypeNames.String ? src.StringValue : src.TimeValue));
             config.CreateMap<SettingDataTypeModel, SettingDataTypeOutputModel>();
@@ -164,7 +164,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperatingRoom, OperatingRoomExportModel>()
                 .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.IsAvailable ? "Evet" : "Hayır"));
             config.CreateMap<Personnel, PersonnelExportModel>();
-            config.CreateMap<PersonnelTitle, PersonnelTitleExportModel>();
+            config.CreateMap<PersonnelCategory, PersonnelCategoryExportModel>();
             config.CreateMap<WorkType, WorkTypeExportModel>();
             config.CreateMap<OperationPlan, OperationPlanExportModel>()
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
@@ -191,7 +191,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Personnel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Where(x => x.IsActive && x.Branch.IsActive).Select(x => x.Branch.Name))))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
-                .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name + " " + src.FirstName + " " + src.LastName))
+                .ForMember(dest => dest.PersonnelCategoryName, opt => opt.MapFrom(src => src.PersonnelCategory.Name + " " + src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)))
                 .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => AppSettings.DoctorPicture + src.PictureUrl));
             config.CreateMap<OperatingRoom, OperatingRoomOutputModel>()
