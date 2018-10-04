@@ -8,18 +8,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Smartiks.Framework.IO;
+using Surgicalogic.Common.Extensions;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.Enum;
 using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
 
-namespace Surgicalogic.Api.Controllers 
+namespace Surgicalogic.Api.Controllers
 {
     public class OperationPlanController : Controller
     {
@@ -29,18 +31,21 @@ namespace Surgicalogic.Api.Controllers
         private readonly IOperatingRoomStoreService _operatingRoomStoreService;
         private readonly IOperationPlanStoreService _operationPlanStoreService;
         private readonly IOperationPlanHistoryStoreService _operationPlanHistoryStoreService;
+        private readonly ISettingStoreService _settingStoreService;
 
         public OperationPlanController(
             IOperationStoreService operationStoreService,
             IOperatingRoomStoreService operatingRoomStoreService,
             IOperationPlanStoreService operationPlanStoreService,
-            IOperationPlanHistoryStoreService operationPlanHistoryStoreService
+            IOperationPlanHistoryStoreService operationPlanHistoryStoreService,
+            ISettingStoreService settingStoreService
             )
         {
             _operationStoreService = operationStoreService;
             _operatingRoomStoreService = operatingRoomStoreService;
             _operationPlanStoreService = operationPlanStoreService;
             _operationPlanHistoryStoreService = operationPlanHistoryStoreService;
+            _settingStoreService = settingStoreService;
         }
         #endregion
 
@@ -56,8 +61,15 @@ namespace Surgicalogic.Api.Controllers
 
             var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms);
 
+            var systemSettings = await _settingStoreService.GetAllAsync();
+
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourStart.ToString());
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourEnd.ToString());
+            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.PeriodInMinutes.ToString());
+
             var result = new ResultModel<OperationPlanOutputModel>
             {
+
                 Info = new Info(),
                 Result = new OperationTimelineOutputModel(plans, roomTimelineModel)
                 {
@@ -65,9 +77,9 @@ namespace Surgicalogic.Api.Controllers
                     MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
                     StartDate = plans.Select(x => x.start).Min() ?? tomorrow.ToString("yyyy-MM-dd 00:00:00"),
                     EndDate = plans.Select(x => x.end).Max() ?? twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
-                    Period = AppSettings.PeriodInMinutes,
-                    WorkingHourStart = AppSettings.WorkingHourStart,
-                    WorkingHourEnd = AppSettings.WorkingHourEnd
+                    Period = period.IntValue.Value,
+                    WorkingHourStart = workingHourStart.TimeValue.HourToDateTime(),
+                    WorkingHourEnd = workingHourEnd.TimeValue.HourToDateTime(),
                 }
             };
 
@@ -99,6 +111,12 @@ namespace Surgicalogic.Api.Controllers
 
             var operations = new List<Planning.Model.InputModel.OperationInputModel>();
 
+            var systemSettings = await _settingStoreService.GetAllAsync();
+
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourStart.ToString());
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourEnd.ToString());
+            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.PeriodInMinutes.ToString());
+
             foreach (var operation in tomorrowOperations)
             {
                 //Bu operasyonun yapılabileceği odaları, operasyonun tipi üzerinden giderek buluyorum.
@@ -111,7 +129,7 @@ namespace Surgicalogic.Api.Controllers
                 {
                     Id = operation.Id,
                     Name = operation.Name,
-                    Period = outputModel.Period,
+                    Period = operation.OperationTime % period.IntValue.Value == 0 ? operation.OperationTime / period.IntValue.Value : operation.OperationTime / period.IntValue.Value + 1,
                     DoctorIds = personnelIds.Select(x => x.PersonnelId).ToArray(),
                     //Bu operasyonun yapılamayacağı odaları, tüm odalardan yapılabileceği odaları çıkartarak buluyorum.
                     UnavailableRooms = rooms.Select(x => x.Id).Except(operatingRoomIds.Except(outputModel.BlockedOperatingRoomIds)).ToList()
@@ -122,11 +140,11 @@ namespace Surgicalogic.Api.Controllers
             {
                 Settings = new SettingsInputModel
                 {
-                    RoomsPeriod = Convert.ToInt32(AppSettings.WorkingHourEnd.Subtract(AppSettings.WorkingHourStart).TotalMinutes) / AppSettings.PeriodInMinutes,
-                    MaximumPeriod = Convert.ToInt32((new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day) - AppSettings.WorkingHourStart).TotalMinutes) / AppSettings.PeriodInMinutes,
-                    StartingHour = AppSettings.WorkingHourStart.Hour,
-                    StartingMinute = AppSettings.WorkingHourStart.Minute,
-                    PeriodInMinutes = AppSettings.PeriodInMinutes,
+                    RoomsPeriod = Convert.ToInt32(workingHourEnd.TimeValue.HourToDateTime().Subtract(workingHourStart.TimeValue.HourToDateTime()).TotalMinutes) / period.IntValue.Value,
+                    MaximumPeriod = Convert.ToInt32((new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day) - workingHourStart.TimeValue.HourToDateTime()).TotalMinutes) / period.IntValue.Value,
+                    StartingHour = workingHourStart.TimeValue.HourToDateTime().Hour,
+                    StartingMinute = workingHourStart.TimeValue.HourToDateTime().Minute,
+                    PeriodInMinutes = period.IntValue.Value,
                 },
                 Rooms = rooms,
                 Operations = operations
@@ -155,7 +173,7 @@ namespace Surgicalogic.Api.Controllers
                                 OperationId = operation.Id,
                                 OperationDate = operation.StartDate,
                                 RealizedStartDate = operation.StartDate,
-                                RealizedEndDate = operation.StartDate.AddMinutes(operation.Period * AppSettings.PeriodInMinutes)
+                                RealizedEndDate = operation.StartDate.AddMinutes(operation.Period * period.IntValue.Value)
                             };
 
                             await _operationPlanStoreService.InsertAsync(model);

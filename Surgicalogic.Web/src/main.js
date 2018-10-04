@@ -75,6 +75,7 @@ import PersonnelTitleEditComponent from '@/components/editcomponents/PersonnelTi
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 import OperatingRoomsCalendarEditComponent from '@/components/editcomponents/OperatingRoomsCalendarEditComponent';
+import SettingsEditComponent from '@/components/editcomponents/SettingsEditComponent';
 
 Vue.component('branches-edit-component', BranchesEditComponent);
 Vue.component('equipments-edit-component', EquipmentsEditComponent);
@@ -87,6 +88,7 @@ Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
 Vue.component('users-edit-component', UsersEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
 Vue.component('operating-rooms-calendar-edit-component', OperatingRoomsCalendarEditComponent);
+Vue.component('settings-edit-component', SettingsEditComponent);
 
 
 // Registering Core Components

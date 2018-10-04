@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181002134603_InitialMigration")]
+    [Migration("20181004134158_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -776,6 +776,41 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<int?>("IntValue");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Key");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("SettingDataTypeId");
+
+                    b.Property<string>("StringValue");
+
+                    b.Property<string>("TimeValue");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SettingDataTypeId");
+
+                    b.ToTable("Settings");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.SettingDataType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
@@ -784,11 +819,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("Value");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("SettingDataTypes");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.User", b =>
@@ -1083,6 +1116,14 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.Personnel", "Personnel")
                         .WithMany("PersonnelBranches")
                         .HasForeignKey("PersonnelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.Setting", b =>
+                {
+                    b.HasOne("Surgicalogic.Data.Entities.SettingDataType", "SettingDataType")
+                        .WithMany()
+                        .HasForeignKey("SettingDataTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

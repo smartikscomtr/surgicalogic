@@ -157,7 +157,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Settings",
+                name: "SettingDataTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -167,12 +167,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Value = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.PrimaryKey("PK_SettingDataTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -350,6 +349,35 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_OperatingRoomCalendars_OperatingRooms_OperatingRoomId",
                         column: x => x.OperatingRoomId,
                         principalTable: "OperatingRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Key = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    SettingDataTypeId = table.Column<int>(nullable: false),
+                    IntValue = table.Column<int>(nullable: true),
+                    StringValue = table.Column<string>(nullable: true),
+                    TimeValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Settings_SettingDataTypes_SettingDataTypeId",
+                        column: x => x.SettingDataTypeId,
+                        principalTable: "SettingDataTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -906,6 +934,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "IX_Personnels_WorkTypeId",
                 table: "Personnels",
                 column: "WorkTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Settings_SettingDataTypeId",
+                table: "Settings",
+                column: "SettingDataTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -978,6 +1011,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "SettingDataTypes");
 
             migrationBuilder.DropTable(
                 name: "OperationTypes");

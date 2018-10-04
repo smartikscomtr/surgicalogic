@@ -18,6 +18,12 @@
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
+
+    <settings-edit-component :edit-action="editAction"
+                                    :edit-visible="editDialog"
+                                    :edit-index="editedIndex"
+                                    @cancel="cancel">
+    </settings-edit-component>
   </div>
 </template>
 
@@ -56,17 +62,17 @@ export default {
       //Columns and actions
       return [
         {
-          value:'Name',
+          value:'name',
           sortBy: 'Name',
           text: vm.$i18n.t('settings.name'),
           sortable: true,
           align: 'left'
          },
         {
-          value:'Value',
+          value:'value',
           sortBy:'Value',
           text: vm.$i18n.t('settings.value'),
-          sortable: true,
+          sortable: false,
           align: 'left'
         },
         {
@@ -77,22 +83,22 @@ export default {
       ];
     },
 
-    historyPlannings() {
+    settings() {
       const vm = this;
 
-      return vm.$store.state.historyPlanningModule.plan;
+      return vm.$store.state.settingsModule.settings;
     },
 
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.historyPlanningModule.loading;
+      return vm.$store.state.settingsModule.loading;
     },
 
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.historyPlanningModule.totalCount;
+      return vm.$store.state.settingsModule.totalCount;
     }
   },
 
@@ -102,7 +108,7 @@ export default {
 
     //We are accessing getAllOperationTypes in vuex store
      if(vm.editLoadOnce){
-        vm.$store.dispatch('getAllOperationTypes');
+        vm.$store.dispatch('getSettingDataTypes');
         vm.editLoadOnce = false;
      }
     }
@@ -110,18 +116,18 @@ export default {
 
   methods: {
     getMethodName(){
-      return "getOperationPlanHistory";
+      return "getSettings";
     },
 
     deleteMethodName(){
       return "";
     },
 
-    exportPlanningHistoryToExcel() {
-      const vm = this;
+    // exportPlanningHistoryToExcel() {
+    //   const vm = this;
 
-      vm.$store.dispatch('excelExportPlanningHistory');
-    }
+    //   vm.$store.dispatch('excelExportPlanningHistory');
+    // }
   }
 };
 

@@ -10,11 +10,13 @@ namespace Surgicalogic.Api.Controllers
 {
     public class SettingController : Controller
     {
-        private readonly IWorkTypeStoreService _settingStoreService;
+        private readonly ISettingStoreService _settingStoreService;
+        private readonly ISettingDataTypeStoreService _settingDataTypeStoreService;
 
-        public SettingController(IWorkTypeStoreService settingStoreService)
+        public SettingController(ISettingStoreService settingStoreService, ISettingDataTypeStoreService settingDataTypeStoreService)
         {
             _settingStoreService = settingStoreService;
+            _settingDataTypeStoreService = settingDataTypeStoreService;
         }
 
         /// <summary>
@@ -34,6 +36,12 @@ namespace Surgicalogic.Api.Controllers
             return await _settingStoreService.GetAsync<SettingOutputModel>();
         }
 
+        [Route("Setting/GetSettingDataTypes")]
+        public async Task<ResultModel<SettingDataTypeOutputModel>> GetSettingDataTypes()
+        {
+            return await _settingDataTypeStoreService.GetAsync<SettingDataTypeOutputModel>();
+        }
+
         /// <summary>
         /// Update setting methode
         /// </summary>
@@ -47,10 +55,13 @@ namespace Surgicalogic.Api.Controllers
             {
                 Id = item.Id,
                 Name = item.Name,
-                Value = item.Value
+                IntValue = item.IntValue,
+                StringValue = item.StringValue,
+                TimeValue = item.TimeValue,
+                SettingDataTypeId = item.SettingDataTypeId
             };
 
-            return new ResultModel<SettingOutputModel>();// await _settingStoreService.UpdateAndSaveAsync<SettingOutputModel>(settingItem);
+            return await _settingStoreService.UpdateAndSaveAsync<SettingOutputModel>(settingItem);
         }
     }
 }

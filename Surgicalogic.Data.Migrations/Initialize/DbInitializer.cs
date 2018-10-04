@@ -1,4 +1,5 @@
-﻿using Smartiks.Framework.IO;
+﻿using Microsoft.EntityFrameworkCore;
+using Smartiks.Framework.IO;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
@@ -371,25 +372,55 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
+                #region SettingDataTypes
+                context.SettingDataTypes.Add(new Entities.SettingDataType
+                {
+                    Name = "Metin",
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new Entities.SettingDataType
+                {
+                    Name = "Sayı",
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new Entities.SettingDataType
+                {
+                    Name = "Zaman",
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });            
+                #endregion
+
                 #region SaveChanges
                 context.SaveChanges();
                 #endregion
 
                 #region OperatingRoomEquipments
 
-                for (int i = 1; i <= 8; i++)
-                {
-                    for (int k = 0; k < _random.Next(1, 5); k++)
-                    {
-                        context.OperatingRoomEquipments.Add(new Entities.OperatingRoomEquipment
-                        {
-                            OperatingRoomId = i,
-                            EquipmentId = _random.Next(1, 30),
-                            CreatedDate = DateTime.Now
-                        });
-                    }
+                //for (int i = 1; i <= 8; i++)
+                //{
+                //    for (int k = 0; k < _random.Next(1, 5); k++)
+                //    {
+                //        context.OperatingRoomEquipments.Add(new Entities.OperatingRoomEquipment
+                //        {
+                //            OperatingRoomId = i,
+                //            EquipmentId = _random.Next(1, 30),
+                //            CreatedDate = DateTime.Now
+                //        });
+                //    }
 
-                }
+                //}
 
                 for (int i = 1; i <= 8; i++)
                 {
@@ -426,12 +457,48 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
+                #region Settings
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "PeriodInMinutes",
+                    Name = "Periyod Süresi",
+                    IntValue = 15,
+                    SettingDataTypeId = 1,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "WorkingHourStart",
+                    Name = "Mesai Başlangıcı",
+                    TimeValue = "08:00",
+                    SettingDataTypeId = 3,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "WorkingHourEnd",
+                    Name = "Mesai Bitişi",
+                    TimeValue = "17:00",
+                    SettingDataTypeId = 3,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                #endregion
+
                 #region SaveChanges
                 context.SaveChanges();
                 #endregion
 
             }
-            catch (Exception)
+            catch (Exception ec)
             { }
 
         }

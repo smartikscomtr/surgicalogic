@@ -18,6 +18,7 @@ import operatingRoomModule from './modules/operatingrooms';
 import personnelModule from './modules/personnel';
 import personnelTitleModule from './modules/personneltitle';
 import planArrangementsModule from './modules/planarrangements';
+import settingsModule from './modules/settings';
 import usersModule from './modules/users';
 import workTypesModule from './modules/worktypes';
 
@@ -41,6 +42,7 @@ export default new Vuex.Store({
     personnelModule,
     planArrangementsModule,
     operatingRoomModule,
+    settingsModule,
     usersModule,
     workTypesModule
   }

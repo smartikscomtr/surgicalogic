@@ -1,5 +1,9 @@
 {
   "title":"Ayarlar",
   "name":"Adı",
-  "value":"Değeri"
+  "value":"Değeri",
+  "editSettings": "Ayar Düzenleme",
+  "settingUpdated": "Ayar Güncellendi",
+  "valueType": "Değer Tipi",
+  "settingDataType":"Veri Tipi"
 }

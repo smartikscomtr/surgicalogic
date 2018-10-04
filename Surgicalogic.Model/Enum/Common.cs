@@ -23,4 +23,18 @@
         InvalidCode = 4,
         PasswordsDoNotMatch = 5
     }
+
+    public enum SettingKey
+    {
+        PeriodInMinutes,
+        WorkingHourStart,
+        WorkingHourEnd
+    }
+
+    public enum SettingDataTypeNames
+    {
+        String = 1,
+        Int = 2,
+        Time = 3
+    }
 }

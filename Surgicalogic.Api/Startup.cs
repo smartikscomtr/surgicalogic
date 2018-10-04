@@ -42,14 +42,15 @@ namespace Surgicalogic.Api
                  builder => builder.MigrationsAssembly("Surgicalogic.Data.Migrations"))
             );
 
-           // services.AddIdentity<User, IdentityRole>(options =>
-           // {
-           //     options.User.RequireUniqueEmail = true;
-           // })
-           //.AddEntityFrameworkStores<DataContext>()
-           //.AddDefaultTokenProviders();
+            // services.AddIdentity<User, IdentityRole>(options =>
+            // {
+            //     options.User.RequireUniqueEmail = true;
+            // })
+            //.AddEntityFrameworkStores<DataContext>()
+            //.AddDefaultTokenProviders();
 
-            services.AddIdentity<User, IdentityRole<int>>(options => {
+            services.AddIdentity<User, IdentityRole<int>>(options =>
+            {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 4;
                 options.Password.RequireNonAlphanumeric = false;
@@ -142,9 +143,11 @@ namespace Surgicalogic.Api
             services.AddScoped<IPersonnelStoreService, PersonnelStoreService>();
             services.AddScoped<IPersonnelBranchStoreService, PersonnelBranchStoreService>();
             services.AddScoped<IPersonnelTitleStoreService, PersonnelTitleStoreService>();
+            services.AddScoped<ISettingStoreService, SettingStoreService>();
+            services.AddScoped<ISettingDataTypeStoreService, SettingDataTypeStoreService>();
             services.AddScoped<IUserStoreService, UserStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
-            
+
             #endregion
 
             services.AddMvc();
@@ -188,12 +191,9 @@ namespace Surgicalogic.Api
             AppSettings.Issuer = Configuration["AppSettings:Token:Issuer"];
             AppSettings.ApiBaseUrl = Configuration["AppSettings:Planning:ApiBaseUrl"];
             AppSettings.ApiPostUrl = Configuration["AppSettings:Planning:ApiPostUrl"];
-            AppSettings.PeriodInMinutes = Configuration["AppSettings:Planning:PeriodInMinutes"].ToNCInt();
             AppSettings.AdminRole = Configuration["AppSettings:Role:Admin"];
             AppSettings.MemberRole = Configuration["AppSettings:Role:Member"];
             AppSettings.DoctorId = Configuration["AppSettings:General:DoctorId"].ToNCInt();
-            AppSettings.WorkingHourStart = Configuration["AppSettings:Planning:WorkingHourStart"].HourToDateTime();
-            AppSettings.WorkingHourEnd = Configuration["AppSettings:Planning:WorkingHourEnd"].HourToDateTime();
             AppSettings.DoctorPicture = Configuration["AppSettings:DoctorPicture:Url"];
         }
     }

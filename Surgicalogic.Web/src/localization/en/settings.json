@@ -1,3 +1,9 @@
 {
-
+  "title":"Title",
+  "name":"Name",
+  "value":"Value",
+  "editSettings": "Edit Setting",
+  "settingUpdated": "Setting Updated",
+  "valueType": "Value Type",
+  "settingDataType":"Data Type"
 }

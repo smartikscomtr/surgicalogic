@@ -11,7 +11,6 @@ namespace Surgicalogic.Model.InputModel
         public string Description { get; set; }
         public string OperationTime { get; set; }
         public int BranchId { get; set; }
-        public int Period { get; set; }
         public int OperationTypeId { get; set; }
         public List<int> PersonnelIds { get; set; }
         public List<int> OperatingRoomIds { get; set; }

@@ -5,7 +5,8 @@ const settingsModule = {
     settings: [],
     loading: false,
     totalCount: 0,
-    allSettings: []
+    allSettings: [],
+    settingDataTypes: []
   },
 
   mutations: {
@@ -27,6 +28,10 @@ const settingsModule = {
         if (element.id == payload.id)
           Object.assign(element, payload);
       });
+    },
+
+    setSettingDataTypes(state, data) {
+      state.settingDataTypes = data;
     }
   },
 
@@ -52,6 +57,15 @@ const settingsModule = {
         .then(response => {
           if (response.data.info.succeeded == true) {
             context.commit('setAllSettings', response.data.result)
+          }
+        })
+    },
+
+    getSettingDataTypes(context) {
+      axios.get('Setting/GetSettingDataTypes')
+        .then(response => {
+          if (response.data.info.succeeded == true) {
+            context.commit('setSettingDataTypes', response.data.result)
           }
         })
     },
