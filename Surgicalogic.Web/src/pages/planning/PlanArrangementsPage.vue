@@ -71,6 +71,7 @@
 </template>
 
 <script>
+
 import Vis from 'vis/dist/vis.js';
 
 export default {

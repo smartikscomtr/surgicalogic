@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout row wrap class="cards-wrap">
-      <v-flex xs12 sm6 md6>
+      <v-flex xs12 sm6 md3>
         <v-card class="operation-wrap">
           <v-container>
             <v-card-title>
@@ -19,7 +19,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs12 sm6 md6>
+      <v-flex xs12 sm6 md3>
         <v-card class="plan-wrap">
           <v-container>
             <v-card-title>
@@ -37,7 +37,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs12 sm6 md6>
+      <v-flex xs12 sm6 md3>
         <v-card class="clinic-wrap">
           <v-container>
             <v-card-title>
@@ -55,7 +55,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs12 sm6 md6>
+      <v-flex xs12 sm6 md3>
         <v-card class="personnel-wrap">
           <v-container>
             <v-card-title>
@@ -73,15 +73,153 @@
         </v-card>
       </v-flex>
     </v-layout>
+
+    <v-container>
+
+    <v-flex xs12 sm6 md3>
+      <v-menu ref="menu"
+              :close-on-content-click="false"
+              v-model="menu"
+              :nudge-right="40"
+              :return-value.sync="date"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290px">
+        <v-text-field readonly
+                      slot="activator"
+                      v-model="dateFormatted"
+                      :label="$t('operation.operationDate')">
+        </v-text-field>
+
+        <v-date-picker v-model="date"
+                        no-title
+                        @input="$refs.menu.save(date)"
+                        :min="getMinDate()"
+                        :max="getMaxDate()">
+        </v-date-picker>
+      </v-menu>
+    </v-flex>
+
+      <div id="visualization" class="vis">
+      </div>
+    </v-container>
   </div>
 </template>
 
 <script>
+
+import Vis from 'vis/dist/vis.js';
+
 export default {
-    data() {
-        return {};
+  data() {
+    return {
+      menu: false,
+      dateFormatted: null,
+      date: null
+    };
+  },
+
+  watch: {
+    showModal (val) {
+      val || this.cancel()
+    },
+
+    date (val) {
+      this.dateFormatted = this.formatDate(this.date)
     }
-};
+  },
+
+  methods: {
+    getMaxDate() {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let selectDay = new Date();
+
+      selectDay.setDate(selectDay.getDate());
+
+      let year = selectDay.getFullYear();
+      let month = toTwoDigits(selectDay.getMonth() + 1);
+      let day = toTwoDigits(selectDay.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
+
+    getMinDate() {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let selectDay = new Date();
+
+      selectDay.setDate(selectDay.getDate() - 4);
+
+      let year = selectDay.getFullYear();
+      let month = toTwoDigits(selectDay.getMonth() + 1);
+      let day = toTwoDigits(selectDay.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
+
+    formatDate (date) {
+      if (!date || date.indexOf('.') > -1)
+        return null;
+
+      const [year, month, day] = date.split('-');
+
+      return `${day}.${month}.${year}`;
+    }
+  },
+
+  mounted() {
+    const vm = this;
+
+    var container = document.getElementById('visualization');
+
+    vm.$store.dispatch('getDashboardTimelinePlans').then(response => {
+        var items = new Vis.DataSet(
+            vm.$store.state.planArrangementsModule.model.plan
+        );
+        var groups = new Vis.DataSet(
+            vm.$store.state.planArrangementsModule.model.rooms
+        );
+
+        var workingHourStart = new Date(
+            vm.$store.state.planArrangementsModule.model.workingHourStart
+        );
+        var workingHourEnd = new Date(
+            vm.$store.state.planArrangementsModule.model.workingHourEnd
+        );
+
+        var options = {
+            orientation: {
+                axis: 'top'
+            },
+            // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
+            locale: 'tr',
+            moveable: true,
+            zoomMax: 86400000,
+            zoomMin: 3600000,
+            horizontalScroll: true,
+            min: vm.$store.state.planArrangementsModule.model.minDate,
+            max: vm.$store.state.planArrangementsModule.model.maxDate,
+            start:
+                vm.$store.state.planArrangementsModule.model.startDate,
+            end: vm.$store.state.planArrangementsModule.model.endDate,
+            editable: {
+                updateTime: true,
+                updateGroup: true
+            },
+            selectable: true
+        };
+
+        container.innerHTML = '';
+        var timeline = new Vis.Timeline(
+            container,
+            items,
+            groups,
+            options
+        );
+    });
+  }
+}
 </script>
 
 <style>
@@ -127,5 +265,50 @@ export default {
     flex-direction: column !important;
     align-items: flex-start !important;
 }
-
+.vis {
+    margin: 20px 0;
+}
+.vis-item.vis-range .vis-item-content {
+    color: #fff;
+}
+.vis-item.vis-range.vis-selected.vis-editable {
+    background-color: #ff7107 !important;
+}
+.vis-time-axis .vis-text {
+    font-size: 11px;
+}
+.drawplan-wrap {
+    padding: 0;
+    margin: 0;
+    min-width: 140px;
+    background-color: #ff7107 !important;
+    font-size: 15px;
+}
+.drawplan-wrap .v-btn__content {
+    color: #fff;
+}
+.updateplan-wrap {
+    float: right;
+    min-width: 200px;
+}
+.updateplan-wrap .v-btn__content {
+    color: #fff;
+}
+.vis-item.vis-range.vis-editable {
+    position: absolute;
+    background-color: #ea9759;
+    border: none;
+    border-radius: 0;
+}
+div.vis-tooltip {
+    background: #616161 !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    display: inline-block !important;
+    padding: 5px 8px !important;
+}
+.unavailable {
+    background-color: darkgray;
+}
 </style>
