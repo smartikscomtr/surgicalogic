@@ -98,6 +98,12 @@ namespace Surgicalogic.Api.Controllers
 
             var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms);
 
+            var systemSettings = await _settingStoreService.GetAllAsync();
+
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourStart.ToString());
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourEnd.ToString());
+            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.PeriodInMinutes.ToString());
+
             var result = new ResultModel<OperationPlanOutputModel>
             {
                 Info = new Info(),
@@ -107,9 +113,9 @@ namespace Surgicalogic.Api.Controllers
                     MaxDate = selectDaysLater.ToString("yyyy-MM-dd 00:00:00"),
                     StartDate = plans.Select(x => x.start).Min() ?? selectDay.ToString("yyyy-MM-dd 00:00:00"),
                     EndDate = plans.Select(x => x.end).Max() ?? selectDaysLater.ToString("yyyy-MM-dd 00:00:00"),
-                    Period = AppSettings.PeriodInMinutes,
-                    WorkingHourStart = AppSettings.WorkingHourStart,
-                    WorkingHourEnd = AppSettings.WorkingHourEnd
+                    Period = period.IntValue.Value,
+                    WorkingHourStart = workingHourStart.TimeValue.HourToDateTime(),
+                    WorkingHourEnd = workingHourEnd.TimeValue.HourToDateTime(),
                 }
             };
 
