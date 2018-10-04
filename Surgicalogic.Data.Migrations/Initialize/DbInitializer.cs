@@ -463,7 +463,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     Key = "PeriodInMinutes",
                     Name = "Periyod Süresi",
                     IntValue = 15,
-                    SettingDataTypeId = 1,
+                    SettingDataTypeId = 2,
                     CreatedDate = DateTime.Now,
                     CreatedBy = 1,
                     IsActive = true
