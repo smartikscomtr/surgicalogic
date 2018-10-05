@@ -148,5 +148,25 @@ namespace Surgicalogic.Services.Stores
             return result;
         }
 
+        public async Task<List<RoomInputModel>> GetOperatingRoomsForDashboardTimelineModelAsync(DateTime selectDate, bool activeOnly = true)
+        {
+            var date = new DateTime(selectDate.Year, selectDate.Month, selectDate.Day, 0, 0, 0);
+            var result = await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= date && t.EndDate >= date && t.IsActive)).ProjectTo<RoomInputModel>().ToListAsync();
+
+            if (!activeOnly)
+            {
+                var unavailableRooms = await _context.OperatingRooms.Where(x => x.IsActive && (!x.IsAvailable || x.OperatingRoomCalendars.Any(t => t.StartDate <= date && t.EndDate >= date && t.IsActive))).ProjectTo<RoomInputModel>().ToListAsync();
+
+                foreach (var item in unavailableRooms)
+                {
+                    item.ClassName = "unavailable";
+                }
+
+                result.AddRange(unavailableRooms);
+            }
+
+            return result;
+        }
+
     }
 }

@@ -91,7 +91,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationPlanOutputModel>> GetDashboardTimelinePlans(DateTime selectDate)
         {
             var plans = await _operationPlanStoreService.GetDashboardTimelineOperationsAsync(selectDate);
-            var rooms = await _operatingRoomStoreService.GetOperatingRoomsForTimelineModelAsync();
+            var rooms = await _operatingRoomStoreService.GetOperatingRoomsForDashboardTimelineModelAsync(selectDate, true);
 
             var selectDay = selectDate;
             var selectDaysLater = selectDate.AddDays(1);

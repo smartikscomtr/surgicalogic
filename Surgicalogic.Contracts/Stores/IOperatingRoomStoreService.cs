@@ -6,6 +6,7 @@ using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Planning.Model.InputModel;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,5 +19,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<RoomInputModel>> GetAvailableRoomsAsync();
         Task<List<OperatingRoomOutputModel>> GetByOperationTypeIdAsync(int operationTypeId);
         Task<List<RoomInputModel>> GetOperatingRoomsForTimelineModelAsync(bool activeOnly = true);
+        Task<List<RoomInputModel>> GetOperatingRoomsForDashboardTimelineModelAsync(DateTime selectDate, bool activeOnly = true);
     }
 }

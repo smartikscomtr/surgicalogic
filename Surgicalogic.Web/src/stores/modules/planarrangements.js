@@ -7,8 +7,10 @@ const planArrangementsModule = {
     model: [],
     allPlans: [],
     generateOperationPlan: [],
-    tomorrowList:[],
+    tomorrowList: [],
     tomorrowListTotalCount: 0,
+    selectDateList: [],
+    selectListTotalCount: 0,
     date: []
   },
 
@@ -28,6 +30,10 @@ const planArrangementsModule = {
     setTomorrowOperationList(state, data) {
       state.tomorrowList = data.result;
       state.tomorrowListTotalCount = data.totalCount;
+    },
+    setSelectDateOperationList(state, data) {
+      state.selectDateList = data.result;
+      state.selectListTotalCount = data.totalCount;
     },
     // setAllOperationPlans(state, data) {
     //   state.allPlans = data;
@@ -143,6 +149,13 @@ const planArrangementsModule = {
         axios.get('OperationPlan/GetTomorrowOperationList')
             .then(response => {
                 context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
+            })
+    },
+
+    getSelectDateOperationList(context){
+        axios.get('OperationPlan/GetSelectDateOperationList')
+            .then(response => {
+                context.commit('setSelectDateOperationList', response.data) //Set the OperationPlanPlan in the store
             })
     },
 

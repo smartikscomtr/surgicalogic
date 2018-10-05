@@ -74,36 +74,41 @@
       </v-flex>
     </v-layout>
 
-    <v-container>
+      <v-container>
 
-    <v-flex xs12 sm6 md3>
-      <v-menu ref="menu"
-              :close-on-content-click="false"
-              v-model="menu"
-              :nudge-right="40"
-              :return-value.sync="date"
-              lazy
-              transition="scale-transition"
-              offset-y
-              full-width
-              min-width="290px">
-        <v-text-field readonly
-                      slot="activator"
-                      v-model="dateFormatted"
-                      :label="$t('operation.operationDate')">
-        </v-text-field>
+      <v-flex xs12 sm6 md3>
+        <v-menu ref="menu"
+                :close-on-content-click="false"
+                v-model="menu"
+                :nudge-right="40"
+                :return-value.sync="date"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290px">
+          <v-text-field readonly
+                        slot="activator"
+                        v-model="dateFormatted"
+                        :label="$t('operation.operationDate')">
+          </v-text-field>
 
-        <v-date-picker v-model="date"
-                        no-title
-                        @input="$refs.menu.save(date)"
-                        :min="getMinDate()"
-                        :max="getMaxDate()">
-        </v-date-picker>
-      </v-menu>
-    </v-flex>
+          <v-date-picker v-model="date"
+                          no-title
+                          @input="$refs.menu.save(date)"
+                          :min="getMinDate()"
+                          :max="getMaxDate()">
+          </v-date-picker>
+        </v-menu>
+      </v-flex>
 
       <div id="visualization" class="vis">
       </div>
+
+      <v-btn  v-show="date"
+              class="drawplan-wrap updateplan-wrap" @click.native="updatePlan()">
+        {{ $t('planarrangements.updatePlan')}}
+      </v-btn>
     </v-container>
   </div>
 </template>
@@ -165,6 +170,38 @@ export default {
       const [year, month, day] = date.split('-');
 
       return `${day}.${month}.${year}`;
+    },
+
+    updatePlan() {
+      const vm = this;
+
+      var operations = [];
+
+      for (var data in timelineItems._data) {
+          var item = timelineItems._data[data];
+          //ilk ve son başlangıç ve bitiş tarihleri
+          var newStart = new Date(item.start);
+          var newEnd = new Date(item.end);
+
+          var operationLength =
+              (newEnd.getTime() - newStart.getTime()) / 60000;
+
+          var operation = {
+              id: item.operationPlanId,
+              operationId: data,
+              start: newStart,
+              roomId: item.group,
+              length: operationLength
+          };
+
+          operations.push(operation);
+      }
+
+      vm.$store
+          .dispatch('updatePlanArrangements', JSON.stringify(operations))
+          .then(response => {
+              vm.$store.dispatch('getDashboardTimelinePlans');
+          });
     }
   },
 

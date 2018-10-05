@@ -49,7 +49,7 @@ namespace Surgicalogic.Services.Stores
         {
             var date = new DateTime(selectDate.Year, selectDate.Month, selectDate.Day, 0, 0, 0);
 
-            return await GetQueryable().Where(x => x.OperationDate == date).ProjectTo<OperationPlanOutputModel>().ToListAsync();
+            return await GetQueryable().Where(x => x.OperationDate > date && x.OperationDate < date.AddDays(1)).ProjectTo<OperationPlanOutputModel>().ToListAsync();
         }
 
         //public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationListAsync(GridInputModel input)
