@@ -21,13 +21,13 @@
             <v-layout wrap edit-layout>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="editAction['name']"
-                              :label="$t('PersonnelCategory.PersonnelCategory')">
+                              :label="$t('personnelcategory.personnelCategory')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm12 md12 input-group-checkbox>
                 <v-checkbox v-model="editAction['suitableForMultipleOperation']"
-                            :label="$t('PersonnelCategory.suitableForMultipleOperation')"
+                            :label="$t('personnelcategory.suitableForMultipleOperation')"
                             color="primary">
                 </v-checkbox>
               </v-flex>
@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('PersonnelCategory.PersonnelCategorySaved')
+      savedMessage: this.$i18n.t('personnelcategory.personnelCategorySaved')
     };
   },
 
@@ -94,7 +94,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1 ? vm.$i18n.t('PersonnelCategory.addPersonnelCategoriesInformation') : vm.$i18n.t('PersonnelCategory.editPersonnelCategoriesInformation');
+      return vm.editIndex === -1 ? vm.$i18n.t('personnelcategory.addPersonnelCategoriesInformation') : vm.$i18n.t('personnelcategory.editPersonnelCategoriesInformation');
     },
 
     showModal: {

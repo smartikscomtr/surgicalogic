@@ -134,7 +134,7 @@ export default new VueRouter({
       component: PersonnelPage
     },
     {
-      path: '/PersonnelCategorypage',
+      path: '/personnelCategorypage',
       name: 'PersonnelCategoryPage',
       component: PersonnelCategoryPage
     },

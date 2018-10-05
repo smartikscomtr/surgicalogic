@@ -44,7 +44,7 @@
                               multiple
                               chips
                               deletable-chips
-                              item-text="PersonnelCategoryName"
+                              item-text="personnelCategoryName"
                               item-value="id">
               </v-autocomplete>
             </v-flex>

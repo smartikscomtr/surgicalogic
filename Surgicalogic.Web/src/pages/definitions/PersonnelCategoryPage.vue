@@ -1,7 +1,7 @@
 <template>
   <div class="container fluid grid-list-md">
     <grid-component :headers="headers"
-                    :items="PersonnelCategories"
+                    :items="personnelCategories"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -44,7 +44,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('PersonnelCategory.PersonnelCategories'),
+      title: vm.$i18n.t('personnelcategory.personnelCategories'),
       search: '',
       editDialog: false,
       deleteDialog: false,
@@ -65,14 +65,14 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('PersonnelCategory.PersonnelCategories'),
+          text: vm.$i18n.t('personnelcategory.personnelCategories'),
           sortable: true,
           align: 'left'
         },
         {
           isCheck: true,
           value: 'suitableForMultipleOperation',
-          text: vm.$i18n.t('PersonnelCategory.suitableForMultipleOperation'),
+          text: vm.$i18n.t('personnelcategory.suitableForMultipleOperation'),
           sortable: true,
           align: 'left'
         },
@@ -84,22 +84,22 @@ export default {
       ];
     },
 
-    PersonnelCategories() {
+    personnelCategories() {
       const vm = this;
 
-      return vm.$store.state.PersonnelCategoryModule.PersonnelCategory;
+      return vm.$store.state.personnelCategoryModule.personnelCategory;
     },
 
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.PersonnelCategoryModule.loading;
+      return vm.$store.state.personnelCategoryModule.loading;
     },
 
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.PersonnelCategoryModule.totalCount;
+      return vm.$store.state.personnelCategoryModule.totalCount;
     }
   },
 

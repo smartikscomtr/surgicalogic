@@ -34,7 +34,7 @@
             <v-flex xs12 sm6 md6>
               <v-autocomplete v-model="selectPersonnelCategory"
                               :items="PersonnelCategories"
-                              :label="$t('PersonnelCategory.PersonnelCategory')"
+                              :label="$t('personnelcategory.personnelCategory')"
                               :filter="customFilter"
                               item-text="name"
                               item-value="id">
@@ -151,13 +151,13 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editAction.PersonnelCategoryId;
+        return vm.editAction.personnelCategoryId;
       },
 
       set(val) {
         const vm = this;
 
-        vm.editAction.PersonnelCategoryId = val;
+        vm.editAction.personnelCategoryId = val;
       }
     },
 
@@ -235,7 +235,7 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          PersonnelCategoryId: vm.editAction.PersonnelCategoryId,
+          personnelCategoryId: vm.editAction.personnelCategoryId,
           branches: vm.editAction.branchId,
           workTypeId: vm.editAction.workTypeId
         }).then(() => {
@@ -254,7 +254,7 @@ export default {
           personnelCode: vm.editAction.personnelCode,
           firstName: vm.editAction.firstName,
           lastName: vm.editAction.lastName,
-          PersonnelCategoryId: vm.editAction.PersonnelCategoryId,
+          personnelCategoryId: vm.editAction.personnelCategoryId,
           branches: vm.editAction.branchId,
           workTypeId: vm.editAction.workTypeId
         }).then(() => {

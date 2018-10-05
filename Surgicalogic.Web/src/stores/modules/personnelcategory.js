@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const PersonnelCategoryModule = {
+const personnelCategoryModule = {
   state: {
-    PersonnelCategory: [],
+    personnelCategory: [],
     loading: false,
     totalCount: 0
   },
@@ -13,24 +13,24 @@ const PersonnelCategoryModule = {
     },
 
     setPersonnelCategories(state, data) {
-      state.PersonnelCategory = data.result;
+      state.personnelCategory = data.result;
       state.totalCount = data.totalCount;
     },
 
     insertPersonnelCategory(state, { item }) {
-      state.PersonnelCategory.push(item);
+      state.personnelCategory.push(item);
     },
 
     deletePersonnelCategory(state, { payload }) {
-      let index = state.PersonnelCategory.findIndex((item) => {
+      let index = state.personnelCategory.findIndex((item) => {
         return item.id === payload.id
       });
 
-      state.PersonnelCategory.splice(index, 1);
+      state.personnelCategory.splice(index, 1);
     },
 
     updatePersonnelCategory(state, payload) {
-      state.PersonnelCategory.forEach(element => {
+      state.personnelCategory.forEach(element => {
         if (element.id == payload.id)
           Object.assign(element, payload);
       });
@@ -108,4 +108,4 @@ const PersonnelCategoryModule = {
   }
 }
 
-export default PersonnelCategoryModule;
+export default personnelCategoryModule;
