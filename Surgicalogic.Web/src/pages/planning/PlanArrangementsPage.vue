@@ -101,6 +101,7 @@ export default {
           vm.getOperationPlan();
           vm.$store.dispatch('getTomorrowOperationList');
         } else {
+          vm.savedMessage = this.$i18n.t('planarrangements.notGenerated')
           vm.snackbarVisible = true;
 
           setTimeout(() => {
@@ -112,6 +113,8 @@ export default {
 
     updatePlan() {
       const vm = this;
+
+      vm.snackbarVisible = false;
 
       var timelineItems = JSON.parse(
           document.getElementById('serializedTimeline').innerHTML
@@ -142,6 +145,13 @@ export default {
       vm.$store
           .dispatch('updatePlanArrangements', JSON.stringify(operations))
           .then(response => {
+             vm.savedMessage = this.$i18n.t('planarrangements.planUpdated')
+             vm.snackbarVisible = true;
+
+            setTimeout(() => {
+              vm.snackbarVisible = false;
+            }, 2300)
+
               vm.$store.dispatch('getTomorrowOperationList');
           });
   },
@@ -151,7 +161,9 @@ export default {
 
       var container = document.getElementById('visualization');
 
-      vm.$store.dispatch('getPlanArrangements').then(response => {
+      vm.$store.dispatch('getDashboardTimelinePlans', {
+            selectDate: vm.getTomorrowDate()
+          }).then(response => {
           var items = new Vis.DataSet(
               vm.$store.state.planArrangementsModule.model.plan
           );
@@ -233,7 +245,20 @@ export default {
               options
           );
       });
-    }
+    },
+
+    getTomorrowDate() {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let selectDay = new Date();
+
+      selectDay.setDate(selectDay.getDate() + 1);
+
+      let year = selectDay.getFullYear();
+      let month = toTwoDigits(selectDay.getMonth() + 1);
+      let day = toTwoDigits(selectDay.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
   },
 
   mounted() {

@@ -127,7 +127,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 string[] PersonnelTitles = new string[] {
                     "Uzman",
                     "Doçent",
-                    "Profesor"
+                    "Profesör"
                 };
 
                 var title = new Entities.PersonnelTitle();

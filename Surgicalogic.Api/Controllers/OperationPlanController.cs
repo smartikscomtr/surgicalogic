@@ -49,43 +49,6 @@ namespace Surgicalogic.Api.Controllers
         }
         #endregion
 
-        [Route("OperationPlan/GetOperationPlans")]
-        [HttpGet]
-        public async Task<ResultModel<OperationPlanOutputModel>> GetOperationPlans(GridInputModel input)
-        {
-            var plans = await _operationPlanStoreService.GetTomorrowOperationsAsync();
-            var rooms = await _operatingRoomStoreService.GetOperatingRoomsForTimelineModelAsync();
-
-            var tomorrow = DateTime.Now.AddDays(1);
-            var twoDaysLater = DateTime.Now.AddDays(2);
-
-            var roomTimelineModel = AutoMapper.Mapper.Map<List<OperatingRoomForTimelineModel>>(rooms);
-
-            var systemSettings = await _settingStoreService.GetAllAsync();
-
-            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourStart.ToString());
-            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourEnd.ToString());
-            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.PeriodInMinutes.ToString());
-
-            var result = new ResultModel<OperationPlanOutputModel>
-            {
-
-                Info = new Info(),
-                Result = new OperationTimelineOutputModel(plans, roomTimelineModel)
-                {
-                    MinDate = tomorrow.ToString("yyyy-MM-dd 00:00:00"),
-                    MaxDate = twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
-                    StartDate = plans.Select(x => x.start).Min() ?? tomorrow.ToString("yyyy-MM-dd 00:00:00"),
-                    EndDate = plans.Select(x => x.end).Max() ?? twoDaysLater.ToString("yyyy-MM-dd 00:00:00"),
-                    Period = period.IntValue.Value,
-                    WorkingHourStart = workingHourStart.TimeValue.HourToDateTime(),
-                    WorkingHourEnd = workingHourEnd.TimeValue.HourToDateTime(),
-                }
-            };
-
-            return result;
-        }
-
         [Route("OperationPlan/GetDashboardTimelinePlans/{selectDate:DateTime}")]
         [HttpGet]
         public async Task<ResultModel<OperationPlanOutputModel>> GetDashboardTimelinePlans(DateTime selectDate)

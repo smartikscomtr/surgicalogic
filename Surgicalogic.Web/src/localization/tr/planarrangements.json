@@ -6,5 +6,6 @@
   "updatePlan": "DEĞİŞİKLİKLERİ KAYDET",
   "drawPlanConfirmTitle": "Plan Çiz",
   "drawPlanConfirmText": "Yarın için yeni bir operasyon planı oluşturulacaktır. Onaylıyor musunuz?",
-  "notGenerated": "Plan çizilemedi."
+  "notGenerated": "Plan çizilemedi.",
+  "planUpdated": "Plan güncellendi."
 }

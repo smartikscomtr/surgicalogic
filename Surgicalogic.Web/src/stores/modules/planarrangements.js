@@ -10,8 +10,7 @@ const planArrangementsModule = {
     tomorrowList: [],
     tomorrowListTotalCount: 0,
     selectDateList: [],
-    selectListTotalCount: 0,
-    date: []
+    selectListTotalCount: 0
   },
 
   mutations: {
@@ -19,13 +18,13 @@ const planArrangementsModule = {
       state.loading = data;
     },
 
-    setPlanArrangements(state, data) {
-      state.model = data.result;
-      state.totalCount = data.totalCount;
-    },
+    // setPlanArrangements(state, data) {
+    //   state.model = data.result;
+    //   state.totalCount = data.totalCount;
+    // },
 
     setDashboardTimelinePlans(state, payload) {
-      state.date = payload;
+      state.model = payload;
     },
     setTomorrowOperationList(state, data) {
       state.tomorrowList = data.result;
@@ -66,25 +65,25 @@ const planArrangementsModule = {
   getters: {},
 
   actions: {
-    getPlanArrangements(context, params) {
-      context.commit('setLoading', true);
+    // getPlanArrangements(context, params) {
+    //   context.commit('setLoading', true);
 
-      return new Promise((resolve, reject) => {
-        axios.get('OperationPlan/GetOperationPlans', {
-          params: params
-        }).then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true){
-            context.commit('setPlanArrangements', response.data) //Set the OperationPlanPlan in the store
-          }
+    //   return new Promise((resolve, reject) => {
+    //     axios.get('OperationPlan/GetOperationPlans', {
+    //       params: params
+    //     }).then(response => {
+    //       if (response.statusText == 'OK' && response.data.info.succeeded == true){
+    //         context.commit('setPlanArrangements', response.data) //Set the OperationPlanPlan in the store
+    //       }
 
-          context.commit('setLoading', false);
-          resolve(response);
-        }, error => {
-          // http failed, let the calling function know that action did not work out
-          reject(error);
-        })
-      })
-    },
+    //       context.commit('setLoading', false);
+    //       resolve(response);
+    //     }, error => {
+    //       // http failed, let the calling function know that action did not work out
+    //       reject(error);
+    //     })
+    //   })
+    // },
 
     getDashboardTimelinePlans(context, payload) {
       context.commit('setLoading', true);

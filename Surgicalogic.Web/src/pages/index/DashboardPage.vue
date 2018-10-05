@@ -105,11 +105,19 @@
       <div id="visualization" class="vis">
       </div>
 
+      <div id="serializedTimeline" style="display:none;">
+      </div>
+
       <v-btn  v-show="date"
               class="drawplan-wrap updateplan-wrap" @click.native="updatePlan()">
         {{ $t('planarrangements.updatePlan')}}
       </v-btn>
     </v-container>
+
+     <snackbar-component :snackbar-visible="snackbarVisible"
+                        :savedMessage="savedMessage">
+    </snackbar-component>
+
   </div>
 </template>
 
@@ -119,10 +127,14 @@ import Vis from 'vis/dist/vis.js';
 
 export default {
   data() {
+    const vm = this;
+
     return {
       menu: false,
       dateFormatted: null,
-      date: null
+      date: null,
+      snackbarVisible: null,
+      savedMessage: this.$i18n.t('planarrangements.planUpdated')
     };
   },
 
@@ -163,6 +175,15 @@ export default {
       return `${year}-${month}-${day}`;
     },
 
+    getDate () {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let today = new Date();
+      let year = today.getFullYear();
+      let month = toTwoDigits(today.getMonth() + 1);
+      let day = toTwoDigits(today.getDate());
+      return `${year}-${month}-${day}`;
+    },
+
     formatDate (date) {
       if (!date || date.indexOf('.') > -1)
         return null;
@@ -174,6 +195,12 @@ export default {
 
     updatePlan() {
       const vm = this;
+
+      vm.snackbarVisible = false;
+
+      var timelineItems = JSON.parse(
+          document.getElementById('serializedTimeline').innerHTML
+      );
 
       var operations = [];
 
@@ -200,7 +227,11 @@ export default {
       vm.$store
           .dispatch('updatePlanArrangements', JSON.stringify(operations))
           .then(response => {
-              vm.$store.dispatch('getDashboardTimelinePlans');
+             vm.snackbarVisible = true;
+
+          setTimeout(() => {
+            vm.snackbarVisible = false;
+          }, 2300)
           });
     }
   },
@@ -216,18 +247,20 @@ export default {
             selectDate: vm.date
           }).then(response => {
               var items = new Vis.DataSet(
-                  vm.$store.state.planArrangementsModule.date.plan
+                  vm.$store.state.planArrangementsModule.model.plan
               );
               var groups = new Vis.DataSet(
-                  vm.$store.state.planArrangementsModule.date.rooms
+                  vm.$store.state.planArrangementsModule.model.rooms
               );
 
               var workingHourStart = new Date(
-                  vm.$store.state.planArrangementsModule.date.workingHourStart
+                  vm.$store.state.planArrangementsModule.model.workingHourStart
               );
               var workingHourEnd = new Date(
-                  vm.$store.state.planArrangementsModule.date.workingHourEnd
+                  vm.$store.state.planArrangementsModule.model.workingHourEnd
               );
+
+              document.getElementById('serializedTimeline').innerHTML = JSON.stringify(items);
 
               var options = {
                   orientation: {
@@ -239,16 +272,35 @@ export default {
                   zoomMax: 86400000,
                   zoomMin: 3600000,
                   horizontalScroll: true,
-                  min: vm.$store.state.planArrangementsModule.date.minDate,
-                  max: vm.$store.state.planArrangementsModule.date.maxDate,
+                  min: vm.$store.state.planArrangementsModule.model.minDate,
+                  max: vm.$store.state.planArrangementsModule.model.maxDate,
                   start:
-                      vm.$store.state.planArrangementsModule.date.startDate,
-                  end: vm.$store.state.planArrangementsModule.date.endDate,
+                      vm.$store.state.planArrangementsModule.model.startDate,
+                  end: vm.$store.state.planArrangementsModule.model.endDate,
                   editable: {
                       updateTime: true,
                       updateGroup: true
                   },
-                  selectable: true
+                  selectable: true,
+
+                  onMoving(item, callback) {
+                  var timelineItems = JSON.parse(
+                      document.getElementById('serializedTimeline')
+                          .innerHTML
+                  );
+
+                  timelineItems._data[item.id].start = new Date(
+                      item.start
+                  );
+                  timelineItems._data[item.id].end = new Date(item.end);
+                  timelineItems._data[item.id].group = item.group;
+
+                  document.getElementById(
+                      'serializedTimeline'
+                  ).innerHTML = JSON.stringify(timelineItems);
+
+                  callback(item);
+              }
               };
 
               container.innerHTML = '';
@@ -261,6 +313,9 @@ export default {
           });
       }
     });
+
+    vm.date = vm.getDate();
+
   }
 }
 </script>

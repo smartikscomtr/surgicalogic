@@ -38,41 +38,12 @@ namespace Surgicalogic.Services.Stores
             await SaveChangesAsync();
         }
 
-        public async Task<List<OperationPlanOutputModel>> GetTomorrowOperationsAsync()
-        {
-            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-
-            return await GetQueryable().Where(x => x.OperationDate > tomorrow && x.OperationDate < tomorrow.AddDays(1)).ProjectTo<OperationPlanOutputModel>().ToListAsync();
-        }
-
         public async Task<List<OperationPlanOutputModel>> GetDashboardTimelineOperationsAsync(DateTime selectDate)
         {
             var date = new DateTime(selectDate.Year, selectDate.Month, selectDate.Day, 0, 0, 0);
 
             return await GetQueryable().Where(x => x.OperationDate > date && x.OperationDate < date.AddDays(1)).ProjectTo<OperationPlanOutputModel>().ToListAsync();
         }
-
-        //public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationListAsync(GridInputModel input)
-        //{
-        //    var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-        //    var projectQuery = GetQueryable().Where(x => x.OperationDate > tomorrow && x.OperationDate < tomorrow.AddDays(1)).ProjectTo<OperationPlanHistoryOutputModel>();
-
-        //    int totalCount = await projectQuery.CountAsync();
-
-        //    if (input.PageSize > 0)
-        //    {
-        //        projectQuery = projectQuery.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
-        //    }
-
-        //    var result = await projectQuery.ToListAsync();
-
-        //    return new ResultModel<OperationPlanHistoryOutputModel>
-        //    {
-        //        Result = result,
-        //        TotalCount = totalCount,
-        //        Info = new Info()
-        //    };
-        //}
 
         public async Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds)
         {
