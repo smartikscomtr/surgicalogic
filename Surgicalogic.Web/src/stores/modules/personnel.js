@@ -57,7 +57,7 @@ const personnelModule = {
       state.allWorkTypes = payload;
     },
 
-    setPersonnelTitles(state, data) {
+    setPersonnelTitlesForPersonnel(state, data) {
       state.personnelTitles = data.result;
     },
 
@@ -159,11 +159,11 @@ const personnelModule = {
         })
     },
 
-    getPersonnelTitles(context) {
-      axios.get('PersonnelTitle/GetPersonnelTitles')
+    getPersonnelTitlesForPersonnel(context) {
+      axios.get('PersonnelTitle/GetAllPersonnelTitles')
         .then(response => {
           if (response.data.info.succeeded == true) {
-            context.commit('setPersonnelTitles', response.data) //Set the Work Types in the store
+            context.commit('setPersonnelTitlesForPersonnel', response.data) //Set the Work Types in the store
           }
         })
     },

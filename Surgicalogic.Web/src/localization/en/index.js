@@ -18,6 +18,7 @@ import * as operatingroomscalendar from './operatingroomscalendar.json';
 import * as operationtypes from './operationtypes.json';
 import * as personnel from './personnel.json';
 import * as personnelcategory from './personnelcategory.json';
+import * as personneltitle from './personneltitle.json';
 import * as plan from './plan.json';
 import * as planarrangements from './planarrangements.json';
 import * as settings from './settings.json';
@@ -38,6 +39,7 @@ export default {
   operationtypes,
   personnel,
   personnelcategory,
+  personneltitle,
   plan,
   planarrangements,
   settings,

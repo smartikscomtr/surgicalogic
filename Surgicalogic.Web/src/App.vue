@@ -262,6 +262,11 @@ export default {
               route: "/PersonnelCategorypage"
             },
             {
+              icon: "person_pin",
+              text: vm.$i18n.t("menu.PersonnelTitles"),
+              route: "/PersonnelTitlepage"
+            },
+            {
               icon: "business_center",
               text: vm.$i18n.t("menu.equipmentTypes"),
               route: "/equipmenttypespage"
