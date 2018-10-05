@@ -262,7 +262,7 @@ export default {
               route: "/PersonnelCategorypage"
             },
             {
-              icon: "person_pin",
+              icon: "grade",
               text: vm.$i18n.t("menu.PersonnelTitles"),
               route: "/PersonnelTitlepage"
             },
