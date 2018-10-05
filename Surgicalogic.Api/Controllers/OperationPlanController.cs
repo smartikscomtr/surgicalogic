@@ -63,9 +63,9 @@ namespace Surgicalogic.Api.Controllers
 
             var systemSettings = await _settingStoreService.GetAllAsync();
 
-            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourStart.ToString());
-            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourEnd.ToString());
-            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.PeriodInMinutes.ToString());
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString());
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString());
+            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationPeriodInMinutes.ToString());
 
             var result = new ResultModel<OperationPlanOutputModel>
             {
@@ -112,9 +112,9 @@ namespace Surgicalogic.Api.Controllers
 
             var systemSettings = await _settingStoreService.GetAllAsync();
 
-            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourStart.ToString());
-            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.WorkingHourEnd.ToString());
-            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.PeriodInMinutes.ToString());
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString());
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString());
+            var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationPeriodInMinutes.ToString());
 
             foreach (var operation in tomorrowOperations)
             {

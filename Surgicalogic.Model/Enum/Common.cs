@@ -26,9 +26,12 @@
 
     public enum SettingKey
     {
-        PeriodInMinutes,
-        WorkingHourStart,
-        WorkingHourEnd
+        OperationPeriodInMinutes,
+        OperationWorkingHourStart,
+        OperationWorkingHourEnd,
+        ClinicPeriodInMinutes,
+        ClinicWorkingHourStart,
+        ClinicWorkingHourEnd
     }
 
     public enum SettingDataTypeNames

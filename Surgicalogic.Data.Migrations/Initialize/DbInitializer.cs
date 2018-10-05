@@ -490,8 +490,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 #region Settings
                 context.Settings.Add(new Entities.Setting
                 {
-                    Key = "PeriodInMinutes",
-                    Name = "Periyod Süresi",
+                    Key = "OperationPeriodInMinutes",
+                    Name = "Ameliyat Periyod Süresi",
                     IntValue = 15,
                     SettingDataTypeId = 2,
                     CreatedDate = DateTime.Now,
@@ -501,8 +501,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
                 context.Settings.Add(new Entities.Setting
                 {
-                    Key = "WorkingHourStart",
-                    Name = "Mesai Başlangıcı",
+                    Key = "OperationWorkingHourStart",
+                    Name = "Ameliyat Mesai Başlangıcı",
                     TimeValue = "08:00",
                     SettingDataTypeId = 3,
                     CreatedDate = DateTime.Now,
@@ -512,8 +512,41 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
                 context.Settings.Add(new Entities.Setting
                 {
-                    Key = "WorkingHourEnd",
-                    Name = "Mesai Bitişi",
+                    Key = "OperationWorkingHourEnd",
+                    Name = "Ameliyat Mesai Bitişi",
+                    TimeValue = "17:00",
+                    SettingDataTypeId = 3,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ClinicPeriodInMinutes",
+                    Name = "Klinik Periyod Süresi",
+                    IntValue = 15,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ClinicWorkingHourStart",
+                    Name = "Klinik Mesai Başlangıcı",
+                    TimeValue = "08:00",
+                    SettingDataTypeId = 3,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ClinicWorkingHourEnd",
+                    Name = "Klinik Mesai Bitişi",
                     TimeValue = "17:00",
                     SettingDataTypeId = 3,
                     CreatedDate = DateTime.Now,
