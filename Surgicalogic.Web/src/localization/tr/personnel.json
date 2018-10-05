@@ -4,8 +4,9 @@
   "lastName": "Soyadı",
   "firstName" : "Adı",
   "personnel": "Personel",
-  "personnelCode": "Personel Kodu",
+  "personnelCode": "Kodu",
   "personnels": "Personeller",
+  "personnelTitle": "Ünvan",
   "personnelCategory":"Kategorisi",
   "personnelSaved": "Personel kaydedildi.",
   "doctor": "Doktor"

@@ -9,6 +9,7 @@ const personnelModule = {
     allBranches: [],
     allPersonnelCategories: [],
     allWorkTypes: [],
+    personnelTitles:[],
     filteredDoctor: []
   },
 
@@ -54,6 +55,10 @@ const personnelModule = {
 
     setAllWorkTypesForPersonnel(state, payload) {
       state.allWorkTypes = payload;
+    },
+
+    setPersonnelTitles(state, data) {
+      state.personnelTitles = data.result;
     },
 
     setDoctorsByBranchIdAsync(state, payload) {
@@ -154,6 +159,15 @@ const personnelModule = {
         })
     },
 
+    getPersonnelTitles(context) {
+      axios.get('PersonnelTitle/GetPersonnelTitles')
+        .then(response => {
+          if (response.data.info.succeeded == true) {
+            context.commit('setPersonnelTitles', response.data) //Set the Work Types in the store
+          }
+        })
+    },
+
     getDoctorsByBranchIdAsync(context, payload) {
       return new Promise((resolve, reject) => {
         axios.get('Personnel/GetDoctorsByBranchIdAsync/' + payload.branchId).then(response => {
@@ -165,7 +179,6 @@ const personnelModule = {
         })
       });
     },
-
 
     excelExportPersonnel(context) {
       axios.get('Personnel/ExcelExport')

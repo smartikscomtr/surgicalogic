@@ -44,6 +44,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             config.CreateMap<PersonnelBranch, PersonnelBranchModel>();
             config.CreateMap<PersonnelCategory, PersonnelCategoryModel>();
+            config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
             config.CreateMap<Setting, SettingModel>();
             config.CreateMap<SettingDataType, SettingDataTypeModel>();
             config.CreateMap<User, UserModel>();
@@ -79,6 +80,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(src => src.PersonnelBranches, opt => opt.Ignore());
             config.CreateMap<PersonnelBranchModel, PersonnelBranch>();
             config.CreateMap<PersonnelCategoryModel, PersonnelCategory>();
+            config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
             config.CreateMap<SettingModel, Setting>()
                 .ForMember(src => src.Key, opt => opt.Ignore());
             config.CreateMap<SettingDataTypeModel, SettingDataType>();
@@ -138,10 +140,12 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<PatientModel, PatientOutputModel>();
             config.CreateMap<PersonnelModel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Where(x => x.IsActive && x.Branch.IsActive).Select(x => x.Branch.Name))))
+                .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
                 .ForMember(dest => dest.PersonnelCategoryName, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
                 .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)));
             config.CreateMap<PersonnelCategoryModel, PersonnelCategoryOutputModel>();
+            config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
             config.CreateMap<SettingModel, SettingOutputModel>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.SettingDataTypeId == (int)SettingDataTypeNames.Int ? src.IntValue.ToString() : src.SettingDataTypeId == (int)SettingDataTypeNames.String ? src.StringValue : src.TimeValue));
             config.CreateMap<SettingDataTypeModel, SettingDataTypeOutputModel>();
@@ -191,6 +195,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Personnel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Where(x => x.IsActive && x.Branch.IsActive).Select(x => x.Branch.Name))))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+                .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name + " " + src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.PersonnelCategoryName, opt => opt.MapFrom(src => src.PersonnelCategory.Name + " " + src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)))
                 .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => AppSettings.DoctorPicture + src.PictureUrl));

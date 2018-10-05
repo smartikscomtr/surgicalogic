@@ -108,15 +108,37 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     "Doktor"
                 };
 
-                var title = new Entities.PersonnelCategory();
+                var category = new Entities.PersonnelCategory();
 
                 foreach (var item in PersonnelCategories)
                 {
-                    title = context.PersonnelCategories.Add(new Entities.PersonnelCategory
+                    category = context.PersonnelCategories.Add(new Entities.PersonnelCategory
                     {
                         Name = item,
                         Description = item,
-                        CreatedDate = DateTime.Now
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
+                    }).Entity;
+                }
+                #endregion
+
+
+                #region PersonnelTitles
+                string[] PersonnelTitles = new string[] {
+                    "Uzman",
+                    "Doçent",
+                    "Profesor"
+                };
+
+                var title = new Entities.PersonnelTitle();
+
+                foreach (var item in PersonnelTitles)
+                {
+                    title = context.PersonnelTitles.Add(new Entities.PersonnelTitle
+                    {
+                        Name = item,
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
                     }).Entity;
                 }
                 #endregion
@@ -247,7 +269,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "TB01",
                     FirstName = "Tuba",
                     LastName = "Bayraktutar",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "tuba.jpg",
@@ -259,7 +282,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "GK01",
                     FirstName = "Gürkan",
                     LastName = "Kesebir",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "gurkan.jpg",
@@ -271,7 +295,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "BK01",
                     FirstName = "Berk",
                     LastName = "Kuğu",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "berk.jpg",
@@ -283,7 +308,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "DD01",
                     FirstName = "Deniz",
                     LastName = "Dara",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "deniz.jpg",
@@ -295,7 +321,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "KS01",
                     FirstName = "Kenan",
                     LastName = "Su",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "kenan.jpg",
@@ -307,7 +334,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "MB01",
                     FirstName = "Mehmet",
                     LastName = "Bal",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "mehmet.jpg",
@@ -319,7 +347,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "SU01",
                     FirstName = "Selim",
                     LastName = "Ural",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "selim.jpg",
@@ -331,7 +360,8 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     PersonnelCode = "UK01",
                     FirstName = "Uğur",
                     LastName = "Kara",
-                    PersonnelCategoryId = title.Id,
+                    PersonnelCategoryId = category.Id,
+                    PersonnelTitleId = title.Id,
                     BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "ugur.jpg",

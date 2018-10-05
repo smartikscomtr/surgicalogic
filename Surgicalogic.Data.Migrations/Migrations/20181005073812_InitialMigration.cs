@@ -157,6 +157,24 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PersonnelTitles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonnelTitles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SettingDataTypes",
                 columns: table => new
                 {
@@ -167,7 +185,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -364,8 +382,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Key = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
+                    Key = table.Column<string>(maxLength: 100, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: true),
                     SettingDataTypeId = table.Column<int>(nullable: false),
                     IntValue = table.Column<int>(nullable: true),
                     StringValue = table.Column<string>(nullable: true),
@@ -397,6 +415,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     PictureUrl = table.Column<string>(nullable: true),
+                    PersonnelTitleId = table.Column<int>(nullable: false),
                     PersonnelCategoryId = table.Column<int>(nullable: false),
                     BranchId = table.Column<int>(nullable: false),
                     WorkTypeId = table.Column<int>(nullable: false)
@@ -408,6 +427,12 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_Personnels_PersonnelCategories_PersonnelCategoryId",
                         column: x => x.PersonnelCategoryId,
                         principalTable: "PersonnelCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Personnels_PersonnelTitles_PersonnelTitleId",
+                        column: x => x.PersonnelTitleId,
+                        principalTable: "PersonnelTitles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -931,6 +956,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "PersonnelCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Personnels_PersonnelTitleId",
+                table: "Personnels",
+                column: "PersonnelTitleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Personnels_WorkTypeId",
                 table: "Personnels",
                 column: "WorkTypeId");
@@ -1029,6 +1059,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "PersonnelCategories");
+
+            migrationBuilder.DropTable(
+                name: "PersonnelTitles");
 
             migrationBuilder.DropTable(
                 name: "WorkTypes");

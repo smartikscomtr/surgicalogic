@@ -4,7 +4,8 @@
   "lastName": "Last Name",
   "firstName" : "First Name",
   "personnel": "Personnel",
-  "personnelCode": "Personnel Code",
+  "personnelCode": "Code",
+  "personnelTitle": "Title",
   "personnels": "Personnels",
   "personnelCategory": "Title",
   "doctor": "Doctor"

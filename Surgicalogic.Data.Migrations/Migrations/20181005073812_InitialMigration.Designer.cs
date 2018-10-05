@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181004145325_InitialMigration")]
+    [Migration("20181005073812_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -694,6 +694,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<int>("PersonnelTitleId");
+
                     b.Property<string>("PictureUrl");
 
                     b.Property<int>("WorkTypeId");
@@ -701,6 +703,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonnelCategoryId");
+
+                    b.HasIndex("PersonnelTitleId");
 
                     b.HasIndex("WorkTypeId");
 
@@ -766,6 +770,30 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.ToTable("PersonnelCategories");
                 });
 
+            modelBuilder.Entity("Surgicalogic.Data.Entities.PersonnelTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonnelTitles");
+                });
+
             modelBuilder.Entity("Surgicalogic.Data.Entities.Setting", b =>
                 {
                     b.Property<int>("Id")
@@ -780,13 +808,16 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<string>("Key");
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
 
                     b.Property<int>("SettingDataTypeId");
 
@@ -817,7 +848,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -1098,6 +1130,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasOne("Surgicalogic.Data.Entities.PersonnelCategory", "PersonnelCategory")
                         .WithMany("Personnels")
                         .HasForeignKey("PersonnelCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
+                        .WithMany()
+                        .HasForeignKey("PersonnelTitleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Surgicalogic.Data.Entities.WorkType", "WorkType")
