@@ -1,7 +1,7 @@
 <template>
   <div class="container fluid grid-list-md">
     <grid-component :headers="headers"
-                    :items="personnelCategories"
+                    :items="personnelTitles"
                     :title="title"
                     :show-detail="false"
                     :show-edit="true"
@@ -12,16 +12,16 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @edit="edit"
-                    @exportToExcel="exportPersonnelCategoryToExcel"
+                    @exportToExcel="exportPersonnelTitleToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem">
     </grid-component>
 
-    <personnel-category-edit-component :edit-action="editAction"
+    <personnel-title-edit-component :edit-action="editAction"
                                     :edit-visible="editDialog"
                                     :edit-index="editedIndex"
                                     @cancel="cancel">
-    </personnel-category-edit-component>
+    </personnel-title-edit-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
@@ -44,7 +44,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('personnelcategory.personnelCategories'),
+      title: vm.$i18n.t('personneltitle.personnelTitles'),
       search: '',
       editDialog: false,
       deleteDialog: false,
@@ -53,7 +53,7 @@ export default {
 
       editedIndex: -1,
       totalRowCount:0,
-      deletePath: 'deletePersonnelCategory'
+      deletePath: 'deletePersonnelTitle'
     };
   },
 
@@ -65,14 +65,7 @@ export default {
       return [
         {
           value: 'name',
-          text: vm.$i18n.t('personnelcategory.personnelCategories'),
-          sortable: true,
-          align: 'left'
-        },
-        {
-          isCheck: true,
-          value: 'suitableForMultipleOperation',
-          text: vm.$i18n.t('personnelcategory.suitableForMultipleOperation'),
+          text: vm.$i18n.t('personneltitle.personnelTitles'),
           sortable: true,
           align: 'left'
         },
@@ -84,38 +77,38 @@ export default {
       ];
     },
 
-    personnelCategories() {
+    personnelTitles() {
       const vm = this;
 
-      return vm.$store.state.personnelCategoryModule.personnelCategory;
+      return vm.$store.state.personnelTitleModule.personnelTitle;
     },
 
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.personnelCategoryModule.loading;
+      return vm.$store.state.personnelTitleModule.loading;
     },
 
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.personnelCategoryModule.totalCount;
+      return vm.$store.state.personnelTitleModule.totalCount;
     }
   },
 
   methods: {
     getMethodName(){
-      return "getPersonnelCategories";
+      return "getPersonnelTitles";
     },
 
     deleteMethodName(){
-      return "deletePersonnelCategory";
+      return "deletePersonnelTitle";
     },
 
-    exportPersonnelCategoryToExcel() {
+    exportPersonnelTitleToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportPersonnelCategory');
+      vm.$store.dispatch('excelExportPersonnelTitle');
     }
   }
 };

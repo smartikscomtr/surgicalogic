@@ -72,6 +72,7 @@ import OperationEditComponent from '@/components/editcomponents/OperationEditCom
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
 import PersonnelEditComponent from '@/components/editcomponents/PersonnelEditComponent';
 import PersonnelCategoryEditComponent from '@/components/editcomponents/PersonnelCategoryEditComponent';
+import PersonnelTitleEditComponent from '@/components/editcomponents/PersonnelTitleEditComponent';
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
 import WorkTypesEditComponent from '@/components/editcomponents/WorkTypesEditComponent';
 import OperatingRoomsCalendarEditComponent from '@/components/editcomponents/OperatingRoomsCalendarEditComponent';
@@ -84,7 +85,8 @@ Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);
 Vue.component('operation-edit-component', OperationEditComponent);
 Vue.component('personnel-edit-component', PersonnelEditComponent);
-Vue.component('personnel-title-edit-component', PersonnelCategoryEditComponent);
+Vue.component('personnel-category-edit-component', PersonnelCategoryEditComponent);
+Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
 Vue.component('users-edit-component', UsersEditComponent);
 Vue.component('work-types-edit-component', WorkTypesEditComponent);
 Vue.component('operating-rooms-calendar-edit-component', OperatingRoomsCalendarEditComponent);

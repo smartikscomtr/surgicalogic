@@ -156,7 +156,7 @@ export default {
      }
 
      if(vm.personnelTitleLoadOnce){
-        vm.$store.dispatch('getPersonnelTitles');
+        vm.$store.dispatch('getPersonnelTitlesForPersonnel');
         vm.personnelTitleLoadOnce = false;
      }
 

@@ -17,6 +17,7 @@ import operatingRoomCalendarModule from './modules/operatingroomscalendar'
 import operatingRoomModule from './modules/operatingrooms';
 import personnelModule from './modules/personnel';
 import personnelCategoryModule from './modules/personnelCategory';
+import personnelTitleModule from './modules/personnelTitle';
 import planArrangementsModule from './modules/planarrangements';
 import settingsModule from './modules/settings';
 import usersModule from './modules/users';
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     operationTypeModule,
     operatingRoomCalendarModule,
     personnelCategoryModule,
+    personnelTitleModule,
     personnelModule,
     planArrangementsModule,
     operatingRoomModule,
