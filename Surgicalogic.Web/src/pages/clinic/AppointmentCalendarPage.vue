@@ -1,35 +1,6 @@
 <template>
   <div>
     <v-container class="container-wrap layout row wrap">
-      <!-- <v-flex xs12 sm12 md8>
-        <div xs12 sm12 md12 class="profession">
-          <b> Uzmanlık Alanları:</b>
-          <span> Psikiyatri</span>
-        </div>
-        <v-tabs show-arrows>
-          <v-tabs-slider color="white">
-          </v-tabs-slider>
-
-          <v-tab v-for="item in items"
-                :href="'#tab-' + item"
-                :key="item">
-            {{ item }}
-          </v-tab>
-
-          <v-tabs-items v-model="currentItem">
-            <v-tab-item v-for="item in items.concat(more)"
-                        :id="'tab-' + item"
-                        :key="item">
-              <v-card flat>
-                <v-card-text>
-                  <h2>{{ item }}</h2>
-                    {{ text }}
-                </v-card-text>
-              </v-card>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-tabs>
-      </v-flex> -->
         <div xs12 sm4 md3 class="doctor-detail">
           <h4> {{ doctorName }} </h4>
 
@@ -37,18 +8,8 @@
         </div>
 
       <v-flex xs12 sm12 md9 block-container>
-        <div v-for="(item,i) in 5"
-            :key="i"
-            popout>
-          <div slot="header"> 19.09.2018 </div>
-
-          <v-card>
-            <input class="appointment-input-wrap"
-                    id="time-1"
-                    type="text"
-                    aria-label=""
-                    placeholder="Lütfen randevu almak istediğiniz saati seçiniz">
-          </v-card>
+        <div>
+          <input id="time-1">
         </div>
       </v-flex>
     </v-container>
