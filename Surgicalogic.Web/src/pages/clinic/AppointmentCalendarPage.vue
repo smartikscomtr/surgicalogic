@@ -25,8 +25,25 @@ export default {
     const vm = this;
 
     return {
+      date: null,
+      interval:null,
+      startTime:null,
+      endTime:null,
+      disabled:[],
       doctorName: vm.$route.query.doctorId
     };
+  },
+
+  methods: {
+    getDate () {
+      const toTwoDigits = num => num < 10 ? '0' + num : num;
+      let today = new Date();
+      today.setDate(today.getDate() + 1);
+      let year = today.getFullYear();
+      let month = toTwoDigits(today.getMonth() + 1);
+      let day = toTwoDigits(today.getDate());
+      return `${year}-${month}-${day}`;
+    }
   },
 
   created () {
@@ -35,7 +52,19 @@ export default {
     vm.$store.dispatch('')
   },
   mounted() {
+
+    const vm = this;
+
+    vm.$watch('date', (newValue, oldValue) => {
+      if (newValue !== oldValue) {
     const AppointmentPicker = require('appointment-picker');
+
+    vm.$store.dispatch('getAppointmentCalendarByDate', {
+            selectDate: vm.date
+          }).then(response => {
+
+          });
+
 
     require(['appointment-picker'], function(AppointmentPicker) {
       var picker = new AppointmentPicker(
@@ -57,9 +86,15 @@ export default {
       );
 
       picker.open();
+
+      });
+      }
     });
+
+    vm.date = vm.getDate();
+
   }
-};
+}
 </script>
 
 <style>
