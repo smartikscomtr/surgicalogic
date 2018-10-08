@@ -14,7 +14,14 @@
       </v-flex>
 
       <v-flex lg4 md3 sm6 xs12>
-        <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilter" @change="filterDoctor()" item-text="personnelCategoryName" item-value="id">
+        <v-autocomplete v-model="selectDoctor"
+                        :items="doctors"
+                        :label="$t('personnel.doctor')"
+                        box
+                        :filter="customFilter"
+                        @change="filterDoctor()"
+                        item-text="personnelCategoryName"
+                        item-value="id">
         </v-autocomplete>
       </v-flex>
     </v-layout>
@@ -23,11 +30,14 @@
       <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg2 md3 sm6 xs12>
         <v-card>
           <img :src="doctorCard.pictureUrl" height="150px" />
+
           <span class="doctorName-wrap" v-text="doctorCard.personnelCategoryName">
           </span>
+
           <span class="branchName-wrap" v-text="doctorCard.branchNames">
           </span>
-          <v-btn @click="$router.push('/appointmentcalendarpage')"> Randevu Al
+
+          <v-btn @click="routePage(doctorCard.id)"> Randevu Al
           </v-btn>
         </v-card>
       </v-flex>
@@ -36,6 +46,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         const vm = this;
@@ -147,23 +158,29 @@ export default {
                     vm.doctorCards.push(vm.filteredDoctors[index]);
                 }
             }
+        },
+
+        routePage(clickDoctorId) {
+          const vm = this;
+
+          return vm.$router.push('/appointmentcalendarpage?doctorId=' + clickDoctorId)
         }
     },
 
     created() {
-        const vm = this;
+      const vm = this;
 
-        vm.$store
-            .dispatch('getDoctorsByBranchIdAsync', {
-                branchId: 0
-            })
-            .then(() => {
-                vm.filteredDoctors =
-                    vm.$store.state.personnelModule.filteredDoctor;
-                vm.doctorCards = vm.filteredDoctors;
-            });
+      vm.$store
+          .dispatch('getDoctorsByBranchIdAsync', {
+              branchId: 0
+          })
+          .then(() => {
+              vm.filteredDoctors =
+                  vm.$store.state.personnelModule.filteredDoctor;
+              vm.doctorCards = vm.filteredDoctors;
+          });
 
-        vm.$store.dispatch('getAllBranches');
+      vm.$store.dispatch('getAllBranches');
     }
 };
 </script>

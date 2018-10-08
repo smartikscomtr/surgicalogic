@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container class="container-wrap layout row wrap">
-      <v-flex xs12 sm12 md8>
+      <!-- <v-flex xs12 sm12 md8>
         <div xs12 sm12 md12 class="profession">
           <b> Uzmanlık Alanları:</b>
           <span> Psikiyatri</span>
@@ -29,31 +29,27 @@
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
-      </v-flex>
-
-      <v-flex xs12 sm12 md4 block-container>
-        <div xs12 sm4 md4 class="doctor-detail">
-          <h4>Tuba Bayraktutar</h4>
+      </v-flex> -->
+        <div xs12 sm4 md3 class="doctor-detail">
+          <h4> {{ doctorName }} </h4>
 
           <h5>Acil Tıp</h5>
         </div>
 
-        <v-expansion-panel>
-          <v-expansion-panel-content v-for="(item,i) in 5"
-                                     :key="i"
-                                     popout>
-            <div slot="header">19.09.2018
-            </div>
+      <v-flex xs12 sm12 md9 block-container>
+        <div v-for="(item,i) in 5"
+            :key="i"
+            popout>
+          <div slot="header"> 19.09.2018 </div>
 
-            <v-card>
-              <input class="appointment-input-wrap"
-                     id="time-1"
-                     type="text"
-                     aria-label=""
-                     placeholder="Lütfen randevu almak istediğiniz saati seçiniz">
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
+          <v-card>
+            <input class="appointment-input-wrap"
+                    id="time-1"
+                    type="text"
+                    aria-label=""
+                    placeholder="Lütfen randevu almak istediğiniz saati seçiniz">
+          </v-card>
+        </div>
       </v-flex>
     </v-container>
   </div>
@@ -65,14 +61,18 @@
 
 export default {
   data() {
+    const vm = this;
+
     return {
-      currentItem: 'tab-Web',
-      items: [ 'Hekim Özgeçmişi', 'Bilimsel Yayınları', 'Sağlık Rehberi' ],
-      more: [ 'News', 'Maps', 'Books', 'Flights', 'Apps' ],
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      doctorName: vm.$route.query.doctorId
     };
   },
 
+  created () {
+    const vm = this;
+
+    vm.$store.dispatch('')
+  },
   mounted() {
     const AppointmentPicker = require('appointment-picker');
 
@@ -80,7 +80,7 @@ export default {
       var picker = new AppointmentPicker(
         document.getElementById('time-1'),
         {
-            interval: '30', //Randevu aralık dakikaları
+            interval: '15', //Randevu aralık dakikaları
             minTime: '09', //Min seçilebilir saat
             maxTime: '17', //Max seçilebilir saat
             mode: '24h', //24 saat ya da 12 saat kullanılıp kullanılmayacağı
