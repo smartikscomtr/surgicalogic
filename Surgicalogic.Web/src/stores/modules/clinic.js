@@ -26,7 +26,7 @@ const clinicModule = {
       return new Promise((resolve, reject) => {
         axios.get('AppointmentCalendar/GetAppointmentCalendarByDate/' + payload.selectDate, {
         }).then(response => {
-          if (response.statusText == 'OK' && response.data.info.succeeded == true){
+          if (response.statusText == 'OK'){
             context.commit('setAppointmentCalendarByDate', response.data.result)
           }
 

@@ -8,6 +8,7 @@ using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.Enum;
 using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -19,10 +20,14 @@ namespace Surgicalogic.Api.Controllers
     public class AppointmentCalendarController : Controller
     {
         private readonly IAppointmentCalendarStoreService _appointmentCalendarStoreService;
+        private readonly ISettingStoreService _settingStoreService;
 
-        public AppointmentCalendarController(IAppointmentCalendarStoreService appointmentStoreService)
+        public AppointmentCalendarController(
+            IAppointmentCalendarStoreService appointmentStoreService,
+            ISettingStoreService settingStoreService)
         {
             _appointmentCalendarStoreService = appointmentStoreService;
+            _settingStoreService = settingStoreService;
         }
 
         /// <summary>
@@ -40,12 +45,30 @@ namespace Surgicalogic.Api.Controllers
         {
             return await _appointmentCalendarStoreService.GetAsync<AppointmentCalendarOutputModel>();
         }
-        
+
         [Route("AppointmentCalendar/GetAppointmentCalendarByDate/{selectDate:DateTime}")]
         [HttpGet]
-        public async Task<ResultModel<OperationPlanOutputModel>> GetAppointmentCalendarByDate(DateTime selectDate)
+        public async Task<AppointmentDayOutputModel> GetAppointmentCalendarByDate(DateTime selectDate)
         {
-            return null;
+            var systemSettings = await _settingStoreService.GetAllAsync();
+
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourStart.ToString());
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourEnd.ToString());
+            var interval = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPeriodInMinutes.ToString()).IntValue.Value;
+
+            var start = workingHourStart.TimeValue.Split(':')[0];
+            var min = Convert.ToInt32(start) - 1;
+            var end = workingHourEnd.TimeValue.Split(':')[0];
+
+
+            return new AppointmentDayOutputModel
+            {
+                Interval = interval,
+                StartTime = start,
+                MinTime = min,
+                EndTime = end,
+                Disabled = new string[] { }
+            };
         }
 
         [Route("AppointmentCalendar/ExcelExport")]

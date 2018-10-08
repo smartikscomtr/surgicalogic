@@ -28,6 +28,7 @@ export default {
     return {
       date: null,
       interval:null,
+      minTime:null,
       startTime:null,
       endTime:null,
       disabled:[],
@@ -66,21 +67,24 @@ export default {
     vm.$store.dispatch('getAppointmentCalendarByDate', {
             selectDate: vm.date
           }).then(response => {
+            vm.interval = response.data.interval;
+            vm.minTime = response.data.minTime;
+            vm.startTime = response.data.startTime;
+            vm.endTime = response.data.endTime;
+            vm.disabled = response.data.disabled;
 
-          });
-
-
-    require(['appointment-picker'], function(AppointmentPicker) {
+debugger
+      require(['appointment-picker'], function(AppointmentPicker) {
       var picker = new AppointmentPicker(
         document.getElementById('time-1'),
         {
-            interval: '15', //Randevu aralık dakikaları
-            minTime: '09', //Min seçilebilir saat
-            maxTime: '17', //Max seçilebilir saat
+            interval: vm.interval,//Randevu aralık dakikaları
+            minTime: vm.minTime, //Min seçilebilir saat
+            maxTime: vm.endTime, //Max seçilebilir saat
             mode: '24h', //24 saat ya da 12 saat kullanılıp kullanılmayacağı
-            startTime: '09', //Gürntülenen saat başlangıcı
-            endTime: '23', //Görüntülenen saat bitişi
-            disabled: ['1:30 pm', '2:00 pm', '7:30 pm'], //Disabled
+            startTime: vm.startTime, //Gürntülenen saat başlangıcı
+            endTime: vm.endTime, //Görüntülenen saat bitişi
+            disabled: vm.disabled, //Disabled
             large: true, //Görünümün büyüklük kontrolü
             static: true, // Statik pop-up durumu (Her zaman açık)
             leadingZero: true, // Whether to zero pad hour (i.e. 07:15)
@@ -91,9 +95,10 @@ export default {
 
       picker.open();
 
+        });
       });
-      }
-    });
+    }
+});
 
     vm.date = vm.getDate();
 
