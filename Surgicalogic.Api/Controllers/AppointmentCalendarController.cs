@@ -40,6 +40,13 @@ namespace Surgicalogic.Api.Controllers
         {
             return await _appointmentCalendarStoreService.GetAsync<AppointmentCalendarOutputModel>();
         }
+        
+        [Route("AppointmentCalendar/GetAppointmentCalendarByDate/{selectDate:DateTime}")]
+        [HttpGet]
+        public async Task<ResultModel<OperationPlanOutputModel>> GetAppointmentCalendarByDate(DateTime selectDate)
+        {
+            return null;
+        }
 
         [Route("AppointmentCalendar/ExcelExport")]
         public async Task<string> ExcelExport()
