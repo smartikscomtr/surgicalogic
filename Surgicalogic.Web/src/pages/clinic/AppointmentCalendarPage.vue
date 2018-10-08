@@ -2,6 +2,7 @@
   <div>
     <v-container class="container-wrap layout row wrap">
         <div xs12 sm4 md3 class="doctor-detail">
+
           <h4> {{ doctorName }} </h4>
 
           <h5>Acil Tıp</h5>
@@ -30,7 +31,7 @@ export default {
       startTime:null,
       endTime:null,
       disabled:[],
-      doctorName: vm.$route.query.doctorId
+      doctorName: null
     };
   },
 
@@ -49,8 +50,11 @@ export default {
   created () {
     const vm = this;
 
-    vm.$store.dispatch('')
+    vm.$store.dispatch('getPersonnelById', vm.$route.query.doctorId).then(response => {debugger
+      vm.doctorName = response.data.fullName
+    })
   },
+
   mounted() {
 
     const vm = this;

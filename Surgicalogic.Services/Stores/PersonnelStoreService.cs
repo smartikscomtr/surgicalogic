@@ -46,5 +46,10 @@ namespace Surgicalogic.Services.Stores
 
             return await query.ProjectTo<PersonnelOutputModel>().ToListAsync();
         }
+
+        public async Task<PersonnelOutputModel> GetPersonnelByIdAsync(int id)
+        {
+            return await  GetQueryable().Where(x => x.Id == id).ProjectTo<PersonnelOutputModel>().FirstOrDefaultAsync();
+        }
     }
 }

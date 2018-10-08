@@ -10,7 +10,8 @@ const personnelModule = {
     allPersonnelCategories: [],
     allWorkTypes: [],
     personnelTitles:[],
-    filteredDoctor: []
+    filteredDoctor: [],
+    singlePersonnel: null
   },
 
   mutations: {
@@ -63,7 +64,10 @@ const personnelModule = {
 
     setDoctorsByBranchIdAsync(state, payload) {
       state.filteredDoctor = payload;
-    }
+    },
+    setPersonnelById(state, payload) {
+      state.singlePersonnel = payload;
+    },
   },
 
   getters: {},
@@ -82,6 +86,19 @@ const personnelModule = {
         context.commit('setLoading', false);
       })
     },
+
+      getPersonnelById(context, payload) {
+        return new Promise((resolve, reject) => {
+          axios.get('Personnel/GetPersonnelById/' + payload)
+            .then(response => {
+              if (response.statusText == 'OK') {
+                context.commit('setPersonnelById', response.data.result); //Delete the Personnel in the store
+              }
+
+              resolve(response);
+            })
+        });
+      },
 
     getAllPersonnels(context) {
       axios.get('Personnel/GetAllPersonnels')
