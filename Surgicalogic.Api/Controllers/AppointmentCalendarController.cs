@@ -60,7 +60,7 @@ namespace Surgicalogic.Api.Controllers
             var personPerPeriodSetting = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPersonPerPeriod.ToString());
             var interval = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPeriodInMinutes.ToString()).IntValue.Value;
 
-            var start =  Convert.ToInt32(workingHourStart.TimeValue.Split(':')[0]);
+            var start = Convert.ToInt32(workingHourStart.TimeValue.Split(':')[0]);
             var end = Convert.ToInt32(workingHourEnd.TimeValue.Split(':')[0]);
             var personPerPeriod = Convert.ToInt32(personPerPeriodSetting.IntValue);
 
@@ -115,7 +115,7 @@ namespace Surgicalogic.Api.Controllers
 
             var appointmentCalendarItem = new AppointmentCalendarModel()
             {
-                AppointmentDate = item.AppointmentDate,
+                AppointmentDate = new DateTime(item.AppointmentDate.Year, item.AppointmentDate.Month, item.AppointmentDate.Day, Convert.ToInt32(item.AppointmentTime.Split(':')[0]), Convert.ToInt32(item.AppointmentTime.Split(':')[1]), 0),
                 PatientId = patient.Result.Id,
                 PersonnelId = item.PersonnelId
             };

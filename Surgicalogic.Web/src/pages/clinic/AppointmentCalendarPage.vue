@@ -66,38 +66,32 @@
             <v-card-text>
                 <v-layout wrap>
                 <v-flex xs12 sm6 md6>
-                    <v-text-field
-                                  label="Adı">
+                    <v-text-field v-model="identityNumber"
+                                  label="identityNumber">
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                    <v-text-field
-                                  label="Adı">
+                    <v-text-field v-model="firstName"
+                                  label="firstName">
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                    <v-text-field
-                                  label="Adı">
+                    <v-text-field v-model="lastName"
+                                  label="lastName">
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                    <v-text-field
-                                  label="Adı">
+                    <v-text-field v-model="phone"
+                                  label="phone">
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                    <v-text-field
-                                  label="Adı">
-                    </v-text-field>
-                </v-flex>
-
-                <v-flex xs12 sm6 md6>
-                    <v-text-field
-                                  label="Adı">
+                    <v-text-field v-model="address"
+                                  label="address">
                     </v-text-field>
                 </v-flex>
                 </v-layout>
@@ -140,14 +134,22 @@ export default {
       dialog: false,
       personPerPeriod:0,
       selectedTimes:[],
-      availableAppointmentsMessage: ""
+      availableAppointmentsMessage: "",
+      identityNumber: null,
+      firstName: null,
+      lastName: null,
+      phone: null,
+      address: null
     };
   },
 
   watch: {
     date(val) {
-      this.dateFormatted = this.formatDate(this.date)
+      const vm = this;
+
+      vm.dateFormatted = vm.formatDate(vm.date)
     }
+
   },
 
   computed: {
@@ -216,56 +218,57 @@ export default {
     destroyPicker(){
       const vm = this;
 
-      vm.picker.destroy()
+      vm.dialog = false;
+      vm.picker.destroy();
     },
 
     saveAppointment() {
       const vm = this;
 
       vm.$store.dispatch('insertAppointmentCalendar', {
-        // IdentityNumber = item.IdentityNumber,
-        // FirstName = item.FirstName,
-        // LastName = item.LastName,
-        // Phone = item.Phone,
-        // Address = item.Address,
-        // AppointmentDate = item.AppointmentDate,
-        // PersonnelId = item.PersonnelId
+        identityNumber: vm.identityNumber,
+        firstName: vm.firstName,
+        lastName: vm.lastName,
+        phone: vm.phone,
+        address: vm.address,
+        appointmentDate: vm.date,
+        appointmentTime : vm.selectedTime,
+        personnelId: vm.$route.query.doctorId
+      }).then(response => {
+        vm.dialog = false;
+        vm.getAppointmentCalendar();
+        vm.picker.setTime('');
+        vm.identityNumber= null,
+        vm.firstName= null,
+        vm.lastName= null,
+        vm.phone= null,
+        vm.address= null
       });
-    }
-  },
+    },
 
-  created () {
-    const vm = this;
+    getAppointmentCalendar(){
+      const vm = this;
 
-    vm.$store.dispatch('getPersonnelById', vm.$route.query.doctorId).then(response => {
-      vm.doctorName = response.data.fullName,
-      vm.doctorBranchNames = response.data.branchNames,
-      vm.doctorPictureUrl = response.data.pictureUrl
-    });
-  },
+      if (vm.picker) {
+        vm.destroyPicker();
+      }
 
-  mounted() {
-    const vm = this;
+      const AppointmentPicker = require('appointment-picker');
 
-    vm.$watch('date', (newValue, oldValue) => {
-      if (newValue !== oldValue) {
-        const AppointmentPicker = require('appointment-picker');
-
-        vm.$store.dispatch('getAppointmentCalendarByDate', {
-          selectedDate: vm.date,
-          doctorId: vm.$route.query.doctorId
-        }).then(response => {
-          vm.interval = response.data.interval;
-          vm.startTime = response.data.startTime;
-          vm.endTime = response.data.endTime;
-          vm.disabled = response.data.disabled;
-          vm.personPerPeriod = response.data.personPerPeriod;
-          vm.selectedTimes = response.data.selectedTimes;
+      vm.$store.dispatch('getAppointmentCalendarByDate', {
+        selectedDate: vm.date,
+        doctorId: vm.$route.query.doctorId
+      }).then(response => {
+        vm.interval = response.data.interval;
+        vm.startTime = response.data.startTime;
+        vm.endTime = response.data.endTime;
+        vm.disabled = response.data.disabled;
+        vm.personPerPeriod = response.data.personPerPeriod;
+        vm.selectedTimes = response.data.selectedTimes;
 
         require(['appointment-picker'], function(AppointmentPicker) {
           vm.picker = new AppointmentPicker(
-            document.getElementById('time-1'),
-            {
+            document.getElementById('time-1'), {
               interval: vm.interval,//Randevu aralık dakikaları
               minTime: vm.startTime, //Min seçilebilir saat
               maxTime: vm.endTime, //Max seçilebilir saat
@@ -282,32 +285,49 @@ export default {
 
             vm.picker.open();
         });
-
-        document.body.addEventListener('change.appo.picker', function(e) {
-          vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ?  "0" + e.time.m :e.time.m);
-          var availablePerson = vm.personPerPeriod;
-
-          for (let index = 0; index < vm.selectedTimes.length; index++) {
-              if(vm.selectedTimes[index] == vm.selectedTime) {
-                availablePerson--;
-              }
-          }
-
-          vm.availableAppointmentsMessage = vm._i18n.locale == "tr" ?
-            /* TR */ vm.selectedTime + " tarihine " + availablePerson + " randevu daha alabilirsiniz." :
-            /* EN */ "You can schedule " + availablePerson + " appointment(s) at " + vm.selectedTime;
-
-          vm.dialog = true;
-        }, false);
       });
     }
-  });
+  },
 
-  vm.date = vm.getDate();
+  created () {
+    const vm = this;
+
+    vm.$store.dispatch('getPersonnelById', vm.$route.query.doctorId).then(response => {
+      vm.doctorName = response.data.fullName,
+      vm.doctorBranchNames = response.data.branchNames,
+      vm.doctorPictureUrl = response.data.pictureUrl
+    });
+
+
+    document.body.addEventListener('change.appo.picker', function(e) {
+      vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ? "0" + e.time.m :e.time.m);
+
+      var availablePerson = vm.personPerPeriod;
+
+      for (let index = 0; index < vm.selectedTimes.length; index++) {
+        if(vm.selectedTimes[index] == vm.selectedTime) {
+          availablePerson--;
+        }
+      }
+
+      vm.availableAppointmentsMessage =  vm.selectedTime + " tarihine " + availablePerson + " randevu daha alabilirsiniz.";
+      vm.dialog = true;
+    }, false);
+  },
+
+  mounted() {
+    const vm = this;
+
+    vm.$watch('date', (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        vm.getAppointmentCalendar();
+      }
+    });
+
+    vm.date = vm.getDate();
   }
 }
 
-document.on
 </script>
 
 <style>
