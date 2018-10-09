@@ -49,16 +49,18 @@
                   max-width="500px">
           <v-card class="container fluid grid-list-md">
             <v-card-title>
-              <div class="headline-wrap flex xs12 sm12 md12">
-                <span class="text">
-                  {{ formTitle }}
-                </span>
+                <div class="headline-wrap flex xs12 sm12 md12">
+                    <span class="text">
+                        {{ formTitle }}
+                    </span>
 
-                <v-icon @click="cancel"
-                        class="close-wrap">
-                  close
-                </v-icon>
-              </div>
+                    <span>{{ availableAppointmentsMessage }}</span>
+
+                    <v-icon @click="cancel"
+                            class="close-wrap">
+                        close
+                    </v-icon>
+                </div>
             </v-card-title>
 
             <v-card-text>
@@ -135,7 +137,10 @@ export default {
       doctorPictureUrl: null,
       doctorBranchNames: null,
       selectedTime: null,
-      dialog: false
+      dialog: false,
+      personPerPeriod:0,
+      selectedTimes:[],
+      availableAppointmentsMessage: ""
     };
   },
 
@@ -254,6 +259,8 @@ export default {
           vm.startTime = response.data.startTime;
           vm.endTime = response.data.endTime;
           vm.disabled = response.data.disabled;
+          vm.personPerPeriod = response.data.personPerPeriod;
+          vm.selectedTimes = response.data.selectedTimes;
 
         require(['appointment-picker'], function(AppointmentPicker) {
           vm.picker = new AppointmentPicker(
@@ -277,7 +284,19 @@ export default {
         });
 
         document.body.addEventListener('change.appo.picker', function(e) {
-          vm.selectedTime = e.time;
+          vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ?  "0" + e.time.m :e.time.m);
+          var availablePerson = vm.personPerPeriod;
+
+          for (let index = 0; index < vm.selectedTimes.length; index++) {
+              if(vm.selectedTimes[index] == vm.selectedTime) {
+                availablePerson--;
+              }
+          }
+
+          vm.availableAppointmentsMessage = vm._i18n.locale == "tr" ?
+            /* TR */ vm.selectedTime + " tarihine " + availablePerson + " randevu daha alabilirsiniz." :
+            /* EN */ "You can schedule " + availablePerson + " appointment(s) at " + vm.selectedTime;
+
           vm.dialog = true;
         }, false);
       });

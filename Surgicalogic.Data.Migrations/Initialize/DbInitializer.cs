@@ -554,6 +554,18 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     IsActive = true
                 });
 
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ClinicPersonPerPeriod",
+                    Name = "Klinik Periyod Başı Hasta Sayısı",
+                    IntValue = 1,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+                
+
                 #endregion
 
                 #region SaveChanges

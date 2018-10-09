@@ -10,5 +10,7 @@ namespace Surgicalogic.Model.OutputModel
         public int StartTime { get; set; }
         public int EndTime { get; set; }
         public string[] Disabled { get; set; }
+        public int PersonPerPeriod { get; set; }
+        public string[] SelectedTimes { get; set; }
     }
 }
