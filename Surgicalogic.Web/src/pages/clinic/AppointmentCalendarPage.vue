@@ -49,6 +49,7 @@
       <v-card>
         <v-card-title>
           <span class="headline">User Profile</span>
+          <span>{{ availableAppointmentsMessage }}</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -125,7 +126,10 @@ export default {
       doctorPictureUrl: null,
       doctorBranchNames: null,
       selectedTime: null,
-      dialog: false
+      dialog: false,
+      personPerPeriod:0,
+      selectedTimes:[],
+      availableAppointmentsMessage: ""
     };
   },
 
@@ -216,6 +220,8 @@ export default {
           vm.startTime = response.data.startTime;
           vm.endTime = response.data.endTime;
           vm.disabled = response.data.disabled;
+          vm.personPerPeriod = response.data.personPerPeriod;
+          vm.selectedTimes = response.data.selectedTimes;
 
         require(['appointment-picker'], function(AppointmentPicker) {
           vm.picker = new AppointmentPicker(
@@ -239,7 +245,19 @@ export default {
         });
 
         document.body.addEventListener('change.appo.picker', function(e) {
-          vm.selectedTime = e.time;
+          vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ?  "0" + e.time.m :e.time.m);
+          var availablePerson = vm.personPerPeriod;
+
+          for (let index = 0; index < vm.selectedTimes.length; index++) {
+              if(vm.selectedTimes[index] == vm.selectedTime) {
+                availablePerson--;
+              }
+          }
+
+          vm.availableAppointmentsMessage = vm._i18n.locale == "tr" ?
+            /* TR */ vm.selectedTime + " tarihine " + availablePerson + " randevu daha alabilirsiniz." :
+            /* EN */ "You can schedule " + availablePerson + " appointment(s) at " + vm.selectedTime;
+
           vm.dialog = true;
         }, false);
       });

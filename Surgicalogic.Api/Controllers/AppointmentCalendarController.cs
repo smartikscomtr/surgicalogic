@@ -54,19 +54,23 @@ namespace Surgicalogic.Api.Controllers
 
             var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourStart.ToString());
             var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourEnd.ToString());
+            var personPerPeriodSetting = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPersonPerPeriod.ToString());
             var interval = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPeriodInMinutes.ToString()).IntValue.Value;
 
             var start =  Convert.ToInt32(workingHourStart.TimeValue.Split(':')[0]);
             var end = Convert.ToInt32(workingHourEnd.TimeValue.Split(':')[0]);
+            var personPerPeriod = Convert.ToInt32(personPerPeriodSetting.IntValue);
 
-            //var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
+            var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
 
             return new AppointmentDayOutputModel
             {
                 Interval = interval,
                 StartTime = start,
                 EndTime = end,
-                Disabled = new string[] { "09:00" , "15:00", "12:00", "11:00", "14:30" }
+                Disabled = appointments.GroupBy(x => x.AppointmentDate).Where(x => x.Count() >= personPerPeriod).Select(x => x.Key.ToString("HH:mm")).ToArray(),
+                PersonPerPeriod = personPerPeriod,
+                SelectedTimes = appointments.Select(x => x.AppointmentDate.ToString("HH:mm")).ToArray()
             };
         }
 

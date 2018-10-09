@@ -31,7 +31,8 @@
         OperationWorkingHourEnd,
         ClinicPeriodInMinutes,
         ClinicWorkingHourStart,
-        ClinicWorkingHourEnd
+        ClinicWorkingHourEnd,
+        ClinicPersonPerPeriod
     }
 
     public enum SettingDataTypeNames
