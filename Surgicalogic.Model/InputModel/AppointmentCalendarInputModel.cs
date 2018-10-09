@@ -10,5 +10,11 @@ namespace Surgicalogic.Model.InputModel
         public DateTime AppointmentDate { get; set; }
         public int PersonnelId { get; set; }
         public int PatientId { get; set; }
+        public int IdentityNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Phone { get; set; }
+        public string Address { get; set; }
+        public List<int> AppointmentCalendars { get; set; }
     }
 }

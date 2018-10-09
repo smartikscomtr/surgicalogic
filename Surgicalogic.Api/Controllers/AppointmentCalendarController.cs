@@ -21,13 +21,16 @@ namespace Surgicalogic.Api.Controllers
     {
         private readonly IAppointmentCalendarStoreService _appointmentCalendarStoreService;
         private readonly ISettingStoreService _settingStoreService;
+        private readonly IPatientStoreService _patientStoreService;
 
         public AppointmentCalendarController(
             IAppointmentCalendarStoreService appointmentStoreService,
-            ISettingStoreService settingStoreService)
+            ISettingStoreService settingStoreService,
+            IPatientStoreService patientStoreService)
         {
             _appointmentCalendarStoreService = appointmentStoreService;
             _settingStoreService = settingStoreService;
+            _patientStoreService = patientStoreService;
         }
 
         /// <summary>
@@ -95,10 +98,21 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<AppointmentCalendarOutputModel>> InsertAppointmentCalendar([FromBody] AppointmentCalendarInputModel item)
         {
+            var patientItem = new PatientModel()
+            {
+                IdentityNumber = item.IdentityNumber,
+                FirstName = item.FirstName,
+                LastName = item.LastName,
+                Phone = item.Phone,
+                Address = item.Address
+            };
+
+            var patient = await _patientStoreService.InsertAndSaveAsync<PatientOutputModel>(patientItem);
+
             var appointmentCalendarItem = new AppointmentCalendarModel()
             {
                 AppointmentDate = item.AppointmentDate,
-                PatientId = item.PatientId,
+                PatientId = patient.Result.Id,
                 PersonnelId = item.PersonnelId
             };
 

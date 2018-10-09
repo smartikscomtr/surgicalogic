@@ -43,63 +43,73 @@
         </div>
       </v-flex>
 
+      <div>
+        <v-dialog v-model="dialog"
+                  persistent
+                  max-width="500px">
+          <v-card class="container fluid grid-list-md">
+            <v-card-title>
+              <div class="headline-wrap flex xs12 sm12 md12">
+                <span class="text">
+                  {{ formTitle }}
+                </span>
 
-  <v-layout row justify-center>
-    <v-dialog v-model="dialog" persistent max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal first name" required></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field
-                  label="Legal last name"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Email" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Password" type="password" required></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age"
-                  required
-                ></v-select>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                  chips
-                ></v-autocomplete>
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-layout>
+                <v-icon @click="cancel"
+                        class="close-wrap">
+                  close
+                </v-icon>
+              </div>
+            </v-card-title>
+
+            <v-card-text>
+                <v-layout wrap>
+                <v-flex xs12 sm6 md6>
+                    <v-text-field
+                                  label="Adı">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex xs12 sm6 md6>
+                    <v-text-field
+                                  label="Adı">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex xs12 sm6 md6>
+                    <v-text-field
+                                  label="Adı">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex xs12 sm6 md6>
+                    <v-text-field
+                                  label="Adı">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex xs12 sm6 md6>
+                    <v-text-field
+                                  label="Adı">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex xs12 sm6 md6>
+                    <v-text-field
+                                  label="Adı">
+                    </v-text-field>
+                </v-flex>
+                </v-layout>
+            </v-card-text>
+            <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none
+                    class="btn-wrap">
+              <v-btn class="btnSave orange"
+                      @click="saveAppointment()">
+                Kaydet
+              </v-btn>
+            </v-flex>
+          </v-card>
+        </v-dialog>
+      </div>
     </v-container>
   </div>
 </template>
@@ -135,7 +145,21 @@ export default {
     }
   },
 
+  computed: {
+    formTitle() {
+      const vm = this;
+
+      return vm.$i18n.t('appointmentcalendar.patientInformation');
+    }
+  },
+
   methods: {
+    cancel() {
+      const vm = this;
+
+      vm.dialog = false;
+    },
+
     getMaxDate() {
       const toTwoDigits = num => num < 10 ? '0' + num : num;
       let selectDay = new Date();
@@ -188,6 +212,20 @@ export default {
       const vm = this;
 
       vm.picker.destroy()
+    },
+
+    saveAppointment() {
+      const vm = this;
+
+      vm.$store.dispatch('insertAppointmentCalendar', {
+        // IdentityNumber = item.IdentityNumber,
+        // FirstName = item.FirstName,
+        // LastName = item.LastName,
+        // Phone = item.Phone,
+        // Address = item.Address,
+        // AppointmentDate = item.AppointmentDate,
+        // PersonnelId = item.PersonnelId
+      });
     }
   },
 
@@ -198,7 +236,7 @@ export default {
       vm.doctorName = response.data.fullName,
       vm.doctorBranchNames = response.data.branchNames,
       vm.doctorPictureUrl = response.data.pictureUrl
-    })
+    });
   },
 
   mounted() {
