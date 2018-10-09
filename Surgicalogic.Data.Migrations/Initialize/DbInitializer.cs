@@ -564,7 +564,17 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedBy = 1,
                     IsActive = true
                 });
-                
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ClinicAppointmentDays",
+                    Name = "Klinik Randevu Verilecek Gün Sayısı",
+                    IntValue = 15,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
 
                 #endregion
 

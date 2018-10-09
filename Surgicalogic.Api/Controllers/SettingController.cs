@@ -2,6 +2,7 @@
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.Enum;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System.Threading.Tasks;
@@ -28,6 +29,23 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<SettingOutputModel>> GetSettings(GridInputModel input)
         {
             return await _settingStoreService.GetAsync<SettingOutputModel>(input);
+        }
+
+        [Route("Setting/GetSettingByName")]
+        [HttpGet]
+        public async Task<object> GetSettingByName(string name)
+        {
+            var setting = await _settingStoreService.GetByKeyAsync(name);
+
+            switch (setting.SettingDataTypeId)
+            {
+                case (int)SettingDataTypeNames.Time:
+                    return setting.TimeValue;
+                case (int)SettingDataTypeNames.Int:
+                    return setting.IntValue;
+                default:
+                    return setting.StringValue;
+            }
         }
 
         [Route("Setting/GetAllSettings")]

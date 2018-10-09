@@ -27,5 +27,10 @@ namespace Surgicalogic.Services.Stores
         {
             return await GetQueryable().Where(x => x.PersonnelId == model.DoctorId && x.AppointmentDate > model.SelectedDate && x.AppointmentDate < model.SelectedDate.AddDays(1)).ProjectTo<AppointmentCalendarModel>().ToListAsync();
         }
+
+        public async Task<int> GetAppointmentCountByDoctorAndDateTimeAsync(int doctorId, DateTime date)
+        {
+            return await GetQueryable().CountAsync(x => x.PersonnelId == doctorId && x.AppointmentDate == date);
+        }
     }
 }

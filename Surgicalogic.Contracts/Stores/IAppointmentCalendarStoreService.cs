@@ -12,5 +12,6 @@ namespace Surgicalogic.Contracts.Stores
     public interface IAppointmentCalendarStoreService : IStoreService<AppointmentCalendar, AppointmentCalendarModel>
     {
         Task<List<AppointmentCalendarModel>> GetAppointmentsByDoctorAndDateAsync(AppointmentDayInputModel model);
+        Task<int> GetAppointmentCountByDoctorAndDateTimeAsync(int doctorId, DateTime date);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
@@ -22,6 +23,8 @@ namespace Surgicalogic.Api.Controllers
         private readonly IAppointmentCalendarStoreService _appointmentCalendarStoreService;
         private readonly ISettingStoreService _settingStoreService;
         private readonly IPatientStoreService _patientStoreService;
+
+        static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
         public AppointmentCalendarController(
             IAppointmentCalendarStoreService appointmentStoreService,
@@ -102,25 +105,60 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<AppointmentCalendarOutputModel>> InsertAppointmentCalendar([FromBody] AppointmentCalendarInputModel item)
         {
-            var patientItem = new PatientModel()
+            var result = new ResultModel<AppointmentCalendarOutputModel> {Info = new Info { Succeeded = false } };
+
+            await semaphoreSlim.WaitAsync();
+            try
             {
-                IdentityNumber = item.IdentityNumber,
-                FirstName = item.FirstName,
-                LastName = item.LastName,
-                Phone = item.Phone,
-                Address = item.Address
-            };
+                var appointmentDateTime = new DateTime(item.AppointmentDate.Year, item.AppointmentDate.Month, item.AppointmentDate.Day, Convert.ToInt32(item.AppointmentTime.Split(':')[0]), Convert.ToInt32(item.AppointmentTime.Split(':')[1]), 0);
 
-            var patient = await _patientStoreService.InsertAndSaveAsync<PatientOutputModel>(patientItem);
+                var appointmentAvailable = await CheckAppointmentAsync(item.PersonnelId, appointmentDateTime);
 
-            var appointmentCalendarItem = new AppointmentCalendarModel()
+                if (!appointmentAvailable)
+                {
+                    result.Info.Message = MessageType.AppointmentIsNotAvailable;
+                    return result;
+                }
+
+                var patientItem = new PatientModel()
+                {
+                    IdentityNumber = item.IdentityNumber,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Phone = item.Phone,
+                    Address = item.Address
+                };
+
+                var patient = await _patientStoreService.InsertAndSaveAsync<PatientOutputModel>(patientItem);
+
+                if (patient.Info.Succeeded)
+                {
+                    var appointmentCalendarItem = new AppointmentCalendarModel()
+                    {
+                        AppointmentDate = appointmentDateTime,
+                        PatientId = patient.Result.Id,
+                        PersonnelId = item.PersonnelId
+                    };
+
+                    result = await _appointmentCalendarStoreService.InsertAndSaveAsync<AppointmentCalendarOutputModel>(appointmentCalendarItem);
+                }
+            }
+            finally
             {
-                AppointmentDate = new DateTime(item.AppointmentDate.Year, item.AppointmentDate.Month, item.AppointmentDate.Day, Convert.ToInt32(item.AppointmentTime.Split(':')[0]), Convert.ToInt32(item.AppointmentTime.Split(':')[1]), 0),
-                PatientId = patient.Result.Id,
-                PersonnelId = item.PersonnelId
-            };
+                semaphoreSlim.Release();
+            }
 
-            return await _appointmentCalendarStoreService.InsertAndSaveAsync<AppointmentCalendarOutputModel>(appointmentCalendarItem);
+            return result;
+        }
+
+        private async Task<bool> CheckAppointmentAsync(int doctorId, DateTime date)
+        {
+            var systemSetting = await _settingStoreService.GetByKeyAsync(SettingKey.ClinicPersonPerPeriod.ToString());
+            var personPerPeriod = systemSetting.IntValue;
+
+            var appointmentCount = await _appointmentCalendarStoreService.GetAppointmentCountByDoctorAndDateTimeAsync(doctorId, date);
+
+           return personPerPeriod > appointmentCount ? true : false;
         }
 
         /// <summary>

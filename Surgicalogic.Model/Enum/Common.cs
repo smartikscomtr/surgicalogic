@@ -21,7 +21,8 @@
         ModelHasRelationalData = 2,
         UserNotFound = 3,
         InvalidCode = 4,
-        PasswordsDoNotMatch = 5
+        PasswordsDoNotMatch = 5,
+        AppointmentIsNotAvailable = 6
     }
 
     public enum SettingKey
@@ -32,7 +33,8 @@
         ClinicPeriodInMinutes,
         ClinicWorkingHourStart,
         ClinicWorkingHourEnd,
-        ClinicPersonPerPeriod
+        ClinicPersonPerPeriod,
+        ClinicAppointmentDays
     }
 
     public enum SettingDataTypeNames

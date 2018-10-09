@@ -168,10 +168,14 @@ export default {
     },
 
     getMaxDate() {
+      const vm = this;
+
       const toTwoDigits = num => num < 10 ? '0' + num : num;
       let selectDay = new Date();
 
       selectDay.setDate(selectDay.getDate() + 15);
+
+      //vm.$store.dispatch('getAppointmentDays');
 
       let year = selectDay.getFullYear();
       let month = toTwoDigits(selectDay.getMonth() + 1);

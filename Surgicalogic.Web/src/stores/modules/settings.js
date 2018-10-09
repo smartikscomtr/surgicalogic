@@ -19,6 +19,11 @@ const settingsModule = {
       state.totalCount = data.totalCount;
     },
 
+    setSettingByName(state, data) {
+      debugger;
+      state.settings = data.result;
+    },
+
     setAllSettings(state, data) {
       state.allSettings = data;
     },
@@ -46,6 +51,18 @@ const settingsModule = {
       }).then(response => {
         if (response.data.info.succeeded == true) {
           context.commit('setSettings', response.data)
+        }
+
+        context.commit('setLoading', false);
+      })
+    },
+
+    getAppointmentDays(context, params) {
+      context.commit('setLoading', true);
+
+      axios.get('Setting/GetSettingByName?name=ClinicAppointmentDays').then(response => {
+        if (response.data.info.succeeded == true) {
+          context.commit('setSettingByName', response.data)
         }
 
         context.commit('setLoading', false);
