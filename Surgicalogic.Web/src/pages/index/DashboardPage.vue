@@ -74,8 +74,7 @@
       </v-flex>
     </v-layout>
 
-      <v-container>
-
+    <v-container>
       <v-flex xs12 sm6 md3>
         <v-menu ref="menu"
                 :close-on-content-click="false"
@@ -181,10 +180,11 @@ export default {
       let year = today.getFullYear();
       let month = toTwoDigits(today.getMonth() + 1);
       let day = toTwoDigits(today.getDate());
+
       return `${year}-${month}-${day}`;
     },
 
-    formatDate (date) {
+    formatDate(date) {
       if (!date || date.indexOf('.') > -1)
         return null;
 
