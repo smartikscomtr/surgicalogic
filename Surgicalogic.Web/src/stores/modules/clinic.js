@@ -20,11 +20,12 @@ const clinicModule = {
     getters: {},
 
     actions: {
-    getAppointmentCalendarByDate(context, payload) {
+    getAppointmentCalendarByDate(context, params) {
       context.commit('setLoading', true);
 
       return new Promise((resolve, reject) => {
-        axios.get('AppointmentCalendar/GetAppointmentCalendarByDate/' + payload.selectDate, {
+        axios.get('AppointmentCalendar/GetAppointmentCalendarByDate', {
+          params: params
         }).then(response => {
           if (response.statusText == 'OK'){
             context.commit('setAppointmentCalendarByDate', response.data.result)

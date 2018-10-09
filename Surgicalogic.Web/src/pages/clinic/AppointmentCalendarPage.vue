@@ -28,7 +28,6 @@ export default {
     return {
       date: null,
       interval:null,
-      minTime:null,
       startTime:null,
       endTime:null,
       disabled:[],
@@ -51,7 +50,7 @@ export default {
   created () {
     const vm = this;
 
-    vm.$store.dispatch('getPersonnelById', vm.$route.query.doctorId).then(response => {debugger
+    vm.$store.dispatch('getPersonnelById', vm.$route.query.doctorId).then(response => {
       vm.doctorName = response.data.fullName
     })
   },
@@ -65,21 +64,20 @@ export default {
     const AppointmentPicker = require('appointment-picker');
 
     vm.$store.dispatch('getAppointmentCalendarByDate', {
-            selectDate: vm.date
+            selectedDate: vm.date,
+            doctorId: vm.$route.query.doctorId
           }).then(response => {
             vm.interval = response.data.interval;
-            vm.minTime = response.data.minTime;
-            vm.startTime = response.data.startTime;
+            vm.startTime = response.data.startTime;;
             vm.endTime = response.data.endTime;
             vm.disabled = response.data.disabled;
 
-debugger
       require(['appointment-picker'], function(AppointmentPicker) {
       var picker = new AppointmentPicker(
         document.getElementById('time-1'),
         {
             interval: vm.interval,//Randevu aralık dakikaları
-            minTime: vm.minTime, //Min seçilebilir saat
+            minTime: vm.startTime, //Min seçilebilir saat
             maxTime: vm.endTime, //Max seçilebilir saat
             mode: '24h', //24 saat ya da 12 saat kullanılıp kullanılmayacağı
             startTime: vm.startTime, //Gürntülenen saat başlangıcı

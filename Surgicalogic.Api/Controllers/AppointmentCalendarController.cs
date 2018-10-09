@@ -46,9 +46,9 @@ namespace Surgicalogic.Api.Controllers
             return await _appointmentCalendarStoreService.GetAsync<AppointmentCalendarOutputModel>();
         }
 
-        [Route("AppointmentCalendar/GetAppointmentCalendarByDate/{selectDate:DateTime}")]
+        [Route("AppointmentCalendar/GetAppointmentCalendarByDate")]
         [HttpGet]
-        public async Task<AppointmentDayOutputModel> GetAppointmentCalendarByDate(DateTime selectDate)
+        public async Task<AppointmentDayOutputModel> GetAppointmentCalendarByDate(AppointmentDayInputModel model)
         {
             var systemSettings = await _settingStoreService.GetAllAsync();
 
@@ -56,18 +56,17 @@ namespace Surgicalogic.Api.Controllers
             var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourEnd.ToString());
             var interval = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPeriodInMinutes.ToString()).IntValue.Value;
 
-            var start = workingHourStart.TimeValue.Split(':')[0];
-            var min = Convert.ToInt32(start) - 1;
-            var end = workingHourEnd.TimeValue.Split(':')[0];
+            var start =  Convert.ToInt32(workingHourStart.TimeValue.Split(':')[0]);
+            var end = Convert.ToInt32(workingHourEnd.TimeValue.Split(':')[0]);
 
+            //var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
 
             return new AppointmentDayOutputModel
             {
                 Interval = interval,
                 StartTime = start,
-                MinTime = min,
                 EndTime = end,
-                Disabled = new string[] { }
+                Disabled = new string[] { "09:00" , "15:00", "12:00", "11:00", "14:30" }
             };
         }
 

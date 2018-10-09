@@ -7,9 +7,8 @@ namespace Surgicalogic.Model.OutputModel
     public class AppointmentDayOutputModel
     {
         public int Interval { get; set; }
-        public int MinTime { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public int StartTime { get; set; }
+        public int EndTime { get; set; }
         public string[] Disabled { get; set; }
     }
 }
