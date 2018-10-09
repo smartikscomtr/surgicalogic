@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const clinicModule = {
+const appointmentCalendarModule = {
   state: {
     loading: false,
     totalCount: 0,
@@ -13,6 +13,10 @@ const clinicModule = {
     },
 
     setAppointmentCalendarByDate(state, payload) {
+      state.model = payload;
+    },
+
+    setAppointmentCalendar(state, payload) {
       state.model = payload;
     }
   },
@@ -37,8 +41,23 @@ const clinicModule = {
           reject(error);
         })
       })
+    },
+
+    insertAppointmentCalendar(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('AppointmentCalendar/InsertAppointmentCalendar', payload)
+          .then(response => {
+            if (response.statusText == 'OK') {
+              context.commit('setAppointmentCalendar', {
+                item: response.data.result
+              }) //Insert the AppointmentCalendar in the store
+            }
+
+            resolve(response);
+          })
+      });
     }
   }
 }
 
-export default clinicModule;
+export default appointmentCalendarModule;

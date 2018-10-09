@@ -5,6 +5,7 @@
  * An example language file.
  */
 
+import * as appointmentcalendar from './appointmentcalendar.json';
 import * as branches from './branches.json';
 import * as common from './common.json';
 import * as equipments from './equipments.json';
@@ -26,6 +27,7 @@ import * as users from './users.json';
 import * as worktypes from './worktypes.json';
 
 export default {
+  appointmentcalendar,
   branches,
   common,
   equipments,

@@ -5,8 +5,8 @@ import mutations from './mutations'; // root's mutation
 import getters from './getters'; // root's getters
 
 //Module import
+import appointmentCalendarModule from './modules/appointmentcalendar';
 import branchesModule from './modules/branches';
-import clinicModule from './modules/clinic';
 import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmenttypes';
 import feedbackModule from './modules/feedback';
@@ -31,8 +31,8 @@ export default new Vuex.Store({
   mutations,
   actions,
   modules : {
+    appointmentCalendarModule,
     branchesModule,
-    clinicModule,
     equipmentModule,
     equipmentTypesModule,
     feedbackModule,
