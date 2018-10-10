@@ -20,7 +20,6 @@ const settingsModule = {
     },
 
     setSettingByName(state, data) {
-      debugger;
       state.settings = data.result;
     },
 

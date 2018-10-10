@@ -1,31 +1,20 @@
 <template>
   <div>
     <!-- Login Page -->
-    <div id="app"
-         v-show= isMounted
-         v-if="$route.meta.fullPage">
+    <div id="app" v-show=isMounted v-if="$route.meta.fullPage">
       <v-app id="insipere">
         <router-view></router-view>
       </v-app>
     </div>
 
     <!-- Dashboard Page -->
-    <div id="app"
-         v-show= isMounted
-         v-else>
+    <div id="app" v-show=isMounted v-else>
       <v-app id="insipere">
         <!-- Navigation -->
-        <v-navigation-drawer class="navigation"
-                             fixed
-                             :clipped="$vuetify.breakpoint.mdAndUp"
-                             app
-                             v-model="drawer">
+        <v-navigation-drawer class="navigation" fixed :clipped="$vuetify.breakpoint.mdAndUp" app v-model="drawer">
           <v-list dense>
             <template v-for="item in items">
-              <v-layout row
-                        v-if="item.heading"
-                        align-center
-                        :key="item.heading">
+              <v-layout row v-if="item.heading" align-center :key="item.heading">
                 <v-flex xs6>
                   <v-subheader v-if="item.heading">
                     {{ item.heading }}
@@ -33,19 +22,14 @@
                 </v-flex>
 
                 <v-flex xs6 class="text-xs-center">
-                  <a href="#!"
-                     class="body-2 black--text">
+                  <a href="#!" class="body-2 black--text">
                     EDIT
                   </a>
                 </v-flex>
               </v-layout>
 
               <!-- Subgroup -->
-              <v-list-group v-else-if="item.children"
-                            v-model="item.model"
-                            :key="item.text"
-                            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-                            append-icon="">
+              <v-list-group v-else-if="item.children" v-model="item.model" :key="item.text" :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
                 <v-list-tile slot="activator">
                   <v-list-tile-content>
                     <v-list-tile-title>
@@ -54,9 +38,7 @@
                   </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile v-for="(child, i) in item.children"
-                            :key="i"
-                            @click="changePages(child.route)">
+                <v-list-tile v-for="(child, i) in item.children" :key="i" @click="changePages(child.route)">
                   <v-list-tile-action v-if="child.icon">
                     <v-icon>
                       {{ child.icon }}
@@ -72,9 +54,7 @@
               </v-list-group>
 
               <!-- Not Subgroup -->
-              <v-list-tile v-else
-                          :key="item.text"
-                          @click="changePages(item.route)">
+              <v-list-tile v-else :key="item.text" @click="changePages(item.route)">
                 <v-list-tile-action>
                   <v-icon>
                     {{ item.icon }}
@@ -92,30 +72,21 @@
         </v-navigation-drawer>
 
         <!-- Toolbar -->
-        <v-toolbar color="teal"
-                  dark
-                  app
-                  :clipped-left="$vuetify.breakpoint.mdAndUp"
-                  fixed>
-          <v-toolbar-title style="width: 300px"
-                          class="ml-0">
+        <v-toolbar color="teal" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
+          <v-toolbar-title style="width: 300px" class="ml-0">
             <v-toolbar-side-icon @click.stop="drawer = !drawer">
             </v-toolbar-side-icon>
 
             <!-- Toolbar text-->
-            <span class="hidden-sm-and-down"
-                  style="cursor: pointer;"
-                  @click="changePages('/dashboardpage')">
-                  Surgicalogic
+            <span class="hidden-sm-and-down" style="cursor: pointer;" @click="changePages('/dashboardpage')">
+              Surgicalogic
             </span>
           </v-toolbar-title>
 
           <v-spacer></v-spacer>
 
           <v-tooltip bottom>
-            <v-btn icon
-                  @click="showFeedback = true"
-                  slot="activator">
+            <v-btn icon @click="showFeedback = true" slot="activator">
               <v-icon>
                 chat_bubble
               </v-icon>
@@ -124,8 +95,7 @@
             <span>{{ $t('feedbacks.feedback') }}</span>
           </v-tooltip>
 
-          <feedback-component v-if="showFeedback"
-                              @showModal="showFeedbackMethod">
+          <feedback-component v-if="showFeedback" @showModal="showFeedbackMethod">
           </feedback-component>
 
           <v-btn icon>
@@ -147,194 +117,196 @@
 </template>
 
 <script>
-
 export default {
-  props: {
-    source: String
-  },
-
-  data() {
-    return {
-      dialog: false,
-      isMounted: false,
-      drawer: null,
-      showFeedback: false
-    }
-  },
-
-  computed: {
-    items() {
-      const vm = this;
-
-      return [
-        {
-          icon: "add_alarm",
-          text: "Operasyonlar",
-          route: "/operationpage"
-        },
-        {
-          icon: "keyboard_arrow_up",
-          "icon-alt": "keyboard_arrow_down",
-          text: vm.$i18n.t('menu.planManagement'),
-          children: [
-            {
-              icon: "timeline",
-              text: vm.$i18n.t('menu.planArrangements'),
-              route: "/planarrangementspage"
-            },
-            {
-              icon: "history",
-              text: vm.$i18n.t('menu.planningHistory'),
-              route: "/historyplanningpage"
-            }
-          ]
-        },
-        {
-          icon: "domain",
-          text: vm.$i18n.t('menu.clinicManagement'),
-          route: "/clinicpage"
-        },
-        {
-          icon: "content_copy",
-          text: vm.$i18n.t('menu.reports'),
-          // route: "/eventcalendarpage"
-        },
-        {
-          icon: "event",
-          text: vm.$i18n.t('menu.simulation'),
-          // route: "/eventcalendarpage"
-        },
-        {
-          icon: "keyboard_arrow_up",
-          "icon-alt": "keyboard_arrow_down",
-          text: vm.$i18n.t('menu.managementPanel'),
-          children: [
-            {
-              icon: "group",
-              text: vm.$i18n.t("menu.users"),
-              route: "/userspage"
-            },
-            {
-              icon: "chat_bubble",
-              text: vm.$i18n.t("menu.feedback"),
-              route: "/feedbackpage"
-            },
-            {
-              icon: "help",
-              text: vm.$i18n.t("menu.help"),
-              // route: "/CreatePlan"
-            },
-            {
-              icon: "settings",
-              text: vm.$i18n.t("menu.settings"),
-              route: "/settingspage"
-            }
-          ]
-        },
-        {
-          icon: "keyboard_arrow_up",
-          "icon-alt": "keyboard_arrow_down",
-          text: vm.$i18n.t("menu.definitions"),
-          children: [
-            {
-              icon: "build",
-              text: vm.$i18n.t("menu.equipments"),
-              route: "/equipmentspage"
-            },
-            {
-              icon: "group",
-              text: vm.$i18n.t("menu.personnel"),
-              route: "/personnelpage"
-            },
-            {
-              icon: "meeting_room",
-              text: vm.$i18n.t("menu.operatingRooms"),
-              route: "/operatingroomspage"
-            },
-            {
-              icon: "bookmarks",
-              text: vm.$i18n.t("menu.branches"),
-              route: "/branchespage"
-            },
-            {
-              icon: "person_pin",
-              text: vm.$i18n.t("menu.PersonnelCategories"),
-              route: "/PersonnelCategorypage"
-            },
-            {
-              icon: "grade",
-              text: vm.$i18n.t("menu.PersonnelTitles"),
-              route: "/PersonnelTitlepage"
-            },
-            {
-              icon: "business_center",
-              text: vm.$i18n.t("menu.equipmentTypes"),
-              route: "/equipmenttypespage"
-            },
-            {
-              icon: "work_outline",
-              text: vm.$i18n.t("menu.operationTypes"),
-              route: "/operationtypespage"
-            },
-            {
-              icon: "group_work",
-              text: vm.$i18n.t("menu.workTypes"),
-              route: "/worktypespage"
-            }
-            // {
-            //   icon: "domain",
-            //   text: "Klinik"
-            //   // route: "/CreatePlan"
-            // }
-          ]
-        }
-      ];
-    }
-  },
-
-  methods: {
-    showFeedbackMethod() {
-      const vm = this;
-
-      return vm.showFeedback = false;
+    props: {
+        source: String
     },
 
-    changePages(route) {
-      const vm = this;
+    data() {
+        return {
+            dialog: false,
+            isMounted: false,
+            drawer: null,
+            showFeedback: false
+        };
+    },
 
-      return vm.$router.push(route);
+    computed: {
+        items() {
+            const vm = this;
+
+            return [
+                {
+                    icon: 'add_alarm',
+                    text: 'Operasyonlar',
+                    route: '/operationpage'
+                },
+                {
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.planManagement'),
+                    children: [
+                        {
+                            icon: 'timeline',
+                            text: vm.$i18n.t('menu.planArrangements'),
+                            route: '/planarrangementspage'
+                        },
+                        {
+                            icon: 'history',
+                            text: vm.$i18n.t('menu.planningHistory'),
+                            route: '/historyplanningpage'
+                        }
+                    ]
+                },
+                {
+                    icon: 'domain',
+                    text: vm.$i18n.t('menu.clinicManagement'),
+                    route: '/clinicpage'
+                },
+                {
+                    icon: 'content_copy',
+                    text: vm.$i18n.t('menu.reports')
+                    // route: "/eventcalendarpage"
+                },
+                {
+                    icon: 'event',
+                    text: vm.$i18n.t('menu.simulation')
+                    // route: "/eventcalendarpage"
+                },
+                {
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.managementPanel'),
+                    children: [
+                        {
+                            icon: 'group',
+                            text: vm.$i18n.t('menu.users'),
+                            route: '/userspage'
+                        },
+                        {
+                            icon: 'chat_bubble',
+                            text: vm.$i18n.t('menu.feedback'),
+                            route: '/feedbackpage'
+                        },
+                        {
+                            icon: 'help',
+                            text: vm.$i18n.t('menu.help')
+                            // route: "/CreatePlan"
+                        },
+                        {
+                            icon: 'settings',
+                            text: vm.$i18n.t('menu.settings'),
+                            route: '/settingspage'
+                        }
+                    ]
+                },
+                {
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.definitions'),
+                    children: [
+                        {
+                            icon: 'build',
+                            text: vm.$i18n.t('menu.equipments'),
+                            route: '/equipmentspage'
+                        },
+                        {
+                            icon: 'group',
+                            text: vm.$i18n.t('menu.personnel'),
+                            route: '/personnelpage'
+                        },
+                        {
+                            icon: 'meeting_room',
+                            text: vm.$i18n.t('menu.operatingRooms'),
+                            route: '/operatingroomspage'
+                        },
+                        {
+                            icon: 'bookmarks',
+                            text: vm.$i18n.t('menu.branches'),
+                            route: '/branchespage'
+                        },
+                        {
+                            icon: 'person_pin',
+                            text: vm.$i18n.t('menu.PersonnelCategories'),
+                            route: '/PersonnelCategorypage'
+                        },
+                        {
+                            icon: 'grade',
+                            text: vm.$i18n.t('menu.PersonnelTitles'),
+                            route: '/PersonnelTitlepage'
+                        },
+                        {
+                            icon: 'business_center',
+                            text: vm.$i18n.t('menu.equipmentTypes'),
+                            route: '/equipmenttypespage'
+                        },
+                        {
+                            icon: 'work_outline',
+                            text: vm.$i18n.t('menu.operationTypes'),
+                            route: '/operationtypespage'
+                        },
+                        {
+                            icon: 'group_work',
+                            text: vm.$i18n.t('menu.workTypes'),
+                            route: '/worktypespage'
+                        }
+                        // {
+                        //   icon: "domain",
+                        //   text: "Klinik"
+                        //   // route: "/CreatePlan"
+                        // }
+                    ]
+                }
+            ];
+        }
+    },
+
+    methods: {
+        showFeedbackMethod() {
+            const vm = this;
+
+            return (vm.showFeedback = false);
+        },
+
+        changePages(route) {
+            const vm = this;
+
+            return vm.$router.push(route);
+        }
+    },
+
+    mounted() {
+        const vm = this;
+
+        vm.isMounted = true;
     }
-  },
-
-  mounted() {
-    const vm = this;
-
-    vm.isMounted = true;
-  }
 };
-
 </script>
 
 <style>
 .navigation {
-  width: 275px;
-  transform: translateX(5px);
-  margin-top: 60px;
-  background-color: #333 !important;
+    width: 275px;
+    transform: translateX(5px);
+    margin-top: 60px;
+    background-color: #333 !important;
 }
 .navigation .v-list__tile__title,
 .navigation .v-list__tile__action i,
 .navigation .v-list__group__header i {
-  color: #fff !important;
+    color: #fff !important;
 }
 .v-list__group--active {
-  background-color: #262626;
+    background-color: #262626;
 }
 .v-list__group--active .v-list__group__header--active {
-  background-color: #232222;
+    background-color: #232222;
 }
 .v-grid-card .v-card__title {
-  padding: 0;
+    padding: 0;
+}
+.all-page-pad {
+    padding: 0 44px;
+    margin-top: 0 !important;
 }
 </style>
 

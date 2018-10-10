@@ -1,34 +1,20 @@
 <template>
   <div class="container fluid grid-list-md clinic-page">
-    <v-layout wrap edit-layout>
+    <v-layout wrap edit-layout class="all-page-pad">
       <v-flex lg4 md3 sm6 xs12>
-        <v-autocomplete v-model="selectBranch"
-                        :items="branches"
-                        :label="$t('branches.branch')"
-                        box
-                        :filter="customFilter"
-                        @change="filterBranch()"
-                        item-text="name"
-                        item-value="id">
+        <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box :filter="customFilter" @change="filterBranch()" item-text="name" item-value="id">
         </v-autocomplete>
       </v-flex>
 
       <v-flex lg4 md3 sm6 xs12>
-        <v-autocomplete v-model="selectDoctor"
-                        :items="doctors"
-                        :label="$t('personnel.doctor')"
-                        box
-                        :filter="customFilter"
-                        @change="filterDoctor()"
-                        item-text="personnelCategoryName"
-                        item-value="id">
+        <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilter" @change="filterDoctor()" item-text="personnelCategoryName" item-value="id">
         </v-autocomplete>
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap>
+    <v-layout row wrap class="all-page-pad column-cards">
       <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg2 md3 sm6 xs12>
-        <v-card>
+        <v-card class="clinic-branch">
           <img :src="doctorCard.pictureUrl" height="150px" />
 
           <span class="doctorName-wrap" v-text="doctorCard.personnelCategoryName">
@@ -37,7 +23,10 @@
           <span class="branchName-wrap" v-text="doctorCard.branchNames">
           </span>
 
-          <v-btn @click="routePage(doctorCard.id)"> Randevu Al
+          <v-btn @click="routePageGetAppointment(doctorCard.id)"> Randevu Al
+          </v-btn>
+
+          <v-btn @click="routePageAppointmentList(doctorCard.id)"> Randevu Listele
           </v-btn>
         </v-card>
       </v-flex>
@@ -46,7 +35,6 @@
 </template>
 
 <script>
-
 export default {
     data() {
         const vm = this;
@@ -160,34 +148,44 @@ export default {
             }
         },
 
-        routePage(clickDoctorId) {
-          const vm = this;
+        routePageGetAppointment(clickDoctorId) {
+            const vm = this;
 
-          return vm.$router.push('/appointmentcalendarpage?doctorId=' + clickDoctorId)
+            return vm.$router.push(
+                '/appointmentcalendarpage?doctorId=' + clickDoctorId
+            );
+        },
+
+        routePageAppointmentList(clickDoctorId) {
+            const vm = this;
+
+            return vm.$router.push(
+                '/appointmentlistpage?doctorId=' + clickDoctorId
+            );
         }
     },
 
     created() {
-      const vm = this;
+        const vm = this;
 
-      vm.$store
-          .dispatch('getDoctorsByBranchIdAsync', {
-              branchId: 0
-          })
-          .then(() => {
-              vm.filteredDoctors =
-                  vm.$store.state.personnelModule.filteredDoctor;
-              vm.doctorCards = vm.filteredDoctors;
-          });
+        vm.$store
+            .dispatch('getDoctorsByBranchIdAsync', {
+                branchId: 0
+            })
+            .then(() => {
+                vm.filteredDoctors =
+                    vm.$store.state.personnelModule.filteredDoctor;
+                vm.doctorCards = vm.filteredDoctors;
+            });
 
-      vm.$store.dispatch('getAllBranches');
+        vm.$store.dispatch('getAllBranches');
     }
 };
 </script>
 
 <style>
-.clinic-page > div {
-      padding: 0 44px;
+.clinic-page .column-cards > div {
+    margin-bottom: 10px;
 }
 .clinic-page .wrap > div .v-card {
     height: 100%;
@@ -203,6 +201,7 @@ export default {
 }
 .clinic-page .wrap > div .v-card img + span {
     margin-top: 20px;
+    font-weight: 500;
 }
 .clinic-page .wrap > div .v-btn {
     margin: 10px;
@@ -228,5 +227,12 @@ export default {
 }
 .v-list .primary--text {
     color: inherit !important;
+}
+span.branchName-wrap {
+    height: 85px;
+    overflow: hidden;
+}
+.clinic-branch {
+    padding: 0 10px;
 }
 </style>
