@@ -341,7 +341,7 @@ export default {
         }
       }
 
-      vm.availableAppointmentsMessage =  vm.selectedTime + " tarihine " + availablePerson + " randevu daha alabilirsiniz.";
+      vm.availableAppointmentsMessage =  vm.selectedTime + " saatine " + availablePerson + " randevu alabilirsiniz.";
       vm.dialog = true;
     }, false);
   },
