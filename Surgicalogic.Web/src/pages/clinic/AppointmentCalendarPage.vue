@@ -139,7 +139,8 @@ export default {
       firstName: null,
       lastName: null,
       phone: null,
-      address: null
+      address: null,
+      maxDateDayCount:null
     };
   },
 
@@ -173,9 +174,7 @@ export default {
       const toTwoDigits = num => num < 10 ? '0' + num : num;
       let selectDay = new Date();
 
-      selectDay.setDate(selectDay.getDate() + 15);
-
-      //vm.$store.dispatch('getAppointmentDays');
+      selectDay.setDate(selectDay.getDate() + vm.maxDateDayCount);
 
       let year = selectDay.getFullYear();
       let month = toTwoDigits(selectDay.getMonth() + 1);
@@ -223,6 +222,7 @@ export default {
       const vm = this;
 
       vm.dialog = false;
+      vm.picker.setTime('');
       vm.picker.destroy();
     },
 
@@ -302,6 +302,9 @@ export default {
       vm.doctorPictureUrl = response.data.pictureUrl
     });
 
+    vm.$store.dispatch('getAppointmentDays').then(response => {
+      vm.maxDateDayCount = response.data
+    });
 
     document.body.addEventListener('change.appo.picker', function(e) {
       vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ? "0" + e.time.m :e.time.m);
@@ -309,7 +312,8 @@ export default {
       var availablePerson = vm.personPerPeriod;
 
       for (let index = 0; index < vm.selectedTimes.length; index++) {
-        if(vm.selectedTimes[index] == vm.selectedTime) {
+        debugger
+        if(vm.selectedTimes[index] == vm.selectedTime || vm.selectedTimes[index] == "0" + vm.selectedTime) {
           availablePerson--;
         }
       }
