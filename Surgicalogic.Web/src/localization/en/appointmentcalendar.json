@@ -1,5 +1,10 @@
 {
   "patientInformation": "Patient Information",
   "appointmentSavedSuccessfully": "Appointment saved successfully",
-  "anErrorOccurred": "An error occurred. Please try again"
+  "anErrorOccurred": "An error occurred. Please try again",
+  "identityNumber":"Identity Number",
+  "firstName":"First Name",
+  "lastName": "Last Name",
+  "phone": "Phone",
+  "address": "Address"
 }

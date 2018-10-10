@@ -67,31 +67,35 @@
                 <v-layout wrap>
                 <v-flex xs12 sm6 md6>
                     <v-text-field v-model="identityNumber"
-                                  label="identityNumber">
+                                  mask="###########"
+                                  :label="$t('appointmentcalendar.identityNumber')"
+                                  ma
+                                  >
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
                     <v-text-field v-model="firstName"
-                                  label="firstName">
+                                  :label="$t('appointmentcalendar.firstName')">
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
                     <v-text-field v-model="lastName"
-                                  label="lastName">
+                                  :label="$t('appointmentcalendar.lastName')">
                     </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
                     <v-text-field v-model="phone"
-                                  label="phone">
+                                   mask="phone"
+                                  :label="$t('appointmentcalendar.phone')">
                     </v-text-field>
                 </v-flex>
 
-                <v-flex xs12 sm6 md6>
+                <v-flex xs12 sm12 md12>
                     <v-text-field v-model="address"
-                                  label="address">
+                                  :label="$t('appointmentcalendar.address')">
                     </v-text-field>
                 </v-flex>
                 </v-layout>

@@ -91,7 +91,7 @@ namespace Surgicalogic.Api.Controllers
                 string hour = end.ToString("HH");
                 int minute = 60 - interval;
 
-                while (minute > end.Minute)
+                while (minute + interval > end.Minute)
                 {
                     disabledTimes.Add(hour + ":" + (minute <= 9 ? "0" + minute : minute.ToString()));
                     minute -= interval;
@@ -115,7 +115,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<string> ExcelExport()
         {
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            var fileName = string.Format("AppointmentCalendard_{0}.xlsx", Guid.NewGuid().ToString());
+            var fileName = string.Format("AppointmentCalendar_{0}.xlsx", Guid.NewGuid().ToString());
 
             FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
             var excelService = new ExcelDocumentService();

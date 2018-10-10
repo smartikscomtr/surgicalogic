@@ -11,7 +11,7 @@ namespace Surgicalogic.Data.Entities
     public class Patient : Entity
     {
         [StringLength(11)]
-        public int IdentityNumber { get; set; }
+        public string IdentityNumber { get; set; }
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
@@ -20,7 +20,7 @@ namespace Surgicalogic.Data.Entities
         public string LastName { get; set; }
         [Required]
         [StringLength(20)]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         [StringLength(500)]
         public string Address { get; set; }
         public virtual ICollection<AppointmentCalendar> AppointmentCalendars { get; set; }
