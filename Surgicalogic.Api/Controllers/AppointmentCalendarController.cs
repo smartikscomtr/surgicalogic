@@ -138,7 +138,7 @@ namespace Surgicalogic.Api.Controllers
         {
             var result = new ResultModel<AppointmentCalendarOutputModel> {Info = new Info { Succeeded = false } };
 
-            await semaphoreSlim.WaitAsync();
+            await semaphoreSlim.WaitAsync(TimeSpan.FromSeconds(5));
             try
             {
                 var appointmentDateTime = new DateTime(item.AppointmentDate.Year, item.AppointmentDate.Month, item.AppointmentDate.Day, Convert.ToInt32(item.AppointmentTime.Split(':')[0]), Convert.ToInt32(item.AppointmentTime.Split(':')[1]), 0);

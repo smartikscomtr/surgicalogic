@@ -105,6 +105,11 @@
             </v-flex>
           </v-card>
         </v-dialog>
+
+        <snackbar-component :snackbar-visible="snackbarVisible"
+                            :savedMessage="savedMessage">
+        </snackbar-component>
+
       </div>
     </v-container>
   </div>
@@ -140,7 +145,9 @@ export default {
       lastName: null,
       phone: null,
       address: null,
-      maxDateDayCount:null
+      maxDateDayCount:null,
+      snackbarVisible: null,
+      savedMessage: null
     };
   },
 
@@ -239,6 +246,19 @@ export default {
         appointmentTime : vm.selectedTime,
         personnelId: vm.$route.query.doctorId
       }).then(response => {
+        if (response.data.info.succeeded) {
+            vm.savedMessage = this.$i18n.t('appointmentcalendar.appointmentSavedSuccessfully')
+        }
+        else {
+            vm.savedMessage = this.$i18n.t('appointmentcalendar.anErrorOccurred')
+        }
+
+        vm.snackbarVisible = true;
+
+        setTimeout(() => {
+          vm.snackbarVisible = false;
+        }, 3000)
+
         vm.dialog = false;
         vm.getAppointmentCalendar();
         vm.picker.setTime('');
@@ -312,7 +332,6 @@ export default {
       var availablePerson = vm.personPerPeriod;
 
       for (let index = 0; index < vm.selectedTimes.length; index++) {
-        debugger
         if(vm.selectedTimes[index] == vm.selectedTime || vm.selectedTimes[index] == "0" + vm.selectedTime) {
           availablePerson--;
         }
