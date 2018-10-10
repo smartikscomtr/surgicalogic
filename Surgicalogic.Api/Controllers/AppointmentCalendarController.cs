@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -63,18 +64,48 @@ namespace Surgicalogic.Api.Controllers
             var personPerPeriodSetting = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPersonPerPeriod.ToString());
             var interval = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPeriodInMinutes.ToString()).IntValue.Value;
 
-            var start = Convert.ToInt32(workingHourStart.TimeValue.Split(':')[0]);
-            var end = Convert.ToInt32(workingHourEnd.TimeValue.Split(':')[0]);
+            var start = workingHourStart.TimeValue.HourToDateTime();
+            var end = workingHourEnd.TimeValue.HourToDateTime();
             var personPerPeriod = Convert.ToInt32(personPerPeriodSetting.IntValue);
 
             var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
 
+            var disabledTimes = appointments.GroupBy(x => x.AppointmentDate).Where(x => x.Count() >= personPerPeriod).Select(x => x.Key.ToString("HH:mm")).ToList();
+
+            //ön yüzde kullandığımız component başlangıç dakikası almadığı için saat başından başlangıç dakikasına kadar olan slotları kapatıyorum. 
+            if (start.Minute > 0)
+            {
+                string hour = start.ToString("HH");
+                int minute = 0;
+
+                while(minute < start.Minute)
+                {
+                    disabledTimes.Add(hour + ":" + (minute <= 9 ? "0" + minute : minute.ToString()));
+                    minute += interval;
+                }
+            }
+
+            //ön yüzde kullandığımız component bitiş dakikası almadığı için bitiş dakikasından sonraki slotları kapatıyorum. 
+            if (end.Minute > 0)
+            {
+                string hour = end.ToString("HH");
+                int minute = 60 - interval;
+
+                while (minute > end.Minute)
+                {
+                    disabledTimes.Add(hour + ":" + (minute <= 9 ? "0" + minute : minute.ToString()));
+                    minute -= interval;
+                }
+
+                end = end.AddHours(1);
+            }
+
             return new AppointmentDayOutputModel
             {
                 Interval = interval,
-                StartTime = start,
-                EndTime = end,
-                Disabled = appointments.GroupBy(x => x.AppointmentDate).Where(x => x.Count() >= personPerPeriod).Select(x => x.Key.ToString("HH:mm")).ToArray(),
+                StartTime = start.Hour,
+                EndTime = end.Hour,
+                Disabled = disabledTimes.ToArray(),
                 PersonPerPeriod = personPerPeriod,
                 SelectedTimes = appointments.Select(x => x.AppointmentDate.ToString("HH:mm")).ToArray()
             };
