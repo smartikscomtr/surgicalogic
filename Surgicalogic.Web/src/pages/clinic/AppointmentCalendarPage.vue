@@ -42,28 +42,36 @@
             <v-card-text>
               <v-layout wrap>
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="identityNumber" label="identityNumber">
-                  </v-text-field>
+                    <v-text-field v-model="identityNumber"
+                                  mask="###########"
+                                  :label="$t('appointmentcalendar.identityNumber')"
+                                  ma
+                                  >
+                    </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="firstName" label="firstName">
-                  </v-text-field>
+                    <v-text-field v-model="firstName"
+                                  label="firstName">
+                    </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="lastName" label="lastName">
-                  </v-text-field>
+                    <v-text-field v-model="lastName"
+                                  label="lastName">
+                    </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="phone" label="phone">
-                  </v-text-field>
+                    <v-text-field v-model="phone"
+                                  label="phone">
+                    </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6 md6>
-                  <v-text-field v-model="address" label="address">
-                  </v-text-field>
+                    <v-text-field v-model="address"
+                                  label="address">
+                    </v-text-field>
                 </v-flex>
               </v-layout>
             </v-card-text>
@@ -74,7 +82,13 @@
             </v-flex>
           </v-card>
         </v-dialog>
-    </v-layout>
+
+        <snackbar-component :snackbar-visible="snackbarVisible"
+                            :savedMessage="savedMessage">
+        </snackbar-component>
+
+      </div>
+    </v-container>
   </div>
 </template>
 
@@ -85,30 +99,33 @@ export default {
     data() {
         const vm = this;
 
-        return {
-            menu: false,
-            date: null,
-            dateFormatted: null,
-            interval: null,
-            startTime: null,
-            endTime: null,
-            disabled: [],
-            picker: null,
-            doctorName: null,
-            doctorPictureUrl: null,
-            doctorBranchNames: null,
-            selectedTime: null,
-            showModal: false,
-            personPerPeriod: 0,
-            selectedTimes: [],
-            availableAppointmentsMessage: '',
-            identityNumber: null,
-            firstName: null,
-            lastName: null,
-            phone: null,
-            address: null
-        };
-    },
+    return {
+      menu: false,
+      date: null,
+      dateFormatted: null,
+      interval:null,
+      startTime:null,
+      endTime:null,
+      disabled:[],
+      picker: null,
+      doctorName: null,
+      doctorPictureUrl: null,
+      doctorBranchNames: null,
+      selectedTime: null,
+      dialog: false,
+      personPerPeriod:0,
+      selectedTimes:[],
+      availableAppointmentsMessage: "",
+      identityNumber: null,
+      firstName: null,
+      lastName: null,
+      phone: null,
+      address: null,
+      maxDateDayCount:null,
+      snackbarVisible: null,
+      savedMessage: null
+    };
+  },
 
     watch: {
         date(val) {
@@ -139,9 +156,9 @@ export default {
             const toTwoDigits = num => (num < 10 ? '0' + num : num);
             let selectDay = new Date();
 
-            selectDay.setDate(selectDay.getDate() + 15);
+      selectDay.setDate(selectDay.getDate() + 15);
 
-            //vm.$store.dispatch('getAppointmentDays');
+      //vm.$store.dispatch('getAppointmentDays');
 
             let year = selectDay.getFullYear();
             let month = toTwoDigits(selectDay.getMonth() + 1);
@@ -187,35 +204,47 @@ export default {
         destroyPicker() {
             const vm = this;
 
-            vm.showModal = false;
-            vm.picker.destroy();
-        },
+      vm.dialog = false;
+      vm.picker.setTime('');
+      vm.picker.destroy();
+    },
 
         saveAppointment() {
             const vm = this;
 
-            vm.$store
-                .dispatch('insertAppointmentCalendar', {
-                    identityNumber: vm.identityNumber,
-                    firstName: vm.firstName,
-                    lastName: vm.lastName,
-                    phone: vm.phone,
-                    address: vm.address,
-                    appointmentDate: vm.date,
-                    appointmentTime: vm.selectedTime,
-                    personnelId: vm.$route.query.doctorId
-                })
-                .then(response => {
-                    vm.showModal = false;
-                    vm.getAppointmentCalendar();
-                    vm.picker.setTime('');
-                    (vm.identityNumber = null),
-                        (vm.firstName = null),
-                        (vm.lastName = null),
-                        (vm.phone = null),
-                        (vm.address = null);
-                });
-        },
+      vm.$store.dispatch('insertAppointmentCalendar', {
+        identityNumber: vm.identityNumber,
+        firstName: vm.firstName,
+        lastName: vm.lastName,
+        phone: vm.phone,
+        address: vm.address,
+        appointmentDate: vm.date,
+        appointmentTime : vm.selectedTime,
+        personnelId: vm.$route.query.doctorId
+      }).then(response => {
+        if (response.data.info.succeeded) {
+            vm.savedMessage = this.$i18n.t('appointmentcalendar.appointmentSavedSuccessfully')
+        }
+        else {
+            vm.savedMessage = this.$i18n.t('appointmentcalendar.anErrorOccurred')
+        }
+
+        vm.snackbarVisible = true;
+
+        setTimeout(() => {
+          vm.snackbarVisible = false;
+        }, 3000)
+
+        vm.dialog = false;
+        vm.getAppointmentCalendar();
+        vm.picker.setTime('');
+        vm.identityNumber= null,
+        vm.firstName= null,
+        vm.lastName= null,
+        vm.phone= null,
+        vm.address= null
+      });
+    },
 
         getAppointmentCalendar() {
             const vm = this;
@@ -277,21 +306,17 @@ export default {
                     (vm.doctorPictureUrl = response.data.pictureUrl);
             });
 
-        document.body.addEventListener(
-            'change.appo.picker',
-            function(e) {
-                vm.selectedTime =
-                    e.time.h +
-                    ':' +
-                    (e.time.m == 0 ? '0' + e.time.m : e.time.m);
+
+    document.body.addEventListener('change.appo.picker', function(e) {
+      vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ? "0" + e.time.m :e.time.m);
 
                 var availablePerson = vm.personPerPeriod;
 
-                for (let index = 0; index < vm.selectedTimes.length; index++) {
-                    if (vm.selectedTimes[index] == vm.selectedTime) {
-                        availablePerson--;
-                    }
-                }
+      for (let index = 0; index < vm.selectedTimes.length; index++) {
+        if(vm.selectedTimes[index] == vm.selectedTime) {
+          availablePerson--;
+        }
+      }
 
                 vm.availableAppointmentsMessage =
                     vm.selectedTime +

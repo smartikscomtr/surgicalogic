@@ -6,6 +6,7 @@ const settingsModule = {
     loading: false,
     totalCount: 0,
     allSettings: [],
+    appointmentDays: 0,
     settingDataTypes: []
   },
 
@@ -19,8 +20,8 @@ const settingsModule = {
       state.totalCount = data.totalCount;
     },
 
-    setSettingByName(state, data) {
-      state.settings = data.result;
+    setAppointmentDays(state, data) {
+      state.appointmentDays = data;
     },
 
     setAllSettings(state, data) {
@@ -58,14 +59,15 @@ const settingsModule = {
 
     getAppointmentDays(context, params) {
       context.commit('setLoading', true);
-
+      return new Promise((resolve, reject) => {
       axios.get('Setting/GetSettingByName?name=ClinicAppointmentDays').then(response => {
-        if (response.data.info.succeeded == true) {
-          context.commit('setSettingByName', response.data)
+        if (response.status == 200) {
+          context.commit('setAppointmentDays', response.data)
         }
-
-        context.commit('setLoading', false);
-      })
+          context.commit('setLoading', false);
+          resolve(response);
+        })
+      });
     },
 
     getAllSettings(context) {

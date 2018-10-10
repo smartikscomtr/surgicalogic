@@ -1,3 +1,10 @@
 {
-  "patientInformation": "Hasta Bilgileri"
+  "patientInformation": "Hasta Bilgileri",
+  "appointmentSavedSuccessfully": "Randevu başarıyla kaydedildi.",
+  "anErrorOccurred": "Randevu alınırken bir hata oluştu. Tekrar deneyiniz.",
+  "identityNumber":"Kimlik No",
+  "firstName":"İsim",
+  "lastName": "Soyisim",
+  "phone": "Telefon",
+  "address": "Adres"
 }
