@@ -181,6 +181,8 @@ namespace Surgicalogic.Data.Utilities
             #endregion
 
             #region Entity To InputOutputModel
+            config.CreateMap<AppointmentCalendar, AppointmentCalendarOutputModel>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName));
             config.CreateMap<Operation, OperationInputModel>();
                 //.ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
             config.CreateMap<OperationType, OperationTypeForOperationOutputModel>()
