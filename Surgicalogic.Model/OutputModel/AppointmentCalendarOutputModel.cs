@@ -10,5 +10,6 @@ namespace Surgicalogic.Model.OutputModel
         public DateTime AppointmentDate { get; set; }
         public int PersonnelId { get; set; }
         public int PatientId { get; set; }
+        public string FullName { get; set; }
     }
 }

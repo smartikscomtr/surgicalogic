@@ -4,7 +4,8 @@ const appointmentCalendarModule = {
   state: {
     loading: false,
     totalCount: 0,
-    model: []
+    model: [],
+    appointments: []
   },
 
   mutations: {
@@ -18,6 +19,10 @@ const appointmentCalendarModule = {
 
     setAppointmentCalendar(state, payload) {
       state.model = payload;
+    },
+
+    setFutureAppointments(state, payload) {
+      state.appointments = payload;
     }
   },
 
@@ -56,7 +61,31 @@ const appointmentCalendarModule = {
             resolve(response);
           })
       });
-    }
+    },
+
+    getFutureAppointments(context, payload) {
+      axios.get('AppointmentCalendar/GetFutureAppointmentListAsync/' + payload.doctorId)
+        .then(response => {
+          if (response.statusText == 'OK') {
+            context.commit('setFutureAppointments', response.data) //Set the  getFutureAppointments in the store
+          }
+        })
+    },
+
+    // deletePersonnel(context, payload) {
+    //   return new Promise((resolve, reject) => {
+    //     axios.post('Personnel/DeletePersonnel/' + payload.id)
+    //       .then(response => {
+    //         if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+    //           context.commit('deletePersonnel', {
+    //             payload
+    //           }); //Delete the Personnel in the store
+    //         }
+
+    //         resolve(response);
+    //       })
+    //   });
+    // },
   }
 }
 

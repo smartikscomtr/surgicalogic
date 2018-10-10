@@ -111,6 +111,13 @@ namespace Surgicalogic.Api.Controllers
             };
         }
 
+        [Route("AppointmentCalendar/GetFutureAppointmentListAsync/{doctorId:int}")]
+        [HttpGet]
+        public async Task<List<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(int doctorId)
+        {
+            return await _appointmentCalendarStoreService.GetFutureAppointmentListAsync(doctorId);
+        }
+
         [Route("AppointmentCalendar/ExcelExport")]
         public async Task<string> ExcelExport()
         {

@@ -562,4 +562,5 @@ input[type='date']::-webkit-inner-spin-button {
     background-color: #ee8b41;
     color: #fff !important;
 }
+
 </style>
