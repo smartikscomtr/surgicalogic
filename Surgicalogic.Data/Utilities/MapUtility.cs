@@ -89,7 +89,14 @@ namespace Surgicalogic.Data.Utilities
             #endregion
 
             #region EntityModel to EntityOutputModel
-            config.CreateMap<AppointmentCalendarModel, AppointmentCalendarOutputModel>();
+            config.CreateMap<AppointmentCalendarModel, AppointmentCalendarOutputModel>()
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Patient.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Patient.LastName))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName))
+                .ForMember(dest => dest.AppointmentDate, opt => opt.MapFrom(src => src.AppointmentDate.ToString("dd.MM.yyyy - HH:mm")))
+                .ForMember(dest => dest.IdentityNumber, opt => opt.MapFrom(src => src.Patient.IdentityNumber))
+                .ForMember(dest => dest.PersonnelId, opt => opt.Ignore())
+                .ForMember(dest => dest.PatientId, opt => opt.Ignore());
             config.CreateMap<BranchModel, BranchOutputModel>();
             config.CreateMap<DoctorCalendarModel, DoctorCalendarOutputModel>();
             config.CreateMap<EquipmentModel, EquipmentOutputModel>()
@@ -182,7 +189,8 @@ namespace Surgicalogic.Data.Utilities
 
             #region Entity To InputOutputModel
             config.CreateMap<AppointmentCalendar, AppointmentCalendarOutputModel>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName));
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName))
+                .ForMember(dest => dest.AppointmentDate, opt => opt.MapFrom(src => src.AppointmentDate.ToString("dd.MM.yyyy HH:mm")));
             config.CreateMap<Operation, OperationInputModel>();
                 //.ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
             config.CreateMap<OperationType, OperationTypeForOperationOutputModel>()

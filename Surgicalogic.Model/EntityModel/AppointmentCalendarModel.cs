@@ -7,13 +7,12 @@ namespace Surgicalogic.Model.EntityModel
 {
     public class AppointmentCalendarModel : Base.EntityModel
     {
-        [Searchable]
         public DateTime AppointmentDate { get; set; }
-        [Searchable]
         public int PersonnelId { get; set; }
-        [Searchable]
+
         public int PatientId { get; set; }
         public PersonnelModel Personnel { get; set; }
+        [Searchable]
         public PatientModel Patient { get; set; }
     }
 }

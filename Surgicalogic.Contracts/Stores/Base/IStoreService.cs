@@ -1,9 +1,9 @@
-﻿using Surgicalogic.Data.Entities.Base;
-using Surgicalogic.Model.CommonModel;
-using Surgicalogic.Model.EntityModel.Base;
+﻿using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.InputModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Contracts.Stores.Base
@@ -12,10 +12,10 @@ namespace Surgicalogic.Contracts.Stores.Base
     {
         IQueryable<TEntity> GetQueryable();
         Task<ResultModel<TModel>> FindByIdAsync(int id);
-        Task<ResultModel<TModel>> GetAsync(GridInputModel input);
+        Task<ResultModel<TModel>> GetAsync(GridInputModel input, Expression<Func<TEntity, bool>> expression);
         Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>();
         Task<List<TExportModel>> GetExportAsync<TExportModel>();
-        Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input);
+        Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input, Expression<Func<TEntity, bool>> expression = null);
         Task<TEntity> InsertAsync(TModel model);
         Task<ResultModel<TModel>> InsertAndSaveAsync(TModel model);
         Task<ResultModel<TOutputModel>> InsertAndSaveAsync<TOutputModel>(TModel model);

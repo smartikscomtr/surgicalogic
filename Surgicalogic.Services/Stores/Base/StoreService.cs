@@ -10,6 +10,7 @@ using Surgicalogic.Services.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores.Base
@@ -53,9 +54,15 @@ namespace Surgicalogic.Services.Stores.Base
         /// </summary>
         /// <param name="GridInputModel">GridInputModel</param>  
         /// <returns>ResultModel</returns>
-        public virtual async Task<ResultModel<TModel>> GetAsync(GridInputModel input)
+        public virtual async Task<ResultModel<TModel>> GetAsync(GridInputModel input, Expression<Func<TEntity, bool>> expression)
         {
             var query = GetQueryable();
+
+            if (expression != null)
+            {
+                query = query.Where(expression);
+            }
+
             var projectQuery = query.ProjectTo<TModel>();
 
             if (!string.IsNullOrEmpty(input.Search))
@@ -124,9 +131,9 @@ namespace Surgicalogic.Services.Stores.Base
         /// </summary>
         /// <typeparam name="TOutputModel"></typeparam>
         /// <returns>TOutputModel</returns>
-        public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input)
+        public virtual async Task<ResultModel<TOutputModel>> GetAsync<TOutputModel>(GridInputModel input, Expression<Func<TEntity, bool>> expression = null)
         {
-            var result = await GetAsync(input);
+            var result = await GetAsync(input, expression);
 
             return new ResultModel<TOutputModel>
             {

@@ -10,79 +10,80 @@
       </v-flex>
       <v-flex md9 sm9 xs12 block-container>
         <v-flex xs12 sm12 md12>
-            <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
-              <v-text-field readonly slot="activator" v-model="dateFormatted" :label="$t('operation.operationDate')">
-              </v-text-field>
+          <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
+            <v-text-field readonly slot="activator" v-model="dateFormatted" :label="$t('operation.operationDate')">
+            </v-text-field>
 
-              <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
-              </v-date-picker>
-            </v-menu>
+            <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
+            </v-date-picker>
+          </v-menu>
         </v-flex>
         <v-flex xs12 sm12 md12>
-            <input type="hidden" id="time-1">
+          <input type="hidden" id="time-1">
         </v-flex>
       </v-flex>
-        <v-dialog v-model="showModal"
-                  persistent>
-          <v-card class="container fluid grid-list-md">
-            <v-card-title>
-              <div class="headline-wrap flex xs12 sm12 md12">
-                <span class="text">
-                  {{ formTitle }}
-                </span>
+      <v-dialog v-model="showModal"
+                persistent>
+        <v-card class="container fluid grid-list-md">
+          <v-card-title>
+            <div class="headline-wrap flex xs12 sm12 md12">
+              <span class="text">
+                {{ formTitle }}
+              </span>
 
-                <span>{{ availableAppointmentsMessage }}</span>
+              <span>{{ availableAppointmentsMessage }}</span>
 
-                <v-icon @click="cancel" class="close-wrap">
-                  close
-                </v-icon>
-              </div>
-            </v-card-title>
+              <v-icon @click="cancel" class="close-wrap">
+                close
+              </v-icon>
+            </div>
+          </v-card-title>
 
-            <v-card-text>
-              <v-layout wrap>
-                <v-flex xs12 sm6 md6>
-                    <v-text-field v-model="identityNumber"
-                                  mask="###########"
-                                  :label="$t('appointmentcalendar.identityNumber')"
-                                  ma
-                                  >
-                    </v-text-field>
-                </v-flex>
+          <v-card-text>
+            <v-layout wrap>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="identityNumber"
+                              mask="###########"
+                              :label="$t('appointmentcalendar.identityNumber')"
+                              ma>
+                </v-text-field>
+              </v-flex>
 
-                <v-flex xs12 sm6 md6>
-                    <v-text-field v-model="firstName"
-                                  label="firstName">
-                    </v-text-field>
-                </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="firstName"
+                              :label="$t('appointmentcalendar.firstName')">
+                </v-text-field>
+              </v-flex>
 
-                <v-flex xs12 sm6 md6>
-                    <v-text-field v-model="lastName"
-                                  label="lastName">
-                    </v-text-field>
-                </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="lastName"
+                              :label="$t('appointmentcalendar.lastName')">
+                </v-text-field>
+              </v-flex>
 
-                <v-flex xs12 sm6 md6>
-                    <v-text-field v-model="phone"
-                                  label="phone">
-                    </v-text-field>
-                </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="phone"
+                              mask="phone"
+                              :label="$t('appointmentcalendar.phone')">
+                </v-text-field>
+              </v-flex>
 
-                <v-flex xs12 sm6 md6>
-                    <v-text-field v-model="address"
-                                  label="address">
-                    </v-text-field>
-                </v-flex>
-              </v-layout>
-            </v-card-text>
-            <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none class="btn-wrap">
-              <v-btn class="btnSave orange" @click="saveAppointment()">
-                Kaydet
-              </v-btn>
-            </v-flex>
-          </v-card>
-        </v-dialog>
+              <v-flex xs12 sm12 md12>
+                <v-text-field v-model="address"
+                              :label="$t('appointmentcalendar.address')">
+                </v-text-field>
+              </v-flex>
 
+            </v-layout>
+          </v-card-text>
+          <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none class="btn-wrap">
+            <v-btn class="btnSave orange" @click="saveAppointment()">
+              Kaydet
+            </v-btn>
+          </v-flex>
+        </v-card>
+      </v-dialog>
+    </v-layout>
         <snackbar-component :snackbar-visible="snackbarVisible"
                             :savedMessage="savedMessage">
         </snackbar-component>
@@ -156,9 +157,7 @@ export default {
             const toTwoDigits = num => (num < 10 ? '0' + num : num);
             let selectDay = new Date();
 
-      selectDay.setDate(selectDay.getDate() + 15);
-
-      //vm.$store.dispatch('getAppointmentDays');
+            selectDay.setDate(selectDay.getDate() + vm.maxDateDayCount);
 
             let year = selectDay.getFullYear();
             let month = toTwoDigits(selectDay.getMonth() + 1);
@@ -306,17 +305,20 @@ export default {
                     (vm.doctorPictureUrl = response.data.pictureUrl);
             });
 
+      vm.$store.dispatch('getAppointmentDays').then(response => {
+        vm.maxDateDayCount = response.data
+      });
 
-    document.body.addEventListener('change.appo.picker', function(e) {
-      vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ? "0" + e.time.m :e.time.m);
+      document.body.addEventListener('change.appo.picker', function(e) {
+        vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ? "0" + e.time.m :e.time.m);
 
                 var availablePerson = vm.personPerPeriod;
 
-      for (let index = 0; index < vm.selectedTimes.length; index++) {
-        if(vm.selectedTimes[index] == vm.selectedTime) {
-          availablePerson--;
+        for (let index = 0; index < vm.selectedTimes.length; index++) {
+          if(vm.selectedTimes[index] == vm.selectedTime) {
+            availablePerson--;
+          }
         }
-      }
 
                 vm.availableAppointmentsMessage =
                     vm.selectedTime +

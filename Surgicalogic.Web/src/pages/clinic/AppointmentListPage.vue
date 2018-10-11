@@ -37,7 +37,7 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('appointment.futureAppointments'),
+      title: vm.$i18n.t('appointmentcalendar.futureAppointments'),
       search: 'Ara',
       deleteDialog: false,
       deleteValue: {},
@@ -55,13 +55,28 @@ export default {
       return [
         {
           value: 'appointmentDate',
-          text: vm.$i18n.t('appointment.appointmentDate'),
+          text: vm.$i18n.t('appointmentcalendar.appointmentDate'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'fullName',
-          text: vm.$i18n.t('appointment.fullName'),
+          value: 'identityNumber',
+          sortBy:'Patient.IdentityNumber',
+          text: vm.$i18n.t('appointmentcalendar.patientidentityNumber'),
+          sortable: true,
+          align: 'left'
+        },
+        {
+          value: 'firstName',
+          sortBy:'Patient.FirstName',
+          text: vm.$i18n.t('appointmentcalendar.patientFirstName'),
+          sortable: true,
+          align: 'left'
+        },
+        {
+          value: 'lastName',
+          sortBy:'Patient.LastName',
+          text: vm.$i18n.t('appointmentcalendar.patientLastName'),
           sortable: true,
           align: 'left'
         },
@@ -99,7 +114,7 @@ export default {
     },
 
     deleteMethodName(){
-      // return "deleteAppointments";
+       return "deleteAppointment";
     }
   },
 

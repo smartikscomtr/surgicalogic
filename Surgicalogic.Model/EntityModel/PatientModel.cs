@@ -7,16 +7,15 @@ namespace Surgicalogic.Model.EntityModel
 {
     public class PatientModel : Base.EntityModel
     {
-        [Searchable]
+        [Searchable(true)]
         public string IdentityNumber { get; set; }
-        [Searchable]
+        [Searchable(true)]
         public string FirstName { get; set; }
-        [Searchable]
+        [Searchable(true)]
         public string LastName { get; set; }
         [Searchable]
         public string Phone { get; set; }
         [Searchable]
         public string Address { get; set; }
-        public ICollection<AppointmentCalendarModel> AppointmentCalendars { get; set; }
     }
 }

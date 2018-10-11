@@ -1,5 +1,6 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.Entities;
+using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -14,6 +15,6 @@ namespace Surgicalogic.Contracts.Stores
     {
         Task<List<AppointmentCalendarModel>> GetAppointmentsByDoctorAndDateAsync(AppointmentDayInputModel model);
         Task<int> GetAppointmentCountByDoctorAndDateTimeAsync(int doctorId, DateTime date);
-        Task<List<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(int doctorId);
+        Task<ResultModel<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(AppointmentDayInputModel model);
     }
 }

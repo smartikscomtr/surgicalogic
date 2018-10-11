@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Surgicalogic.Model.OutputModel;
+using Surgicalogic.Model.CommonModel;
 
 namespace Surgicalogic.Services.Stores
 {
@@ -34,9 +35,25 @@ namespace Surgicalogic.Services.Stores
             return await GetQueryable().CountAsync(x => x.PersonnelId == doctorId && x.AppointmentDate == date);
         }
 
-        public async Task<List<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(int doctorId)
+        public async Task<ResultModel<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(AppointmentDayInputModel model)
         {
-            return await GetQueryable().Where(x => x.PersonnelId == doctorId && x.AppointmentDate >= DateTime.Now).ProjectTo<AppointmentCalendarOutputModel>().ToListAsync();
+            var inputModel = new GridInputModel
+            {
+                CurrentPage = model.CurrentPage,
+                Descending = model.Descending,
+                PageSize = model.PageSize,
+                Search = model.Search,
+                SortBy = model.SortBy
+            };
+
+            var appointments = await GetAsync(inputModel, x => x.PersonnelId == model.DoctorId && x.AppointmentDate >= DateTime.Now);
+
+            return new ResultModel<AppointmentCalendarOutputModel>
+            {
+                Info = appointments.Info,
+                TotalCount = appointments.TotalCount,
+                Result = AutoMapper.Mapper.Map<List<AppointmentCalendarOutputModel>>(appointments.Result)
+            };
         }
     }
 }

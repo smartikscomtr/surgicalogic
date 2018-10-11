@@ -111,11 +111,12 @@ namespace Surgicalogic.Api.Controllers
             };
         }
 
-        [Route("AppointmentCalendar/GetFutureAppointmentListAsync/{doctorId:int}")]
+        [Route("AppointmentCalendar/GetFutureAppointmentListAsync")]
         [HttpGet]
-        public async Task<List<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(int doctorId)
+        public async Task<ResultModel<AppointmentCalendarOutputModel>> GetFutureAppointmentListAsync(AppointmentDayInputModel model)
         {
-            return await _appointmentCalendarStoreService.GetFutureAppointmentListAsync(doctorId);
+            var result = await _appointmentCalendarStoreService.GetFutureAppointmentListAsync(model);
+            return result;
         }
 
         [Route("AppointmentCalendar/ExcelExport")]
@@ -204,9 +205,9 @@ namespace Surgicalogic.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Int</returns>
-        [Route("AppointmentCalendar/DeleteAppointmentCalendar/{id:int}")]
+        [Route("AppointmentCalendar/DeleteAppointment/{id:int}")]
         [HttpPost]
-        public async Task<ResultModel<int>> DeleteAppointmentCalendar(int id)
+        public async Task<ResultModel<int>> DeleteAppointment(int id)
         {
             return await _appointmentCalendarStoreService.DeleteAndSaveByIdAsync(id);
         }

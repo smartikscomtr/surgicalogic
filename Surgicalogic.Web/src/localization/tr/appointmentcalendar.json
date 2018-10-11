@@ -6,5 +6,11 @@
   "firstName":"İsim",
   "lastName": "Soyisim",
   "phone": "Telefon",
-  "address": "Adres"
+  "address": "Adres",
+  "futureAppointments": "Gelecek Randevular",
+  "appointmentDate":"Randevu Tarihi",
+  "patientFullName": "Hasta Adı Soyadı",
+  "patientFirstName": "Adı",
+  "patientLastName": "Soyadı",
+  "patientidentityNumber": "Kimlik No"
 }

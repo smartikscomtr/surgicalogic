@@ -22,8 +22,16 @@ const appointmentCalendarModule = {
     },
 
     setFutureAppointments(state, payload) {
-      state.appointments = payload;
-    }
+      state.appointments = payload.result;
+      state.totalCount = payload.totalCount;
+    },
+
+    deleteAppointment(state, { payload }) {
+      let index = state.appointments.findIndex((item) => {
+        return item.id === payload.id
+      });
+      state.appointments.splice(index, 1);
+    },
   },
 
     getters: {},
@@ -64,28 +72,29 @@ const appointmentCalendarModule = {
     },
 
     getFutureAppointments(context, payload) {
-      axios.get('AppointmentCalendar/GetFutureAppointmentListAsync/' + payload.doctorId)
-        .then(response => {
+      axios.get('AppointmentCalendar/GetFutureAppointmentListAsync', {
+        params:payload
+      }).then(response => {
           if (response.statusText == 'OK') {
             context.commit('setFutureAppointments', response.data) //Set the  getFutureAppointments in the store
           }
         })
     },
 
-    // deletePersonnel(context, payload) {
-    //   return new Promise((resolve, reject) => {
-    //     axios.post('Personnel/DeletePersonnel/' + payload.id)
-    //       .then(response => {
-    //         if (response.statusText == 'OK' && response.data.info.succeeded == true) {
-    //           context.commit('deletePersonnel', {
-    //             payload
-    //           }); //Delete the Personnel in the store
-    //         }
+    deleteAppointment(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('AppointmentCalendar/DeleteAppointment/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteAppointment', {
+                payload
+              });
+            }
 
-    //         resolve(response);
-    //       })
-    //   });
-    // },
+            resolve(response);
+          })
+      });
+    },
   }
 }
 
