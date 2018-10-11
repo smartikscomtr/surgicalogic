@@ -13,7 +13,7 @@
     </v-layout>
 
     <v-layout row wrap class="all-page-pad column-cards">
-      <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg2 md3 sm6 xs12>
+      <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg3 md3 sm6 xs12>
         <v-card class="clinic-branch">
           <img :src="doctorCard.pictureUrl" height="150px" />
 
@@ -202,6 +202,8 @@ export default {
 .clinic-page .wrap > div .v-card img + span {
     margin-top: 20px;
     font-weight: 500;
+    height: 40px;
+    overflow: hidden;
 }
 .clinic-page .wrap > div .v-btn {
     margin: 10px;

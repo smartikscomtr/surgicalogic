@@ -1,335 +1,327 @@
 <template>
   <div>
-    <v-layout row wrap class="cards-wrap">
-      <v-flex xs12 sm6 md3>
-        <v-card class="operation-wrap">
-          <v-container>
-            <v-card-title>
-              <div>
-                <v-icon dark x-large>add_alarm</v-icon>
-                <p class="headline">{{ 'Operasyonlar' }} </p>
-              </div>
-              <p>{{ 'Operasyonlarınızı Yönetebilirsiniz' }} </p>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn small @click="$router.push('/operationpage')">Git</v-btn>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </v-flex>
-
-      <v-flex xs12 sm6 md3>
-        <v-card class="plan-wrap">
-          <v-container>
-            <v-card-title>
-              <div>
-                <v-icon dark x-large>timeline</v-icon>
-                <p class="headline">{{ 'Planlar' }} </p>
-              </div>
-              <p>{{ 'Planlarınızı Yönetebilirsiniz' }} </p>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn small @click="$router.push('/planarrangementspage')">Git</v-btn>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </v-flex>
-
-      <v-flex xs12 sm6 md3>
-        <v-card class="clinic-wrap">
-          <v-container>
-            <v-card-title>
-              <div>
-                <v-icon dark x-large>domain</v-icon>
-                <p class="headline">{{ 'Klinik Yönetimleri' }} </p>
-              </div>
-              <p>{{ 'Kliniklerinizi Yönetebilirsiniz' }} </p>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn small @click="$router.push('/clinicpage')">{{ $t('common.go') }}</v-btn>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </v-flex>
-
-      <v-flex xs12 sm6 md3>
-        <v-card class="personnel-wrap">
-          <v-container>
-            <v-card-title>
-              <div>
-                <v-icon dark x-large>group</v-icon>
-                <p class="headline">{{ 'Personel Yönetimleri' }} </p>
-              </div>
-              <p>{{ 'Personellerinizi Yönetebilirsiniz' }} </p>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn small @click="$router.push('/personnelpage')">{{ $t('common.go') }}</v-btn>
-            </v-card-actions>
-          </v-container>
-        </v-card>
-      </v-flex>
-    </v-layout>
-
     <v-container>
-      <v-flex xs12 sm6 md3>
-        <v-menu ref="menu"
-                :close-on-content-click="false"
-                v-model="menu"
-                :nudge-right="40"
-                :return-value.sync="date"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290px">
-          <v-text-field readonly
-                        slot="activator"
-                        v-model="dateFormatted"
-                        :label="$t('operation.operationDate')">
-          </v-text-field>
+      <v-layout row wrap class="cards-wrap">
+        <v-flex xs12 sm6 md3>
+          <v-card class="operation-wrap">
+            <v-container>
+              <v-card-title>
+                <div>
+                  <v-icon dark x-large>add_alarm</v-icon>
+                  <p class="headline">{{ 'Operasyonlar' }} </p>
+                </div>
+                <p>{{ 'Operasyonlarınızı Yönetebilirsiniz' }} </p>
+              </v-card-title>
 
-          <v-date-picker v-model="date"
-                          no-title
-                          @input="$refs.menu.save(date)"
-                          :min="getMinDate()"
-                          :max="getMaxDate()">
-          </v-date-picker>
-        </v-menu>
-      </v-flex>
+              <v-card-actions>
+                <v-btn small @click="$router.push('/operationpage')">Git</v-btn>
+              </v-card-actions>
+            </v-container>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs12 sm6 md3>
+          <v-card class="plan-wrap">
+            <v-container>
+              <v-card-title>
+                <div>
+                  <v-icon dark x-large>timeline</v-icon>
+                  <p class="headline">{{ 'Planlar' }} </p>
+                </div>
+                <p>{{ 'Planlarınızı Yönetebilirsiniz' }} </p>
+              </v-card-title>
+
+              <v-card-actions>
+                <v-btn small @click="$router.push('/planarrangementspage')">Git</v-btn>
+              </v-card-actions>
+            </v-container>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs12 sm6 md3>
+          <v-card class="clinic-wrap">
+            <v-container>
+              <v-card-title>
+                <div>
+                  <v-icon dark x-large>domain</v-icon>
+                  <p class="headline">{{ 'Klinik Yönetimleri' }} </p>
+                </div>
+                <p>{{ 'Kliniklerinizi Yönetebilirsiniz' }} </p>
+              </v-card-title>
+
+              <v-card-actions>
+                <v-btn small @click="$router.push('/clinicpage')">{{ $t('common.go') }}</v-btn>
+              </v-card-actions>
+            </v-container>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs12 sm6 md3>
+          <v-card class="personnel-wrap">
+            <v-container>
+              <v-card-title>
+                <div>
+                  <v-icon dark x-large>group</v-icon>
+                  <p class="headline">{{ 'Personel Yönetimleri' }} </p>
+                </div>
+                <p>{{ 'Personellerinizi Yönetebilirsiniz' }} </p>
+              </v-card-title>
+
+              <v-card-actions>
+                <v-btn small @click="$router.push('/personnelpage')">{{ $t('common.go') }}</v-btn>
+              </v-card-actions>
+            </v-container>
+          </v-card>
+        </v-flex>
+
+        <v-flex xs12 sm6 md3>
+          <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
+            <v-text-field readonly slot="activator" v-model="dateFormatted" :label="$t('operation.operationDate')">
+            </v-text-field>
+
+            <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()" :max="getMaxDate()">
+            </v-date-picker>
+          </v-menu>
+        </v-flex>
+      </v-layout>
 
       <div id="visualization" class="vis">
       </div>
 
       <div id="serializedTimeline" style="display:none;">
       </div>
-
-      <v-btn  v-show="date"
-              class="drawplan-wrap updateplan-wrap" @click.native="updatePlan()">
-        {{ $t('planarrangements.updatePlan')}}
-      </v-btn>
+      <v-layout class="dashboard-page-btn">
+        <div class="flex xs12">
+          <v-btn v-show="date" class="drawplan-wrap updateplan-wrap" @click.native="updatePlan()">
+            {{ $t('planarrangements.updatePlan')}}
+          </v-btn>
+        </div>
+      </v-layout>
     </v-container>
 
-     <snackbar-component :snackbar-visible="snackbarVisible"
-                        :savedMessage="savedMessage">
+    <snackbar-component :snackbar-visible="snackbarVisible" :savedMessage="savedMessage">
     </snackbar-component>
 
   </div>
 </template>
 
 <script>
-
 import Vis from 'vis/dist/vis.js';
 
 export default {
-  data() {
-    const vm = this;
+    data() {
+        const vm = this;
 
-    return {
-      menu: false,
-      dateFormatted: null,
-      date: null,
-      snackbarVisible: null,
-      savedMessage: this.$i18n.t('planarrangements.planUpdated')
-    };
-  },
-
-  watch: {
-    showModal (val) {
-      val || this.cancel()
+        return {
+            menu: false,
+            dateFormatted: null,
+            date: null,
+            snackbarVisible: null,
+            savedMessage: this.$i18n.t('planarrangements.planUpdated')
+        };
     },
 
-    date (val) {
-      this.dateFormatted = this.formatDate(this.date)
-    }
-  },
+    watch: {
+        showModal(val) {
+            val || this.cancel();
+        },
 
-  methods: {
-    getMaxDate() {
-      const toTwoDigits = num => num < 10 ? '0' + num : num;
-      let selectDay = new Date();
-
-      selectDay.setDate(selectDay.getDate());
-
-      let year = selectDay.getFullYear();
-      let month = toTwoDigits(selectDay.getMonth() + 1);
-      let day = toTwoDigits(selectDay.getDate());
-
-      return `${year}-${month}-${day}`;
+        date(val) {
+            this.dateFormatted = this.formatDate(this.date);
+        }
     },
 
-    getMinDate() {
-      const toTwoDigits = num => num < 10 ? '0' + num : num;
-      let selectDay = new Date();
+    methods: {
+        getMaxDate() {
+            const toTwoDigits = num => (num < 10 ? '0' + num : num);
+            let selectDay = new Date();
 
-      selectDay.setDate(selectDay.getDate() - 4);
+            selectDay.setDate(selectDay.getDate());
 
-      let year = selectDay.getFullYear();
-      let month = toTwoDigits(selectDay.getMonth() + 1);
-      let day = toTwoDigits(selectDay.getDate());
+            let year = selectDay.getFullYear();
+            let month = toTwoDigits(selectDay.getMonth() + 1);
+            let day = toTwoDigits(selectDay.getDate());
 
-      return `${year}-${month}-${day}`;
-    },
+            return `${year}-${month}-${day}`;
+        },
 
-    getDate () {
-      const toTwoDigits = num => num < 10 ? '0' + num : num;
-      let today = new Date();
-      let year = today.getFullYear();
-      let month = toTwoDigits(today.getMonth() + 1);
-      let day = toTwoDigits(today.getDate());
+        getMinDate() {
+            const toTwoDigits = num => (num < 10 ? '0' + num : num);
+            let selectDay = new Date();
 
-      return `${year}-${month}-${day}`;
-    },
+            selectDay.setDate(selectDay.getDate() - 4);
 
-    formatDate(date) {
-      if (!date || date.indexOf('.') > -1)
-        return null;
+            let year = selectDay.getFullYear();
+            let month = toTwoDigits(selectDay.getMonth() + 1);
+            let day = toTwoDigits(selectDay.getDate());
 
-      const [year, month, day] = date.split('-');
+            return `${year}-${month}-${day}`;
+        },
 
-      return `${day}.${month}.${year}`;
-    },
+        getDate() {
+            const toTwoDigits = num => (num < 10 ? '0' + num : num);
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = toTwoDigits(today.getMonth() + 1);
+            let day = toTwoDigits(today.getDate());
 
-    updatePlan() {
-      const vm = this;
+            return `${year}-${month}-${day}`;
+        },
 
-      vm.snackbarVisible = false;
+        formatDate(date) {
+            if (!date || date.indexOf('.') > -1) return null;
 
-      var timelineItems = JSON.parse(
-          document.getElementById('serializedTimeline').innerHTML
-      );
+            const [year, month, day] = date.split('-');
 
-      var operations = [];
+            return `${day}.${month}.${year}`;
+        },
 
-      for (var data in timelineItems._data) {
-          var item = timelineItems._data[data];
-          //ilk ve son başlangıç ve bitiş tarihleri
-          var newStart = new Date(item.start);
-          var newEnd = new Date(item.end);
+        updatePlan() {
+            const vm = this;
 
-          var operationLength =
-              (newEnd.getTime() - newStart.getTime()) / 60000;
-
-          var operation = {
-              id: item.operationPlanId,
-              operationId: data,
-              start: newStart,
-              roomId: item.group,
-              length: operationLength
-          };
-
-          operations.push(operation);
-      }
-
-      vm.$store
-          .dispatch('updatePlanArrangements', JSON.stringify(operations))
-          .then(response => {
-             vm.snackbarVisible = true;
-
-          setTimeout(() => {
             vm.snackbarVisible = false;
-          }, 2300)
-          });
+
+            var timelineItems = JSON.parse(
+                document.getElementById('serializedTimeline').innerHTML
+            );
+
+            var operations = [];
+
+            for (var data in timelineItems._data) {
+                var item = timelineItems._data[data];
+                //ilk ve son başlangıç ve bitiş tarihleri
+                var newStart = new Date(item.start);
+                var newEnd = new Date(item.end);
+
+                var operationLength =
+                    (newEnd.getTime() - newStart.getTime()) / 60000;
+
+                var operation = {
+                    id: item.operationPlanId,
+                    operationId: data,
+                    start: newStart,
+                    roomId: item.group,
+                    length: operationLength
+                };
+
+                operations.push(operation);
+            }
+
+            vm.$store
+                .dispatch('updatePlanArrangements', JSON.stringify(operations))
+                .then(response => {
+                    vm.snackbarVisible = true;
+
+                    setTimeout(() => {
+                        vm.snackbarVisible = false;
+                    }, 2300);
+                });
+        }
+    },
+
+    mounted() {
+        const vm = this;
+
+        vm.$watch('date', (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                var container = document.getElementById('visualization');
+
+                vm.$store
+                    .dispatch('getDashboardTimelinePlans', {
+                        selectDate: vm.date
+                    })
+                    .then(response => {
+                        var items = new Vis.DataSet(
+                            vm.$store.state.planArrangementsModule.model.plan
+                        );
+                        var groups = new Vis.DataSet(
+                            vm.$store.state.planArrangementsModule.model.rooms
+                        );
+
+                        var workingHourStart = new Date(
+                            vm.$store.state.planArrangementsModule.model.workingHourStart
+                        );
+                        var workingHourEnd = new Date(
+                            vm.$store.state.planArrangementsModule.model.workingHourEnd
+                        );
+
+                        document.getElementById(
+                            'serializedTimeline'
+                        ).innerHTML = JSON.stringify(items);
+
+                        var options = {
+                            orientation: {
+                                axis: 'top'
+                            },
+                            // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.date.period },
+                            locale: 'tr',
+                            moveable: true,
+                            zoomMax: 86400000,
+                            zoomMin: 3600000,
+                            horizontalScroll: true,
+                            min:
+                                vm.$store.state.planArrangementsModule.model
+                                    .minDate,
+                            max:
+                                vm.$store.state.planArrangementsModule.model
+                                    .maxDate,
+                            start:
+                                vm.$store.state.planArrangementsModule.model
+                                    .startDate,
+                            end:
+                                vm.$store.state.planArrangementsModule.model
+                                    .endDate,
+                            editable: {
+                                updateTime: true,
+                                updateGroup: true
+                            },
+                            selectable: true,
+
+                            onMoving(item, callback) {
+                                var timelineItems = JSON.parse(
+                                    document.getElementById(
+                                        'serializedTimeline'
+                                    ).innerHTML
+                                );
+
+                                timelineItems._data[item.id].start = new Date(
+                                    item.start
+                                );
+                                timelineItems._data[item.id].end = new Date(
+                                    item.end
+                                );
+                                timelineItems._data[item.id].group = item.group;
+
+                                document.getElementById(
+                                    'serializedTimeline'
+                                ).innerHTML = JSON.stringify(timelineItems);
+
+                                callback(item);
+                            }
+                        };
+
+                        container.innerHTML = '';
+                        var timeline = new Vis.Timeline(
+                            container,
+                            items,
+                            groups,
+                            options
+                        );
+                    });
+            }
+        });
+
+        vm.date = vm.getDate();
     }
-  },
-
-  mounted() {
-    const vm = this;
-
-    vm.$watch('date', (newValue, oldValue) => {
-      if (newValue !== oldValue) {
-        var container = document.getElementById('visualization');
-
-          vm.$store.dispatch('getDashboardTimelinePlans', {
-            selectDate: vm.date
-          }).then(response => {
-              var items = new Vis.DataSet(
-                  vm.$store.state.planArrangementsModule.model.plan
-              );
-              var groups = new Vis.DataSet(
-                  vm.$store.state.planArrangementsModule.model.rooms
-              );
-
-              var workingHourStart = new Date(
-                  vm.$store.state.planArrangementsModule.model.workingHourStart
-              );
-              var workingHourEnd = new Date(
-                  vm.$store.state.planArrangementsModule.model.workingHourEnd
-              );
-
-              document.getElementById('serializedTimeline').innerHTML = JSON.stringify(items);
-
-              var options = {
-                  orientation: {
-                      axis: 'top'
-                  },
-                  // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.date.period },
-                  locale: 'tr',
-                  moveable: true,
-                  zoomMax: 86400000,
-                  zoomMin: 3600000,
-                  horizontalScroll: true,
-                  min: vm.$store.state.planArrangementsModule.model.minDate,
-                  max: vm.$store.state.planArrangementsModule.model.maxDate,
-                  start:
-                      vm.$store.state.planArrangementsModule.model.startDate,
-                  end: vm.$store.state.planArrangementsModule.model.endDate,
-                  editable: {
-                      updateTime: true,
-                      updateGroup: true
-                  },
-                  selectable: true,
-
-                  onMoving(item, callback) {
-                  var timelineItems = JSON.parse(
-                      document.getElementById('serializedTimeline')
-                          .innerHTML
-                  );
-
-                  timelineItems._data[item.id].start = new Date(
-                      item.start
-                  );
-                  timelineItems._data[item.id].end = new Date(item.end);
-                  timelineItems._data[item.id].group = item.group;
-
-                  document.getElementById(
-                      'serializedTimeline'
-                  ).innerHTML = JSON.stringify(timelineItems);
-
-                  callback(item);
-              }
-              };
-
-              container.innerHTML = '';
-              var timeline = new Vis.Timeline(
-                  container,
-                  items,
-                  groups,
-                  options
-              );
-          });
-      }
-    });
-
-    vm.date = vm.getDate();
-
-  }
-}
+};
 </script>
 
 <style>
-.layout.row {
-    padding: 1%;
-    margin: 1%;
-}
 .layout.row.wrap > div {
     padding: 1%;
 }
-.cards-wrap .v-btn__content{
-    color: rgba(0,0,0,.87) !important;
+.cards-wrap .v-btn__content {
+    color: rgba(0, 0, 0, 0.87) !important;
 }
 .operation-wrap.v-card {
     background-color: #ff6767;
@@ -341,7 +333,7 @@ export default {
     background-color: #56d67d;
 }
 .personnel-wrap {
-  background-color: #9b63cd !important;
+    background-color: #9b63cd !important;
 }
 .v-card__actions {
     justify-content: flex-end;
@@ -357,7 +349,7 @@ export default {
 }
 .cards-wrap .v-card__title p {
     margin: 0;
-    color:#fff;
+    color: #fff;
 }
 .cards-wrap .v-card__title {
     flex-direction: column !important;
@@ -365,6 +357,7 @@ export default {
 }
 .vis {
     margin: 20px 0;
+    padding: 1%;
 }
 .vis-item.vis-range .vis-item-content {
     color: #fff;
@@ -382,16 +375,12 @@ export default {
     background-color: #ff7107 !important;
     font-size: 15px;
 }
-.drawplan-wrap .v-btn__content {
-    color: #fff;
-}
+
 .updateplan-wrap {
     float: right;
     min-width: 200px;
 }
-.updateplan-wrap .v-btn__content {
-    color: #fff;
-}
+
 .vis-item.vis-range.vis-editable {
     position: absolute;
     background-color: #ea9759;
@@ -408,5 +397,15 @@ div.vis-tooltip {
 }
 .unavailable {
     background-color: darkgray;
+}
+.dashboard-page-btn{
+  padding: 1%;
+}
+.dashboard-page-btn .v-btn__content{
+      color: #fff;
+}
+.accent {
+    background-color: #ff7107 !important;
+    border-color: #ff7107 !important;
 }
 </style>

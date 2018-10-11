@@ -308,5 +308,72 @@ export default {
     padding: 0 44px;
     margin-top: 0 !important;
 }
+.v-icon.close-wrap {
+    background-color: #ff7107;
+    color: #fff !important;
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 18px;
+}
+.edit-layout .flex {
+    margin-bottom: 10px;
+}
+.v-dialog.v-dialog--active,
+.v-dialog:not(.v-dialog--fullscreen) {
+    max-width: 800px;
+    width: 98%;
+}
+.headline-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.headline-wrap .text {
+    flex: 1;
+    font-size: 18px;
+    color: #000;
+    margin: 0;
+}
+.v-card__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+        margin-bottom: 5px;
+}
+.orange .v-btn__content {
+    color: #fff;
+}
+.close-wrap {
+    color: #ff7107 !important;
+}
+.orange {
+    padding: 0;
+    margin: 0;
+    min-width: 140px;
+    background-color: #ff7107 !important;
+    height: 40px;
+    font-size: 15px;
+}
+.v-dialog:not(.dialog--fullscreen) {
+    max-height: inherit;
+}
+.v-dialog:not(.v-dialog--fullscreen) .v-card__text {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.v-card__text .flex {
+    padding: 0 10px !important;
+}
+.v-card__text .btn-wrap {
+    float: right;
+}
+.v-dialog .v-card__title {
+    padding: 0 20px !important;
+}
+.v-card__title button + button {
+    margin-left: 1%;
+}
 </style>
 

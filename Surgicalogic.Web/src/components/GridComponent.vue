@@ -340,12 +340,7 @@ table.v-table tbody td:last-child {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-.headline-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
+
 .v-card {
     background-color: #fff;
     position: relative;
@@ -357,34 +352,9 @@ tr:nth-child(even) {
     padding: 0 20px;
     margin-bottom: 20px;
 }
-.v-card__title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-}
+
 .v-card__title.search-wrap {
     padding: 15px 0;
-}
-.v-card__title .flex {
-    padding: 0 10px;
-}
-.v-card__text .flex {
-    padding: 0 15px !important;
-}
-.text {
-    flex: 1;
-    font-size: 18px;
-    color: #000;
-    margin: 0;
-}
-.orange {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    height: 40px;
-    font-size: 15px;
 }
 .export-wrap {
     padding: 0;
@@ -393,14 +363,8 @@ tr:nth-child(even) {
     background-color: #ff7107 !important;
     height: 40px;
     font-size: 15px;
-    margin-right: 1%;
 }
-.orange .v-btn__content {
-    color: #fff;
-}
-.close-wrap {
-    color: #ff7107 !important;
-}
+
 .headline-wrap .btn--active .btn__content:before,
 .headline-wrap .btn:focus .btn__content:before,
 .headline-wrap .btn:hover .btn__content:before {
@@ -432,11 +396,7 @@ tr:nth-child(even) {
     text-align: left;
     color: #000;
 }
-.v-dialog.v-dialog--active,
-.v-dialog:not(.v-dialog--fullscreen) {
-    max-width: 800px;
-    width: 98%;
-}
+
 a {
     color: #009688;
 }
@@ -467,13 +427,7 @@ a {
     padding: 10px;
     min-height: 64px;
 }
-.v-dialog:not(.dialog--fullscreen) {
-    max-height: inherit;
-}
-.v-dialog:not(.v-dialog--fullscreen) .v-card__text {
-    max-height: 60vh;
-    overflow-y: auto;
-}
+
 .input-group__selections > div {
     display: inline-block !important;
     width: 100%;
@@ -542,19 +496,7 @@ input[type='date']::-webkit-inner-spin-button {
     display: none;
     -webkit-appearance: none;
 }
-.v-icon.close-wrap {
-    background-color: #ff7107;
-    color: #fff !important;
-    border-radius: 3px;
-    padding: 5px;
-    font-size: 18px;
-    position: relative;
-    top: -20px;
-    right: -30px;
-}
-.edit-layout .flex {
-    margin-bottom: 10px;
-}
+
 .margin-bottom-none {
     margin-bottom: 0 !important;
 }
