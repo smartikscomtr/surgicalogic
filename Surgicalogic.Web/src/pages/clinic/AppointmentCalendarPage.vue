@@ -319,9 +319,9 @@ export default {
 
                 vm.availableAppointmentsMessage =
                     vm.selectedTime +
-                    ' tarihine ' +
+                    ' saatine ' +
                     availablePerson +
-                    ' randevu daha alabilirsiniz.';
+                    ' randevu alabilirsiniz.';
                 vm.showModal = true;
             },
             false
