@@ -1,5 +1,5 @@
 <template>
-  <div class="container fluid grid-list-md">
+  <div class="container fluid grid-list-md appointment-calendar-wrap">
     <v-layout wrap edit-layout class="all-page-pad">
       <v-flex md3 sm3 xs12 class="doctor-detail">
         <img :src="doctorPictureUrl" height="150px" />
@@ -22,16 +22,13 @@
           <input type="hidden" id="time-1">
         </v-flex>
       </v-flex>
-      <v-dialog v-model="showModal"
-                persistent>
+      <v-dialog v-model="showModal" slot="activator" persistent>
         <v-card class="container fluid grid-list-md">
           <v-card-title>
             <div class="headline-wrap flex xs12 sm12 md12">
               <span class="text">
                 {{ formTitle }}
               </span>
-
-              <span>{{ availableAppointmentsMessage }}</span>
 
               <v-icon @click="cancel" class="close-wrap">
                 close
@@ -40,12 +37,9 @@
           </v-card-title>
 
           <v-card-text>
-            <v-layout wrap>
+            <v-layout wrap edit-layout>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="identityNumber"
-                              mask="###########"
-                              :label="$t('appointmentcalendar.identityNumber')"
-                              ma>
+                <v-text-field v-model="identityNumber" mask="###########" :label="$t('appointmentcalendar.identityNumber')">
                 </v-text-field>
               </v-flex>
 
@@ -69,27 +63,26 @@
               </v-flex>
 
               <v-flex xs12 sm12 md12>
-                <v-text-field v-model="address"
-                              :label="$t('appointmentcalendar.address')">
+                <v-text-field v-model="address" :label="$t('appointmentcalendar.address')">
                 </v-text-field>
               </v-flex>
-
             </v-layout>
           </v-card-text>
-          <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none class="btn-wrap">
-            <v-btn class="btnSave orange" @click="saveAppointment()">
-              Kaydet
-            </v-btn>
-          </v-flex>
+          <div class="v-card__text">
+            <div class="margin-bottom-none">
+              <span class="available-message">{{ availableAppointmentsMessage }}</span>
+              <v-btn class="btnSave orange" @click="saveAppointment()">
+                Kaydet
+              </v-btn>
+            </div>
+          </div>
+
         </v-card>
       </v-dialog>
-    </v-layout>
-        <snackbar-component :snackbar-visible="snackbarVisible"
-                            :savedMessage="savedMessage">
-        </snackbar-component>
 
-      </div>
-    </v-container>
+      <snackbar-component :snackbar-visible="snackbarVisible" :savedMessage="savedMessage">
+      </snackbar-component>
+    </v-layout>
   </div>
 </template>
 
@@ -100,33 +93,33 @@ export default {
     data() {
         const vm = this;
 
-    return {
-      menu: false,
-      date: null,
-      dateFormatted: null,
-      interval:null,
-      startTime:null,
-      endTime:null,
-      disabled:[],
-      picker: null,
-      doctorName: null,
-      doctorPictureUrl: null,
-      doctorBranchNames: null,
-      selectedTime: null,
-      dialog: false,
-      personPerPeriod:0,
-      selectedTimes:[],
-      availableAppointmentsMessage: "",
-      identityNumber: null,
-      firstName: null,
-      lastName: null,
-      phone: null,
-      address: null,
-      maxDateDayCount:null,
-      snackbarVisible: null,
-      savedMessage: null
-    };
-  },
+        return {
+            menu: false,
+            date: null,
+            dateFormatted: null,
+            interval: null,
+            startTime: null,
+            endTime: null,
+            disabled: [],
+            picker: null,
+            doctorName: null,
+            doctorPictureUrl: null,
+            doctorBranchNames: null,
+            selectedTime: null,
+            showModal: false,
+            personPerPeriod: 0,
+            selectedTimes: [],
+            availableAppointmentsMessage: '',
+            identityNumber: null,
+            firstName: null,
+            lastName: null,
+            phone: null,
+            address: null,
+            maxDateDayCount: null,
+            snackbarVisible: null,
+            savedMessage: null
+        };
+    },
 
     watch: {
         date(val) {
@@ -203,47 +196,52 @@ export default {
         destroyPicker() {
             const vm = this;
 
-      vm.dialog = false;
-      vm.picker.setTime('');
-      vm.picker.destroy();
-    },
+            vm.showModal = false;
+            vm.picker.setTime('');
+            vm.picker.destroy();
+        },
 
         saveAppointment() {
             const vm = this;
 
-      vm.$store.dispatch('insertAppointmentCalendar', {
-        identityNumber: vm.identityNumber,
-        firstName: vm.firstName,
-        lastName: vm.lastName,
-        phone: vm.phone,
-        address: vm.address,
-        appointmentDate: vm.date,
-        appointmentTime : vm.selectedTime,
-        personnelId: vm.$route.query.doctorId
-      }).then(response => {
-        if (response.data.info.succeeded) {
-            vm.savedMessage = this.$i18n.t('appointmentcalendar.appointmentSavedSuccessfully')
-        }
-        else {
-            vm.savedMessage = this.$i18n.t('appointmentcalendar.anErrorOccurred')
-        }
+            vm.$store
+                .dispatch('insertAppointmentCalendar', {
+                    identityNumber: vm.identityNumber,
+                    firstName: vm.firstName,
+                    lastName: vm.lastName,
+                    phone: vm.phone,
+                    address: vm.address,
+                    appointmentDate: vm.date,
+                    appointmentTime: vm.selectedTime,
+                    personnelId: vm.$route.query.doctorId
+                })
+                .then(response => {
+                    if (response.data.info.succeeded) {
+                        vm.savedMessage = this.$i18n.t(
+                            'appointmentcalendar.appointmentSavedSuccessfully'
+                        );
+                    } else {
+                        vm.savedMessage = this.$i18n.t(
+                            'appointmentcalendar.anErrorOccurred'
+                        );
+                    }
 
-        vm.snackbarVisible = true;
+                    vm.snackbarVisible = true;
 
-        setTimeout(() => {
-          vm.snackbarVisible = false;
-        }, 3000)
+                    setTimeout(() => {
+                        vm.snackbarVisible = false;
+                    }, 3000);
 
-        vm.dialog = false;
-        vm.getAppointmentCalendar();
-        vm.picker.setTime('');
-        vm.identityNumber= null,
-        vm.firstName= null,
-        vm.lastName= null,
-        vm.phone= null,
-        vm.address= null
-      });
-    },
+                    vm.showModal = false;
+                    vm.getAppointmentCalendar();
+                    vm.picker.setTime('');
+                    (vm.identityNumber = null),
+                        (vm.firstName = null),
+                        (vm.lastName = null),
+                        (vm.phone = null),
+                        (vm.address = null);
+                });
+        },
 
         getAppointmentCalendar() {
             const vm = this;
@@ -305,20 +303,25 @@ export default {
                     (vm.doctorPictureUrl = response.data.pictureUrl);
             });
 
-      vm.$store.dispatch('getAppointmentDays').then(response => {
-        vm.maxDateDayCount = response.data
-      });
+          vm.$store.dispatch('getAppointmentDays').then(response => {
+                vm.maxDateDayCount = response.data
+          });
 
-      document.body.addEventListener('change.appo.picker', function(e) {
-        vm.selectedTime = e.time.h + ":" + (e.time.m == 0 ? "0" + e.time.m :e.time.m);
+        document.body.addEventListener(
+            'change.appo.picker',
+            function(e) {
+                vm.selectedTime =
+                    e.time.h +
+                    ':' +
+                    (e.time.m == 0 ? '0' + e.time.m : e.time.m);
 
                 var availablePerson = vm.personPerPeriod;
 
-        for (let index = 0; index < vm.selectedTimes.length; index++) {
-          if(vm.selectedTimes[index] == vm.selectedTime) {
-            availablePerson--;
-          }
-        }
+                for (let index = 0; index < vm.selectedTimes.length; index++) {
+                    if (vm.selectedTimes[index] == vm.selectedTime) {
+                        availablePerson--;
+                    }
+                }
 
                 vm.availableAppointmentsMessage =
                     vm.selectedTime +
@@ -451,9 +454,22 @@ export default {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+.available-message {
+    font-size: 13px;
+}
 .theme--light .v-tabs__bar .v-tabs__div {
     color: rgb(250, 250, 250);
 }
+.appointment-calendar-wrap .block-container .v-input {
+    margin-top: 0;
+}
+.margin-bottom-none {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
 @media (min-width: 960px) {
     .block-container {
         padding-left: 40px !important;

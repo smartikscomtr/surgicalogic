@@ -69,14 +69,15 @@
               </v-flex>
             </v-layout>
           </v-card-text>
-
-          <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none
-                  class="btn-wrap">
+          <v-card-text>
+             <div class="margin-bottom-none btn-wrap">
             <v-btn class="btnSave orange"
                     @click.native="save">
               Kaydet
             </v-btn>
-        </v-flex>
+        </div>
+          </v-card-text>
+
       </v-card>
     </v-dialog>
 
