@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
@@ -8,7 +9,9 @@ using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -94,9 +97,13 @@ namespace Surgicalogic.Api.Controllers
         /// <param name="item"></param>
         /// <returns>PersonnelOutputModel</returns>
         [Route("Personnel/InsertPersonnel")]
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
         public async Task<ResultModel<PersonnelOutputModel>> InsertPersonnel([FromBody] PersonnelInputModel item)
         {
+            MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(item.PersonnelPhoto));
+            Image i = Image.FromStream(ms);
+            i.Save(@"C:\Users\GURKANK\Desktop\ziraat\gk1.jpg");
+
             var result = new ResultModel<PersonnelOutputModel>();
             var personnelItem = new PersonnelModel()
             {

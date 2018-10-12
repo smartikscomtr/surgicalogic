@@ -1,16 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Surgicalogic.Planning.Engine;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
-using Surgicalogic.Planning.ORTools;
 using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace Surgicalogic.Planning.Test
 {
-    [TestClass]
     public class UnitTests
     {
-        [TestMethod]
+        [Fact]
         public void TwoOperationsTwoRoomTwoDoctorTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -61,7 +60,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -70,13 +69,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TwoOperationsOneDoctorTwoRoomTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -125,7 +124,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -134,13 +133,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void RoomRestrictionTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -194,7 +193,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -203,13 +202,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TooManyOperationsTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -344,7 +343,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -353,13 +352,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ConsecutiveOperationsTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -476,7 +475,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -485,13 +484,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void NotEnoughTimeTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -547,12 +546,12 @@ namespace Surgicalogic.Planning.Test
             {
                 if (item.Operations.Count > 0)
                 {
-                    Assert.Fail();
+                    Assert.True(false);
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ChangedPeriod()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -641,7 +640,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -650,13 +649,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void SecondChangedPeriod()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -804,7 +803,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -813,14 +812,14 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
 
         }
 
-        [TestMethod]
+        [Fact]
         public void SecondRoomResctrictionTest()
         {
             var surgeryPlan = new DailyPlanInputModel
@@ -1009,7 +1008,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -1018,13 +1017,13 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Operations()
         {
 
@@ -1170,7 +1169,7 @@ namespace Surgicalogic.Planning.Test
 
             if (actual.Rooms.Count == 0)
             {
-                Assert.Fail();
+                Assert.True(false);
             }
 
             for (int i = 0; i < actual.Rooms.Count; i++)
@@ -1179,7 +1178,7 @@ namespace Surgicalogic.Planning.Test
                 {
                     if (actual.Rooms[i].Id != expected.Rooms[i].Id || actual.Rooms[i].Operations[j].Id != expected.Rooms[i].Operations[j].Id || actual.Rooms[i].Operations[j].StartDate != expected.Rooms[i].Operations[j].StartDate)
                     {
-                        Assert.Fail();
+                        Assert.True(false);
                     }
                 }
             }

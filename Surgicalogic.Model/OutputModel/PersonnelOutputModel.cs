@@ -15,6 +15,8 @@ namespace Surgicalogic.Model.OutputModel
         public string BranchNames { get; set; }
         public List<int> BranchIds { get; set; }
         public int WorkTypeId { get; set; }
+        public byte[] PersonnelPhoto { get; set; }
+        public string PersonnelTitle { get; set; }
         public string PersonnelTitleName { get; set; }
         public string PersonnelCategoryName{ get; set; }
         public string WorkTypeName { get; set; }

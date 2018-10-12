@@ -51,12 +51,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj">
-      <Project>{461B62AB-3367-4B20-9745-FBF84DB33E58}</Project>
-      <Name>Surgicalogic.Planning.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

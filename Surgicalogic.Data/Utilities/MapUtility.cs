@@ -205,6 +205,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Personnel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Where(x => x.IsActive && x.Branch.IsActive).Select(x => x.Branch.Name))))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+                .ForMember(dest => dest.PersonnelTitle, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name + " " + src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.PersonnelCategoryName, opt => opt.MapFrom(src => src.PersonnelCategory.Name + " " + src.FirstName + " " + src.LastName))
                 .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)))

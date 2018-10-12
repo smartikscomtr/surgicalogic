@@ -1,11 +1,13 @@
-﻿using Surgicalogic.Planning.Model.InputModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using Surgicalogic.Planning.Engine;
+using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
-using Surgicalogic.Planning.ORTools;
-using System.Web.Http;
 
 namespace Surgicalogic.Planning.Api.Controllers
 {
-    public class PlanController : ApiController
+    [Produces("application/json")]
+    [Route("api/Plan")]
+    public class PlanController : Controller
     {
         public DailyPlanOutputModel Post([FromBody]DailyPlanInputModel input)
         {

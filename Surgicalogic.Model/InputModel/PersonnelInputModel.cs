@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 
 namespace Surgicalogic.Model.InputModel
 {
@@ -15,5 +16,6 @@ namespace Surgicalogic.Model.InputModel
         public int WorkTypeId { get; set; }
         public List<int> DoctorCalendars { get; set; }
         public List<int> AppointmentCalendars { get; set; }
+        public string PersonnelPhoto { get; set; }
     }
 }

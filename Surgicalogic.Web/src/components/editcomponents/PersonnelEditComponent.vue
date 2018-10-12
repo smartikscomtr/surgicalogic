@@ -41,6 +41,18 @@
               </v-text-field>
             </v-flex>
 
+            <v-flex xs12 sm6 md6>
+					 <img :src="imageUrl" height="50" v-if="imageUrl"/>
+					<v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+					<input
+						type="file"
+						style="display: none"
+						ref="image"
+						accept="image/*"
+						@change="onFilePicked"
+					>
+				</v-flex>
+
             <v-flex xs12 sm12 md12>
               <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" multiple chips deletable-chips :filter="customFilter" item-text="name" item-value="id">
               </v-autocomplete>
@@ -93,7 +105,10 @@ export default {
     data() {
         return {
             snackbarVisible: null,
-            savedMessage: this.$i18n.t('personnel.personnelSaved')
+            savedMessage: this.$i18n.t('personnel.personnelSaved'),
+            imageName: '',
+            imageUrl: '',
+            imageFile: ''
         };
     },
 
@@ -241,7 +256,8 @@ export default {
                         personnelCategoryId: vm.editAction.personnelCategoryId,
                         personnelTitleId: vm.editAction.personnelTitleId,
                         branches: vm.editAction.branchId,
-                        workTypeId: vm.editAction.workTypeId
+                        workTypeId: vm.editAction.workTypeId,
+                        personnelPhoto: vm.imageUrl
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
@@ -263,7 +279,8 @@ export default {
                         personnelCategoryId: vm.editAction.personnelCategoryId,
                         personnelTitleId: vm.editAction.personnelTitleId,
                         branches: vm.editAction.branchId,
-                        workTypeId: vm.editAction.workTypeId
+                        workTypeId: vm.editAction.workTypeId,
+                        personnelPhoto: vm.imageUrl
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
@@ -276,6 +293,31 @@ export default {
             }
 
             vm.showModal = false;
+        },
+
+         pickFile () {
+            this.$refs.image.click ()
+        },
+
+        onFilePicked (e) {
+          const files = e.target.files
+          if(files[0] !== undefined) {
+            debugger;
+            this.imageName = files[0].name
+            if(this.imageName.lastIndexOf('.') <= 0) {
+              return
+            }
+            const fr = new FileReader ()
+            fr.readAsDataURL(files[0])
+            fr.addEventListener('load', () => {
+              this.imageUrl = fr.result
+              this.imageFile = files[0] // this is an image file that can be sent to server...
+            })
+          } else {
+            this.imageName = ''
+            this.imageFile = ''
+            this.imageUrl = ''
+          }
         }
     }
 };

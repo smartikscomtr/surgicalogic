@@ -4,7 +4,9 @@
       <v-flex md3 sm3 xs12 class="doctor-detail">
         <img :src="doctorPictureUrl" height="150px" />
 
-        <h4> {{ doctorName }} </h4>
+        <h4>  {{ doctorName }} </h4>
+        <h4>  {{ doctorTitle }} </h4>
+
 
         <h5> {{ doctorBranchNames }}</h5>
       </v-flex>
@@ -103,6 +105,7 @@ export default {
             disabled: [],
             picker: null,
             doctorName: null,
+            doctorTitle: null,
             doctorPictureUrl: null,
             doctorBranchNames: null,
             selectedTime: null,
@@ -298,6 +301,7 @@ export default {
         vm.$store
             .dispatch('getPersonnelById', vm.$route.query.doctorId)
             .then(response => {
+              (vm.doctorTitle = response.data.personnelTitle),
                 (vm.doctorName = response.data.fullName),
                     (vm.doctorBranchNames = response.data.branchNames),
                     (vm.doctorPictureUrl = response.data.pictureUrl);
@@ -469,7 +473,10 @@ export default {
     justify-content: space-between;
     padding: 0 5px;
 }
-
+.accent {
+    background-color: #ff7107 !important;
+    border-color: #ff7107 !important;
+}
 @media (min-width: 960px) {
     .block-container {
         padding-left: 40px !important;

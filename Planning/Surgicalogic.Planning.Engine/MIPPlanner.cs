@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Surgicalogic.Planning.ORTools
+namespace Surgicalogic.Planning.Engine
 {
     public class MIPPlanner
     {

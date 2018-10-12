@@ -40,13 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Common", "Surg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Planning", "Planning", "{3EA6C97C-3339-418C-884F-BE49CB746009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Test", "Planning\Surgicalogic.Planning.Test\Surgicalogic.Planning.Test.csproj", "{932C6829-79D6-40C3-BBCE-67DE040938CC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Model", "Planning\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj", "{461B62AB-3367-4B20-9745-FBF84DB33E58}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.ORTools", "Planning\Surgicalogic.Planning.ORTools\Surgicalogic.Planning.ORTools.csproj", "{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Api", "Planning\Surgicalogic.Planning.Api\Surgicalogic.Planning.Api.csproj", "{F0CEC99D-5FAB-42E7-97CE-A6309F2EDEA1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Smartiks.Framework", "Smartiks.Framework", "{054CE7F7-FC51-4B55-A996-7D28154CDB40}"
 EndProject
@@ -57,6 +51,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Extensions", "Smartiks.Framework\Smartiks.Framework.IO.Extensions\Smartiks.Framework.IO.Extensions.csproj", "{0D6955A8-43D9-4D82-A3A6-7953AA319A55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Test", "Surgicalogic.Test\Surgicalogic.Test.csproj", "{ED8B6175-760D-46A4-AB87-54890C6A34E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Model", "Planning\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj", "{A7182544-90B8-496A-8B9A-9B29E6E65FF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Engine", "Planning\Surgicalogic.Planning.Engine\Surgicalogic.Planning.Engine.csproj", "{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Api", "Planning\Surgicalogic.Planning.Api\Surgicalogic.Planning.Api.csproj", "{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Test", "Planning\Surgicalogic.Planning.Test\Surgicalogic.Planning.Test.csproj", "{CE67706A-6CE5-4834-ABF8-F44704FE86A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,22 +97,10 @@ Global
 		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{932C6829-79D6-40C3-BBCE-67DE040938CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{932C6829-79D6-40C3-BBCE-67DE040938CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{932C6829-79D6-40C3-BBCE-67DE040938CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{932C6829-79D6-40C3-BBCE-67DE040938CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{461B62AB-3367-4B20-9745-FBF84DB33E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{461B62AB-3367-4B20-9745-FBF84DB33E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{461B62AB-3367-4B20-9745-FBF84DB33E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{461B62AB-3367-4B20-9745-FBF84DB33E58}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0CEC99D-5FAB-42E7-97CE-A6309F2EDEA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0CEC99D-5FAB-42E7-97CE-A6309F2EDEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0CEC99D-5FAB-42E7-97CE-A6309F2EDEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0CEC99D-5FAB-42E7-97CE-A6309F2EDEA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{632C76C4-F109-4E13-8D8E-00F03CCDAD19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{632C76C4-F109-4E13-8D8E-00F03CCDAD19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{632C76C4-F109-4E13-8D8E-00F03CCDAD19}.Release|Any CPU.Build.0 = Release|Any CPU
@@ -124,18 +114,35 @@ Global
 		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{932C6829-79D6-40C3-BBCE-67DE040938CC} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{461B62AB-3367-4B20-9745-FBF84DB33E58} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{F0CEC99D-5FAB-42E7-97CE-A6309F2EDEA1} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 		{632C76C4-F109-4E13-8D8E-00F03CCDAD19} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
 		{076DFF4D-04BF-433E-93E1-09214035C400} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
 		{0D6955A8-43D9-4D82-A3A6-7953AA319A55} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
+		{A7182544-90B8-496A-8B9A-9B29E6E65FF6} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{CE67706A-6CE5-4834-ABF8-F44704FE86A2} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3DD0261F-E73B-45A0-9B9B-0DD5E2904F15}
