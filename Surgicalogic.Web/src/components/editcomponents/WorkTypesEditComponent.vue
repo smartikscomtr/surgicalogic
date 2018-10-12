@@ -14,10 +14,11 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm12 md12>
-              <v-text-field v-model="editAction['name']" :label="$t('worktypes.workType')">
+              <v-text-field v-model="editAction['name']"  :rules="required" :label="$t('worktypes.workType')">
               </v-text-field>
             </v-flex>
 
@@ -35,6 +36,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -68,7 +70,14 @@ export default {
     data() {
         return {
             snackbarVisible: null,
-            savedMessage: this.$i18n.t('worktypes.workTypeSaved')
+            savedMessage: this.$i18n.t('worktypes.workTypeSaved'),
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            multipleRequired: [
+              v => v.length > 0 || this.$i18n.t('common.required')
+            ]
         };
     },
 
@@ -100,14 +109,23 @@ export default {
     },
 
     methods: {
-        cancel() {
+          cancel() {
             const vm = this;
 
+            vm.clear();
             vm.showModal = false;
-        },
+          },
 
-        save() {
+          clear () {
+              this.$refs.form.reset()
+          },
+
+          save() {
             const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             vm.snackbarVisible = false;
 
@@ -146,6 +164,7 @@ export default {
             }
 
             vm.showModal = false;
+            vm.clear();
         }
     }
 };

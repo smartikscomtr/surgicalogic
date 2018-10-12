@@ -14,30 +14,50 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['name']" :label="$t('equipments.name')">
+              <v-text-field v-model="editAction['name']"
+                            :rules="required"
+                            :label="$t('equipments.name')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['code']" :label="$t('equipments.equipmentCode')">
+              <v-text-field v-model="editAction['code']"
+                            :rules="required"
+                            :label="$t('equipments.equipmentCode')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectEquipmentType" :items="equipmentTypes" :label="$t('equipmenttypes.equipmentType')" :filter="customFilter" item-text="name" item-value="id">
+              <v-autocomplete v-model="selectEquipmentType"
+                              :items="equipmentTypes"
+                              :label="$t('equipmenttypes.equipmentType')"
+                              :filter="customFilter"
+                              item-text="name"
+                              item-value="id">
               </v-autocomplete>
             </v-flex>
 
             <v-flex xs12 sm6 md6 input-group-checkbox>
-              <v-checkbox v-model="editAction['isPortable']" :label="$t('equipments.portable')" color="primary">
+              <v-checkbox v-model="editAction['isPortable']"
+                          :label="$t('equipments.portable')"
+                          color="primary">
               </v-checkbox>
             </v-flex>
 
             <v-flex v-if="!editAction['isPortable']" xs12 sm12 md12>
-              <v-autocomplete v-model="selectOperatingRoom" :items="operatingRooms" :label="$t('operatingrooms.operatingRoom')" :filter="customFilter" multiple chips deletable-chips item-text="name" item-value="id">
+              <v-autocomplete v-model="selectOperatingRoom"
+                              :items="operatingRooms"
+                              :label="$t('operatingrooms.operatingRoom')"
+                              :filter="customFilter"
+                              multiple
+                              chips
+                              deletable-chips
+                              item-text="name"
+                              item-value="id">
               </v-autocomplete>
             </v-flex>
 
@@ -55,6 +75,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -88,7 +109,14 @@ export default {
     data() {
         return {
             snackbarVisible: null,
-            savedMessage: this.$i18n.t('equipments.equipmentSaved')
+            savedMessage: this.$i18n.t('equipments.equipmentSaved'),
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            multipleRequired: [
+              v => v.length > 0 || this.$i18n.t('common.required')
+            ]
         };
     },
 
@@ -190,14 +218,23 @@ export default {
                 .toLowerCase();
         },
 
-        cancel() {
-            const vm = this;
+      cancel() {
+        const vm = this;
 
-            vm.showModal = false;
-        },
+        vm.clear();
+        vm.showModal = false;
+      },
 
-        save() {
-            const vm = this;
+      clear () {
+          this.$refs.form.reset()
+      },
+
+      save() {
+        const vm = this;
+
+        if (!vm.$refs.form.validate()) {
+          return;
+        }
 
             vm.snackbarVisible = false;
 
@@ -247,6 +284,7 @@ export default {
             }
 
             vm.showModal = false;
+            vm.clear();
         }
     }
 };

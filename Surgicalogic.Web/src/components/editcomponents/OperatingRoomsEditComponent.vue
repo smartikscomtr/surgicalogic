@@ -14,20 +14,26 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['name']" :label="$t('operatingrooms.operatingRoom')">
+              <v-text-field v-model="editAction['name']"
+                            :rules="required"
+                            :label="$t('operatingrooms.operatingRoom')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm4 md4 input-group-checkbox>
-              <v-checkbox v-model="editAction['isAvailable']" :label="$t('operatingrooms.isAvailable')" color="primary">
+              <v-checkbox v-model="editAction['isAvailable']"
+                          :label="$t('operatingrooms.isAvailable')"
+                          color="primary">
               </v-checkbox>
             </v-flex>
 
             <v-flex xs12 sm3 md3>
-              <v-text-field v-model="editAction['location']" :label="$t('operatingrooms.location')">
+              <v-text-field v-model="editAction['location']"
+                            :label="$t('operatingrooms.location')">
               </v-text-field>
             </v-flex>
 
@@ -70,6 +76,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -104,7 +111,14 @@ export default {
         return {
             snackbarVisible: null,
             savedMessage: this.$i18n.t('operatingrooms.operatingRoomSaved'),
-            mask: '###'
+            mask: '###',
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            multipleRequired: [
+              v => v.length > 0 || this.$i18n.t('common.required')
+            ]
         };
     },
 
@@ -195,11 +209,20 @@ export default {
         cancel() {
             const vm = this;
 
+            vm.clear();
             vm.showModal = false;
-        },
+          },
 
-        save() {
+          clear () {
+              this.$refs.form.reset()
+          },
+
+          save() {
             const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             vm.snackbarVisible = false;
 
@@ -260,6 +283,7 @@ export default {
             }
 
             vm.showModal = false;
+            vm.clear();
         }
     }
 };

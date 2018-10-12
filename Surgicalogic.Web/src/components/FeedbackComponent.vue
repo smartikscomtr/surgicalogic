@@ -17,6 +17,7 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
               <v-flex xs12 sm12 md12>
@@ -27,6 +28,7 @@
 
             <v-flex xs12 sm12 md12>
               <v-textarea v-model="body"
+                          :rules="required"
                           rows="3"
                           :label="$t('feedbacks.body')">
               </v-textarea>
@@ -39,6 +41,7 @@
             </v-flex>
           </v-layout>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -57,7 +60,12 @@ export default {
       showModal: true,
       body: null,
       email: null,
-      savedMessage: this.$i18n.t('feedbacks.feedbackSaved')
+      savedMessage: this.$i18n.t('feedbacks.feedbackSaved'),
+      valid: true,
+      required: [
+        v => !!v || this.$i18n.t('common.required'),
+        v => (v && v.length >= 10) || this.$i18n.t('common.moreThanTenCharacters')
+      ]
     }
   },
 
@@ -73,11 +81,20 @@ export default {
     cancel() {
       const vm = this;
 
-      vm.$emit("showModal", false);
+      vm.clear();
+      vm.showModal = false;
+    },
+
+    clear () {
+        this.$refs.form.reset()
     },
 
     save() {
       const vm = this;
+
+      if (!vm.$refs.form.validate()) {
+        return;
+      }
 
       vm.snackbarVisible = false;
 

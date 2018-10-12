@@ -20,5 +20,8 @@
   "theDataWasSuccessfullyDeleted": "The data was successfully deleted.",
   "viewRecord": "View Record",
   "editRecord": "Edit Record",
-  "deleteRecord": "Delete Record"
+  "deleteRecord": "Delete Record",
+  "required":"Required Field",
+  "endDateMustBeBiggerThanStart": "The End Date Must Be Bigger Than Start Date",
+  "moreThanTenCharacters": "This field must be more than 10 characters"
 }

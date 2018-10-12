@@ -14,15 +14,20 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['firstName']" :label="$t('personnel.firstName')">
+              <v-text-field v-model="editAction['firstName']"
+                            :rules="required"
+                            :label="$t('personnel.firstName')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['lastName']" :label="$t('personnel.lastName')">
+              <v-text-field v-model="editAction['lastName']"
+                            :rules="required"
+                            :label="$t('personnel.lastName')">
               </v-text-field>
             </v-flex>
 
@@ -37,11 +42,13 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['personnelCode']" :label="$t('personnel.personnelCode')">
+              <v-text-field v-model="editAction['personnelCode']"
+                            :rules="required"
+                            :label="$t('personnel.personnelCode')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm6 md6>
+            <!-- <v-flex xs12 sm6 md6>
 					 <img :src="imageUrl" height="50" v-if="imageUrl"/>
 					<v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
 					<input
@@ -51,7 +58,7 @@
 						accept="image/*"
 						@change="onFilePicked"
 					>
-				</v-flex>
+				</v-flex> -->
 
             <v-flex xs12 sm12 md12>
               <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" multiple chips deletable-chips :filter="customFilter" item-text="name" item-value="id">
@@ -72,6 +79,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -108,7 +116,14 @@ export default {
             savedMessage: this.$i18n.t('personnel.personnelSaved'),
             imageName: '',
             imageUrl: '',
-            imageFile: ''
+            imageFile: '',
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            multipleRequired: [
+              v => v.length > 0 || this.$i18n.t('common.required')
+            ]
         };
     },
 
@@ -234,14 +249,23 @@ export default {
                 .toLowerCase();
         },
 
-        cancel() {
+          cancel() {
             const vm = this;
 
+            vm.clear();
             vm.showModal = false;
-        },
+          },
 
-        save() {
+          clear () {
+              this.$refs.form.reset()
+          },
+
+          save() {
             const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             vm.snackbarVisible = false;
             //Edit personnel
@@ -293,6 +317,7 @@ export default {
             }
 
             vm.showModal = false;
+            vm.clear();
         },
 
          pickFile () {

@@ -17,10 +17,12 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
             <v-layout wrap edit-layout>
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['name']"
+                              :rules="required"
                               :label="$t('operationtypes.operationType')">
                 </v-text-field>
               </v-flex>
@@ -29,6 +31,7 @@
                 <v-autocomplete v-model="selectBranch"
                                 :items="branches"
                                 :label="$t('branches.branch')"
+                                :rules="required"
                                 :filter="customFilter"
                                 item-text="name"
                                 item-value="id">
@@ -52,6 +55,7 @@
                 <v-autocomplete v-model="selectOperatingRoom"
                                 :items="operatingRooms"
                                 :label="$t('operatingrooms.operatingRoom')"
+                                :rules="multipleRequired"
                                  multiple
                                  chips
                                  deletable-chips
@@ -77,7 +81,7 @@
             </v-btn>
         </div>
           </v-card-text>
-
+      </v-form>
       </v-card>
     </v-dialog>
 
@@ -113,7 +117,14 @@ export default {
   data() {
     return {
       snackbarVisible: null,
-      savedMessage: this.$i18n.t('operationtypes.operationTypeSaved')
+      savedMessage: this.$i18n.t('operationtypes.operationTypeSaved'),
+      valid: true,
+      required: [
+        v => !!v || this.$i18n.t('common.required')
+      ],
+      multipleRequired: [
+        v => v.length > 0 || this.$i18n.t('common.required')
+      ]
     };
   },
 
@@ -220,11 +231,20 @@ export default {
     cancel() {
       const vm = this;
 
+      vm.clear();
       vm.showModal = false;
+    },
+
+    clear () {
+        this.$refs.form.reset()
     },
 
     save() {
       const vm = this;
+
+      if (!vm.$refs.form.validate()) {
+        return;
+      }
 
       vm.snackbarVisible = false;
       //Edit operation type
@@ -271,6 +291,7 @@ export default {
       }
 
       vm.showModal = false;
+      vm.clear();
     }
   }
 };
