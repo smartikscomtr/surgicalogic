@@ -45,6 +45,8 @@ namespace Surgicalogic.Services.Stores
                     PersonnelId = personnelId,
                     BranchId = branchId
                 });
+
+                await SaveChangesAsync();
             }
 
             foreach (var branchId in removedBranches)

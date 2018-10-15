@@ -111,7 +111,11 @@ const personnelModule = {
 
     insertPersonnel(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('Personnel/InsertPersonnel', payload)
+        axios.post('Personnel/InsertPersonnel', payload, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+        })
           .then(response => {
             if (response.data.info.succeeded == true) {
               context.commit('insertPersonnel', {
@@ -141,7 +145,11 @@ const personnelModule = {
 
     updatePersonnel(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('Personnel/UpdatePersonnel', payload)
+        axios.post('Personnel/UpdatePersonnel', payload, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+        })
           .then(response => {
             context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
             resolve(response);

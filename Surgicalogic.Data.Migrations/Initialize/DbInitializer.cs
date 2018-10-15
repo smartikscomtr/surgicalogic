@@ -271,7 +271,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Bayraktutar",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "tuba.jpg",
                     CreatedDate = DateTime.Now
@@ -284,7 +283,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Kesebir",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "gurkan.jpg",
                     CreatedDate = DateTime.Now
@@ -297,7 +295,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Kuğu",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "berk.jpg",
                     CreatedDate = DateTime.Now
@@ -310,7 +307,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Dara",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "deniz.jpg",
                     CreatedDate = DateTime.Now
@@ -323,7 +319,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Su",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "kenan.jpg",
                     CreatedDate = DateTime.Now
@@ -336,7 +331,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Bal",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "mehmet.jpg",
                     CreatedDate = DateTime.Now
@@ -349,7 +343,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Ural",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "selim.jpg",
                     CreatedDate = DateTime.Now
@@ -362,7 +355,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     LastName = "Kara",
                     PersonnelCategoryId = category.Id,
                     PersonnelTitleId = title.Id,
-                    BranchId = branch.Id,
                     WorkTypeId = workType.Id,
                     PictureUrl = "ugur.jpg",
                     CreatedDate = DateTime.Now
