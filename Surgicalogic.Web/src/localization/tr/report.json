@@ -1,0 +1,9 @@
+{
+  "overtimeReportTitle":"Süresinde Bitmeyen Operasyonlar",
+  "roomName": "Oda",
+  "operationName": "Operasyon",
+  "operationDate": "Tarih",
+  "realizedStartDate":"Başlangıç",
+  "realizedEndDate":"Bitiş",
+  "overtime":"Zaman Farkı"
+}

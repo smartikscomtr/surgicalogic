@@ -52,6 +52,9 @@ import AppointmentListPage from "@/pages/clinic/AppointmentListPage";
 import ClinicPage from "@/pages/clinic/ClinicPage";
 import AppointmentCalendarPage from "@/pages/clinic/AppointmentCalendarPage";
 
+//Registering report Pages
+import OvertimeReportPage from "@/pages/report/OvertimeReportPage";
+
 export default new VueRouter({
   mode: 'history',
   routes: [
@@ -95,6 +98,11 @@ export default new VueRouter({
       path: '/feedbackpage',
       name: 'FeedbackPage',
       component: FeedbackPage
+    },
+    {
+      path: '/overtimereportpage',
+      name: 'OvertimeReportPage',
+      component: OvertimeReportPage
     },
     {
       path: '/loginpage',

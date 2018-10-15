@@ -22,6 +22,7 @@ import * as personnelcategory from './personnelcategory.json';
 import * as personneltitle from './personneltitle.json';
 import * as plan from './plan.json';
 import * as planarrangements from './planarrangements.json';
+import * as report from './report.json';
 import * as settings from './settings.json';
 import * as users from './users.json';
 import * as worktypes from './worktypes.json';
@@ -44,6 +45,7 @@ export default {
   personneltitle,
   plan,
   planarrangements,
+  report,
   settings,
   users,
   worktypes
