@@ -1,5 +1,5 @@
 <template>
-  <div class="container fluid grid-list-md clinic-page">
+  <div class="container fluid grid-list-md clinic-page" id="section-to-print" >
     <v-layout wrap edit-layout class="all-page-pad">
       <v-flex lg4 md3 sm6 xs12>
         <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box :filter="customFilter" @change="filterBranch()" item-text="name" item-value="id">
@@ -184,6 +184,29 @@ export default {
 </script>
 
 <style>
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #section-to-print,
+    #section-to-print * {
+        visibility: visible;
+    }
+    .v-content {
+        position: relative;
+    }
+    #section-to-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .navigation.v-navigation-drawer {
+        display: none !important;
+    }
+    main.v-content {
+        padding: 0 !important;
+    }
+}
 .clinic-page .column-cards > div {
     margin-bottom: 10px;
 }

@@ -5,6 +5,7 @@
         {{ title }}
       </h2>
     </div>
+
     <div class="container">
       <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
         <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
@@ -27,7 +28,7 @@
         </v-btn>
       </v-card-title>
 
-      <v-data-table :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
+      <v-data-table id="section-to-print" :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
         <v-progress-linear slot="progress" color="teal" indeterminate>
         </v-progress-linear>
 
@@ -302,6 +303,33 @@ export default {
 </script>
 
 <style>
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #section-to-print,
+    #section-to-print * {
+        visibility: visible;
+    }
+    .v-content {
+        position: relative;
+    }
+    #section-to-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .navigation.v-navigation-drawer {
+        display: none !important;
+    }
+    main.v-content {
+        padding: 0 !important;
+    }
+}
+#section-to-print {
+    color: pink;
+    background: #aaaaaa;
+}
 .v-table__overflow .v-btn__content .v-icon {
     color: #000;
 }
@@ -504,5 +532,4 @@ input[type='date']::-webkit-inner-spin-button {
     background-color: #ee8b41;
     color: #fff !important;
 }
-
 </style>
