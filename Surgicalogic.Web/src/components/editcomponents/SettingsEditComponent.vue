@@ -14,30 +14,31 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['name']" :label="$t('settings.name')">
+              <v-text-field v-model="editAction['name']" :rules="required"  :label="$t('settings.name')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="0">
-              <v-autocomplete v-model="selectSettingDataType" :items="settingDataTypes" :label="$t('settings.settingDataType')" :filter="customFilter" @change="settingDataTypeChanged()" disabled="true" item-text="name" item-value="id">
+              <v-autocomplete v-model="selectSettingDataType" :items="settingDataTypes" :label="$t('settings.settingDataType')" :filter="customFilter" @change="settingDataTypeChanged()"  item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="showInt">
-              <v-text-field v-model="editAction['intValue']" :label="$t('settings.value')">
+              <v-text-field v-model="editAction['intValue']"  :rules="requiredInt" :label="$t('settings.value')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="showString">
-              <v-text-field v-model="editAction['stringValue']" :label="$t('settings.value')">
+              <v-text-field v-model="editAction['stringValue']"  :rules="requiredString" :label="$t('settings.value')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="showTime">
-              <v-text-field v-model="editAction['timeValue']" :label="$t('settings.value')" :value="editAction['timeValue']" type="time">
+              <v-text-field v-model="editAction['timeValue']"  :rules="requiredTime" :label="$t('settings.value')" :value="editAction['timeValue']" type="time">
               </v-text-field>
             </v-flex>
 
@@ -51,6 +52,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -87,7 +89,20 @@ export default {
             savedMessage: this.$i18n.t('settings.settingUpdated'),
             showInt: false,
             showString: false,
-            showTime: false
+            showTime: false,
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            requiredInt: [
+              v => (!!v || !this.showInt) || this.$i18n.t('common.required')
+            ],
+            requiredString: [
+              v => (!!v || !this.showString) || this.$i18n.t('common.required')
+            ],
+            requiredTime: [
+              v => (!!v  || !this.showTime) || this.$i18n.t('common.required')
+            ]
         };
     },
 
@@ -153,14 +168,23 @@ export default {
                 .toLowerCase();
         },
 
-        cancel() {
+          cancel() {
             const vm = this;
 
+            vm.clear();
             vm.showModal = false;
-        },
+          },
 
-        save() {
+          clear () {
+              this.$refs.form.reset()
+          },
+
+          save() {
             const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             vm.snackbarVisible = false;
 
@@ -182,6 +206,7 @@ export default {
                 });
 
             vm.showModal = false;
+            vm.clear();
         },
 
         settingDataTypeChanged() {

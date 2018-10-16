@@ -23,5 +23,8 @@
   "theDataWasSuccessfullyDeleted": "Veri başarıyla silindi.",
   "viewRecord": "Kayıt Detayı",
   "editRecord": "Kaydı Düzenle",
-  "deleteRecord": "Kaydı Sil"
+  "deleteRecord": "Kaydı Sil",
+  "required":"Zorunlu Alan",
+  "endDateMustBeBiggerThanStart": "Bitiş tarihi başlangıç tarihinden büyük olmalı.",
+  "moreThanTenCharacters": "Bu alana en az 10 karakter girmelisiniz."
 }

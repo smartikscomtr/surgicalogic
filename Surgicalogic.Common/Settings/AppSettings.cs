@@ -13,5 +13,6 @@ namespace Surgicalogic.Common.Settings
         public static string MemberRole { get; set; }
         public static int DoctorId { get; set; }
         public static string DoctorPicture { get; set; }
+        public static string ImagesFolder { get; set; }
     }
 }

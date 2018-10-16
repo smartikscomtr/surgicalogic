@@ -77,7 +77,10 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationType>();
             config.CreateMap<PatientModel, Patient>();
             config.CreateMap<PersonnelModel, Personnel>()
-                .ForMember(src => src.PersonnelBranches, opt => opt.Ignore());
+                .ForMember(src => src.PersonnelBranches, opt => opt.Ignore())
+                .ForMember(src => src.PersonnelCategory, opt => opt.Ignore())
+                .ForMember(src => src.PersonnelTitle, opt => opt.Ignore())
+                .ForMember(src => src.WorkType, opt => opt.Ignore());
             config.CreateMap<PersonnelBranchModel, PersonnelBranch>();
             config.CreateMap<PersonnelCategoryModel, PersonnelCategory>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
@@ -150,7 +153,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
                 .ForMember(dest => dest.PersonnelCategoryName, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
                 .ForMember(dest => dest.WorkTypeName, opt => opt.MapFrom(src => src.WorkType.Name))
-                .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)));
+                .ForMember(dest => dest.BranchIds, opt => opt.MapFrom(src => src.PersonnelBranches.Where(x => x.IsActive).Select(x => x.BranchId)))
+                .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => AppSettings.DoctorPicture + src.PictureUrl));
             config.CreateMap<PersonnelCategoryModel, PersonnelCategoryOutputModel>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
             config.CreateMap<SettingModel, SettingOutputModel>()

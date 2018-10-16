@@ -18,11 +18,9 @@ namespace Surgicalogic.Data.Entities
         [StringLength(50)]
         public string LastName { get; set; }
         public string PictureUrl { get; set; }
-        public int PersonnelTitleId { get; set; }
-        public int PersonnelCategoryId { get; set; }
-        public int BranchId { get; set; }
+        public int? PersonnelTitleId { get; set; }
+        public int? PersonnelCategoryId { get; set; }
         public int WorkTypeId { get; set; }
-        public byte[] PersonnelPhoto { get; set; }
 
         public virtual PersonnelTitle PersonnelTitle { get; set; }
         public virtual PersonnelCategory PersonnelCategory { get; set; }

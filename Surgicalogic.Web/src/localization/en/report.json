@@ -1,0 +1,9 @@
+{
+  "overtimeReportTitle":"Overtime Report",
+  "roomName": "Room",
+  "operationName": "Operation",
+  "operationDate": "Date",
+  "realizedStartDate":"Start",
+  "realizedEndDate": "End",
+  "overtime": "Difference"
+}

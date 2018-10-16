@@ -14,15 +14,20 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['firstName']" :label="$t('personnel.firstName')">
+              <v-text-field v-model="editAction['firstName']"
+                            :rules="required"
+                            :label="$t('personnel.firstName')">
               </v-text-field>
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['lastName']" :label="$t('personnel.lastName')">
+              <v-text-field v-model="editAction['lastName']"
+                            :rules="required"
+                            :label="$t('personnel.lastName')">
               </v-text-field>
             </v-flex>
 
@@ -36,31 +41,38 @@
               </v-autocomplete>
             </v-flex>
 
-            <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['personnelCode']" :label="$t('personnel.personnelCode')">
-              </v-text-field>
-            </v-flex>
-
-            <v-flex xs12 sm6 md6>
-					 <img :src="imageUrl" height="50" v-if="imageUrl"/>
-					<v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
-					<input
-						type="file"
-						style="display: none"
-						ref="image"
-						accept="image/*"
-						@change="onFilePicked"
-					>
-				</v-flex>
-
             <v-flex xs12 sm12 md12>
               <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" multiple chips deletable-chips :filter="customFilter" item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectWorkType" :items="workTypes" :label="$t('worktypes.workType')" :filter="customFilter" item-text="name" item-value="id">
+              <v-text-field v-model="editAction['personnelCode']"
+                            :rules="required"
+                            :label="$t('personnel.personnelCode')">
+              </v-text-field>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6>
+                <v-text-field :label="$t('personnel.personnelPhoto')" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                <input
+                  type="file"
+                  style="display: none"
+                  id="file"
+                  ref="file"
+                  accept="image/*"
+                  @change="onFilePicked"
+                >
+				    </v-flex>
+
+            <v-flex xs12 sm6 md6>
+              <v-autocomplete v-model="selectWorkType" :rules="required" :items="workTypes" :label="$t('worktypes.workType')" :filter="customFilter" item-text="name" item-value="id">
               </v-autocomplete>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6>
+              <img :src="imageUrl" height="150" v-if="imageUrl"/>
+              <img :src="editAction['pictureUrl']" height="150px" v-if="!imageUrl" />
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -72,6 +84,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
 
@@ -106,9 +119,17 @@ export default {
         return {
             snackbarVisible: null,
             savedMessage: this.$i18n.t('personnel.personnelSaved'),
+            file: '',
             imageName: '',
             imageUrl: '',
-            imageFile: ''
+            imageFile: '',
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            multipleRequired: [
+              v => v.length > 0 || this.$i18n.t('common.required')
+            ]
         };
     },
 
@@ -192,7 +213,7 @@ export default {
             set(val) {
                 const vm = this;
 
-                vm.editAction.branchId = val;
+                vm.editAction.branchIds = val;
             }
         },
 
@@ -234,31 +255,50 @@ export default {
                 .toLowerCase();
         },
 
-        cancel() {
-            const vm = this;
+        handleFileUpload(){
 
-            vm.showModal = false;
         },
 
-        save() {
+          cancel() {
             const vm = this;
+
+            vm.clear();
+            vm.showModal = false;
+          },
+
+          clear () {
+              this.$refs.form.reset()
+              this.imageUrl = '';
+              const input = this.$refs.file;
+              input.type = 'text';
+              input.type = 'file';
+          },
+
+          save() {
+            const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             vm.snackbarVisible = false;
             //Edit personnel
             if (vm.editIndex > -1) {
                 //We are accessing updatePersonnel in vuex store
+                let formData = new FormData();
+                formData.append('file', this.file);
+                formData.append('id', vm.editAction.id);
+                formData.append('personnelCode',vm.editAction.personnelCode);
+                formData.append('firstName',  vm.editAction.firstName);
+                formData.append('pictureUrl',  vm.editAction.pictureUrl);
+                formData.append('lastName',  vm.editAction.lastName);
+                formData.append('personnelCategoryId',  vm.editAction.personnelCategoryId);
+                formData.append('personnelTitleId',  vm.editAction.personnelTitleId);
+                formData.append('branches',  vm.editAction.branchIds);
+                formData.append('workTypeId',  vm.editAction.workTypeId);
+
                 vm.$store
-                    .dispatch('updatePersonnel', {
-                        id: vm.editAction.id,
-                        personnelCode: vm.editAction.personnelCode,
-                        firstName: vm.editAction.firstName,
-                        lastName: vm.editAction.lastName,
-                        personnelCategoryId: vm.editAction.personnelCategoryId,
-                        personnelTitleId: vm.editAction.personnelTitleId,
-                        branches: vm.editAction.branchId,
-                        workTypeId: vm.editAction.workTypeId,
-                        personnelPhoto: vm.imageUrl
-                    })
+                    .dispatch('updatePersonnel', formData)
                     .then(() => {
                         vm.snackbarVisible = true;
                         vm.$store.dispatch('getPersonnels');
@@ -271,17 +311,18 @@ export default {
             //Add personnel
             else {
                 //We are accessing insertPersonnel in vuex store
+                let formData = new FormData();
+                formData.append('file', this.file);
+                formData.append('personnelCode',vm.editAction.personnelCode);
+                formData.append('firstName',  vm.editAction.firstName);
+                formData.append('lastName',  vm.editAction.lastName);
+                formData.append('personnelCategoryId',  vm.editAction.personnelCategoryId);
+                formData.append('personnelTitleId',  vm.editAction.personnelTitleId);
+                formData.append('branches',  vm.editAction.branchIds);
+                formData.append('workTypeId',  vm.editAction.workTypeId);
+
                 vm.$store
-                    .dispatch('insertPersonnel', {
-                        personnelCode: vm.editAction.personnelCode,
-                        firstName: vm.editAction.firstName,
-                        lastName: vm.editAction.lastName,
-                        personnelCategoryId: vm.editAction.personnelCategoryId,
-                        personnelTitleId: vm.editAction.personnelTitleId,
-                        branches: vm.editAction.branchId,
-                        workTypeId: vm.editAction.workTypeId,
-                        personnelPhoto: vm.imageUrl
-                    })
+                    .dispatch('insertPersonnel', formData)
                     .then(() => {
                         vm.snackbarVisible = true;
                         vm.$store.dispatch('getPersonnels');
@@ -293,16 +334,17 @@ export default {
             }
 
             vm.showModal = false;
+            vm.clear();
         },
 
          pickFile () {
-            this.$refs.image.click ()
+            this.$refs.file.click ()
         },
 
         onFilePicked (e) {
           const files = e.target.files
           if(files[0] !== undefined) {
-            debugger;
+            this.file = this.$refs.file.files[0];
             this.imageName = files[0].name
             if(this.imageName.lastIndexOf('.') <= 0) {
               return

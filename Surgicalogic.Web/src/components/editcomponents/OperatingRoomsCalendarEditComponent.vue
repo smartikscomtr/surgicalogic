@@ -14,11 +14,12 @@
           </div>
         </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs6 sm6 md6>
               <v-menu ref="menu1" :close-on-content-click="false" v-model="menu1" :nudge-right="40" :return-value.sync="startDate" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field readonly slot="activator" v-model="startDateFormatted" :label="$t('operatingroomscalendar.startDate')">
+                <v-text-field readonly slot="activator"  :rules="required" v-model="startDateFormatted" :label="$t('operatingroomscalendar.startDate')">
                 </v-text-field>
 
                 <v-date-picker v-model="startDate" no-title @input="$refs.menu1.save(startDate);" :min="getMinDate()">
@@ -28,7 +29,7 @@
 
             <v-flex xs6 sm6 md6>
               <v-menu ref="menu2" :close-on-content-click="false" v-model="menu2" :nudge-right="40" :return-value.sync="endDate" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field readonly slot="activator" v-model="endDateFormatted" :label="$t('operatingroomscalendar.endDate')">
+                <v-text-field readonly slot="activator"  :rules="requiredEnd" v-model="endDateFormatted" :label="$t('operatingroomscalendar.endDate')">
                 </v-text-field>
 
                 <v-date-picker v-model="endDate" no-title @input="$refs.menu2.save(endDate);" :min="getMinDate()">
@@ -45,6 +46,7 @@
             </v-btn>
           </div>
         </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
   </div>
@@ -77,7 +79,15 @@ export default {
             menu1: false,
             menu2: false,
             startDateFormatted: null,
-            endDateFormatted: null
+            endDateFormatted: null,
+            valid: true,
+            required: [
+              v => !!v || this.$i18n.t('common.required')
+            ],
+            requiredEnd: [
+              v => !!v || this.$i18n.t('common.required'),
+              v => this.endDate >= this.startDate || this.$i18n.t('common.endDateMustBeBiggerThanStart')
+            ]
         };
     },
 
@@ -171,14 +181,25 @@ export default {
     },
 
     methods: {
-        cancel() {
+          cancel() {
             const vm = this;
 
+            vm.clear();
             vm.showModal = false;
-        },
+          },
 
-        save() {
+          clear () {
             const vm = this;
+
+            vm.$refs.form.reset()
+          },
+
+          save() {
+            const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             //Edit operating room
             if (vm.editIndex > -1) {
@@ -201,6 +222,7 @@ export default {
             }
 
             vm.showModal = false;
+            vm.clear();
         },
 
         getMinDate() {

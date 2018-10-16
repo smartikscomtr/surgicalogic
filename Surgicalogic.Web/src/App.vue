@@ -165,8 +165,15 @@ export default {
                 },
                 {
                     icon: 'content_copy',
-                    text: vm.$i18n.t('menu.reports')
-                    // route: "/eventcalendarpage"
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.reports'),
+                   children: [
+                        {
+                            icon: 'timer_off',
+                            text: vm.$i18n.t('menu.overtimeReport'),
+                            route: '/overtimeReportPage'
+                        }
+                   ]
                 },
                 {
                     icon: 'event',

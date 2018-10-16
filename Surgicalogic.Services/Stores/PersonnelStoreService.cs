@@ -51,5 +51,12 @@ namespace Surgicalogic.Services.Stores
         {
             return await  GetQueryable().Where(x => x.Id == id).ProjectTo<PersonnelOutputModel>().FirstOrDefaultAsync();
         }
+
+        public async Task UpdatePhotoAsync(int id, string fileName)
+        {
+            var entity = GetQueryable().ProjectTo<PersonnelModel>().SingleOrDefault(x => x.Id == id);
+            entity.PictureUrl = fileName;
+            await UpdateAndSaveAsync(entity);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -11,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -98,12 +101,8 @@ namespace Surgicalogic.Api.Controllers
         /// <returns>PersonnelOutputModel</returns>
         [Route("Personnel/InsertPersonnel")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<ResultModel<PersonnelOutputModel>> InsertPersonnel([FromBody] PersonnelInputModel item)
+        public async Task<ResultModel<PersonnelOutputModel>> InsertPersonnel([FromForm] PersonnelInputModel item)
         {
-            MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(item.PersonnelPhoto));
-            Image i = Image.FromStream(ms);
-            i.Save(@"C:\Users\GURKANK\Desktop\ziraat\gk1.jpg");
-
             var result = new ResultModel<PersonnelOutputModel>();
             var personnelItem = new PersonnelModel()
             {
@@ -112,23 +111,48 @@ namespace Surgicalogic.Api.Controllers
                 LastName = item.LastName,
                 PersonnelCategoryId = item.PersonnelCategoryId,
                 PersonnelTitleId = item.PersonnelTitleId,
-                BranchId = 1,
                 WorkTypeId = item.WorkTypeId
             };
+
+            var branches = string.IsNullOrEmpty(item.Branches) ? new int[] { } : item.Branches.Split(',').Select(int.Parse).ToArray();
 
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {
                 result = await _personnelStoreService.InsertAndSaveAsync<PersonnelOutputModel>(personnelItem);
 
-                if (item.Branches != null && result.Info.Succeeded)
+                if (result.Info.Succeeded)
                 {
-                    await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, item.Branches.ToArray());
+                        var file = Request != null && Request.Form != null && Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
+                        if (file != null && file.Length > 0)
+                        {
+                             await UploadImageAsync(result.Result.Id, file);
+                        }
+                }
+
+                if (branches != null && branches.Length > 0 && result.Info.Succeeded)
+                {
+                    await _personnelBranchStoreService.UpdatePersonelBranchAsync(result.Result.Id, branches);
                 }
 
                 ts.Complete();
             }
 
             return result;
+        }
+
+        private async Task<string> UploadImageAsync(int id, IFormFile file)
+        {
+            string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            fileName = Guid.NewGuid() + "_" + fileName;
+            string fullPath = Path.Combine(AppSettings.ImagesFolder, fileName);
+            using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            await _personnelStoreService.UpdatePhotoAsync(id, fileName);
+
+            return fileName;
         }
 
         /// <summary>
@@ -149,8 +173,8 @@ namespace Surgicalogic.Api.Controllers
         /// <param name="item"></param>
         /// <returns>PersonnelModel</returns>
         [Route("Personnel/UpdatePersonnel")]
-        [HttpPost]
-        public async Task<ResultModel<PersonnelOutputModel>> UpdatePersonnel([FromBody] PersonnelInputModel item)
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ResultModel<PersonnelOutputModel>> UpdatePersonnel([FromForm] PersonnelInputModel item)
         {
             var result = new ResultModel<PersonnelOutputModel>() { Info = new Info() };
 
@@ -162,17 +186,28 @@ namespace Surgicalogic.Api.Controllers
                 LastName = item.LastName,
                 PersonnelCategoryId = item.PersonnelCategoryId,
                 PersonnelTitleId = item.PersonnelTitleId,
-                BranchId = 1,
+                PictureUrl = item.PictureUrl,
                 WorkTypeId = item.WorkTypeId
             };
 
+            var branches = string.IsNullOrEmpty(item.Branches) ? new int[] { } : item.Branches.Split(',').Select(int.Parse).ToArray();
+
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
             {
-                if (item.Branches != null)
+                if (result.Info.Succeeded)
                 {
-                    result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, item.Branches.ToArray());
+                    var file = Request != null && Request.Form != null && Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
+                    if (file != null && file.Length > 0)
+                    {
+                        personnelItem.PictureUrl = await UploadImageAsync(item.Id, file);
+                    }
                 }
 
+                if (branches != null && branches.Length > 0)
+                {
+                    result = await _personnelBranchStoreService.UpdatePersonelBranchAsync(item.Id, branches);
+                }
+                
                 if (result.Info.Succeeded)
                 {
                     result = await _personnelStoreService.UpdateAndSaveAsync<PersonnelOutputModel>(personnelItem);

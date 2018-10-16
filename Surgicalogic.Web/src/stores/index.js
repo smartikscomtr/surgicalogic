@@ -20,6 +20,7 @@ import personnelModule from './modules/personnel';
 import personnelCategoryModule from './modules/personnelCategory';
 import personnelTitleModule from './modules/personnelTitle';
 import planArrangementsModule from './modules/planarrangements';
+import reportsModule from './modules/report';
 import settingsModule from './modules/settings';
 import usersModule from './modules/users';
 import workTypesModule from './modules/worktypes';
@@ -45,6 +46,7 @@ export default new Vuex.Store({
     personnelTitleModule,
     personnelModule,
     planArrangementsModule,
+    reportsModule,
     operatingRoomModule,
     settingsModule,
     usersModule,

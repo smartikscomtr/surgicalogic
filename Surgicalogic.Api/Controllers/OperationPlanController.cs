@@ -56,6 +56,22 @@ namespace Surgicalogic.Api.Controllers
             var plans = await _operationPlanStoreService.GetDashboardTimelineOperationsAsync(selectDate);
             var rooms = await _operatingRoomStoreService.GetOperatingRoomsForDashboardTimelineModelAsync(selectDate, true);
 
+            foreach (var item in plans)
+            {
+                if (item.RealizedStartDate > DateTime.Now)
+                {
+                    item.className = "blue";
+                }
+                else if (item.RealizedStartDate < DateTime.Now && item.RealizedEndDate > DateTime.Now)
+                {
+                    item.className = "red";
+                }
+                else if (item.RealizedEndDate < DateTime.Now)
+                {
+                    item.className = "green";
+                }
+            }
+
             var selectDay = selectDate;
             var selectDaysLater = selectDate.AddDays(1);
 

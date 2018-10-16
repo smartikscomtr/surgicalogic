@@ -196,6 +196,7 @@ namespace Surgicalogic.Api
             AppSettings.MemberRole = Configuration["AppSettings:Role:Member"];
             AppSettings.DoctorId = Configuration["AppSettings:General:DoctorId"].ToNCInt();
             AppSettings.DoctorPicture = Configuration["AppSettings:DoctorPicture:Url"];
+            AppSettings.ImagesFolder = Configuration["AppSettings:General:ImagesFolder"];
         }
     }
 }
