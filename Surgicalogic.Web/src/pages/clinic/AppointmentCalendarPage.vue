@@ -1,5 +1,5 @@
 <template>
-  <div class="container fluid grid-list-md appointment-calendar-wrap">
+  <div class="container fluid grid-list-md appointment-calendar-wrap" id="section-to-print" >
     <v-layout wrap edit-layout class="all-page-pad">
       <v-flex md3 sm3 xs12 class="doctor-detail">
         <img :src="doctorPictureUrl" height="150px" />
@@ -151,6 +151,7 @@ export default {
             const vm = this;
 
             vm.showModal = false;
+            vm.picker.setTime('');
         },
 
         getMaxDate() {
@@ -359,6 +360,29 @@ export default {
 </script>
 
 <style>
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #section-to-print,
+    #section-to-print * {
+        visibility: visible;
+    }
+    .v-content {
+        position: relative;
+    }
+    #section-to-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .navigation.v-navigation-drawer {
+        display: none !important;
+    }
+    main.v-content {
+        padding: 0 !important;
+    }
+}
 .doctor-detail,
 .profession {
     margin-bottom: 30px;
