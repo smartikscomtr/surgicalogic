@@ -8,13 +8,13 @@
               <v-card-title>
                 <div>
                   <v-icon dark x-large>add_alarm</v-icon>
-                  <p class="headline">{{ 'Operasyonlar' }} </p>
+                  <p class="headline">{{ $t('menu.operations') }} </p>
                 </div>
-                <p>{{ 'Operasyonlarınızı Yönetebilirsiniz' }} </p>
+                <p>{{ $t('menu.youCanManageYourOperations') }} </p>
               </v-card-title>
 
               <v-card-actions>
-                <v-btn small @click="$router.push('/operationpage')">Git</v-btn>
+                <v-btn small @click="$router.push('/operationpage')">{{ $t('common.go') }}</v-btn>
               </v-card-actions>
             </v-container>
           </v-card>
@@ -26,13 +26,13 @@
               <v-card-title>
                 <div>
                   <v-icon dark x-large>timeline</v-icon>
-                  <p class="headline">{{ 'Planlar' }} </p>
+                  <p class="headline">{{ $t('menu.plans') }} </p>
                 </div>
-                <p>{{ 'Planlarınızı Yönetebilirsiniz' }} </p>
+                <p>{{ $t('menu.youCanManageYourPlans') }} </p>
               </v-card-title>
 
               <v-card-actions>
-                <v-btn small @click="$router.push('/planarrangementspage')">Git</v-btn>
+                <v-btn small @click="$router.push('/planarrangementspage')">{{ $t('common.go') }}</v-btn>
               </v-card-actions>
             </v-container>
           </v-card>
@@ -44,9 +44,9 @@
               <v-card-title>
                 <div>
                   <v-icon dark x-large>domain</v-icon>
-                  <p class="headline">{{ 'Klinik Yönetimleri' }} </p>
+                  <p class="headline">{{ $t('menu.clinicManagement') }} </p>
                 </div>
-                <p>{{ 'Kliniklerinizi Yönetebilirsiniz' }} </p>
+                <p>{{ $t('menu.youCanManageYourClinics') }} </p>
               </v-card-title>
 
               <v-card-actions>
@@ -62,9 +62,9 @@
               <v-card-title>
                 <div>
                   <v-icon dark x-large>group</v-icon>
-                  <p class="headline">{{ 'Personel Yönetimleri' }} </p>
+                  <p class="headline">{{ $t('menu.personnelManagement') }} </p>
                 </div>
-                <p>{{ 'Personellerinizi Yönetebilirsiniz' }} </p>
+                <p>{{ $t('menu.youCanManageYourPersonnels') }} </p>
               </v-card-title>
 
               <v-card-actions>
@@ -254,7 +254,7 @@ export default {
                                 axis: 'top'
                             },
                             // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.date.period },
-                            locale: 'tr',
+                            locale: vm.$cookie.get('currentLanguage'),
                             moveable: true,
                             zoomMax: 86400000,
                             zoomMin: 3600000,

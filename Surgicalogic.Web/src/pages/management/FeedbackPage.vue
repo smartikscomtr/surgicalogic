@@ -35,7 +35,6 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('feedbacks.feedbacks'),
       search: '',
       detailDialog: false,
       detailAction: {},
@@ -44,6 +43,12 @@ export default {
   },
 
   computed: {
+    title() {
+      const vm = this;
+
+      return vm.$i18n.t('feedbacks.feedbacks');
+    },
+
     headers() {
       const vm = this;
 

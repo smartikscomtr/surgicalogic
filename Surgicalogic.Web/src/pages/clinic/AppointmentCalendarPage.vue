@@ -137,6 +137,12 @@ export default {
             const vm = this;
 
             return vm.$i18n.t('appointmentcalendar.patientInformation');
+        },
+
+        pickerTitle(){
+          const vm = this;
+
+          return vm.$i18n.t('appointmentcalendar.appointmentTimes');
         }
     },
 
@@ -285,7 +291,7 @@ export default {
                                 static: true, // Statik pop-up durumu (Her zaman açık)
                                 leadingZero: true, // Whether to zero pad hour (i.e. 07:15)
                                 allowReset: true, // Whether a time can be resetted once entered
-                                title: 'Randevu Saatleri' //Başlık
+                                title: vm.pickerTitle //Başlık
                             }
                         );
 

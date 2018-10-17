@@ -44,7 +44,6 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('equipmenttypes.equipmentTypes'),
       search: '',
       editDialog: false,
       deleteDialog: false,
@@ -57,6 +56,12 @@ export default {
   },
 
   computed: {
+     title() {
+      const vm = this;
+
+      return vm.$i18n.t('equipmenttypes.equipmentTypes');
+    },
+
     headers() {
       const vm = this;
 

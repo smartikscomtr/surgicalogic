@@ -23,10 +23,10 @@
           <span class="branchName-wrap" v-text="doctorCard.branchNames">
           </span>
 
-          <v-btn @click="routePageGetAppointment(doctorCard.id)"> Randevu Al
+          <v-btn @click="routePageGetAppointment(doctorCard.id)"> {{ $t('appointmentcalendar.setAppointment') }}
           </v-btn>
 
-          <v-btn @click="routePageAppointmentList(doctorCard.id)"> Randevu Listele
+          <v-btn @click="routePageAppointmentList(doctorCard.id)">  {{ $t('appointmentcalendar.appointmentList') }}
           </v-btn>
         </v-card>
       </v-flex>

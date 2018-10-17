@@ -17,6 +17,7 @@ import { i18n } from './plugins/vue-i18n';
 import router from './router';
 import Authentication from './plugins/authentication-plugin.js';
 
+var VueCookie = require('vue-cookie');
 /* ============
  * Main App
  * ============
@@ -30,6 +31,7 @@ Vue.use(Vuex);
 Vue.use(Vuetify);
 Vue.use(Authentication);
 Vue.use(require('vue-moment'));
+Vue.use(VueCookie);
 
 // Registering Components
 import DeleteComponent from '@/components/DeleteComponent';

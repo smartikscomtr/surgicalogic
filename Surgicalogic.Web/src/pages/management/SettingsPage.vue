@@ -40,7 +40,6 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('settings.title'),
       search: '',
       detailDialog: false,
       editDialog: false,
@@ -56,6 +55,12 @@ export default {
   },
 
   computed: {
+     title() {
+      const vm = this;
+
+      return vm.$i18n.t('settings.title');
+    },
+
     headers() {
       const vm = this;
 

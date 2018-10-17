@@ -61,7 +61,6 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('operatingrooms.operatingRoomsCalendar'),
       editDialog: false,
       deleteDialog: false,
       editAction: {},
@@ -88,6 +87,12 @@ export default {
           vm.$emit('cancel');
         }
       }
+    },
+
+    title() {
+      const vm = this;
+
+      return vm.$i18n.t('operatingrooms.operatingRoomsCalendar');
     },
 
     headers() {
