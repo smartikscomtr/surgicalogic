@@ -1,76 +1,68 @@
 <template>
   <div>
-    <v-container>
+    <v-container grid-list-md>
       <v-layout row wrap class="cards-wrap">
         <v-flex xs12 sm6 md3>
           <v-card class="operation-wrap">
-            <v-container>
-              <v-card-title>
-                <div>
-                  <v-icon dark x-large>add_alarm</v-icon>
-                  <p class="headline">{{ $t('menu.operations') }} </p>
-                </div>
-                <p>{{ $t('menu.youCanManageYourOperations') }} </p>
-              </v-card-title>
+            <v-card-title>
+              <div>
+                <v-icon dark x-large>add_alarm</v-icon>
+                <p class="headline">{{ $t('menu.operations') }} </p>
+              </div>
+              <p>{{ $t('menu.youCanManageYourOperations') }} </p>
+            </v-card-title>
 
-              <v-card-actions>
-                <v-btn small @click="$router.push('/operationpage')">{{ $t('common.go') }}</v-btn>
-              </v-card-actions>
-            </v-container>
+            <v-card-actions>
+              <v-btn small @click="$router.push('/operationpage')">{{ $t('common.go') }}</v-btn>
+            </v-card-actions>
           </v-card>
         </v-flex>
 
         <v-flex xs12 sm6 md3>
           <v-card class="plan-wrap">
-            <v-container>
-              <v-card-title>
-                <div>
-                  <v-icon dark x-large>timeline</v-icon>
-                  <p class="headline">{{ $t('menu.plans') }} </p>
-                </div>
-                <p>{{ $t('menu.youCanManageYourPlans') }} </p>
-              </v-card-title>
+            <v-card-title>
+              <div>
+                <v-icon dark x-large>timeline</v-icon>
+                <p class="headline">{{ $t('menu.plans') }} </p>
+              </div>
+              <p>{{ $t('menu.youCanManageYourPlans') }} </p>
+            </v-card-title>
 
-              <v-card-actions>
-                <v-btn small @click="$router.push('/planarrangementspage')">{{ $t('common.go') }}</v-btn>
-              </v-card-actions>
-            </v-container>
+            <v-card-actions>
+              <v-btn small @click="$router.push('/planarrangementspage')">{{ $t('common.go') }}</v-btn>
+            </v-card-actions>
           </v-card>
         </v-flex>
 
         <v-flex xs12 sm6 md3>
           <v-card class="clinic-wrap">
-            <v-container>
-              <v-card-title>
-                <div>
-                  <v-icon dark x-large>domain</v-icon>
-                  <p class="headline">{{ $t('menu.clinicManagement') }} </p>
-                </div>
-                <p>{{ $t('menu.youCanManageYourClinics') }} </p>
-              </v-card-title>
+            <v-card-title>
+              <div>
+                <v-icon dark x-large>domain</v-icon>
+                <p class="headline">{{ $t('menu.clinicManagement') }} </p>
+              </div>
+              <p>{{ $t('menu.youCanManageYourClinics') }} </p>
+            </v-card-title>
 
-              <v-card-actions>
-                <v-btn small @click="$router.push('/clinicpage')">{{ $t('common.go') }}</v-btn>
-              </v-card-actions>
-            </v-container>
+            <v-card-actions>
+              <v-btn small @click="$router.push('/clinicpage')">{{ $t('common.go') }}</v-btn>
+            </v-card-actions>
           </v-card>
         </v-flex>
 
         <v-flex xs12 sm6 md3>
           <v-card class="personnel-wrap">
-            <v-container>
-              <v-card-title>
-                <div>
-                  <v-icon dark x-large>group</v-icon>
-                  <p class="headline">{{ $t('menu.personnelManagement') }} </p>
-                </div>
-                <p>{{ $t('menu.youCanManageYourPersonnels') }} </p>
-              </v-card-title>
+            <v-card-title>
+              <div>
+                <v-icon dark x-large>group</v-icon>
+                <p class="headline">{{ $t('menu.personnelManagement') }} </p>
+              </div>
+              <p>{{ $t('menu.youCanManageYourPersonnels') }} </p>
+            </v-card-title>
 
-              <v-card-actions>
-                <v-btn small @click="$router.push('/personnelpage')">{{ $t('common.go') }}</v-btn>
-              </v-card-actions>
-            </v-container>
+            <v-card-actions>
+              <v-btn small @click="$router.push('/personnelpage')">{{ $t('common.go') }}</v-btn>
+            </v-card-actions>
           </v-card>
         </v-flex>
 
@@ -84,7 +76,6 @@
           </v-menu>
         </v-flex>
       </v-layout>
-
       <div id="visualization" class="vis">
       </div>
 
@@ -92,7 +83,7 @@
       </div>
       <v-layout class="dashboard-page-btn">
         <div class="flex xs12">
-          <v-btn v-show="date" class="drawplan-wrap updateplan-wrap" @click.native="updatePlan()">
+          <v-btn v-show="date" class="updateplan-wrap orange" @click.native="updatePlan()">
             {{ $t('planarrangements.updatePlan')}}
           </v-btn>
         </div>
@@ -317,18 +308,6 @@ export default {
 </script>
 
 <style>
-.primary--text {
-    color: #ff7107 !important;
-}
-.accent--text {
-    color: #ff7107 !important;
-}
-.layout.row.wrap > div {
-    padding: 1%;
-}
-.cards-wrap .v-btn__content {
-    color: rgba(0, 0, 0, 0.87) !important;
-}
 .operation-wrap.v-card {
     background-color: #ff6767;
 }
@@ -361,30 +340,15 @@ export default {
     flex-direction: column !important;
     align-items: flex-start !important;
 }
-.vis {
-    margin: 20px 0;
-    padding: 1%;
-}
-.vis-item.vis-range .vis-item-content {
-    color: #fff;
+
+.cards-wrap .flex:last-child {
+    margin-top: 40px;
 }
 .vis-item.vis-range.vis-selected.vis-editable {
     background-color: #ff7107 !important;
 }
-.vis-time-axis .vis-text {
-    font-size: 11px;
-}
-.drawplan-wrap {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    font-size: 15px;
-}
-
-.updateplan-wrap {
-    float: right;
-    min-width: 200px;
+.vis-time-axis .vis-text div {
+    font-weight: bold;
 }
 
 .vis-item.vis-range.vis-editable {
@@ -404,18 +368,8 @@ div.vis-tooltip {
 .unavailable {
     background-color: darkgray;
 }
-.dashboard-page-btn{
-  padding: 1%;
-}
-.dashboard-page-btn .v-btn__content{
-      color: #fff;
-}
-.accent {
-    background-color: #ff7107 !important;
-    border-color: #ff7107 !important;
-}
 
-.vis{
-  margin:0 !important;
+.vis {
+    margin: 0;
 }
 </style>
