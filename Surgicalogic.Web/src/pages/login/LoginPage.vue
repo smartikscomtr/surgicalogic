@@ -115,20 +115,7 @@ export default {
 .close-wrap{
   color: #ff7107 !important;
 }
-.primary {
-  background-color: #009688 !important;
-  border-color: #009688 !important;
-}
-.primary--text {
-  color: #009688 !important;
-}
-.primary--text input,
-.primary--text textarea {
-  caret-color: #009688 !important;
-}
-.primary--after::after {
-  background: #009688 !important;
-}
+
 .forgot-password {
   text-decoration: none;
   flex: 10;
@@ -136,20 +123,7 @@ export default {
   color: #ff7107 !important;
   font-size: 15px;
 }
-.primary {
-  background-color: #009688 !important;
-  border-color: #009688 !important;
-}
-.primary--text {
-  color: #009688 !important;
-}
-.primary--text input,
-.primary--text textarea {
-  caret-color: #009688 !important;
-}
-.primary--after::after {
-  background: #009688 !important;
-}
+
 .btnSave {
   padding: 0;
   margin: 0;

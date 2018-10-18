@@ -1,33 +1,32 @@
 <template>
   <v-card class="grid-card">
-    <div class="page-title">
+    <div class="v-card__title">
       <h2>
         {{ title }}
       </h2>
     </div>
 
-    <div class="container">
-      <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
-        <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
-        </v-text-field>
+    <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
+      <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
+      </v-text-field>
 
-        <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-        <v-btn v-if="!hideExport" class="export-wrap" @click="exportExcel">
-          <v-icon color="white--text">
-            arrow_downward
-          </v-icon>
-          {{ $t('common.export') }}
-        </v-btn>
+      <v-btn v-if="!hideExport" class="orange" @click="exportExcel">
+        <v-icon color="white--text">
+          arrow_downward
+        </v-icon>
+        {{ $t('common.export') }}
+      </v-btn>
 
-        <v-btn v-if="showInsert" class="orange" slot="activator" @click="addNewItem">
-          <v-icon color="white--text">
-            add
-          </v-icon>
-          {{ $t('common.add') }}
-        </v-btn>
-      </v-card-title>
-
+      <v-btn v-if="showInsert" class="orange" slot="activator" @click="addNewItem">
+        <v-icon color="white--text">
+          add
+        </v-icon>
+        {{ $t('common.add') }}
+      </v-btn>
+    </v-card-title>
+    <div class="v-card__text">
       <v-data-table id="section-to-print" :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 20, { 'text': $t('common.all'), 'value': -1 }]">
         <v-progress-linear slot="progress" color="teal" indeterminate>
         </v-progress-linear>
@@ -326,10 +325,6 @@ export default {
         padding: 0 !important;
     }
 }
-#section-to-print {
-    color: pink;
-    background: #aaaaaa;
-}
 .v-table__overflow .v-btn__content .v-icon {
     color: #000;
 }
@@ -339,10 +334,6 @@ export default {
 .grid-card.card {
     box-shadow: inherit;
     height: 100vh !important;
-}
-.grid-card .page-title h2 {
-    padding-left: 24px;
-    padding-top: 20px;
 }
 .datatable__actions {
     background-color: #f8f8f8 !important;
@@ -369,37 +360,10 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.v-card {
-    background-color: #fff;
-    position: relative;
-    margin-top: 0;
-    margin-bottom: 0;
-    box-shadow: none;
-}
-.grid-card.v-card {
-    padding: 0 20px;
-    margin-bottom: 20px;
-}
-
-.v-card__title.search-wrap {
-    padding: 15px 0;
-}
-.export-wrap {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    height: 40px;
-    font-size: 15px;
-}
-
 .headline-wrap .btn--active .btn__content:before,
 .headline-wrap .btn:focus .btn__content:before,
 .headline-wrap .btn:hover .btn__content:before {
     background-color: transparent;
-}
-.headline-wrap span.text {
-    /* margin: 0 10px; */
 }
 .headline-wrap .backBtn i {
     color: #000 !important;
@@ -428,20 +392,7 @@ tr:nth-child(even) {
 a {
     color: #009688;
 }
-.primary {
-    background-color: #009688 !important;
-    border-color: #009688 !important;
-}
-.primary--text {
-    color: #ff7107 !important;
-}
-.primary--text input,
-.primary--text textarea {
-    caret-color: #009688 !important;
-}
-.primary--after::after {
-    background: #009688 !important;
-}
+
 .input-group-checkbox {
     display: flex;
     align-items: center;
@@ -492,16 +443,6 @@ table.v-table thead th:not(:first-child) {
 .v-list__group.v-list__group--active {
     background: #262626;
 }
-.v-card__title .v-btn__content {
-    color: #fff;
-}
-
-.v-card__title .v-input__slot {
-    width: 80%;
-}
-.v-input__slot {
-    margin-bottom: 0;
-}
 .v-toolbar__content .v-input {
     position: relative;
 }
@@ -523,10 +464,6 @@ table.v-table thead th:not(:first-child) {
 input[type='date']::-webkit-inner-spin-button {
     display: none;
     -webkit-appearance: none;
-}
-
-.margin-bottom-none {
-    margin-bottom: 0 !important;
 }
 .v-chip__content {
     background-color: #ee8b41;

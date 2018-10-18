@@ -83,37 +83,11 @@ export default {
 .close-wrap{
   color: #ff7107 !important;
 }
-.primary {
-  background-color: #009688 !important;
-  border-color: #009688 !important;
-}
-.primary--text {
-  color: #009688 !important;
-}
-.primary--text input,
-.primary--text textarea {
-  caret-color: #009688 !important;
-}
-.primary--after::after {
-  background: #009688 !important;
-}
+
 .v-btn__content {
   color: #fff;
 }
-.primary {
-  background-color: #009688 !important;
-  border-color: #009688 !important;
-}
-.primary--text {
-  color: #009688 !important;
-}
-.primary--text input,
-.primary--text textarea {
-  caret-color: #009688 !important;
-}
-.primary--after::after {
-  background: #009688 !important;
-}
+
 .btnSave {
   padding: 0;
   margin: 0;

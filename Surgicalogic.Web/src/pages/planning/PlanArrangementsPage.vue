@@ -1,7 +1,7 @@
 <template>
   <div class="container fluid grid-list-md">
     <div class="grid-card v-card">
-      <div class="container">
+      <div class="v-card__text">
         <loading-component :loading="getLoading">
         </loading-component>
 
@@ -26,13 +26,13 @@
               <v-spacer></v-spacer>
 
               <v-btn color="darken-1"
-                    flat="flat"
+                 flat="flat"
                      @click="drawPlan">
                     {{ $t('common.yes') }}
               </v-btn>
 
               <v-btn color="red darken-1"
-                    flat="flat"
+                 flat="flat"
                      @click="drawPlanConfirm = false">
                 {{ $t('common.no') }}
               </v-btn>
@@ -40,7 +40,7 @@
           </v-card>
         </v-dialog>
 
-        <v-btn class="drawplan-wrap"
+        <v-btn class="orange"
                @click.native="drawPlanConfirm = true">
           {{ $t('planarrangements.drawPlan')}}
         </v-btn>
@@ -51,7 +51,7 @@
         <div id="serializedTimeline" style="display:none;">
         </div>
 
-        <v-btn class="drawplan-wrap updateplan-wrap" @click.native="updatePlan()">
+        <v-btn class="orange updateplan-wrap" @click.native="updatePlan()">
           {{ $t('planarrangements.updatePlan')}}
         </v-btn>
         <div>
@@ -350,34 +350,12 @@ function calcuteOvertimeAndUtilization(
 </script>
 
 <style>
-.vis {
-    margin: 20px 0;
-}
-.vis-item.vis-range .vis-item-content {
-    color: #fff;
-}
+
 .vis-item.vis-range.vis-selected.vis-editable {
     background-color: #ff7107 !important;
 }
 .vis-time-axis .vis-text {
     font-size: 11px;
-}
-.drawplan-wrap {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
-    background-color: #ff7107 !important;
-    font-size: 15px;
-}
-.drawplan-wrap .v-btn__content {
-    color: #fff;
-}
-.updateplan-wrap {
-    float: right;
-    min-width: 200px;
-}
-.updateplan-wrap .v-btn__content {
-    color: #fff;
 }
 .vis-item.vis-range.vis-editable {
     position: absolute;

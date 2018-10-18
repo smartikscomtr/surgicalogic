@@ -419,14 +419,11 @@ export default {
     background-color: white;
     max-width: 240px;
     padding: 10px;
-    border: 1px solid #ccc;
     z-index: 9999;
     /* Large variation */
 }
 .appo-picker.is-open {
     display: flex;
-    -ms-flex-direction: column;
-    -webkit-flex-direction: column;
     flex-direction: column;
 }
 .appo-picker.is-position-static {
@@ -434,12 +431,7 @@ export default {
     flex-direction: column;
     position: static;
 }
-.appo-picker.is-large {
-    max-width: 100%;
-    padding: 20px;
-    border: solid 1px #e8e5e5;
-    border-radius: 5px;
-}
+
 .appo-picker-title {
     font-size: 20px;
     padding-bottom: 10px;
@@ -449,7 +441,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding: 0;
-    margin: 0 -5px;
+    margin: 0 -8px;
 }
 .appo-picker-list li input {
     background-color: #f5f5f5;
@@ -457,7 +449,7 @@ export default {
     padding: 10px 20px;
 }
 .appo-picker-list li {
-    margin: 5px;
+    margin: 8px;
 }
 .appo-picker-list-item input[type='button'].is-selected {
     background-color: #29a79b;
@@ -503,10 +495,7 @@ export default {
     justify-content: space-between;
     padding: 0 5px;
 }
-.accent {
-    background-color: #ff7107 !important;
-    border-color: #ff7107 !important;
-}
+
 @media (min-width: 960px) {
     .block-container {
         padding-left: 40px !important;
