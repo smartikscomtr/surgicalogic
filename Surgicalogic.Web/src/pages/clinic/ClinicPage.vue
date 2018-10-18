@@ -1,6 +1,6 @@
 <template>
-  <div class="container fluid grid-list-md clinic-page" id="section-to-print" >
-    <v-layout wrap edit-layout class="all-page-pad">
+  <div class="container fluid grid-list-md clinic-page" id="section-to-print">
+    <v-layout wrap edit-layout>
       <v-flex lg4 md3 sm6 xs12>
         <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box :filter="customFilter" @change="filterBranch()" item-text="name" item-value="id">
         </v-autocomplete>
@@ -12,7 +12,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap class="all-page-pad column-cards">
+    <v-layout row wrap class="column-cards">
       <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg3 md3 sm6 xs12>
         <v-card class="clinic-branch">
           <img :src="doctorCard.pictureUrl" height="150px" />
@@ -23,10 +23,12 @@
           <span class="branchName-wrap" v-text="doctorCard.branchNames">
           </span>
 
-          <v-btn @click="routePageGetAppointment(doctorCard.id)"> {{ $t('appointmentcalendar.setAppointment') }}
+          <v-btn class="orange"
+          @click="routePageGetAppointment(doctorCard.id)"> {{ $t('appointmentcalendar.setAppointment') }}
           </v-btn>
 
-          <v-btn @click="routePageAppointmentList(doctorCard.id)">  {{ $t('appointmentcalendar.appointmentList') }}
+          <v-btn class="orange"
+           @click="routePageAppointmentList(doctorCard.id)"> {{ $t('appointmentcalendar.appointmentList') }}
           </v-btn>
         </v-card>
       </v-flex>
@@ -227,31 +229,6 @@ export default {
     font-weight: 500;
     height: 40px;
     overflow: hidden;
-}
-.clinic-page .wrap > div .v-btn {
-    margin: 10px;
-    background-color: #ff7107 !important;
-}
-.clinic-page .wrap > div .v-btn {
-    color: #fff;
-}
-.clinic-page .v-input__slot {
-    background-color: #fff !important;
-    color: #ff7107 !important;
-}
-.clinic-page .v-input__slot:before {
-    border-color: rgba(0, 0, 0, 0.42) !important;
-}
-.clinic-page .v-menu__activator label.primary--text,
-.clinic-page .v-menu__activator .v-input__icon i.primary--text {
-    color: rgba(0, 0, 0, 0.54) !important;
-}
-.clinic-page .v-menu__activator--active .v-select__slot label.primary--text,
-.clinic-page .v-menu__activator--active .v-input__icon i {
-    color: #ff7107 !important;
-}
-.v-list .primary--text {
-    color: inherit !important;
 }
 span.branchName-wrap {
     height: 85px;
