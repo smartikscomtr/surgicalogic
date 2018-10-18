@@ -5,5 +5,7 @@
   "operationDate": "Date",
   "realizedStartDate":"Start",
   "realizedEndDate": "End",
-  "overtime": "Difference"
+  "overtime": "Difference",
+  "doctorName": "Doctor",
+  "branchName":"Branch"
 }
