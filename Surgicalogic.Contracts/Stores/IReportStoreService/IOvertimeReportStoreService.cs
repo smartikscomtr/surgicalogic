@@ -16,5 +16,6 @@ namespace Surgicalogic.Contracts.Stores.IReportStoreService
     public interface IOvertimeReportStoreService
     {
         Task<ResultModel<OvertimeReportOutputModel>> GetAsync<TOutputModel>(OvertimeReportInputModel input);
+        Task<List<OvertimeReportOutputModel>> GetExportAsync<OvertimeReportOutputModel>(OvertimeReportInputModel input);
     }
 }

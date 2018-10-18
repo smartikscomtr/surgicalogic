@@ -36,8 +36,10 @@ const reportsModule = {
 
     },
 
-    excelExportOvertimeOperations(context) {
-      axios.get('OperationPlan/ExcelExport')
+    excelExportOvertimeOperations(context, params) {
+      axios.get('Report/OvertimeReportExcelExport', {
+        params: params
+      })
         .then(response => {
           const link = document.createElement('a');
 

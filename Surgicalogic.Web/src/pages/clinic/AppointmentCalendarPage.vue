@@ -292,7 +292,7 @@ export default {
                                 static: true, // Statik pop-up durumu (Her zaman açık)
                                 leadingZero: true, // Whether to zero pad hour (i.e. 07:15)
                                 allowReset: true, // Whether a time can be resetted once entered
-                                title: vm.pickerTitle //Başlık
+                                title: "" //Başlık
                             }
                         );
 

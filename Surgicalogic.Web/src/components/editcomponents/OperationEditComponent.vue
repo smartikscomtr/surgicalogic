@@ -246,6 +246,7 @@ export default {
                     vm.$store.commit('saveGlobalDate', vm.editAction.date);
                 }
 
+                vm.dateFormatted = this.formatDate(vm.$store.state.operationModule.globalDate);
                 return vm.$store.state.operationModule.globalDate;
             },
 

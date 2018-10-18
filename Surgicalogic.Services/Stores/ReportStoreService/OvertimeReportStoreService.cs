@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Surgicalogic.Services.Stores.ReportStoreService
 {
@@ -25,7 +26,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
             _dataContext = context;
         }
 
-        public async System.Threading.Tasks.Task<ResultModel<OvertimeReportOutputModel>> GetAsync<TOutputModel>(OvertimeReportInputModel input)
+        public async Task<ResultModel<OvertimeReportOutputModel>> GetAsync<TOutputModel>(OvertimeReportInputModel input)
         {
             var query = _dataContext.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
@@ -74,8 +75,8 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                     query = query.OrderBy(orderBy);
                 }
             }
-            
-            if(input.BranchId > 0)
+
+            if (input.BranchId > 0)
             {
                 query = query.Where(x => x.Operation.OperationType.BranchId == input.BranchId);
             }
@@ -97,9 +98,9 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
             if (!string.IsNullOrEmpty(input.Search))
             {
-                query = query.Where(x => 
-                    x.Operation.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 || 
-                    x.OperatingRoom.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 || 
+                query = query.Where(x =>
+                    x.Operation.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+                    x.OperatingRoom.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                     x.Operation.OperationType.Branch.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0
                 );
             }
@@ -121,6 +122,35 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
             };
 
             //return base.GetAsync<TOutputModel>(input, expression);
+        }
+
+        public async Task<List<OvertimeReportOutputModel>> GetExportAsync<OvertimeReportOutputModel>(OvertimeReportInputModel input)
+        {
+            var query = _dataContext.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
+
+            if (input.BranchId > 0)
+            {
+                query = query.Where(x => x.Operation.OperationType.BranchId == input.BranchId);
+            }
+
+            if (input.DoctorId > 0)
+            {
+                query = query.Where(x => x.Operation.OperationPersonels.Any(t => t.PersonnelId == input.DoctorId));
+            }
+
+            if (input.RealizedStartDate != null && input.RealizedStartDate != DateTime.MinValue)
+            {
+                query = query.Where(x => x.RealizedStartDate >= input.RealizedStartDate);
+            }
+
+            if (input.RealizedEndDate != null && input.RealizedEndDate != DateTime.MinValue)
+            {
+                query = query.Where(x => x.RealizedEndDate <= input.RealizedEndDate.AddDays(1));
+            }
+
+            var list = await query.ProjectTo<OperationPlanForReportModel>().ToListAsync();
+
+            return AutoMapper.Mapper.Map<List<OvertimeReportOutputModel>>(list);
         }
     }
 }

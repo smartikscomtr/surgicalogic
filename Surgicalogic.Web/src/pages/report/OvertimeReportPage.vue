@@ -7,6 +7,7 @@
                         :label="$t('branches.branch')"
                         box
                         :filter="customFilter"
+                        clearable
                         item-text="name"
                         item-value="id">
         </v-autocomplete>
@@ -17,7 +18,8 @@
                         :items="doctors"
                         :label="$t('personnel.doctor')"
                         box
-                        :filter="customFilter"
+                        :filter="customFilterForDoctor"
+                        clearable
                         item-text="personnelTitleName"
                         item-value="id">
         </v-autocomplete>
@@ -36,6 +38,7 @@
                 min-width="290px">
           <v-text-field readonly slot="activator"
                         v-model="startDateFormatted"
+                        clearable
                         :label="$t('report.realizedStartDate')">
           </v-text-field>
 
@@ -60,6 +63,7 @@
                 min-width="290px">
           <v-text-field readonly slot="activator"
                         v-model="endDateFormatted"
+                        clearable
                         :label="$t('report.realizedEndDate')">
           </v-text-field>
 
@@ -84,13 +88,15 @@
                     :show-insert="false"
                     :hide-actions="false"
                     :methodName="getMethodName"
+                    :custom-parameters="customParameters"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @detail="detail"
                     @exportToExcel="exportOvertimeReportToExcel"
                     @edit="edit"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
   </div>
 </template>
@@ -129,7 +135,8 @@ export default {
       menu2:false,
       dateFormatted: null,
       startDate: null,
-      endDate: null
+      endDate: null,
+      customParameters: {}
     };
   },
 
@@ -147,7 +154,7 @@ export default {
      title() {
       const vm = this;
 
-      return vm.$i18n.t('equipmenttypes.equipmentTypes');
+      return vm.$i18n.t('report.overtimeReportTitle');
     },
 
     headers() {
@@ -315,7 +322,12 @@ export default {
     exportOvertimeReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportOvertimeOperations');
+      vm.$store.dispatch('excelExportOvertimeOperations', {
+        branchId: vm.branchId,
+        doctorId: vm.doctorId,
+        RealizedStartDate: vm.startDate,
+        RealizedEndDate: vm.endDate
+      });
     },
 
     customFilter(item, queryText, itemText) {
@@ -326,6 +338,16 @@ export default {
 
       return text.indexOf(searchText) > -1;
     },
+
+    customFilterForDoctor(item, queryText, itemText) {
+      const vm = this;
+
+      const text = vm.replaceForAutoComplete(item.personnelTitleName);
+      const searchText = vm.replaceForAutoComplete(queryText);
+
+      return text.indexOf(searchText) > -1;
+    },
+
 
     replaceForAutoComplete(text) {
       return text.replace(/İ/g, 'i')
@@ -350,14 +372,14 @@ export default {
 
     filteredReport() {
       const vm = this;
-      debugger
-      vm.$parent.$route.pagination;
-      vm.$store.dispatch('getOvertimeOperations', {
-        branchId: vm.branchId,
-        doctorId: vm.doctorId,
-        RealizedStartDate: vm.startDate,
-        RealizedEndDate: vm.endDate
-      });
+
+      vm.customParameters.branchId= vm.branchId;
+      vm.customParameters.doctorId= vm.doctorId;
+      vm.customParameters.realizedStartDate= vm.startDate;
+      vm.customParameters.realizedEndDate= vm.endDate;
+
+      var child = this.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   },
 

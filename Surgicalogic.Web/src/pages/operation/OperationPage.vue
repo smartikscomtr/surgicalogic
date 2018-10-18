@@ -136,7 +136,7 @@ export default {
     //We are accessing getAllOperationTypes in vuex store
      if(vm.editLoadOnce){
          vm.$store.dispatch('getOperationTypesByBranchId');
-         vm.$store.dispatch('getPersonnelsByOperationTypeId');
+        // vm.$store.dispatch('getPersonnelsByOperationTypeId');
         vm.editLoadOnce = false;
      }
     }
