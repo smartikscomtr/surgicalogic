@@ -1,29 +1,31 @@
 <template>
   <div>
-    <grid-component :headers="headers"
-                    :items="settings"
-                    :title="title"
-                    :show-detail="false"
-                    :show-edit="true"
-                    :show-delete="false"
-                    :show-search="true"
-                    :show-insert="false"
-                    :hide-actions="false"
-                    :hide-export="true"
-                    :methodName="getMethodName"
-                    :loading="getLoading"
-                    :totalCount="getTotalCount"
-                    @detail="detail"
-                    @edit="edit"
-                    @newaction="addNewItem"
-                    @deleteitem="deleteItem">
-    </grid-component>
+    <div class="container fluid grid-list-md">
+      <grid-component :headers="headers"
+                      :items="settings"
+                      :title="title"
+                      :show-detail="false"
+                      :show-edit="true"
+                      :show-delete="false"
+                      :show-search="true"
+                      :show-insert="false"
+                      :hide-actions="false"
+                      :hide-export="true"
+                      :methodName="getMethodName"
+                      :loading="getLoading"
+                      :totalCount="getTotalCount"
+                      @detail="detail"
+                      @edit="edit"
+                      @newaction="addNewItem"
+                      @deleteitem="deleteItem">
+      </grid-component>
 
-    <settings-edit-component :edit-action="editAction"
-                                    :edit-visible="editDialog"
-                                    :edit-index="editedIndex"
-                                    @cancel="cancel">
-    </settings-edit-component>
+      <settings-edit-component :edit-action="editAction"
+                                      :edit-visible="editDialog"
+                                      :edit-index="editedIndex"
+                                      @cancel="cancel">
+      </settings-edit-component>
+    </div>
   </div>
 </template>
 
