@@ -1,0 +1,16 @@
+{
+  "addOperatingRoomInformation": "Yeni Operasyon Oda Bilgisi Ekle",
+  "editOperatingRoomInformation": "Operasyon Oda Bilgisi Düzenleme",
+  "equipments": "Ekipmanlar",
+  "detailOperatingRooms": "Operasyon Odası Detayı",
+  "height": "Yükseklik (cm)",
+  "length": "Uzunluk (cm)",
+  "location": "Konum",
+  "operatingRoom": "Operasyon Odası",
+  "operatingRooms": "Operasyon Odaları",
+  "blockedOperatingRooms": "Operasyon Yapılamayacak Odalar",
+  "width": "Genişlik (cm)",
+  "operatingRoomsCalendar": "Operasyon Odasının Uygun Olmadığı Tarihler",
+  "isAvailable": "Uygun",
+  "operatingRoomSaved": "Operasyon odası kaydedildi."
+}

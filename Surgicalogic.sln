@@ -3,62 +3,60 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Api", "Surgicalogic.Api\Surgicalogic.Api.csproj", "{0CA2D94A-F88E-47A4-8891-98497CB57E16}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Surgicalogic.Planning", "Surgicalogic.Planning", "{3EA6C97C-3339-418C-884F-BE49CB746009}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Surgicalogic.Web", "Surgicalogic.Web\", "{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Smartiks.Framework", "Smartiks.Framework", "{054CE7F7-FC51-4B55-A996-7D28154CDB40}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Abstractions", "src\Smartiks.Framework\Smartiks.Framework.IO.Abstractions\Smartiks.Framework.IO.Abstractions.csproj", "{3216E45E-5982-4991-A5BB-F600904DDCB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO", "src\Smartiks.Framework\Smartiks.Framework.IO\Smartiks.Framework.IO.csproj", "{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Extensions", "src\Smartiks.Framework\Smartiks.Framework.IO.Extensions\Smartiks.Framework.IO.Extensions.csproj", "{E4CBD45B-C0A2-402D-BD6D-92B930E23565}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Api", "src\Surgicalogic.Planning\Surgicalogic.Planning.Api\Surgicalogic.Planning.Api.csproj", "{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Engine", "src\Surgicalogic.Planning\Surgicalogic.Planning.Engine\Surgicalogic.Planning.Engine.csproj", "{910E9578-10A3-490E-83A9-FFBD93FF449A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Model", "src\Surgicalogic.Planning\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj", "{60CFE565-E727-4744-8CC4-113BB7CA0926}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Test", "src\Surgicalogic.Planning\Surgicalogic.Planning.Test\Surgicalogic.Planning.Test.csproj", "{A56398B2-8EC1-4B64-B39C-E3CF3583951D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Api", "src\Surgicalogic.Api\Surgicalogic.Api.csproj", "{F269F5C9-A8CE-403A-ABB7-DF5C2E7C9D0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Common", "src\Surgicalogic.Common\Surgicalogic.Common.csproj", "{FFC10880-62FE-449E-959C-03F93AD326ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Contracts", "src\Surgicalogic.Contracts\Surgicalogic.Contracts.csproj", "{B40D68E5-6D4A-48AC-AEE7-7CFE8AFFAA5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Data", "src\Surgicalogic.Data\Surgicalogic.Data.csproj", "{745C1766-FF11-437C-A74E-B42804DC2E25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Data.Migrations", "src\Surgicalogic.Data.Migrations\Surgicalogic.Data.Migrations.csproj", "{ADA1FB26-67F8-45BB-8902-D1F81394FD9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Model", "src\Surgicalogic.Model\Surgicalogic.Model.csproj", "{CF8972B7-7B33-41F0-BDED-065DA4CA552A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Services", "src\Surgicalogic.Services\Surgicalogic.Services.csproj", "{3DDC9F76-0514-4579-A1F4-CD27FF901F8D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Test", "src\Surgicalogic.Test\Surgicalogic.Test.csproj", "{F60DC96E-C5BC-44CD-9822-EFD84A4A2775}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Surgicalogic.Web", "src\Surgicalogic.Web\", "{E60FE75D-7A49-4144-815C-9DCB31BE1A2B}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_6648"
-		Debug.AspNetCompiler.PhysicalPath = "Surgicalogic.Web\"
+		Debug.AspNetCompiler.PhysicalPath = "src\Surgicalogic.Web\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_6648\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_6648"
-		Release.AspNetCompiler.PhysicalPath = "Surgicalogic.Web\"
+		Release.AspNetCompiler.PhysicalPath = "src\Surgicalogic.Web\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_6648\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "6648"
-		SlnRelativePath = "Surgicalogic.Web\"
+		SlnRelativePath = "src\Surgicalogic.Web\"
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Data", "Surgicalogic.Data\Surgicalogic.Data.csproj", "{44FBE89A-67D3-4583-BFE3-A28BE08D2858}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Data.Migrations", "Surgicalogic.Data.Migrations\Surgicalogic.Data.Migrations.csproj", "{0EC33303-6E56-4144-9959-D69351A59CA2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Contracts", "Surgicalogic.Contracts\Surgicalogic.Contracts.csproj", "{E39AD109-48BE-4D81-81BE-DECC311E9253}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Services", "Surgicalogic.Services\Surgicalogic.Services.csproj", "{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Model", "Surgicalogic.Model\Surgicalogic.Model.csproj", "{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Common", "Surgicalogic.Common\Surgicalogic.Common.csproj", "{C86C3545-4C4E-4289-93DC-8C065C32D8E2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Planning", "Planning", "{3EA6C97C-3339-418C-884F-BE49CB746009}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.ORTools", "Planning\Surgicalogic.Planning.ORTools\Surgicalogic.Planning.ORTools.csproj", "{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Smartiks.Framework", "Smartiks.Framework", "{054CE7F7-FC51-4B55-A996-7D28154CDB40}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO", "Smartiks.Framework\Smartiks.Framework.IO\Smartiks.Framework.IO.csproj", "{632C76C4-F109-4E13-8D8E-00F03CCDAD19}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Abstractions", "Smartiks.Framework\Smartiks.Framework.IO.Abstractions\Smartiks.Framework.IO.Abstractions.csproj", "{076DFF4D-04BF-433E-93E1-09214035C400}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Extensions", "Smartiks.Framework\Smartiks.Framework.IO.Extensions\Smartiks.Framework.IO.Extensions.csproj", "{0D6955A8-43D9-4D82-A3A6-7953AA319A55}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Test", "Surgicalogic.Test\Surgicalogic.Test.csproj", "{ED8B6175-760D-46A4-AB87-54890C6A34E2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Model", "Planning\Surgicalogic.Planning.Model\Surgicalogic.Planning.Model.csproj", "{A7182544-90B8-496A-8B9A-9B29E6E65FF6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Engine", "Planning\Surgicalogic.Planning.Engine\Surgicalogic.Planning.Engine.csproj", "{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Api", "Planning\Surgicalogic.Planning.Api\Surgicalogic.Planning.Api.csproj", "{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Test", "Planning\Surgicalogic.Planning.Test\Surgicalogic.Planning.Test.csproj", "{CE67706A-6CE5-4834-ABF8-F44704FE86A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,83 +64,80 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0CA2D94A-F88E-47A4-8891-98497CB57E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CA2D94A-F88E-47A4-8891-98497CB57E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CA2D94A-F88E-47A4-8891-98497CB57E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CA2D94A-F88E-47A4-8891-98497CB57E16}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B6F4885-B1D5-441E-98BA-99C37E4B84EE}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44FBE89A-67D3-4583-BFE3-A28BE08D2858}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EC33303-6E56-4144-9959-D69351A59CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EC33303-6E56-4144-9959-D69351A59CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EC33303-6E56-4144-9959-D69351A59CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EC33303-6E56-4144-9959-D69351A59CA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E39AD109-48BE-4D81-81BE-DECC311E9253}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18F09F73-C674-4CAF-9F4E-8EBDFADB3031}.Release|Any CPU.Build.0 = Release|Any CPU
-		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{058BA9DD-DF7C-4F84-A9D7-341F2CAE5B69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C86C3545-4C4E-4289-93DC-8C065C32D8E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{632C76C4-F109-4E13-8D8E-00F03CCDAD19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{632C76C4-F109-4E13-8D8E-00F03CCDAD19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{632C76C4-F109-4E13-8D8E-00F03CCDAD19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{076DFF4D-04BF-433E-93E1-09214035C400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{076DFF4D-04BF-433E-93E1-09214035C400}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{076DFF4D-04BF-433E-93E1-09214035C400}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D6955A8-43D9-4D82-A3A6-7953AA319A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D6955A8-43D9-4D82-A3A6-7953AA319A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D6955A8-43D9-4D82-A3A6-7953AA319A55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED8B6175-760D-46A4-AB87-54890C6A34E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7182544-90B8-496A-8B9A-9B29E6E65FF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE67706A-6CE5-4834-ABF8-F44704FE86A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{910E9578-10A3-490E-83A9-FFBD93FF449A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910E9578-10A3-490E-83A9-FFBD93FF449A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910E9578-10A3-490E-83A9-FFBD93FF449A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910E9578-10A3-490E-83A9-FFBD93FF449A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60CFE565-E727-4744-8CC4-113BB7CA0926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60CFE565-E727-4744-8CC4-113BB7CA0926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60CFE565-E727-4744-8CC4-113BB7CA0926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60CFE565-E727-4744-8CC4-113BB7CA0926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56398B2-8EC1-4B64-B39C-E3CF3583951D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56398B2-8EC1-4B64-B39C-E3CF3583951D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56398B2-8EC1-4B64-B39C-E3CF3583951D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56398B2-8EC1-4B64-B39C-E3CF3583951D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F269F5C9-A8CE-403A-ABB7-DF5C2E7C9D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F269F5C9-A8CE-403A-ABB7-DF5C2E7C9D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F269F5C9-A8CE-403A-ABB7-DF5C2E7C9D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F269F5C9-A8CE-403A-ABB7-DF5C2E7C9D0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC10880-62FE-449E-959C-03F93AD326ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC10880-62FE-449E-959C-03F93AD326ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC10880-62FE-449E-959C-03F93AD326ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC10880-62FE-449E-959C-03F93AD326ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B40D68E5-6D4A-48AC-AEE7-7CFE8AFFAA5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B40D68E5-6D4A-48AC-AEE7-7CFE8AFFAA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B40D68E5-6D4A-48AC-AEE7-7CFE8AFFAA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B40D68E5-6D4A-48AC-AEE7-7CFE8AFFAA5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{745C1766-FF11-437C-A74E-B42804DC2E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{745C1766-FF11-437C-A74E-B42804DC2E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{745C1766-FF11-437C-A74E-B42804DC2E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{745C1766-FF11-437C-A74E-B42804DC2E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA1FB26-67F8-45BB-8902-D1F81394FD9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA1FB26-67F8-45BB-8902-D1F81394FD9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA1FB26-67F8-45BB-8902-D1F81394FD9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA1FB26-67F8-45BB-8902-D1F81394FD9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF8972B7-7B33-41F0-BDED-065DA4CA552A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF8972B7-7B33-41F0-BDED-065DA4CA552A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF8972B7-7B33-41F0-BDED-065DA4CA552A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF8972B7-7B33-41F0-BDED-065DA4CA552A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DDC9F76-0514-4579-A1F4-CD27FF901F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DDC9F76-0514-4579-A1F4-CD27FF901F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DDC9F76-0514-4579-A1F4-CD27FF901F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DDC9F76-0514-4579-A1F4-CD27FF901F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F60DC96E-C5BC-44CD-9822-EFD84A4A2775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F60DC96E-C5BC-44CD-9822-EFD84A4A2775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F60DC96E-C5BC-44CD-9822-EFD84A4A2775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F60DC96E-C5BC-44CD-9822-EFD84A4A2775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E60FE75D-7A49-4144-815C-9DCB31BE1A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E60FE75D-7A49-4144-815C-9DCB31BE1A2B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E5BBFCEC-7A6D-4033-AB95-1514235B98CD} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{632C76C4-F109-4E13-8D8E-00F03CCDAD19} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
-		{076DFF4D-04BF-433E-93E1-09214035C400} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
-		{0D6955A8-43D9-4D82-A3A6-7953AA319A55} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
-		{A7182544-90B8-496A-8B9A-9B29E6E65FF6} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{732AA33A-8D6E-4691-97B9-23D4C5AA9EF2} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{0EAB2C77-2EDA-4984-BEE2-EB543B83DC52} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{CE67706A-6CE5-4834-ABF8-F44704FE86A2} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{3216E45E-5982-4991-A5BB-F600904DDCB2} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
+		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
+		{E4CBD45B-C0A2-402D-BD6D-92B930E23565} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
+		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{910E9578-10A3-490E-83A9-FFBD93FF449A} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{60CFE565-E727-4744-8CC4-113BB7CA0926} = {3EA6C97C-3339-418C-884F-BE49CB746009}
+		{A56398B2-8EC1-4B64-B39C-E3CF3583951D} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3DD0261F-E73B-45A0-9B9B-0DD5E2904F15}

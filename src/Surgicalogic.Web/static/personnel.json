@@ -1,0 +1,172 @@
+[
+  {
+    "id":1,
+    "personnelCode":213458,
+    "givenName":"Tuba",
+    "familyName":"Bayraktutar",
+    "task":"Doktor",
+    "branch":"Kardiyoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":2,
+    "personnelCode":216965,
+    "givenName":"Mustafa",
+    "familyName":"Deniz",
+    "task":"Doktor",
+    "branch":"Nöroloji",
+    "shift":"16.00-24.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }, { "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":3,
+    "personnelCode":113325,
+    "givenName":"Gürkan",
+    "familyName":"Kesebir",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"12.00-21.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }]
+  },
+  {
+    "id":4,
+    "personnelCode":576098,
+    "givenName":"Yusuf Orhan",
+    "familyName":"Uçal",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"16.00-24.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":5,
+    "personnelCode":870644,
+    "givenName":"Belma",
+    "familyName":"Şahin",
+    "task":"Hemşire",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"16.00-24.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }]
+  },
+  {
+    "id":6,
+    "personnelCode":285097,
+    "givenName":"Deniz",
+    "familyName":"Küçükkaya",
+    "task":"Hemşire",
+    "branch":"Plastik Cerrahi",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }, { "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }, { "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "1", "name": "Sözleşmeli Personel", "description": "Sözleşmeli Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  },
+  {
+    "id":7,
+    "personnelCode":907492,
+    "givenName":"Hasan",
+    "familyName":"Beyaz",
+    "task":"Doktor",
+    "branch":"Ortopedi ve Travmatoloji",
+    "shift":"09.00-18.00",
+    "workTypes": [{ "id": "2", "name": "Kadrolu Personel", "description": "Kadrolu Personel Açıklama" }]
+  }
+]

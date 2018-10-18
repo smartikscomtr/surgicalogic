@@ -1,0 +1,12 @@
+{
+  "addEquipmentsInformation": "Add Equipments Information",
+  "description" : "Description",
+  "detailEquipments": "Detail Equipments",
+  "editEquipmentsInformation": "Edit Equipments Information",
+  "equipment": "Equipment",
+  "equipments": "Equipments",
+  "name": "Name",
+  "equipmentCode":"Equipment Code",
+  "portable" : "Portablity",
+  "type": "Type"
+}

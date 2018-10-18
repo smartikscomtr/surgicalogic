@@ -1,0 +1,15 @@
+{
+  "addOperatingRoomInformation": "Add Operating Room Information",
+  "editOperatingRoomInformation": "Edit Operating Room Information",
+  "detailOperatingRooms": "Detail Operating Rooms",
+  "height": "Height",
+  "length": "Length",
+  "location": "Location",
+  "operatingRoom": "Operating Room",
+  "operatingRooms": "Operating Rooms",
+  "blockedOperatingRooms": "Blocked Operating Rooms",
+  "size": "Size",
+  "width": "Width",
+  "operatingRoomsCalendar": "Operating Room Unavailability Calendar",
+  "isAvailable":"Available"
+}

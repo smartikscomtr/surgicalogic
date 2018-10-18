@@ -1,0 +1,14 @@
+{
+  "addPersonnelInformation": "Yeni Personel Bilgisi Ekleme",
+  "editPersonnelInformation": "Personel Bilgisi Düzenleme",
+  "lastName": "Soyadı",
+  "firstName" : "Adı",
+  "personnel": "Personel",
+  "personnelCode": "Kodu",
+  "personnels": "Personeller",
+  "personnelTitle": "Ünvan",
+  "personnelCategory":"Kategorisi",
+  "personnelSaved": "Personel kaydedildi.",
+  "doctor": "Doktor",
+  "personnelPhoto": "Fotoğraf"
+}

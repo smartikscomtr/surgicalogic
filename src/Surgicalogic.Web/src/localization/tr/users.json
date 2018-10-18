@@ -1,0 +1,13 @@
+{
+  "addUsersInformation": "Yeni Kullanıcı Ekle",
+  "confirmPassword": "Şifre Onayı",
+  "editUsersInformation": "Kullanıcı Bilgisi Düzenleme",
+  "email": "E-mail",
+  "familyName": "Soyadı",
+  "givenName": "Adı",
+  "password": "Şifre",
+  "users": "Kullanıcılar",
+  "userName": "Kullanıcı Adı",
+  "isAdmin":"Yönetici",
+  "userSaved": "Kullanıcı kaydedildi."
+}

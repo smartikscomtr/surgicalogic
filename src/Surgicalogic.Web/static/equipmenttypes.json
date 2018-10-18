@@ -1,0 +1,12 @@
+[
+  {
+    "id" :"1",
+    "name": "Saf Malzeme",
+    "description": "Saf Malzeme Açıklama"
+  },
+  {
+    "id" :"2",
+    "name": "Kompozit Malzeme",
+    "description": "Kompozit Malzeme Açıklama"
+  }
+]
