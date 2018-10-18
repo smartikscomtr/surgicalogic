@@ -98,24 +98,18 @@
           <feedback-component v-if="showFeedback" @showModal="showFeedbackMethod">
           </feedback-component>
 
-          <v-menu bottom offset-y
-                            origin="center center"
-                  transition="scale-transition">
+          <v-menu bottom offset-y origin="center center" transition="scale-transition">
 
-          <!-- <v-tooltip z-index="10" bottom slot="activator"> -->
-            <v-btn icon flat
-                  slot="activator"
-                  dark
-            >
+            <!-- <v-tooltip z-index="10" bottom slot="activator"> -->
+            <v-btn icon flat slot="activator" dark>
               <v-icon>language</v-icon>
             </v-btn>
-          <!-- <span>{{ $t('menu.changeLanguage') }}</span>
+            <!-- <span>{{ $t('menu.changeLanguage') }}</span>
         </v-tooltip> -->
 
             <v-list>
-              <v-list-tile :color="item.selected ? 'blue' : ''"  v-for="(item, index) in languages"
-          :key="index" @click="changeLanguage(item.code)">
-                <v-list-tile-title ><img  align="center" :src="'/static/images/languages/' + item.icon " /> {{item.name}}</v-list-tile-title>
+              <v-list-tile :color="item.selected ? 'teal' : ''" v-for="(item, index) in languages" :key="index" @click="changeLanguage(item.code)">
+                <v-list-tile-title><img align="center" :src="'/static/images/languages/' + item.icon " /> {{item.name}}</v-list-tile-title>
               </v-list-tile>
               <!-- <v-list-tile @click="changeLanguage('en')">
                 <v-list-tile-title><img align="center" src="/static/images/languages/en.png" /> EN</v-list-tile-title>
@@ -148,18 +142,20 @@ export default {
             isMounted: false,
             drawer: null,
             showFeedback: false,
-            languages: [{
-              code:'tr',
-              name:'TR',
-              icon:'tr.png',
-              selected: false
-            },
-            {
-              code:'en',
-              name:'EN',
-              icon:'en.png',
-              selected: false
-            }]
+            languages: [
+                {
+                    code: 'tr',
+                    name: 'TR',
+                    icon: 'tr.png',
+                    selected: false
+                },
+                {
+                    code: 'en',
+                    name: 'EN',
+                    icon: 'en.png',
+                    selected: false
+                }
+            ]
         };
     },
 
@@ -199,13 +195,13 @@ export default {
                     icon: 'content_copy',
                     'icon-alt': 'keyboard_arrow_down',
                     text: vm.$i18n.t('menu.reports'),
-                   children: [
+                    children: [
                         {
                             icon: 'timer_off',
                             text: vm.$i18n.t('menu.overtimeReport'),
-                            route: '/overtimeReportPage'
+                            route: '/overtimereportpage'
                         }
-                   ]
+                    ]
                 },
                 {
                     icon: 'event',
@@ -313,16 +309,16 @@ export default {
             return vm.$router.push(route);
         },
 
-        changeLanguage(lang){
-          const vm = this;
+        changeLanguage(lang) {
+            const vm = this;
 
-          for (let index = 0; index < vm.languages.length; index++) {
-            const element = vm.languages[index];
-              element.selected = element.code == lang;
-          }
+            for (let index = 0; index < vm.languages.length; index++) {
+                const element = vm.languages[index];
+                element.selected = element.code == lang;
+            }
 
-          vm.$i18n.locale = lang;
-          vm.$cookie.set('currentLanguage', lang, 365);
+            vm.$i18n.locale = lang;
+            vm.$cookie.set('currentLanguage', lang, 365);
         }
     },
 
@@ -333,13 +329,10 @@ export default {
 
         var currentLanguage = vm.$cookie.get('currentLanguage');
 
-        if (currentLanguage == null)
-        {
-          vm.$cookie.set('currentLanguage', vm.$i18n.locale, 365);
-        }
-        else
-        {
-          vm.changeLanguage(currentLanguage);
+        if (currentLanguage == null) {
+            vm.$cookie.set('currentLanguage', vm.$i18n.locale, 365);
+        } else {
+            vm.changeLanguage(currentLanguage);
         }
     }
 };
@@ -366,19 +359,12 @@ export default {
 .v-grid-card .v-card__title {
     padding: 0;
 }
-.all-page-pad {
-    padding: 0 44px;
-    margin-top: 0 !important;
-}
 .v-icon.close-wrap {
     background-color: #ff7107;
     color: #fff !important;
     border-radius: 3px;
     padding: 5px;
     font-size: 18px;
-}
-.edit-layout .flex {
-    margin-bottom: 10px;
 }
 .v-dialog.v-dialog--active,
 .v-dialog:not(.v-dialog--fullscreen) {
@@ -402,7 +388,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-        margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .orange .v-btn__content {
     color: #fff;
@@ -411,12 +397,7 @@ export default {
     color: #ff7107 !important;
 }
 .orange {
-    padding: 0;
-    margin: 0;
-    min-width: 140px;
     background-color: #ff7107 !important;
-    height: 40px;
-    font-size: 15px;
 }
 .v-dialog:not(.dialog--fullscreen) {
     max-height: inherit;
@@ -425,35 +406,65 @@ export default {
     max-height: 60vh;
     overflow-y: auto;
 }
-.v-card__text .flex {
-    padding: 0 10px !important;
+.updateplan-wrap {
+    float: right;
 }
 .v-card__text .btn-wrap {
     float: right;
 }
-.v-dialog .v-card__title {
+/* .v-dialog .v-card__title {
     padding: 0 20px !important;
-}
+} */
 .v-card__title button + button {
     margin-left: 1%;
 }
-.primary {
+
+#language {
+    cursor: pointer;
+    margin: 5px;
+}
+.grid-card.v-card {
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+.appo-picker {
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+        0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+.appo-picker.is-large {
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 5px;
+}
+#app .primary--text {
+    color: #ff7107 !important;
+}
+#app .primary {
     background-color: #009688 !important;
     border-color: #009688 !important;
 }
-.primary--text {
+#app .primary--text {
     color: #ff7107 !important;
 }
-.primary--text input,
-.primary--text textarea {
+#app .primary--text input,
+#app .primary--text textarea {
     caret-color: #009688 !important;
 }
-.primary--after::after {
+#app .primary--after::after {
     background: #009688 !important;
 }
-#language {
-  cursor: pointer;
-  margin: 5px;
+.vis-item.vis-range .vis-item-content {
+    color: #fff;
+}
+.vis {
+    margin: 20px 0;
+}
+#app .accent {
+    background-color: #ff7107 !important;
+    border-color: #ff7107 !important;
+}
+#app .accent--text {
+    color: #ff7107 !important;
 }
 </style>
 
