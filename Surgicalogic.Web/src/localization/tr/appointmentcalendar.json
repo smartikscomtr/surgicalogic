@@ -12,5 +12,8 @@
   "patientFullName": "Hasta Adı Soyadı",
   "patientFirstName": "Adı",
   "patientLastName": "Soyadı",
-  "patientidentityNumber": "Kimlik No"
+  "patientidentityNumber": "Kimlik No",
+  "setAppointment": "Randevu Al",
+  "appointmentList": "Randevu Listesi",
+  "appointmentTimes":"Randevu Saatleri"
 }

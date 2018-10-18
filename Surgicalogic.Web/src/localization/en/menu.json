@@ -5,6 +5,8 @@
   "planArrangements": "Plan Arrangements",
   "planningHistory": "Operation History",
   "clinicManagement": "Clinic Management",
+  "personnelManagement":"Personnel Management",
+  "plans":"Plans",
   "reports": "Reports",
   "overtimeReport":"Overtime Report",
   "simulation": "Simulation",
@@ -22,5 +24,10 @@
   "PersonnelTitles": "Personnel Title",
   "equipmentTypes": "Equipment Types",
   "operationTypes": "Operation Types",
-  "workTypes": "Work Types"
+  "workTypes": "Work Types",
+  "youCanManageYourOperations":"You can manage your operations",
+  "youCanManageYourPlans":"You can manage your plans",
+  "youCanManageYourClinics":"You can manage your clinics",
+  "youCanManageYourPersonnels":"You can manage your personnels",
+  "changeLanguage":"Change Language"
 }

@@ -12,5 +12,8 @@
   "patientFullName": "Patient Full Name",
   "patientFirstName": "First Name",
   "patientLastName": "Last Name",
-  "patientidentityNumber": "Identity No"
+  "patientidentityNumber": "Identity No",
+  "setAppointment": "Set Appointment",
+  "appointmentList": "Appointment List",
+  "appointmentTimes":"Appointment Times"
 }

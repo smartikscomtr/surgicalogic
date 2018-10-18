@@ -44,7 +44,6 @@ export default {
     const vm = this;
 
     return {
-      title: vm.$i18n.t('personneltitle.personnelTitles'),
       search: '',
       editDialog: false,
       deleteDialog: false,
@@ -58,6 +57,12 @@ export default {
   },
 
   computed: {
+     title() {
+      const vm = this;
+
+      return vm.$i18n.t('personneltitle.personnelTitles');
+    },
+
     headers() {
       const vm = this;
 

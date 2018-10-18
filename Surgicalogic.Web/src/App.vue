@@ -98,11 +98,31 @@
           <feedback-component v-if="showFeedback" @showModal="showFeedbackMethod">
           </feedback-component>
 
-          <v-btn icon>
-            <v-icon>
-              language
-            </v-icon>
-          </v-btn>
+          <v-menu bottom offset-y
+                            origin="center center"
+                  transition="scale-transition">
+
+          <!-- <v-tooltip z-index="10" bottom slot="activator"> -->
+            <v-btn icon flat
+                  slot="activator"
+                  dark
+            >
+              <v-icon>language</v-icon>
+            </v-btn>
+          <!-- <span>{{ $t('menu.changeLanguage') }}</span>
+        </v-tooltip> -->
+
+            <v-list>
+              <v-list-tile :color="item.selected ? 'blue' : ''"  v-for="(item, index) in languages"
+          :key="index" @click="changeLanguage(item.code)">
+                <v-list-tile-title ><img  align="center" :src="'/static/images/languages/' + item.icon " /> {{item.name}}</v-list-tile-title>
+              </v-list-tile>
+              <!-- <v-list-tile @click="changeLanguage('en')">
+                <v-list-tile-title><img align="center" src="/static/images/languages/en.png" /> EN</v-list-tile-title>
+              </v-list-tile> -->
+            </v-list>
+          </v-menu>
+
         </v-toolbar>
 
         <v-content>
@@ -127,7 +147,19 @@ export default {
             dialog: false,
             isMounted: false,
             drawer: null,
-            showFeedback: false
+            showFeedback: false,
+            languages: [{
+              code:'tr',
+              name:'TR',
+              icon:'tr.png',
+              selected: false
+            },
+            {
+              code:'en',
+              name:'EN',
+              icon:'en.png',
+              selected: false
+            }]
         };
     },
 
@@ -138,7 +170,7 @@ export default {
             return [
                 {
                     icon: 'add_alarm',
-                    text: 'Operasyonlar',
+                    text: vm.$i18n.t('menu.operations'),
                     route: '/operationpage'
                 },
                 {
@@ -279,6 +311,18 @@ export default {
             const vm = this;
 
             return vm.$router.push(route);
+        },
+
+        changeLanguage(lang){
+          const vm = this;
+
+          for (let index = 0; index < vm.languages.length; index++) {
+            const element = vm.languages[index];
+              element.selected = element.code == lang;
+          }
+
+          vm.$i18n.locale = lang;
+          vm.$cookie.set('currentLanguage', lang, 365);
         }
     },
 
@@ -286,6 +330,17 @@ export default {
         const vm = this;
 
         vm.isMounted = true;
+
+        var currentLanguage = vm.$cookie.get('currentLanguage');
+
+        if (currentLanguage == null)
+        {
+          vm.$cookie.set('currentLanguage', vm.$i18n.locale, 365);
+        }
+        else
+        {
+          vm.changeLanguage(currentLanguage);
+        }
     }
 };
 </script>
@@ -395,6 +450,10 @@ export default {
 }
 .primary--after::after {
     background: #009688 !important;
+}
+#language {
+  cursor: pointer;
+  margin: 5px;
 }
 </style>
 

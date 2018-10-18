@@ -4,7 +4,9 @@
   "planManagement":"Plan Yönetimi",
   "planArrangements":"Plan Görüntüleme",
   "planningHistory":"Operasyon Tarihçesi",
+  "plans":"Planlar",
   "clinicManagement": "Klinik Yönetimi",
+  "personnelManagement": "Personel Yönetimi",
   "reports":"Raporlar",
   "overtimeReport":"Süresinde Bitmeyen Operasyonlar",
   "simulation":"Simülasyon",
@@ -22,5 +24,10 @@
   "PersonnelTitles": "Personel Ünvanları",
   "equipmentTypes":"Ekipman Tipleri",
   "operationTypes":"Operasyon Tipleri",
-  "workTypes":"Çalışma Tipleri"
+  "workTypes":"Çalışma Tipleri",
+  "youCanManageYourOperations":"Operasyonlarınızı yönetebilirsiniz",
+  "youCanManageYourPlans":"Planlarınızı yönetebilirsiniz",
+  "youCanManageYourClinics":"Kliniklerinizi yönetebilirsiniz",
+  "youCanManageYourPersonnels":"Personellerinizi yönetebilirsiniz",
+  "changeLanguage":"Dili Değiştir"
 }

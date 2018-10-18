@@ -23,5 +23,6 @@
   "deleteRecord": "Delete Record",
   "required":"Required Field",
   "endDateMustBeBiggerThanStart": "The End Date Must Be Bigger Than Start Date",
-  "moreThanTenCharacters": "This field must be more than 10 characters"
+  "moreThanTenCharacters": "This field must be more than 10 characters",
+  "go":"Go"
 }

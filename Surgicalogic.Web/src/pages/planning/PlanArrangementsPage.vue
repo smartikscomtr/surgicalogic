@@ -194,7 +194,7 @@ export default {
                   axis: 'top'
               },
               // timeAxis: { scale: 'minute', step: vm.$store.state.planArrangementsModule.model.period },
-              locale: 'tr',
+              locale: vm.$cookie.get('currentLanguage'),
               moveable: true,
               zoomMax: 86400000,
               zoomMin: 3600000,
