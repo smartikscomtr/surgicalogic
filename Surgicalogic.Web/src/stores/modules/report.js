@@ -22,10 +22,9 @@ const reportsModule = {
 
   actions: {
     getOvertimeOperations(context, params) {
-      debugger;
       context.commit('setLoading', true);
 
-      axios.get('OperationPlan/GetOperationPlanHistory', {
+      axios.get('Report/OvertimeReportPage', {
         params: params
       }).then(response => {
         if (response.data.info.succeeded == true){
