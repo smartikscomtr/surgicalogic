@@ -15,73 +15,55 @@
         </v-card-title>
 
         <v-form ref="form" v-model="valid" lazy-validation>
-        <v-card-text>
-          <v-layout wrap edit-layout>
-            <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['name']"
-                            :rules="required"
-                            :label="$t('operation.operationName')">
-              </v-text-field>
-            </v-flex>
-
-            <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectOperationType"
-                              :rules="required"
-                              :items="operationTypes"
-                              :label="$t('operation.operationType')"
-                              :filter="customFilter"
-                              @change="operationTypeChanged()"
-                              item-text="name"
-                              item-value="id">
-              </v-autocomplete>
-            </v-flex>
-
-            <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectPersonnel" :items="filterPersonnels" :label="$t('personnel.personnel')" :filter="customFilter" multiple chips deletable-chips item-text="personnelCategoryName" item-value="id">
-              </v-autocomplete>
-            </v-flex>
-
-            <v-flex xs12 sm6 md6>
-              <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field readonly slot="activator"
-                :rules="required"
-                 v-model="dateFormatted"
-                 :label="$t('operation.operationDate')">
+          <v-card-text>
+            <v-layout wrap edit-layout>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['name']" :rules="required" :label="$t('operation.operationName')">
                 </v-text-field>
+              </v-flex>
 
-                <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()">
-                </v-date-picker>
-              </v-menu>
-            </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectOperationType" :rules="required" :items="operationTypes" :label="$t('operation.operationType')" :filter="customFilter" @change="operationTypeChanged()" item-text="name" item-value="id">
+                </v-autocomplete>
+              </v-flex>
 
-            <v-flex xs12 sm6 md6>
-              <v-text-field v-model="selectOperationTime"
-                            :rules="required"
-                            :label="$t('operation.operationTime')"
-                            :value="editAction['operationTime']"
-                            type="time">
-              </v-text-field>
-            </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectPersonnel" :items="filterPersonnels" :label="$t('personnel.personnel')" :filter="customFilter" multiple chips deletable-chips item-text="personnelCategoryName" item-value="id">
+                </v-autocomplete>
+              </v-flex>
 
-            <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectOperatingRoom" :items="filteredOperatingRooms" :label="$t('operatingrooms.blockedOperatingRooms')" :filter="customFilter" multiple chips deletable-chips item-text="name" item-value="id">
-              </v-autocomplete>
-            </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
+                  <v-text-field readonly slot="activator" :rules="required" v-model="dateFormatted" :label="$t('operation.operationDate')">
+                  </v-text-field>
 
-            <v-flex xs12 sm12 md12>
-              <v-textarea v-model="editAction['description']" rows="3" :label="$t('common.description')">
-              </v-textarea>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
+                  <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()">
+                  </v-date-picker>
+                </v-menu>
+              </v-flex>
 
-        <v-card-text>
-          <div class="margin-bottom-none btn-wrap">
-            <v-btn class="btnSave orange" @click.native="save">
-              Kaydet
-            </v-btn>
-          </div>
-        </v-card-text>
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="selectOperationTime" :rules="required" :label="$t('operation.operationTime')" :value="editAction['operationTime']" type="time">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectOperatingRoom" :items="filteredOperatingRooms" :label="$t('operatingrooms.blockedOperatingRooms')" :filter="customFilter" multiple chips deletable-chips item-text="name" item-value="id">
+                </v-autocomplete>
+              </v-flex>
+
+              <v-flex xs12 sm12 md12>
+                <v-textarea v-model="editAction['description']" rows="3" :label="$t('common.description')">
+                </v-textarea>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+
+          <v-card-actions class="justify-end flex">
+              <v-btn class="orange" @click.native="save">
+                Kaydet
+              </v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
@@ -125,11 +107,9 @@ export default {
             menu: false,
             dateFormatted: null,
             valid: true,
-            required: [
-              v => !!v || this.$i18n.t('common.required')
-            ],
+            required: [v => !!v || this.$i18n.t('common.required')],
             multipleRequired: [
-              v => v.length > 0 || this.$i18n.t('common.required')
+                v => v.length > 0 || this.$i18n.t('common.required')
             ]
         };
     },
@@ -277,22 +257,22 @@ export default {
                 .toLowerCase();
         },
 
-          cancel() {
+        cancel() {
             const vm = this;
 
             vm.clear();
             vm.showModal = false;
-          },
+        },
 
-          clear () {
-              this.$refs.form.reset()
-          },
+        clear() {
+            this.$refs.form.reset();
+        },
 
-          save() {
+        save() {
             const vm = this;
 
             if (!vm.$refs.form.validate()) {
-              return;
+                return;
             }
 
             vm.snackbarVisible = false;
