@@ -1,0 +1,15 @@
+{
+  "branch":"Branş",
+  "operation": "Operasyon",
+  "operations": "Operasyonlar",
+  "operationName": "Operasyon Adı",
+  "operationTime": "Operasyon Süresi",
+  "operationType": "Operasyon Tipi",
+  "operationDate": "Operasyon Tarihi",
+  "operationSaved": "Operasyon kaydedildi.",
+  "operationHour": "Operasyon Saati",
+  "operationMinute": "Operasyon Dakikası",
+  "detailOperation": "Operasyon Detayı",
+  "addOperationInformation": "Yeni Operasyon Bilgisi Ekle",
+  "editOperationInformation": "Operasyon Bilgisi Düzenleme"
+}

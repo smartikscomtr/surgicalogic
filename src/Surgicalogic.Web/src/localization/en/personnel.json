@@ -1,0 +1,13 @@
+{
+  "addPersonnelInformation": "Add Personnel Information",
+  "editPersonnelInformation": "Edit Personnel Information",
+  "lastName": "Last Name",
+  "firstName" : "First Name",
+  "personnel": "Personnel",
+  "personnelCode": "Code",
+  "personnelTitle": "Title",
+  "personnels": "Personnels",
+  "personnelCategory": "Title",
+  "doctor": "Doctor",
+  "personnelPhoto":"Photo"
+}

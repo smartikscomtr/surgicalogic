@@ -1,0 +1,11 @@
+{
+  "drawPlan": "Draw Plan",
+  "overtime": "Overtime",
+  "utilization": "Utilization",
+  "minute": "min",
+  "updatePlan":"SAVE CHANGES",
+  "drawPlanConfirmTitle": "Plan Draw",
+  "drawPlanConfirmText": "Yarın için yeni bir operasyon planı oluşturulacaktır. Onaylıyor musunuz?",
+  "notGenerated": "Plan has not been generated.",
+  "planUpdated": "Plan Updated"
+}

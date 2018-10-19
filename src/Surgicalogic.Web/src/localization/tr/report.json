@@ -1,0 +1,13 @@
+{
+  "overtimeReportTitle":"Süresinde Bitmeyen Operasyonlar",
+  "roomName": "Oda",
+  "operationName": "Operasyon",
+  "operationDate": "Tarih",
+  "plannedStartDate":"Planlanan Başlangıç",
+  "plannedEndDate":"Planlanan Bitiş",
+  "realizedStartDate":"Gerçekleşen Başlangıç",
+  "realizedEndDate":"Gerçekleşen Bitiş",
+  "overtime":"Zaman Farkı",
+  "doctorName": "Doktor",
+  "branchName":"Branş"
+}

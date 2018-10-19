@@ -1,0 +1,13 @@
+{
+  "addEquipmentsInformation": "Yeni Ekipman Bilgisi Ekle",
+  "description" : "Açıklama",
+  "detailEquipments": "Ekipman Detayı",
+  "editEquipmentsInformation": "Ekipman Bilgileri Düzenleme",
+  "equipment": "Ekipman",
+  "equipments": "Ekipmanlar",
+  "name": "Adı",
+  "equipmentCode":"Ekipman Kodu",
+  "portable" : "Taşınabilir",
+  "type": "Tipi",
+  "equipmentSaved": "Ekipman kaydedildi."
+}

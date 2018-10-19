@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Surgicalogic.Data\Surgicalogic.Data.csproj" />
+    <ProjectReference Include="..\Surgicalogic.Model\Surgicalogic.Model.csproj" />
+  </ItemGroup>
+
+</Project>
