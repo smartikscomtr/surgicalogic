@@ -17,7 +17,8 @@
                       @detail="detail"
                       @edit="edit"
                       @newaction="addNewItem"
-                      @deleteitem="deleteItem">
+                      @deleteitem="deleteItem"
+                      ref="gridComponent">
       </grid-component>
 
       <settings-edit-component :edit-action="editAction"
@@ -129,6 +130,13 @@ export default {
     deleteMethodName(){
       return "";
     },
+
+    getSettings(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
+    }
 
     // exportPlanningHistoryToExcel() {
     //   const vm = this;

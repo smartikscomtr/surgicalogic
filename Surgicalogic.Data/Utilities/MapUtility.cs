@@ -9,6 +9,7 @@ using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Model.OutputModel.ReportOutputModel;
 using Surgicalogic.Planning.Model.OutputModel;
+using System;
 using System.Linq;
 
 namespace Surgicalogic.Data.Utilities
@@ -152,7 +153,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
                 .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
                 .ForMember(dest => dest.OperationRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
-                .ForMember(dest => dest.OperationTimeDifference, opt => opt.MapFrom(src => src.Operation.OperationTime - System.Convert.ToInt32((src.RealizedEndDate - src.RealizedStartDate).TotalMinutes)))
+                .ForMember(dest => dest.isOvertime, opt => opt.MapFrom(src => src.Operation.OperationTime - System.Convert.ToInt32((src.RealizedEndDate - src.RealizedStartDate).TotalMinutes) < 0))
+                .ForMember(dest => dest.OperationTimeDifference, opt => opt.MapFrom(src => Math.Abs(src.Operation.OperationTime - Convert.ToInt32((src.RealizedEndDate - src.RealizedStartDate).TotalMinutes))))
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
                 .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Operation.OperationType.Branch.Name))
                 .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => string.Join(", ", src.Operation.OperationPersonels.Where(x => x.IsActive).Select(x => x.Personnel.FirstName + " " + x.Personnel.LastName))));

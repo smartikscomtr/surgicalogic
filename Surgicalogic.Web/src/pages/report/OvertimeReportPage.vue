@@ -154,8 +154,10 @@ export default {
                 },
                 {
                     value: 'operationTimeDifference',
+                    isOvertime:'isOvertime',
                     text: vm.$i18n.t('report.overtime'),
                     sortable: true,
+                    overtimeValue:true,
                     align: 'left'
                 },
                 {

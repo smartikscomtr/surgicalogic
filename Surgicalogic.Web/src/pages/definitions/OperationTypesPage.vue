@@ -15,7 +15,8 @@
                     @edit="edit"
                     @exportToExcel="exportOperationTypeToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <operation-types-detail-component :detail-action="detailAction"
@@ -143,6 +144,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('exportOperationTypeToExcel');
+    },
+
+    getOperationTypes(){
+      const vm = this;
+debugger;
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

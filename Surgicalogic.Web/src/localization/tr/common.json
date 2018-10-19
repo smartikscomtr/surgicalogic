@@ -26,5 +26,6 @@
   "deleteRecord": "Kaydı Sil",
   "required":"Zorunlu Alan",
   "endDateMustBeBiggerThanStart": "Bitiş tarihi başlangıç tarihinden büyük olmalı.",
-  "moreThanTenCharacters": "Bu alana en az 10 karakter girmelisiniz."
+  "moreThanTenCharacters": "Bu alana en az 10 karakter girmelisiniz.",
+  "minute":"dk"
 }

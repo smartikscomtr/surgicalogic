@@ -245,7 +245,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getOperatingRooms');
+                        vm.$parent.getOperatingRooms();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;
@@ -272,7 +272,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getOperatingRooms');
+                        vm.$parent.getOperatingRooms();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;

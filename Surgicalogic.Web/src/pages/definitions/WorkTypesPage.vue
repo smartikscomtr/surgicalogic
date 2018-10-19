@@ -14,7 +14,8 @@
                     @edit="edit"
                     @exportToExcel="exportWorkTypeToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <work-types-edit-component :edit-action="editAction"
@@ -119,6 +120,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportWorkType');
+    },
+
+    getWorkTypes(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

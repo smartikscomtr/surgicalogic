@@ -47,6 +47,11 @@
               {{ props.item[header.value] | moment("DD.MM.YYYY HH:mm") }}
             </template>
 
+             <template v-else-if="!header.isAction && header.overtimeValue">
+               <span v-if="props.item[header.isOvertime]" class="overtimeMinutes"> {{ props.item[header.value] }} {{ $t('common.minute') }} </span>
+               <span v-else class="belowtimeMinutes"> {{ props.item[header.value] }} {{ $t('common.minute') }} </span>
+            </template>
+
             <template v-else-if="!header.isAction && header.isDate">
               {{ props.item[header.value] | moment("DD.MM.YYYY") }}
             </template>
@@ -468,5 +473,11 @@ input[type='date']::-webkit-inner-spin-button {
 .v-chip__content {
     background-color: #ee8b41;
     color: #fff !important;
+}
+.overtimeMinutes {
+    color: red !important;
+}
+.belowtimeMinutes {
+    color: green !important;
 }
 </style>

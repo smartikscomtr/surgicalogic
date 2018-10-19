@@ -17,7 +17,8 @@
                     @edit="edit"
                     @exportToExcel="exportOperatingRoomToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <!-- <operating-rooms-calendar-component :calendar-action="calendarAction"
@@ -170,6 +171,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('exportOperatingRoomToExcel');
+    },
+
+    getOperatingRooms(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

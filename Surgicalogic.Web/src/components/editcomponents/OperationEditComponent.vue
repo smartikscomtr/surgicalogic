@@ -294,7 +294,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getOperations');
+                        vm.$parent.getOperations();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;
@@ -317,7 +317,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getOperations');
+                        vm.$parent.getOperations();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;

@@ -14,7 +14,8 @@
                     @edit="edit"
                     @exportToExcel="exportPersonnelTitleToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <personnel-title-edit-component :edit-action="editAction"
@@ -114,6 +115,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportPersonnelTitle');
+    },
+
+    getPersonnelTitles(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

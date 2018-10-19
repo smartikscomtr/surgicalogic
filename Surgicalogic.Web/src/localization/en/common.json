@@ -15,6 +15,7 @@
   "search":"Search",
   "rowsPerPage":"Rows per page:",
   "noDataAvailable" : "No data available",
+  "go":"Go",
   "export": "Export",
   "theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData": "The item can not be deleted because it is associated with another data.",
   "theDataWasSuccessfullyDeleted": "The data was successfully deleted.",
@@ -24,5 +25,5 @@
   "required":"Required Field",
   "endDateMustBeBiggerThanStart": "The End Date Must Be Bigger Than Start Date",
   "moreThanTenCharacters": "This field must be more than 10 characters",
-  "go":"Go"
+  "minute":"min"
 }

@@ -15,7 +15,8 @@
                     @exportToExcel="exportUserToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem"
-                    @resetpassword="resetPassword">
+                    @resetpassword="resetPassword"
+                    ref="gridComponent">
     </grid-component>
 
     <users-edit-component :edit-action="editAction"
@@ -123,6 +124,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportUser');
+    },
+
+    getUsers(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 }

@@ -259,7 +259,7 @@ export default {
           operatingRoomIds: vm.editAction.operatingRoomId
         }).then(() => {
           vm.snackbarVisible = true;
-          vm.$store.dispatch('getOperationTypes');
+          vm.$parent.getOperationTypes();
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -280,7 +280,7 @@ export default {
           operatingRoomIds: vm.editAction.operatingRoomId
         }).then(() => {
           vm.snackbarVisible = true;
-          vm.$store.dispatch('getOperationTypes');
+          vm.$parent.getOperationTypes();
 
           setTimeout(() => {
             vm.snackbarVisible = false;

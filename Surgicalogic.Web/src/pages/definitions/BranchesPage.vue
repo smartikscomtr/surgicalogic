@@ -14,7 +14,8 @@
                     @edit="edit"
                     @exportToExcel="exportBranchesToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <branches-edit-component :edit-action="editAction"
@@ -120,6 +121,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportBranches');
+    },
+
+    getBranches(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

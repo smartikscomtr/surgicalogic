@@ -238,6 +238,7 @@ export default {
 
             //Edit equipment
             if (vm.editIndex > -1) {
+              debugger;
                 //We are accessing updateEquipment in vuex store
                 vm.$store
                     .dispatch('updateEquipment', {
@@ -251,7 +252,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getEquipments');
+                        vm.$parent.getEquipments();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;
@@ -273,7 +274,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getEquipments');
+                        vm.$parent.getEquipments();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;

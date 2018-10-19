@@ -197,7 +197,7 @@ export default {
                 })
                 .then(() => {
                     vm.snackbarVisible = true;
-                    vm.$store.dispatch('getSettings');
+                    vm.$parent.getSettings();
                     setTimeout(() => {
                         vm.snackbarVisible = false;
                     }, 2300);

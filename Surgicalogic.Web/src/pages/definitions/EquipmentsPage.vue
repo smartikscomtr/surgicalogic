@@ -15,7 +15,8 @@
                     @edit="edit"
                     @exportToExcel="exportEquipmentsToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <equipments-detail-component :detail-action="detailAction"
@@ -155,6 +156,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportEquipments');
+    },
+
+    getEquipments(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

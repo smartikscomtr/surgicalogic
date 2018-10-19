@@ -15,5 +15,6 @@ namespace Surgicalogic.Model.OutputModel.ReportOutputModel
         public DateTime RealizedStartDate { get; set; }
         public DateTime RealizedEndDate { get; set; }
         public int OperationTimeDifference { get; set; }
+        public bool isOvertime { get; set; }
     }
 }

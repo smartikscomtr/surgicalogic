@@ -299,7 +299,7 @@ export default {
                     .dispatch('updatePersonnel', formData)
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getPersonnels');
+                        vm.$parent.getPersonnels();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;
@@ -323,7 +323,7 @@ export default {
                     .dispatch('insertPersonnel', formData)
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getPersonnels');
+                        vm.$parent.getPersonnels();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;

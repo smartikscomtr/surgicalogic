@@ -152,7 +152,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getUsers');
+                        vm.$parent.getUsers();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;
@@ -170,7 +170,7 @@ export default {
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
-                        vm.$store.dispatch('getUsers');
+                        vm.$parent.getUsers();
 
                         setTimeout(() => {
                             vm.snackbarVisible = false;

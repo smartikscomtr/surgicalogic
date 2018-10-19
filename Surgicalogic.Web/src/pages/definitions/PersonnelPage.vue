@@ -14,7 +14,8 @@
                     @edit="edit"
                     @exportToExcel="exportPersonnelsToExcel"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
 
     <personnel-edit-component :edit-action="editAction"
@@ -186,6 +187,13 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportPersonnel');
+    },
+
+    getPersonnels(){
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };
