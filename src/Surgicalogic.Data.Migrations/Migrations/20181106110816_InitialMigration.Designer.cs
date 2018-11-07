@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181005073812_InitialMigration")]
+    [Migration("20181106110816_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -451,6 +451,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("EventNumber");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<int?>("ModifiedBy");
@@ -463,9 +465,13 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<int>("OperationTypeId");
 
+                    b.Property<int>("PatientId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OperationTypeId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Operations");
                 });
@@ -641,7 +647,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("IdentityNumber")
+                    b.Property<string>("IdentityNumber")
                         .HasMaxLength(11);
 
                     b.Property<bool>("IsActive");
@@ -654,7 +660,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<int>("Phone")
+                    b.Property<string>("Phone")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
@@ -667,8 +673,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BranchId");
 
                     b.Property<int>("CreatedBy");
 
@@ -688,13 +692,13 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<int>("PersonnelCategoryId");
+                    b.Property<int?>("PersonnelCategoryId");
 
                     b.Property<string>("PersonnelCode")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int>("PersonnelTitleId");
+                    b.Property<int?>("PersonnelTitleId");
 
                     b.Property<string>("PictureUrl");
 
@@ -1063,6 +1067,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .WithMany("Operations")
                         .HasForeignKey("OperationTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.Patient", "Patient")
+                        .WithMany("Operations")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.OperationBlockedOperatingRoom", b =>
@@ -1129,13 +1138,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 {
                     b.HasOne("Surgicalogic.Data.Entities.PersonnelCategory", "PersonnelCategory")
                         .WithMany("Personnels")
-                        .HasForeignKey("PersonnelCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PersonnelCategoryId");
 
                     b.HasOne("Surgicalogic.Data.Entities.PersonnelTitle", "PersonnelTitle")
                         .WithMany()
-                        .HasForeignKey("PersonnelTitleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PersonnelTitleId");
 
                     b.HasOne("Surgicalogic.Data.Entities.WorkType", "WorkType")
                         .WithMany("Personnels")

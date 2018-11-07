@@ -30,21 +30,18 @@ namespace Surgicalogic.Api.Controllers
         private readonly IOperationStoreService _operationStoreService;
         private readonly IOperatingRoomStoreService _operatingRoomStoreService;
         private readonly IOperationPlanStoreService _operationPlanStoreService;
-        private readonly IOperationPlanHistoryStoreService _operationPlanHistoryStoreService;
         private readonly ISettingStoreService _settingStoreService;
 
         public OperationPlanController(
             IOperationStoreService operationStoreService,
             IOperatingRoomStoreService operatingRoomStoreService,
             IOperationPlanStoreService operationPlanStoreService,
-            IOperationPlanHistoryStoreService operationPlanHistoryStoreService,
             ISettingStoreService settingStoreService
             )
         {
             _operationStoreService = operationStoreService;
             _operatingRoomStoreService = operatingRoomStoreService;
             _operationPlanStoreService = operationPlanStoreService;
-            _operationPlanHistoryStoreService = operationPlanHistoryStoreService;
             _settingStoreService = settingStoreService;
         }
         #endregion
@@ -99,20 +96,6 @@ namespace Surgicalogic.Api.Controllers
             };
 
             return result;
-        }
-
-        [Route("OperationPlan/GetOperationPlanHistory")]
-        [HttpGet]
-        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationPlanHistory(GridInputModel input)
-        {
-            return await _operationPlanHistoryStoreService.GetAsync<OperationPlanHistoryOutputModel>(input);
-        }
-
-        [Route("OperationPlan/GetTomorrowOperationList")]
-        [HttpGet]
-        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationList(GridInputModel input)
-        {
-            return await _operationPlanHistoryStoreService.GetTomorrowOperationListAsync(input);
         }
 
         [HttpPost]

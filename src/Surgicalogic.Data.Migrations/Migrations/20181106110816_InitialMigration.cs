@@ -125,10 +125,10 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    IdentityNumber = table.Column<int>(maxLength: 11, nullable: false),
+                    IdentityNumber = table.Column<string>(maxLength: 11, nullable: true),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    Phone = table.Column<int>(maxLength: 20, nullable: false),
+                    Phone = table.Column<string>(maxLength: 20, nullable: true),
                     Address = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
@@ -415,9 +415,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     PictureUrl = table.Column<string>(nullable: true),
-                    PersonnelTitleId = table.Column<int>(nullable: false),
-                    PersonnelCategoryId = table.Column<int>(nullable: false),
-                    BranchId = table.Column<int>(nullable: false),
+                    PersonnelTitleId = table.Column<int>(nullable: true),
+                    PersonnelCategoryId = table.Column<int>(nullable: true),
                     WorkTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -428,13 +427,13 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         column: x => x.PersonnelCategoryId,
                         principalTable: "PersonnelCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Personnels_PersonnelTitles_PersonnelTitleId",
                         column: x => x.PersonnelTitleId,
                         principalTable: "PersonnelTitles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Personnels_WorkTypes_WorkTypeId",
                         column: x => x.WorkTypeId,
@@ -657,11 +656,13 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     ModifiedBy = table.Column<int>(nullable: true),
                     ModifiedDate = table.Column<DateTime>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
+                    EventNumber = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     OperationTypeId = table.Column<int>(nullable: false),
                     OperationTime = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    PatientId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -670,6 +671,12 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_Operations_OperationTypes_OperationTypeId",
                         column: x => x.OperationTypeId,
                         principalTable: "OperationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Operations_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -926,6 +933,11 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "OperationTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Operations_PatientId",
+                table: "Operations",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OperationTypeEquipments_EquipmentId",
                 table: "OperationTypeEquipments",
                 column: "EquipmentId");
@@ -1025,9 +1037,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "Patients");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -1047,6 +1056,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "OperationTypes");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "EquipmentTypes");

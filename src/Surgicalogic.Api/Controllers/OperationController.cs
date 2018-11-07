@@ -20,16 +20,19 @@ namespace Surgicalogic.Api.Controllers
         private readonly IOperationStoreService _operationStoreService;
         private readonly IOperationPersonnelStoreService _operationPersonnelStoreService;
         private readonly IOperationBlockedOperatingRoomStoreService _operationBlockedOperatingRoomStoreService;
+        private readonly IPatientStoreService _patientStoreService;
 
         public OperationController(
             IOperationStoreService operationStoreService, 
             IOperationPersonnelStoreService operationPersonnelStoreService,
-            IOperationBlockedOperatingRoomStoreService operationBlockedOperatingRoomStoreService
+            IOperationBlockedOperatingRoomStoreService operationBlockedOperatingRoomStoreService,
+            IPatientStoreService patientStoreService
             )
         {
             _operationStoreService = operationStoreService;
             _operationPersonnelStoreService = operationPersonnelStoreService;
             _operationBlockedOperatingRoomStoreService = operationBlockedOperatingRoomStoreService;
+            _patientStoreService = patientStoreService;
         }
 
         /// <summary>
@@ -41,7 +44,6 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
             return await _operationStoreService.GetAsync<OperationOutputModel>(input);
-
         }
 
         [Route("Operation/GetAllOperations")]
@@ -77,13 +79,25 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationOutputModel>> InsertOperation([FromBody] OperationInputModel item)
         {
             var operationTimes = item.OperationTime.Split(':');
+
+            var patient = new PatientModel()
+            {
+                FirstName = item.PatientFirstName,
+                LastName = item.PatientLastName,
+                IdentityNumber = item.PatientIdentityNumber
+            };
+
+            var patientModel = await _patientStoreService.InsertAndSaveAsync(patient);
+
             var operationItem = new OperationModel()
             {
                 Name = item.Name,
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
-                Date = item.Date < new DateTime(2000,01,01) ? DateTime.Now.AddDays(1) : item.Date //TODO: Çakma çözüm
+                Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date, //TODO: Çakma çözüm
+                EventNumber = item.EventNumber,
+                PatientId = patientModel.Result.Id
             };
 
             var result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
@@ -125,6 +139,16 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationOutputModel>> UpdateOperation([FromBody] OperationInputModel item)
         {
             var operationTimes = item.OperationTime.Split(':');
+
+            var patient = new PatientModel()
+            {
+                FirstName = item.PatientFirstName,
+                LastName = item.PatientLastName,
+                IdentityNumber = item.PatientIdentityNumber
+            };
+
+            var patientModel = await _patientStoreService.InsertAndSaveAsync(patient);
+
             var operationItem = new OperationModel()
             {
                 Id = item.Id,
@@ -132,7 +156,8 @@ namespace Surgicalogic.Api.Controllers
                 Description = item.Description,
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
-                Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date //TODO: Çakma çözüm
+                Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date, //TODO: Çakma çözüm
+                PatientId = patientModel.Result.Id
             };
 
             var result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);

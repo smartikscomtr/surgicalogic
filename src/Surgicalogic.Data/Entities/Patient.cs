@@ -18,11 +18,11 @@ namespace Surgicalogic.Data.Entities
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
-        [Required]
         [StringLength(20)]
         public string Phone { get; set; }
         [StringLength(500)]
         public string Address { get; set; }
+        public virtual ICollection<Operation> Operations { get; set; }
         public virtual ICollection<AppointmentCalendar> AppointmentCalendars { get; set; }
     }
 }
