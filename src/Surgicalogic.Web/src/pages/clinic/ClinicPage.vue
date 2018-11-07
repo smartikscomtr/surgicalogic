@@ -2,12 +2,14 @@
   <div class="container fluid grid-list-md clinic-page" id="section-to-print">
     <v-layout wrap edit-layout>
       <v-flex lg4 md3 sm6 xs12>
-        <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box :filter="customFilter" @change="filterBranch()" item-text="name" item-value="id">
+        <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box
+                        clearable :filter="customFilter" @change="filterBranch()" item-text="name" item-value="id">
         </v-autocomplete>
       </v-flex>
 
       <v-flex lg4 md3 sm6 xs12>
-        <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilter" @change="filterDoctor()" item-text="personnelTitleName" item-value="id">
+        <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box
+                        clearable :filter="customFilter" @change="filterDoctor()" item-text="personnelTitleName" item-value="id">
         </v-autocomplete>
       </v-flex>
     </v-layout>

@@ -8,5 +8,6 @@
   "realizedStartDate":"Gerçekleşen Başlangıç",
   "realizedEndDate":"Gerçekleşen Bitiş",
   "futurePlan": "Gelecek Plan",
-  "planningHistory": "Operasyon Tarihçesi"
+  "planningHistory": "Operasyon Tarihçesi",
+  "operationRoomName": "Operasyon Odası"
 }

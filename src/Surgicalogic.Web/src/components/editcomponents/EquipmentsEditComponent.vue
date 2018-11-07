@@ -36,6 +36,7 @@
                               :items="equipmentTypes"
                               :label="$t('equipmenttypes.equipmentType')"
                               :filter="customFilter"
+                              clearable
                               item-text="name"
                               item-value="id">
               </v-autocomplete>
@@ -55,6 +56,7 @@
                               :filter="customFilter"
                               multiple
                               chips
+                              clearable
                               deletable-chips
                               item-text="name"
                               item-value="id">

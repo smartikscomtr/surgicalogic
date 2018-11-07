@@ -32,17 +32,20 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectPersonnelTitle" :items="PersonnelTitles" :label="$t('personnel.personnelTitle')" :filter="customFilter" item-text="name" item-value="id">
+              <v-autocomplete v-model="selectPersonnelTitle" :items="PersonnelTitles" :label="$t('personnel.personnelTitle')" :filter="customFilter"
+                              clearable item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectPersonnelCategory" :items="PersonnelCategories" :label="$t('personnelcategory.personnelCategory')" :filter="customFilter" item-text="name" item-value="id">
+              <v-autocomplete v-model="selectPersonnelCategory" :items="PersonnelCategories" :label="$t('personnelcategory.personnelCategory')" :filter="customFilter"
+                              clearable item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 
             <v-flex xs12 sm12 md12>
-              <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" multiple chips deletable-chips :filter="customFilter" item-text="name" item-value="id">
+              <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" multiple chips
+                              clearable deletable-chips :filter="customFilter" item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 
@@ -66,7 +69,8 @@
 				    </v-flex>
 
             <v-flex xs12 sm6 md6>
-              <v-autocomplete v-model="selectWorkType" :rules="required" :items="workTypes" :label="$t('worktypes.workType')" :filter="customFilter" item-text="name" item-value="id">
+              <v-autocomplete v-model="selectWorkType" :rules="required" :items="workTypes" :label="$t('worktypes.workType')" :filter="customFilter"
+                              clearable item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 

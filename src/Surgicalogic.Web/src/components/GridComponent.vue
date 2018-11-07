@@ -204,9 +204,9 @@ export default {
     watch: {
         pagination: {
             handler() {
-                const vm = this;
+              const vm = this;
 
-                vm.executeGridOperations();
+              vm.executeGridOperations();
             }
         }
     },

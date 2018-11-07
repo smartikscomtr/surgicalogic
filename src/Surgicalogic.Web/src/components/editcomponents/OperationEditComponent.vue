@@ -18,23 +18,47 @@
           <v-card-text>
             <v-layout wrap edit-layout>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['name']" :rules="required" :label="$t('operation.operationName')">
+                <v-text-field v-model="editAction['patientIdentityNumber']"
+                              mask="###########"
+                              :label="$t('operation.patientIdentityNumber')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectOperationType" :rules="required" :items="operationTypes" :label="$t('operation.operationType')" :filter="customFilter" @change="operationTypeChanged()" item-text="name" item-value="id">
+                <v-text-field v-model="editAction['eventNumber']" :rules="required" :label="$t('operation.eventNo')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['patientFirstName']" :rules="required" :label="$t('operation.patientFirstName')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="editAction['patientLastName']" :rules="required" :label="$t('operation.patientLastName')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-text-field v-model="operationName" disabled :rules="required" :label="$t('operation.operationName')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
+                <v-autocomplete v-model="selectOperationType" :rules="required" :items="operationTypes" :label="$t('operation.operationType')" :filter="customFilter"
+                              clearable @change="operationTypeChanged()" item-text="name" item-value="id">
                 </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectPersonnel" :items="filterPersonnels" :label="$t('personnel.personnel')" :filter="customFilter" multiple chips deletable-chips item-text="personnelCategoryName" item-value="id">
+                <v-autocomplete v-model="selectPersonnel" :items="filterPersonnels" :label="$t('personnel.personnel')" :filter="customFilter"
+                              clearable multiple chips deletable-chips item-text="personnelCategoryName" item-value="id">
                 </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
                 <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                  <v-text-field readonly slot="activator" :rules="required" v-model="dateFormatted" :label="$t('operation.operationDate')">
+                  <v-text-field readonly clearable slot="activator" :rules="required" v-model="dateFormatted" :label="$t('operation.operationDate')">
                   </v-text-field>
 
                   <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()">
@@ -48,7 +72,8 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-autocomplete v-model="selectOperatingRoom" :items="filteredOperatingRooms" :label="$t('operatingrooms.blockedOperatingRooms')" :filter="customFilter" multiple chips deletable-chips item-text="name" item-value="id">
+                <v-autocomplete v-model="selectOperatingRoom" :items="filteredOperatingRooms" :label="$t('operatingrooms.blockedOperatingRooms')" :filter="customFilter"
+                              clearable multiple chips deletable-chips item-text="name" item-value="id">
                 </v-autocomplete>
               </v-flex>
 
@@ -125,6 +150,20 @@ export default {
     },
 
     computed: {
+        operationName: {
+          get() {
+            const vm = this;
+
+            return (vm.editAction['eventNumber'] ? vm.editAction['eventNumber'] : "") + (vm.editAction['patientFirstName'] ? " " + vm.editAction['patientFirstName'] : "") + (vm.editAction['patientLastName'] ? " " + vm.editAction['patientLastName'] : "");
+          },
+
+          set(val) {
+            const vm = this;
+
+            vm.editAction.operationName = val;
+          }
+        },
+
         formTitle() {
             const vm = this;
 
@@ -284,13 +323,17 @@ export default {
                 vm.$store
                     .dispatch('updateOperation', {
                         id: vm.editAction.id,
-                        name: vm.editAction.name,
+                        name: vm.operationName,
                         date: vm.editAction.date,
                         operationTime: vm.editAction.operationTime,
                         description: vm.editAction.description,
                         operationTypeId: vm.editAction.operationTypeId,
                         personnelIds: vm.editAction.personnelIds,
-                        operatingRoomIds: vm.editAction.blockedOperatingRoomIds
+                        operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
+                        patientIdentityNumber: vm.editAction.patientIdentityNumber,
+                        patientFirstName: vm.editAction.patientFirstName,
+                        patientLastName: vm.editAction.patientLastName,
+                        eventNumber: vm.editAction.eventNumber
                     })
                     .then(() => {
                         vm.snackbarVisible = true;
@@ -307,13 +350,17 @@ export default {
                 //We are accessing insertOperation in vuex store
                 vm.$store
                     .dispatch('insertOperation', {
-                        name: vm.editAction.name,
+                        name: vm.operationName,
                         date: vm.editAction.date,
                         operationTime: vm.editAction.operationTime,
                         description: vm.editAction.description,
                         operationTypeId: vm.editAction.operationTypeId,
                         personnelIds: vm.editAction.personnelIds,
-                        operatingRoomIds: vm.editAction.blockedOperatingRoomIds
+                        operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
+                        patientIdentityNumber: vm.editAction.patientIdentityNumber,
+                        patientFirstName: vm.editAction.patientFirstName,
+                        patientLastName: vm.editAction.patientLastName,
+                        eventNumber: vm.editAction.eventNumber
                     })
                     .then(() => {
                         vm.snackbarVisible = true;

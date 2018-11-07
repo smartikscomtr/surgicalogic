@@ -8,5 +8,6 @@
   "realizedEndDate": "Realized End",
   "operations": "Operations",
   "futurePlan": "Future Plan",
-  "planningHistory": "Operation History"
+  "planningHistory": "Operation History",
+  "operationRoomName": "Operation Room"
 }

@@ -23,7 +23,8 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="0">
-              <v-autocomplete v-model="selectSettingDataType" :items="settingDataTypes" :label="$t('settings.settingDataType')" :filter="customFilter" @change="settingDataTypeChanged()"  item-text="name" item-value="id">
+              <v-autocomplete v-model="selectSettingDataType" :items="settingDataTypes" :label="$t('settings.settingDataType')" :filter="customFilter"
+                              clearable @change="settingDataTypeChanged()"  item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 

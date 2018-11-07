@@ -13,7 +13,7 @@
       <v-flex md9 sm9 xs12 block-container>
         <v-flex xs12 sm12 md12>
           <v-menu ref="menu" :close-on-content-click="false" v-model="menu" :nudge-right="40" :return-value.sync="date" lazy transition="scale-transition" offset-y full-width min-width="290px">
-            <v-text-field append-icon="keyboard_arrow_down" readonly slot="activator" v-model="dateFormatted" :label="$t('appointmentcalendar.appointmentDate')">
+            <v-text-field append-icon="keyboard_arrow_down" readonly clearable slot="activator" v-model="dateFormatted" :label="$t('appointmentcalendar.appointmentDate')">
             </v-text-field>
 
             <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
@@ -46,6 +46,13 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
+                <v-text-field v-model="phone"
+                              mask="phone"
+                              :label="$t('appointmentcalendar.phone')">
+                </v-text-field>
+              </v-flex>
+
+              <v-flex xs12 sm6 md6>
                 <v-text-field v-model="firstName"
                               :label="$t('appointmentcalendar.firstName')">
                 </v-text-field>
@@ -54,13 +61,6 @@
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="lastName"
                               :label="$t('appointmentcalendar.lastName')">
-                </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="phone"
-                              mask="phone"
-                              :label="$t('appointmentcalendar.phone')">
                 </v-text-field>
               </v-flex>
 

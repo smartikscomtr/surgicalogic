@@ -11,5 +11,10 @@
   "operationMinute": "Operasyon Dakikası",
   "detailOperation": "Operasyon Detayı",
   "addOperationInformation": "Yeni Operasyon Bilgisi Ekle",
-  "editOperationInformation": "Operasyon Bilgisi Düzenleme"
+  "editOperationInformation": "Operasyon Bilgisi Düzenleme",
+  "eventNo": "Vaka Numarası",
+  "patientIdentityNumber": "Hasta TC Kimlik No",
+  "patientFirstName": "Hasta Adı",
+  "patientLastName": "Hasta Soyadı",
+  "eventNumber": "Vaka Numarası"
 }

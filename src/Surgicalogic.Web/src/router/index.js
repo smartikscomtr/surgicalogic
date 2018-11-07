@@ -44,7 +44,6 @@ import SettingsPage from "@/pages/management/SettingsPage";
 import OperationPage from "@/pages/operation/OperationPage";
 
 //Registering Planning Pages
-import HistoryPlanningPage from "@/pages/planning/HistoryPlanningPage";
 import PlanArrangementsPage from "@/pages/planning/PlanArrangementsPage";
 
 //Registering Clinic Pages
@@ -53,6 +52,8 @@ import ClinicPage from "@/pages/clinic/ClinicPage";
 import AppointmentCalendarPage from "@/pages/clinic/AppointmentCalendarPage";
 
 //Registering report Pages
+import HistoryClinicPage from "@/pages/report/HistoryClinicPage";
+import HistoryPlanningPage from "@/pages/report/HistoryPlanningPage";
 import OvertimeReportPage from "@/pages/report/OvertimeReportPage";
 
 export default new VueRouter({
@@ -105,6 +106,16 @@ export default new VueRouter({
       component: OvertimeReportPage
     },
     {
+      path: '/historyclinicpage',
+      name: 'HistoryClinicPage',
+      component: HistoryClinicPage
+    },
+    {
+      path: '/historyplanningpage',
+      name: 'HistoryPlanningPage',
+      component: HistoryPlanningPage
+    },
+    {
       path: '/loginpage',
       name: 'LoginPage',
       component: LoginPage,
@@ -132,11 +143,6 @@ export default new VueRouter({
       path: '/operationpage',
       name: 'OperationPage',
       component: OperationPage
-    },
-    {
-      path: '/historyplanningpage',
-      name: 'HistoryPlanningPage',
-      component: HistoryPlanningPage
     },
     {
       path: '/operationtypespage',

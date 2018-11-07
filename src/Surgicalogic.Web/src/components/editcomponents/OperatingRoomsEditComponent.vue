@@ -53,12 +53,14 @@
             </v-flex>
 
             <v-flex xs12 sm12 md12>
-              <v-autocomplete v-model="selectEquipment" :items="equipments" :label="$t('equipments.equipments')" :filter="customFilter" multiple chips deletable-chips item-text="name" item-value="id">
+              <v-autocomplete v-model="selectEquipment" :items="equipments" :label="$t('equipments.equipments')" :filter="customFilter" multiple chips
+                              clearable deletable-chips item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 
             <v-flex xs12 sm12 md12>
-              <v-autocomplete v-model="selectOperationType" :items="operationTypes" :label="$t('operationtypes.operationType')" :filter="customFilter" multiple chips deletable-chips item-text="name" item-value="id">
+              <v-autocomplete v-model="selectOperationType" :items="operationTypes" :label="$t('operationtypes.operationType')" :filter="customFilter" multiple chips
+                              clearable deletable-chips item-text="name" item-value="id">
               </v-autocomplete>
             </v-flex>
 

@@ -19,7 +19,7 @@
           <v-layout wrap edit-layout>
             <v-flex xs6 sm6 md6>
               <v-menu ref="menu1" :close-on-content-click="false" v-model="menu1" :nudge-right="40" :return-value.sync="startDate" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field readonly slot="activator"  :rules="required" v-model="startDateFormatted" :label="$t('operatingroomscalendar.startDate')">
+                <v-text-field readonly slot="activator" clearable :rules="required" v-model="startDateFormatted" :label="$t('operatingroomscalendar.startDate')">
                 </v-text-field>
 
                 <v-date-picker v-model="startDate" no-title @input="$refs.menu1.save(startDate);" :min="getMinDate()">
@@ -29,7 +29,7 @@
 
             <v-flex xs6 sm6 md6>
               <v-menu ref="menu2" :close-on-content-click="false" v-model="menu2" :nudge-right="40" :return-value.sync="endDate" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field readonly slot="activator"  :rules="requiredEnd" v-model="endDateFormatted" :label="$t('operatingroomscalendar.endDate')">
+                <v-text-field readonly slot="activator" clearable :rules="requiredEnd" v-model="endDateFormatted" :label="$t('operatingroomscalendar.endDate')">
                 </v-text-field>
 
                 <v-date-picker v-model="endDate" no-title @input="$refs.menu2.save(endDate);" :min="getMinDate()">

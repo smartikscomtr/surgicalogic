@@ -178,11 +178,6 @@ export default {
                             icon: 'timeline',
                             text: vm.$i18n.t('menu.planArrangements'),
                             route: '/planarrangementspage'
-                        },
-                        {
-                            icon: 'history',
-                            text: vm.$i18n.t('menu.planningHistory'),
-                            route: '/historyplanningpage'
                         }
                     ]
                 },
@@ -192,7 +187,7 @@ export default {
                     route: '/clinicpage'
                 },
                 {
-                    icon: 'content_copy',
+                    icon: 'keyboard_arrow_up',
                     'icon-alt': 'keyboard_arrow_down',
                     text: vm.$i18n.t('menu.reports'),
                     children: [
@@ -200,6 +195,11 @@ export default {
                             icon: 'timer_off',
                             text: vm.$i18n.t('menu.overtimeReport'),
                             route: '/overtimereportpage'
+                        },
+                        {
+                            icon: 'history',
+                            text: vm.$i18n.t('menu.planningHistory'),
+                            route: '/historyplanningpage'
                         }
                     ]
                 },

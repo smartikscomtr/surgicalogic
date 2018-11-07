@@ -10,18 +10,29 @@
           </div>
         </v-flex>
         <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box :filter="customFilter" item-text="name" item-value="id">
+          <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box clearable :filter="customFilter" item-text="name" item-value="id">
           </v-autocomplete>
         </v-flex>
 
         <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box :filter="customFilterForDoctor" item-text="personnelTitleName" item-value="id">
+          <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box clearable :filter="customFilterForDoctor" item-text="personnelTitleName" item-value="id">
           </v-autocomplete>
         </v-flex>
 
         <v-flex xs12 sm6 md6>
-          <v-menu ref="menu1" :close-on-content-click="false" v-model="menu1" :nudge-right="40" lazy :return-value.sync="startDate" transition="scale-transition" offset-y full-width min-width="290px">
-            <v-text-field readonly slot="activator" v-model="startDateFormatted" :label="$t('report.realizedStartDate')">
+          <v-menu ref="menu1"
+                  :close-on-content-click="false"
+                  v-model="menu1"
+                  :nudge-right="40"
+                  lazy
+                  :return-value.sync="startDate"
+                  transition="scale-transition"
+                  offset-y full-width min-width="290px">
+            <v-text-field readonly
+                          clearable
+                          slot="activator"
+                          v-model="startDateFormatted"
+                          :label="$t('report.realizedStartDate')">
             </v-text-field>
 
             <v-date-picker v-model="startDate" no-title @input="$refs.menu1.save(startDate)" :max="getMaxDate()">
@@ -31,7 +42,7 @@
 
         <v-flex xs12 sm6 md6>
           <v-menu ref="menu2" :close-on-content-click="false" v-model="menu2" :nudge-right="40" lazy :return-value.sync="endDate" transition="scale-transition" offset-y full-width min-width="290px">
-            <v-text-field readonly slot="activator" v-model="endDateFormatted" :label="$t('report.realizedEndDate')">
+            <v-text-field readonly clearable slot="activator" v-model="endDateFormatted" :label="$t('report.realizedEndDate')">
             </v-text-field>
 
             <v-date-picker v-model="endDate" no-title @input="$refs.menu2.save(endDate)" :max="getMaxDate()">
@@ -41,7 +52,25 @@
 
       </div>
     </div>
-    <grid-component :headers="headers" :items="overtimeOperations" :title="title" :show-detail="false" :show-edit="false" :show-delete="false" :show-search="true" :show-insert="false" :hide-actions="false" :custom-parameters="customParameters" :methodName="getMethodName" :loading="getLoading" :totalCount="getTotalCount" @detail="detail" @exportToExcel="exportOvertimeReportToExcel" @edit="edit" @newaction="addNewItem" @deleteitem="deleteItem" ref="gridComponent">
+    <grid-component :headers="headers"
+                    :items="overtimeOperations"
+                    :title="title"
+                    :show-detail="false"
+                    :show-edit="false"
+                    :show-delete="false"
+                    :show-search="true"
+                    :show-insert="false"
+                    :hide-actions="false"
+                    :custom-parameters="customParameters"
+                    :methodName="getMethodName"
+                    :loading="getLoading"
+                    :totalCount="getTotalCount"
+                    @detail="detail"
+                    @exportToExcel="exportOvertimeReportToExcel"
+                    @edit="edit"
+                    @newaction="addNewItem"
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
   </div>
 </template>
@@ -96,8 +125,8 @@ export default {
         title() {
             const vm = this;
 
-      return vm.$i18n.t('report.overtimeReportTitle');
-    },
+            return vm.$i18n.t('report.overtimeReportTitle');
+        },
 
         headers() {
             const vm = this;
@@ -154,10 +183,10 @@ export default {
                 },
                 {
                     value: 'operationTimeDifference',
-                    isOvertime:'isOvertime',
+                    isOvertime: 'isOvertime',
                     text: vm.$i18n.t('report.overtime'),
                     sortable: true,
-                    overtimeValue:true,
+                    overtimeValue: true,
                     align: 'left'
                 },
                 {
@@ -266,13 +295,13 @@ export default {
         exportOvertimeReportToExcel() {
             const vm = this;
 
-      vm.$store.dispatch('excelExportOvertimeOperations', {
-        branchId: vm.branchId,
-        doctorId: vm.doctorId,
-        RealizedStartDate: vm.startDate,
-        RealizedEndDate: vm.endDate
-      });
-    },
+            vm.$store.dispatch('excelExportOvertimeOperations', {
+                branchId: vm.branchId,
+                doctorId: vm.doctorId,
+                RealizedStartDate: vm.startDate,
+                RealizedEndDate: vm.endDate
+            });
+        },
 
         customFilter(item, queryText, itemText) {
             const vm = this;
@@ -283,21 +312,21 @@ export default {
             return text.indexOf(searchText) > -1;
         },
 
-    customFilterForDoctor(item, queryText, itemText) {
-      const vm = this;
+        customFilterForDoctor(item, queryText, itemText) {
+            const vm = this;
 
-      const text = vm.replaceForAutoComplete(item.personnelTitleName);
-      const searchText = vm.replaceForAutoComplete(queryText);
+            const text = vm.replaceForAutoComplete(item.personnelTitleName);
+            const searchText = vm.replaceForAutoComplete(queryText);
 
-      return text.indexOf(searchText) > -1;
-    },
+            return text.indexOf(searchText) > -1;
+        },
 
-
-    replaceForAutoComplete(text) {
-      return text.replace(/İ/g, 'i')
-                 .replace(/I/g, 'ı')
-                 .toLowerCase();
-    },
+        replaceForAutoComplete(text) {
+            return text
+                .replace(/İ/g, 'i')
+                .replace(/I/g, 'ı')
+                .toLowerCase();
+        },
 
         filterDoctor() {
             const vm = this;
@@ -314,18 +343,18 @@ export default {
             }
         },
 
-    filteredReport() {
-      const vm = this;
+        filteredReport() {
+            const vm = this;
 
-      vm.customParameters.branchId= vm.branchId;
-      vm.customParameters.doctorId= vm.doctorId;
-      vm.customParameters.realizedStartDate= vm.startDate;
-      vm.customParameters.realizedEndDate= vm.endDate;
+            vm.customParameters.branchId = vm.branchId;
+            vm.customParameters.doctorId = vm.doctorId;
+            vm.customParameters.realizedStartDate = vm.startDate;
+            vm.customParameters.realizedEndDate = vm.endDate;
 
-      var child = this.$refs.gridComponent;
-      child.executeGridOperations(true);
-    }
-  },
+            var child = this.$refs.gridComponent;
+            child.executeGridOperations(true);
+        }
+    },
 
     created() {
         const vm = this;
@@ -344,6 +373,7 @@ export default {
     }
 };
 </script>
+
 <style>
 .btn-wrap {
     display: flex;
@@ -351,6 +381,4 @@ export default {
     align-items: center;
     margin-bottom: 20px;
 }
-
-
 </style>

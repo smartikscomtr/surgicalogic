@@ -33,6 +33,7 @@
                                 :label="$t('branches.branch')"
                                 :rules="required"
                                 :filter="customFilter"
+                                clearable
                                 item-text="name"
                                 item-value="id">
                 </v-autocomplete>
@@ -42,6 +43,7 @@
                 <v-autocomplete v-model="selectEquipment"
                                 :items="equipments"
                                 :label="$t('equipments.equipment')"
+                                clearable
                                  multiple
                                  chips
                                  deletable-chips
@@ -56,9 +58,10 @@
                                 :items="operatingRooms"
                                 :label="$t('operatingrooms.operatingRoom')"
                                 :rules="multipleRequired"
-                                 multiple
-                                 chips
-                                 deletable-chips
+                                clearable
+                                multiple
+                                chips
+                                deletable-chips
                                 :filter="customFilter"
                                 item-text="name"
                                 item-value="id">

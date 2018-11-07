@@ -11,5 +11,10 @@
   "operationMinute": "Operation Minute",
   "detailOperation": "Detail Operation",
   "addOperationInformation": "Add Operation Information",
-  "editOperationInformation": "Edit Operation Information"
+  "editOperationInformation": "Edit Operation Information",
+  "eventNo": "Event Number",
+  "patientIdentityNumber": "Patient Identity Number",
+  "patientFirstName": "Patient First Name",
+  "patientLastName": "Patient Last Name",
+  "eventNumber": "Event Number"
 }

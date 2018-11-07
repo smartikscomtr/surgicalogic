@@ -10,12 +10,12 @@ import branchesModule from './modules/branches';
 import equipmentModule from './modules/equipments';
 import equipmentTypesModule from './modules/equipmenttypes';
 import feedbackModule from './modules/feedback';
-import historyPlanningModule from './modules/historyplanning';
 import loginModule from './modules/login';
 import operationModule from './modules/operation';
 import operationTypeModule from './modules/operationtypes';
 import operatingRoomCalendarModule from './modules/operatingroomscalendar'
 import operatingRoomModule from './modules/operatingrooms';
+import patientModule from './modules/patient';
 import personnelModule from './modules/personnel';
 import personnelCategoryModule from './modules/personnelCategory';
 import personnelTitleModule from './modules/personnelTitle';
@@ -37,11 +37,11 @@ export default new Vuex.Store({
     equipmentModule,
     equipmentTypesModule,
     feedbackModule,
-    historyPlanningModule,
     loginModule,
     operationModule,
     operationTypeModule,
     operatingRoomCalendarModule,
+    patientModule,
     personnelCategoryModule,
     personnelTitleModule,
     personnelModule,
