@@ -4,8 +4,10 @@
       <div class="v-card__text layout row wrap">
         <v-flex xs12 sm12 md12>
           <div class="btn-wrap">
-            <v-btn class="btnSave orange" @click.native="filteredReport">
-              Filtrele
+            <v-btn class="btnSave orange"
+                   lang="tr"
+                   @click.native="filteredReport">
+              {{ $t('report.filter') }}
             </v-btn>
           </div>
         </v-flex>
