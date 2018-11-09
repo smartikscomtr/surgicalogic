@@ -28,7 +28,7 @@
 
         <v-card-actions class="justify-end flex">
               <v-btn class="orange" @click.native="save">
-                Kaydet
+              {{ $t('menu.save') }}
               </v-btn>
           </v-card-actions>
         </v-form>

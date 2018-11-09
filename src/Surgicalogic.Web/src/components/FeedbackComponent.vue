@@ -36,7 +36,7 @@
               <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
                 <v-btn class="btnSave orange"
                       @click.native="save">
-                  Kaydet
+              {{ $t('menu.save') }}
                 </v-btn>
             </v-flex>
           </v-layout>
