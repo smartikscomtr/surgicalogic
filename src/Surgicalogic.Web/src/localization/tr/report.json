@@ -1,5 +1,5 @@
 {
-  "overtimeReportTitle":"Süresinde Bitmeyen Operasyonlar",
+  "overtimeReportTitle":"Süresinde Bitmeyen Operasyonlar Raporu",
   "roomName": "Oda",
   "operationName": "Operasyon",
   "operationDate": "Tarih",
@@ -9,5 +9,15 @@
   "realizedEndDate":"Gerçekleşen Bitiş",
   "overtime":"Zaman Farkı",
   "doctorName": "Doktor",
-  "branchName":"Branş"
+  "branchName":"Branş",
+  "clinicHistoryReport": "Klinik Tarihçesi Raporu",
+  "branch": "Branş",
+  "doctor": "Doktor",
+  "filter": "Filtrele",
+  "patient": "Hasta",
+  "appointmentDate": "Randevu Tarihi",
+  "overtimeUtilizationReport": "Fazla Mesai ve Kullanım Oranı Raporu",
+  "overTime":"Fazla Mesai",
+  "utilization": "Kullanım Oranı",
+  "operatingRoom": "Operasyon Odası"
 }

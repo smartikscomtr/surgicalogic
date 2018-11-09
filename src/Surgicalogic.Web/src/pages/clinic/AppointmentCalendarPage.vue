@@ -74,7 +74,7 @@
             <div class="margin-bottom-none">
               <span class="available-message">{{ availableAppointmentsMessage }}</span>
               <v-btn class="btnSave orange" @click="saveAppointment()">
-                Kaydet
+              {{ $t('menu.save') }}
               </v-btn>
             </div>
           </div>

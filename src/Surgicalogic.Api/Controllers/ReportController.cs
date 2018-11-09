@@ -8,6 +8,7 @@ using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Contracts.Stores.IReportStoreService;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.ExportModel.Report;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -19,14 +20,17 @@ namespace Surgicalogic.Api.Controllers
     {
         private readonly IOvertimeReportStoreService _overtimeReportStoreService;
         private readonly IOperationPlanHistoryStoreService _operationPlanHistoryStoreService;
+        private readonly IHistoryClinicReportStoreService _historyClinicReportStoreService;
 
         public ReportController(
             IOvertimeReportStoreService overtimeReportStoreService,
-            IOperationPlanHistoryStoreService operationPlanHistoryStoreService
+            IOperationPlanHistoryStoreService operationPlanHistoryStoreService,
+            IHistoryClinicReportStoreService historyClinicReportStoreService
             )
         {
             _overtimeReportStoreService = overtimeReportStoreService;
             _operationPlanHistoryStoreService = operationPlanHistoryStoreService;
+            _historyClinicReportStoreService = historyClinicReportStoreService;
         }
 
         [HttpGet]
@@ -78,6 +82,31 @@ namespace Surgicalogic.Api.Controllers
             var items = await _operationPlanHistoryStoreService.GetExportAsync<HistoryPlanningReportExportModel>(input);
 
             excelService.Write(fs, "Worksheet", typeof(HistoryPlanningReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
+        }
+
+        [HttpGet]
+        [Route("Report/GetClinicHistory")]
+        public async Task<ResultModel<HistoryClinicReportOutputModel>> HistoryClinicReportPage(HistoryClinicReportInputModel input)
+        {
+            var result = await _historyClinicReportStoreService.GetAsync<HistoryClinicReportOutputModel>(input);
+
+            return result;
+        }
+
+        [Route("Report/HistoryClinicReportExcelExport")]
+        public async Task<string> HistoryClinicReportExcelExport(HistoryClinicReportInputModel input)
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("History_Operations_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _historyClinicReportStoreService.GetExportAsync<HistoryClinicReportExportModel>(input);
+
+            excelService.Write(fs, "Worksheet", typeof(HistoryClinicReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }

@@ -7,7 +7,8 @@ const reportsModule = {
     totalCount: 0,
     plan: [],
     tomorrowPlan: [],
-    allPlans: []
+    clinic: [],
+    overtimeUtilization: []
   },
 
   mutations: {
@@ -27,6 +28,16 @@ const reportsModule = {
 
     setTomorrowOperationPlans(state, data) {
       state.tomorrowPlan = data.result;
+      state.totalCount = data.totalCount;
+    },
+
+    setClinicHistory(state, data) {
+      state.clinic = data.result;
+      state.totalCount = data.totalCount;
+    },
+
+    setOvertimeUtilization(state, data) {
+      state.overtimeUtilization = data.result;
       state.totalCount = data.totalCount;
     }
   },
@@ -60,7 +71,34 @@ const reportsModule = {
 
         context.commit('setLoading', false);
       })
+    },
 
+    getClinicHistory(context, params) {
+      context.commit('setLoading', true);
+
+      axios.get('Report/GetClinicHistory', {
+        params: params
+      }).then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setClinicHistory', response.data) //Set the ClinicHistory in the store
+        }
+
+        context.commit('setLoading', false);
+      })
+    },
+
+    getOvertimeUtilization(context, params) {
+      context.commit('setLoading', true);
+
+      axios.get('Report/GetOvertimeUtilization', {
+        params: params
+      }).then(response => {
+        if (response.data.info.succeeded == true){
+          context.commit('setOvertimeUtilization', response.data) //Set the OvertimeUtilization in the store
+        }
+
+        context.commit('setLoading', false);
+      })
     },
 
     excelExportOvertimeOperations(context, params) {
@@ -78,6 +116,32 @@ const reportsModule = {
 
     excelExportHistoryPlanning(context, params) {
       axios.get('Report/HistoryPlanningReportExcelExport', {
+        params: params
+      })
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href = "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
+    },
+
+    excelExportHistoryClinic(context, params) {
+      axios.get('Report/HistoryClinicReportExcelExport', {
+        params: params
+      })
+        .then(response => {
+          const link = document.createElement('a');
+
+          link.href = "/static/" + response.data;
+          document.body.appendChild(link);
+          link.click();
+        })
+    },
+
+    excelExportOvertimeUtilization(context, params) {
+      axios.get('Report/OvertimeUtilizationReportExcelExport', {
         params: params
       })
         .then(response => {

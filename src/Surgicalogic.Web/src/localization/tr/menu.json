@@ -3,12 +3,12 @@
   "operations":"Operasyonlar",
   "planManagement":"Plan Yönetimi",
   "planArrangements":"Plan Görüntüleme",
-  "planningHistory":"Operasyon Tarihçesi",
+  "planningHistoryReport":"Operasyon Tarihçesi Raporu",
   "plans":"Planlar",
   "clinicManagement": "Klinik Yönetimi",
   "personnelManagement": "Personel Yönetimi",
   "reports":"Raporlar",
-  "overtimeReport":"Süresinde Bitmeyen Operasyonlar",
+  "overtimeReport":"Süresinde Bitmeyen Operasyonlar Raporu",
   "simulation":"Simülasyon",
   "managementPanel": "Yönetim Paneli",
   "users":"Kullanıcılar",
@@ -29,5 +29,8 @@
   "youCanManageYourPlans":"Planlarınızı yönetebilirsiniz",
   "youCanManageYourClinics":"Kliniklerinizi yönetebilirsiniz",
   "youCanManageYourPersonnels":"Personellerinizi yönetebilirsiniz",
-  "changeLanguage":"Dili Değiştir"
+  "changeLanguage":"Dili Değiştir",
+  "clinicHistoryReport": "Klinik Tarihçesi Raporu",
+  "save": "Kaydet",
+  "overtimeUtilizationReport":"Fazla Mesai ve Kullanım Oranı Raporu"
 }

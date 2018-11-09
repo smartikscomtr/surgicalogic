@@ -3,7 +3,7 @@
   "operations": "Operations",
   "planManagement": "Plan Management",
   "planArrangements": "Plan Arrangements",
-  "planningHistory": "Operation History",
+  "planningHistoryReport": "Operation History Report",
   "clinicManagement": "Clinic Management",
   "personnelManagement":"Personnel Management",
   "plans":"Plans",
@@ -29,5 +29,8 @@
   "youCanManageYourPlans":"You can manage your plans",
   "youCanManageYourClinics":"You can manage your clinics",
   "youCanManageYourPersonnels":"You can manage your personnels",
-  "changeLanguage":"Change Language"
+  "changeLanguage":"Change Language",
+  "clinicHistoryReport": "Clinic History",
+  "save": "Save",
+  "overtimeUtilizationReport":"Overtime and Utilization Report"
 }

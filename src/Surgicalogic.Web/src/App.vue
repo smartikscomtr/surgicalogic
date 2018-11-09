@@ -198,8 +198,18 @@ export default {
                         },
                         {
                             icon: 'history',
-                            text: vm.$i18n.t('menu.planningHistory'),
+                            text: vm.$i18n.t('menu.planningHistoryReport'),
                             route: '/historyplanningpage'
+                        },
+                        {
+                            icon: 'history',
+                            text: vm.$i18n.t('menu.clinicHistoryReport'),
+                            route: '/historyclinicpage'
+                        },
+                        {
+                            icon: 'hourglass_full',
+                            text: vm.$i18n.t('menu.overtimeUtilizationReport'),
+                            route: '/overtimeutilizationpage'
                         }
                     ]
                 },

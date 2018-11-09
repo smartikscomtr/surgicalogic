@@ -23,6 +23,7 @@ namespace Surgicalogic.Data.Utilities
             #region Entity to EntityModel
             config.CreateMap<AppointmentCalendar, AppointmentCalendarModel>();
             config.CreateMap<Branch, BranchModel>();
+            config.CreateMap<Branch, BranchForReportModel>();
             config.CreateMap<DoctorCalendar, DoctorCalendarModel>();
             config.CreateMap<Equipment, EquipmentModel>()
                 .ForMember(dest => dest.OperatingRoomEquipments, opt => { opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive && x.Equipment.IsActive && x.OperatingRoom.IsActive)); });
@@ -181,7 +182,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.OperatingRoomIds, opt => opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId)))
                 .ForMember(dest => dest.EquipmentName, opt => opt.MapFrom(src => string.Join(", ", src.OperationTypeEquipment.Where(x => x.IsActive).Select(x => x.Equipment.Name))))
                 .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => string.Join(", ", src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoom.Name))));
-            config.CreateMap<PatientModel, PatientOutputModel>();
+            config.CreateMap<PatientModel, PatientOutputModel>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
             config.CreateMap<PersonnelModel, PersonnelOutputModel>()
                 .ForMember(dest => dest.BranchNames, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Where(x => x.IsActive && x.Branch.IsActive).Select(x => x.Branch.Name))))
                 .ForMember(dest => dest.PersonnelTitleName, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
@@ -207,6 +209,11 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.IsPortable, opt => opt.MapFrom(src => src.IsPortable ? "Evet" : "Hayır"));
             config.CreateMap<EquipmentType, EquipmentTypeExportModel>();
             config.CreateMap<Feedback, FeedbackExportModel>();
+            config.CreateMap<AppointmentCalendar, HistoryClinicReportExportModel>()
+                .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Personnel.FirstName + " " + src.Personnel.LastName))
+                .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Personnel.PersonnelBranches.FirstOrDefault() != null ? src.Personnel.PersonnelBranches.FirstOrDefault().Branch.Name : ""))
+                .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName))
+                .ForMember(dest => dest.AppointmentDate, opt => opt.MapFrom(src => src.AppointmentDate.ToString("dd.MM.yyyy HH:mm")));
             config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarExportModel>()
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy")))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy")));
@@ -255,6 +262,11 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.operationPlanId, opt => opt.MapFrom(src => src.Id))
                  .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
                  .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));
+            config.CreateMap<AppointmentCalendar, HistoryClinicReportOutputModel>()
+                 .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Personnel.FirstName + " " + src.Personnel.LastName))
+                 .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Personnel.PersonnelBranches.FirstOrDefault() != null ? src.Personnel.PersonnelBranches.FirstOrDefault().Branch.Name : ""))
+                 .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName));
+
             #endregion
         }
     }

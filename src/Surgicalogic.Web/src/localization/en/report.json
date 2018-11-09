@@ -7,5 +7,15 @@
   "realizedEndDate": "End",
   "overtime": "Difference",
   "doctorName": "Doctor",
-  "branchName":"Branch"
+  "branchName":"Branch",
+  "clinicHistoryReport": "Clinic History Report",
+  "branch": "Branch",
+  "doctor": "Doctor",
+  "filter": "Filter",
+  "patient": "Patient",
+  "appointmentDate": "Appointment Date",
+  "overtimeUtilizationReport": "Overtime Utilization Report",
+  "overTime":"Overtime",
+  "utilization": "Utilization",
+  "operatingRoom": "Operating Room"
 }

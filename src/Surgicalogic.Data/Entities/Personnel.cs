@@ -25,7 +25,6 @@ namespace Surgicalogic.Data.Entities
         public virtual PersonnelTitle PersonnelTitle { get; set; }
         public virtual PersonnelCategory PersonnelCategory { get; set; }
         public virtual WorkType WorkType { get; set; }        
-        public virtual ICollection<Branch> Branches { get; set; }
         public virtual ICollection<OperationPersonnel> OperationPersonels { get; set; }
         public virtual ICollection<PersonnelBranch> PersonnelBranches { get; set; }
         public virtual ICollection<DoctorCalendar> DoctorCalendars { get; set; }

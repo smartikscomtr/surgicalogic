@@ -8,5 +8,7 @@ namespace Surgicalogic.Model.CustomModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public ICollection<BranchForReportModel> PersonnelBranches { get; set; }
     }
 }
