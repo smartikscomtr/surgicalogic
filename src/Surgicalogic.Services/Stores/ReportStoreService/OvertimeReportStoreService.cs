@@ -30,6 +30,9 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
         {
             var query = _dataContext.OperationPlans.Where(x => x.IsActive && Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
+            var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
+            var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
+
             if (!string.IsNullOrEmpty(input.SortBy))
             {
                 Expression<Func<OperationPlan, object>> orderBy = null;
@@ -76,14 +79,14 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 }
             }
 
-            if (input.BranchId > 0)
+            if (branchIds?.Count > 0)
             {
-                query = query.Where(x => x.Operation.OperationType.BranchId == input.BranchId);
+                query = query.Where(x => branchIds.Contains(x.Operation.OperationType.BranchId));
             }
 
-            if (input.DoctorId > 0)
+            if (doctorIds?.Count > 0)
             {
-                query = query.Where(x => x.Operation.OperationPersonels.Any(t => t.PersonnelId == input.DoctorId));
+                query = query.Where(x => x.Operation.OperationPersonels.Any(t => doctorIds.Contains(t.PersonnelId)));
             }
 
             if (input.RealizedStartDate != null && input.RealizedStartDate != DateTime.MinValue)
@@ -128,14 +131,17 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
         {
             var query = _dataContext.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
-            if (input.BranchId > 0)
+            var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
+            var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
+
+            if (branchIds?.Count > 0)
             {
-                query = query.Where(x => x.Operation.OperationType.BranchId == input.BranchId);
+                query = query.Where(x => branchIds.Contains(x.Operation.OperationType.BranchId));
             }
 
-            if (input.DoctorId > 0)
+            if (doctorIds?.Count > 0)
             {
-                query = query.Where(x => x.Operation.OperationPersonels.Any(t => t.PersonnelId == input.DoctorId));
+                query = query.Where(x => x.Operation.OperationPersonels.Any(t => doctorIds.Contains(t.PersonnelId)));
             }
 
             if (input.RealizedStartDate != null && input.RealizedStartDate != DateTime.MinValue)

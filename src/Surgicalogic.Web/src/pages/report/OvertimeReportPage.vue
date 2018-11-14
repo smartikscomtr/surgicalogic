@@ -22,12 +22,32 @@
           </v-flex>
 
           <v-flex xs12 sm6 md6>
-            <v-autocomplete v-model="selectBranch" :items="branches" :label="$t('branches.branch')" box clearable :filter="customFilter" item-text="name" item-value="id">
+            <v-autocomplete v-model="selectBranch"
+                            :items="branches"
+                            :label="$t('branches.branch')"
+                            box
+                            clearable
+                            multiple
+                            chips
+                            deletable-chips
+                            :filter="customFilter"
+                            item-text="name"
+                            item-value="id">
             </v-autocomplete>
           </v-flex>
 
           <v-flex xs12 sm6 md6>
-            <v-autocomplete v-model="selectDoctor" :items="doctors" :label="$t('personnel.doctor')" box clearable :filter="customFilterForDoctor" item-text="personnelTitleName" item-value="id">
+            <v-autocomplete v-model="selectDoctor"
+                            :items="doctors"
+                            :label="$t('personnel.doctor')"
+                            box
+                            clearable
+                            multiple
+                            chips
+                            deletable-chips
+                            :filter="customFilterForDoctor"
+                            item-text="personnelTitleName"
+                            item-value="id">
             </v-autocomplete>
           </v-flex>
 
@@ -359,8 +379,14 @@ export default {
     filteredReport() {
         const vm = this;
 
-        vm.customParameters.branchId = vm.branchId;
-        vm.customParameters.doctorId = vm.doctorId;
+        if (vm.branchId) {
+          vm.customParameters.branchId = vm.branchId.join();
+        }
+
+        if (vm.doctorId) {
+          vm.customParameters.doctorId = vm.doctorId.join();
+        }
+
         vm.customParameters.realizedStartDate = vm.startDate;
         vm.customParameters.realizedEndDate = vm.endDate;
 
