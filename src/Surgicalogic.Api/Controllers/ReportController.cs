@@ -8,6 +8,7 @@ using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Contracts.Stores.IReportStoreService;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.ExportModel.Report;
 using Surgicalogic.Model.InputModel;
@@ -21,16 +22,19 @@ namespace Surgicalogic.Api.Controllers
         private readonly IOvertimeReportStoreService _overtimeReportStoreService;
         private readonly IOperationPlanHistoryStoreService _operationPlanHistoryStoreService;
         private readonly IHistoryClinicReportStoreService _historyClinicReportStoreService;
+        private readonly IOvertimeUtilizationReportStoreService _overtimeUtilizationStoreService;
 
         public ReportController(
             IOvertimeReportStoreService overtimeReportStoreService,
             IOperationPlanHistoryStoreService operationPlanHistoryStoreService,
-            IHistoryClinicReportStoreService historyClinicReportStoreService
+            IHistoryClinicReportStoreService historyClinicReportStoreService,
+            IOvertimeUtilizationReportStoreService overtimeUtilizationStoreService
             )
         {
             _overtimeReportStoreService = overtimeReportStoreService;
             _operationPlanHistoryStoreService = operationPlanHistoryStoreService;
             _historyClinicReportStoreService = historyClinicReportStoreService;
+            _overtimeUtilizationStoreService = overtimeUtilizationStoreService;
         }
 
         [HttpGet]
@@ -107,6 +111,29 @@ namespace Surgicalogic.Api.Controllers
             var items = await _historyClinicReportStoreService.GetExportAsync<HistoryClinicReportExportModel>(input);
 
             excelService.Write(fs, "Worksheet", typeof(HistoryClinicReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+
+            return fileName;
+        }
+
+        [HttpGet]
+        [Route("Report/GetOvertimeUtilization")]
+        public async Task<ResultModel<OvertimeUtilizationReportOutputModel>> GetOvertimeUtilization(OvertimeUtilizationReportInputModel input)
+        {
+            return await _overtimeUtilizationStoreService.GetAsync<OvertimeUtilizationReportOutputModel>(input);
+        }
+
+        [Route("Report/OvertimeUtilizationReportExcelExport")]
+        public async Task<string> OvertimeUtilizationReportExcelExport(OvertimeUtilizationReportInputModel input)
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("History_Operations_{0}.xlsx", Guid.NewGuid().ToString());
+
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
+
+            var items = await _overtimeUtilizationStoreService.GetExportAsync<OvertimeUtilizationForOvertimeReportOutputModel>(input);
+
+            excelService.Write(fs, "Worksheet", typeof(OvertimeUtilizationForOvertimeReportOutputModel), items, System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }

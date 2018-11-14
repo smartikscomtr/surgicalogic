@@ -199,6 +199,11 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<UserModel, UserOutputModel>()
                 .ForMember(src => src.IsAdmin, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();
+            config.CreateMap<OvertimeUtilizationForOvertimeReportOutputModel, OvertimeUtilizationReportOutputModel>()
+                .ForMember(dest => dest.OperatingRoom, opt => opt.MapFrom(src => src.OperatingRoom))
+                .ForMember(dest => dest.Overtime, opt => opt.MapFrom(src => src.Overtime))
+                .ForMember(dest => dest.Utilization, opt => opt.MapFrom(src => src.Utilization))
+                .ReverseMap();
             #endregion
 
             #region Entity to EntityExportModel
@@ -266,7 +271,7 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Personnel.FirstName + " " + src.Personnel.LastName))
                  .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Personnel.PersonnelBranches.FirstOrDefault() != null ? src.Personnel.PersonnelBranches.FirstOrDefault().Branch.Name : ""))
                  .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName));
-
+            config.CreateMap<OperationPlan, OvertimeUtilizationReportOutputModel>();
             #endregion
         }
     }
