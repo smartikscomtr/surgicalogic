@@ -1,79 +1,112 @@
 <template>
   <div class="container fluid grid-list-md">
     <div class="grid-card v-card">
-      <div class="v-card__text layout row wrap">
-        <v-flex xs12 sm12 md12>
-          <div class="btn-wrap">
-            <v-btn class="btnSave orange"
-                   lang="tr"
-                   @click.native="filteredReport">
-              {{ $t('report.filter') }}
-            </v-btn>
-          </div>
-        </v-flex>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <div class="v-card__text layout row wrap">
+          <v-flex xs12 sm12 md12>
+            <div class="btn-wrap">
+              <v-btn class="btnSave orange"
+                    lang="tr"
+                    @click.native="filteredReport">
+                {{ $t('report.filter') }}
+              </v-btn>
+            </div>
 
-        <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectBranch"
-                          :items="branches"
-                          :label="$t('report.branch')"
-                          clearable
-                          box
-                          :filter="customFilter"
-                          item-text="name"
-                          item-value="id">
-          </v-autocomplete>
-        </v-flex>
+            <div class="btn-wrap">
+              <v-btn class="btnSave orange"
+                    lang="tr"
+                    @click.native="clearReport">
+                {{ $t('report.clear') }}
+              </v-btn>
+            </div>
+          </v-flex>
 
-        <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectDoctor"
-                          :items="doctors"
-                          :label="$t('report.doctor')"
-                          box
-                          clearable
-                          @change="filterDoctor()"
-                          :filter="customFilterForDoctor"
-                          item-text="personnelTitleName"
-                          item-value="id">
-          </v-autocomplete>
-        </v-flex>
+          <v-flex xs12 sm12 md12>
+            <v-autocomplete v-model="selectBranch"
+                            :items="branches"
+                            :label="$t('report.branch')"
+                            clearable
+                            box
+                            :filter="customFilter"
+                            item-text="name"
+                            item-value="id">
+            </v-autocomplete>
+          </v-flex>
 
-        <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectPatient"
-                          :items="patients"
-                          :label="$t('report.patient')"
-                          box
-                          clearable
-                          :filter="customFilterForPatient"
-                          item-text="fullName"
-                          item-value="id">
-          </v-autocomplete>
-        </v-flex>
+          <v-flex xs12 sm6 md6>
+            <v-autocomplete v-model="selectDoctor"
+                            :items="doctors"
+                            :label="$t('report.doctor')"
+                            box
+                            clearable
+                            @change="filterDoctor()"
+                            :filter="customFilterForDoctor"
+                            item-text="personnelTitleName"
+                            item-value="id">
+            </v-autocomplete>
+          </v-flex>
 
-        <v-flex xs12 sm6 md6>
-          <v-menu ref="menu1"
-                  :close-on-content-click="false"
-                  v-model="menu1"
-                  :nudge-right="40"
-                  lazy
-                  :return-value.sync="appointmentDate"
-                  transition="scale-transition"
-                  offset-y
-                  full-width
-                  min-width="290px">
-            <v-text-field readonly slot="activator"
-                          v-model="startDateFormatted"
-                          clearable
-                          :label="$t('plan.operationDate')">
-            </v-text-field>
+          <v-flex xs12 sm6 md6>
+            <v-autocomplete v-model="selectPatient"
+                            :items="patients"
+                            :label="$t('report.patient')"
+                            box
+                            clearable
+                            :filter="customFilterForPatient"
+                            item-text="fullName"
+                            item-value="id">
+            </v-autocomplete>
+          </v-flex>
 
-            <v-date-picker v-model="appointmentDate"
-                           no-title
-                           @input="$refs.menu1.save(appointmentDate)"
-                           :max="getMaxDate()">
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
-      </div>
+          <v-flex xs12 sm6 md6>
+            <v-menu ref="menu1"
+                    :close-on-content-click="false"
+                    v-model="menu1"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="appointmentStartDate"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px">
+              <v-text-field readonly slot="activator"
+                            v-model="startDateFormatted"
+                            clearable
+                            :label="$t('report.appointmentStartDate')">
+              </v-text-field>
+
+              <v-date-picker v-model="appointmentStartDate"
+                            no-title
+                            @input="$refs.menu1.save(appointmentStartDate)"
+                            :max="getMaxDate()">
+              </v-date-picker>
+            </v-menu>
+          </v-flex>
+
+          <v-flex xs12 sm6 md6>
+            <v-menu ref="menu2"
+                    :close-on-content-click="false"
+                    v-model="menu2"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="appointmentEndDate"
+                    transition="scale-transition"
+                    offset-y full-width min-width="290px">
+              <v-text-field readonly
+                            clearable slot="activator"
+                            v-model="endDateFormatted"
+                            :label="$t('report.appointmentEndDate')">
+              </v-text-field>
+
+              <v-date-picker v-model="appointmentEndDate"
+                            no-title
+                            @input="$refs.menu2.save(appointmentEndDate)"
+                            :max="getMaxDate()">
+              </v-date-picker>
+            </v-menu>
+          </v-flex>
+        </div>
+      </v-form>
     </div>
 
     <grid-component :headers="headers"
@@ -124,23 +157,32 @@ export default {
       editLoadOnce: true,
       deletePath: '',
       menu1: false,
-      dateFormatted: null,
+      menu2: false,
       startDateFormatted: null,
+      endDateFormatted: null,
       customParameters: {},
       branchId: null,
       doctorId: null,
       patientId: null,
-      appointmentDate: null,
+      appointmentStartDate: null,
+      appointmentEndDate: null,
       filteredDoctors: [],
-      doctorCards: []
+      doctorCards: [],
+      valid: true
     };
   },
 
   watch: {
-    appointmentDate(val) {
+    appointmentStartDate(val) {
       const vm = this;
 
-      vm.startDateFormatted = vm.formatDate(vm.appointmentDate);
+      vm.startDateFormatted = vm.formatDate(vm.appointmentStartDate);
+    },
+
+    appointmentEndDate(val) {
+      const vm = this;
+
+      vm.endDateFormatted = vm.formatDate(vm.appointmentEndDate);
     }
   },
 
@@ -329,7 +371,8 @@ export default {
       vm.customParameters.branchId = vm.branchId;
       vm.customParameters.doctorId = vm.doctorId;
       vm.customParameters.patientId = vm.patientId;
-      vm.customParameters.appointmentDate = vm.appointmentDate;
+      vm.customParameters.appointmentStartDate = vm.appointmentStartDate;
+      vm.customParameters.appointmentEndDate = vm.appointmentEndDate;
 
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
@@ -361,7 +404,8 @@ export default {
         branchId: vm.branchId,
         doctorId: vm.doctorId,
         patientId: vm.patientId,
-        appointmentDate: vm.appointmentDate
+        appointmentStartDate: vm.appointmentStartDate,
+        appointmentEndDate: vm.appointmentEndDate
       });
     },
 
@@ -379,6 +423,18 @@ export default {
           vm.doctorCards.push(vm.filteredDoctors[index]);
         }
       }
+    },
+
+    clearReport() {
+      const vm = this;
+
+      vm.clear();
+    },
+
+    clear() {
+      const vm = this;
+
+      vm.$refs.form.reset();
     }
   },
 

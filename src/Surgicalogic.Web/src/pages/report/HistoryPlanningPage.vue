@@ -1,67 +1,103 @@
 <template>
   <div class="container fluid grid-list-md">
     <div class="grid-card v-card">
-      <div class="v-card__text layout row wrap">
-        <v-flex xs12 sm12 md12>
-          <div class="btn-wrap">
-            <v-btn class="btnSave orange"
-                   lang="tr"
-                   @click.native="filteredReport">
-              {{ $t('report.filter') }}
-            </v-btn>
-          </div>
-        </v-flex>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <div class="v-card__text layout row wrap">
+          <v-flex xs12 sm12 md12>
+            <div class="btn-wrap">
+              <v-btn class="btnSave orange"
+                    lang="tr"
+                    @click.native="filteredReport">
+                {{ $t('report.filter') }}
+              </v-btn>
+            </div>
 
-        <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectOperation"
-                          :items="operations"
-                          :label="$t('operation.operationName')"
-                          clearable
-                          box
-                          :filter="customFilter"
-                          item-text="name"
-                          item-value="id">
-          </v-autocomplete>
-        </v-flex>
+            <div class="btn-wrap">
+              <v-btn class="btnSave orange"
+                    lang="tr"
+                    @click.native="clearReport">
+                {{ $t('report.clear') }}
+              </v-btn>
+            </div>
+          </v-flex>
 
-        <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectOperatingRoom"
-                          :items="operatingRooms"
-                          :label="$t('operatingrooms.operatingRoom')"
-                          box
-                          clearable
-                          :filter="customFilter"
-                          item-text="name"
-                          item-value="id">
-          </v-autocomplete>
-        </v-flex>
+          <v-flex xs12 sm12 md12>
+            <v-autocomplete v-model="selectOperation"
+                            :items="operations"
+                            :label="$t('operation.operationName')"
+                            clearable
+                            multiple
+                            chips
+                            deletable-chips
+                            box
+                            :filter="customFilter"
+                            item-text="name"
+                            item-value="id">
+            </v-autocomplete>
+          </v-flex>
 
-        <v-flex xs12 sm6 md6>
-          <v-menu ref="menu1"
-                  :close-on-content-click="false"
-                  v-model="menu1"
-                  :nudge-right="40"
-                  lazy
-                  :return-value.sync="startDate"
-                  transition="scale-transition"
-                  offset-y full-width min-width="290px">
-            <v-text-field readonly slot="activator"
-                          v-model="startDateFormatted"
-                          clearable
-                          :label="$t('plan.operationDate')">
+          <v-flex xs12 sm6 md6>
+            <v-autocomplete v-model="selectOperatingRoom"
+                            :items="operatingRooms"
+                            :label="$t('operatingrooms.operatingRoom')"
+                            box
+                            clearable
+                            :filter="customFilter"
+                            item-text="name"
+                            item-value="id">
+            </v-autocomplete>
+          </v-flex>
+
+          <v-flex xs12 sm6 md6>
+            <v-text-field v-model="identityNumber"
+                          :label="$t('patient.identityNumber')">
             </v-text-field>
+          </v-flex>
 
-            <v-date-picker v-model="startDate" no-title @input="$refs.menu1.save(startDate)" :max="getMaxDate()">
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
+          <v-flex xs12 sm6 md6>
+            <v-menu ref="menu1"
+                    :close-on-content-click="false"
+                    v-model="menu1"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="startDate"
+                    transition="scale-transition"
+                    offset-y full-width min-width="290px">
+              <v-text-field readonly slot="activator"
+                            v-model="startDateFormatted"
+                            clearable
+                            :label="$t('report.operationStartDate')">
+              </v-text-field>
 
-        <v-flex xs12 sm6 md6>
-          <v-text-field v-model="identityNumber"
-                        :label="$t('patient.identityNumber')">
-          </v-text-field>
-        </v-flex>
-      </div>
+              <v-date-picker v-model="startDate" no-title @input="$refs.menu1.save(startDate)" :max="getMaxDate()">
+              </v-date-picker>
+            </v-menu>
+          </v-flex>
+
+          <v-flex xs12 sm6 md6>
+            <v-menu ref="menu2"
+                    :close-on-content-click="false"
+                    v-model="menu2"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="endDate"
+                    transition="scale-transition"
+                    offset-y full-width min-width="290px">
+              <v-text-field readonly
+                            clearable slot="activator"
+                            v-model="endDateFormatted"
+                            :label="$t('report.operationEndDate')">
+              </v-text-field>
+
+              <v-date-picker v-model="endDate"
+                            no-title
+                            @input="$refs.menu2.save(endDate)"
+                            :max="getMaxDate()">
+              </v-date-picker>
+            </v-menu>
+          </v-flex>
+        </div>
+      </v-form>
     </div>
 
     <grid-component :headers="headers"
@@ -114,11 +150,15 @@ export default {
       operatingRoomId: null,
       operationId: null,
       menu1: false,
+      menu2: false,
       startDate: null,
+      endDate: null,
       dateFormatted: null,
       startDateFormatted: null,
+      endDateFormatted: null,
       customParameters: {},
-      identityNumber: null
+      identityNumber: null,
+      valid: true
     };
   },
 
@@ -127,6 +167,12 @@ export default {
       const vm = this;
 
       vm.startDateFormatted = vm.formatDate(vm.startDate);
+    },
+
+    endDate(val) {
+      const vm = this;
+
+      vm.endDateFormatted = vm.formatDate(vm.endDate);
     }
   },
 
@@ -134,7 +180,7 @@ export default {
     title() {
       const vm = this;
 
-      return vm.$i18n.t('plan.planningHistoryReport');
+      return vm.$i18n.t('plan.planningHistory');
     },
 
     headers() {
@@ -286,7 +332,8 @@ export default {
 
       vm.customParameters.operationId = vm.operationId;
       vm.customParameters.operatingRoomId = vm.operatingRoomId;
-      vm.customParameters.operationDate = vm.startDate;
+      vm.customParameters.operationStartDate = vm.startDate;
+      vm.customParameters.operationEndDate = vm.endDate;
       vm.customParameters.identityNumber = vm.identityNumber;
 
       var child = vm.$refs.gridComponent;
@@ -318,8 +365,21 @@ export default {
         vm.$store.dispatch('excelExportHistoryPlanning', {
           operationId: vm.operationId,
           operatingRoomId: vm.operatingRoomId,
-          operationDate: vm.startDate
+          operationStartDate: vm.startDate,
+          operationEndDate: vm.startDate
         });
+    },
+
+    clearReport() {
+      const vm = this;
+
+      vm.clear();
+    },
+
+    clear() {
+      const vm = this;
+
+      vm.$refs.form.reset();
     }
   },
 
