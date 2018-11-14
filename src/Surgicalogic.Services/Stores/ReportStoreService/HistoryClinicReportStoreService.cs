@@ -31,6 +31,10 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
         {
             var query = _context.AppointmentCalendars.Where(x => x.IsActive);
 
+            var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
+            var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
+            var patientIds = input.PatientId?.Split(',').Select(int.Parse).ToList();
+
             if (!string.IsNullOrEmpty(input.SortBy))
             {
                 Expression<Func<AppointmentCalendar, object>> orderBy = null;
@@ -65,19 +69,19 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 }
             }
 
-            if (input.BranchId > 0)
+            if (branchIds?.Count > 0)
             {
-                query = query.Where(x => x.Personnel.PersonnelBranches.Any(y => y.Id == input.BranchId));
+                query = query.Where(x => x.Personnel.PersonnelBranches.Any(y => branchIds.Contains(y.BranchId)));
             }
 
-            if (input.DoctorId > 0)
+            if (doctorIds?.Count > 0)
             {
-                query = query.Where(x => x.PersonnelId == input.DoctorId);
+                query = query.Where(x => doctorIds.Contains(x.PersonnelId));
             }
 
-            if (input.PatientId > 0)
+            if (patientIds?.Count > 0)
             {
-                query = query.Where(x => x.PatientId == input.PatientId);
+                query = query.Where(x => patientIds.Contains(x.PatientId));
             }
 
             if (input.AppointmentStartDate != null && input.AppointmentStartDate > DateTime.MinValue)
@@ -124,19 +128,23 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
         {
             var query = _context.AppointmentCalendars.Where(x => x.IsActive);
 
-            if (input.BranchId > 0)
+            var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
+            var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
+            var patientIds = input.PatientId?.Split(',').Select(int.Parse).ToList();
+
+            if (branchIds?.Count > 0)
             {
-                query = query.Where(x => x.Personnel.PersonnelBranches.Any(y => y.Id == input.BranchId));
+                query = query.Where(x => x.Personnel.PersonnelBranches.Any(y => branchIds.Contains(y.BranchId)));
             }
 
-            if (input.DoctorId > 0)
+            if (doctorIds?.Count > 0)
             {
-                query = query.Where(x => x.PersonnelId == input.DoctorId);
+                query = query.Where(x => doctorIds.Contains(x.PersonnelId));
             }
 
-            if (input.PatientId > 0)
+            if (patientIds?.Count > 0)
             {
-                query = query.Where(x => x.PatientId == input.PatientId);
+                query = query.Where(x => patientIds.Contains(x.PatientId));
             }
 
             if (input.AppointmentStartDate != null && input.AppointmentStartDate > DateTime.MinValue)

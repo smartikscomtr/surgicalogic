@@ -3,6 +3,10 @@
     <div class="grid-card v-card">
       <v-form ref="form" v-model="valid" lazy-validation>
         <div class="v-card__text layout row wrap">
+
+        <pie-chart :data="chartData">
+        </pie-chart>
+
           <v-flex xs12 sm12 md12>
             <div class="btn-wrap">
               <v-btn class="btnSave orange"
@@ -125,7 +129,8 @@ export default {
       dateFormatted: null,
       startDate: null,
       endDate: null,
-      valid: true
+      valid: true,
+      chartData: [["Oda1", 4], ["Oda2", 2], ["Oda3", 10], ["Oda4", 5], ["Oda5", 3]]
     };
   },
 
@@ -289,6 +294,12 @@ export default {
       const vm = this;
 
       vm.$refs.form.reset();
+    },
+
+    loadChartData() {
+      const vm = this;
+
+      // vm.
     }
   },
 
@@ -308,7 +319,11 @@ export default {
     vm.$store.dispatch('getOvertimeUtilization', {
       operationStartDate: vm.startDate,
       operationEndDate: vm.endDate
-    })
+    });
+
+    // vm.$nextTick(() => {
+    //   vm.loadChartData();
+    // });
   }
 };
 

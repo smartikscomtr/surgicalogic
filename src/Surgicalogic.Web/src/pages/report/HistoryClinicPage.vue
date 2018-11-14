@@ -26,6 +26,9 @@
                             :items="branches"
                             :label="$t('report.branch')"
                             clearable
+                            multiple
+                            chips
+                            deletable-chips
                             box
                             :filter="customFilter"
                             item-text="name"
@@ -39,6 +42,9 @@
                             :label="$t('report.doctor')"
                             box
                             clearable
+                            multiple
+                            chips
+                            deletable-chips
                             @change="filterDoctor()"
                             :filter="customFilterForDoctor"
                             item-text="personnelTitleName"
@@ -52,6 +58,9 @@
                             :label="$t('report.patient')"
                             box
                             clearable
+                            multiple
+                            chips
+                            deletable-chips
                             :filter="customFilterForPatient"
                             item-text="fullName"
                             item-value="id">
@@ -368,9 +377,18 @@ export default {
     filteredReport() {
       const vm = this;
 
-      vm.customParameters.branchId = vm.branchId;
-      vm.customParameters.doctorId = vm.doctorId;
-      vm.customParameters.patientId = vm.patientId;
+      if (vm.branchId) {
+        vm.customParameters.branchId = vm.branchId.join();
+      }
+
+      if (vm.doctorId) {
+        vm.customParameters.doctorId = vm.doctorId.join();
+      }
+
+      if (vm.patientId) {
+        vm.customParameters.patientId = vm.patientId.join();
+      }
+
       vm.customParameters.appointmentStartDate = vm.appointmentStartDate;
       vm.customParameters.appointmentEndDate = vm.appointmentEndDate;
 

@@ -16,6 +16,7 @@ import VueAxios from 'vue-axios';
 import { i18n } from './plugins/vue-i18n';
 import router from './router';
 import Authentication from './plugins/authentication-plugin.js';
+import VueChartkick from 'vue-chartkick';
 
 var VueCookie = require('vue-cookie');
 /* ============
@@ -32,6 +33,7 @@ Vue.use(Vuetify);
 Vue.use(Authentication);
 Vue.use(require('vue-moment'));
 Vue.use(VueCookie);
+Vue.use(VueChartkick);
 
 // Registering Components
 import DeleteComponent from '@/components/DeleteComponent';

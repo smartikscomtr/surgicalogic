@@ -6,9 +6,9 @@ namespace Surgicalogic.Model.InputModel
 {
     public class HistoryClinicReportInputModel : GridInputModel
     {
-        public int BranchId { get; set; }
-        public int DoctorId { get; set; } 
-        public int PatientId { get; set; } 
+        public string BranchId { get; set; }
+        public string DoctorId { get; set; } 
+        public string PatientId { get; set; } 
         public DateTime AppointmentStartDate { get; set; }
         public DateTime AppointmentEndDate { get; set; }
     }
