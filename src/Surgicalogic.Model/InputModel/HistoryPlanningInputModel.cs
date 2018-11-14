@@ -8,7 +8,8 @@ namespace Surgicalogic.Model.InputModel
     {
         public int OperatingRoomId { get; set; }
         public int OperationId { get; set; }
-        public DateTime OperationDate { get; set; }
+        public DateTime OperationStartDate { get; set; }
+        public DateTime OperationEndDate { get; set; }
         public string IdentityNumber { get; set; }
     }
 }

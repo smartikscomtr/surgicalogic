@@ -95,9 +95,14 @@ namespace Surgicalogic.Services.Stores
                 query = query.Where(x => x.Operation.OperationPersonels.Any(t => t.OperationId == input.OperationId));
             }
 
-            if (input.OperationDate > DateTime.MinValue)
+            if (input.OperationStartDate != null && input.OperationStartDate != DateTime.MinValue)
             {
-                query = query.Where(x => x.OperationDate == input.OperationDate);
+                query = query.Where(x => x.OperationDate >= input.OperationStartDate);
+            }
+
+            if (input.OperationEndDate !=null && input.OperationEndDate != DateTime.MinValue)
+            {
+                query = query.Where(x => x.OperationDate < input.OperationEndDate);
             }
 
             if (!string.IsNullOrEmpty(input.IdentityNumber))
@@ -147,9 +152,14 @@ namespace Surgicalogic.Services.Stores
                 query = query.Where(x => x.Operation.OperationPersonels.Any(t => t.OperationId == input.OperationId));
             }
 
-            if (input.OperationDate > DateTime.MinValue)
+            if (input.OperationStartDate != null && input.OperationStartDate != DateTime.MinValue)
             {
-                query = query.Where(x => x.OperationDate == input.OperationDate);
+                query = query.Where(x => x.OperationDate >= input.OperationStartDate);
+            }
+
+            if (input.OperationEndDate != null && input.OperationEndDate != DateTime.MinValue)
+            {
+                query = query.Where(x => x.OperationDate < input.OperationEndDate);
             }
 
             if (!string.IsNullOrEmpty(input.IdentityNumber))

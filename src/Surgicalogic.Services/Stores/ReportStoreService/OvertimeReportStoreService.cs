@@ -28,7 +28,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
         public async Task<ResultModel<OvertimeReportOutputModel>> GetAsync<TOutputModel>(OvertimeReportInputModel input)
         {
-            var query = _dataContext.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
+            var query = _dataContext.OperationPlans.Where(x => x.IsActive && Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
             if (!string.IsNullOrEmpty(input.SortBy))
             {

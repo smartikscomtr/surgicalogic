@@ -80,9 +80,14 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 query = query.Where(x => x.PatientId == input.PatientId);
             }
 
-            if (input.AppointmentDate > DateTime.MinValue)
+            if (input.AppointmentStartDate != null && input.AppointmentStartDate > DateTime.MinValue)
             {
-                query = query.Where(x => x.AppointmentDate == input.AppointmentDate);
+                query = query.Where(x => x.AppointmentDate >= input.AppointmentStartDate);
+            }
+
+            if (input.AppointmentEndDate !=null && input.AppointmentEndDate > DateTime.MinValue)
+            {
+                query = query.Where(x => x.AppointmentDate < input.AppointmentEndDate);
             }
 
             if (!string.IsNullOrEmpty(input.Search))
@@ -134,9 +139,14 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 query = query.Where(x => x.PatientId == input.PatientId);
             }
 
-            if (input.AppointmentDate > DateTime.MinValue)
+            if (input.AppointmentStartDate != null && input.AppointmentStartDate > DateTime.MinValue)
             {
-                query = query.Where(x => x.AppointmentDate == input.AppointmentDate);
+                query = query.Where(x => x.AppointmentDate >= input.AppointmentStartDate);
+            }
+
+            if (input.AppointmentEndDate != null && input.AppointmentEndDate > DateTime.MinValue)
+            {
+                query = query.Where(x => x.AppointmentDate < input.AppointmentEndDate);
             }
 
             return await query.ProjectTo<HistoryClinicReportExportModel>().ToListAsync();

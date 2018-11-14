@@ -9,6 +9,7 @@ namespace Surgicalogic.Model.InputModel
         public int BranchId { get; set; }
         public int DoctorId { get; set; } 
         public int PatientId { get; set; } 
-        public DateTime AppointmentDate { get; set; }
+        public DateTime AppointmentStartDate { get; set; }
+        public DateTime AppointmentEndDate { get; set; }
     }
 }
