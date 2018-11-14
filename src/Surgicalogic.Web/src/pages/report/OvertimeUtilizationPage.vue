@@ -1,29 +1,74 @@
 <template>
   <div class="container fluid grid-list-md">
     <div class="grid-card v-card">
-      <div class="v-card__text layout row wrap">
-        <v-flex xs12 sm12 md12>
-          <div class="btn-wrap">
-            <v-btn class="btnSave orange"
-                   lang="tr"
-                   @click.native="filteredReport">
-              {{ $t('report.filter') }}
-            </v-btn>
-          </div>
-        </v-flex>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <div class="v-card__text layout row wrap">
+          <v-flex xs12 sm12 md12>
+            <div class="btn-wrap">
+              <v-btn class="btnSave orange"
+                    lang="tr"
+                    @click.native="filteredReport">
+                {{ $t('report.filter') }}
+              </v-btn>
+            </div>
 
-        <v-flex xs12 sm6 md6>
-          <v-autocomplete v-model="selectOperatingRoom"
-                          :items="operatingRooms"
-                          :label="$t('report.operatingRoom')"
-                          clearable
-                          box
-                          :filter="customFilter"
-                          item-text="name"
-                          item-value="id">
-          </v-autocomplete>
-        </v-flex>
-      </div>
+            <div class="btn-wrap">
+              <v-btn class="btnSave orange"
+                    lang="tr"
+                    @click.native="clearReport">
+                {{ $t('report.clear') }}
+              </v-btn>
+            </div>
+          </v-flex>
+
+          <v-flex xs12 sm6 md6>
+            <v-menu ref="menu1"
+                    :close-on-content-click="false"
+                    v-model="menu1"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="startDate"
+                    transition="scale-transition"
+                    offset-y full-width min-width="290px">
+              <v-text-field readonly
+                            clearable
+                            slot="activator"
+                            v-model="startDateFormatted"
+                            :label="$t('report.operationStartDate')">
+              </v-text-field>
+
+              <v-date-picker v-model="startDate"
+                            no-title
+                            @input="$refs.menu1.save(startDate)"
+                            :max="getMaxDate()">
+              </v-date-picker>
+            </v-menu>
+          </v-flex>
+
+          <v-flex xs12 sm6 md6>
+            <v-menu ref="menu2"
+                    :close-on-content-click="false"
+                    v-model="menu2"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="endDate"
+                    transition="scale-transition"
+                    offset-y full-width min-width="290px">
+              <v-text-field readonly
+                            clearable slot="activator"
+                            v-model="endDateFormatted"
+                            :label="$t('report.operationEndDate')">
+              </v-text-field>
+
+              <v-date-picker v-model="endDate"
+                            no-title
+                            @input="$refs.menu2.save(endDate)"
+                            :max="getMaxDate()">
+              </v-date-picker>
+            </v-menu>
+          </v-flex>
+        </div>
+      </v-form>
     </div>
 
     <grid-component :headers="headers"
@@ -32,7 +77,7 @@
                     :show-detail="false"
                     :show-edit="false"
                     :show-delete="false"
-                    :show-search="true"
+                    :show-search="false"
                     :show-insert="false"
                     :hide-actions="false"
                     :methodName="getMethodName"
@@ -62,7 +107,6 @@ export default {
     const vm = this;
 
     return {
-      search: '',
       detailDialog: false,
       editDialog: false,
       deleteDialog: false,
@@ -74,8 +118,29 @@ export default {
       editLoadOnce: true,
       deletePath: '',
       customParameters: {},
-      operatingRoomId: null
+      startDateFormatted: null,
+      endDateFormatted: null,
+      menu1: false,
+      menu2: false,
+      dateFormatted: null,
+      startDate: null,
+      endDate: null,
+      valid: true
     };
+  },
+
+  watch: {
+    startDate(val) {
+      const vm = this;
+
+      vm.startDateFormatted = vm.formatDate(vm.startDate);
+    },
+
+    endDate(val) {
+      const vm = this;
+
+      vm.endDateFormatted = vm.formatDate(vm.endDate);
+    }
   },
 
   computed: {
@@ -136,26 +201,6 @@ export default {
       const vm = this;
 
       return vm.$store.state.reportsModule.totalCount;
-    },
-
-    selectOperatingRoom: {
-      get() {
-        const vm = this;
-
-        vm.operatingRoomId;
-      },
-
-      set(val) {
-        const vm = this;
-
-        vm.operatingRoomId = val;
-      }
-    },
-
-    operatingRooms() {
-      const vm = this;
-
-      return vm.$store.state.operatingRoomModule.allOperatingRooms;
     }
   },
 
@@ -168,15 +213,6 @@ export default {
       return "";
     },
 
-    customFilter(item, queryText, itemText) {
-      const vm = this;
-
-      const text = vm.replaceForAutoComplete(item.name);
-      const searchText = vm.replaceForAutoComplete(queryText);
-
-      return text.indexOf(searchText) > -1;
-    },
-
     replaceForAutoComplete(text) {
       return text.replace(/İ/g, 'i')
                  .replace(/I/g, 'ı')
@@ -186,7 +222,8 @@ export default {
     filteredReport() {
       const vm = this;
 
-      vm.customParameters.operatingRoomId = vm.operatingRoomId;
+      vm.customParameters.operationStartDate = vm.startDate;
+      vm.customParameters.operationEndDate = vm.endDate;
 
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
@@ -198,13 +235,80 @@ export default {
       vm.$store.dispatch('excelExportOvertimeUtilization', {
         operatingRoomId: vm.operatingRoomId
       });
+    },
+
+    getMaxDate() {
+      const toTwoDigits = num => (num < 10 ? '0' + num : num);
+      let today = new Date();
+
+      let year = today.getFullYear();
+      let month = toTwoDigits(today.getMonth() + 1);
+      let day = toTwoDigits(today.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
+
+    formatDate(date) {
+      if (!date || date.indexOf('.') > -1) return null;
+
+      const [year, month, day] = date.split('-');
+
+      return `${day}.${month}.${year}`;
+    },
+
+    getDate() {
+        const toTwoDigits = num => (num < 10 ? '0' + num : num);
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = toTwoDigits(today.getMonth() + 1);
+        let day = toTwoDigits(today.getDate());
+
+        return `${year}-${month}-${day}`;
+    },
+
+    getMinDate() {
+        const toTwoDigits = num => (num < 10 ? '0' + num : num);
+        let selectDay = new Date();
+
+        selectDay.setDate(selectDay.getDate() - 7);
+
+        let year = selectDay.getFullYear();
+        let month = toTwoDigits(selectDay.getMonth() + 1);
+        let day = toTwoDigits(selectDay.getDate());
+
+        return `${year}-${month}-${day}`;
+    },
+
+    clearReport() {
+      const vm = this;
+
+      vm.clear();
+    },
+
+    clear() {
+      const vm = this;
+
+      vm.$refs.form.reset();
     }
+  },
+
+  mounted() {
+    const vm = this;
+
+    vm.customParameters.operationStartDate = vm.startDate;
+    vm.customParameters.operationEndDate = vm.endDate;
   },
 
   created () {
     const vm = this;
 
-    vm.$store.dispatch('getAllOperatingRooms');
+    vm.startDate = vm.getMinDate();
+    vm.endDate = vm.getDate();
+
+    vm.$store.dispatch('getOvertimeUtilization', {
+      operationStartDate: vm.startDate,
+      operationEndDate: vm.endDate
+    })
   }
 };
 

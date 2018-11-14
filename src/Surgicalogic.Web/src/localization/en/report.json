@@ -17,5 +17,10 @@
   "overtimeUtilizationReport": "Overtime Utilization Report",
   "overTime":"Overtime",
   "utilization": "Utilization",
-  "operatingRoom": "Operating Room"
+  "operatingRoom": "Operating Room",
+  "operationStartDate": "Operation Start Date",
+  "operationEndDate": "Operation End Date",
+  "appointmentStartDate": "Appointment Start Date",
+  "appointmentEndDate": "Appointment End Date",
+  "clear": "Clear"
 }

@@ -19,5 +19,10 @@
   "overtimeUtilizationReport": "Fazla Mesai ve Kullanım Oranı Raporu",
   "overTime":"Fazla Mesai",
   "utilization": "Kullanım Oranı",
-  "operatingRoom": "Operasyon Odası"
+  "operatingRoom": "Operasyon Odası",
+  "operationStartDate": "Operasyon Başlangıç Tarihi",
+  "operationEndDate": "Operasyon Bitiş Tarihi",
+  "appointmentStartDate": "Randevu Aralığı (Başlangıç)",
+  "appointmentEndDate": "Randevu Aralığı (Bitiş)",
+  "clear": "Temizle"
 }
