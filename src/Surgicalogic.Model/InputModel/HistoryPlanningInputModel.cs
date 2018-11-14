@@ -6,8 +6,8 @@ namespace Surgicalogic.Model.InputModel
 {
     public class HistoryPlanningInputModel : GridInputModel
     {
-        public int OperatingRoomId { get; set; }
-        public int OperationId { get; set; }
+        public string OperatingRoomId { get; set; }
+        public string OperationId { get; set; }
         public DateTime OperationStartDate { get; set; }
         public DateTime OperationEndDate { get; set; }
         public string IdentityNumber { get; set; }

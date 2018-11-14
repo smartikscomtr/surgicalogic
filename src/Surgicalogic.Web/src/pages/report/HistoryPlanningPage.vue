@@ -40,8 +40,11 @@
             <v-autocomplete v-model="selectOperatingRoom"
                             :items="operatingRooms"
                             :label="$t('operatingrooms.operatingRoom')"
-                            box
                             clearable
+                            multiple
+                            chips
+                            deletable-chips
+                            box
                             :filter="customFilter"
                             item-text="name"
                             item-value="id">
@@ -330,8 +333,12 @@ export default {
     filteredReport() {
       const vm = this;
 
-      vm.customParameters.operationId = vm.operationId;
-      vm.customParameters.operatingRoomId = vm.operatingRoomId;
+      if (vm.operationId) {
+        vm.customParameters.operationId = vm.operationId.join();
+      }
+      if (vm.operatingRoomId) {
+        vm.customParameters.operatingRoomId = vm.operatingRoomId.join();
+      }
       vm.customParameters.operationStartDate = vm.startDate;
       vm.customParameters.operationEndDate = vm.endDate;
       vm.customParameters.identityNumber = vm.identityNumber;
