@@ -22,5 +22,7 @@
   "operationEndDate": "Operation End Date",
   "appointmentStartDate": "Appointment Start Date",
   "appointmentEndDate": "Appointment End Date",
-  "clear": "Clear"
+  "clear": "Clear",
+  "room": "Room",
+  "notFoundRoomInfo": "Room info not found."
 }

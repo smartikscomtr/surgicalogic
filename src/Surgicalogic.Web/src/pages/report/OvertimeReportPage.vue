@@ -67,23 +67,43 @@
                             :label="$t('report.realizedStartDate')">
               </v-text-field>
 
-              <v-date-picker v-model="startDate" no-title @input="$refs.menu1.save(startDate)" :max="getMaxDate()">
+              <v-date-picker v-model="startDate"
+                             no-title
+                             @input="$refs.menu1.save(startDate)"
+                             :max="getMaxDate()">
               </v-date-picker>
             </v-menu>
           </v-flex>
 
           <v-flex xs12 sm6 md6>
-            <v-menu ref="menu2" :close-on-content-click="false" v-model="menu2" :nudge-right="40" lazy :return-value.sync="endDate" transition="scale-transition" offset-y full-width min-width="290px">
-              <v-text-field readonly clearable slot="activator" v-model="endDateFormatted" :label="$t('report.realizedEndDate')">
+            <v-menu ref="menu2"
+                    :close-on-content-click="false"
+                    v-model="menu2"
+                    :nudge-right="40"
+                    lazy
+                    :return-value.sync="endDate"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px">
+              <v-text-field readonly
+                            clearable
+                            slot="activator"
+                            v-model="endDateFormatted"
+                            :label="$t('report.realizedEndDate')">
               </v-text-field>
 
-              <v-date-picker v-model="endDate" no-title @input="$refs.menu2.save(endDate)" :max="getMaxDate()">
+              <v-date-picker v-model="endDate"
+                             no-title
+                             @input="$refs.menu2.save(endDate)"
+                             :max="getMaxDate()">
               </v-date-picker>
             </v-menu>
           </v-flex>
         </div>
       </v-form>
     </div>
+
     <grid-component :headers="headers"
                     :items="overtimeOperations"
                     :title="title"
@@ -108,10 +128,13 @@
 </template>
 
 <script>
+
 import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
-  mixins: [gridMixin],
+  mixins: [
+    gridMixin
+  ],
 
   data() {
     const vm = this;
@@ -145,13 +168,17 @@ export default {
   },
 
   watch: {
-      startDate(val) {
-          this.startDateFormatted = this.formatDate(this.startDate);
-      },
+    startDate(val) {
+      const vm = this;
 
-      endDate(val) {
-          this.endDateFormatted = this.formatDate(this.endDate);
-      }
+      vm.startDateFormatted = vm.formatDate(vm.startDate);
+    },
+
+    endDate(val) {
+      const vm = this;
+
+      vm.endDateFormatted = vm.formatDate(vm.endDate);
+    }
   },
 
   computed: {
@@ -167,231 +194,239 @@ export default {
       //Columns and actions
       return [
         {
-            value: 'branchName',
-            text: vm.$i18n.t('report.branchName'),
-            sortable: true,
-            align: 'left'
+          value: 'branchName',
+          text: vm.$i18n.t('report.branchName'),
+          sortable: true,
+          align: 'left'
         },
         {
-            value: 'operationName',
-            text: vm.$i18n.t('report.operationName'),
-            sortable: true,
-            align: 'left'
+          value: 'operationName',
+          text: vm.$i18n.t('report.operationName'),
+          sortable: true,
+          align: 'left'
         },
         {
-            value: 'doctorName',
-            text: vm.$i18n.t('report.doctorName'),
-            sortable: false,
-            align: 'left'
+          value: 'doctorName',
+          text: vm.$i18n.t('report.doctorName'),
+          sortable: false,
+          align: 'left'
         },
         {
-            value: 'operationRoomName',
-            text: vm.$i18n.t('report.roomName'),
-            sortable: true,
-            align: 'left'
+          value: 'operationRoomName',
+          text: vm.$i18n.t('report.roomName'),
+          sortable: true,
+          align: 'left'
         },
         {
-            value: 'operationStartDate',
-            text: vm.$i18n.t('report.plannedStartDate'),
-            isDateTime: true,
-            align: 'left'
+          value: 'operationStartDate',
+          text: vm.$i18n.t('report.plannedStartDate'),
+          isDateTime: true,
+          align: 'left'
         },
         {
-            value: 'operationEndDate',
-            text: vm.$i18n.t('report.plannedEndDate'),
-            isDateTime: true,
-            align: 'left'
+          value: 'operationEndDate',
+          text: vm.$i18n.t('report.plannedEndDate'),
+          isDateTime: true,
+          align: 'left'
         },
         {
-            value: 'realizedStartDate',
-            text: vm.$i18n.t('report.realizedStartDate'),
-            isDateTime: true,
-            align: 'left'
+          value: 'realizedStartDate',
+          text: vm.$i18n.t('report.realizedStartDate'),
+          isDateTime: true,
+          align: 'left'
         },
         {
-            value: 'realizedEndDate',
-            text: vm.$i18n.t('report.realizedEndDate'),
-            isDateTime: true,
-            align: 'left'
+          value: 'realizedEndDate',
+          text: vm.$i18n.t('report.realizedEndDate'),
+          isDateTime: true,
+          align: 'left'
         },
         {
-            value: 'operationTimeDifference',
-            isOvertime: 'isOvertime',
-            text: vm.$i18n.t('report.overtime'),
-            sortable: true,
-            overtimeValue: true,
-            align: 'left'
+          value: 'operationTimeDifference',
+          isOvertime: 'isOvertime',
+          text: vm.$i18n.t('report.overtime'),
+          sortable: true,
+          overtimeValue: true,
+          align: 'left'
         },
         {
-            isAction: true,
-            sortable: false,
-            align: 'right'
+          isAction: true,
+          sortable: false,
+          align: 'right'
         }
       ];
     },
 
     branches() {
-        const vm = this;
+      const vm = this;
 
-        return vm.$store.state.branchesModule.allBranches;
+      return vm.$store.state.branchesModule.allBranches;
     },
 
     selectBranch: {
-        get() {
-            const vm = this;
+      get() {
+        const vm = this;
 
-            return vm.branchId;
-        },
+        return vm.branchId;
+      },
 
-        set(val) {
-            const vm = this;
+      set(val) {
+        const vm = this;
 
-            vm.branchId = val;
-        }
+        vm.branchId = val;
+      }
     },
 
     doctors: {
-        get() {
-            const vm = this;
+      get() {
+        const vm = this;
 
-            return vm.filteredDoctors;
-        },
+        return vm.filteredDoctors;
+      },
 
-        set(val) {
-            const vm = this;
+      set(val) {
+        const vm = this;
 
-            vm.filteredDoctors = val;
-        }
+        vm.filteredDoctors = val;
+      }
     },
 
     selectDoctor: {
-        get() {
-            const vm = this;
+      get() {
+        const vm = this;
 
-            return vm.doctorId;
-        },
+        return vm.doctorId;
+      },
 
-        set(val) {
-            const vm = this;
+      set(val) {
+        const vm = this;
 
-            vm.doctorId = val;
-        }
+        vm.doctorId = val;
+      }
     },
 
     overtimeOperations() {
-        const vm = this;
+      const vm = this;
 
-        return vm.$store.state.reportsModule.reportItems;
+      return vm.$store.state.reportsModule.reportItems;
     },
 
     getLoading() {
-        const vm = this;
+      const vm = this;
 
-        return vm.$store.state.reportsModule.loading;
+      return vm.$store.state.reportsModule.loading;
     },
 
     getTotalCount() {
-        const vm = this;
+      const vm = this;
 
-        return vm.$store.state.reportsModule.totalCount;
+      return vm.$store.state.reportsModule.totalCount;
     }
   },
 
   methods: {
     getMethodName() {
-        return 'getOvertimeOperations';
+      return 'getOvertimeOperations';
     },
 
     deleteMethodName() {
-        return '';
+      return '';
     },
 
     getMaxDate() {
-        const toTwoDigits = num => (num < 10 ? '0' + num : num);
-        let today = new Date();
+      const toTwoDigits = num => (num < 10 ? '0' + num : num);
 
-        let year = today.getFullYear();
-        let month = toTwoDigits(today.getMonth() + 1);
-        let day = toTwoDigits(today.getDate());
+      let today = new Date();
+      let year = today.getFullYear();
+      let month = toTwoDigits(today.getMonth() + 1);
+      let day = toTwoDigits(today.getDate());
 
-        return `${year}-${month}-${day}`;
+      return `${year}-${month}-${day}`;
     },
 
     formatDate(date) {
-        if (!date || date.indexOf('.') > -1) return null;
+      if (!date || date.indexOf('.') > -1)
+        return null;
 
-        const [year, month, day] = date.split('-');
+      const [year, month, day] = date.split('-');
 
-        return `${day}.${month}.${year}`;
+      return `${day}.${month}.${year}`;
     },
 
     exportOvertimeReportToExcel() {
-        const vm = this;
+      const vm = this;
 
-        vm.$store.dispatch('excelExportOvertimeOperations', {
-            branchId: vm.branchId,
-            doctorId: vm.doctorId,
-            RealizedStartDate: vm.startDate,
-            RealizedEndDate: vm.endDate
-        });
+      vm.$store.dispatch('excelExportOvertimeOperations');
     },
 
     customFilter(item, queryText, itemText) {
-        const vm = this;
+      const vm = this;
 
-        const text = vm.replaceForAutoComplete(item.name);
-        const searchText = vm.replaceForAutoComplete(queryText);
+      const text = vm.replaceForAutoComplete(item.name);
+      const searchText = vm.replaceForAutoComplete(queryText);
 
-        return text.indexOf(searchText) > -1;
+      return text.indexOf(searchText) > -1;
     },
 
     customFilterForDoctor(item, queryText, itemText) {
-        const vm = this;
+      const vm = this;
 
-        const text = vm.replaceForAutoComplete(item.personnelTitleName);
-        const searchText = vm.replaceForAutoComplete(queryText);
+      const text = vm.replaceForAutoComplete(item.personnelTitleName);
+      const searchText = vm.replaceForAutoComplete(queryText);
 
-        return text.indexOf(searchText) > -1;
+      return text.indexOf(searchText) > -1;
     },
 
     replaceForAutoComplete(text) {
-        return text
-            .replace(/İ/g, 'i')
-            .replace(/I/g, 'ı')
-            .toLowerCase();
+      return text.replace(/İ/g, 'i')
+                 .replace(/I/g, 'ı')
+                 .toLowerCase();
     },
 
     filterDoctor() {
-        const vm = this;
+      const vm = this;
 
-        var doctor = [];
+      var doctor = [];
+      vm.doctorCards = [];
 
-        vm.doctorCards = [];
-        for (let index = 0; index < vm.filteredDoctors.length; index++) {
-            const element = vm.filteredDoctors[index];
+      for (let index = 0; index < vm.filteredDoctors.length; index++) {
+        const element = vm.filteredDoctors[index];
 
-            if (element.id == vm.doctorId) {
-                vm.doctorCards.push(vm.filteredDoctors[index]);
-            }
+        if (element.id == vm.doctorId) {
+          vm.doctorCards.push(vm.filteredDoctors[index]);
         }
+      }
     },
 
     filteredReport() {
-        const vm = this;
+      const vm = this;
 
-        if (vm.branchId) {
-          vm.customParameters.branchId = vm.branchId.join();
-        }
+      if (vm.branchId) {
+        vm.customParameters.branchId = vm.branchId.join();
+      } else {
+        vm.customParameters.branchId = null;
+      }
 
-        if (vm.doctorId) {
-          vm.customParameters.doctorId = vm.doctorId.join();
-        }
+      if (vm.doctorId) {
+        vm.customParameters.doctorId = vm.doctorId.join();
+      } else {
+        vm.customParameters.doctorId = null;
+      }
 
+      if (vm.startDateFormatted) {
         vm.customParameters.realizedStartDate = vm.startDate;
-        vm.customParameters.realizedEndDate = vm.endDate;
+      } else {
+        vm.customParameters.realizedStartDate = null;
+      }
 
-        var child = this.$refs.gridComponent;
-        child.executeGridOperations(true);
+      if (vm.endDateFormatted) {
+        vm.customParameters.realizedEndDate = vm.endDate;
+      } else {
+        vm.customParameters.realizedEndDate = null;
+      }
+
+      var child = this.$refs.gridComponent;
+      child.executeGridOperations(true);
     },
 
     clearReport() {
@@ -408,28 +443,24 @@ export default {
   },
 
   created() {
-      const vm = this;
+    const vm = this;
 
-      vm.$store
-          .dispatch('getDoctorsByBranchIdAsync', {
-              branchId: 0
-          })
-          .then(() => {
-              vm.filteredDoctors =
-                  vm.$store.state.personnelModule.filteredDoctor;
-              vm.doctorCards = vm.filteredDoctors;
-          });
+    vm.$store.dispatch('getDoctorsByBranchIdAsync', { branchId: 0 })
+        .then(() => {
+          vm.filteredDoctors = vm.$store.state.personnelModule.filteredDoctor;
+          vm.doctorCards = vm.filteredDoctors;
+        });
 
-      vm.$store.dispatch('getAllBranches');
+    vm.$store.dispatch('getAllBranches');
   }
 };
 </script>
 
 <style>
 .btn-wrap {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
 }
 </style>

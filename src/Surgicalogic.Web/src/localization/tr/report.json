@@ -24,5 +24,7 @@
   "operationEndDate": "Operasyon Bitiş Tarihi",
   "appointmentStartDate": "Randevu Aralığı (Başlangıç)",
   "appointmentEndDate": "Randevu Aralığı (Bitiş)",
-  "clear": "Temizle"
+  "clear": "Temizle",
+  "room": "Odası",
+  "notFoundRoomInfo": "Oda bilgisi bulunamadı."
 }

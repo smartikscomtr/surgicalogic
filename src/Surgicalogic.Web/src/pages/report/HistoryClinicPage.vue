@@ -379,18 +379,33 @@ export default {
 
       if (vm.branchId) {
         vm.customParameters.branchId = vm.branchId.join();
+      } else {
+        vm.customParameters.branchId = null;
       }
 
       if (vm.doctorId) {
         vm.customParameters.doctorId = vm.doctorId.join();
+      } else {
+        vm.customParameters.doctorId = null;
       }
 
       if (vm.patientId) {
         vm.customParameters.patientId = vm.patientId.join();
+      } else {
+        vm.customParameters.patientId = null;
       }
 
-      vm.customParameters.appointmentStartDate = vm.appointmentStartDate;
-      vm.customParameters.appointmentEndDate = vm.appointmentEndDate;
+      if (vm.startDateFormatted) {
+        vm.customParameters.appointmentStartDate = vm.appointmentStartDate;
+      } else {
+        vm.customParameters.appointmentStartDate = null;
+      }
+
+      if (vm.endDateFormatted) {
+        vm.customParameters.appointmentEndDate = vm.appointmentEndDate;
+      } else {
+        vm.customParameters.appointmentEndDate = null;
+      }
 
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
@@ -418,13 +433,7 @@ export default {
     exportHistoryClinicReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportHistoryClinic', {
-        branchId: vm.branchId,
-        doctorId: vm.doctorId,
-        patientId: vm.patientId,
-        appointmentStartDate: vm.appointmentStartDate,
-        appointmentEndDate: vm.appointmentEndDate
-      });
+      vm.$store.dispatch('excelExportHistoryClinic');
     },
 
     filterDoctor() {

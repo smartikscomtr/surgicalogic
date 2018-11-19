@@ -21,7 +21,7 @@
             </div>
           </v-flex>
 
-          <v-flex xs12 sm12 md12>
+          <v-flex xs12 sm6 md6>
             <v-autocomplete v-model="selectOperation"
                             :items="operations"
                             :label="$t('operation.operationName')"
@@ -49,12 +49,6 @@
                             item-text="name"
                             item-value="id">
             </v-autocomplete>
-          </v-flex>
-
-          <v-flex xs12 sm6 md6>
-            <v-text-field v-model="identityNumber"
-                          :label="$t('patient.identityNumber')">
-            </v-text-field>
           </v-flex>
 
           <v-flex xs12 sm6 md6>
@@ -160,7 +154,6 @@ export default {
       startDateFormatted: null,
       endDateFormatted: null,
       customParameters: {},
-      identityNumber: null,
       valid: true
     };
   },
@@ -335,13 +328,27 @@ export default {
 
       if (vm.operationId) {
         vm.customParameters.operationId = vm.operationId.join();
+      } else {
+        vm.customParameters.operationId = null;
       }
+
       if (vm.operatingRoomId) {
         vm.customParameters.operatingRoomId = vm.operatingRoomId.join();
+      } else {
+        vm.customParameters.operatingRoomId = null;
       }
-      vm.customParameters.operationStartDate = vm.startDate;
-      vm.customParameters.operationEndDate = vm.endDate;
-      vm.customParameters.identityNumber = vm.identityNumber;
+
+      if (vm.startDateFormatted) {
+        vm.customParameters.operationStartDate = vm.startDate;
+      } else {
+        vm.customParameters.operationStartDate = null;
+      }
+
+      if (vm.endDateFormatted) {
+        vm.customParameters.operationEndDate = vm.endDate;
+      } else {
+        vm.customParameters.operationEndDate = null;
+      }
 
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
@@ -369,12 +376,7 @@ export default {
     exportHistoryPlanningReportToExcel() {
         const vm = this;
 
-        vm.$store.dispatch('excelExportHistoryPlanning', {
-          operationId: vm.operationId,
-          operatingRoomId: vm.operatingRoomId,
-          operationStartDate: vm.startDate,
-          operationEndDate: vm.startDate
-        });
+        vm.$store.dispatch('excelExportHistoryPlanning');
     },
 
     clearReport() {
