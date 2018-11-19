@@ -39,12 +39,12 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
             if (operationStartDate != null && operationStartDate > DateTime.MinValue)
             {
-                operationPlans = operationPlans.Where(x => x.OperationDate > operationStartDate);
+                operationPlans = operationPlans.Where(x => x.OperationDate >= operationStartDate);
             }
 
             if (operationEndDate != null && operationEndDate > DateTime.MinValue)
             {
-                operationPlans = operationPlans.Where(x => x.OperationDate > operationStartDate);
+                operationPlans = operationPlans.Where(x => x.OperationDate <= operationEndDate.AddDays(1));
             }
                 
             var allOperations = await operationPlans.ProjectTo<OperationPlanModel>().ToListAsync();
@@ -74,7 +74,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                         OperatingRoomId = item,
                         OperatingRoom = operatingRooms.Where(x => x.Id == item).First().Name,
                         Overtime = operations.Sum(x => x.DateDifference) / operations.Count < 0 ? 0 : operations.Sum(x => x.DateDifference) / operations.Count,
-                        Utilization = "%" + Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / workingHours) * 100, 2)
+                        Utilization = Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / workingHours) * 100, 2)
                     }
                 );
             }
@@ -157,21 +157,11 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
             return result;
         }
 
-        public async Task<List<OvertimeUtilizationForOvertimeReportOutputModel>> GetExportAsync<OvertimeUtilizationReportOutputModel>(OvertimeUtilizationReportInputModel input)
+        public async Task<List<OvertimeUtilizationReportExportModel>> GetExportAsync(OvertimeUtilizationReportInputModel input)
         {
-            return await GetOvertimeAndUtilizationAsync(input.OperationStartDate, input.OperationEndDate);
+            var query = await GetOvertimeAndUtilizationAsync(input.OperationStartDate, input.OperationEndDate);
 
-            //if (input.OperationStartDate > DateTime.MinValue)
-            //{
-            //    query = query.Where(x => x.OperationDate == input.OperationStartDate);
-            //}
-
-            //if (input.OperationEndDate > DateTime.MaxValue)
-            //{
-            //    query = query.Where(x => x.OperationDate == input.OperationEndDate);
-            //}
-
-            //return await query.ProjectTo<OvertimeUtilizationReportExportModel>().ToListAsync();
+            return AutoMapper.Mapper.Map<List<OvertimeUtilizationReportExportModel>>(query);
         }
     }
 }

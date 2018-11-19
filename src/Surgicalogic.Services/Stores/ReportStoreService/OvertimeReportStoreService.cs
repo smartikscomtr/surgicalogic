@@ -6,6 +6,7 @@ using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel.Report;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel.ReportOutputModel;
 using Surgicalogic.Services.Stores.Base;
@@ -123,40 +124,15 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 TotalCount = totalCount,
                 Info = new Info { Succeeded = true }
             };
-
-            //return base.GetAsync<TOutputModel>(input, expression);
         }
 
-        public async Task<List<OvertimeReportOutputModel>> GetExportAsync<OvertimeReportOutputModel>(OvertimeReportInputModel input)
+        public async Task<List<OvertimeReportExportModel>> GetExportAsync(OvertimeReportInputModel input)
         {
             var query = _dataContext.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
-            var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
-            var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
-
-            if (branchIds?.Count > 0)
-            {
-                query = query.Where(x => branchIds.Contains(x.Operation.OperationType.BranchId));
-            }
-
-            if (doctorIds?.Count > 0)
-            {
-                query = query.Where(x => x.Operation.OperationPersonels.Any(t => doctorIds.Contains(t.PersonnelId)));
-            }
-
-            if (input.RealizedStartDate != null && input.RealizedStartDate != DateTime.MinValue)
-            {
-                query = query.Where(x => x.RealizedStartDate >= input.RealizedStartDate);
-            }
-
-            if (input.RealizedEndDate != null && input.RealizedEndDate != DateTime.MinValue)
-            {
-                query = query.Where(x => x.RealizedEndDate <= input.RealizedEndDate.AddDays(1));
-            }
-
             var list = await query.ProjectTo<OperationPlanForReportModel>().ToListAsync();
 
-            return AutoMapper.Mapper.Map<List<OvertimeReportOutputModel>>(list);
+            return AutoMapper.Mapper.Map<List<OvertimeReportExportModel>>(list);
         }
     }
 }

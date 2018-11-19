@@ -91,7 +91,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
             if (input.AppointmentEndDate !=null && input.AppointmentEndDate > DateTime.MinValue)
             {
-                query = query.Where(x => x.AppointmentDate < input.AppointmentEndDate);
+                query = query.Where(x => x.AppointmentDate <= input.AppointmentEndDate.AddDays(1));
             }
 
             if (!string.IsNullOrEmpty(input.Search))
@@ -127,35 +127,6 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
         public async Task<List<HistoryClinicReportExportModel>> GetExportAsync<HistoryClinicReportOutputModel>(HistoryClinicReportInputModel input)
         {
             var query = _context.AppointmentCalendars.Where(x => x.IsActive);
-
-            var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
-            var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
-            var patientIds = input.PatientId?.Split(',').Select(int.Parse).ToList();
-
-            if (branchIds?.Count > 0)
-            {
-                query = query.Where(x => x.Personnel.PersonnelBranches.Any(y => branchIds.Contains(y.BranchId)));
-            }
-
-            if (doctorIds?.Count > 0)
-            {
-                query = query.Where(x => doctorIds.Contains(x.PersonnelId));
-            }
-
-            if (patientIds?.Count > 0)
-            {
-                query = query.Where(x => patientIds.Contains(x.PatientId));
-            }
-
-            if (input.AppointmentStartDate != null && input.AppointmentStartDate > DateTime.MinValue)
-            {
-                query = query.Where(x => x.AppointmentDate >= input.AppointmentStartDate);
-            }
-
-            if (input.AppointmentEndDate != null && input.AppointmentEndDate > DateTime.MinValue)
-            {
-                query = query.Where(x => x.AppointmentDate < input.AppointmentEndDate);
-            }
 
             return await query.ProjectTo<HistoryClinicReportExportModel>().ToListAsync();
         }

@@ -105,7 +105,7 @@ namespace Surgicalogic.Services.Stores
 
             if (input.OperationEndDate !=null && input.OperationEndDate != DateTime.MinValue)
             {
-                query = query.Where(x => x.OperationDate < input.OperationEndDate);
+                query = query.Where(x => x.OperationDate <= input.OperationEndDate.AddDays(1));
             }
 
             if (!string.IsNullOrEmpty(input.IdentityNumber))
@@ -144,35 +144,7 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<HistoryPlanningReportExportModel>> GetExportAsync<OperationPlanHistoryOutputModel>(HistoryPlanningInputModel input)
         {
             var query = _context.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
-
-            var operationIds = input.OperationId.Split(',').Select(int.Parse).ToList();
-            var operatingRoomIds = input.OperatingRoomId?.Split(',').Select(int.Parse).ToList();
-
-            if (operatingRoomIds?.Count > 0)
-            {
-                query = query.Where(x => operatingRoomIds.Contains(x.OperatingRoomId));
-            }
-
-            if (operationIds.Count > 0)
-            {
-                query = query.Where(x => x.Operation.OperationPersonels.Any(t => operationIds.Contains(t.OperationId)));
-            }
-
-            if (input.OperationStartDate != null && input.OperationStartDate != DateTime.MinValue)
-            {
-                query = query.Where(x => x.OperationDate >= input.OperationStartDate);
-            }
-
-            if (input.OperationEndDate != null && input.OperationEndDate != DateTime.MinValue)
-            {
-                query = query.Where(x => x.OperationDate < input.OperationEndDate);
-            }
-
-            if (!string.IsNullOrEmpty(input.IdentityNumber))
-            {
-                query = query.Where(x => x.Operation.Patient.IdentityNumber == input.IdentityNumber);
-            }
-
+            
             return await query.ProjectTo<HistoryPlanningReportExportModel>().ToListAsync();
         }
     }
