@@ -4,9 +4,6 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <div class="v-card__text layout row wrap">
 
-        <pie-chart :data="chartData">
-        </pie-chart>
-
           <v-flex xs12 sm12 md12>
             <div class="btn-wrap">
               <v-btn class="btnSave orange"
@@ -95,6 +92,31 @@
                     @deleteitem="deleteItem"
                     ref="gridComponent">
     </grid-component>
+
+    <div class="grid-card v-card flex layout">
+      <v-flex xs6 sm6 md6 class="chart">
+        <span class="headline">
+          {{ $t('report.overTime') }}
+        </span>
+
+        <column-chart :data="overtimeChartData"
+                   donut
+                   :messages="{empty: $t('report.notFoundRoomInfo')}">
+        </column-chart>
+      </v-flex>
+
+      <v-flex xs6 sm6 md6 class="chart">
+        <span class="headline">
+          {{ $t('report.utilization') }}
+        </span>
+
+        <pie-chart :data="utilizationChartData"
+                   donut
+                   legend="bottom"
+                   :messages="{empty: $t('report.notFoundRoomInfo')}">
+        </pie-chart>
+      </v-flex>
+    </div>
   </div>
 </template>
 
@@ -129,8 +151,7 @@ export default {
       dateFormatted: null,
       startDate: null,
       endDate: null,
-      valid: true,
-      chartData: [["Oda1", 4], ["Oda2", 2], ["Oda3", 10], ["Oda4", 5], ["Oda5", 3]]
+      valid: true
     };
   },
 
@@ -206,6 +227,18 @@ export default {
       const vm = this;
 
       return vm.$store.state.reportsModule.totalCount;
+    },
+
+    overtimeChartData() {
+      const vm = this;
+
+      return vm.$store.state.reportsModule.overtimeUtilization.map(x => [x.operatingRoom + " " + vm.$i18n.t('report.room'), x.overtime]);
+    },
+
+    utilizationChartData() {
+      const vm = this;
+
+      return vm.$store.state.reportsModule.overtimeUtilization.map(x => [x.operatingRoom+ " " + vm.$i18n.t('report.room'), x.utilization.replace('%', '')]);
     }
   },
 
@@ -227,8 +260,17 @@ export default {
     filteredReport() {
       const vm = this;
 
-      vm.customParameters.operationStartDate = vm.startDate;
-      vm.customParameters.operationEndDate = vm.endDate;
+      if (vm.startDateFormatted) {
+        vm.customParameters.operationStartDate = vm.startDate;
+      } else {
+        vm.customParameters.operationStartDate = null;
+      }
+
+      if (vm.endDateFormatted) {
+        vm.customParameters.operationEndDate = vm.endDate;
+      } else {
+        vm.customParameters.operationEndDate = null;
+      }
 
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
@@ -237,9 +279,7 @@ export default {
     exportOvertimeUtilizationReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportOvertimeUtilization', {
-        operatingRoomId: vm.operatingRoomId
-      });
+      vm.$store.dispatch('excelExportOvertimeUtilization');
     },
 
     getMaxDate() {
@@ -295,12 +335,6 @@ export default {
 
       vm.$refs.form.reset();
     },
-
-    loadChartData() {
-      const vm = this;
-
-      // vm.
-    }
   },
 
   mounted() {
@@ -320,11 +354,16 @@ export default {
       operationStartDate: vm.startDate,
       operationEndDate: vm.endDate
     });
-
-    // vm.$nextTick(() => {
-    //   vm.loadChartData();
-    // });
   }
 };
 
 </script>
+
+<style>
+.chart {
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+</style>
+
