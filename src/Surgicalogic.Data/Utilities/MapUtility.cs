@@ -202,7 +202,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OvertimeUtilizationForOvertimeReportOutputModel, OvertimeUtilizationReportOutputModel>()
                 .ForMember(dest => dest.OperatingRoom, opt => opt.MapFrom(src => src.OperatingRoom))
                 .ForMember(dest => dest.Overtime, opt => opt.MapFrom(src => src.Overtime))
-                .ForMember(dest => dest.Utilization, opt => opt.MapFrom(src => src.Utilization))
+                .ForMember(dest => dest.Utilization, opt => opt.MapFrom(src => "%" + src.Utilization))
                 .ReverseMap();
             #endregion
 
@@ -238,6 +238,15 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationPlan, HistoryPlanningReportExportModel>()
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
                 .ForMember(dest => dest.OperationRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name));
+            config.CreateMap<OperationPlanForReportModel, OvertimeReportExportModel>()
+                .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
+                .ForMember(dest => dest.OperationRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
+                .ForMember(dest => dest.OperationTimeDifference, opt => opt.MapFrom(src => src.Operation.OperationTime - Convert.ToInt32((src.RealizedEndDate - src.RealizedStartDate).TotalMinutes) > 0 ? ("+" + (src.Operation.OperationTime - Convert.ToInt32((src.RealizedEndDate - src.RealizedStartDate).TotalMinutes))) : ("-" + (src.Operation.OperationTime - Convert.ToInt32((src.RealizedEndDate - src.RealizedStartDate).TotalMinutes)))))
+                .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
+                .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Operation.OperationType.Branch.Name))
+                .ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => string.Join(", ", src.Operation.OperationPersonels.Where(x => x.IsActive).Select(x => x.Personnel.FirstName + " " + x.Personnel.LastName))));
+            config.CreateMap<OvertimeUtilizationForOvertimeReportOutputModel, OvertimeUtilizationReportExportModel>();
             #endregion
 
             #region Entity To InputOutputModel

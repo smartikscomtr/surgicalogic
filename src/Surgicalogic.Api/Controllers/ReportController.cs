@@ -53,9 +53,9 @@ namespace Surgicalogic.Api.Controllers
             FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
             var excelService = new ExcelDocumentService();
 
-            var items = await _overtimeReportStoreService.GetExportAsync<OvertimeReportOutputModel>(input);
+            var items = await _overtimeReportStoreService.GetExportAsync(input);
 
-            excelService.Write(fs, "Worksheet", typeof(OvertimeReportOutputModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            excelService.Write(fs, "Worksheet", typeof(OvertimeReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
@@ -78,7 +78,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<string> HistoryPlanningReportExcelExport(HistoryPlanningInputModel input)
         {
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            var fileName = string.Format("History_Operations_{0}.xlsx", Guid.NewGuid().ToString());
+            var fileName = string.Format("History_Plannings_{0}.xlsx", Guid.NewGuid().ToString());
 
             FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
             var excelService = new ExcelDocumentService();
@@ -103,7 +103,7 @@ namespace Surgicalogic.Api.Controllers
         public async Task<string> HistoryClinicReportExcelExport(HistoryClinicReportInputModel input)
         {
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            var fileName = string.Format("History_Operations_{0}.xlsx", Guid.NewGuid().ToString());
+            var fileName = string.Format("History_Clinics_{0}.xlsx", Guid.NewGuid().ToString());
 
             FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
             var excelService = new ExcelDocumentService();
@@ -126,14 +126,14 @@ namespace Surgicalogic.Api.Controllers
         public async Task<string> OvertimeUtilizationReportExcelExport(OvertimeUtilizationReportInputModel input)
         {
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            var fileName = string.Format("History_Operations_{0}.xlsx", Guid.NewGuid().ToString());
+            var fileName = string.Format("Overtime_Utilization_{0}.xlsx", Guid.NewGuid().ToString());
 
             FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
             var excelService = new ExcelDocumentService();
 
-            var items = await _overtimeUtilizationStoreService.GetExportAsync<OvertimeUtilizationForOvertimeReportOutputModel>(input);
+            var items = await _overtimeUtilizationStoreService.GetExportAsync(input);
 
-            excelService.Write(fs, "Worksheet", typeof(OvertimeUtilizationForOvertimeReportOutputModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            excelService.Write(fs, "Worksheet", typeof(OvertimeUtilizationReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
