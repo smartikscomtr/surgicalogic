@@ -43,6 +43,8 @@ namespace Surgicalogic.Api.Controllers
                     return setting.TimeValue;
                 case (int)SettingDataTypeNames.Int:
                     return setting.IntValue;
+                case (int)SettingDataTypeNames.Double:
+                    return setting.DoubleValue;
                 default:
                     return setting.StringValue;
             }
@@ -76,6 +78,7 @@ namespace Surgicalogic.Api.Controllers
                 IntValue = item.IntValue,
                 StringValue = item.StringValue,
                 TimeValue = item.TimeValue,
+                DoubleValue = item.DoubleValue,
                 SettingDataTypeId = item.SettingDataTypeId
             };
 

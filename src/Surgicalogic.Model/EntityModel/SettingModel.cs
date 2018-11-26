@@ -14,5 +14,6 @@ namespace Surgicalogic.Model.EntityModel
         public int? IntValue { get; set; }
         public string StringValue { get; set; }
         public string TimeValue { get; set; }
+        public double? DoubleValue { get; set; }
     }
 }

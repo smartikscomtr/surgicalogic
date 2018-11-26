@@ -34,13 +34,21 @@
         ClinicWorkingHourStart,
         ClinicWorkingHourEnd,
         ClinicPersonPerPeriod,
-        ClinicAppointmentDays
+        ClinicAppointmentDays,
+        SumPatientNumber,
+        ForAverageTimeEveryPatient,
+        ForStandardDeviationAverageTime,
+        PatientsFailureRate,
+        WithoutAppointmentPatientRate,
+        DoctorTimePatientTimeRate,
+        RoundingIntervalValue
     }
 
     public enum SettingDataTypeNames
     {
         String = 1,
         Int = 2,
-        Time = 3
+        Time = 3,
+        Double = 7
     }
 }

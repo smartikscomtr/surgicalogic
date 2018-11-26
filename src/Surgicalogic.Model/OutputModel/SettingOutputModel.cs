@@ -12,6 +12,7 @@ namespace Surgicalogic.Model.OutputModel
         public int? IntValue { get; set; }
         public string StringValue { get; set; }
         public string TimeValue { get; set; }
+        public string DoubleValue { get; set; }
         public string Value { get; set; }
     }
 }

@@ -39,7 +39,12 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="showTime">
-              <v-text-field v-model="editAction['timeValue']"  :rules="requiredTime" :label="$t('settings.value')" :value="editAction['timeValue']" type="time">
+              <v-text-field v-model="editAction['timeValue']" :rules="requiredTime" :label="$t('settings.value')" :value="editAction['timeValue']" type="time">
+              </v-text-field>
+            </v-flex>
+
+            <v-flex xs12 sm6 md6 v-show="showDouble">
+              <v-text-field v-model="editAction['timeValue']" :rules="requiredDouble" :label="$t('settings.value')" :value="editAction['doubleValue']" >
               </v-text-field>
             </v-flex>
 
@@ -89,6 +94,7 @@ export default {
             showInt: false,
             showString: false,
             showTime: false,
+            showDouble: false,
             valid: true,
             required: [
               v => !!v || this.$i18n.t('common.required')
@@ -101,6 +107,9 @@ export default {
             ],
             requiredTime: [
               v => (!!v  || !this.showTime) || this.$i18n.t('common.required')
+            ],
+            requiredDouble: [
+              v => (!!v  || !this.showDouble) || this.$i18n.t('common.required')
             ]
         };
     },
@@ -194,7 +203,8 @@ export default {
                     settingDataTypeId: vm.editAction.settingDataTypeId,
                     intValue: vm.editAction.intValue,
                     stringValue: vm.editAction.stringValue,
-                    timeValue: vm.editAction.timeValue
+                    timeValue: vm.editAction.timeValue,
+                    doubleValue: vm.editAction.doubleValue
                 })
                 .then(() => {
                     vm.snackbarVisible = true;
