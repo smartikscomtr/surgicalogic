@@ -12,5 +12,6 @@ namespace Surgicalogic.Model.OutputModel
         public string[] Disabled { get; set; }
         public int PersonPerPeriod { get; set; }
         public string[] SelectedTimes { get; set; }
+        public string[] AssignedSchedulesAsDate { get; set; }
     }
 }

@@ -194,7 +194,9 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<PersonnelCategoryModel, PersonnelCategoryOutputModel>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitleOutputModel>();
             config.CreateMap<SettingModel, SettingOutputModel>()
-                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.SettingDataTypeId == (int)SettingDataTypeNames.Int ? src.IntValue.ToString() : src.SettingDataTypeId == (int)SettingDataTypeNames.String ? src.StringValue : src.TimeValue));
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.SettingDataTypeId == (int)SettingDataTypeNames.Int ? 
+                                                                         src.IntValue.ToString() : src.SettingDataTypeId == (int)SettingDataTypeNames.String ? 
+                                                                         src.StringValue : src.SettingDataTypeId == (int)SettingDataTypeNames.Double ? src.DoubleValue.ToString() : src.TimeValue));
             config.CreateMap<SettingDataTypeModel, SettingDataTypeOutputModel>();
             config.CreateMap<UserModel, UserOutputModel>()
                 .ForMember(src => src.IsAdmin, opt => opt.Ignore());

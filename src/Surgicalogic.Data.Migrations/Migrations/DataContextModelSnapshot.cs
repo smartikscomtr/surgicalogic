@@ -181,11 +181,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<int?>("PersonnelId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonnelId");
 
                     b.ToTable("Branches");
                 });
@@ -806,6 +802,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<double?>("DoubleValue");
+
                     b.Property<int?>("IntValue");
 
                     b.Property<bool>("IsActive");
@@ -1000,13 +998,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .WithMany("AppointmentCalendars")
                         .HasForeignKey("PersonnelId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Surgicalogic.Data.Entities.Branch", b =>
-                {
-                    b.HasOne("Surgicalogic.Data.Entities.Personnel")
-                        .WithMany("Branches")
-                        .HasForeignKey("PersonnelId");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.DoctorCalendar", b =>

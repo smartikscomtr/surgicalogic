@@ -110,7 +110,6 @@ export default {
             doctorBranchNames: null,
             selectedTime: null,
             showModal: false,
-            personPerPeriod: 0,
             selectedTimes: [],
             availableAppointmentsMessage: '',
             identityNumber: null,
@@ -272,8 +271,8 @@ export default {
                     vm.startTime = response.data.startTime;
                     vm.endTime = response.data.endTime;
                     vm.disabled = response.data.disabled;
-                    vm.personPerPeriod = response.data.personPerPeriod;
                     vm.selectedTimes = response.data.selectedTimes;
+                    vm.assignedSchedulesAsDate = response.data.assignedSchedulesAsDate;
 
                     require(['appointment-picker'], function(
                         AppointmentPicker
@@ -322,15 +321,15 @@ export default {
             'change.appo.picker',
             function(e) {
                 vm.selectedTime =
-                    e.time.h +
+                    (e.time.h <= 9 ? '0' + e.time.h : e.time.h) +
                     ':' +
                     (e.time.m == 0 ? '0' + e.time.m : e.time.m);
 
-                var availablePerson = vm.personPerPeriod;
+                var availablePerson = 0;
 
-                for (let index = 0; index < vm.selectedTimes.length; index++) {
-                    if (vm.selectedTimes[index] == vm.selectedTime) {
-                        availablePerson--;
+                for (let index = 0; index < vm.assignedSchedulesAsDate.length; index++) {
+                    if (vm.assignedSchedulesAsDate[index] == vm.selectedTime) {
+                        availablePerson++;
                     }
                 }
 

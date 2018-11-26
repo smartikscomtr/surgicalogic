@@ -10,7 +10,7 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181106110816_InitialMigration")]
+    [Migration("20181119135310_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,11 +183,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<int?>("PersonnelId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonnelId");
 
                     b.ToTable("Branches");
                 });
@@ -808,6 +804,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<double?>("DoubleValue");
+
                     b.Property<int?>("IntValue");
 
                     b.Property<bool>("IsActive");
@@ -1002,13 +1000,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .WithMany("AppointmentCalendars")
                         .HasForeignKey("PersonnelId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Surgicalogic.Data.Entities.Branch", b =>
-                {
-                    b.HasOne("Surgicalogic.Data.Entities.Personnel")
-                        .WithMany("Branches")
-                        .HasForeignKey("PersonnelId");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.DoctorCalendar", b =>

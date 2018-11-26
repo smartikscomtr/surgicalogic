@@ -421,7 +421,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedDate = DateTime.Now,
                     CreatedBy = 1,
                     IsActive = true
-                });            
+                });
                 #endregion
 
                 #region SaveChanges
@@ -562,6 +562,83 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     Key = "ClinicAppointmentDays",
                     Name = "Klinik Randevu Verilecek Gün Sayısı",
                     IntValue = 15,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "SumPatientNumber",
+                    Name = "Toplam Hasta Sayısı",
+                    IntValue = 12,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ForAverageTimeEveryPatient",
+                    Name = "Her Hasta İçin Ortalama Süre(dk)",
+                    IntValue = 14,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "ForStandardDeviationAverageTime",
+                    Name = "Ortalama Süre İçin Standart Sapma(dk)",
+                    DoubleValue = 6.75,
+                    SettingDataTypeId = 7,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "PatientsFailureRate",
+                    Name = "Hastaların Gelmeme Oranı(%)",
+                    IntValue = 12,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "WithoutAppointmentPatientRate",
+                    Name = "Randevusuz Gelen Hasta Oranı(%)",
+                    IntValue = 28,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "DoctorTimePatientTimeRate",
+                    Name = "Doktor Zamanı/Hasta Zamanı",
+                    IntValue = 10,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "RoundingIntervalValue",
+                    Name = "Yuvarlama Aralık Değeri",
+                    IntValue = 10,
                     SettingDataTypeId = 2,
                     CreatedDate = DateTime.Now,
                     CreatedBy = 1,

@@ -26,6 +26,9 @@ namespace Surgicalogic.Api.Controllers
         private readonly IPatientStoreService _patientStoreService;
 
         static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+        private static List<int> availableAppointmentTimes = new List<int>();
+        private static DateTime start = new DateTime();
+        private static DateTime end = new DateTime();
 
         public AppointmentCalendarController(
             IAppointmentCalendarStoreService appointmentStoreService,
@@ -61,16 +64,102 @@ namespace Surgicalogic.Api.Controllers
 
             var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourStart.ToString());
             var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicWorkingHourEnd.ToString());
-            var personPerPeriodSetting = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPersonPerPeriod.ToString());
-            var interval = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ClinicPeriodInMinutes.ToString()).IntValue.Value;
+            
 
-            var start = workingHourStart.TimeValue.HourToDateTime();
-            var end = workingHourEnd.TimeValue.HourToDateTime();
-            var personPerPeriod = Convert.ToInt32(personPerPeriodSetting.IntValue);
+            //Ortalama süre düzeltme(dk)
+            var patientsFailureRate = (double)systemSettings.SingleOrDefault(x => x.Key == SettingKey.PatientsFailureRate.ToString()).IntValue.Value / 100;
+            var withoutAppointmentPatientRate = (double)systemSettings.SingleOrDefault(x => x.Key == SettingKey.WithoutAppointmentPatientRate.ToString()).IntValue.Value / 100;
+            var forAverageTimeEveryPatient = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ForAverageTimeEveryPatient.ToString()).IntValue.Value;
+
+            var subTotal = Math.Round((1 - patientsFailureRate + withoutAppointmentPatientRate) * forAverageTimeEveryPatient, 2);
+
+
+            //Sigma Değerleri
+            var forStandardDeviationAverageTime = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ForStandardDeviationAverageTime.ToString()).DoubleValue.Value;
+
+            var sigma1 = Math.Round((1 - patientsFailureRate - withoutAppointmentPatientRate) * (Math.Pow(forStandardDeviationAverageTime, 2) + Math.Pow((patientsFailureRate - withoutAppointmentPatientRate), 2) * Math.Pow(forAverageTimeEveryPatient, 2)), 5);
+            var sigma2 = Math.Round(patientsFailureRate * Math.Pow((1 - patientsFailureRate + withoutAppointmentPatientRate), 2) * Math.Pow(forAverageTimeEveryPatient, 2), 5);
+            var sigma3 = Math.Round(withoutAppointmentPatientRate * (2 * Math.Pow(forStandardDeviationAverageTime, 2) + Math.Pow((1 + patientsFailureRate - withoutAppointmentPatientRate), 2) * Math.Pow(forAverageTimeEveryPatient, 2)), 5);
+
+
+            //Standart Sapma Düzeltme
+            var editStandardDeviation = Math.Round(sigma1 + sigma2 + sigma3, 5);
+
+
+            //N
+            var sumPatientNumber = systemSettings.SingleOrDefault(x => x.Key == SettingKey.SumPatientNumber.ToString()).IntValue.Value;
+            var N = Math.Ceiling(sumPatientNumber / (1 - patientsFailureRate + withoutAppointmentPatientRate));
+
+
+            //k
+            var doctorTimePatientTimeRate = systemSettings.SingleOrDefault(x => x.Key == SettingKey.DoctorTimePatientTimeRate.ToString()).IntValue.Value;
+
+            var k1 = 0.9973;
+            var k2 = -0.103 * (0.005765 * doctorTimePatientTimeRate * (1 - patientsFailureRate) + Math.Pow((doctorTimePatientTimeRate * (1 - patientsFailureRate)), -0.3481));
+            var k3 = -0.10699 * Math.Pow((forStandardDeviationAverageTime / subTotal), 1.257);
+            var k4 = -0.627 * Math.Pow((N * (1 - patientsFailureRate)), -0.8579);
+            var k5 = -0.007574 * (Math.Pow((Math.Abs(doctorTimePatientTimeRate * (1 - withoutAppointmentPatientRate) - 2.143)), 0.9682) - 0.622 * doctorTimePatientTimeRate * (1 - withoutAppointmentPatientRate));
+            var k6 = 0.004855 * Math.Pow(doctorTimePatientTimeRate, 0.8913);
+
+            var k = Math.Round(Math.Pow((k1 + k2 + k3 + k4 + k5 + k6), -1.898), 6);
+
+            //calculatedSchedule ve assignedSchedule
+            var roundingIntervalValue = systemSettings.SingleOrDefault(x => x.Key == SettingKey.RoundingIntervalValue.ToString()).IntValue.Value;
+
+            var calculatedSchedule = 0.0;
+            var assignedSchedule = new int[sumPatientNumber];
+
+            for (int i = 1; i <= sumPatientNumber; i++)
+            {
+                if ((k * (i - 1) * subTotal - Math.Sqrt(editStandardDeviation) * ((N + i) / (N - 1)) * Math.Sqrt(i)) < 0)
+                {
+                    calculatedSchedule = 0.0;
+                } else {
+                    calculatedSchedule = Math.Round(k * (i - 1) * subTotal - Math.Sqrt(editStandardDeviation) * ((N + i) / (N - 1)) * Math.Sqrt(i), 2);
+                };
+
+                assignedSchedule[i -1] = (int)Math.Round((calculatedSchedule / (double)roundingIntervalValue), MidpointRounding.AwayFromZero) * roundingIntervalValue;
+            }
+
+            availableAppointmentTimes = assignedSchedule.ToList();
+
+            start = workingHourStart.TimeValue.HourToDateTime();
+            end = workingHourEnd.TimeValue.HourToDateTime();
+            var personPerPeriod = assignedSchedule.GroupBy(x => x).OrderByDescending(x => x.Count()).FirstOrDefault().Count();
+            var intervals = new int[Convert.ToInt32((end-start).TotalMinutes) / roundingIntervalValue];
+
+            for (int i = 0; i < intervals.Length; i++)
+            {
+                intervals[i] = i * roundingIntervalValue;
+            }
 
             var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
+            var selectedTimesAsDate = appointments.Select(x => x.AppointmentDate).ToArray();
 
-            var disabledTimes = appointments.GroupBy(x => x.AppointmentDate).Where(x => x.Count() >= personPerPeriod).Select(x => x.Key.ToString("HH:mm")).ToList();
+            var assignedSchedulesAsDate = new string[assignedSchedule.Length];
+
+            for (int i = 0; i < assignedSchedule.Length; i++)
+            {
+                assignedSchedulesAsDate[i] = start.AddMinutes(assignedSchedule[i]).ToString("HH:mm");
+            }
+
+            for (int i = 0; i < selectedTimesAsDate.Length; i++)
+            {
+                var minutesFromStart = (selectedTimesAsDate[i] - new DateTime(selectedTimesAsDate[i].Year, selectedTimesAsDate[i].Month, selectedTimesAsDate[i].Day, start.Hour, start.Minute, 0)).TotalMinutes;
+                int numIndex = Array.IndexOf(assignedSchedule, Convert.ToInt32(minutesFromStart));
+                assignedSchedule = assignedSchedule.Where((val, idx) => idx != numIndex).ToArray();
+                numIndex = Array.IndexOf(assignedSchedulesAsDate, selectedTimesAsDate[i].ToString("HH:mm"));
+                assignedSchedulesAsDate = assignedSchedulesAsDate.Where((val, idx) => idx != numIndex).ToArray();
+            }
+
+            var disabledTimes = new List<string>();
+
+            var notAvailableItems = intervals.Except(assignedSchedule).ToArray();
+            for (int i = 0; i < notAvailableItems.Count(); i++)
+            {
+                var disabledTime = start.AddMinutes(notAvailableItems[i]);
+                disabledTimes.Add(disabledTime.ToString("HH:mm"));
+            }
 
             //ön yüzde kullandığımız component başlangıç dakikası almadığı için saat başından başlangıç dakikasına kadar olan slotları kapatıyorum. 
             if (start.Minute > 0)
@@ -81,7 +170,7 @@ namespace Surgicalogic.Api.Controllers
                 while(minute < start.Minute)
                 {
                     disabledTimes.Add(hour + ":" + (minute <= 9 ? "0" + minute : minute.ToString()));
-                    minute += interval;
+                    minute += roundingIntervalValue;
                 }
             }
 
@@ -89,12 +178,12 @@ namespace Surgicalogic.Api.Controllers
             if (end.Minute > 0)
             {
                 string hour = end.ToString("HH");
-                int minute = 60 - interval;
+                int minute = 60 - roundingIntervalValue;
 
-                while (minute + interval > end.Minute)
+                while (minute + roundingIntervalValue > end.Minute)
                 {
                     disabledTimes.Add(hour + ":" + (minute <= 9 ? "0" + minute : minute.ToString()));
-                    minute -= interval;
+                    minute -= roundingIntervalValue;
                 }
 
                 end = end.AddHours(1);
@@ -102,12 +191,13 @@ namespace Surgicalogic.Api.Controllers
 
             return new AppointmentDayOutputModel
             {
-                Interval = interval,
+                Interval = roundingIntervalValue,
                 StartTime = start.Hour,
                 EndTime = end.Hour,
                 Disabled = disabledTimes.ToArray(),
                 PersonPerPeriod = personPerPeriod,
-                SelectedTimes = appointments.Select(x => x.AppointmentDate.ToString("HH:mm")).ToArray()
+                SelectedTimes = appointments.Select(x => x.AppointmentDate.ToString("HH:mm")).ToArray(),
+                AssignedSchedulesAsDate = assignedSchedulesAsDate
             };
         }
 
@@ -151,7 +241,9 @@ namespace Surgicalogic.Api.Controllers
             {
                 var appointmentDateTime = new DateTime(item.AppointmentDate.Year, item.AppointmentDate.Month, item.AppointmentDate.Day, Convert.ToInt32(item.AppointmentTime.Split(':')[0]), Convert.ToInt32(item.AppointmentTime.Split(':')[1]), 0);
 
-                var appointmentAvailable = await CheckAppointmentAsync(item.PersonnelId, appointmentDateTime);
+                var minutesFromStart = (appointmentDateTime - new DateTime(appointmentDateTime.Year, appointmentDateTime.Month, appointmentDateTime.Day, start.Hour, start.Minute, 0)).TotalMinutes;
+
+                var appointmentAvailable = await CheckAppointmentAsync(item.PersonnelId, appointmentDateTime, availableAppointmentTimes.Count(x => x == minutesFromStart));
 
                 if (!appointmentAvailable)
                 {
@@ -190,11 +282,8 @@ namespace Surgicalogic.Api.Controllers
             return result;
         }
 
-        private async Task<bool> CheckAppointmentAsync(int doctorId, DateTime date)
+        private async Task<bool> CheckAppointmentAsync(int doctorId, DateTime date, int personPerPeriod)
         {
-            var systemSetting = await _settingStoreService.GetByKeyAsync(SettingKey.ClinicPersonPerPeriod.ToString());
-            var personPerPeriod = systemSetting.IntValue;
-
             var appointmentCount = await _appointmentCalendarStoreService.GetAppointmentCountByDoctorAndDateTimeAsync(doctorId, date);
 
            return personPerPeriod > appointmentCount ? true : false;

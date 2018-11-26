@@ -53,6 +53,25 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Branches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branches", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EquipmentTypes",
                 columns: table => new
                 {
@@ -318,6 +337,32 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OperationTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: true),
+                    BranchId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperationTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperationTypes_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Equipments",
                 columns: table => new
                 {
@@ -387,7 +432,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     SettingDataTypeId = table.Column<int>(nullable: false),
                     IntValue = table.Column<int>(nullable: true),
                     StringValue = table.Column<string>(nullable: true),
-                    TimeValue = table.Column<string>(nullable: true)
+                    TimeValue = table.Column<string>(nullable: true),
+                    DoubleValue = table.Column<double>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -438,178 +484,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_Personnels_WorkTypes_WorkTypeId",
                         column: x => x.WorkTypeId,
                         principalTable: "WorkTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OperatingRoomEquipments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    EquipmentId = table.Column<int>(nullable: false),
-                    OperatingRoomId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OperatingRoomEquipments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OperatingRoomEquipments_Equipments_EquipmentId",
-                        column: x => x.EquipmentId,
-                        principalTable: "Equipments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OperatingRoomEquipments_OperatingRooms_OperatingRoomId",
-                        column: x => x.OperatingRoomId,
-                        principalTable: "OperatingRooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AppointmentCalendars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    AppointmentDate = table.Column<DateTime>(nullable: false),
-                    PersonnelId = table.Column<int>(nullable: false),
-                    PatientId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppointmentCalendars", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AppointmentCalendars_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AppointmentCalendars_Personnels_PersonnelId",
-                        column: x => x.PersonnelId,
-                        principalTable: "Personnels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Branches",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 250, nullable: false),
-                    Description = table.Column<string>(maxLength: 1000, nullable: true),
-                    PersonnelId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Branches", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Branches_Personnels_PersonnelId",
-                        column: x => x.PersonnelId,
-                        principalTable: "Personnels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DoctorCalendars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    PersonnelId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DoctorCalendars", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DoctorCalendars_Personnels_PersonnelId",
-                        column: x => x.PersonnelId,
-                        principalTable: "Personnels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OperationTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 250, nullable: false),
-                    Description = table.Column<string>(maxLength: 1000, nullable: true),
-                    BranchId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OperationTypes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OperationTypes_Branches_BranchId",
-                        column: x => x.BranchId,
-                        principalTable: "Branches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PersonnelBranches",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedBy = table.Column<int>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<int>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    PersonnelId = table.Column<int>(nullable: false),
-                    BranchId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersonnelBranches", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PersonnelBranches_Branches_BranchId",
-                        column: x => x.BranchId,
-                        principalTable: "Branches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PersonnelBranches_Personnels_PersonnelId",
-                        column: x => x.PersonnelId,
-                        principalTable: "Personnels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -682,6 +556,37 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OperatingRoomEquipments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    EquipmentId = table.Column<int>(nullable: false),
+                    OperatingRoomId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OperatingRoomEquipments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomEquipments_Equipments_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OperatingRoomEquipments_OperatingRooms_OperatingRoomId",
+                        column: x => x.OperatingRoomId,
+                        principalTable: "OperatingRooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OperationTypeEquipments",
                 columns: table => new
                 {
@@ -708,6 +613,95 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         name: "FK_OperationTypeEquipments_OperationTypes_OperationTypeId",
                         column: x => x.OperationTypeId,
                         principalTable: "OperationTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppointmentCalendars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    AppointmentDate = table.Column<DateTime>(nullable: false),
+                    PersonnelId = table.Column<int>(nullable: false),
+                    PatientId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppointmentCalendars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppointmentCalendars_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppointmentCalendars_Personnels_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "Personnels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorCalendars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    PersonnelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorCalendars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DoctorCalendars_Personnels_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "Personnels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonnelBranches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<int>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    PersonnelId = table.Column<int>(nullable: false),
+                    BranchId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonnelBranches", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonnelBranches_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonnelBranches_Personnels_PersonnelId",
+                        column: x => x.PersonnelId,
+                        principalTable: "Personnels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -856,11 +850,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Branches_PersonnelId",
-                table: "Branches",
-                column: "PersonnelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorCalendars_PersonnelId",
@@ -1052,6 +1041,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "Equipments");
 
             migrationBuilder.DropTable(
+                name: "Personnels");
+
+            migrationBuilder.DropTable(
                 name: "SettingDataTypes");
 
             migrationBuilder.DropTable(
@@ -1064,12 +1056,6 @@ namespace Surgicalogic.Data.Migrations.Migrations
                 name: "EquipmentTypes");
 
             migrationBuilder.DropTable(
-                name: "Branches");
-
-            migrationBuilder.DropTable(
-                name: "Personnels");
-
-            migrationBuilder.DropTable(
                 name: "PersonnelCategories");
 
             migrationBuilder.DropTable(
@@ -1077,6 +1063,9 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "WorkTypes");
+
+            migrationBuilder.DropTable(
+                name: "Branches");
         }
     }
 }
