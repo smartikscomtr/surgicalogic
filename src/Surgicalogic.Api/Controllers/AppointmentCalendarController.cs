@@ -125,12 +125,19 @@ namespace Surgicalogic.Api.Controllers
 
             start = workingHourStart.TimeValue.HourToDateTime();
             end = workingHourEnd.TimeValue.HourToDateTime();
+            var intervalStartMinuteDifference = 0;
             var personPerPeriod = assignedSchedule.GroupBy(x => x).OrderByDescending(x => x.Count()).FirstOrDefault().Count();
             var intervals = new int[Convert.ToInt32((end-start).TotalMinutes) / roundingIntervalValue];
 
             for (int i = 0; i < intervals.Length; i++)
             {
                 intervals[i] = i * roundingIntervalValue;
+            }
+
+            //Eğer başlangıç dakikası, her randevuya ayrılacak sürenin bir katı değilse
+            if (start.Minute > 0 && start.Minute % roundingIntervalValue > 0)
+            {
+                intervalStartMinuteDifference += roundingIntervalValue - start.Minute % roundingIntervalValue;
             }
 
             var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
@@ -140,7 +147,7 @@ namespace Surgicalogic.Api.Controllers
 
             for (int i = 0; i < assignedSchedule.Length; i++)
             {
-                assignedSchedulesAsDate[i] = start.AddMinutes(assignedSchedule[i]).ToString("HH:mm");
+                assignedSchedulesAsDate[i] = start.AddMinutes(intervalStartMinuteDifference + assignedSchedule[i]).ToString("HH:mm");
             }
 
             for (int i = 0; i < selectedTimesAsDate.Length; i++)
