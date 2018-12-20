@@ -71,6 +71,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationModel, Operation>()
                 .ForMember(src => src.OperationType, opt => opt.Ignore())
                 .ForMember(src => src.OperationPersonels, opt => opt.Ignore())
+                .ForMember(src => src.Patient, opt => opt.Ignore())
                 .ForMember(src => src.OperationBlockedOperatingRooms, opt => opt.Ignore());
             config.CreateMap<OperationPersonnelModel, OperationPersonnel>();
             config.CreateMap<OperationPlanModel, OperationPlan>()

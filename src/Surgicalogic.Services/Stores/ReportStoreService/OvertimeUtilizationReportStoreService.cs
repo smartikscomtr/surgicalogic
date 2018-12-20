@@ -73,7 +73,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                     {
                         OperatingRoomId = item,
                         OperatingRoom = operatingRooms.Where(x => x.Id == item).First().Name,
-                        Overtime = operations.Sum(x => x.DateDifference) / operations.Count < 0 ? 0 : operations.Sum(x => x.DateDifference) / operations.Count,
+                        Overtime = operations.Count == 0 ? 0 : operations.Sum(x => x.DateDifference) / operations.Count,
                         Utilization = Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / workingHours) * 100, 2)
                     }
                 );

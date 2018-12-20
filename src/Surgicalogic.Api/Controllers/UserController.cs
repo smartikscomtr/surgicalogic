@@ -192,6 +192,7 @@ namespace Surgicalogic.Api.Controllers
                 //Send an email with this link
                 string code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "User", new { email = user.Email, code = code }, protocol: HttpContext.Request.Scheme);
+                var resetUrl = AppSettings.WebSiteUrl + callbackUrl.Substring(callbackUrl.IndexOf("/User") + 5, callbackUrl.Length - callbackUrl.IndexOf("/User") - 5);
 
             //TODO: Send Email
             // await UserManager<User>.SendEmailAsync(user, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
