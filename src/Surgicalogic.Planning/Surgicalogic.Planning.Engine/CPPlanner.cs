@@ -215,7 +215,7 @@ namespace Surgicalogic.Planning.Engine
                             //Console.Write(surgeryRoom.Id + ". Oda, Saat: " + dateTime.ToShortTimeString());
                             operationTimes.Add(dateTime.Hour);
 
-                            surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorIds = input.Operations[i].DoctorIds, Period = input.Operations[i].Period, StartDate = dateTime });
+                            surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorIds = input.Operations[i].DoctorIds, Period = input.Operations[i].Period, StartDate = dateTime, OperationTime = input.Operations[i].OperationTime });
                         }
                         roomUsage.Add(v);
                     }

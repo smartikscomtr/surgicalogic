@@ -651,6 +651,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 context.SaveChanges();
                 #endregion
 
+                #region InsertRole
+                context.Database.ExecuteSqlCommand("insert into [dbo].[AspNetRoles](Name,NormalizedName) values('Admin', 'ADMIN')");
+                context.Database.ExecuteSqlCommand("insert into [dbo].[AspNetRoles](Name,NormalizedName) values('Member', 'MEMBER')");
+                #endregion
+
             }
             catch (Exception ec)
             { }

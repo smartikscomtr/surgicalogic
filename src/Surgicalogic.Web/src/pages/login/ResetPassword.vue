@@ -69,6 +69,12 @@ export default {
                     code: vm.$route.query.code
                 })
                 .then(response => {
+                  if (response.data.info.succeeded) {
+                     vm.savedMessage = vm.$i18n.t('login.passwordUpdated');
+                      setTimeout(() => {
+                         vm.$router.push("/loginpage");
+                    }, 2500);
+                  } else {
                     switch (response.data.info.message) {
                         case 3:
                             vm.savedMessage = vm.$i18n.t('login.userNotFound');
@@ -83,8 +89,8 @@ export default {
                             break;
                         default:
                             break;
+                      }
                     }
-
                     vm.snackbarVisible = true;
 
                     setTimeout(() => {

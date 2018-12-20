@@ -129,6 +129,7 @@ namespace Surgicalogic.Api.Controllers
                     Name = operation.Name,
                     Period = operation.OperationTime % period.IntValue.Value == 0 ? operation.OperationTime / period.IntValue.Value : operation.OperationTime / period.IntValue.Value + 1,
                     DoctorIds = personnelIds.Select(x => x.PersonnelId).ToArray(),
+                    OperationTime = operation.OperationTime,
                     //Bu operasyonun yapılamayacağı odaları, tüm odalardan yapılabileceği odaları çıkartarak buluyorum.
                     UnavailableRooms = rooms.Select(x => x.Id).Except(operatingRoomIds.Except(outputModel.BlockedOperatingRoomIds)).ToList()
                 });
@@ -171,7 +172,7 @@ namespace Surgicalogic.Api.Controllers
                                 OperationId = operation.Id,
                                 OperationDate = operation.StartDate,
                                 RealizedStartDate = operation.StartDate,
-                                RealizedEndDate = operation.StartDate.AddMinutes(operation.Period * period.IntValue.Value)
+                                RealizedEndDate = operation.StartDate.AddMinutes(operation.OperationTime)
                             };
 
                             await _operationPlanStoreService.InsertAsync(model);

@@ -12,5 +12,6 @@
   "forgotPasswordMailInfo": "Mail adresiniz geçerliyse şifre sıfırlama bağlantısı gönderilmiştir.",
   "userNotFound": "Kullanıcı bulunamadı.",
   "invalidCode": "Geçersiz kod. Lütfen yeniden şifre sıfırlama adımlarını izleyiniz.",
-  "passwordsDoNotMatch": "Şifreler eşleşmiyor"
+  "passwordsDoNotMatch": "Şifreler eşleşmiyor",
+  "passwordUpdated":"Şifreniz başarıyla güncellendi"
 }

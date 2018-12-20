@@ -12,5 +12,6 @@
   "forgotPasswordMailInfo": "Password reset link is sent if your e-mail address is valid.",
   "userNotFound": "User not found.",
   "invalidCode": "Invalid code. Please follow the password reset steps again.",
-  "passwordsDoNotMatch": "Passwords Do Not Match"
+  "passwordsDoNotMatch": "Passwords Do Not Match",
+  "passwordUpdated":"Your password has been changed successfully"
 }

@@ -157,7 +157,8 @@ namespace Surgicalogic.Api.Controllers
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
                 Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date, //TODO: Çakma çözüm
-                PatientId = patientModel.Result.Id
+                PatientId = patientModel.Result.Id,
+                EventNumber = item.EventNumber
             };
 
             var result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);

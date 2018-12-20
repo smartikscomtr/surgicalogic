@@ -350,10 +350,10 @@ export default {
     vm.startDate = vm.getMinDate();
     vm.endDate = vm.getDate();
 
-    vm.$store.dispatch('getOvertimeUtilization', {
-      operationStartDate: vm.startDate,
-      operationEndDate: vm.endDate
-    });
+    // vm.$store.dispatch('getOvertimeUtilization', {
+    //   operationStartDate: vm.startDate,
+    //   operationEndDate: vm.endDate
+    // });
   }
 };
 
