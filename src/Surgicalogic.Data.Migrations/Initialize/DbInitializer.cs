@@ -101,11 +101,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
-                #endregion
-
                 #region PersonnelCategories
                 string[] PersonnelCategories = new string[] {
                     "Anestezi Uzmanı",
@@ -125,11 +120,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         IsActive = true
                     }).Entity;
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region PersonnelTitles
@@ -152,11 +142,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
-                #endregion
-
                 #region WorkTypes
                 var workType = new Entities.WorkType();
 
@@ -171,11 +156,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         CreatedDate = DateTime.Now
                     }).Entity;
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region EquipmentType
@@ -220,11 +200,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         CreatedDate = DateTime.Now
                     }).Entity;
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region SaveChanges
@@ -283,11 +258,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     });
                     codeIndex++;
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region Personnels
@@ -393,11 +363,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 context.Personnels.AddRange(PersonnelsList);
                 #endregion
 
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
-                #endregion
-
                 #region OperatingRooms
                 for (int i = 0; i <= 4; i++)
                 {
@@ -410,11 +375,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         CreatedDate = DateTime.Now
                     });
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region OperationTypes
@@ -431,11 +391,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         IsActive = true
                     });
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region SettingDataTypes
@@ -466,10 +421,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedBy = 1,
                     IsActive = true
                 });
-                #endregion
-
-                #region SaveChanges
-                context.SaveChanges();
                 #endregion
 
                 #region OperatingRoomEquipments
@@ -520,6 +471,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         Name = "Operasyon " + i,
                         Description = "Operasyon " + i,
                         OperationTypeId = i,
+                        EventNumber = _random.Next(1000, 2000).ToString(),
                         OperationTime = _random.Next(5, 25) * 5,
                         Date = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day),
                         CreatedDate = DateTime.Now,
@@ -529,11 +481,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     });
                 }
 
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region OperatingRoomOperationTypes
@@ -552,11 +499,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         });
                     }
                 }
-                #endregion
-
-                #region SaveChanges
-                //Saving here because needed above records IDs below.
-                context.SaveChanges();
                 #endregion
 
                 #region SettingDataTypes
@@ -602,7 +544,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 context.SaveChanges();
 
                 #endregion
-
 
                 #region Settings
                 context.Settings.Add(new Entities.Setting
