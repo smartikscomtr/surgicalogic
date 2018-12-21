@@ -101,6 +101,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
+                #endregion
+
                 #region PersonnelCategories
                 string[] PersonnelCategories = new string[] {
                     "Anestezi Uzmanı",
@@ -122,6 +127,10 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
+                #endregion
 
                 #region PersonnelTitles
                 string[] PersonnelTitles = new string[] {
@@ -143,6 +152,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
+                #endregion
+
                 #region WorkTypes
                 var workType = new Entities.WorkType();
 
@@ -157,6 +171,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         CreatedDate = DateTime.Now
                     }).Entity;
                 }
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
                 #endregion
 
                 #region EquipmentType
@@ -201,6 +220,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         CreatedDate = DateTime.Now
                     }).Entity;
                 }
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
                 #endregion
 
                 #region SaveChanges
@@ -259,6 +283,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     });
                     codeIndex++;
                 }
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
                 #endregion
 
                 #region Personnels
@@ -364,6 +393,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 context.Personnels.AddRange(PersonnelsList);
                 #endregion
 
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
+                #endregion
+
                 #region OperatingRooms
                 for (int i = 0; i <= 4; i++)
                 {
@@ -376,6 +410,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         CreatedDate = DateTime.Now
                     });
                 }
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
                 #endregion
 
                 #region OperationTypes
@@ -392,6 +431,11 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         IsActive = true
                     });
                 }
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
                 #endregion
 
                 #region SettingDataTypes
@@ -444,6 +488,31 @@ namespace Surgicalogic.Data.Migrations.Initialize
 
                 //}
 
+                #endregion
+
+                #region Patients
+
+                for (int i = 1; i <= 8; i++)
+                {
+                    context.Patients.Add(new Entities.Patient
+                    {
+                        FirstName = "İsim " + i,
+                        LastName = "Soyisim " + i,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = 1,
+                        IsActive = true
+                    });
+                }
+
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
+                #endregion
+
+                #region Operations
+
                 for (int i = 1; i <= 8; i++)
                 {
                     context.Operations.Add(new Entities.Operation
@@ -455,10 +524,16 @@ namespace Surgicalogic.Data.Migrations.Initialize
                         Date = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day),
                         CreatedDate = DateTime.Now,
                         CreatedBy = 1,
+                        PatientId = i,
                         IsActive = true
                     });
                 }
 
+                #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
                 #endregion
 
                 #region OperatingRoomOperationTypes
@@ -478,6 +553,56 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     }
                 }
                 #endregion
+
+                #region SaveChanges
+                //Saving here because needed above records IDs below.
+                context.SaveChanges();
+                #endregion
+
+                #region SettingDataTypes
+
+                context.SettingDataTypes.Add(new SettingDataType
+                {
+                    Name = "String",
+                    CreatedBy = 1,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new SettingDataType
+                {
+                    Name = "Int",
+                    CreatedBy = 1,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new SettingDataType
+                {
+                    Name = "Time",
+                    CreatedBy = 1,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new SettingDataType
+                {
+                    Name = "Double",
+                    CreatedBy = 1,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                #endregion
+
 
                 #region Settings
                 context.Settings.Add(new Entities.Setting

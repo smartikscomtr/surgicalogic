@@ -115,7 +115,7 @@ export default {
               v => !!v || this.$i18n.t('common.required')
             ],
             multipleRequired: [
-              v => v.length > 0 || this.$i18n.t('common.required')
+              v => !!v && v.length > 0 || this.$i18n.t('common.required')
             ]
         };
     },
@@ -240,7 +240,7 @@ export default {
 
             //Edit equipment
             if (vm.editIndex > -1) {
-              debugger;
+
                 //We are accessing updateEquipment in vuex store
                 vm.$store
                     .dispatch('updateEquipment', {

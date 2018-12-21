@@ -148,7 +148,7 @@ export default {
 
     getOperationTypes(){
       const vm = this;
-debugger;
+
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
     }

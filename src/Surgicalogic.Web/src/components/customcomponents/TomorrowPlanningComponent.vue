@@ -105,7 +105,7 @@ export default {
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.reportModule.loading;
+      return vm.$store.state.planArrangementsModule.loading;
     },
 
     getTotalCount() {

@@ -10,8 +10,8 @@ using Surgicalogic.Data.DbContexts;
 namespace Surgicalogic.Data.Migrations.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181119135310_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20181220135902_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

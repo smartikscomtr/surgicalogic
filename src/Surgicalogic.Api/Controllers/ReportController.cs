@@ -119,9 +119,7 @@ namespace Surgicalogic.Api.Controllers
         [Route("Report/GetOvertimeUtilization")]
         public async Task<ResultModel<OvertimeUtilizationReportOutputModel>> GetOvertimeUtilization(OvertimeUtilizationReportInputModel input)
         {
-            var a = await _overtimeUtilizationStoreService.GetAsync<OvertimeUtilizationReportOutputModel>(input);
-
-            return a;
+            return await _overtimeUtilizationStoreService.GetAsync<OvertimeUtilizationReportOutputModel>(input);
         }
 
         [Route("Report/OvertimeUtilizationReportExcelExport")]

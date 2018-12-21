@@ -215,8 +215,8 @@ export default {
                 },
                 {
                     icon: 'event',
-                    text: vm.$i18n.t('menu.simulation')
-                    // route: "/eventcalendarpage"
+                    text: vm.$i18n.t('menu.simulation'),
+                    route: "#"
                 },
                 {
                     icon: 'keyboard_arrow_up',
@@ -235,8 +235,8 @@ export default {
                         },
                         {
                             icon: 'help',
-                            text: vm.$i18n.t('menu.help')
-                            // route: "/CreatePlan"
+                            text: vm.$i18n.t('menu.help'),
+                            route: "#"
                         },
                         {
                             icon: 'settings',

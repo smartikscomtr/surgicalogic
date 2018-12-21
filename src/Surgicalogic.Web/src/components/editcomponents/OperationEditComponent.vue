@@ -134,7 +134,7 @@ export default {
             valid: true,
             required: [v => !!v || this.$i18n.t('common.required')],
             multipleRequired: [
-                v => v.length > 0 || this.$i18n.t('common.required')
+                v => !!v && v.length > 0 || this.$i18n.t('common.required')
             ]
         };
     },
@@ -305,7 +305,13 @@ export default {
         },
 
         clear() {
-            this.$refs.form.reset();
+          const vm = this;
+
+            vm.$refs.form.reset();
+
+            vm.editAction.date = null;
+            vm.$store.commit('saveGlobalDate', null);
+            vm.dateFormatted = null;
         },
 
         save() {

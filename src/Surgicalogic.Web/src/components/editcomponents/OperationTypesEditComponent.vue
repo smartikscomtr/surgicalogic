@@ -124,7 +124,7 @@ export default {
         v => !!v || this.$i18n.t('common.required')
       ],
       multipleRequired: [
-        v => v.length > 0 || this.$i18n.t('common.required')
+        v => !!v && v.length > 0 || this.$i18n.t('common.required')
       ]
     };
   },

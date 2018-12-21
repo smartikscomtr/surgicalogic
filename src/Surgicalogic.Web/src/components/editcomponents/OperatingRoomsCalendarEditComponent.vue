@@ -161,6 +161,7 @@ export default {
   },
 
   computed: {
+
     formTitle() {
       const vm = this;
 
@@ -259,6 +260,13 @@ export default {
 
     clear() {
       const vm = this;
+
+      vm.$store.commit("saveStartDate",null);
+      vm.$store.commit("saveEndDate",null);
+      vm.editAction.startDate = null;
+      vm.editAction.endDate = null;
+      vm.endDateFormatted = null;
+      vm.startDateFormatted = null;
 
       vm.$refs.form.reset();
     },

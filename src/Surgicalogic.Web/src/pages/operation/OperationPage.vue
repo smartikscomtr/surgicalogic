@@ -140,6 +140,7 @@ export default {
         // vm.$store.dispatch('getPersonnelsByOperationTypeId');
         vm.editLoadOnce = false;
      }
+
     }
   },
 

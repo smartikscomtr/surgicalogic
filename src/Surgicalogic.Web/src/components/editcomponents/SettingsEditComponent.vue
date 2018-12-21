@@ -29,7 +29,7 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="showInt">
-              <v-text-field v-model="editAction['intValue']"  :rules="requiredInt" :label="$t('settings.value')">
+              <v-text-field v-model="editAction['intValue']"  :rules="requiredInt" mask="###########" :label="$t('settings.value')">
               </v-text-field>
             </v-flex>
 
