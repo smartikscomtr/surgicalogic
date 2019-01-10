@@ -284,6 +284,18 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Personnel.PersonnelBranches.FirstOrDefault() != null ? src.Personnel.PersonnelBranches.FirstOrDefault().Branch.Name : ""))
                  .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient.FirstName + " " + src.Patient.LastName));
             config.CreateMap<OperationPlan, OvertimeUtilizationReportOutputModel>();
+            config.CreateMap<OperationPlan, OperationPlanHistoryOutputModel>()
+                .ForMember(dest => dest.OperationDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.RealizedStartDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.RealizedEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
+                .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
+                .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
+                .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
+                .ForMember(dest => dest.PatientFirstName, opt => opt.MapFrom(src => src.Operation.Patient.FirstName))
+                .ForMember(dest => dest.PatientLastName, opt => opt.MapFrom(src => src.Operation.Patient.LastName))
+                .ForMember(dest => dest.PatientIdentityNumber, opt => opt.MapFrom(src => src.Operation.Patient.IdentityNumber))
+                .ForMember(dest => dest.EventNumber, opt => opt.MapFrom(src => src.Operation.EventNumber));
             #endregion
         }
     }
