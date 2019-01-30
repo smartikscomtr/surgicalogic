@@ -57,6 +57,9 @@ import HistoryPlanningPage from "@/pages/report/HistoryPlanningPage";
 import OvertimeUtilizationPage from "@/pages/report/OvertimeUtilizationPage";
 import OvertimeReportPage from "@/pages/report/OvertimeReportPage";
 
+//Registering Simulation Pages
+import SimulationPage from "@/pages/simulation/SimulationPage";
+
 export default new VueRouter({
   mode: 'history',
   routes: [
@@ -200,5 +203,10 @@ export default new VueRouter({
       name: 'WorkTypesPage',
       component: WorkTypesPage
     },
+    {
+      path: '/simulationpage',
+      name: 'SimulationPage',
+      component: SimulationPage
+    }
   ]
 })

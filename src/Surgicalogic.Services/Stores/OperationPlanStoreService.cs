@@ -8,6 +8,7 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -48,6 +49,15 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds)
         {
             return await GetQueryable().Where(x => updatedItemIds.Contains(x.Id)).ProjectTo<OperationPlanModel>().ToListAsync();
+        }
+
+        public async Task<List<SimulationOperationPlanModel>> GetTomorrowOperationListAsync()
+        {
+            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
+
+             return await GetQueryable().Where(x => x.IsActive && x.OperationDate > tomorrow && x.OperationDate < tomorrow.AddDays(1)).OrderBy(x => x.OperationDate).ThenBy(x => x.OperatingRoomId)
+                .ProjectTo<SimulationOperationPlanModel>().ToListAsync();
+            
         }
     }
 }

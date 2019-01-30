@@ -216,7 +216,7 @@ export default {
                 {
                     icon: 'event',
                     text: vm.$i18n.t('menu.simulation'),
-                    route: "#"
+                    route: "/SimulationPage"
                 },
                 {
                     icon: 'keyboard_arrow_up',

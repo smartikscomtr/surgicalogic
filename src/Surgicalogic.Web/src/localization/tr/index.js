@@ -27,6 +27,7 @@ import * as report from './report.json';
 import * as settings from './settings.json';
 import * as users from './users.json';
 import * as worktypes from './worktypes.json';
+import * as simulation from './simulation.json';
 
 export default {
   appointmentcalendar,
@@ -50,5 +51,6 @@ export default {
   report,
   settings,
   users,
-  worktypes
+  worktypes,
+  simulation
 };

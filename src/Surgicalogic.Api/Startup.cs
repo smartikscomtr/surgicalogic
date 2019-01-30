@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Surgicalogic.Api.Helpers;
 using Surgicalogic.Common.Extensions;
 using Surgicalogic.Common.Settings;
+using Surgicalogic.Contracts.Helpers;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Contracts.Stores.IReportStoreService;
@@ -153,6 +155,7 @@ namespace Surgicalogic.Api
             services.AddScoped<ISettingDataTypeStoreService, SettingDataTypeStoreService>();
             services.AddScoped<IUserStoreService, UserStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
+            services.AddScoped<ISimulation, Simulation>();
 
             #endregion
 

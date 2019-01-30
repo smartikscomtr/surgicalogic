@@ -296,6 +296,13 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.PatientLastName, opt => opt.MapFrom(src => src.Operation.Patient.LastName))
                 .ForMember(dest => dest.PatientIdentityNumber, opt => opt.MapFrom(src => src.Operation.Patient.IdentityNumber))
                 .ForMember(dest => dest.EventNumber, opt => opt.MapFrom(src => src.Operation.EventNumber));
+            config.CreateMap<OperationPlan, SimulationOperationPlanModel>()
+                .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => src.Operation.OperationTime))
+                .ForMember(dest => dest.ActualOperationTime, opt => opt.MapFrom(src => src.Operation.OperationTime))
+                .ForMember(dest => dest.OperationPersonelIds, opt => opt.MapFrom(src => src.Operation.OperationPersonels.Select(x => x.PersonnelId )));
+
+            
+
             #endregion
         }
     }

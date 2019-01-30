@@ -1,6 +1,7 @@
 ﻿using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -15,5 +16,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<OperationPlanOutputModel>> GetDashboardTimelineOperationsAsync(DateTime selectDate);
         Task DeleteTomorrowPlanAsync();
         Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds);
+        Task<List<SimulationOperationPlanModel>> GetTomorrowOperationListAsync();
     }
 }
