@@ -58,8 +58,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Surgicalogic.Web", "src\Sur
 		SlnRelativePath = "src\Surgicalogic.Web\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surgicalogic.Planning.Simulation", "src\Surgicalogic.Planning\Surgicalogic.Planning.Simulation\Surgicalogic.Planning.Simulation.csproj", "{D9054FB9-3A47-410B-891F-2F0F76F4457C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,10 +126,6 @@ Global
 		{F60DC96E-C5BC-44CD-9822-EFD84A4A2775}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E60FE75D-7A49-4144-815C-9DCB31BE1A2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E60FE75D-7A49-4144-815C-9DCB31BE1A2B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9054FB9-3A47-410B-891F-2F0F76F4457C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9054FB9-3A47-410B-891F-2F0F76F4457C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9054FB9-3A47-410B-891F-2F0F76F4457C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9054FB9-3A47-410B-891F-2F0F76F4457C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,7 +138,6 @@ Global
 		{910E9578-10A3-490E-83A9-FFBD93FF449A} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 		{60CFE565-E727-4744-8CC4-113BB7CA0926} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 		{A56398B2-8EC1-4B64-B39C-E3CF3583951D} = {3EA6C97C-3339-418C-884F-BE49CB746009}
-		{D9054FB9-3A47-410B-891F-2F0F76F4457C} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3DD0261F-E73B-45A0-9B9B-0DD5E2904F15}

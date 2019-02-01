@@ -8,9 +8,7 @@ namespace Surgicalogic.Model.CustomModel
     {
         public int OperationId { get; set; }
         public int OperatingRoomId { get; set; }
-        public DateTime OperationDate { get; set; }
-        public DateTime RealizedStartDate { get; set; }
-        public DateTime RealizedEndDate { get; set; }
+        public DateTime OperationDate { get; set; }        
         public int OperationTime { get; set; }
         public int ActualOperationTime { get;set;}
         public int StartPeriot { get; set; }

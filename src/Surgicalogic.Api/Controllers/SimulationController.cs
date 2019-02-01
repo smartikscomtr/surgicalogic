@@ -43,9 +43,9 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ActionResult> Run()
         {
             
-            List<RoomPlanModel> operationList = await _simulation.Run();
+            List<SimulationResultModel> result = await _simulation.Run();
 
-            return Json(operationList);
+            return Json(result);
         }        
 
     }

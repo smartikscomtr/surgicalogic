@@ -8,6 +8,6 @@ namespace Surgicalogic.Contracts.Helpers
 {
     public interface ISimulation
     {
-        Task<List<RoomPlanModel>> Run();
+        Task<List<SimulationResultModel>> Run();
     }
 }
