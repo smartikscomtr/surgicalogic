@@ -8,6 +8,7 @@ namespace Surgicalogic.Model.CustomModel
     {
         public int OperationId { get; set; }
         public int OperatingRoomId { get; set; }
+        public string OperatingRoomName { get; set; }
         public DateTime OperationDate { get; set; }        
         public int OperationTime { get; set; }
         public int ActualOperationTime { get;set;}
@@ -17,6 +18,6 @@ namespace Surgicalogic.Model.CustomModel
         public ICollection<int> OperationPersonelIds { get; set; }
         public bool InUse { get; set; } = false;
         public bool IsFinished { get; set; } = false;
-        
+
     }
 }

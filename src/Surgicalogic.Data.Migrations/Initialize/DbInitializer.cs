@@ -711,6 +711,17 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     IsActive = true
                 });
 
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "SimulationIterationCount",
+                    Name = "Simülasyon İterasyon Sayısı",
+                    IntValue = 10000,
+                    SettingDataTypeId = 2,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
                 #endregion
 
                 #region SaveChanges

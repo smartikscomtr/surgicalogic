@@ -170,16 +170,9 @@ export default {
                     route: '/operationpage'
                 },
                 {
-                    icon: 'keyboard_arrow_up',
-                    'icon-alt': 'keyboard_arrow_down',
-                    text: vm.$i18n.t('menu.planManagement'),
-                    children: [
-                        {
-                            icon: 'timeline',
-                            text: vm.$i18n.t('menu.planArrangements'),
-                            route: '/planarrangementspage'
-                        }
-                    ]
+                  icon: 'timeline',
+                  text: vm.$i18n.t('menu.planArrangements'),
+                  route: '/planarrangementspage'
                 },
                 {
                     icon: 'domain',
@@ -216,7 +209,7 @@ export default {
                 {
                     icon: 'event',
                     text: vm.$i18n.t('menu.simulation'),
-                    route: "/SimulationPage"
+                    route: "/simulationpage"
                 },
                 {
                     icon: 'keyboard_arrow_up',

@@ -41,7 +41,8 @@
         PatientsFailureRate,
         WithoutAppointmentPatientRate,
         DoctorTimePatientTimeRate,
-        RoundingIntervalValue
+        RoundingIntervalValue,
+        SimulationIterationCount
     }
 
     public enum SettingDataTypeNames

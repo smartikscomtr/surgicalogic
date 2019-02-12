@@ -1,27 +1,14 @@
 <template>
   <div class="container fluid grid-list-md">
-      <div class="grid-card v-card">
-        <div class="v-card__title">
-          <h2>
-            {{ title }}
-          </h2>
-        </div>
-
-        <v-btn  class="orange"  @click="runSimulation">          
-          {{ $t('simulation.simulate') }}
-        </v-btn>
-        <br/>
-        <br/>
-      
-
-      </div>
+    <simulation-run-component>
+    </simulation-run-component>
   </div>
-
 </template>
 
 
 
 <script>
+
 import { gridMixin } from './../../mixins/gridMixin';
 
 export default {
@@ -30,27 +17,32 @@ export default {
   ],
 
   computed: {
-      title() {
-        const vm = this;
+    title() {
+      const vm = this;
 
-        return vm.$i18n.t('simulation.simulation');
-      },
-      headers() {
-        const vm = this;        
-      }
+      return vm.$i18n.t('simulation.simulation');
+    },
+
+    getLoading() {
+      const vm = this;
+
+      return vm.$store.state.simulationModule.loading;
+    },
+
+    getTotalCount() {
+      const vm = this;
+
+      return vm.$store.state.simulationModule.totalCount;
+    }
   },
 
   methods: {
-    runSimulation() {
-      const vm = this;
+    // runSimulation() {
+    //   const vm = this;
 
-       vm.$store.dispatch('runSimulation');
-
-    }
-
+    //   vm.$store.dispatch('runSimulation');
+    // }
   }
-
-
 }
 
 </script>

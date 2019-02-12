@@ -7,6 +7,7 @@ namespace Surgicalogic.Model.CustomModel
     public class SimulationResultGroupModel
     {
         public int OperatingRoomId { get; set;}
+        public string OperatingRoomName { get; set;}
         public List<SimulationResultModel> SimulationResultModels { get; set; }
     }
 }

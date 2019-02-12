@@ -2,5 +2,8 @@
   "branch":"Branş",
   "operation": "Operasyon",
   "simulation": "Simülasyon",
-  "simulate": "Simülasyonu Çalıştır"
+  "simulate": "Simülasyonu Çalıştır",
+  "overtime": "Fazla Mesai",
+  "usage": "Kullanım Oranı",
+  "waitingTime": "Bekleme Süresi"
 }

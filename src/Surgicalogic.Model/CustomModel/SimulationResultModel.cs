@@ -7,8 +7,9 @@ namespace Surgicalogic.Model.CustomModel
     public class SimulationResultModel
     {
         public int OperatingRoomId { get; set; }
+        public string OperatingRoomName { get; set; }
         public int Usage { get; set; }
         public int OverTime { get; set; }
-        public decimal WaitingTime { get; set; }
+        public decimal WaitingTime { get; set; } 
     }
 }

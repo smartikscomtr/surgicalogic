@@ -2,5 +2,8 @@
   "branch":"Branch",
   "operation": "Operatiion",
   "simulation": "Simulation",
-  "simulate": "Simulate"
+  "simulate": "Simulate",
+  "overtime": "Overtime",
+  "usage": "Usage Rate",
+  "waitingTime": "Waiting Time"
 }

@@ -24,7 +24,7 @@ import reportsModule from './modules/report';
 import settingsModule from './modules/settings';
 import usersModule from './modules/users';
 import workTypesModule from './modules/worktypes';
-import simulation from './modules/simulation';
+import simulationModule from './modules/simulation';
 
 //New Registeration Of Store
 export default new Vuex.Store({
@@ -52,6 +52,6 @@ export default new Vuex.Store({
     settingsModule,
     usersModule,
     workTypesModule,
-    simulation
+    simulationModule
   }
 });

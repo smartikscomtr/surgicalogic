@@ -10,6 +10,7 @@ using Surgicalogic.Api.Helpers;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Helpers;
 using Surgicalogic.Contracts.Stores;
+using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
@@ -21,34 +22,26 @@ namespace Surgicalogic.Api.Controllers
 {
     public class SimulationController : Controller
     {
-        #region Constructor
-
         private readonly ISimulation _simulation;
         
-        /// <summary>
-        /// Simulation Constructor
-        /// <para>Injection will add this entry point</para>
-        /// </summary>
         public SimulationController(ISimulation simulation)
         {
             _simulation = simulation;
             
         }
-
-        #endregion
-
-
+        
         [HttpGet]
         [Route("Simulation/Run")]
-        public async Task<ActionResult> Run()
-        {
-            
-            List<SimulationResultModel> result = await _simulation.Run();
+        public async Task<ResultModel<SimulationResultModel>> Run(GridInputModel input)
+        { 
+            return await _simulation.Run(input);
+        }
 
-            return Json(result);
-        }        
-
+        //[HttpGet]
+        //[Route("Simulation/TodayRun")]
+        //public async Task<ResultModel<SimulationResultModel>> TodayRun(GridInputModel input)
+        //{
+        //    return await _simulation.TodayRun(input);
+        //}
     }
-    
-
 }

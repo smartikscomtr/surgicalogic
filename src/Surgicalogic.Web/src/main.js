@@ -67,6 +67,11 @@ import TomorrowPlanningComponent from '@/components/customcomponents/TomorrowPla
 
 Vue.component('tomorrow-planning-component', TomorrowPlanningComponent);
 
+//Registering Simulation Run Component
+import SimulationRunComponent from '@/components/customComponents/SimulationRunComponent';
+
+Vue.component('simulation-run-component', SimulationRunComponent);
+
 // Registering Edit Components
 import BranchesEditComponent from '@/components/editcomponents/BranchesEditComponent';
 import EquipmentsEditComponent from '@/components/editcomponents/EquipmentsEditComponent';

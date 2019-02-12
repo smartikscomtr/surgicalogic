@@ -7,6 +7,7 @@ namespace Surgicalogic.Model.CustomModel
     public class RoomPlanModel
     {
         public int OperatingRoomId { get; set; }
+        public string OperatingRoomName { get; set; }
         public List<SimulationOperationPlanModel> SimulationOperationPlanModels { get; set; }
     }
 }
