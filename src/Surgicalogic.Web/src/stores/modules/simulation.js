@@ -5,8 +5,8 @@ const simulationModule = {
     loading: false,
     totalCount: 0,
     model: [],
-    tomorrowList : [],
-    tomorrowListTotalCount : 0
+    operationList : [],
+    operationListTotalCount : 0
   },
 
   mutations : {
@@ -14,21 +14,33 @@ const simulationModule = {
       state.loading = data;
     },
 
-    setTomorrowOperationList(state, data) {
-      state.tomorrowList = data.result;
-      state.tomorrowListTotalCount = data.totalCount;
+    setOperationList(state, data) {
+      state.operationList = data.result;
+      state.operationListTotalCount = data.totalCount;
     }
   },
 
   getters: {},
 
   actions: {
-    runSimulation(context) {
-      axios.get('Simulation/Run')
-        .then(response => {
-          context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
-        })
-    },
+    runSimulation(context, payload) {
+      context.commit('setLoading', true);
+
+      return new Promise((resolve, reject) => {
+        axios.get('Simulation/Run/' + payload.selectDate)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true){
+              context.commit('setOperationList', response.data) //Set the OperationList in the store
+            }
+
+            context.commit('setLoading', false);
+            resolve(response);
+          }, error => {
+            // http failed, let the calling function know that action did not work out
+            reject(error);
+          })
+        });
+    }
   }
 }
 
