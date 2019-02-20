@@ -4,5 +4,5 @@ const devEnv = require('./dev.env')
 
 module.exports = merge(devEnv, {
   NODE_ENV: '"testing"',
-  ROOT_API: '"http://localhost/Surgicalogic.Api/"'
+  ROOT_API: '"http://localhost:6633/"'
 })

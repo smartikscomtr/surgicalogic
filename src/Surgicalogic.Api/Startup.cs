@@ -114,12 +114,15 @@ namespace Surgicalogic.Api
 
             //CROS service registerd. This methode was add besause of allow-control-access-origin
             services.AddCors(options =>
-                options.AddPolicy("CorsConfig",
-                    builder =>
-                        builder.WithOrigins(Configuration["AppSettings:Http:AllowedOrigin"])
-                       .AllowAnyMethod()
-                       .AllowAnyHeader())
-            );
+                options.AddDefaultPolicy(builder =>
+                {
+                    var allowedOrigins = Configuration["AppSettings:Http:AllowedOrigin"];
+
+                    builder
+                        .WithOrigins(allowedOrigins)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }));
 
             #endregion
 
@@ -171,12 +174,14 @@ namespace Surgicalogic.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
+
             //StaticFile Allowance Initialized
             app.UseStaticFiles();
-            app.UseCors("CorsConfig");
+
             app.UseAuthentication();
 
-            AuthAppBuilderExtensions.UseAuthentication(app);
+            app.UseMvc();
 
             //Mapping Initialized
             Mapper.Initialize(cfg =>
@@ -184,13 +189,12 @@ namespace Surgicalogic.Api
                 MapUtility.ConfigureMapping(cfg);
             });
 
-            if (Convert.ToBoolean(Configuration["AppSettings:Migration:DbSeed"]))
+            BuildAppSettings();
+
+            if (bool.TryParse(Configuration["AppSettings:Migration:DbSeed"], out var seed) && seed)
             {
                 DbInitializer.Seed(context);
             }
-
-            BuildAppSettings();
-            app.UseMvc();
         }
 
         private void BuildAppSettings()
