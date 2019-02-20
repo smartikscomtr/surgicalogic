@@ -171,7 +171,7 @@ export default {
                 },
                 {
                   icon: 'timeline',
-                  text: vm.$i18n.t('menu.planArrangements'),
+                  text: vm.$i18n.t('menu.planArrangementsAndSimulation'),
                   route: '/planarrangementspage'
                 },
                 {
@@ -206,11 +206,11 @@ export default {
                         }
                     ]
                 },
-                {
-                    icon: 'event',
-                    text: vm.$i18n.t('menu.simulation'),
-                    route: "/simulationpage"
-                },
+                // {
+                //     icon: 'event',
+                //     text: vm.$i18n.t('menu.simulation'),
+                //     route: "/simulationpage"
+                // },
                 {
                     icon: 'keyboard_arrow_up',
                     'icon-alt': 'keyboard_arrow_down',

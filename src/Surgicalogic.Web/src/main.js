@@ -46,8 +46,10 @@ Vue.component('grid-component', GridComponent);
 
 // Registering Calendar Rage Components
 import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
+import OvertimeUtilizationComponent from '@/components/customcomponents/OvertimeUtilizationComponent';
 
 Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent);
+Vue.component('overtime-utilization-component', OvertimeUtilizationComponent);
 
 // Registering Detail Components
 import EquipmentsDetailComponent from '@/components/detailcomponents/EquipmentsDetailComponent';
