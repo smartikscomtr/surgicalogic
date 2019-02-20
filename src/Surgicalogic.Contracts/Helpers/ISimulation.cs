@@ -11,7 +11,6 @@ namespace Surgicalogic.Contracts.Helpers
 {
     public interface ISimulation
     {
-        Task<ResultModel<SimulationResultModel>> Run(GridInputModel input);
-        //Task<ResultModel<SimulationResultModel>> TodayRun(GridInputModel input);
+        Task<ResultModel<SimulationResultModel>> Run(GridInputModel input, DateTime selectDate);
     }
 }

@@ -31,17 +31,10 @@ namespace Surgicalogic.Api.Controllers
         }
         
         [HttpGet]
-        [Route("Simulation/Run")]
-        public async Task<ResultModel<SimulationResultModel>> Run(GridInputModel input)
+        [Route("Simulation/Run/{selectDate:DateTime}")]
+        public async Task<ResultModel<SimulationResultModel>> Run(GridInputModel input, DateTime selectDate)
         { 
-            return await _simulation.Run(input);
+            return await _simulation.Run(input, selectDate);
         }
-
-        //[HttpGet]
-        //[Route("Simulation/TodayRun")]
-        //public async Task<ResultModel<SimulationResultModel>> TodayRun(GridInputModel input)
-        //{
-        //    return await _simulation.TodayRun(input);
-        //}
     }
 }

@@ -11,6 +11,7 @@ using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.OutputModel;
 using Surgicalogic.Model.Enum;
+using Surgicalogic.Common.Extensions;
 
 namespace Surgicalogic.Api.Helpers
 {
@@ -28,62 +29,10 @@ namespace Surgicalogic.Api.Helpers
         public Simulation(IOperationPlanStoreService operationPlanStoreService, ISettingStoreService settingStoreService)
         {
             _operationPlanStoreService = operationPlanStoreService;
-            _settingStoreService = settingStoreService;            
+            _settingStoreService = settingStoreService;
         }
-        //public async Task<ResultModel<SimulationResultModel>> TodayRun(GridInputModel input)
-        //{
-        //    var settings = await _settingStoreService.GetAllAsync();
 
-        //    periot = settings.FirstOrDefault(x => x.Key == "OperationPeriodInMinutes").IntValue ?? periot;
-        //    startTime = settings.FirstOrDefault(x => x.Key == "OperationWorkingHourStart").TimeValue;
-
-        //    var simulationCount = settings.SingleOrDefault(x => x.Key == SettingKey.SimulationIterationCount.ToString());
-
-        //    //Yarının planlanmıs operasyonları cekilir
-        //    var operationList = await _operationPlanStoreService.GetTomorrowOperationListAsync();
-
-        //    //Yarının operasyonlarını operasyon odasına göre grupla
-        //    List<RoomPlanModel> roomPlan = operationList.GroupBy(x => x.OperatingRoomId,
-        //        (key, g) =>
-        //            new RoomPlanModel()
-        //            {
-        //                OperatingRoomId = key,
-        //                OperatingRoomName = g.FirstOrDefault().OperatingRoomName,
-        //                SimulationOperationPlanModels = g.ToList() //Maping from OperationPlan entity
-        //            }
-        //        ).ToList();
-
-
-        //    //Create Calculation List
-        //    List<SimulationResultModel> simulationResultList = new List<SimulationResultModel>();
-
-        //    //Iterate simulation list selected time
-        //    for (int l = 0; l < simulationCount.IntValue; l++)
-        //    {
-        //        //Operasyon odasına göre gruplanmış operasyonların sürelerini random olarak değiştirir
-        //        var list = GetList(roomPlan);
-
-        //        for (int t = 0; list.Any(x => x.SimulationOperationPlanModels.Any(y => !y.IsFinished)); t++)
-        //        {
-        //            SetEnd(list, t);
-
-        //            SetStart(list, t);
-        //        }
-
-        //        simulationResultList.AddRange(AddSimulationResultList(list));
-
-        //    }
-
-        //    var result = Calculation(simulationResultList);
-
-        //    return new ResultModel<SimulationResultModel>
-        //    {
-        //        Result = result,
-        //        Info = new Info()
-        //    };
-        //}
-
-        public async Task<ResultModel<SimulationResultModel>> Run(GridInputModel input)
+        public async Task<ResultModel<SimulationResultModel>> Run(GridInputModel input, DateTime selectDate)
         {
             var settings = await _settingStoreService.GetAllAsync();
 
@@ -93,7 +42,7 @@ namespace Surgicalogic.Api.Helpers
             var simulationCount = settings.SingleOrDefault(x => x.Key == SettingKey.SimulationIterationCount.ToString());
 
             //Yarının planlanmıs operasyonları cekilir
-            var operationList = await _operationPlanStoreService.GetTomorrowOperationListAsync();
+            var operationList = await _operationPlanStoreService.GetOperationByIdListAsync(selectDate);
             
             //Yarının operasyonlarını operasyon odasına göre grupla
             List<RoomPlanModel> roomPlan = operationList.GroupBy(x => x.OperatingRoomId,
@@ -123,7 +72,7 @@ namespace Surgicalogic.Api.Helpers
                     SetStart(list, t);
                 }
 
-                simulationResultList.AddRange(AddSimulationResultList(list));
+                simulationResultList.AddRange(await AddSimulationResultList(list));
 
             }
 
@@ -131,7 +80,7 @@ namespace Surgicalogic.Api.Helpers
 
             return new ResultModel<SimulationResultModel>
             {
-                Result = result,
+                Result = AutoMapper.Mapper.Map<List<SimulationOutputModel>>(result),
                 Info = new Info()
             };
         }
@@ -255,7 +204,7 @@ namespace Surgicalogic.Api.Helpers
         /// </summary>
         /// <param name="list"></param>
         /// <returns>List<SimulationResultModel></returns>
-        private List<SimulationResultModel> AddSimulationResultList(List<RoomPlanModel> list)
+        private async Task<List<SimulationResultModel>> AddSimulationResultList(List<RoomPlanModel> list)
         {
             List<SimulationResultModel> result = new List<SimulationResultModel>();
 
@@ -270,7 +219,7 @@ namespace Surgicalogic.Api.Helpers
                     usage += plan[b].OperationPeriot;
 
                 }
-                result.Add(RoomSimulationResult(plan));
+                result.Add(await RoomSimulationResult(plan));
             }
 
             return result;
@@ -281,9 +230,13 @@ namespace Surgicalogic.Api.Helpers
         /// </summary>
         /// <param name="plan"></param>
         /// <returns>SimulationResultModel</returns>
-        private SimulationResultModel RoomSimulationResult(List<SimulationOperationPlanModel> plan)
+        private async Task<SimulationResultModel> RoomSimulationResult(List<SimulationOperationPlanModel> plan)
         {
-           
+            var settings = await _settingStoreService.GetAllAsync();
+
+            DateTime workingStartTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime();
+            DateTime workingEndTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime();
+
             int usage = 0;
             decimal waitingPeriot = 0;
             
@@ -298,8 +251,8 @@ namespace Surgicalogic.Api.Helpers
             return new SimulationResultModel
             {
                 OperatingRoomId = plan[0].OperatingRoomId,
-                Usage = usage / 9 * 100,
-                OverTime = plan.LastOrDefault().EndPeriot > 9 ? plan.LastOrDefault().EndPeriot - 9 : 0,
+                Usage = usage / Convert.ToInt32((workingEndTime - workingStartTime).TotalHours) * 100,
+                OverTime = plan.LastOrDefault().EndPeriot > Convert.ToInt32((workingEndTime - workingStartTime).TotalHours) ? plan.LastOrDefault().EndPeriot - Convert.ToInt32((workingEndTime - workingStartTime).TotalHours) : 0,
                 WaitingTime = waitingPeriot / plan.Count,
                 OperatingRoomName = plan[0].OperatingRoomName.ToString()
             };
@@ -339,14 +292,14 @@ namespace Surgicalogic.Api.Helpers
 
                     waitingTime += plan[b].WaitingTime;                    
                 }
-                
+
                 result.Add(new SimulationResultModel
                 {
                     OperatingRoomId = ListGroup[a].OperatingRoomId,
                     OperatingRoomName = ListGroup[a].OperatingRoomName,
                     Usage = usage / plan.Count,
                     OverTime = overTime / plan.Count,
-                    WaitingTime = waitingTime / plan.Count
+                    WaitingTime = Math.Round((waitingTime / plan.Count), 2)
                 });
             }
 
@@ -355,8 +308,5 @@ namespace Surgicalogic.Api.Helpers
 
 
         #endregion
-
-
-
     }
 }
