@@ -147,7 +147,22 @@
             </v-date-picker>
           </v-menu>
         </v-flex>
+
+
+        <v-layout class="dashboard-page-btn">
+          <div class="flex xs12">
+            <v-btn
+              :disabled="!moving === true"
+              v-show="date"
+              class="updateplan-wrap orange"
+              @click.native="updatePlan()"
+            >
+              {{ $t('planarrangements.updatePlan')}}
+            </v-btn>
+          </div>
+        </v-layout>
       </v-layout>
+
       <div
         id="visualization"
         class="vis"
@@ -159,17 +174,6 @@
         style="display:none;"
       >
       </div>
-      <v-layout class="dashboard-page-btn">
-        <div class="flex xs12">
-          <v-btn
-            v-show="date"
-            class="updateplan-wrap orange"
-            @click.native="updatePlan()"
-          >
-            {{ $t('planarrangements.updatePlan')}}
-          </v-btn>
-        </div>
-      </v-layout>
     </v-container>
 
     <snackbar-component
@@ -193,7 +197,8 @@ export default {
       dateFormatted: null,
       date: null,
       snackbarVisible: null,
-      savedMessage: this.$i18n.t("planarrangements.planUpdated")
+      savedMessage: this.$i18n.t("planarrangements.planUpdated"),
+      moving: null
     };
   },
 
@@ -286,6 +291,7 @@ export default {
         .dispatch("updatePlanArrangements", JSON.stringify(operations))
         .then(response => {
           vm.snackbarVisible = true;
+          vm.moving = false;
 
           setTimeout(() => {
             vm.snackbarVisible = false;
@@ -345,6 +351,7 @@ export default {
               selectable: true,
 
               onMoving(item, callback) {
+                vm.moving = true;
                 var timelineItems = JSON.parse(
                   document.getElementById("serializedTimeline").innerHTML
                 );
