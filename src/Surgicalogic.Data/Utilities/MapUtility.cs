@@ -199,6 +199,11 @@ namespace Surgicalogic.Data.Utilities
                                                                          src.IntValue.ToString() : src.SettingDataTypeId == (int)SettingDataTypeNames.String ? 
                                                                          src.StringValue : src.SettingDataTypeId == (int)SettingDataTypeNames.Double ? src.DoubleValue.ToString() : src.TimeValue));
             config.CreateMap<SettingDataTypeModel, SettingDataTypeOutputModel>();
+            config.CreateMap<SimulationResultModel, SimulationOutputModel>()
+                .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoomName))
+                .ForMember(dest => dest.OverTime, opt => opt.MapFrom(src => src.OverTime + " dk"))
+                .ForMember(dest => dest.Usage, opt => opt.MapFrom(src => "%" + src.Usage))
+                .ForMember(dest => dest.WaitingTime, opt => opt.MapFrom(src => src.WaitingTime + " dk"));
             config.CreateMap<UserModel, UserOutputModel>()
                 .ForMember(src => src.IsAdmin, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();

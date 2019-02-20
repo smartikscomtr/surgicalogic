@@ -49,33 +49,42 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 
             var allOperations = await operationPlans.ProjectTo<OperationPlanModel>().ToListAsync();
 
-            var overtimeOperations = allOperations.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime).ToList();
+            var systemSettings = await _settingStoreService.GetAllAsync();
+
+            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime().AddDays(1);
+            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime().AddDays(1);
+
+            var overtimeOperations = allOperations.Where(x => x.RealizedStartDate < workingHourStart || x.RealizedEndDate > workingHourEnd).ToList();
 
             var operatingRooms = allOperations.Select(x => x.OperatingRoom).ToList(); 
 
             var result = new List<OvertimeUtilizationForOvertimeReportOutputModel>();
 
-            var workingHours = await GetWorkingHours(operationStartDate, operationEndDate);
-
             foreach (var item in operatingRooms.Select(x => x.Id).Distinct())
             {
-                var operations = overtimeOperations.Where(x => x.OperatingRoomId == item)
-                    .Select
-                    (
-                        x => new OvertimeUtilizationForDateDifferenceReportOutputModel
-                        {
-                            OperationId = x.OperationId,
-                            DateDifference = Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) - x.Operation.OperationTime
-                        }
-                    ).ToList();
+                var overtimeOperationsByRoom = overtimeOperations.Where(x => x.OperatingRoomId == item).ToList();
+                double overtime = 0;
 
-                var utilization = Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / workingHours) * 100, 2);
+                foreach (var overtimeOperation in overtimeOperationsByRoom)
+                {
+                    if (overtimeOperation.RealizedStartDate < workingHourStart)
+                    {
+                        overtime += (workingHourStart - overtimeOperation.RealizedStartDate).TotalMinutes;
+                    }
+
+                    if (overtimeOperation.RealizedEndDate > workingHourEnd)
+                    {
+                        overtime += (overtimeOperation.RealizedEndDate - workingHourEnd).TotalMinutes;
+                    }
+                }
+
+                var utilization = Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / (workingHourEnd - workingHourStart).TotalHours) * 100, 2);
 
                 result.Add(new OvertimeUtilizationForOvertimeReportOutputModel
                 {
                     OperatingRoomId = item,
                     OperatingRoom = operatingRooms.Where(x => x.Id == item).First().Name,
-                    Overtime = operations.Count == 0 || operations.Sum(x => x.DateDifference) < 0 ? 0 : operations.Sum(x => x.DateDifference) / operations.Count,
+                    Overtime = overtime + " dk",
                     Utilization = utilization < 0 ? 0 : utilization
                 });
             }
@@ -129,33 +138,6 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 TotalCount = 0,
                 Info = new Info { Succeeded = true }
             };
-        }
-
-        private async Task<int> GetWorkingHours(DateTime operationStartDate, DateTime operationEndDate)
-        {
-            var systemSettings = await _settingStoreService.GetAllAsync();
-
-            var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime();
-            var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime();
-
-            var dailyWorkingHours = (workingHourEnd - workingHourStart).Hours;
-
-            var dayCount = GetWeekDaysCount(operationStartDate, operationEndDate);
-
-            return dailyWorkingHours * dayCount;
-        }
-
-        private int GetWeekDaysCount(DateTime operationStartDate, DateTime operationEndDate)
-        {
-            var result = 0;
-            for (DateTime i = operationStartDate; i <= operationEndDate; i = i.AddDays(1))
-            {
-                if (i.DayOfWeek != DayOfWeek.Saturday && i.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    result++;
-                }
-            }
-            return result;
         }
 
         public async Task<List<OvertimeUtilizationReportExportModel>> GetExportAsync(OvertimeUtilizationReportInputModel input)

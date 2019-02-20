@@ -7,7 +7,7 @@ namespace Surgicalogic.Model.CustomModel
     public class OvertimeUtilizationForOvertimeReportOutputModel
     {
         public int OperatingRoomId { get; set; }
-        public double Overtime { get; set; }
+        public string Overtime { get; set; }
         public string OperatingRoom { get; set; }
         public double Utilization { get; set; }
     }
