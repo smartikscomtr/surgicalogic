@@ -7,5 +7,9 @@
   "drawPlanConfirmTitle": "Plan Çiz",
   "drawPlanConfirmText": "Yarın için yeni bir operasyon planı oluşturulacaktır. Onaylıyor musunuz?",
   "notGenerated": "Plan çizilemedi.",
-  "planUpdated": "Plan güncellendi."
+  "planUpdated": "Plan güncellendi.",
+  "overtimeUtilization": "Fazla Mesai ve Kullanım Oranı",
+  "run": "Çalıştır",
+  "sumOvertime": "Toplam Fazla Mesai",
+  "sumUtilization": "Toplam Kullanım Oranı"
 }
