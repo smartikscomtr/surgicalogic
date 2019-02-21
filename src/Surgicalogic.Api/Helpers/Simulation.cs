@@ -38,6 +38,8 @@ namespace Surgicalogic.Api.Helpers
 
             periot = settings.FirstOrDefault(x => x.Key == "OperationPeriodInMinutes").IntValue ?? periot;
             startTime = settings.FirstOrDefault(x => x.Key == "OperationWorkingHourStart").TimeValue;
+            var workingStartTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime();
+            var workingEndTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime();
 
             var simulationCount = settings.SingleOrDefault(x => x.Key == SettingKey.SimulationIterationCount.ToString());
 
@@ -72,7 +74,7 @@ namespace Surgicalogic.Api.Helpers
                     SetStart(list, t);
                 }
 
-                simulationResultList.AddRange(await AddSimulationResultList(list));
+                simulationResultList.AddRange(AddSimulationResultList(list, workingStartTime, workingEndTime));
 
             }
 
@@ -204,7 +206,7 @@ namespace Surgicalogic.Api.Helpers
         /// </summary>
         /// <param name="list"></param>
         /// <returns>List<SimulationResultModel></returns>
-        private async Task<List<SimulationResultModel>> AddSimulationResultList(List<RoomPlanModel> list)
+        private List<SimulationResultModel> AddSimulationResultList(List<RoomPlanModel> list, DateTime workingStartTime, DateTime workingEndTime)
         {
             List<SimulationResultModel> result = new List<SimulationResultModel>();
 
@@ -219,7 +221,7 @@ namespace Surgicalogic.Api.Helpers
                     usage += plan[b].OperationPeriot;
 
                 }
-                result.Add(await RoomSimulationResult(plan));
+                result.Add(RoomSimulationResult(plan, workingStartTime, workingEndTime));
             }
 
             return result;
@@ -230,13 +232,8 @@ namespace Surgicalogic.Api.Helpers
         /// </summary>
         /// <param name="plan"></param>
         /// <returns>SimulationResultModel</returns>
-        private async Task<SimulationResultModel> RoomSimulationResult(List<SimulationOperationPlanModel> plan)
+        private SimulationResultModel RoomSimulationResult(List<SimulationOperationPlanModel> plan, DateTime workingStartTime, DateTime  workingEndTime)
         {
-            var settings = await _settingStoreService.GetAllAsync();
-
-            DateTime workingStartTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime();
-            DateTime workingEndTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime();
-
             int usage = 0;
             decimal waitingPeriot = 0;
             
