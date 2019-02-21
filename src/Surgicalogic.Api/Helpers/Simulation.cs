@@ -22,7 +22,7 @@ namespace Surgicalogic.Api.Helpers
 
         public static readonly Random random = new Random();
         
-        public int periot = 15;
+        public int period = 15;
         public string startTime;
         public string endTime;
 
@@ -36,7 +36,7 @@ namespace Surgicalogic.Api.Helpers
         {
             var settings = await _settingStoreService.GetAllAsync();
 
-            periot = settings.FirstOrDefault(x => x.Key == "OperationPeriodInMinutes").IntValue ?? periot;
+            period = settings.FirstOrDefault(x => x.Key == "OperationPeriodInMinutes").IntValue ?? period;
             startTime = settings.FirstOrDefault(x => x.Key == "OperationWorkingHourStart").TimeValue;
             var workingStartTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime();
             var workingEndTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime();
@@ -92,7 +92,7 @@ namespace Surgicalogic.Api.Helpers
         private int GetRandom(int max)
         {
             //Operasyon süresini periyot ve max operasyon süresi arasında random olarak uzatır. max = operasyon süresinin 2 katı
-            return random.Next(periot, max);
+            return random.Next(period, max);
         }
 
         /// <summary>
@@ -125,37 +125,37 @@ namespace Surgicalogic.Api.Helpers
                     //Random olarak atanmıs operasyon süreleri 
                     plan[b].OperationTime = GetRandom(plan[b].ActualOperationTime * 2);
 
-                    //Sets start-periot, end-periot and operation-periot the perit of operaiton. 
-                    SetPeriot(plan[b]);
+                    //Sets start-period, end-period and operation-period the perit of operaiton. 
+                    SetPeriod(plan[b]);
                 }
             }
             return list;
         }
 
         /// <summary>
-        /// Sets the operation total, start and end periot. 
+        /// Sets the operation total, start and end period. 
         /// </summary>
         /// <param name="model">SimulationOperationPlanModel</param>
-        private void SetPeriot(SimulationOperationPlanModel model)
+        private void SetPeriod(SimulationOperationPlanModel model)
         {
 
             //TODO: System work start hour wil set. 
 
-            var operationStartPeriot = ((model.OperationDate.Hour - Convert.ToInt32(startTime.Split(":")[0])) * 60 / periot) + (model.OperationDate.Minute / periot + (model.OperationDate.Minute % periot > 0 ? 1: 0));
+            var operationStartPeriod = ((model.OperationDate.Hour - Convert.ToInt32(startTime.Split(":")[0])) * 60 / period) + (model.OperationDate.Minute / period + (model.OperationDate.Minute % period > 0 ? 1: 0));
 
-            var operationPeriot = model.OperationTime / periot + (model.OperationTime % periot > 0 ? 1 : 0);
+            var operationPeriod = model.OperationTime / period + (model.OperationTime % period > 0 ? 1 : 0);
 
-            model.StartPeriot = operationStartPeriot;
+            model.StartPeriod = operationStartPeriod;
 
-            model.EndPeriot = operationStartPeriot + operationPeriot;
-            model.OperationPeriot = model.EndPeriot - model.StartPeriot;
+            model.EndPeriod = operationStartPeriod + operationPeriod;
+            model.OperationPeriod = model.EndPeriod - model.StartPeriod;
         }
 
         /// <summary>
-        /// Sets the property of end operation at specific periot
+        /// Sets the property of end operation at specific period
         /// </summary>        
         /// <param name="list">Operation plans list grouped by operation room.</param>
-        /// <param name="t">Periot.</param>
+        /// <param name="t">Period.</param>
         private void SetEnd(List<RoomPlanModel> list, int t)
         {            
             for (int a = 0; a < list.Count; a++)
@@ -164,7 +164,7 @@ namespace Surgicalogic.Api.Helpers
 
                 for (int b = 0; b < plan.Count; b++)
                 {
-                    if (plan[b].InUse && plan[b].EndPeriot == t)
+                    if (plan[b].InUse && plan[b].EndPeriod == t)
                     {
                         plan[b].InUse = false;
 
@@ -176,10 +176,10 @@ namespace Surgicalogic.Api.Helpers
         }
 
         /// <summary>
-        ///  Sets the property of start operation at specific periot
+        ///  Sets the property of start operation at specific period
         /// </summary>
         /// <param name="list">Operation plans list grouped by operation room.</param>
-        /// <param name="t">Periot</param>
+        /// <param name="t">Period</param>
         private void SetStart(List<RoomPlanModel> list, int t)
         {
             for (int a = 0; a < list.Count; a++)
@@ -188,11 +188,11 @@ namespace Surgicalogic.Api.Helpers
 
                 for (int b = 1; b < plan.Count; b++)
                 {
-                    if (plan[b-1].IsFinished && !plan[b].IsFinished && !plan[b].InUse && plan[b].StartPeriot <= t)
+                    if (plan[b-1].IsFinished && !plan[b].IsFinished && !plan[b].InUse && plan[b].StartPeriod <= t)
                     {                                                     
-                        plan[b].StartPeriot = plan[b].StartPeriot < plan[b - 1].EndPeriot ? plan[b - 1].EndPeriot : plan[b].StartPeriot;
+                        plan[b].StartPeriod = plan[b].StartPeriod < plan[b - 1].EndPeriod ? plan[b - 1].EndPeriod : plan[b].StartPeriod;
 
-                        plan[b].EndPeriot = plan[b].StartPeriot + plan[b].OperationPeriot;
+                        plan[b].EndPeriod = plan[b].StartPeriod + plan[b].OperationPeriod;
 
                         plan[b].InUse = true;                       
                         
@@ -218,7 +218,7 @@ namespace Surgicalogic.Api.Helpers
 
                 for (int b = 1; b < plan.Count; b++)
                 {
-                    usage += plan[b].OperationPeriot;
+                    usage += plan[b].OperationPeriod;
 
                 }
                 result.Add(RoomSimulationResult(plan, workingStartTime, workingEndTime));
@@ -235,22 +235,22 @@ namespace Surgicalogic.Api.Helpers
         private SimulationResultModel RoomSimulationResult(List<SimulationOperationPlanModel> plan, DateTime workingStartTime, DateTime  workingEndTime)
         {
             int usage = 0;
-            decimal waitingPeriot = 0;
+            decimal waitingPeriod = 0;
             
             for (int i = 0; i < plan.Count; i++)
             {
-                usage += plan[i].OperationPeriot;
+                usage += plan[i].OperationPeriod;
 
                 if (i > 0)
-                    waitingPeriot +=  plan[i].StartPeriot - plan[i - 1].EndPeriot;
+                    waitingPeriod +=  plan[i].StartPeriod - plan[i - 1].EndPeriod;
             }
 
             return new SimulationResultModel
             {
                 OperatingRoomId = plan[0].OperatingRoomId,
-                Usage = usage / Convert.ToInt32((workingEndTime - workingStartTime).TotalHours) * 100,
-                OverTime = plan.LastOrDefault().EndPeriot > Convert.ToInt32((workingEndTime - workingStartTime).TotalHours) ? plan.LastOrDefault().EndPeriot - Convert.ToInt32((workingEndTime - workingStartTime).TotalHours) : 0,
-                WaitingTime = waitingPeriot / plan.Count,
+                Usage = (double)usage / ((double)(workingEndTime - workingStartTime).TotalMinutes / (double)period) * 100,
+                OverTime = plan.LastOrDefault().EndPeriod > Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period) ? plan.LastOrDefault().EndPeriod - Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period) : 0,
+                WaitingTime = waitingPeriod / plan.Count,
                 OperatingRoomName = plan[0].OperatingRoomName.ToString()
             };
         }
@@ -273,7 +273,7 @@ namespace Surgicalogic.Api.Helpers
 
             for (int a = 0; a < ListGroup.Count; a++)
             {
-                int usage = 0;
+                double usage = 0;
 
                 int overTime = 0;
 
@@ -294,7 +294,7 @@ namespace Surgicalogic.Api.Helpers
                 {
                     OperatingRoomId = ListGroup[a].OperatingRoomId,
                     OperatingRoomName = ListGroup[a].OperatingRoomName,
-                    Usage = usage / plan.Count,
+                    Usage = Math.Round(usage / (double)plan.Count, 2),
                     OverTime = overTime / plan.Count,
                     WaitingTime = Math.Round((waitingTime / plan.Count), 2)
                 });

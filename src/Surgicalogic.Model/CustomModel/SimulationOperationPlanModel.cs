@@ -12,9 +12,9 @@ namespace Surgicalogic.Model.CustomModel
         public DateTime OperationDate { get; set; }        
         public int OperationTime { get; set; }
         public int ActualOperationTime { get;set;}
-        public int StartPeriot { get; set; }
-        public int EndPeriot { get; set; }
-        public int OperationPeriot { get; set; }
+        public int StartPeriod { get; set; }
+        public int EndPeriod { get; set; }
+        public int OperationPeriod { get; set; }
         public ICollection<int> OperationPersonelIds { get; set; }
         public bool InUse { get; set; } = false;
         public bool IsFinished { get; set; } = false;
