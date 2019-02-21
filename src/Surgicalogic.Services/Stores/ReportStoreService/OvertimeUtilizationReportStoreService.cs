@@ -54,7 +54,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
             var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime().AddDays(1);
             var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime().AddDays(1);
 
-            var overtimeOperations = allOperations.Where(x => x.RealizedStartDate < workingHourStart || x.RealizedEndDate > workingHourEnd).ToList();
+            var overtimeOperations = allOperations.Where(x => x.RealizedStartDate.Hour < workingHourStart.Hour || (x.RealizedStartDate.Hour == workingHourStart.Hour && x.RealizedStartDate.Minute < workingHourStart.Minute) || x.RealizedEndDate.Hour > workingHourEnd.Hour || (x.RealizedEndDate.Hour == workingHourEnd.Hour && x.RealizedEndDate.Minute > workingHourEnd.Minute)).ToList();
 
             var operatingRooms = allOperations.Select(x => x.OperatingRoom).ToList(); 
 
@@ -67,18 +67,21 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
                 foreach (var overtimeOperation in overtimeOperationsByRoom)
                 {
-                    if (overtimeOperation.RealizedStartDate < workingHourStart)
+                    var dailyWorkingHourStart = new DateTime(overtimeOperation.RealizedStartDate.Year, overtimeOperation.RealizedStartDate.Month, overtimeOperation.RealizedStartDate.Day, workingHourStart.Hour, workingHourStart.Minute, 0);
+                    var dailyWorkingHourEnd = new DateTime(overtimeOperation.RealizedStartDate.Year, overtimeOperation.RealizedStartDate.Month, overtimeOperation.RealizedStartDate.Day, workingHourEnd.Hour, workingHourEnd.Minute, 0);
+
+                    if (overtimeOperation.RealizedStartDate < dailyWorkingHourStart)
                     {
-                        overtime += (workingHourStart - overtimeOperation.RealizedStartDate).TotalMinutes;
+                        overtime += (dailyWorkingHourStart - overtimeOperation.RealizedStartDate).TotalMinutes;
                     }
 
-                    if (overtimeOperation.RealizedEndDate > workingHourEnd)
+                    if (overtimeOperation.RealizedEndDate > dailyWorkingHourEnd)
                     {
-                        overtime += (overtimeOperation.RealizedEndDate - workingHourEnd).TotalMinutes;
+                        overtime += (overtimeOperation.RealizedEndDate - dailyWorkingHourEnd).TotalMinutes;
                     }
                 }
 
-                var utilization = Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / (workingHourEnd - workingHourStart).TotalHours) * 100, 2);
+                var utilization = Math.Round((allOperations.Where(x => x.OperatingRoomId == item).Sum(x => (x.RealizedEndDate - x.RealizedStartDate).TotalHours) / ((workingHourEnd - workingHourStart).TotalHours * (operationEndDate.AddDays(1) - operationStartDate).TotalDays)) * 100, 2);
 
                 result.Add(new OvertimeUtilizationForOvertimeReportOutputModel
                 {
