@@ -100,11 +100,11 @@ namespace Surgicalogic.Api.Controllers
 
         [HttpPost]
         [Route("OperationPlan/GenerateOperationPlan")]
-        public async Task<DailyPlanOutputModel> GenerateOperationPlan()
+        public async Task<DailyPlanOutputModel> GenerateOperationPlan([FromBody]GenerateOperationPlanInputModel input)
         {
             var result = new DailyPlanOutputModel();
 
-            var tomorrowOperations = await _operationStoreService.GetTomorrowOperationsAsync();
+            var allOperations = await _operationStoreService.GetOperationsByDateAsync(input.OperationDate);
             var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync();
 
             var operations = new List<Planning.Model.InputModel.OperationInputModel>();
@@ -115,7 +115,7 @@ namespace Surgicalogic.Api.Controllers
             var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString());
             var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationPeriodInMinutes.ToString());
 
-            foreach (var operation in tomorrowOperations)
+            foreach (var operation in allOperations)
             {
                 //Bu operasyonun yapılabileceği odaları, operasyonun tipi üzerinden giderek buluyorum.
                 var operatingRoomIds = operation.OperationType.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperatingRoomId);
@@ -140,10 +140,11 @@ namespace Surgicalogic.Api.Controllers
                 Settings = new SettingsInputModel
                 {
                     RoomsPeriod = Convert.ToInt32(workingHourEnd.TimeValue.HourToDateTime().Subtract(workingHourStart.TimeValue.HourToDateTime()).TotalMinutes) / period.IntValue.Value,
-                    MaximumPeriod = Convert.ToInt32((new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day) - workingHourStart.TimeValue.HourToDateTime()).TotalMinutes) / period.IntValue.Value,
+                    MaximumPeriod = Convert.ToInt32((new DateTime(input.OperationDate.AddDays(1).Year, input.OperationDate.AddDays(1).Month, input.OperationDate.AddDays(1).Day) - workingHourStart.TimeValue.HourToDateTime()).TotalMinutes) / period.IntValue.Value,
                     StartingHour = workingHourStart.TimeValue.HourToDateTime().Hour,
                     StartingMinute = workingHourStart.TimeValue.HourToDateTime().Minute,
                     PeriodInMinutes = period.IntValue.Value,
+                    OperationDate = input.OperationDate
                 },
                 Rooms = rooms,
                 Operations = operations
@@ -157,7 +158,7 @@ namespace Surgicalogic.Api.Controllers
 
                 if (response.Content != null)
                 {
-                    await _operationPlanStoreService.DeleteTomorrowPlanAsync();
+                    await _operationPlanStoreService.DeletePlanByDateAsync(input.OperationDate);
 
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var apiResultModel = JsonConvert.DeserializeObject<DailyPlanOutputModel>(responseContent);

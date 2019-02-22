@@ -144,8 +144,8 @@ const planArrangementsModule = {
       })
     },
 
-    getTomorrowOperationList(context, params){
-        axios.get('OperationPlan/GetTomorrowOperationList', {
+    getOperationListByDate(context, params){
+        axios.get('OperationPlan/GetOperationListByDate', {
           params: params
         }).then(response => {
                 context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
@@ -159,11 +159,11 @@ const planArrangementsModule = {
             })
     },
 
-    getGenerateOperationPlan(context) {
+    getGenerateOperationPlan(context, params) {
       return new Promise((resolve, reject) => {
       context.commit('setLoading', true);
 
-      axios.post('OperationPlan/GenerateOperationPlan')
+      axios.post('OperationPlan/GenerateOperationPlan', params)
         .then(response => {
           context.commit('setGenerateOperationPlan', response.data)
           context.commit('setLoading', false);

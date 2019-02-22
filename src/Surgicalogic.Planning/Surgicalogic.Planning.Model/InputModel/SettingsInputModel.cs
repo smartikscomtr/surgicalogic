@@ -1,4 +1,6 @@
-﻿namespace Surgicalogic.Planning.Model.InputModel
+﻿using System;
+
+namespace Surgicalogic.Planning.Model.InputModel
 {
     public class SettingsInputModel
     {
@@ -7,5 +9,6 @@
         public int StartingHour { get; set; }
         public int StartingMinute { get; set; }
         public int PeriodInMinutes { get; set; }
+        public DateTime OperationDate { get; set; }
     }
 }

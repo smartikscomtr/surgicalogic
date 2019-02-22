@@ -184,8 +184,7 @@ namespace Surgicalogic.Planning.Engine
                         if (production[i, r, t].SolutionValue() == 1)
                         {
                             var surgeryRoom = result.Rooms[r];
-                            var tomorrow = DateTime.Now.AddDays(1);
-                            var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
+                            var dateTime = new DateTime(input.Settings.OperationDate.Year, input.Settings.OperationDate.Month, input.Settings.OperationDate.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
                             dateTime = dateTime.AddMinutes(t * input.Settings.PeriodInMinutes);
                             surgeryRoom.Operations.Add(new OperationOutputModel { Id = input.Operations[i].Id, Name = input.Operations[i].Name, DoctorIds = input.Operations[i].DoctorIds, Period = input.Operations[i].Period, StartDate = dateTime, OperationTime = input.Operations[i].OperationTime });
                         }

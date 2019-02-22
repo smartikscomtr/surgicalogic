@@ -208,8 +208,7 @@ namespace Surgicalogic.Planning.Engine
                             int room = v % input.Rooms.Count;
                             var surgeryRoom = result.Rooms[room];
                             int time = room == input.Rooms.Count - 1 ? (valueIndex + 1) / input.Rooms.Count : ((valueIndex + 1) / input.Rooms.Count) + 1;
-                            var tomorrow = DateTime.Now.AddDays(1);
-                            var dateTime = new DateTime(tomorrow.Year, tomorrow.Month, tomorrow.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
+                            var dateTime = new DateTime(input.Settings.OperationDate.Year, input.Settings.OperationDate.Month, input.Settings.OperationDate.Day, input.Settings.StartingHour, input.Settings.StartingMinute, 0);
                             dateTime = dateTime.AddMinutes((time - 1) * input.Settings.PeriodInMinutes);
                             //Console.Write(surgeryRoom.Id + "-" + surgeryRoom.Name + " Ameliyathanesi, Başlangıç: " + dateTime.ToShortTimeString() + ", Bitiş: " + dateTime.AddMinutes(input.Operations[i].Period * input.Settings.PeriodInMinutes).ToShortTimeString());
                             //Console.Write(surgeryRoom.Id + ". Oda, Saat: " + dateTime.ToShortTimeString());

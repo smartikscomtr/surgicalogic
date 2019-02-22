@@ -163,11 +163,11 @@ export default {
       return `${year}-${month}-${twoNextDay}`;
     },
 
-    getOvertimeAndUtilizations() {
+    getOvertimeAndUtilizations(dateTime) {
       const vm = this;
 
-      vm.customParameters.operationStartDate = vm.formatDate()
-      vm.customParameters.operationEndDate = vm.formatDate()
+      vm.customParameters.operationStartDate = dateTime
+      vm.customParameters.operationEndDate = dateTime
 
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);

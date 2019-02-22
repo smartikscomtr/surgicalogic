@@ -39,6 +39,20 @@ namespace Surgicalogic.Services.Stores
             await SaveChangesAsync();
         }
 
+        public async Task DeletePlanByDateAsync(DateTime date)
+        {
+            var twoDaysLater = date.AddDays(1);
+
+            var items = await GetQueryable().Where(x => x.OperationDate > date && x.OperationDate < twoDaysLater).ToListAsync();
+
+            foreach (var item in items)
+            {
+                await DeleteByIdAsync(item.Id);
+            }
+
+            await SaveChangesAsync();
+        }
+
         public async Task<List<OperationPlanOutputModel>> GetDashboardTimelineOperationsAsync(DateTime selectDate)
         {
             var date = new DateTime(selectDate.Year, selectDate.Month, selectDate.Day, 0, 0, 0);

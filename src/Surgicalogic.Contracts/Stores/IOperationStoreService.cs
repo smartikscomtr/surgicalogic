@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Surgicalogic.Contracts.Stores.Base;
 using Surgicalogic.Data.Entities;
@@ -10,6 +11,7 @@ namespace Surgicalogic.Contracts.Stores
     public interface IOperationStoreService : IStoreService<Operation, OperationModel>
     {
         Task<List<OperationModel>> GetTomorrowOperationsAsync();
+        Task<List<OperationModel>> GetOperationsByDateAsync(DateTime operationDate);
         Task<List<OperationModel>> GetByIdListAsync(int[] updatedItemIds);
     }
 }

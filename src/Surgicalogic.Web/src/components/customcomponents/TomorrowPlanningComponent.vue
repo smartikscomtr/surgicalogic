@@ -14,6 +14,7 @@
                     :loading="getLoading"
                     :totalCount="getTotalCount"
                     @detail="detail"
+                    :custom-parameters="customParameters"
                     @edit="edit"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem"
@@ -45,7 +46,8 @@ export default {
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
-      deletePath: ''
+      deletePath: '',
+      customParameters: {}
     };
   },
 
@@ -130,19 +132,45 @@ export default {
 
   methods: {
     getMethodName(){
-      return "getTomorrowOperationList";
+      return "getOperationListByDate";
     },
 
     deleteMethodName(){
       return "";
     },
 
-    getOperations() {
+    getOperations(datetime) {
       const vm = this;
 
+      vm.customParameters.operationDate = datetime;
       var child = vm.$refs.gridComponent;
       child.executeGridOperations(true);
+    },
+
+    formatDate() {
+      const vm = this;
+
+      const toTwoDigits = num => (num < 10 ? '0' + num : num);
+      let today = new Date();
+
+      let year = today.getFullYear();
+      let month = toTwoDigits(today.getMonth() + 1);
+      let tomorrow = toTwoDigits(today.getDate() + 1);
+
+      return `${year}-${month}-${tomorrow}`;
     }
+  },
+
+  mounted() {
+    const vm = this;
+
+    vm.customParameters.operationDate = vm.formatDate()
+  },
+
+  created () {
+    const vm = this;
+
+    vm.customParameters.operationDate = vm.formatDate()
   }
 };
 

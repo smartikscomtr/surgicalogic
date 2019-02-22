@@ -47,6 +47,27 @@ namespace Surgicalogic.Services.Stores
             };
         }
 
+        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate)
+        {
+            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > operationDate && x.OperationDate < operationDate.AddDays(1)).ProjectTo<OperationPlanHistoryOutputModel>();
+
+            int totalCount = await projectQuery.CountAsync();
+
+            if (input.PageSize > 0)
+            {
+                projectQuery = projectQuery.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
+            }
+
+            var result = await projectQuery.ToListAsync();
+
+            return new ResultModel<OperationPlanHistoryOutputModel>
+            {
+                Result = result,
+                TotalCount = totalCount,
+                Info = new Info()
+            };
+        }
+
         public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetAsync<TOutputModel>(HistoryPlanningInputModel input)
         {
             var query = _context.OperationPlans.Where(x => x.IsActive);

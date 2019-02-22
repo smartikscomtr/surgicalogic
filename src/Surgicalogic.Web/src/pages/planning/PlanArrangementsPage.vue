@@ -6,6 +6,7 @@
 
       <v-dialog v-model="drawPlanConfirm"
                 persistent>
+
         <v-card class="container fluid grid-list-md">
           <v-card-title class="headline">
             <div class="flex xs12 sm12 md12">
@@ -16,7 +17,7 @@
           <v-card-text>
             <v-layout wrap>
               <div class="flex xs12 sm12 md12">
-                {{ $t('planarrangements.drawPlanConfirmText') }}
+                {{ dateFormatted}} {{ $t('planarrangements.drawPlanConfirmText') }}
               </div>
             </v-layout>
           </v-card-text>
@@ -39,10 +40,43 @@
         </v-card>
       </v-dialog>
 
+          <v-menu
+            ref="menu"
+            :close-on-content-click="false"
+            v-model="menu"
+            :nudge-right="40"
+            :return-value.sync="date"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+          >
+
+            <v-text-field
+              append-icon="keyboard_arrow_down"
+              readonly
+              slot="activator"
+              v-model="dateFormatted"
+              :label="$t('operation.operationDate')"
+            >
+            </v-text-field>
+
+            <v-date-picker
+              v-model="date"
+              no-title
+              @input="$refs.menu.save(date)"
+              :min="getMinDate()"
+            >
+            </v-date-picker>
+          </v-menu>
+
+
       <v-btn class="orange"
              @click.native="drawPlanConfirm = true">
         {{ $t('planarrangements.drawPlan')}}
       </v-btn>
+
 
       <v-btn :disabled="!moving === true"
              class="orange updateplan-wrap"
@@ -126,7 +160,10 @@ export default {
       snackbarVisible: null,
       savedMessage: vm.$i18n.t("planarrangements.notGenerated"),
       moving: null,
-      customParameters: {}
+      customParameters: {},
+      menu: false,
+      dateFormatted: null,
+      date: null,
     };
   },
 
@@ -138,18 +175,29 @@ export default {
     }
   },
 
+  watch: {
+    date(val) {
+      this.dateFormatted = this.formatDate(this.date);
+    }
+  },
+
   methods: {
     drawPlan() {
       const vm = this;
 
       vm.drawPlanConfirm = false;
-      vm.$store.dispatch("getGenerateOperationPlan").then(response => {
+      vm.$store.dispatch("getGenerateOperationPlan", {
+        operationDate: vm.date
+      }).then(response => {
         if (response.data.hasSolution) {
           vm.getOperationPlan();
+
           var child = vm.$refs.operationComponent;
-          child[0].getOperations()
+          child[0].getOperations(vm.date)
+
           child = vm.$refs.overtimeUtilizationComponent;
-          child[0].getOvertimeAndUtilizations();
+          child[0].getOvertimeAndUtilizations(vm.date);
+
         } else {
           vm.savedMessage = vm.$i18n.t("planarrangements.notGenerated");
           vm.snackbarVisible = true;
@@ -202,9 +250,11 @@ export default {
           }, 2300);
 
           var child = vm.$refs.operationComponent;
-          child[0].getOperations()
+          child[0].getOperations(vm.date)
+
           child = vm.$refs.overtimeUtilizationComponent;
-          child[0].getOvertimeAndUtilizations();
+          child[0].getOvertimeAndUtilizations(vm.date);
+
         });
     },
 
@@ -215,7 +265,7 @@ export default {
 
       vm.$store
         .dispatch("getDashboardTimelinePlans", {
-          selectDate: vm.getTomorrowDate()
+          selectDate: vm.date
         })
         .then(response => {
           var items = new Vis.DataSet(
@@ -305,13 +355,47 @@ export default {
       let day = toTwoDigits(selectDay.getDate());
 
       return `${year}-${month}-${day}`;
-    }
+    },
+
+    getMinDate() {
+      const toTwoDigits = num => (num < 10 ? "0" + num : num);
+      let selectDay = new Date();
+
+      selectDay.setDate(selectDay.getDate() + 1);
+
+      let year = selectDay.getFullYear();
+      let month = toTwoDigits(selectDay.getMonth() + 1);
+      let day = toTwoDigits(selectDay.getDate());
+
+      return `${year}-${month}-${day}`;
+    },
+
+    formatDate(date) {
+      if (!date || date.indexOf(".") > -1) return null;
+
+      const [year, month, day] = date.split("-");
+
+      return `${day}.${month}.${year}`;
+    },
   },
 
   mounted() {
     const vm = this;
 
-    vm.getOperationPlan();
+    vm.$watch("date", (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        vm.getOperationPlan();
+
+        var child = vm.$refs.operationComponent;
+        child[0].getOperations(vm.date)
+
+        child = vm.$refs.overtimeUtilizationComponent;
+        child[0].getOvertimeAndUtilizations(vm.date);
+
+      }
+    })
+
+    vm.date = vm.getTomorrowDate();
   }
 };
 
