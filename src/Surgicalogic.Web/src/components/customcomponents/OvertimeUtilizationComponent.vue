@@ -161,6 +161,16 @@ export default {
       let twoNextDay = toTwoDigits(today.getDate() + 2);
 
       return `${year}-${month}-${twoNextDay}`;
+    },
+
+    getOvertimeAndUtilizations() {
+      const vm = this;
+
+      vm.customParameters.operationStartDate = vm.formatDate()
+      vm.customParameters.operationEndDate = vm.formatDate()
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   },
 
@@ -168,14 +178,14 @@ export default {
     const vm = this;
 
     vm.customParameters.operationStartDate = vm.formatDate()
-    vm.customParameters.operationEndDate = vm.addFormatDate()
+    vm.customParameters.operationEndDate = vm.formatDate()
   },
 
   created () {
     const vm = this;
 
     vm.customParameters.operationStartDate = vm.formatDate()
-    vm.customParameters.operationEndDate = vm.addFormatDate()
+    vm.customParameters.operationEndDate = vm.formatDate()
   }
 }
 

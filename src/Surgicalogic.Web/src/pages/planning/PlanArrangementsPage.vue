@@ -87,10 +87,12 @@
                   :key="item.name">
         <v-card flat>
           <v-card-text>
-            <tomorrow-planning-component v-if="item.content=='operation'">
+            <tomorrow-planning-component v-if="item.content=='operation'"
+                                         ref="operationComponent">
             </tomorrow-planning-component>
 
-            <overtime-utilization-component v-if="item.content=='overtimeUtilization'">
+            <overtime-utilization-component v-if="item.content=='overtimeUtilization'"
+                                            ref="overtimeUtilizationComponent">
             </overtime-utilization-component>
 
             <simulation-run-component v-if="item.content=='simulation'">
@@ -123,7 +125,8 @@ export default {
       drawPlanConfirm: false,
       snackbarVisible: null,
       savedMessage: vm.$i18n.t("planarrangements.notGenerated"),
-      moving: null
+      moving: null,
+      customParameters: {}
     };
   },
 
@@ -143,7 +146,10 @@ export default {
       vm.$store.dispatch("getGenerateOperationPlan").then(response => {
         if (response.data.hasSolution) {
           vm.getOperationPlan();
-          vm.$store.dispatch("getTomorrowOperationList");
+          var child = vm.$refs.operationComponent;
+          child[0].getOperations()
+          child = vm.$refs.overtimeUtilizationComponent;
+          child[0].getOvertimeAndUtilizations();
         } else {
           vm.savedMessage = vm.$i18n.t("planarrangements.notGenerated");
           vm.snackbarVisible = true;
@@ -195,7 +201,10 @@ export default {
             vm.snackbarVisible = false;
           }, 2300);
 
-          vm.$store.dispatch("getTomorrowOperationList");
+          var child = vm.$refs.operationComponent;
+          child[0].getOperations()
+          child = vm.$refs.overtimeUtilizationComponent;
+          child[0].getOvertimeAndUtilizations();
         });
     },
 

@@ -16,7 +16,8 @@
                     @detail="detail"
                     @edit="edit"
                     @newaction="addNewItem"
-                    @deleteitem="deleteItem">
+                    @deleteitem="deleteItem"
+                    ref="gridComponent">
     </grid-component>
   </div>
 </template>
@@ -134,6 +135,13 @@ export default {
 
     deleteMethodName(){
       return "";
+    },
+
+    getOperations() {
+      const vm = this;
+
+      var child = vm.$refs.gridComponent;
+      child.executeGridOperations(true);
     }
   }
 };

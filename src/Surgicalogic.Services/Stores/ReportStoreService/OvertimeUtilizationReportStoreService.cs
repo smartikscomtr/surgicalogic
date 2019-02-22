@@ -138,7 +138,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
             return new ResultModel<OvertimeUtilizationReportOutputModel>
             {
                 Result = AutoMapper.Mapper.Map<List<OvertimeUtilizationReportOutputModel>>(result),
-                TotalCount = 0,
+                TotalCount = totalCount,
                 Info = new Info { Succeeded = true }
             };
         }

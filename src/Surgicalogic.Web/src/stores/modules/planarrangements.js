@@ -144,9 +144,10 @@ const planArrangementsModule = {
       })
     },
 
-    getTomorrowOperationList(context){
-        axios.get('OperationPlan/GetTomorrowOperationList')
-            .then(response => {
+    getTomorrowOperationList(context, params){
+        axios.get('OperationPlan/GetTomorrowOperationList', {
+          params: params
+        }).then(response => {
                 context.commit('setTomorrowOperationList', response.data) //Set the OperationPlanPlan in the store
             })
     },
