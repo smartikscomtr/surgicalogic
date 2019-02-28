@@ -11,6 +11,8 @@ namespace Surgicalogic.Model.EntityModel
         [Searchable]
         public string Description { get; set; }
         public int BranchId { get; set; }
+        public double? CoefficientOfVariation { get; set; }
+
         [Searchable]
         public BranchModel Branch { get; set; }
         public ICollection<OperatingRoomOperationTypeModel> OperatingRoomOperationTypes { get; set; }

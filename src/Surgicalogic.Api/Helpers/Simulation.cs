@@ -41,6 +41,8 @@ namespace Surgicalogic.Api.Helpers
             var workingStartTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString()).TimeValue.HourToDateTime();
             var workingEndTime = settings.FirstOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString()).TimeValue.HourToDateTime();
 
+            int minPeriod = Convert.ToInt32((new DateTime(workingStartTime.Year, workingStartTime.Month, workingStartTime.Day) - workingStartTime).TotalMinutes / period);
+
             var simulationCount = settings.SingleOrDefault(x => x.Key == SettingKey.SimulationIterationCount.ToString());
 
             //Yarının planlanmıs operasyonları cekilir
@@ -67,7 +69,7 @@ namespace Surgicalogic.Api.Helpers
                 //Operasyon odasına göre gruplanmış operasyonların sürelerini random olarak değiştirir
                 var list = GetList(roomPlan);
 
-                for (int t = 0; list.Any(x => x.SimulationOperationPlanModels.Any(y => !y.IsFinished)); t++)
+                for (int t = minPeriod; list.Any(x => x.SimulationOperationPlanModels.Any(y => !y.IsFinished)); t++)
                 {
                     SetEnd(list, t);
 
@@ -123,13 +125,32 @@ namespace Surgicalogic.Api.Helpers
 
                     //TODO: oepration time constraint will set after defined.
                     //Random olarak atanmıs operasyon süreleri 
-                    plan[b].OperationTime = GetRandom(plan[b].ActualOperationTime * 2);
+                    plan[b].OperationTime = GetDuration(plan[b], 60/period);
 
                     //Sets start-period, end-period and operation-period the perit of operaiton. 
                     SetPeriod(plan[b]);
                 }
             }
             return list;
+        }
+
+        private int GetDuration(SimulationOperationPlanModel simulationOperationPlanModel, int periodsInHour)
+        {
+            double e = simulationOperationPlanModel.ActualOperationTime / period;
+            double sd = e * GetRandomCV();
+            double sigma = 0;
+            double mean = 0;
+            double stdNormal = 0;
+            double normalValue = 0;
+            double lognormalValues = 0;
+            int duration = 0;
+            sigma = Math.Sqrt(Math.Log10(1 + ((sd * sd) / (e * e))));
+            mean = Math.Log10(e) - ((sigma * sigma) / 2);
+            stdNormal = random.NextGaussian();
+            normalValue = sigma * stdNormal + mean;
+            lognormalValues = Math.Exp(normalValue);
+            duration = (int)Math.Ceiling(periodsInHour * lognormalValues);
+            return duration * period;
         }
 
         /// <summary>
@@ -249,7 +270,7 @@ namespace Surgicalogic.Api.Helpers
             {
                 OperatingRoomId = plan[0].OperatingRoomId,
                 Usage = (double)usage / ((double)(workingEndTime - workingStartTime).TotalMinutes / (double)period) * 100,
-                OverTime = plan.LastOrDefault().EndPeriod > Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period) ? plan.LastOrDefault().EndPeriod - Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period) : 0,
+                OverTime = plan.LastOrDefault().EndPeriod > Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period) ? (plan.LastOrDefault().EndPeriod - Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period)) * period : 0,
                 WaitingTime = waitingPeriod / plan.Count,
                 OperatingRoomName = plan[0].OperatingRoomName.ToString()
             };
@@ -301,6 +322,13 @@ namespace Surgicalogic.Api.Helpers
             }
 
             return result;
+        }
+
+        public double GetRandomCV()
+        {
+            double[] cvs = new[] { 0.56, 1.02, 0.71, 0.78, 1.04, 1.11, 0.85, 0.97, 0.94 };
+            var index = random.Next(0, cvs.Length);
+            return cvs[index];
         }
 
 

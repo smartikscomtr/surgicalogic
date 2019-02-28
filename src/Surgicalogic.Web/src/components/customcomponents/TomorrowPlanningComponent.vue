@@ -151,13 +151,14 @@ export default {
       const vm = this;
 
       const toTwoDigits = num => (num < 10 ? '0' + num : num);
-      let today = new Date();
+      let tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
 
-      let year = today.getFullYear();
-      let month = toTwoDigits(today.getMonth() + 1);
-      let tomorrow = toTwoDigits(today.getDate() + 1);
+      let year = tomorrow.getFullYear();
+      let month = toTwoDigits(tomorrow.getMonth() + 1);
+      let day = toTwoDigits(tomorrow.getDate());
 
-      return `${year}-${month}-${tomorrow}`;
+      return `${year}-${month}-${day}`;
     }
   },
 

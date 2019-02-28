@@ -28,7 +28,7 @@ namespace Surgicalogic.Services.Stores
         public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationListAsync(GridInputModel input)
         {
             var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > tomorrow && x.OperationDate < tomorrow.AddDays(1)).ProjectTo<OperationPlanHistoryOutputModel>();
+            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > tomorrow && x.OperationDate < tomorrow.AddDays(1)).OrderBy(x => x.OperationDate).ProjectTo<OperationPlanHistoryOutputModel>();
 
             int totalCount = await projectQuery.CountAsync();
 
@@ -49,7 +49,7 @@ namespace Surgicalogic.Services.Stores
 
         public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate)
         {
-            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > operationDate && x.OperationDate < operationDate.AddDays(1)).ProjectTo<OperationPlanHistoryOutputModel>();
+            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > operationDate && x.OperationDate < operationDate.AddDays(1)).OrderByDescending(x => x.OperationDate).ProjectTo<OperationPlanHistoryOutputModel>();
 
             int totalCount = await projectQuery.CountAsync();
 

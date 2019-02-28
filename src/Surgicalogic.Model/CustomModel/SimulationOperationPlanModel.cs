@@ -18,6 +18,7 @@ namespace Surgicalogic.Model.CustomModel
         public ICollection<int> OperationPersonelIds { get; set; }
         public bool InUse { get; set; } = false;
         public bool IsFinished { get; set; } = false;
+        public double? CoefficientOfVariation { get; set; }
 
     }
 }

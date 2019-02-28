@@ -14,6 +14,7 @@ namespace Surgicalogic.Data.Entities
         [StringLength(1000)]
         public string Description {get;set;}
         public int BranchId { get; set; }
+        public double? CoefficientOfVariation { get; set; }
         public Branch Branch { get; set; }
         
         public virtual ICollection<Operation> Operations { get; set; }

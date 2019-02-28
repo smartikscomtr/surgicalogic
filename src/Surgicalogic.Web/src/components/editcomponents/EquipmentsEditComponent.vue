@@ -168,14 +168,6 @@ export default {
             set(val) {
                 const vm = this;
 
-                vm.editAction.equipmentTypeName = vm.$store.state.equipmentModule.allEquipmentTypes.find(
-                    item => {
-                        if (item.id == val) {
-                            return item;
-                        }
-                    }
-                ).name;
-
                 vm.editAction.equipmentTypeId = val;
             }
         },
