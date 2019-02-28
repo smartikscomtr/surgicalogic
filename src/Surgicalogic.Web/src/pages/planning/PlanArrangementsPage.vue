@@ -40,6 +40,8 @@
         </v-card>
       </v-dialog>
 
+      <div class="v-card__title">
+        <v-flex xs3 sm3 md3>
           <v-menu
             ref="menu"
             :close-on-content-click="false"
@@ -52,7 +54,6 @@
             full-width
             min-width="290px"
           >
-
             <v-text-field
               append-icon="keyboard_arrow_down"
               readonly
@@ -70,19 +71,23 @@
             >
             </v-date-picker>
           </v-menu>
+        </v-flex>
 
+        <v-flex xs3 sm3 md3>
+          <v-btn class="orange"
+                @click.native="drawPlanConfirm = true">
+            {{ $t('planarrangements.drawPlan') }}
+          </v-btn>
+        </v-flex>
 
-      <v-btn class="orange"
-             @click.native="drawPlanConfirm = true">
-        {{ $t('planarrangements.drawPlan')}}
-      </v-btn>
-
-
-      <v-btn :disabled="!moving === true"
-             class="orange updateplan-wrap"
-             @click.native="updatePlan()">
-        {{ $t('planarrangements.updatePlan')}}
-      </v-btn>
+        <v-flex xs6 sm6 md6>
+          <v-btn :disabled="!moving === true"
+                class="orange updateplan-wrap"
+                @click.native="updatePlan()">
+            {{ $t('planarrangements.updatePlan')}}
+          </v-btn>
+        </v-flex>
+      </div>
 
       <div id="visualization"
            class="vis">
