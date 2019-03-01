@@ -3,11 +3,13 @@ using Smartiks.Framework.IO;
 using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
+using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -44,6 +46,12 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
             return await _operationStoreService.GetAsync<OperationOutputModel>(input);
+        }
+
+        [Route("Operation/GetOperationNamesForHistory")]
+        public async Task<List<OperationNameModel>> GetOperationNamesForHistory()
+        {
+            return await _operationStoreService.GetOperationNamesForHistory();
         }
 
         [Route("Operation/GetAllOperations")]

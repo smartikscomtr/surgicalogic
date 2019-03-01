@@ -15,7 +15,7 @@
   "all": "Hepsi",
   "close": "KAPAT",
   "search": "Ara",
-  "rowsPerPage":"Sayfa başına öğe:",
+  "rowsPerPage":"Gösterilen Kayıt:",
   "noDataAvailable" : "Hiç kayıt yok",
   "go": "Git",
   "export": "Excel'e Aktar",

@@ -396,7 +396,7 @@ export default {
     const vm = this;
 
     vm.$store.dispatch('getAllOperatingRooms');
-    vm.$store.dispatch('getAllOperations');
+    vm.$store.dispatch('getOperationNamesForHistory');
     vm.$store.dispatch('getAllPatients');
   }
 };

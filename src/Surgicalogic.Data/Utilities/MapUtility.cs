@@ -307,7 +307,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.ActualOperationTime, opt => opt.MapFrom(src => src.Operation.OperationTime))
                 .ForMember(dest => dest.OperationPersonelIds, opt => opt.MapFrom(src => src.Operation.OperationPersonels.Select(x => x.PersonnelId)))
                 .ForMember(dest => dest.CoefficientOfVariation, opt => opt.MapFrom(src => src.Operation.OperationType.CoefficientOfVariation));
-
+            config.CreateMap<Operation, OperationNameModel>();
             #endregion
         }
     }

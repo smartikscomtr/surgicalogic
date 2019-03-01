@@ -25,6 +25,10 @@ const operationModule = {
       state.totalCount = data.totalCount;
     },
 
+    setOperationNamesForHistory(state, data) {
+      state.allOperations = data;
+    },
+
     setAllOperations(state, data) {
       state.allOperations = data;
     },
@@ -87,7 +91,17 @@ const operationModule = {
 
         context.commit('setLoading', false);
       })
+    },
 
+    getOperationNamesForHistory(context, params) {
+      context.commit('setLoading', true);
+      axios.get('Operation/GetOperationNamesForHistory', {
+        params: params
+      }).then(response => {
+        context.commit('setOperationNamesForHistory', response.data) //Set the Operation in the store
+
+        context.commit('setLoading', false);
+      })
     },
 
     getAllOperations(context) {

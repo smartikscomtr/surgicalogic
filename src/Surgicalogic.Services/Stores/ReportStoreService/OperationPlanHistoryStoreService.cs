@@ -116,7 +116,7 @@ namespace Surgicalogic.Services.Stores
 
             if (operationIds?.Count > 0)
             {
-                query = query.Where(x => x.Operation.OperationPersonels.Any(t => operationIds.Contains(t.OperationId)));
+                query = query.Where(x => operationIds.Contains(x.OperationId));
             }
 
             if (input.OperationStartDate != null && input.OperationStartDate != DateTime.MinValue)

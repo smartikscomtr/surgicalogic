@@ -9,7 +9,7 @@ namespace Surgicalogic.Model.CustomModel
     {
         public string Name { get; set; }
         public int OperationTime { get; set; }
-        public OperationTypeModel OperationType { get; set; }
+        public OperationTypeForReportModel OperationType { get; set; }
         public ICollection<OperationPersonnelForReportModel> OperationPersonels { get; set; }
     }
 }

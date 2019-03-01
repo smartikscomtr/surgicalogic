@@ -7,6 +7,6 @@ namespace Surgicalogic.Model.CustomModel
 {
     public class OperationTypeForReportModel : EntityModel.Base.EntityModel
     {
-        public BranchModel Branch { get; set; } 
+        public BranchModel Branch { get; set; }
     }
 }

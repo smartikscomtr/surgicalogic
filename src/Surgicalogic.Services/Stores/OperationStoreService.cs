@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Surgicalogic.Model.CustomModel;
 
 namespace Surgicalogic.Services.Stores
 {
@@ -23,8 +24,7 @@ namespace Surgicalogic.Services.Stores
 
         public async Task<List<OperationModel>> GetTomorrowOperationsAsync()
         {
-            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-            return await _context.Operations.Where(x => x.Date >= tomorrow && x.Date < tomorrow.AddDays(1) && x.IsActive).ProjectTo<OperationModel>().ToListAsync();
+            return await _context.Operations.Where(x => x.Date >= DateTime.Today.AddDays(1) && x.Date < DateTime.Today.AddDays(1).AddDays(1) && x.IsActive).ProjectTo<OperationModel>().ToListAsync();
         }
 
         public async Task<List<OperationModel>> GetOperationsByDateAsync(DateTime operationDate)
@@ -35,6 +35,11 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<OperationModel>> GetByIdListAsync(int[] updatedItemIds)
         {
             return await GetQueryable().Where(x => updatedItemIds.Contains(x.Id)).ProjectTo<OperationModel>().ToListAsync();
+        }
+
+        public async Task<List<OperationNameModel>> GetOperationNamesForHistory()
+        {
+            return await GetQueryable().Where(x => x.Date < DateTime.Today.AddDays(1)).ProjectTo<OperationNameModel>().ToListAsync();
         }
     }
 }

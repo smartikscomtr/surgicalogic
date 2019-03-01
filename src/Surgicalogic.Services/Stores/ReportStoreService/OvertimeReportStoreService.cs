@@ -21,15 +21,15 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 {
     public class OvertimeReportStoreService : IOvertimeReportStoreService
     {
-        DataContext _dataContext;
+        private DataContext _context;
         public OvertimeReportStoreService(DataContext context)
         {
-            _dataContext = context;
+            _context = context;
         }
 
         public async Task<ResultModel<OvertimeReportOutputModel>> GetAsync<TOutputModel>(OvertimeReportInputModel input)
         {
-            var query = _dataContext.OperationPlans.Where(x => x.IsActive && Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
+            var query = _context.OperationPlans.Where(x => x.IsActive && Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
             var branchIds = input.BranchId?.Split(',').Select(int.Parse).ToList();
             var doctorIds = input.DoctorId?.Split(',').Select(int.Parse).ToList();
@@ -128,7 +128,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
         public async Task<List<OvertimeReportExportModel>> GetExportAsync(OvertimeReportInputModel input)
         {
-            var query = _dataContext.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
+            var query = _context.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
             var list = await query.ProjectTo<OperationPlanForReportModel>().ToListAsync();
 
