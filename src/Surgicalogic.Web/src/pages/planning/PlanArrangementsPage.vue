@@ -484,32 +484,3 @@ function calcuteOvertimeAndUtilization(
   setOvertime(moreThanOvertime);
 }
 </script>
-
-<style>
-.vis-item.vis-range.vis-selected.vis-editable {
-  background-color: #ff7107 !important;
-}
-.vis-time-axis .vis-text {
-  font-size: 11px;
-}
-.vis-item.vis-range.vis-editable {
-  position: absolute;
-  background-color: #ea9759;
-  border: none;
-  border-radius: 0;
-}
-div.vis-tooltip {
-  background: #616161 !important;
-  border-radius: 2px !important;
-  color: #fff !important;
-  font-size: 12px !important;
-  display: inline-block !important;
-  padding: 5px 8px !important;
-}
-.unavailable {
-  background-color: darkgray;
-}
-.span-color {
-  color: #fff;
-}
-</style>

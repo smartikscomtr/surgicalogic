@@ -358,12 +358,3 @@ export default {
 };
 
 </script>
-
-<style>
-.chart {
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-}
-</style>
-

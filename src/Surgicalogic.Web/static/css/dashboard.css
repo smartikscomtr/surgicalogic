@@ -30,10 +30,6 @@
   flex-direction: column !important;
   align-items: flex-start !important;
 }
-
-.cards-wrap .flex:last-child {
-  margin-top: 40px;
-}
 .vis-item.vis-range.vis-selected.vis-editable {
   background-color: #ff7107 !important;
 }
@@ -58,7 +54,14 @@ div.vis-tooltip {
 .unavailable {
   background-color: darkgray;
 }
-
 .vis {
   margin: 0;
+}
+.cards-wrap .v-card{
+  height: 100%;
+}
+.dashboard-page-btn{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

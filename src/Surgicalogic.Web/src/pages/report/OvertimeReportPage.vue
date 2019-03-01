@@ -455,12 +455,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.btn-wrap {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 20px;
-}
-</style>
