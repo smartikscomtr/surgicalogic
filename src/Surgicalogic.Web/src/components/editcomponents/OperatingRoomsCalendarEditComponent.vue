@@ -109,7 +109,7 @@
 
           <v-card-actions class="justify-end flex">
             <v-btn
-              class="orange"
+              class="orangeButton"
               @click.native="save"
             >
               {{ $t('menu.save') }}

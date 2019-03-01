@@ -38,28 +38,32 @@
             </div>
           </v-card-title>
 
+        <v-form ref="form" v-model="valid" lazy-validation>
           <v-card-text>
             <v-layout wrap edit-layout>
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="identityNumber" mask="###########" :label="$t('appointmentcalendar.identityNumber')">
+                <v-text-field v-model="identityNumber" mask="###########" :rules="required" :label="$t('appointmentcalendar.identityNumber')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="phone"
                               mask="phone"
+                              :rules="required"
                               :label="$t('appointmentcalendar.phone')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="firstName"
+                              :rules="required"
                               :label="$t('appointmentcalendar.firstName')">
                 </v-text-field>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="lastName"
+                              :rules="required"
                               :label="$t('appointmentcalendar.lastName')">
                 </v-text-field>
               </v-flex>
@@ -73,12 +77,12 @@
           <div class="v-card__text">
             <div class="margin-bottom-none">
               <span class="available-message">{{ availableAppointmentsMessage }}</span>
-              <v-btn class="btnSave orange" @click="saveAppointment()">
+              <v-btn class="btnSave orangeButton" @click="saveAppointment()">
               {{ $t('menu.save') }}
               </v-btn>
             </div>
           </div>
-
+        </v-form>
         </v-card>
       </v-dialog>
 
@@ -97,6 +101,8 @@ export default {
 
         return {
             menu: false,
+            required: [v => !!v || vm.$i18n.t("common.required")],
+            valid: true,
             date: null,
             dateFormatted: null,
             interval: null,
@@ -147,10 +153,11 @@ export default {
 
     methods: {
         cancel() {
-            const vm = this;
+          const vm = this;
 
-            vm.showModal = false;
-            vm.picker.setTime('');
+          vm.clear();
+          vm.showModal = false;
+          vm.picker.setTime('');
         },
 
         getMaxDate() {
@@ -210,8 +217,16 @@ export default {
             vm.picker.destroy();
         },
 
+        clear () {
+            this.$refs.form.reset()
+        },
+
         saveAppointment() {
             const vm = this;
+
+            if (!vm.$refs.form.validate()) {
+              return;
+            }
 
             vm.$store
                 .dispatch('insertAppointmentCalendar', {
@@ -357,152 +372,3 @@ export default {
     }
 };
 </script>
-
-<style>
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    #section-to-print,
-    #section-to-print * {
-        visibility: visible;
-    }
-    .v-content {
-        position: relative;
-    }
-    #section-to-print {
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-    .navigation.v-navigation-drawer {
-        display: none !important;
-    }
-    main.v-content {
-        padding: 0 !important;
-    }
-}
-.doctor-detail,
-.profession {
-    margin-bottom: 30px;
-    border-radius: 5px;
-    background-color: #ff7107;
-    color: #fff;
-    padding: 10px;
-}
-.doctor-detail {
-    flex-direction: column;
-    align-items: center;
-    display: flex;
-    padding: 20px !important;
-}
-.doctor-detail h4 {
-    font-size: 24px;
-}
-.doctor-detail h5 {
-    font-size: 16px;
-    font-weight: 400;
-    text-align: center;
-}
-.appointment-input-wrap {
-    background-color: white;
-    padding: 10px 20px;
-    width: 100%;
-    margin-bottom: 10px;
-    border: solid 1px #e8e5e5;
-    border-radius: 5px;
-}
-.appo-picker {
-    position: absolute;
-    display: none;
-    background-color: white;
-    max-width: 240px;
-    padding: 10px;
-    z-index: 9999;
-    /* Large variation */
-}
-.appo-picker.is-open {
-    display: flex;
-    flex-direction: column;
-}
-.appo-picker.is-position-static {
-    display: flex;
-    flex-direction: column;
-    position: static;
-}
-
-.appo-picker-title {
-    font-size: 20px;
-    padding-bottom: 10px;
-}
-.appo-picker-list {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0 -8px;
-}
-.appo-picker-list li input {
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    padding: 10px 20px;
-}
-.appo-picker-list li {
-    margin: 8px;
-}
-.appo-picker-list-item input[type='button'].is-selected {
-    background-color: #29a79b;
-    color: #fff;
-}
-.appo-picker-list-item input:hover,
-.appo-picker-list-item input:active,
-.appo-picker-list-item input:focus {
-    color: #fff;
-    background-color: #ff7107;
-    outline: none;
-}
-.appo-picker-list-item input:disabled {
-    background-color: #d3d3d3;
-    opacity: 0.3;
-    color: #666;
-    cursor: auto;
-}
-
-.doctor-detail img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 20px;
-}
-.v-tabs__bar {
-    background-color: #ff7107 !important;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-.available-message {
-    font-size: 13px;
-}
-.theme--light .v-tabs__bar .v-tabs__div {
-    color: rgb(250, 250, 250);
-}
-.appointment-calendar-wrap .block-container .v-input {
-    margin-top: 0;
-}
-.margin-bottom-none {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 0 5px;
-}
-
-@media (min-width: 960px) {
-    .block-container {
-        padding-left: 40px !important;
-    }
-}
-@media (max-width: 960px) {
-    .block-container {
-        margin-top: 20px;
-    }
-}
-</style>

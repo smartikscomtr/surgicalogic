@@ -6,7 +6,7 @@
 
           <v-flex xs12 sm12 md12>
             <div class="btn-wrap">
-              <v-btn class="btnSave orange"
+              <v-btn class="btnSave orangeButton"
                     lang="tr"
                     @click.native="filteredReport">
                 {{ $t('report.filter') }}
@@ -14,7 +14,7 @@
             </div>
 
             <div class="btn-wrap">
-              <v-btn class="btnSave orange"
+              <v-btn class="btnSave orangeButton"
                     lang="tr"
                     @click.native="clearReport">
                 {{ $t('report.clear') }}
@@ -358,12 +358,3 @@ export default {
 };
 
 </script>
-
-<style>
-.chart {
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-}
-</style>
-

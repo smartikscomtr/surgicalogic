@@ -27,7 +27,7 @@
       </v-flex>
 
       <v-flex xs12 sm6 md3>
-        <v-btn class="orange"
+        <v-btn class="orangeButton"
               @click="runSimulation">
           <span lang="tr">{{ $t('simulation.simulate') }}</span>
         </v-btn>
