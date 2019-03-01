@@ -27,7 +27,12 @@
               <v-btn
                 small
                 @click="$router.push('/operationpage')"
-              >{{ $t('common.go') }}</v-btn>
+              >
+                <span class="text"
+                      lang="tr">
+                  {{ $t('common.go') }}
+                </span>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -53,7 +58,12 @@
               <v-btn
                 small
                 @click="$router.push('/planarrangementspage')"
-              >{{ $t('common.go') }}</v-btn>
+              >
+                <span class="text"
+                      lang="tr">
+                  {{ $t('common.go') }}
+                </span>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -79,7 +89,12 @@
               <v-btn
                 small
                 @click="$router.push('/clinicpage')"
-              >{{ $t('common.go') }}</v-btn>
+              >
+                <span class="text"
+                      lang="tr">
+                  {{ $t('common.go') }}
+                </span>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -105,7 +120,12 @@
               <v-btn
                 small
                 @click="$router.push('/personnelpage')"
-              >{{ $t('common.go') }}</v-btn>
+              >
+                <span class="text"
+                      lang="tr">
+                  {{ $t('common.go') }}
+                </span>
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
