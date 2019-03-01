@@ -14,7 +14,6 @@ namespace Surgicalogic.Contracts.Stores
 {
     public interface IOperationPlanHistoryStoreService
     {
-        Task<ResultModel<OperationPlanHistoryOutputModel>> GetTomorrowOperationListAsync(GridInputModel input);
         Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate);
         Task<ResultModel<OperationPlanHistoryOutputModel>> GetAsync<TOutputModel>(HistoryPlanningInputModel input);
         Task<List<HistoryPlanningReportExportModel>> GetExportAsync<OperationPlanHistoryOutputModel>(HistoryPlanningInputModel input);
