@@ -15,7 +15,6 @@
           <v-text-field append-icon="keyboard_arrow_down"
                         readonly
                         slot="activator"
-                        clearable
                         v-model="dateFormatted"
                         :label="$t('operation.operationDate')">
           </v-text-field>
