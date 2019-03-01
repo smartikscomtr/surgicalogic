@@ -38,7 +38,7 @@
                   </v-list-tile-content>
                 </v-list-tile>
 
-                <v-list-tile v-for="(child, i) in item.children" :key="i" @click="changePages(child.route)">
+                <v-list-tile v-for="(child, i) in item.children" :key="i" @click="changePages(child.route)" @mousedown.middle="newTab(child.route)">
                   <v-list-tile-action v-if="child.icon">
                     <v-icon>
                       {{ child.icon }}
@@ -54,7 +54,7 @@
               </v-list-group>
 
               <!-- Not Subgroup -->
-              <v-list-tile v-else :key="item.text" @click="changePages(item.route)">
+              <v-list-tile v-else :key="item.text" @click="changePages(item.route)" @mousedown.middle="newTab(item.route)">
                 <v-list-tile-action>
                   <v-icon>
                     {{ item.icon }}
@@ -310,6 +310,10 @@ export default {
             const vm = this;
 
             return vm.$router.push(route);
+        },
+
+        newTab(route) {
+          window.open(route, "_blank");
         },
 
         changeLanguage(lang) {
