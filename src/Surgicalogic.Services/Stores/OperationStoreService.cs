@@ -22,11 +22,6 @@ namespace Surgicalogic.Services.Stores
             _context = context;
         }
 
-        public async Task<List<OperationModel>> GetTomorrowOperationsAsync()
-        {
-            return await _context.Operations.Where(x => x.Date >= DateTime.Today.AddDays(1) && x.Date < DateTime.Today.AddDays(1).AddDays(1) && x.IsActive).ProjectTo<OperationModel>().ToListAsync();
-        }
-
         public async Task<List<OperationModel>> GetOperationsByDateAsync(DateTime operationDate)
         {
             return await _context.Operations.Where(x => x.Date >= operationDate && x.Date < operationDate.AddDays(1) && x.IsActive).ProjectTo<OperationModel>().ToListAsync();

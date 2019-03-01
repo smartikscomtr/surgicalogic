@@ -13,7 +13,6 @@ namespace Surgicalogic.Contracts.Stores
     public interface IOperationStoreService : IStoreService<Operation, OperationModel>
     {
         Task<List<OperationNameModel>> GetOperationNamesForHistory();
-        Task<List<OperationModel>> GetTomorrowOperationsAsync();
         Task<List<OperationModel>> GetOperationsByDateAsync(DateTime operationDate);
         Task<List<OperationModel>> GetByIdListAsync(int[] updatedItemIds);
     }

@@ -35,10 +35,9 @@ namespace Surgicalogic.Services.Stores
             _operatingRoomOperationTypeStoreService = operatingRoomOperationTypeStoreService;
         }
 
-        public async Task<List<RoomInputModel>> GetAvailableRoomsAsync()
+        public async Task<List<RoomInputModel>> GetAvailableRoomsAsync(DateTime date)
         {
-            var tomorrow = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day, 0, 0, 0);
-            return await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= tomorrow && t.EndDate >= tomorrow && t.IsActive)).ProjectTo<RoomInputModel>().ToListAsync();
+            return await _context.OperatingRooms.Where(x => x.IsActive && x.IsAvailable && !x.OperatingRoomCalendars.Any(t => t.StartDate <= date && t.EndDate >= date && t.IsActive)).ProjectTo<RoomInputModel>().ToListAsync();
         }
 
         public async Task<ResultModel<OperatingRoomOutputModel>> UpdateOperatingRoomEquipmentsAsync(OperatingRoomInputModel item)

@@ -14,7 +14,6 @@ namespace Surgicalogic.Contracts.Stores
     public interface IOperationPlanStoreService : IStoreService<OperationPlan, OperationPlanModel>
     {
         Task<List<OperationPlanOutputModel>> GetDashboardTimelineOperationsAsync(DateTime selectDate);
-        Task DeleteTomorrowPlanAsync();
         Task DeletePlanByDateAsync(DateTime date);
         Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds);
         Task<List<SimulationOperationPlanModel>> GetOperationByIdListAsync(DateTime selectDate);

@@ -105,7 +105,7 @@ namespace Surgicalogic.Api.Controllers
             var result = new DailyPlanOutputModel();
 
             var allOperations = await _operationStoreService.GetOperationsByDateAsync(input.OperationDate);
-            var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync();
+            var rooms = await _operatingRoomStoreService.GetAvailableRoomsAsync(input.OperationDate);
 
             var operations = new List<Planning.Model.InputModel.OperationInputModel>();
 
