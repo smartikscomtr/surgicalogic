@@ -153,7 +153,7 @@
             <v-btn
               :disabled="!moving === true"
               v-show="date"
-              class="updateplan-wrap orange"
+              class="updateplan-wrap orangeButton"
               @click.native="updatePlan()"
             >
               {{ $t('planarrangements.updatePlan')}}

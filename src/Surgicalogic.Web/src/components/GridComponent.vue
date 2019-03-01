@@ -12,14 +12,14 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn v-if="!hideExport" class="orange" @click="exportExcel">
+      <v-btn v-if="!hideExport" class="orangeButton" @click="exportExcel">
         <v-icon color="white--text">
           arrow_downward
         </v-icon>
         {{ $t('common.export') }}
       </v-btn>
 
-      <v-btn v-if="showInsert" class="orange" slot="activator" @click="addNewItem">
+      <v-btn v-if="showInsert" class="orangeButton" slot="activator" @click="addNewItem">
         <v-icon color="white--text">
           add
         </v-icon>

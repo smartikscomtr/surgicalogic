@@ -74,7 +74,7 @@
         </v-flex>
 
         <v-flex xs3 sm3 md3>
-          <v-btn class="orange"
+          <v-btn class="orangeButton"
                 @click.native="drawPlanConfirm = true">
             {{ $t('planarrangements.drawPlan') }}
           </v-btn>
@@ -82,7 +82,7 @@
 
         <v-flex xs6 sm6 md6>
           <v-btn :disabled="!moving === true"
-                class="orange updateplan-wrap"
+                class="orangeButton updateplan-wrap"
                 @click.native="updatePlan()">
             {{ $t('planarrangements.updatePlan')}}
           </v-btn>
@@ -110,7 +110,7 @@
     <v-tabs v-model="tab"
             color="teal"
             align-with-title>
-      <v-tabs-slider color="orange"></v-tabs-slider>
+      <v-tabs-slider color="orangeButton"></v-tabs-slider>
 
       <v-tab v-for="item in items"
              :key="item.name">

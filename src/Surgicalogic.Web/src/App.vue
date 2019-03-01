@@ -397,13 +397,13 @@ export default {
     flex-direction: row;
     margin-bottom: 5px;
 }
-.orange .v-btn__content {
+.orangeButton .v-btn__content {
     color: #fff;
 }
 .close-wrap {
     color: #ff7107 !important;
 }
-.orange {
+.orangeButton {
     background-color: #ff7107 !important;
 }
 .v-dialog:not(.dialog--fullscreen) {

@@ -25,11 +25,11 @@
           <span class="branchName-wrap" v-text="doctorCard.branchNames">
           </span>
 
-          <v-btn class="orange"
+          <v-btn class="orangeButton"
           @click="routePageGetAppointment(doctorCard.id)"> {{ $t('appointmentcalendar.setAppointment') }}
           </v-btn>
 
-          <v-btn class="orange"
+          <v-btn class="orangeButton"
            @click="routePageAppointmentList(doctorCard.id)"> {{ $t('appointmentcalendar.appointmentList') }}
           </v-btn>
         </v-card>

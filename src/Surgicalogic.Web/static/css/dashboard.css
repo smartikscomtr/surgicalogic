@@ -1,0 +1,64 @@
+.operation-wrap.v-card {
+  background-color: #ff6767;
+}
+.plan-wrap.v-card {
+  background-color: #ffba75;
+}
+.clinic-wrap.v-card {
+  background-color: #56d67d;
+}
+.personnel-wrap {
+  background-color: #9b63cd !important;
+}
+.v-card__actions {
+  justify-content: flex-end;
+}
+.cards-wrap .v-card__title > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.cards-wrap .v-card__title > div p {
+  margin-left: 10px;
+}
+.cards-wrap .v-card__title p {
+  margin: 0;
+  color: #fff;
+}
+.cards-wrap .v-card__title {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.cards-wrap .flex:last-child {
+  margin-top: 40px;
+}
+.vis-item.vis-range.vis-selected.vis-editable {
+  background-color: #ff7107 !important;
+}
+.vis-time-axis .vis-text div {
+  font-weight: bold;
+}
+
+.vis-item.vis-range.vis-editable {
+  position: absolute;
+  background-color: #ea9759;
+  border: none;
+  border-radius: 0;
+}
+div.vis-tooltip {
+  background: #616161 !important;
+  border-radius: 2px !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  display: inline-block !important;
+  padding: 5px 8px !important;
+}
+.unavailable {
+  background-color: darkgray;
+}
+
+.vis {
+  margin: 0;
+}

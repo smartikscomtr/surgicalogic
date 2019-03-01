@@ -35,7 +35,7 @@
         </v-card-text>
 
         <v-card-actions class="justify-end flex">
-              <v-btn class="orange" @click.native="save">
+              <v-btn class="orangeButton" @click.native="save">
               {{ $t('menu.save') }}
               </v-btn>
           </v-card-actions>

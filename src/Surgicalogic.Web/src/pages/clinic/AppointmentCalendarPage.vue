@@ -73,7 +73,7 @@
           <div class="v-card__text">
             <div class="margin-bottom-none">
               <span class="available-message">{{ availableAppointmentsMessage }}</span>
-              <v-btn class="btnSave orange" @click="saveAppointment()">
+              <v-btn class="btnSave orangeButton" @click="saveAppointment()">
               {{ $t('menu.save') }}
               </v-btn>
             </div>
