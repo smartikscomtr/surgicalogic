@@ -149,8 +149,11 @@
         </v-flex>
 
 
-        <v-layout class="dashboard-page-btn">
-          <div class="flex xs12">
+        <v-flex
+          xs12
+          sm6
+          md9
+          class="dashboard-page-btn">
             <v-btn
               :disabled="!moving === true"
               v-show="date"
@@ -159,8 +162,7 @@
             >
               {{ $t('planarrangements.updatePlan')}}
             </v-btn>
-          </div>
-        </v-layout>
+        </v-flex>
       </v-layout>
 
       <div
@@ -395,6 +397,9 @@ export default {
 .v-card__actions {
   justify-content: flex-end;
 }
+.cards-wrap .v-card{
+  height: 100%;
+}
 .cards-wrap .v-card__title > div {
   display: flex;
   align-items: center;
@@ -411,10 +416,6 @@ export default {
 .cards-wrap .v-card__title {
   flex-direction: column !important;
   align-items: flex-start !important;
-}
-
-.cards-wrap .flex:last-child {
-  margin-top: 40px;
 }
 .vis-item.vis-range.vis-selected.vis-editable {
   background-color: #ff7107 !important;
@@ -440,8 +441,12 @@ div.vis-tooltip {
 .unavailable {
   background-color: darkgray;
 }
-
 .vis {
   margin: 0;
+}
+.dashboard-page-btn{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>
