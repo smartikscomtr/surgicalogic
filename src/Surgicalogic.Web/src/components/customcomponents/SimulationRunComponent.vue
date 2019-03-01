@@ -50,6 +50,7 @@
                       :hide-actions="false"
                       :hide-export="true"
                       :methodName="getMethodName"
+                      :custom-parameters="customParameters"
                       :loading="getLoading"
                       :totalCount="getTotalCount"
                       @detail="detail"
@@ -88,7 +89,8 @@ export default {
       totalRowCount:0,
       editLoadOnce: true,
       deletePath: '',
-      simulation: false
+      simulation: false,
+      customParameters: {}
     };
   },
 
@@ -169,7 +171,9 @@ export default {
     getMethodName(){
       const vm = this;
 
-      return `${"runSimulation"}, ${vm.date}`;
+      vm.customParameters.selectDate = vm.date;
+
+      return "runSimulation";
     },
 
     deleteMethodName(){

@@ -129,24 +129,31 @@ export default {
             const vm = this;
 
             vm.$store
-                .dispatch('getDoctorsByBranchIdAsync', {
-                    branchId: vm.branchId
-                })
-                .then(() => {
-                    vm.filteredDoctors =
-                        vm.$store.state.personnelModule.filteredDoctor;
-                    vm.doctorCards = vm.filteredDoctors;
-                });
+              .dispatch('getDoctorsByBranchIdAsync', {
+                  branchId: vm.branchId ? vm.branchId : 0
+              })
+              .then(() => {
+                  vm.filteredDoctors =
+                      vm.$store.state.personnelModule.filteredDoctor;
+                  vm.doctorCards = vm.filteredDoctors;
+
+              if (vm.doctorId)
+              {
+                vm.filterDoctor();
+              }
+
+              });
         },
 
         filterDoctor() {
             const vm = this;
+
             var doctor = [];
             vm.doctorCards = [];
             for (let index = 0; index < vm.filteredDoctors.length; index++) {
                 const element = vm.filteredDoctors[index];
 
-                if (element.id == vm.doctorId) {
+                if (!vm.doctorId || element.id == vm.doctorId) {
                     vm.doctorCards.push(vm.filteredDoctors[index]);
                 }
             }
