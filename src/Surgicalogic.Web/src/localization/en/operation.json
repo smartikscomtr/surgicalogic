@@ -17,5 +17,5 @@
   "patientFirstName": "Patient First Name",
   "patientLastName": "Patient Last Name",
   "eventNumber": "Event Number",
-  "IsEventDifferent": "afdaf"
+  "EventNumberIsNotDifferent": "Event number is not different."
 }

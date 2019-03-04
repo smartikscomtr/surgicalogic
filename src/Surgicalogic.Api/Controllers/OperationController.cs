@@ -134,7 +134,7 @@ namespace Surgicalogic.Api.Controllers
             }
             else
             {
-                result.Info.Message = MessageType.IsEventNumberDifferent;
+                result.Info.Message = MessageType.EventNumberIsNotDifferent;
                 return result;
             }
         }

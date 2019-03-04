@@ -79,7 +79,7 @@
 
             <!-- Toolbar text-->
             <span class="hidden-sm-and-down" style="cursor: pointer;" @click="changePages('/dashboardpage')">
-              Surgicalogic
+              SurgicaLogic
             </span>
           </v-toolbar-title>
 

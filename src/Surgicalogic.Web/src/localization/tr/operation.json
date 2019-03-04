@@ -17,5 +17,5 @@
   "patientFirstName": "Hasta Adı",
   "patientLastName": "Hasta Soyadı",
   "eventNumber": "Vaka Numarası",
-  "IsEventDifferent": "Aynı vaka numarasına sahip kayıt vardır."
+  "EventNumberIsNotDifferent": "Aynı vaka numarasına sahip kayıt vardır."
 }

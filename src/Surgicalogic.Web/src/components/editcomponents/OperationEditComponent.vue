@@ -154,7 +154,13 @@ export default {
           get() {
             const vm = this;
 
-            return (vm.editAction['eventNumber'] ? vm.editAction['eventNumber'] : "") + (vm.editAction['patientFirstName'] ? " " + vm.editAction['patientFirstName'] : "") + (vm.editAction['patientLastName'] ? " " + vm.editAction['patientLastName'] : "");
+            return (
+              vm.editAction['eventNumber'] ?
+              vm.editAction['eventNumber'] : "") + (vm.editAction['patientFirstName'] ?
+              " " + vm.editAction['patientFirstName'] : "") + (vm.editAction['patientLastName'] ?
+              " " + vm.editAction['patientLastName'] :
+              ""
+            );
           },
 
           set(val) {
@@ -165,11 +171,10 @@ export default {
         },
 
         formTitle() {
-            const vm = this;
+          const vm = this;
 
-            return vm.editIndex === -1
-                ? vm.$i18n.t('operation.addOperationInformation')
-                : vm.$i18n.t('operation.editOperationInformation');
+          return vm.editIndex === -1 ?
+            vm.$i18n.t('operation.addOperationInformation') : vm.$i18n.t('operation.editOperationInformation');
         },
 
         showModal: {
@@ -190,111 +195,111 @@ export default {
         },
 
         operationTypes() {
-            const vm = this;
+          const vm = this;
 
-            return vm.$store.state.operationModule.filteredOperationTypes;
+          return vm.$store.state.operationModule.filteredOperationTypes;
         },
 
         selectOperationType: {
-            get() {
-                const vm = this;
+          get() {
+            const vm = this;
 
-                return vm.editAction.operationTypeId;
-            },
+            return vm.editAction.operationTypeId;
+          },
 
-            set(val) {
-                const vm = this;
+          set(val) {
+            const vm = this;
 
-                vm.editAction.operationTypeId = val;
-            }
+            vm.editAction.operationTypeId = val;
+          }
         },
 
         selectPersonnel: {
-            get() {
-                const vm = this;
+          get() {
+            const vm = this;
 
-                return vm.editAction.personnelIds;
-            },
+            return vm.editAction.personnelIds;
+          },
 
-            set(val) {
-                const vm = this;
+          set(val) {
+            const vm = this;
 
-                vm.editAction.personnelIds = val;
-            }
+            vm.editAction.personnelIds = val;
+          }
         },
 
         selectOperatingRoom: {
-            get() {
-                const vm = this;
+          get() {
+            const vm = this;
 
-                return vm.editAction.blockedOperatingRoomIds;
-            },
+            return vm.editAction.blockedOperatingRoomIds;
+          },
 
-            set(val) {
-                const vm = this;
+          set(val) {
+            const vm = this;
 
-                vm.editAction.blockedOperatingRoomIds = val;
-            }
+            vm.editAction.blockedOperatingRoomIds = val;
+          }
         },
 
         selectOperationTime: {
-            get() {
-                const vm = this;
+          get() {
+            const vm = this;
 
-                return vm.editAction.operationTime;
-            },
+            return vm.editAction.operationTime;
+          },
 
-            set(val) {
-                const vm = this;
+          set(val) {
+            const vm = this;
 
-                vm.editAction.operationTime = val;
-            }
+            vm.editAction.operationTime = val;
+          }
         },
 
         branches() {
-            const vm = this;
+          const vm = this;
 
-            return vm.$store.state.operationModule.allBranches;
+          return vm.$store.state.operationModule.allBranches;
         },
 
         date: {
-            get() {
-                const vm = this;
+          get() {
+            const vm = this;
 
-                if (vm.editAction.date) {
-                    vm.$store.commit('saveGlobalDate', vm.editAction.date);
-                }
-
-                vm.dateFormatted = this.formatDate(vm.$store.state.operationModule.globalDate);
-                return vm.$store.state.operationModule.globalDate;
-            },
-
-            set(newValue) {
-                const vm = this;
-
-                if (newValue) {
-                    vm.editAction.date = newValue;
-                    vm.$store.commit('saveGlobalDate', vm.editAction.date);
-                }
+            if (vm.editAction.date) {
+              vm.$store.commit('saveGlobalDate', vm.editAction.date);
             }
+
+            vm.dateFormatted = this.formatDate(vm.$store.state.operationModule.globalDate);
+            return vm.$store.state.operationModule.globalDate;
+          },
+
+          set(newValue) {
+            const vm = this;
+
+            if (newValue) {
+              vm.editAction.date = newValue;
+              vm.$store.commit('saveGlobalDate', vm.editAction.date);
+            }
+          }
         }
     },
 
     methods: {
         customFilter(item, queryText, itemText) {
-            const vm = this;
+          const vm = this;
 
-            const text = vm.replaceForAutoComplete(item.name);
-            const searchText = vm.replaceForAutoComplete(queryText);
+          const text = vm.replaceForAutoComplete(item.name);
+          const searchText = vm.replaceForAutoComplete(queryText);
 
-            return text.indexOf(searchText) > -1;
+          return text.indexOf(searchText) > -1;
         },
 
         replaceForAutoComplete(text) {
-            return text
-                .replace(/İ/g, 'i')
-                .replace(/I/g, 'ı')
-                .toLowerCase();
+          return text
+            .replace(/İ/g, 'i')
+            .replace(/I/g, 'ı')
+            .toLowerCase();
         },
 
         cancel() {
@@ -368,14 +373,14 @@ export default {
                         patientLastName: vm.editAction.patientLastName,
                         eventNumber: vm.editAction.eventNumber
                     })
-                    .then(response => {
-                        if (response.data.info.succeeded) {
+                    .then(response => {debugger
+                        if (response.data.info.eventNumber) {
                             // vm.savedMessage = this.$i18n.t(
                             //     'appointmentcalendar.appointmentSavedSuccessfully'
                             // );
                         } else {
                             vm.savedMessage = this.$i18n.t(
-                                'operation.IsEventDifferent'
+                                'operation.EventNumberIsNotDifferent'
                             );
                         }
 
