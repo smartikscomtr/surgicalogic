@@ -28,5 +28,6 @@
   "endDateMustBeBiggerThanStart": "Bitiş tarihi başlangıç tarihinden büyük olmalı.",
   "moreThanTenCharacters": "Bu alana en az 10 karakter girmelisiniz.",
   "minute":"dk",
-  "codeIsNotUnique":"Lütfen benzersiz bir kod girin."
+  "codeIsNotUnique":"Lütfen benzersiz bir kod girin.",
+  "eventNumberIsNotDifferent": "Aynı vaka numarasına sahip kayıt vardır."
 }

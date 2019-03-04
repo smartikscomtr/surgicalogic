@@ -87,6 +87,22 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperationOutputModel>> InsertOperation([FromBody] OperationInputModel item)
         {
+            var result = new ResultModel<OperationOutputModel>();
+
+            var isDuplicateEventNumber = await _operationStoreService.IsDuplicateEventNumber(item.EventNumber, item.Id);
+
+            if (isDuplicateEventNumber)
+            {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.EventNumberIsNotDifferent
+                };
+
+                return result;
+            }
+
             var operationTimes = item.OperationTime.Split(':');
 
             var patient = new PatientModel()
@@ -109,34 +125,21 @@ namespace Surgicalogic.Api.Controllers
                 PatientId = patientModel.Result.Id
             };
 
-            var itemDifferent = await _operationStoreService.IsEventNumberDifferent(operationItem.EventNumber);
+            result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
 
-            var result = new ResultModel<OperationOutputModel>();
+            item.Id = result.Result.Id;
 
-            if (itemDifferent == false)
+            if (item.PersonnelIds != null && result.Info.Succeeded)
             {
-                result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
-
-                item.Id = result.Result.Id;
-
-                if (item.PersonnelIds != null && result.Info.Succeeded)
-                {
-                    await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
-                }
-
-                if (item.OperatingRoomIds != null && result.Info.Succeeded)
-                {
-                    await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
-                }
-
-                return result;
-                
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
             }
-            else
+
+            if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {
-                result.Info.Message = MessageType.EventNumberIsNotDifferent;
-                return result;
+                await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -160,6 +163,22 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<OperationOutputModel>> UpdateOperation([FromBody] OperationInputModel item)
         {
+            var result = new ResultModel<OperationOutputModel>();
+
+            var isDuplicateEventNumber = await _operationStoreService.IsDuplicateEventNumber(item.EventNumber, item.Id);
+
+            if (isDuplicateEventNumber)
+            {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.EventNumberIsNotDifferent
+                };
+
+                return result;
+            }
+
             var operationTimes = item.OperationTime.Split(':');
 
             var patient = new PatientModel()
@@ -183,7 +202,7 @@ namespace Surgicalogic.Api.Controllers
                 EventNumber = item.EventNumber
             };
 
-            var result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
+            result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
 
             if (item.PersonnelIds != null && result.Info.Succeeded)
             {

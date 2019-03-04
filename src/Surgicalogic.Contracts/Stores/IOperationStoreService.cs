@@ -16,6 +16,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<OperationNameModel>> GetOperationNamesForHistory();
         Task<List<OperationModel>> GetOperationsByDateAsync(DateTime operationDate);
         Task<List<OperationModel>> GetByIdListAsync(int[] updatedItemIds);
-        Task<bool> IsEventNumberDifferent(string eventNumber);
+        Task<bool> IsDuplicateEventNumber(string eventNumber, int id);
     }
 }
