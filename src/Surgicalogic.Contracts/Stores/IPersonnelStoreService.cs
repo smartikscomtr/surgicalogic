@@ -14,5 +14,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<PersonnelOutputModel>> GetPersonnelsByOperationTypeIdAsync(int operationTypeId);
         Task<PersonnelOutputModel> GetPersonnelByIdAsync(int id);
         Task UpdatePhotoAsync(int id, string fileName);
+        Task<bool> IsDuplicateCode(string personnelCode, int id);
     }
 }

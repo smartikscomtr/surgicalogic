@@ -10,5 +10,6 @@ namespace Surgicalogic.Contracts.Stores
     public interface IEquipmentStoreService : IStoreService<Equipment, EquipmentModel>
     {
         Task<ResultModel<EquipmentOutputModel>> GetNonPortableEquipments();
+        Task<bool> IsDuplicateCode(string code, int id);
     }
 }

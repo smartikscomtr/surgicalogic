@@ -33,5 +33,10 @@ namespace Surgicalogic.Services.Stores
                 Info = new Info()
             };
         }
+
+        public async Task<bool> IsDuplicateCode(string code, int id)
+        {
+            return await GetQueryable().AnyAsync(x => x.Code == code && x.Id != id);
+        }
     }
 }

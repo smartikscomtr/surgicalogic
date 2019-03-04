@@ -244,13 +244,8 @@ export default {
                         equipmentTypeId: vm.selectEquipmentType,
                         operatingRoomIds: vm.editAction.operatingRoomId
                     })
-                    .then(() => {
-                        vm.snackbarVisible = true;
-                        vm.$parent.getEquipments();
-
-                        setTimeout(() => {
-                            vm.snackbarVisible = false;
-                        }, 2300);
+                    .then(response => {
+                        vm.processResult(response);
                     });
             }
 
@@ -266,19 +261,39 @@ export default {
                         equipmentTypeId: vm.selectEquipmentType,
                         operatingRoomIds: vm.editAction.operatingRoomId
                     })
-                    .then(() => {
-                        vm.snackbarVisible = true;
-                        vm.$parent.getEquipments();
-
-                        setTimeout(() => {
-                            vm.snackbarVisible = false;
-                        }, 2300);
+                    .then(response => {
+                        vm.processResult(response);
                     });
             }
+        },
 
-            vm.showModal = false;
-            vm.clear();
-        }
+        processResult(response) {
+          const vm = this;
+
+            if (response.data.info.succeeded){
+                vm.savedMessage= vm.$i18n.t('equipments.equipmentSaved');
+                vm.snackbarVisible = true;
+            }
+            else if (response.data.info.message == errorMessages.CodeIsNotUnique){
+              vm.savedMessage= vm.$i18n.t('common.codeIsNotUnique');
+              vm.snackbarVisible = true;
+              setTimeout(() => {
+                vm.snackbarVisible = false;
+              }, 2300);
+
+              return false;
+            }
+
+            vm.snackbarVisible = true;
+            vm.$parent.getEquipments();
+
+            setTimeout(() => {
+                vm.snackbarVisible = false;
+            }, 2300);
+
+          vm.showModal = false;
+          vm.clear();
+        },
     }
 };
 </script>

@@ -75,6 +75,22 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<EquipmentOutputModel>> InsertEquipment([FromBody] EquipmentInputModel item)
         {
+            var result = new ResultModel<EquipmentOutputModel>();
+
+            var isDuplicateCode = await _equipmentStoreService.IsDuplicateCode(item.Code, item.Id);
+
+            if (isDuplicateCode)
+            {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.CodeIsNotUnique
+                };
+
+                return result;
+            }
+
             var equipmentItem = new EquipmentModel()
             {
                 Name = item.Name,
@@ -84,15 +100,15 @@ namespace Surgicalogic.Api.Controllers
                 EquipmentTypeId = item.EquipmentTypeId
             };
 
-            var model = await _equipmentStoreService.InsertAndSaveAsync<EquipmentOutputModel>(equipmentItem);
+            result = await _equipmentStoreService.InsertAndSaveAsync<EquipmentOutputModel>(equipmentItem);
 
-            if (!item.IsPortable && item.OperatingRoomIds != null && model.Info.Succeeded)
+            if (!item.IsPortable && item.OperatingRoomIds != null && result.Info.Succeeded)
             {
-                item.Id = model.Result.Id;
+                item.Id = result.Result.Id;
                 await _operatingRoomEquipmentStoreService.UpdateEquipmentOperatingRoomsAsync(item);
             }
 
-            return model;
+            return result;
         }
 
         /// <summary>
@@ -124,6 +140,20 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<EquipmentOutputModel>> UpdateEquipments([FromBody] EquipmentInputModel item)
         {
             var result = new ResultModel<EquipmentOutputModel>();
+
+            var isDuplicateCode = await _equipmentStoreService.IsDuplicateCode(item.Code, item.Id);
+
+            if (isDuplicateCode)
+            {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.CodeIsNotUnique
+                };
+
+                return result;
+            }
 
             var equipmentItem = new EquipmentModel()
             {
