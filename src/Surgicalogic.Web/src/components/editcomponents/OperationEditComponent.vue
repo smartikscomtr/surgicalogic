@@ -346,13 +346,8 @@ export default {
                         patientLastName: vm.editAction.patientLastName,
                         eventNumber: vm.editAction.eventNumber
                     })
-                    .then(() => {
-                        vm.snackbarVisible = true;
-                        vm.$parent.getOperations();
-
-                        setTimeout(() => {
-                            vm.snackbarVisible = false;
-                        }, 2300);
+                    .then(response => {
+                        vm.processResult(response);
                     });
             }
 
@@ -373,28 +368,38 @@ export default {
                         patientLastName: vm.editAction.patientLastName,
                         eventNumber: vm.editAction.eventNumber
                     })
-                    .then(response => {debugger
-                        if (response.data.info.eventNumber) {
-                            // vm.savedMessage = this.$i18n.t(
-                            //     'appointmentcalendar.appointmentSavedSuccessfully'
-                            // );
-                        } else {
-                            vm.savedMessage = this.$i18n.t(
-                                'operation.EventNumberIsNotDifferent'
-                            );
-                        }
-
-                        vm.snackbarVisible = true;
-                        vm.$parent.getOperations();
-
-                        setTimeout(() => {
-                            vm.snackbarVisible = false;
-                        }, 2300);
+                    .then(response => {
+                        vm.processResult(response);
                     });
             }
 
             vm.showModal = false;
             vm.clear();
+        },
+
+        processResult(response) {
+          const vm = this;
+
+          if (response.data.info.succeeded){
+              vm.savedMessage= vm.$i18n.t('operation.operationSaved');
+              vm.snackbarVisible = true;
+          }
+          else if (response.data.info.message == errorMessages.EventNumberIsNotDifferent){
+            vm.savedMessage= vm.$i18n.t('common.eventNumberIsNotDifferent');
+            vm.snackbarVisible = true;
+            setTimeout(() => {
+              vm.snackbarVisible = false;
+            }, 2300);
+
+            return false;
+          }
+
+          vm.snackbarVisible = true;
+          vm.$parent.getOperations();
+
+          setTimeout(() => {
+              vm.snackbarVisible = false;
+          }, 2300);
         },
 
         getMinDate() {

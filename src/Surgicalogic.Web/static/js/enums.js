@@ -5,6 +5,6 @@ var errorMessages = {
   InvalidCode: 4,
   PasswordsDoNotMatch: 5,
   AppointmentIsNotAvailable: 6,
-  IsEventNumberDifferent: 7,
+  EventNumberIsNotDifferent: 7,
   CodeIsNotUnique: 8
 };

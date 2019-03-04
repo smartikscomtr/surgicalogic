@@ -38,11 +38,9 @@ namespace Surgicalogic.Services.Stores
             return await GetQueryable().Where(x => x.Date < DateTime.Today.AddDays(1)).ProjectTo<OperationNameModel>().ToListAsync();
         }
 
-        public async Task<bool> IsEventNumberDifferent(string eventNumber)
+        public async Task<bool> IsDuplicateEventNumber(string eventNumber, int id)
         {
-            var a = await GetQueryable().AnyAsync(x => x.EventNumber == eventNumber);
-            
-            return a;
+            return await GetQueryable().AnyAsync(x => x.EventNumber == eventNumber && x.Id != id);
         }
     }
 }
