@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Surgicalogic.Model.CustomModel;
+using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Services.Stores
 {
@@ -35,6 +36,13 @@ namespace Surgicalogic.Services.Stores
         public async Task<List<OperationNameModel>> GetOperationNamesForHistory()
         {
             return await GetQueryable().Where(x => x.Date < DateTime.Today.AddDays(1)).ProjectTo<OperationNameModel>().ToListAsync();
+        }
+
+        public async Task<bool> IsEventNumberDifferent(string eventNumber)
+        {
+            var a = await GetQueryable().AnyAsync(x => x.EventNumber == eventNumber);
+            
+            return a;
         }
     }
 }

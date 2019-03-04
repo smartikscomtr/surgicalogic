@@ -16,5 +16,6 @@
   "patientIdentityNumber": "Patient Identity Number",
   "patientFirstName": "Patient First Name",
   "patientLastName": "Patient Last Name",
-  "eventNumber": "Event Number"
+  "eventNumber": "Event Number",
+  "IsEventDifferent": "afdaf"
 }

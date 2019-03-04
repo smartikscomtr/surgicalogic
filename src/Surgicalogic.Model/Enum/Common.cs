@@ -22,7 +22,8 @@
         UserNotFound = 3,
         InvalidCode = 4,
         PasswordsDoNotMatch = 5,
-        AppointmentIsNotAvailable = 6
+        AppointmentIsNotAvailable = 6,
+        IsEventNumberDifferent = 7
     }
 
     public enum SettingKey

@@ -5,6 +5,7 @@ using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.Enum;
 using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
@@ -108,21 +109,34 @@ namespace Surgicalogic.Api.Controllers
                 PatientId = patientModel.Result.Id
             };
 
-            var result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
+            var itemDifferent = await _operationStoreService.IsEventNumberDifferent(operationItem.EventNumber);
 
-            item.Id = result.Result.Id;
+            var result = new ResultModel<OperationOutputModel>();
 
-            if (item.PersonnelIds != null && result.Info.Succeeded)
+            if (itemDifferent == false)
             {
-                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
-            }
+                result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
 
-            if (item.OperatingRoomIds != null && result.Info.Succeeded)
+                item.Id = result.Result.Id;
+
+                if (item.PersonnelIds != null && result.Info.Succeeded)
+                {
+                    await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+                }
+
+                if (item.OperatingRoomIds != null && result.Info.Succeeded)
+                {
+                    await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
+                }
+
+                return result;
+                
+            }
+            else
             {
-                await _operationBlockedOperatingRoomStoreService.UpdateOperatingRoomsAsync(item);
+                result.Info.Message = MessageType.IsEventNumberDifferent;
+                return result;
             }
-
-            return result;
         }
 
         /// <summary>

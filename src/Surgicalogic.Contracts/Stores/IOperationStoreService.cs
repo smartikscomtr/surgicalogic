@@ -7,6 +7,7 @@ using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.CustomModel;
 using Surgicalogic.Model.EntityModel;
 using Surgicalogic.Model.InputModel;
+using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Contracts.Stores
 {
@@ -15,5 +16,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<OperationNameModel>> GetOperationNamesForHistory();
         Task<List<OperationModel>> GetOperationsByDateAsync(DateTime operationDate);
         Task<List<OperationModel>> GetByIdListAsync(int[] updatedItemIds);
+        Task<bool> IsEventNumberDifferent(string eventNumber);
     }
 }

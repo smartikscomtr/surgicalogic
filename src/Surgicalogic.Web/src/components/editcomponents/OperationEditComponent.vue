@@ -368,7 +368,17 @@ export default {
                         patientLastName: vm.editAction.patientLastName,
                         eventNumber: vm.editAction.eventNumber
                     })
-                    .then(() => {
+                    .then(response => {
+                        if (response.data.info.succeeded) {
+                            // vm.savedMessage = this.$i18n.t(
+                            //     'appointmentcalendar.appointmentSavedSuccessfully'
+                            // );
+                        } else {
+                            vm.savedMessage = this.$i18n.t(
+                                'operation.IsEventDifferent'
+                            );
+                        }
+
                         vm.snackbarVisible = true;
                         vm.$parent.getOperations();
 
