@@ -17,7 +17,7 @@
   "patient": "Hasta",
   "appointmentDate": "Randevu Tarihi",
   "overtimeUtilizationReport": "Fazla Mesai ve Kullanım Oranı Raporu",
-  "overTime":"Fazla Mesai",
+  "overTime":"Fazla Mesai (dk)",
   "utilization": "Kullanım Oranı",
   "operatingRoom": "Operasyon Odası",
   "operationStartDate": "Operasyon Başlangıç Tarihi",

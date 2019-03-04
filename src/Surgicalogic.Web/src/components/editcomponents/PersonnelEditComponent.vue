@@ -330,7 +330,7 @@ export default {
             this.$refs.file.click ()
         },
 
-        processResult(response){
+        processResult(response) {
           const vm = this;
 
             if (response.data.info.succeeded){

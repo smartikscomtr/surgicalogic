@@ -28,7 +28,7 @@
                 small
                 @click="$router.push('/operationpage')"
               >
-                <span class="text"
+                <span class="text text-wrap"
                       lang="tr">
                   {{ $t('common.go') }}
                 </span>
@@ -59,7 +59,7 @@
                 small
                 @click="$router.push('/planarrangementspage')"
               >
-                <span class="text"
+                <span class="text text-wrap"
                       lang="tr">
                   {{ $t('common.go') }}
                 </span>
@@ -90,7 +90,7 @@
                 small
                 @click="$router.push('/clinicpage')"
               >
-                <span class="text"
+                <span class="text text-wrap"
                       lang="tr">
                   {{ $t('common.go') }}
                 </span>
@@ -121,7 +121,7 @@
                 small
                 @click="$router.push('/personnelpage')"
               >
-                <span class="text"
+                <span class="text text-wrap"
                       lang="tr">
                   {{ $t('common.go') }}
                 </span>

@@ -372,9 +372,6 @@ export default {
                         vm.processResult(response);
                     });
             }
-
-            vm.showModal = false;
-            vm.clear();
         },
 
         processResult(response) {
@@ -400,6 +397,9 @@ export default {
           setTimeout(() => {
               vm.snackbarVisible = false;
           }, 2300);
+
+          vm.showModal = false;
+          vm.clear();
         },
 
         getMinDate() {

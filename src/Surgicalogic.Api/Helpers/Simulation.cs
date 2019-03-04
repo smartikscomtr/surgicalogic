@@ -271,7 +271,7 @@ namespace Surgicalogic.Api.Helpers
                 OperatingRoomId = plan[0].OperatingRoomId,
                 Usage = (double)usage / ((double)(workingEndTime - workingStartTime).TotalMinutes / (double)period) * 100,
                 OverTime = plan.LastOrDefault().EndPeriod > Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period) ? (plan.LastOrDefault().EndPeriod - Convert.ToInt32((workingEndTime - workingStartTime).TotalMinutes / period)) * period : 0,
-                WaitingTime = waitingPeriod / plan.Count,
+                WaitingTime = Convert.ToInt32(waitingPeriod / plan.Count),
                 OperatingRoomName = plan[0].OperatingRoomName.ToString()
             };
         }
@@ -317,7 +317,7 @@ namespace Surgicalogic.Api.Helpers
                     OperatingRoomName = ListGroup[a].OperatingRoomName,
                     Usage = Math.Round(usage / (double)plan.Count, 2),
                     OverTime = overTime / plan.Count,
-                    WaitingTime = Math.Round((waitingTime / plan.Count), 2)
+                    WaitingTime = Math.Round((waitingTime / plan.Count), 0)
                 });
             }
 

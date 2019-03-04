@@ -3,7 +3,7 @@
   "operation": "Operasyon",
   "simulation": "Simülasyon",
   "simulate": "Simülasyonu Çalıştır",
-  "overtime": "Fazla Mesai",
+  "overtime": "Fazla Mesai (dk)",
   "usage": "Kullanım Oranı",
-  "waitingTime": "Bekleme Süresi"
+  "waitingTime": "Bekleme Süresi (dk)"
 }

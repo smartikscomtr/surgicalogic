@@ -3,7 +3,7 @@
   "operation": "Operatiion",
   "simulation": "Simulation",
   "simulate": "Simulate",
-  "overtime": "Overtime",
+  "overtime": "Overtime (min)",
   "usage": "Usage Rate",
-  "waitingTime": "Waiting Time"
+  "waitingTime": "Waiting Time (min)"
 }

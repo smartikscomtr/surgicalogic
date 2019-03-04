@@ -27,5 +27,7 @@
   "moreThanTenCharacters": "This field must be more than 10 characters",
   "minute":"min",
   "codeIsNotUnique":"Code is not unique.",
-  "eventNumberIsNotDifferent": "Event number is not different."
+  "eventNumberIsNotDifferent": "Event number is not unique.",
+  "emailIsNotUnique":"Email is not unique.",
+  "invalidEmail": "Invalid e-mail"
 }
