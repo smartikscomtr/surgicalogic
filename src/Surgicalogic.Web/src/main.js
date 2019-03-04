@@ -17,6 +17,7 @@ import { i18n } from './plugins/vue-i18n';
 import router from './router';
 import Authentication from './plugins/authentication-plugin.js';
 import VueChartkick from 'vue-chartkick';
+import Chart from 'chart.js'
 
 var VueCookie = require('vue-cookie');
 /* ============
@@ -33,7 +34,7 @@ Vue.use(Vuetify);
 Vue.use(Authentication);
 Vue.use(require('vue-moment'));
 Vue.use(VueCookie);
-Vue.use(VueChartkick);
+Vue.use(VueChartkick, {adapter: Chart});
 
 // Registering Components
 import DeleteComponent from '@/components/DeleteComponent';
