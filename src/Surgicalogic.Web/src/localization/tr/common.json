@@ -27,5 +27,6 @@
   "required":"Zorunlu Alan",
   "endDateMustBeBiggerThanStart": "Bitiş tarihi başlangıç tarihinden büyük olmalı.",
   "moreThanTenCharacters": "Bu alana en az 10 karakter girmelisiniz.",
-  "minute":"dk"
+  "minute":"dk",
+  "codeIsNotUnique":"Lütfen benzersiz bir kod girin."
 }

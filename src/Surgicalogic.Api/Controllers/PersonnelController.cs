@@ -104,6 +104,21 @@ namespace Surgicalogic.Api.Controllers
         public async Task<ResultModel<PersonnelOutputModel>> InsertPersonnel([FromForm] PersonnelInputModel item)
         {
             var result = new ResultModel<PersonnelOutputModel>();
+
+            var isDuplicateCode = await _personnelStoreService.IsDuplicateCode(item.PersonnelCode, item.Id);
+
+            if (isDuplicateCode)
+            {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.CodeIsNotUnique
+                };
+
+                return result;
+            }
+
             var personnelItem = new PersonnelModel()
             {
                 PersonnelCode = item.PersonnelCode,
@@ -176,7 +191,21 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<ResultModel<PersonnelOutputModel>> UpdatePersonnel([FromForm] PersonnelInputModel item)
         {
-            var result = new ResultModel<PersonnelOutputModel>() { Info = new Info() };
+            var result = new ResultModel<PersonnelOutputModel> { Info = new Info() };
+
+            var isDuplicateCode = await _personnelStoreService.IsDuplicateCode(item.PersonnelCode, item.Id);
+
+            if (isDuplicateCode)
+            {
+                result.Info = new Info
+                {
+                    Succeeded = false,
+                    InfoType = Model.Enum.InfoType.Error,
+                    Message = Model.Enum.MessageType.CodeIsNotUnique
+                };
+
+                return result;
+            }
 
             var personnelItem = new PersonnelModel()
             {
@@ -186,7 +215,7 @@ namespace Surgicalogic.Api.Controllers
                 LastName = item.LastName,
                 PersonnelCategoryId = item.PersonnelCategoryId,
                 PersonnelTitleId = item.PersonnelTitleId,
-                PictureUrl = item.PictureUrl,
+                PictureUrl = item.PictureUrl.Split('/').LastOrDefault(),
                 WorkTypeId = item.WorkTypeId
             };
 

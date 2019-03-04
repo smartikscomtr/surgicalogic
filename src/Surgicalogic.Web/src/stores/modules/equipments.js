@@ -31,10 +31,12 @@ const equipmentModule = {
     },
 
     updateEquipment(state, payload) {
-      state.equipments.forEach(element => {
-        if (element.id == payload.id)
-          Object.assign(element, payload);
-      });
+      if (payload){
+        state.equipments.forEach(element => {
+          if (element.id == payload.id)
+            Object.assign(element, payload);
+        });
+      }
     },
 
     setAllEquipmentTypes(state, payload) {

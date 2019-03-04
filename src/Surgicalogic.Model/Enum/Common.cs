@@ -23,7 +23,8 @@
         InvalidCode = 4,
         PasswordsDoNotMatch = 5,
         AppointmentIsNotAvailable = 6,
-        IsEventNumberDifferent = 7
+        IsEventNumberDifferent = 7,
+        CodeIsNotUnique = 8
     }
 
     public enum SettingKey

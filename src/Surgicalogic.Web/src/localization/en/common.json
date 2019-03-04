@@ -25,5 +25,6 @@
   "required":"Required Field",
   "endDateMustBeBiggerThanStart": "The End Date Must Be Bigger Than Start Date",
   "moreThanTenCharacters": "This field must be more than 10 characters",
-  "minute":"min"
+  "minute":"min",
+  "codeIsNotUnique":"Code is not unique."
 }

@@ -151,7 +151,10 @@ const personnelModule = {
         }
         })
           .then(response => {
-            context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
+            if (response.data.info.succeeded){
+              context.commit('updatePersonnel', response.data.result) //Update the Personnel in the store
+            }
+
             resolve(response);
           })
       });

@@ -58,5 +58,10 @@ namespace Surgicalogic.Services.Stores
             entity.PictureUrl = fileName;
             await UpdateAndSaveAsync(entity);
         }
+
+        public async Task<bool> IsDuplicateCode(string personnelCode, int id)
+        {
+            return await GetQueryable().AnyAsync(x => x.PersonnelCode == personnelCode && x.Id != id);
+        }
     }
 }
