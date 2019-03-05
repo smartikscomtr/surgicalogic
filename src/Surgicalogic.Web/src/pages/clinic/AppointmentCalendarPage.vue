@@ -127,7 +127,8 @@ export default {
             address: null,
             maxDateDayCount: null,
             snackbarVisible: null,
-            savedMessage: null
+            savedMessage: null,
+            dateChanged: false
         };
     },
 
@@ -135,6 +136,7 @@ export default {
         date(val) {
             const vm = this;
 
+            vm.dateChanged = true;
             vm.dateFormatted = vm.formatDate(vm.date);
         }
     },
@@ -211,12 +213,16 @@ export default {
             return `${year}-${month}-${day}`;
         },
 
-        destroyPicker() {
+        destroyPicker(manual) {
             const vm = this;
 
-            vm.showModal = false;
-            vm.picker.setTime('');
-            vm.picker.destroy();
+            if (manual || vm.dateChanged)
+            {
+              vm.showModal = false;
+              vm.picker.setTime('');
+              vm.picker.destroy();
+              vm.dateChanged = false;
+            }
         },
 
         clear () {
@@ -273,7 +279,7 @@ export default {
             const vm = this;
 
             if (vm.picker) {
-                vm.destroyPicker();
+                vm.destroyPicker(true);
             }
 
             const AppointmentPicker = require('appointment-picker');
