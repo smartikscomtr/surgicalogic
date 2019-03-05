@@ -33,12 +33,12 @@
                           :label="$t('feedbacks.body')">
               </v-textarea>
             </v-flex>
-              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-                <v-btn class="btnSave orangeButton"
-                      @click.native="save">
+
+          <v-card-actions class="justify-end flex">
+              <v-btn class="btnSave orangeButton" @click.native="save">
               {{ $t('menu.save') }}
-                </v-btn>
-            </v-flex>
+              </v-btn>
+          </v-card-actions>
           </v-layout>
         </v-card-text>
         </v-form>
