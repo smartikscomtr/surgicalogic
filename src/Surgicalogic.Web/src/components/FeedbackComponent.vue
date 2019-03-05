@@ -22,7 +22,8 @@
           <v-layout wrap edit-layout>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="email"
-                              :label="$t('feedbacks.email')">
+                              :label="$t('feedbacks.email')"
+                               :rules="[rules.required, rules.email]">
                 </v-text-field>
               </v-flex>
 
@@ -33,12 +34,12 @@
                           :label="$t('feedbacks.body')">
               </v-textarea>
             </v-flex>
-              <v-flex xs12 sm12 md12 text-lg-right text-md-right text-sm-right text-xs-right margin-bottom-none>
-                <v-btn class="btnSave orangeButton"
-                      @click.native="save">
+
+          <v-card-actions class="justify-end flex">
+              <v-btn class="btnSave orangeButton" @click.native="save">
               {{ $t('menu.save') }}
-                </v-btn>
-            </v-flex>
+              </v-btn>
+          </v-card-actions>
           </v-layout>
         </v-card-text>
         </v-form>
@@ -65,7 +66,15 @@ export default {
       required: [
         v => !!v || this.$i18n.t('common.required'),
         v => (v && v.length >= 10) || this.$i18n.t('common.moreThanTenCharacters')
-      ]
+      ],
+      rules: {
+        required: v => !!v || this.$i18n.t('common.required'),
+        multipleRequired: v => (v && v.length >= 10) || this.$i18n.t('common.moreThanTenCharacters'),
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || this.$i18n.t('common.invalidEmail')
+        }
+      }
     }
   },
 
