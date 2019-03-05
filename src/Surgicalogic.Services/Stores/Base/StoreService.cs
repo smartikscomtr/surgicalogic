@@ -95,7 +95,19 @@ namespace Surgicalogic.Services.Stores.Base
                 projectQuery = projectQuery.Skip((input.CurrentPage - 1) * input.PageSize).Take(input.PageSize);
             }
 
-            var result = await projectQuery.ToListAsync();
+            var result = new List<TModel>();
+            try
+            {
+                result = await projectQuery.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                //TODO: EF Core sürümü oluşturduğumuz sorguyu bazı istisnai durumlarda async olarak çalıştırmıyor. Geçici olarak bu şekilde yaptım, yeni sürümlerde ya da sorguyu değiştirerek inceleyeceğim.  
+                if (ex.Message.Contains("IAsyncEnumerable"))
+                {
+                    result = projectQuery.ToList();
+                }
+            }
 
             return new ResultModel<TModel>
             {

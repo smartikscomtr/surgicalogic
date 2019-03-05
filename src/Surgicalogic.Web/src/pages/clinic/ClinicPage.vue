@@ -17,7 +17,7 @@
     <v-layout row wrap class="column-cards">
       <v-flex v-for="(doctorCard, i) in doctorCards" :key="i" lg3 md3 sm6 xs12>
         <v-card class="clinic-branch">
-          <img :src="doctorCard.pictureUrl" height="150px" />
+          <img :src="doctorCard.pictureUrl" @error="imageNotFound(doctorCards,i)" height="150px" />
 
           <span class="doctorName-wrap" v-text="doctorCard.personnelTitleName">
           </span>
@@ -107,6 +107,11 @@ export default {
             const max = 560;
 
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+
+
+        imageNotFound(doctorCards, index){
+          doctorCards[index].pictureUrl = "/static/images/no-image.png"
         },
 
         customFilter(item, queryText, itemText) {

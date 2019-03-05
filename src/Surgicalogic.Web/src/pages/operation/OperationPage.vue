@@ -85,7 +85,7 @@ export default {
         },
         {
           value:'operationTypeName',
-          sortable:'OperationType.Name',
+          sortBy:'OperationType.Name',
           text: vm.$i18n.t('operation.operationType'),
           sortable: true,
           align: 'left'
