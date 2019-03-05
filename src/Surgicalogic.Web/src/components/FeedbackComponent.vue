@@ -22,7 +22,8 @@
           <v-layout wrap edit-layout>
               <v-flex xs12 sm12 md12>
                 <v-text-field v-model="email"
-                              :label="$t('feedbacks.email')">
+                              :label="$t('feedbacks.email')"
+                               :rules="[rules.required, rules.email]">
                 </v-text-field>
               </v-flex>
 
@@ -65,7 +66,15 @@ export default {
       required: [
         v => !!v || this.$i18n.t('common.required'),
         v => (v && v.length >= 10) || this.$i18n.t('common.moreThanTenCharacters')
-      ]
+      ],
+      rules: {
+        required: v => !!v || this.$i18n.t('common.required'),
+        multipleRequired: v => (v && v.length >= 10) || this.$i18n.t('common.moreThanTenCharacters'),
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || this.$i18n.t('common.invalidEmail')
+        }
+      }
     }
   },
 
