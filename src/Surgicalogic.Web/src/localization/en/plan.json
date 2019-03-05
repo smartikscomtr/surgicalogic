@@ -9,5 +9,6 @@
   "operations": "Operations",
   "futurePlan": "Future Plan",
   "planningHistoryReport": "Operation History Report",
-  "operationRoomName": "Operation Room"
+  "operationRoomName": "Operation Room",
+  "planningHistory": "Planning History Report"
 }

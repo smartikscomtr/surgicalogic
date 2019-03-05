@@ -8,5 +8,6 @@
   "name": "Name",
   "equipmentCode":"Equipment Code",
   "portable" : "Portablity",
-  "type": "Type"
+  "type": "Type",
+  "equipmentSaved": "Equipment saved."
 }

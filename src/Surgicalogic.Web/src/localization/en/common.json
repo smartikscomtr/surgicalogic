@@ -1,10 +1,12 @@
 {
   "actions": "Actions",
-  "add": "New Add",
+  "add": "Add",
   "areYouSureWantToDelete": "Are you sure want to delete ?",
   "deleteOperation": "Delete Operation",
   "description": "Description",
   "doYouWantToDeleteTheRecord": "Do you want to delete the record?",
+  "doYouWantToDeleteTheCode": "will be deleted. Are you sure?",
+  "doYouWantToDeleteTheName": "will be deleted. Are you sure?",
   "resetPassword": "Reset Password",
   "doYouWantToResetPassword": "Do you want to reset password?",
   "name": "Name",

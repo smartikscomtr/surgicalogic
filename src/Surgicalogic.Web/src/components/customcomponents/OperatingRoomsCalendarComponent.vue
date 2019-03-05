@@ -100,14 +100,14 @@ export default {
       return [
         {
           value: 'startDate',
-          text: "Başlangıç Tarihi", //vm.$i18n.t('operatingrooms.operatingRoom'),
+          text: `${vm.$i18n.t('operatingroomscalendar.startDate')}`,
           sortable: true,
           align: 'left',
           isDateTime:true
         },
         {
           value: 'endDate',
-          text: 'Bitiş Tarihi', //vm.$i18n.t('operatingrooms.location'),
+          text: `${vm.$i18n.t('operatingroomscalendar.endDate')}`,
           sortable: true,
           align: 'left',
           isDateTime:true

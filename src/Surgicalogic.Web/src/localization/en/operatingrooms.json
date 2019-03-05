@@ -11,5 +11,6 @@
   "size": "Size",
   "width": "Width",
   "operatingRoomsCalendar": "Operating Room Unavailability Calendar",
-  "isAvailable":"Available"
+  "isAvailable":"Available",
+  "operatingRoomSaved": "Operating room saved."
 }

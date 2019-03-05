@@ -24,5 +24,7 @@
   "appointmentEndDate": "Appointment End Date",
   "clear": "Clear",
   "room": "Room",
-  "notFoundRoomInfo": "Room info not found."
+  "notFoundRoomInfo": "Room info not found.",
+  "plannedStartDate":"Planned Start Date",
+  "plannedEndDate":"Planned End Date"
 }

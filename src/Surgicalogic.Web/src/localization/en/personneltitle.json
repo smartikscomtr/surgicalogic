@@ -1,7 +1,8 @@
 {
   "addPersonnelTitleInformation": "Add Personnel Titles Information",
-  "editWPersonnelTitleInformation": "Edit Personnel Titles Information",
+  "editPersonnelTitleInformation": "Edit Personnel Titles Information",
   "personnelTitle": "Personnel Title",
   "personnelTitles": "Personnel Titles",
-  "suitableForMultipleOperation": "Could it be involved in more than one operation at the same time?"
+  "suitableForMultipleOperation": "Could it be involved in more than one operation at the same time?",
+  "personnelTitleSaved": "Personnel title saved."
 }

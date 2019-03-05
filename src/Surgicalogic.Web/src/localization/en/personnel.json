@@ -7,7 +7,8 @@
   "personnelCode": "Code",
   "personnelTitle": "Title",
   "personnels": "Personnels",
-  "personnelCategory": "Title",
+  "personnelCategory": "Category",
   "doctor": "Doctor",
-  "personnelPhoto":"Photo"
+  "personnelPhoto":"Photo",
+  "personnelSaved": "Personel saved."
 }

@@ -8,5 +8,6 @@
   "password": "Password",
   "users": "Users",
   "userName": "User Name",
-  "isAdmin":"Administrator"
+  "isAdmin":"Administrator",
+  "userSaved": "User saved."
 }

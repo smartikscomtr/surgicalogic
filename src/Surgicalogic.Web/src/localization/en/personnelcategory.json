@@ -1,7 +1,8 @@
 {
-  "addPersonnelCategoryInformation": "Add Personnel Categories Information",
-  "editWPersonnelCategoriesInformation": "Edit Personnel Categories Information",
+  "addPersonnelCategoriesInformation": "Add Personnel Categories Information",
+  "editPersonnelCategoriesInformation": "Edit Personnel Categories Information",
   "personnelCategory": "Personnel Category",
   "personnelCategories": "Personnel Categories",
-  "suitableForMultipleOperation": "Could it be involved in more than one operation at the same time?"
+  "suitableForMultipleOperation": "Could it be involved in more than one operation at the same time?",
+  "personnelCategorySaved": "Personel type saved."
 }
