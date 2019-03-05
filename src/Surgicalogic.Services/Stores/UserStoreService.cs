@@ -180,5 +180,10 @@ namespace Surgicalogic.Services.Stores
                 Info = new Info()
             };
         }
+
+        public async Task<bool> IsDuplicateEmail(string email, int id)
+        {
+            return await GetQueryable().AnyAsync(x => x.Email == email && x.Id != id);
+        }
     }
 }

@@ -138,8 +138,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationPlanModel, OperationPlanOutputModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.OperationId))
                  .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.OperatingRoomId))
-                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Operation.Name))
-                 .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.OperatingRoom.Name))
+                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Operation.Name + " - " + src.Operation.OperationType.Name))
+                 .ForMember(dest => dest.title, opt => opt.MapFrom(src => string.Join("<br/> ", src.Operation.OperationPersonels.Where(x => x.IsActive).Select(x => x.Personnel.PersonnelTitle.Name + " " + x.Personnel.FirstName + " " + x.Personnel.LastName))))
                  .ForMember(dest => dest.operationPlanId, opt => opt.MapFrom(src => src.Id))
                  .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
                  .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));
@@ -201,9 +201,9 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<SettingDataTypeModel, SettingDataTypeOutputModel>();
             config.CreateMap<SimulationResultModel, SimulationOutputModel>()
                 .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoomName))
-                .ForMember(dest => dest.OverTime, opt => opt.MapFrom(src => src.OverTime + " dk"))
+                .ForMember(dest => dest.OverTime, opt => opt.MapFrom(src => src.OverTime))
                 .ForMember(dest => dest.Usage, opt => opt.MapFrom(src => "%" + src.Usage))
-                .ForMember(dest => dest.WaitingTime, opt => opt.MapFrom(src => src.WaitingTime + " dk"));
+                .ForMember(dest => dest.WaitingTime, opt => opt.MapFrom(src => src.WaitingTime));
             config.CreateMap<UserModel, UserOutputModel>()
                 .ForMember(src => src.IsAdmin, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkTypeOutputModel>();
@@ -279,8 +279,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationPlan, OperationPlanOutputModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.OperationId))
                  .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.OperatingRoomId))
-                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Operation.Name))
-                 .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.OperatingRoom.Name))
+                 .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Operation.Name + " - " + src.Operation.OperationType.Name))
+                 .ForMember(dest => dest.title, opt => opt.MapFrom(src => string.Join("<br/> ", src.Operation.OperationPersonels.Where(x => x.IsActive).Select(x => x.Personnel.PersonnelTitle.Name + " " + x.Personnel.FirstName + " " + x.Personnel.LastName))))
                  .ForMember(dest => dest.operationPlanId, opt => opt.MapFrom(src => src.Id))
                  .ForMember(dest => dest.start, opt => opt.MapFrom(src => src.OperationDate.ToString("yyyy-MM-dd HH:mm:ss")))
                  .ForMember(dest => dest.end, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime).ToString("yyyy-MM-dd HH:mm:ss")));

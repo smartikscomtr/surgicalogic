@@ -103,7 +103,6 @@
 
         <column-chart :data="overtimeChartData"
                    donut
-                   suffix=" dk"
                    :messages="{empty: $t('report.notFoundRoomInfo')}">
         </column-chart>
       </v-flex>

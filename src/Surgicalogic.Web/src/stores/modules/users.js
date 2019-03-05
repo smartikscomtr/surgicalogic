@@ -29,10 +29,12 @@ const usersModule = {
     },
 
     updateUser(state, payload) {
-      state.users.forEach(element => {
-        if (element.id == payload.id)
-          Object.assign(element, payload);
-      });
+      if (payload){
+        state.users.forEach(element => {
+          if (element.id == payload.id)
+            Object.assign(element, payload);
+        });
+      }
     }
   },
 

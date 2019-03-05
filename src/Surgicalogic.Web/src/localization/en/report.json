@@ -15,7 +15,7 @@
   "patient": "Patient",
   "appointmentDate": "Appointment Date",
   "overtimeUtilizationReport": "Overtime Utilization Report",
-  "overTime":"Overtime",
+  "overTime":"Overtime (min)",
   "utilization": "Utilization",
   "operatingRoom": "Operating Room",
   "operationStartDate": "Operation Start Date",

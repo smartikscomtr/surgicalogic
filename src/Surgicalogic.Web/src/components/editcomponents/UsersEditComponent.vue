@@ -18,7 +18,7 @@
         <v-card-text>
           <v-layout wrap edit-layout>
             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['userName']"  :rules="required" :label="$t('users.userName')">
+              <v-text-field v-model="editAction['userName']"  :rules="[rules.required]" :label="$t('users.userName')">
               </v-text-field>
             </v-flex>
 
@@ -28,7 +28,7 @@
             </v-flex>
 
             <v-flex xs12 sm12 md12>
-              <v-text-field v-model="editAction['email']"  :rules="required" :label="$t('users.email')">
+              <v-text-field v-model="editAction['email']"  :rules="[rules.required, rules.email]" :label="$t('users.email')">
               </v-text-field>
             </v-flex>
 
@@ -83,12 +83,14 @@ export default {
             snackbarVisible: null,
             savedMessage: this.$i18n.t('users.userSaved'),
             valid: true,
-            required: [
-              v => !!v || this.$i18n.t('common.required')
-            ],
-            multipleRequired: [
-              v =>!!v && v.length > 0 || this.$i18n.t('common.required')
-            ]
+            rules: {
+              required: value => !!value || this.$i18n.t('common.required'),
+              multipleRequired: v =>!!v && v.length > 0 || this.$i18n.t('common.required'),
+              email: value => {
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                return pattern.test(value) || this.$i18n.t('common.invalidEmail')
+              }
+            }
         };
     },
 
@@ -150,13 +152,8 @@ export default {
                         email: vm.editAction.email,
                         isAdmin: vm.editAction.isAdmin
                     })
-                    .then(() => {
-                        vm.snackbarVisible = true;
-                        vm.$parent.getUsers();
-
-                        setTimeout(() => {
-                            vm.snackbarVisible = false;
-                        }, 2300);
+                    .then(response => {
+                        vm.processResult(response);
                     });
             }
             //Add work type
@@ -168,18 +165,10 @@ export default {
                         email: vm.editAction.email,
                         isAdmin: vm.editAction.isAdmin
                     })
-                    .then(() => {
-                        vm.snackbarVisible = true;
-                        vm.$parent.getUsers();
-
-                        setTimeout(() => {
-                            vm.snackbarVisible = false;
-                        }, 2300);
+                    .then(response => {
+                        vm.processResult(response);
                     });
             }
-
-            vm.showModal = false;
-            vm.clear();
         },
 
         resetPassword(item) {
@@ -197,7 +186,35 @@ export default {
                         vm.snackbarVisible = false;
                     }, 2300);
                 });
-        }
+        },
+
+         processResult(response) {
+          const vm = this;
+
+            if (response.data.info.succeeded){
+                vm.savedMessage= vm.$i18n.t('users.userSaved');
+                vm.snackbarVisible = true;
+            }
+            else if (response.data.info.message == errorMessages.CodeIsNotUnique){
+              vm.savedMessage= vm.$i18n.t('common.emailIsNotUnique');
+              vm.snackbarVisible = true;
+              setTimeout(() => {
+                vm.snackbarVisible = false;
+              }, 2300);
+
+              return false;
+            }
+
+            vm.snackbarVisible = true;
+            vm.$parent.getUsers();
+
+            setTimeout(() => {
+                vm.snackbarVisible = false;
+            }, 2300);
+
+          vm.showModal = false;
+          vm.clear();
+        },
     }
 };
 </script>

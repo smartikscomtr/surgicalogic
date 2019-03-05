@@ -68,7 +68,7 @@ namespace Surgicalogic.Api.Controllers
             foreach (var item in users.Result)
             {
                 var email = (string)item.Email;
-                var user = _userManager.Users.SingleOrDefault(r => r.Email == email);
+                var user = _userManager.Users.SingleOrDefault(r => r.Email == email && r.IsActive);
                 item.IsAdmin = await _userManager.IsInRoleAsync(user, AppSettings.AdminRole);
             }
 
@@ -105,6 +105,23 @@ namespace Surgicalogic.Api.Controllers
                 Email = item.Email,
             };
 
+            var isDuplicateEmail = await _userStoreService.IsDuplicateEmail(item.Email, item.Id);
+
+            if (isDuplicateEmail)
+            {
+                var errorResult = new ResultModel<UserOutputModel>
+                {
+                    Info = new Info
+                    {
+                        Succeeded = false,
+                        InfoType = Model.Enum.InfoType.Error,
+                        Message = Model.Enum.MessageType.CodeIsNotUnique
+                    }
+                };
+
+                return errorResult;
+            }
+
             var result =  await _userStoreService.InsertAndSaveAsync<UserOutputModel>(userItem);
 
             await SetUserRolesAsync(item.Email, item.IsAdmin);
@@ -139,6 +156,23 @@ namespace Surgicalogic.Api.Controllers
                 UserName = item.UserName,
                 Email = item.Email
             };
+
+            var isDuplicateEmail = await _userStoreService.IsDuplicateEmail(item.Email, item.Id);
+
+            if (isDuplicateEmail)
+            {
+                var errorResult = new ResultModel<UserModel>
+                {
+                    Info = new Info
+                    {
+                        Succeeded = false,
+                        InfoType = Model.Enum.InfoType.Error,
+                        Message = Model.Enum.MessageType.CodeIsNotUnique
+                    }
+                };
+
+                return errorResult;
+            }
 
             var updateResult = await _userStoreService.UpdateAndSaveAsync(userItem);
 

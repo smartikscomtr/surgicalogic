@@ -1,14 +1,14 @@
 {
   "actions": "Aksiyon",
   "add": "Yeni Ekle",
-  "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz ?",
+  "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz?",
   "deleteOperation": "Silme İşlemi",
   "description": "Açıklama",
-  "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz ?",
-  "doYouWantToDeleteTheCode": "kodlu kaydı silmek istediğinize emin misiniz ?",
-  "doYouWantToDeleteTheName": "kaydını silmek istediğinize emin misiniz ?",
+  "doYouWantToDeleteTheRecord": "Kaydı silmek istediğinize emin misiniz?",
+  "doYouWantToDeleteTheCode": "kodlu kaydı silmek istediğinize emin misiniz?",
+  "doYouWantToDeleteTheName": "kaydını silmek istediğinize emin misiniz?",
   "resetPassword": "Şifreyi Sıfırla",
-  "doYouWantToResetPassword": "Kullanıcının şifresini sıfırlamak istiyor musunuz ?",
+  "doYouWantToResetPassword": "Kullanıcının şifresini sıfırlamak istiyor musunuz?",
   "name": "Ad",
   "no": "Hayır",
   "yes": "Evet",
@@ -28,6 +28,8 @@
   "endDateMustBeBiggerThanStart": "Bitiş tarihi başlangıç tarihinden büyük olmalı.",
   "moreThanTenCharacters": "Bu alana en az 10 karakter girmelisiniz.",
   "minute":"dk",
-  "codeIsNotUnique":"Lütfen benzersiz bir kod girin.",
-  "eventNumberIsNotDifferent": "Aynı vaka numarasına sahip kayıt vardır."
+  "codeIsNotUnique":"Aynı koda sahip bir kayıt zaten var.",
+  "eventNumberIsNotDifferent": "Aynı vaka numarasına sahip bir kayıt zaten var.",
+  "emailIsNotUnique":"Aynı emaile sahip bir kullanıcı zaten var.",
+  "invalidEmail": "Geçersiz e-posta adresi."
 }

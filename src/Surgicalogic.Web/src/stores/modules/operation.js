@@ -46,10 +46,12 @@ const operationModule = {
     },
 
     updateOperation(state, payload) {
-      state.operation.forEach(element => {
-        if (element.id == payload.id)
-          Object.assign(element, payload);
-      });
+      if (payload){
+        state.operation.forEach(element => {
+          if (element.id == payload.id)
+            Object.assign(element, payload);
+        });
+      }
     },
 
     setAllOperationTypeForOperation(state, payload) {

@@ -51,12 +51,14 @@
 }
 .orangeButton .v-btn__content {
   color: #fff;
+  text-transform: none !important;
 }
 .close-wrap {
   color: #ff7107 !important;
 }
 .orangeButton {
   background-color: #ff7107 !important;
+  text-transform: none !important;
 }
 .v-dialog:not(.dialog--fullscreen) {
   max-height: inherit;
@@ -689,6 +691,7 @@ div.vis-tooltip {
 }
 .span-color {
   color: #fff;
+  text-transform: none !important;
 }
 .btn-wrap {
   display: flex;
@@ -700,4 +703,7 @@ div.vis-tooltip {
   align-items: center;
   flex-direction: column;
   display: flex;
+}
+.text-wrap{
+  text-transform: none !important;
 }

@@ -87,7 +87,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 {
                     OperatingRoomId = item,
                     OperatingRoom = operatingRooms.Where(x => x.Id == item).First().Name,
-                    Overtime = overtime + " dk",
+                    Overtime = overtime.ToString(),
                     Utilization = utilization < 0 ? 0 : utilization
                 });
             }
