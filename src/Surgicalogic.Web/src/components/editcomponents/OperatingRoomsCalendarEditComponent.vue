@@ -61,6 +61,7 @@
                   <v-date-picker
                     v-model="startDate"
                     no-title
+                    locale="tr-TR"
                     @input="$refs.menu1.save(startDate);"
                     :min="getMinDate()"
                   >
@@ -98,6 +99,7 @@
                   <v-date-picker
                     v-model="endDate"
                     no-title
+                    locale="tr-TR"
                     @input="$refs.menu2.save(endDate);"
                     :min="getMinDate()"
                   >

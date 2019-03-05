@@ -65,6 +65,7 @@
 
             <v-date-picker
               v-model="date"
+              locale="tr-TR"
               no-title
               @input="$refs.menu.save(date)"
               :min="getMinDate()"

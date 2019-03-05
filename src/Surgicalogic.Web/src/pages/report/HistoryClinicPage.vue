@@ -86,6 +86,7 @@
 
               <v-date-picker v-model="appointmentStartDate"
                             no-title
+                            locale="tr-TR"
                             @input="$refs.menu1.save(appointmentStartDate)"
                             :max="getMaxDate()">
               </v-date-picker>
@@ -109,6 +110,7 @@
 
               <v-date-picker v-model="appointmentEndDate"
                             no-title
+                            locale="tr-TR"
                             @input="$refs.menu2.save(appointmentEndDate)"
                             :max="getMaxDate()">
               </v-date-picker>

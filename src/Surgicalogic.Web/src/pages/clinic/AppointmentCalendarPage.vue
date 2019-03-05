@@ -16,7 +16,9 @@
             <v-text-field append-icon="keyboard_arrow_down" readonly clearable slot="activator" v-model="dateFormatted" :label="$t('appointmentcalendar.appointmentDate')">
             </v-text-field>
 
-            <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
+            <v-date-picker v-model="date"
+                            no-title
+                            locale="tr-TR" @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
             </v-date-picker>
           </v-menu>
         </v-flex>

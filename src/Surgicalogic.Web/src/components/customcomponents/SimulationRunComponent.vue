@@ -21,6 +21,7 @@
 
           <v-date-picker v-model="date"
                           no-title
+                          locale="tr-TR"
                           @input="$refs.menu.save(date)">
           </v-date-picker>
         </v-menu>

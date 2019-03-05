@@ -159,6 +159,7 @@
             <v-date-picker
               v-model="date"
               no-title
+              locale="tr-TR"
               @input="$refs.menu.save(date)"
               :min="getMinDate()"
               :max="getMaxDate()"

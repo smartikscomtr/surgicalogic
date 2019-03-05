@@ -61,7 +61,8 @@
                   <v-text-field readonly clearable slot="activator" :rules="required" v-model="dateFormatted" :label="$t('operation.operationDate')">
                   </v-text-field>
 
-                  <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)" :min="getMinDate()">
+                  <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)"
+                    locale="tr-TR" :min="getMinDate()">
                   </v-date-picker>
                 </v-menu>
               </v-flex>
