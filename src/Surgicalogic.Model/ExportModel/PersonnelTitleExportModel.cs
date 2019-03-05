@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Surgicalogic.Model.ExportModel
 {
-    public class OperationTypeExportModel
+    public class PersonnelTitleExportModel
     {
         public string Name { get; set; }
-        public string Branch { get; set; }
     }
 }

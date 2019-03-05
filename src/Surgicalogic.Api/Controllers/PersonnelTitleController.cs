@@ -8,6 +8,7 @@ using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
+using Surgicalogic.Model.ExportModel;
 using Surgicalogic.Model.InputModel;
 using Surgicalogic.Model.OutputModel;
 
@@ -39,21 +40,21 @@ namespace Surgicalogic.Api.Controllers
             return await _personnelTitleStoreService.GetAsync<PersonnelTitleOutputModel>();
         }
 
-        //[Route("PersonnelTitle/ExcelExport")]
-        //public async Task<string> ExcelExport()
-        //{
-        //    var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
-        //    var fileName = string.Format("PersonnelTitles_{0}.xlsx", Guid.NewGuid().ToString());
+        [Route("PersonnelTitle/ExcelExport")]
+        public async Task<string> ExcelExport()
+        {
+            var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var fileName = string.Format("PersonnelTitles_{0}.xlsx", Guid.NewGuid().ToString());
 
-        //    FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
-        //    var excelService = new ExcelDocumentService();
+            FileStream fs = new FileStream(Path.Combine(parentDirectory, "Surgicalogic.Web", "static", fileName), FileMode.CreateNew);
+            var excelService = new ExcelDocumentService();
 
-        //    var items = await _personnelTitleStoreService.GetExportAsync<PersonnelTitleExportModel>();
+            var items = await _personnelTitleStoreService.GetExportAsync<PersonnelTitleExportModel>();
 
-        //    excelService.Write(fs, "Worksheet", typeof(PersonnelTitleExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            excelService.Write(fs, "Worksheet", typeof(PersonnelTitleExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
 
-        //    return fileName;
-        //}
+            return fileName;
+        }
 
         /// <summary>
         /// Add PersonnelTitle methode
