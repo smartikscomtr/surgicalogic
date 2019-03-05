@@ -40,6 +40,42 @@
         </v-card>
       </v-dialog>
 
+      <v-dialog v-model="overlapConfirm"
+                persistent>
+
+        <v-card class="container fluid grid-list-md">
+          <v-card-title class="headline">
+            <div class="flex xs12 sm12 md12">
+              {{ $t('planarrangements.updatePlan')}}
+            </div>
+          </v-card-title>
+
+          <v-card-text>
+            <v-layout wrap>
+              <div class="flex xs12 sm12 md12">
+                {{ $t('planarrangements.overlapConfirmText') }}
+              </div>
+            </v-layout>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn color="darken-1"
+                   flat="flat"
+                   @click="updatePlan">
+              {{ $t('common.yes') }}
+            </v-btn>
+
+            <v-btn color="red darken-1"
+                   flat="flat"
+                   @click="overlapConfirm = false">
+              {{ $t('common.no') }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <div class="v-card__title">
         <v-flex xs3 sm3 md3>
           <v-menu
@@ -84,7 +120,7 @@
         <v-flex xs6 sm6 md6>
           <v-btn :disabled="!moving === true"
                 class="orangeButton updateplan-wrap"
-                @click.native="updatePlan()">
+                @click.native="overlap ? overlapConfirm = true : updatePlan()">
             {{ $t('planarrangements.updatePlan')}}
           </v-btn>
         </v-flex>
@@ -170,6 +206,8 @@ export default {
       menu: false,
       dateFormatted: null,
       date: null,
+      overlap:false,
+      overlapConfirm:false
     };
   },
 
@@ -219,6 +257,7 @@ export default {
       const vm = this;
 
       vm.snackbarVisible = false;
+      vm.overlapConfirm = false
 
       var timelineItems = JSON.parse(
         document.getElementById("serializedTimeline").innerHTML
@@ -244,6 +283,12 @@ export default {
 
         operations.push(operation);
       }
+
+      operations.forEach(firstElement => {
+        operations.forEach(element => {
+
+        });
+      });
 
       vm.$store
         .dispatch("updatePlanArrangements", JSON.stringify(operations))
@@ -340,6 +385,24 @@ export default {
                 workingHourStart,
                 workingHourEnd
               );
+
+                    var overlapping = items.get({
+                    filter: function(testItem) {
+
+                      if (testItem.id == item.id || testItem.group != item.group) {
+                        return false;
+                      }
+
+                      return ((item.start < new Date(testItem.end)) && (item.end > new Date(testItem.start)));
+                    }
+                  });
+
+                  if (overlapping.length == 0) {
+                    vm.overlap = false;
+                  }
+                  else{
+                    vm.overlap = true;
+                  }
 
               callback(item);
             }

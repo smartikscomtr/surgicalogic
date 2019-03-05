@@ -11,5 +11,6 @@
   "overtimeUtilization": "Fazla Mesai ve Kullanım Oranı",
   "run": "Çalıştır",
   "sumOvertime": "Toplam Fazla Mesai",
-  "sumUtilization": "Toplam Kullanım Oranı"
+  "sumUtilization": "Toplam Kullanım Oranı",
+  "overlapConfirmText":"Aynı odada aynı saate birden fazla ameliyat planladınız. İşleminize devam etmek istiyor musunuz?"
 }
