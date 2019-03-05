@@ -86,7 +86,7 @@
                   </div>
 
                   <div class="value">
-                    {{ detailAction['date'] }}
+                    {{ date }}
                   </div>
                 </div>
               </v-flex>
@@ -140,7 +140,8 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+    };
   },
 
   computed: {
@@ -148,6 +149,12 @@ export default {
       const vm = this;
 
       return vm.$i18n.t('operation.detailOperation');
+    },
+
+    date() {
+      const vm = this;
+
+       return vm.formatDate(vm.detailAction['date']);
     },
 
     showModal: {
@@ -173,6 +180,14 @@ export default {
       const vm = this;
 
       vm.showModal = false;
+    },
+
+    formatDate(date) {
+      if (!date || date.indexOf('.') > -1) return null;
+
+      const [year, month, day] = date.split('-');
+
+      return `${day}.${month}.${year}`;
     }
   }
 };
