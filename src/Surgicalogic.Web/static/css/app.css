@@ -127,16 +127,6 @@
 #app .accent--text {
   color: #ff7107 !important;
 }
-.v-progress-circular{
-  margin: 172px 0 0px -124px;
-  color: #009688;
-  /* background-color: #fafafa; */
-  position: absolute;
-  left: 50%;
-  right: 50%;
-  border-radius: 50%;
-  z-index: 100
-}
 @media print {
   body * {
       visibility: hidden;
@@ -706,4 +696,14 @@ div.vis-tooltip {
 }
 .text-wrap{
   text-transform: none !important;
+}
+.loading {
+  margin: 150px 0 0px -120px;
+  color: #ff7107;
+  /* background-color: #fafafa; */
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  border-radius: 50%;
+  z-index: 100
 }
