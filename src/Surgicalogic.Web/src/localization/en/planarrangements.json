@@ -11,5 +11,6 @@
   "overtimeUtilization": "Overtime And Utilization",
   "run": "Run",
   "sumOvertime": "Sum Overtime",
-  "sumUtilization": "Sum Utilization"
+  "sumUtilization": "Sum Utilization",
+  "overlapConfirmText":"You have planned more than one operation in the same room, same time. Do you want to continue your process?"
 }

@@ -57,14 +57,13 @@ export default {
         {
           value: 'email',
           text: vm.$i18n.t('feedbacks.email'),
-          sortable: true,
+          sortable: false,
           align: 'left'
         },
         {
           value: 'body',
-          sortBy: 'Branch.Name',
           text: vm.$i18n.t('feedbacks.body'),
-          sortable: true,
+          sortable: false,
           align: 'left'
         },
         {

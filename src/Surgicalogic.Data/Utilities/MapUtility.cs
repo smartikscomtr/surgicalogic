@@ -232,9 +232,16 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy")));
             config.CreateMap<OperatingRoom, OperatingRoomExportModel>()
                 .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.IsAvailable ? "Evet" : "Hayır"));
-            config.CreateMap<Personnel, PersonnelExportModel>();
+            config.CreateMap<Personnel, PersonnelExportModel>()
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
+                .ForMember(dest => dest.Branch, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Select(x => x.Branch.Name))))
+                .ForMember(dest => dest.WorkType, opt => opt.MapFrom(src => src.WorkType.Name));
             config.CreateMap<PersonnelCategory, PersonnelCategoryExportModel>();
+            config.CreateMap<PersonnelTitle, PersonnelTitleExportModel>();
             config.CreateMap<WorkType, WorkTypeExportModel>();
+            config.CreateMap<OperationType, OperationTypeExportModel>()
+                .ForMember(dest => dest.Branch, opt => opt.MapFrom(src => src.Branch.Name));
             config.CreateMap<OperationPlan, OperationPlanExportModel>()
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
                 .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
