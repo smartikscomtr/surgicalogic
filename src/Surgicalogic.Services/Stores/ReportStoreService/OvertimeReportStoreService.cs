@@ -105,6 +105,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
                 query = query.Where(x =>
                     x.Operation.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
                     x.OperatingRoom.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+                    x.Operation.OperationPersonels.Any(t => t.IsActive && (t.Personnel.FirstName + " " + t.Personnel.LastName).IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0) ||
                     x.Operation.OperationType.Branch.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0
                 );
             }
