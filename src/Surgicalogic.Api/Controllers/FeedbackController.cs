@@ -27,8 +27,6 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<FeedbackOutputModel>> GetFeedbacks(GridInputModel input)
         {
-            input.Descending = true;
-            input.SortBy = "Id";
             return await _feedbackStoreService.GetAsync<FeedbackOutputModel>(input);
         }
 
