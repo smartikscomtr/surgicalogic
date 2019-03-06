@@ -24,6 +24,7 @@ namespace Surgicalogic.Api.Controllers
         private readonly IAppointmentCalendarStoreService _appointmentCalendarStoreService;
         private readonly ISettingStoreService _settingStoreService;
         private readonly IPatientStoreService _patientStoreService;
+        private readonly IOperationPlanStoreService _operationPlanStoreService;
 
         static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         private static List<int> availableAppointmentTimes = new List<int>();
@@ -33,11 +34,13 @@ namespace Surgicalogic.Api.Controllers
         public AppointmentCalendarController(
             IAppointmentCalendarStoreService appointmentStoreService,
             ISettingStoreService settingStoreService,
-            IPatientStoreService patientStoreService)
+            IPatientStoreService patientStoreService,
+            IOperationPlanStoreService operationPlanStoreService)
         {
             _appointmentCalendarStoreService = appointmentStoreService;
             _settingStoreService = settingStoreService;
             _patientStoreService = patientStoreService;
+            _operationPlanStoreService = operationPlanStoreService;
         }
 
         /// <summary>
@@ -70,6 +73,7 @@ namespace Surgicalogic.Api.Controllers
             var patientsFailureRate = (double)systemSettings.SingleOrDefault(x => x.Key == SettingKey.PatientsFailureRate.ToString()).IntValue.Value / 100;
             var withoutAppointmentPatientRate = (double)systemSettings.SingleOrDefault(x => x.Key == SettingKey.WithoutAppointmentPatientRate.ToString()).IntValue.Value / 100;
             var forAverageTimeEveryPatient = systemSettings.SingleOrDefault(x => x.Key == SettingKey.ForAverageTimeEveryPatient.ToString()).IntValue.Value;
+            var operationPlanPeriod = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationPeriodInMinutes.ToString()).IntValue.Value;
 
             var subTotal = Math.Round((1 - patientsFailureRate + withoutAppointmentPatientRate) * forAverageTimeEveryPatient, 2);
 
@@ -142,6 +146,8 @@ namespace Surgicalogic.Api.Controllers
                 intervalStartMinuteDifference += roundingIntervalValue - start.Minute % roundingIntervalValue;
             }
 
+            var disabledTimes = new List<string>();
+
             var appointments = await _appointmentCalendarStoreService.GetAppointmentsByDoctorAndDateAsync(model);
             var selectedTimesAsDate = appointments.Select(x => x.AppointmentDate).ToArray();
 
@@ -152,7 +158,6 @@ namespace Surgicalogic.Api.Controllers
                 assignedSchedulesAsDate[i] = start.AddMinutes(intervalStartMinuteDifference + assignedSchedule[i]).ToString("HH:mm");
             }
 
-            var disabledTimes = new List<string>();
 
             for (int i = 0; i < selectedTimesAsDate.Length; i++)
             {
@@ -164,6 +169,16 @@ namespace Surgicalogic.Api.Controllers
                 if (assignedSchedulesAsDate.Count(x => x == item) > disabledTimes.Count(x => x == item))
                 {
                     disabledTimes.Remove(item);
+                }
+            }
+
+            var operationPlans = await _operationPlanStoreService.GetOperationPlansByDoctorAndDateAsync(model);
+
+            foreach (var item in operationPlans)
+            {
+                for (DateTime i = item.RealizedStartDate; i < item.RealizedEndDate; i = i.AddMinutes(1))
+                {
+                    disabledTimes.Add(i.ToString("HH:mm"));
                 }
             }
 
