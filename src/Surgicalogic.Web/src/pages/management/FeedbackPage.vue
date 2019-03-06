@@ -57,13 +57,13 @@ export default {
         {
           value: 'email',
           text: vm.$i18n.t('feedbacks.email'),
-          sortable: false,
+          sortable: true,
           align: 'left'
         },
         {
           value: 'body',
           text: vm.$i18n.t('feedbacks.body'),
-          sortable: false,
+          sortable: true,
           align: 'left'
         },
         {
