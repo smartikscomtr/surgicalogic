@@ -57,5 +57,10 @@ namespace Surgicalogic.Services.Stores
             return await GetQueryable().Where(x => x.IsActive && x.OperationDate > date && x.OperationDate < date.AddDays(1)).OrderBy(x => x.OperationDate).ThenBy(x => x.OperatingRoomId)
                 .ProjectTo<SimulationOperationPlanModel>().ToListAsync();
         }
+
+        public async Task<List<OperationPlanModel>> GetOperationPlansByDoctorAndDateAsync(AppointmentDayInputModel model)
+        {
+            return await GetQueryable().Where(x => x.Operation.OperationPersonels.Any(y => y.PersonnelId == model.DoctorId) && x.RealizedStartDate >= model.SelectedDate && x.RealizedStartDate < model.SelectedDate.AddDays(1)).ProjectTo<OperationPlanModel>().ToListAsync();
+        }
     }
 }

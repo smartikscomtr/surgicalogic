@@ -17,5 +17,6 @@ namespace Surgicalogic.Contracts.Stores
         Task DeletePlanByDateAsync(DateTime date);
         Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds);
         Task<List<SimulationOperationPlanModel>> GetOperationByIdListAsync(DateTime selectDate);
+        Task<List<OperationPlanModel>> GetOperationPlansByDoctorAndDateAsync(AppointmentDayInputModel model);
     }
 }
