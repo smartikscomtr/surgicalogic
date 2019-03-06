@@ -76,7 +76,7 @@
 
             <v-flex xs12 sm6 md6>
               <img :src="imageUrl" height="150" v-if="imageUrl"/>
-              <img :src="editAction['pictureUrl']" height="150px" v-if="!imageUrl" />
+              <img :src="editAction['pictureUrl']" height="150px" @error="imageNotFound()" v-if="!imageUrl" />
             </v-flex>
           </v-layout>
         </v-card-text>
@@ -377,7 +377,13 @@ export default {
             this.imageFile = ''
             this.imageUrl = ''
           }
-        }
+        },
+
+        imageNotFound(doctorCard){
+          const vm = this;
+
+          vm.editAction['pictureUrl'] = "/static/images/no-image.png"
+        },
     }
 };
 </script>

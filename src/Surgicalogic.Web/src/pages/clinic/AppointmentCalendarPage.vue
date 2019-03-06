@@ -133,11 +133,14 @@ export default {
     },
 
     watch: {
-        date(val) {
-            const vm = this;
+        date(newVal, oldVal) {
+          const vm = this;
 
+          vm.dateFormatted = vm.formatDate(vm.date);
+
+          if (oldVal && newVal != oldVal){
             vm.dateChanged = true;
-            vm.dateFormatted = vm.formatDate(vm.date);
+          }
         }
     },
 
