@@ -1,9 +1,6 @@
 <template>
   <div class="container fluid grid-list-md">
     <div class="v-card__text">
-      <loading-component :loading="getLoading">
-      </loading-component>
-
       <v-dialog v-model="drawPlanConfirm"
                 persistent>
 
@@ -42,7 +39,6 @@
 
       <v-dialog v-model="overlapConfirm"
                 persistent>
-
         <v-card class="container fluid grid-list-md">
           <v-card-title class="headline">
             <div class="flex xs12 sm12 md12">
@@ -126,9 +122,14 @@
         </v-flex>
       </div>
 
+      <loading-component class="loading"
+                         :loading="getLoading">
+      </loading-component>
+
       <div id="visualization"
            class="vis">
       </div>
+
 
       <div id="serializedTimeline"
            style="display:none;">

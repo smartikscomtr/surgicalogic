@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-progress-circular v-show="loading"
-                         :size="40"
+                         :size="70"
                          indeterminate>
     </v-progress-circular>
   </div>
