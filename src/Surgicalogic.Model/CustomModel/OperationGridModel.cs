@@ -1,11 +1,12 @@
 ﻿using Surgicalogic.Common.CustomAttributes;
+using Surgicalogic.Model.EntityModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Surgicalogic.Model.EntityModel
+namespace Surgicalogic.Model.CustomModel
 {
-    public class OperationModel: Base.EntityModel
+    public class OperationGridModel : EntityModel.Base.EntityModel
     {
         [Searchable(true)]
         public string Name { get; set; }
@@ -17,9 +18,6 @@ namespace Surgicalogic.Model.EntityModel
         public string EventNumber { get; set; }
 
         [Searchable]
-        public OperationTypeModel OperationType { get; set; }
-        public PatientModel Patient { get; set; }
-        public ICollection<OperationPersonnelModel> OperationPersonels { get; set; }
-        public virtual ICollection<OperationBlockedOperatingRoomModel> OperationBlockedOperatingRooms { get; set; }
+        public OperationTypeForOperationModel OperationType { get; set; }
     }
 }
