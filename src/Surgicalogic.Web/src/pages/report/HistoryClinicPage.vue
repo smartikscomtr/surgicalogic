@@ -21,7 +21,7 @@
             </div>
           </v-flex>
 
-          <v-flex xs12 sm12 md12>
+          <v-flex xs12 sm6 md6>
             <v-autocomplete v-model="selectBranch"
                             :items="branches"
                             :label="$t('report.branch')"
@@ -48,21 +48,6 @@
                             @change="filterDoctor()"
                             :filter="customFilterForDoctor"
                             item-text="personnelTitleName"
-                            item-value="id">
-            </v-autocomplete>
-          </v-flex>
-
-          <v-flex xs12 sm6 md6>
-            <v-autocomplete v-model="selectPatient"
-                            :items="patients"
-                            :label="$t('report.patient')"
-                            box
-                            clearable
-                            multiple
-                            chips
-                            deletable-chips
-                            :filter="customFilterForPatient"
-                            item-text="fullName"
                             item-value="id">
             </v-autocomplete>
           </v-flex>
@@ -325,12 +310,6 @@ export default {
 
         vm.patientId = val;
       }
-    },
-
-    patients() {
-      const vm = this;
-
-      return vm.$store.state.patientModule.allPatients;
     }
   },
 
@@ -478,7 +457,6 @@ export default {
     });
 
     vm.$store.dispatch('getAllBranches');
-    vm.$store.dispatch('getAllPatients');
   }
 };
 
