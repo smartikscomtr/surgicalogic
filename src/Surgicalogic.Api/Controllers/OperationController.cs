@@ -105,15 +105,6 @@ namespace Surgicalogic.Api.Controllers
 
             var operationTimes = item.OperationTime.Split(':');
 
-            var patient = new PatientModel()
-            {
-                FirstName = item.PatientFirstName,
-                LastName = item.PatientLastName,
-                IdentityNumber = item.PatientIdentityNumber
-            };
-
-            var patientModel = await _patientStoreService.InsertAndSaveAsync(patient);
-
             var operationItem = new OperationModel()
             {
                 Name = item.Name,
@@ -121,18 +112,14 @@ namespace Surgicalogic.Api.Controllers
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
                 Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date, //TODO: Çakma çözüm
-                EventNumber = item.EventNumber,
-                PatientId = patientModel.Result.Id
+                PatientId = item.PatientId,
+                EventNumber = item.EventNumber
             };
 
             result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
 
             item.Id = result.Result.Id;
-
-            if (item.PersonnelIds != null && result.Info.Succeeded)
-            {
-                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
-            }
+            
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {
@@ -181,15 +168,6 @@ namespace Surgicalogic.Api.Controllers
 
             var operationTimes = item.OperationTime.Split(':');
 
-            var patient = new PatientModel()
-            {
-                FirstName = item.PatientFirstName,
-                LastName = item.PatientLastName,
-                IdentityNumber = item.PatientIdentityNumber
-            };
-
-            var patientModel = await _patientStoreService.InsertAndSaveAsync(patient);
-
             var operationItem = new OperationModel()
             {
                 Id = item.Id,
@@ -198,16 +176,12 @@ namespace Surgicalogic.Api.Controllers
                 OperationTypeId = item.OperationTypeId,
                 OperationTime = (operationTimes[0].ToNCInt() * 60) + operationTimes[1].ToNCInt(),
                 Date = item.Date < new DateTime(2000, 01, 01) ? DateTime.Now.AddDays(1) : item.Date, //TODO: Çakma çözüm
-                PatientId = patientModel.Result.Id,
+                PatientId = item.PatientId,
                 EventNumber = item.EventNumber
             };
 
             result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
-
-            if (item.PersonnelIds != null && result.Info.Succeeded)
-            {
-                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
-            }
+            
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {

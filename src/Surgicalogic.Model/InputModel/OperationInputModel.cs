@@ -15,9 +15,7 @@ namespace Surgicalogic.Model.InputModel
         public List<int> PersonnelIds { get; set; }
         public List<int> OperatingRoomIds { get; set; }
         public DateTime Date { get; set; }
-        public string PatientFirstName { get; set; }
-        public string PatientLastName { get; set; }
-        public string PatientIdentityNumber { get; set; }
+        public int PatientId { get; set; }
         public string EventNumber { get; set; }
     }
 }

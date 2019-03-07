@@ -130,9 +130,7 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.OperatingRoomNames, opt => opt.MapFrom(src => string.Join(", ", src.OperationBlockedOperatingRooms.Where(x => x.IsActive).Select(x => x.OperatingRoom.Name))))
                  .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => (src.OperationTime / 60 < 10 ? ("0" + src.OperationTime / 60) : (src.OperationTime / 60 + "")) + ":" + (src.OperationTime % 60 < 10 ? ("0" + src.OperationTime % 60) : (src.OperationTime % 60 + ""))))
                  .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
-                .ForMember(dest => dest.PatientFirstName, opt => opt.MapFrom(src => src.Patient.FirstName))
-                .ForMember(dest => dest.PatientLastName, opt => opt.MapFrom(src => src.Patient.LastName))
-                .ForMember(dest => dest.PatientIdentityNumber, opt => opt.MapFrom(src => src.Patient.IdentityNumber))
+                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Patient.Id))
                 .ForMember(dest => dest.EventNumber, opt => opt.MapFrom(src => src.EventNumber));
             //.ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
             config.CreateMap<OperationPlanModel, OperationPlanOutputModel>()

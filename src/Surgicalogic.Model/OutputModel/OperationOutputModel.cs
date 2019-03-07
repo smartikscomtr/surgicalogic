@@ -20,9 +20,7 @@ namespace Surgicalogic.Model.OutputModel
         public int[] BlockedOperatingRoomIds { get; set; }
         public string OperatingRoomNames { get; set; }
         public string Date { get; set; }
-        public string PatientFirstName { get; set; }
-        public string PatientLastName { get; set; }
-        public string PatientIdentityNumber { get; set; }
+        public int PatientId { get; set; }
         public string EventNumber { get; set; }
     }
 }

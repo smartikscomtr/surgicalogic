@@ -10,6 +10,5 @@ namespace Surgicalogic.Contracts.Stores
 {
     public interface IOperationPersonnelStoreService : IStoreService<OperationPersonnel, OperationPersonnelModel>
     {
-        Task<ResultModel<OperationOutputModel>> UpdateOperationPersonnelsAsync(OperationInputModel item);
     }
 }
