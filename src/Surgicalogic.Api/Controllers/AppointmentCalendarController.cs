@@ -176,7 +176,7 @@ namespace Surgicalogic.Api.Controllers
 
             foreach (var item in operationPlans)
             {
-                for (DateTime i = item.RealizedStartDate; i < item.RealizedEndDate; i = i.AddMinutes(1))
+                for (DateTime i = item.RealizedStartDate; i <= item.RealizedEndDate; i = i.AddMinutes(1))
                 {
                     disabledTimes.Add(i.ToString("HH:mm"));
                 }
