@@ -30,6 +30,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<EquipmentType, EquipmentTypeModel>();
             config.CreateMap<Feedback, FeedbackModel>();
             config.CreateMap<Operation, OperationModel>();
+            config.CreateMap<Operation, OperationGridModel>();
             config.CreateMap<Operation, OperationForReportModel>();
             config.CreateMap<Operation, OperationForOperationPlanModel>();
             config.CreateMap<OperationPersonnel, OperationPersonnelModel>();
@@ -44,6 +45,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationBlockedOperatingRoom, OperationBlockedOperatingRoomModel>();
             config.CreateMap<OperatingRoomCalendar, OperatingRoomCalendarModel>();
             config.CreateMap<OperationType, OperationTypeModel>();
+            config.CreateMap<OperationType, OperationTypeForOperationModel>();
             config.CreateMap<OperationType, OperationTypeForReportModel>();
             config.CreateMap<OperationTypeEquipment, OperationTypeEquipmentModel>();
             config.CreateMap<OperatingRoomOperationType, OperatingRoomOperationTypeModel>();
@@ -133,6 +135,11 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Patient.Id))
                 .ForMember(dest => dest.EventNumber, opt => opt.MapFrom(src => src.EventNumber));
             //.ForMember(dest => dest.Period, opt => opt.MapFrom(src => src.OperationTime % AppSettings.PeriodInMinutes == 0 ? src.OperationTime / AppSettings.PeriodInMinutes : src.OperationTime / AppSettings.PeriodInMinutes + 1));
+            config.CreateMap<OperationGridModel, Model.OutputModel.OperationOutputModel>()
+                 .ForMember(dest => dest.OperationTypeName, opt => opt.MapFrom(src => src.OperationType.Name))
+                 .ForMember(dest => dest.OperationTime, opt => opt.MapFrom(src => (src.OperationTime / 60 < 10 ? ("0" + src.OperationTime / 60) : (src.OperationTime / 60 + "")) + ":" + (src.OperationTime % 60 < 10 ? ("0" + src.OperationTime % 60) : (src.OperationTime % 60 + ""))))
+                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("yyyy-MM-dd")))
+                .ForMember(dest => dest.EventNumber, opt => opt.MapFrom(src => src.EventNumber));
             config.CreateMap<OperationPlanModel, OperationPlanOutputModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.OperationId))
                  .ForMember(dest => dest.group, opt => opt.MapFrom(src => src.OperatingRoomId))

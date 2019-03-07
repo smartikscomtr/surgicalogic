@@ -6,7 +6,7 @@ namespace Surgicalogic.Model.EntityModel
 {
     public class OperationTypeModel : Base.EntityModel
     {
-        [Searchable]
+        [Searchable(true)]
         public string Name { get; set; }
         [Searchable]
         public string Description { get; set; }

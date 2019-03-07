@@ -21,18 +21,21 @@ namespace Surgicalogic.Api.Controllers
     public class OperationController : Controller
     {
         private readonly IOperationStoreService _operationStoreService;
+        private readonly IOperationGridStoreService _operationGridStoreService;
         private readonly IOperationPersonnelStoreService _operationPersonnelStoreService;
         private readonly IOperationBlockedOperatingRoomStoreService _operationBlockedOperatingRoomStoreService;
         private readonly IPatientStoreService _patientStoreService;
 
         public OperationController(
-            IOperationStoreService operationStoreService, 
+            IOperationStoreService operationStoreService,
+            IOperationGridStoreService operationGridStoreService,
             IOperationPersonnelStoreService operationPersonnelStoreService,
             IOperationBlockedOperatingRoomStoreService operationBlockedOperatingRoomStoreService,
             IPatientStoreService patientStoreService
             )
         {
             _operationStoreService = operationStoreService;
+            _operationGridStoreService = operationGridStoreService;
             _operationPersonnelStoreService = operationPersonnelStoreService;
             _operationBlockedOperatingRoomStoreService = operationBlockedOperatingRoomStoreService;
             _patientStoreService = patientStoreService;
@@ -46,7 +49,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
-            return await _operationStoreService.GetAsync<OperationOutputModel>(input);
+            return await _operationGridStoreService.GetAsync<OperationOutputModel>(input);
         }
 
         [Route("Operation/GetOperationNamesForHistory")]
