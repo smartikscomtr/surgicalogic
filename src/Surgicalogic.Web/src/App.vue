@@ -77,6 +77,8 @@
             <v-toolbar-side-icon @click.stop="drawer = !drawer">
             </v-toolbar-side-icon>
 
+            <img height="50px" align="center"  style="cursor: pointer;" :src="'/static/favicon.ico'" @click="changePages('/dashboardpage')" />
+
             <!-- Toolbar text-->
             <span class="hidden-sm-and-down" style="cursor: pointer;" @click="changePages('/dashboardpage')">
               SurgicaLogic
