@@ -18,6 +18,7 @@
   "definitions": "Definitions",
   "equipments": "Equipments",
   "personnel": "Personnel",
+  "patient":"Patient",
   "operatingRooms": "Operating Rooms",
   "branches": "Branches",
   "PersonnelCategories": "Personnel Categories",

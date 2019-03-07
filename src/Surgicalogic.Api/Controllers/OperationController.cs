@@ -49,7 +49,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
-            return await _operationGridStoreService.GetAsync<OperationOutputModel>(input);
+            return await _operationStoreService.GetAsync<OperationOutputModel>(input);
         }
 
         [Route("Operation/GetOperationNamesForHistory")]
@@ -122,7 +122,11 @@ namespace Surgicalogic.Api.Controllers
             result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
 
             item.Id = result.Result.Id;
-            
+
+            if (item.PersonnelIds != null && result.Info.Succeeded)
+            {
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+            }
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {
@@ -184,7 +188,11 @@ namespace Surgicalogic.Api.Controllers
             };
 
             result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
-            
+
+            if (item.PersonnelIds != null && result.Info.Succeeded)
+            {
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+            }
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {

@@ -17,26 +17,17 @@
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card-text>
             <v-layout wrap edit-layout>
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['patientIdentityNumber']"
-                              mask="###########"
-                              :label="$t('operation.patientIdentityNumber')">
-                </v-text-field>
-              </v-flex>
 
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['eventNumber']" :rules="required" :label="$t('operation.eventNo')">
                 </v-text-field>
+                 <!-- @change="generateOperationName" -->
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['patientFirstName']" :rules="required" :label="$t('operation.patientFirstName')">
-                </v-text-field>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <v-text-field v-model="editAction['patientLastName']" :rules="required" :label="$t('operation.patientLastName')">
-                </v-text-field>
+                <v-autocomplete v-model="selectPatient" :items="patients" :label="$t('personnel.patient')" :filter="customFilterForFullName"
+                              clearable chips item-text="fullName" item-value="id" @change="handleChange" >
+                </v-autocomplete>
               </v-flex>
 
               <v-flex xs12 sm6 md6>
@@ -133,10 +124,12 @@ export default {
             menu: false,
             dateFormatted: null,
             valid: true,
+            selectedPatient: null,
             required: [v => !!v || this.$i18n.t('common.required')],
             multipleRequired: [
                 v => !!v && v.length > 0 || this.$i18n.t('common.required')
-            ]
+            ],
+            eventNumber: vm.editAction['eventNumber']
         };
     },
 
@@ -155,13 +148,22 @@ export default {
           get() {
             const vm = this;
 
+            let patientName = "";
+
+            if (vm.patients)
+            {
+              vm.patients.forEach(element => {
+                if (element.id == vm.selectedPatient)
+                {
+                  patientName = element.fullName;
+                }
+              });
+            }
+
             return (
               vm.editAction['eventNumber'] ?
-              vm.editAction['eventNumber'] : "") + (vm.editAction['patientFirstName'] ?
-              " " + vm.editAction['patientFirstName'] : "") + (vm.editAction['patientLastName'] ?
-              " " + vm.editAction['patientLastName'] :
-              ""
-            );
+              vm.editAction['eventNumber'] : "") + " " + patientName;
+
           },
 
           set(val) {
@@ -170,7 +172,6 @@ export default {
             vm.editAction.operationName = val;
           }
         },
-
         formTitle() {
           const vm = this;
 
@@ -201,6 +202,12 @@ export default {
           return vm.$store.state.operationModule.filteredOperationTypes;
         },
 
+        patients() {
+          const vm = this;
+
+          return vm.$store.state.patientModule.allPatients;
+        },
+
         selectOperationType: {
           get() {
             const vm = this;
@@ -228,6 +235,21 @@ export default {
             vm.editAction.personnelIds = val;
           }
         },
+
+        selectPatient: {
+          get() {
+            const vm = this;
+
+            return vm.editAction.patientId;
+          },
+
+          set(val) {
+            const vm = this;
+
+            vm.editAction.patientId = val;
+          }
+        },
+
 
         selectOperatingRoom: {
           get() {
@@ -287,10 +309,25 @@ export default {
     },
 
     methods: {
+      handleChange(val) {
+          const vm = this;
+
+          vm.selectedPatient = val;
+          vm.operationName = "";
+      },
         customFilter(item, queryText, itemText) {
           const vm = this;
 
           const text = vm.replaceForAutoComplete(item.name);
+          const searchText = vm.replaceForAutoComplete(queryText);
+
+          return text.indexOf(searchText) > -1;
+        },
+
+        customFilterForFullName(item, queryText, itemText) {
+          const vm = this;
+
+          const text = vm.replaceForAutoComplete(item.fullName);
           const searchText = vm.replaceForAutoComplete(queryText);
 
           return text.indexOf(searchText) > -1;
@@ -342,9 +379,7 @@ export default {
                         operationTypeId: vm.editAction.operationTypeId,
                         personnelIds: vm.editAction.personnelIds,
                         operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
-                        patientIdentityNumber: vm.editAction.patientIdentityNumber,
-                        patientFirstName: vm.editAction.patientFirstName,
-                        patientLastName: vm.editAction.patientLastName,
+                        patientId: vm.editAction.patientId,
                         eventNumber: vm.editAction.eventNumber
                     })
                     .then(response => {
@@ -364,9 +399,7 @@ export default {
                         operationTypeId: vm.editAction.operationTypeId,
                         personnelIds: vm.editAction.personnelIds,
                         operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
-                        patientIdentityNumber: vm.editAction.patientIdentityNumber,
-                        patientFirstName: vm.editAction.patientFirstName,
-                        patientLastName: vm.editAction.patientLastName,
+                        patientId: vm.editAction.patientId,
                         eventNumber: vm.editAction.eventNumber
                     })
                     .then(response => {

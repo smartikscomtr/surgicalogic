@@ -40,6 +40,12 @@ namespace Surgicalogic.Api.Controllers
             return await _patientStoreService.GetAsync<PatientOutputModel>();
         }
 
+        [Route("Patient/GetAllPatientsForOperation")]
+        public async Task<ResultModel<PatientForOperationOutputModel>> GetAllPatientsForOperation()
+        {
+            return await _patientStoreService.GetAsync<PatientForOperationOutputModel>();
+        }
+
         [Route("Patient/ExcelExport")]
         public async Task<string> ExcelExport()
         {
@@ -100,6 +106,7 @@ namespace Surgicalogic.Api.Controllers
         {
             var patientModel = new PatientModel()
             {
+                Id = item.Id,
                 IdentityNumber = item.IdentityNumber,
                 FirstName = item.FirstName,
                 LastName = item.LastName,

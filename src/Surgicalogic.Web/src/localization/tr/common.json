@@ -31,5 +31,6 @@
   "codeIsNotUnique":"Aynı koda sahip bir kayıt zaten var.",
   "eventNumberIsNotDifferent": "Aynı vaka numarasına sahip bir kayıt zaten var.",
   "emailIsNotUnique":"Aynı emaile sahip bir kullanıcı zaten var.",
-  "invalidEmail": "Geçersiz e-posta adresi."
+  "invalidEmail": "Geçersiz e-posta adresi.",
+  "identityRequired":"Lütfen geçerli bir kimlik numarası giriniz."
 }

@@ -83,6 +83,7 @@ import OperatingRoomsEditComponent from '@/components/editcomponents/OperatingRo
 import OperationEditComponent from '@/components/editcomponents/OperationEditComponent';
 import OperationTypesEditComponent from '@/components/editcomponents/OperationTypesEditComponent';
 import PersonnelEditComponent from '@/components/editcomponents/PersonnelEditComponent';
+import PatientEditComponent from '@/components/editcomponents/PatientEditComponent';
 import PersonnelCategoryEditComponent from '@/components/editcomponents/PersonnelCategoryEditComponent';
 import PersonnelTitleEditComponent from '@/components/editcomponents/PersonnelTitleEditComponent';
 import UsersEditComponent from '@/components/editcomponents/UsersEditComponent';
@@ -97,6 +98,7 @@ Vue.component('operating-rooms-edit-component', OperatingRoomsEditComponent);
 Vue.component('operation-types-edit-component', OperationTypesEditComponent);
 Vue.component('operation-edit-component', OperationEditComponent);
 Vue.component('personnel-edit-component', PersonnelEditComponent);
+Vue.component('patient-edit-component', PatientEditComponent);
 Vue.component('personnel-category-edit-component', PersonnelCategoryEditComponent);
 Vue.component('personnel-title-edit-component', PersonnelTitleEditComponent);
 Vue.component('users-edit-component', UsersEditComponent);

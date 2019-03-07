@@ -1,9 +1,9 @@
 <template>
   <div class="container fluid grid-list-md">
     <grid-component :headers="headers"
-                    :items="operations"
+                    :items="patients"
                     :title="title"
-                    :show-detail="true"
+                    :show-detail="false"
                     :show-edit="true"
                     :show-delete="true"
                     :show-search="true"
@@ -11,24 +11,18 @@
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
-                    @detail="detail"
                     @edit="edit"
-                    @exportToExcel="exportOperationToExcel"
+                    @exportToExcel="exportPatientsToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem"
                     ref="gridComponent">
     </grid-component>
 
-    <operation-detail-component :detail-action="detailAction"
-                                 :detail-visible="detailDialog"
-                                 @cancel="cancel">
-    </operation-detail-component>
-
-    <operation-edit-component :edit-action="editAction"
-                               :edit-visible="editDialog"
-                               :edit-index="editedIndex"
-                               @cancel="cancel">
-    </operation-edit-component>
+    <patient-edit-component :edit-action="editAction"
+                              :edit-visible="editDialog"
+                              :edit-index="editedIndex"
+                              @cancel="cancel">
+    </patient-edit-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
@@ -52,24 +46,21 @@ export default {
 
     return {
       search: '',
-      detailDialog: false,
       editDialog: false,
       deleteDialog: false,
-      detailAction: {},
       editAction: {},
       deleteValue: {},
+      totalRows:0,
       editedIndex: -1,
-      totalRowCount:0,
-      editLoadOnce: true,
-      deletePath: 'deleteOperation'
+      deletePath: 'deletePatient'
     };
   },
 
   computed: {
-     title() {
+    title() {
       const vm = this;
 
-      return vm.$i18n.t('operation.operations');
+      return vm.$i18n.t('patient.patients');
     },
 
     headers() {
@@ -78,30 +69,34 @@ export default {
       //Columns and actions
       return [
         {
-          value: 'name',
-          text: vm.$i18n.t('operation.operationName'),
+          value: 'firstName',
+          text: vm.$i18n.t('patient.firstName'),
           sortable: true,
           align: 'left'
         },
         {
-          value:'operationTypeName',
-          sortBy:'OperationType.Name',
-          text: vm.$i18n.t('operation.operationType'),
+          value: 'lastName',
+          text: vm.$i18n.t('patient.lastName'),
           sortable: true,
           align: 'left'
         },
         {
-          value: 'date',
-          text: vm.$i18n.t('operation.operationDate'),
+          value: 'identityNumber',
+          text: vm.$i18n.t('patient.identityNumber'),
           sortable: true,
-          isDate: true,
           align: 'left'
         },
         {
-          value: 'operationTime',
-          text: vm.$i18n.t('operation.operationTime'),
+          value: 'phone',
+          text: vm.$i18n.t('patient.phone'),
           sortable: true,
           align: 'left'
+        },
+        {
+          value: 'address',
+          text: vm.$i18n.t('patient.address'),
+          sortable: true,
+          align: "left"
         },
         {
           isAction: true,
@@ -111,55 +106,45 @@ export default {
       ];
     },
 
-    operations() {
+    patients() {
       const vm = this;
 
-      return vm.$store.state.operationModule.operation;
+      return vm.$store.state.patientModule.patient;
     },
 
     getLoading() {
       const vm = this;
 
-      return vm.$store.state.operationModule.loading;
+      return vm.$store.state.patientModule.loading;
     },
 
     getTotalCount() {
       const vm = this;
 
-      return vm.$store.state.operationModule.totalCount;
+      return vm.$store.state.patientModule.totalCount;
     }
   },
 
   watch: {
-   editDialog() {
-     const vm = this;
 
-    //We are accessing getAllOperationTypes in vuex store
-     if(vm.editLoadOnce){
-         vm.$store.dispatch('getOperationTypesByBranchId');
-         vm.$store.dispatch('getAllPatientsForOperation');
-        vm.editLoadOnce = false;
-     }
-
-    }
   },
 
   methods: {
     getMethodName(){
-      return "getOperations";
+      return "getPatients";
     },
 
     deleteMethodName(){
-      return "deleteOperation";
+      return "deletePatient";
     },
 
-    exportOperationToExcel() {
+    exportPatientsToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportOperation');
+      vm.$store.dispatch('excelExportPatient');
     },
 
-    getOperations(){
+    getPatients(){
       const vm = this;
 
       var child = vm.$refs.gridComponent;

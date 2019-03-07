@@ -1,5 +1,11 @@
 {
-  "identityNumber":"Hasta TC Kimlik Numarası",
-  "firstName":"Hasta Adı",
-  "lastName":"Hasta Soyadı"
+  "identityNumber":"TC Kimlik Numarası",
+  "firstName":"Adı",
+  "lastName":"Soyadı",
+  "phone":"Telefon",
+  "address":"Adres",
+  "patients":"Hastalar",
+  "patientSaved": "Hasta Kaydedildi.",
+  "addPatientInformation": "Hasta Ekle",
+  "editPatientInformation": "Hasta Güncelle"
 }

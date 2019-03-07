@@ -254,6 +254,11 @@ export default {
                             route: '/personnelpage'
                         },
                         {
+                            icon: 'group',
+                            text: vm.$i18n.t('menu.patient'),
+                            route: '/patientpage'
+                        },
+                        {
                             icon: 'meeting_room',
                             text: vm.$i18n.t('menu.operatingRooms'),
                             route: '/operatingroomspage'
