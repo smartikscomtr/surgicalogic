@@ -122,7 +122,11 @@ namespace Surgicalogic.Api.Controllers
             result = await _operationStoreService.InsertAndSaveAsync<OperationOutputModel>(operationItem);
 
             item.Id = result.Result.Id;
-            
+
+            if (item.PersonnelIds != null && result.Info.Succeeded)
+            {
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+            }
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {
@@ -184,7 +188,11 @@ namespace Surgicalogic.Api.Controllers
             };
 
             result = await _operationStoreService.UpdateAndSaveAsync<OperationOutputModel>(operationItem);
-            
+
+            if (item.PersonnelIds != null && result.Info.Succeeded)
+            {
+                await _operationPersonnelStoreService.UpdateOperationPersonnelsAsync(item);
+            }
 
             if (item.OperatingRoomIds != null && result.Info.Succeeded)
             {

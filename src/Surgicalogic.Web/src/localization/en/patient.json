@@ -1,5 +1,11 @@
 {
-  "identityNumber":"Patient Identity Number",
-  "firstName":"Patient Rirst Name",
-  "lastName":"Patient Last Name"
+  "identityNumber":"Identity Number",
+  "firstName":"First Name",
+  "lastName":"Last Name",
+  "phone":"Phone",
+  "address":"Address",
+  "patients":"Patients",
+  "patientSaved": "Patient saved.",
+  "addPatientInformation": "Add Patient",
+  "editPatientInformation": "Edit Patient"
 }

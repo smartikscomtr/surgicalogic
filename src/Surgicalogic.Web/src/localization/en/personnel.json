@@ -10,5 +10,6 @@
   "personnelCategory": "Category",
   "doctor": "Doctor",
   "personnelPhoto":"Photo",
-  "personnelSaved": "Personel saved."
+  "personnelSaved": "Personel saved.",
+  "patient":"Patient"
 }

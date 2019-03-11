@@ -10,5 +10,6 @@
   "personnelCategory":"Kategorisi",
   "personnelSaved": "Personel kaydedildi.",
   "doctor": "Doktor",
-  "personnelPhoto": "Fotoğraf"
+  "personnelPhoto": "Fotoğraf",
+  "patient":"Hasta"
 }
