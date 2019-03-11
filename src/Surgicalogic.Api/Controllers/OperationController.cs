@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores;
@@ -18,6 +19,7 @@ namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
+    [Authorize]
     public class OperationController : Controller
     {
         private readonly IOperationStoreService _operationStoreService;

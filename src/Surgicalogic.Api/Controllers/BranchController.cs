@@ -10,11 +10,13 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using Surgicalogic.Model.ExportModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
+    [Authorize]
     public class BranchController : Controller
     {
         private readonly IBranchStoreService _branchStoreService;

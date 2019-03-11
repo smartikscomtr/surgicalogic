@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
@@ -14,6 +15,7 @@ using Surgicalogic.Model.OutputModel;
 
 namespace Surgicalogic.Api.Controllers
 {
+    [Authorize]
     public class FeedbackController : Controller
     {
         private readonly IFeedbackStoreService _feedbackStoreService;

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Common.Extensions;
@@ -19,6 +20,7 @@ namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
+    [Authorize]
     public class AppointmentCalendarController : Controller
     {
         private readonly IAppointmentCalendarStoreService _appointmentCalendarStoreService;

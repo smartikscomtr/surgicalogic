@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
+    [Authorize]
     public class OperatingRoomCalendarController : Controller
     {
         private readonly IOperatingRoomCalendarStoreService _operatingRoomCalendarStoreService;

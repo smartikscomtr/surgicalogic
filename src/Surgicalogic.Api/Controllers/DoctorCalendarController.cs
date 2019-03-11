@@ -10,9 +10,11 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using Surgicalogic.Model.ExportModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Surgicalogic.Api.Controllers
 {
+    [Authorize]
     public class DoctorCalendarController : Controller
     {
         private readonly IDoctorCalendarStoreService _doctorCalendarStoreService;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Surgicalogic.Api.Helpers;
@@ -20,6 +21,7 @@ using Surgicalogic.Planning.Model.OutputModel;
 
 namespace Surgicalogic.Api.Controllers
 {
+    [Authorize]
     public class SimulationController : Controller
     {
         private readonly ISimulation _simulation;

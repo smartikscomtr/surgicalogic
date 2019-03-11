@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Surgicalogic.Api.Controllers
 {
+    [Authorize]
     public class SettingController : Controller
     {
         private readonly ISettingStoreService _settingStoreService;

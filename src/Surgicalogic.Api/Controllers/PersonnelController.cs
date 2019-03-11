@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Common.Settings;
@@ -22,6 +23,7 @@ namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
+    [Authorize]
     public class PersonnelController : Controller
     {
         private readonly IPersonnelStoreService _personnelStoreService;

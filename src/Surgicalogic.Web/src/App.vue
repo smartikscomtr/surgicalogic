@@ -7,6 +7,13 @@
       </v-app>
     </div>
 
+    <!-- Error Page -->
+    <div id="app" v-show=isMounted v-if="$route.meta.fullPage">
+      <v-app id="insipere">
+        <router-view></router-view>
+      </v-app>
+    </div>
+
     <!-- Dashboard Page -->
     <div id="app" v-show=isMounted v-else>
       <v-app id="insipere">

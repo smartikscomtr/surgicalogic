@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Common.Settings;
@@ -19,6 +20,7 @@ using System.Web;
 
 namespace Surgicalogic.Api.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private SignInManager<User> _signInManager;
@@ -36,6 +38,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("User/Login")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<object> Login([FromBody]LoginViewModel model)
         {
             var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email && r.IsActive);
@@ -210,6 +213,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("User/ForgotPassword")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ResultModel<User>> ForgotPassword([FromBody]ForgotPasswordViewModel model)
         {
             var result = new ResultModel<User>() { Info = new Info { Succeeded = false } };
@@ -238,6 +242,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("User/ResetPassword")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ResultModel<bool>> ResetPassword([FromBody]ResetPasswordViewModel model)
         {
             var returnResult = new ResultModel<bool> { Info = new Info { Succeeded = false } };

@@ -6,6 +6,7 @@ import {
 
 const httpCodes = {
   badRequest: 401,
+  unAuthorized:403,
   serverError: 500
 }
 
@@ -95,9 +96,18 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
           }
 
         }
+        else if (error.response.status === httpCodes.unAuthorized) {
+          return vm.$router.push({
+            name: 'ForbiddenErrorPage'
+          });
+        }
       }
 
-      console.error('Http after request error: ', error);
+      return vm.$router.push({
+        name: 'ApiErrorPage'
+      });
+
+      //console.error('Http after request error: ', error);
 
       return Promise.reject(error);
     });

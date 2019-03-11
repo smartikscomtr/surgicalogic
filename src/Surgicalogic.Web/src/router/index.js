@@ -58,74 +58,130 @@ import HistoryPlanningPage from "@/pages/report/HistoryPlanningPage";
 import OvertimeUtilizationPage from "@/pages/report/OvertimeUtilizationPage";
 import OvertimeReportPage from "@/pages/report/OvertimeReportPage";
 
+//Registering error Pages
+import ApiErrorPage from "@/pages/error/ApiErrorPage";
+import ForbiddenErrorPage from "@/pages/error/ForbiddenErrorPage";
+
 export default new VueRouter({
   mode: 'history',
   routes: [
     {
       path: '/appointmentListPage',
       name: 'AppointmentListPage',
-      component: AppointmentListPage
+      component: AppointmentListPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/appointmentcalendarpage',
       name: 'AppointmentCalendarPage',
-      component: AppointmentCalendarPage
+      component: AppointmentCalendarPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/branchespage',
       name: 'BranchesPage',
-      component: BranchesPage
+      component: BranchesPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/clinicpage',
       name: 'ClinicPage',
-      component: ClinicPage
+      component: ClinicPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/dashboardpage',
       name: 'DashboardPage',
       component: DashboardPage,
-      alias: ['']
+      alias: [''],
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/equipmentspage',
       name: 'EquipmentsPage',
-      component: EquipmentsPage
+      component: EquipmentsPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/equipmenttypespage',
       name: 'EquipmentTypesPage',
-      component: EquipmentTypesPage
+      component: EquipmentTypesPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/feedbackpage',
       name: 'FeedbackPage',
-      component: FeedbackPage
+      component: FeedbackPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/overtimeutilizationpage',
       name: 'OvertimeUtilizationPage',
-      component: OvertimeUtilizationPage
+      component: OvertimeUtilizationPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/overtimereportpage',
       name: 'OvertimeReportPage',
-      component: OvertimeReportPage
+      component: OvertimeReportPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/historyclinicpage',
       name: 'HistoryClinicPage',
-      component: HistoryClinicPage
+      component: HistoryClinicPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/historyplanningpage',
       name: 'HistoryPlanningPage',
-      component: HistoryPlanningPage
+      component: HistoryPlanningPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/loginpage',
       name: 'LoginPage',
       component: LoginPage,
+      meta: {
+        fullPage: true
+      }
+    },
+    {
+      path: '/apierrorpage',
+      name: 'ApiErrorPage',
+      component: ApiErrorPage,
+      meta: {
+        fullPage: true
+      }
+    },
+    {
+      path: '/forbiddenerrorpage',
+      name: 'ForbiddenErrorPage',
+      component: ForbiddenErrorPage,
       meta: {
         fullPage: true
       }
@@ -149,62 +205,98 @@ export default new VueRouter({
     {
       path: '/operationpage',
       name: 'OperationPage',
-      component: OperationPage
+      component: OperationPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/operationtypespage',
       name: 'OperationTypesPage',
-      component: OperationTypesPage
+      component: OperationTypesPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/personnelpage',
       name: 'PersonnelPage',
-      component: PersonnelPage
+      component: PersonnelPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/patientpage',
       name: 'PatientPage',
-      component: PatientPage
+      component: PatientPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/personnelCategorypage',
       name: 'PersonnelCategoryPage',
-      component: PersonnelCategoryPage
+      component: PersonnelCategoryPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/personnelTitlepage',
       name: 'PersonnelTitlePage',
-      component: PersonnelTitlePage
+      component: PersonnelTitlePage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/operatingroomcalendarpage',
       name: 'OperatingRoomCalendarPage',
-      component: OperatingRoomCalendarPage
+      component: OperatingRoomCalendarPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/operatingroomspage',
       name: 'OperatingRoomsPage',
-      component: OperatingRoomsPage
+      component: OperatingRoomsPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/planarrangementspage',
       name: 'PlanArrangementsPage',
-      component: PlanArrangementsPage
+      component: PlanArrangementsPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/userspage',
       name: 'UsersPage',
-      component: UsersPage
+      component: UsersPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/settingspage',
       name: 'SettingsPage',
-      component: SettingsPage
+      component: SettingsPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/worktypespage',
       name: 'WorkTypesPage',
-      component: WorkTypesPage
+      component: WorkTypesPage,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

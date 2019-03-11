@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Surgicalogic.Contracts.Stores;
@@ -16,6 +17,7 @@ namespace Surgicalogic.Api.Controllers
 {
     //[Produces("application/json")]
     //[Route("api/[controller]")]
+    [Authorize]
     public class OperationTypeController : Controller
     {
         private readonly IOperationTypeStoreService _operationTypeStoreService;

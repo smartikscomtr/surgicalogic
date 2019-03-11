@@ -26,6 +26,18 @@ var VueCookie = require('vue-cookie');
  * we import the main application.
  */
 
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("token")) {
+      next()
+      return
+    }
+    next('/loginpage')
+  } else {
+    next()
+  }
+})
+
 import App from './App';
 import store from './stores';
 
