@@ -87,6 +87,22 @@
 
           <v-spacer></v-spacer>
 
+          <v-menu offset-y>
+            <span slot="activator">
+              <span class="hidden-sm-and-down">
+                Tuba Bayraktutar
+              </span>
+
+              <v-btn flat icon dark>
+                  <v-icon>arrow_drop_down</v-icon>
+              </v-btn>
+            </span>
+
+            <v-list>
+              <v-list-tile @click="logOut">{{ $t('common.logout') }}</v-list-tile>
+            </v-list>
+          </v-menu>
+
           <v-tooltip bottom>
             <v-btn icon @click="showFeedback = true" slot="activator">
               <v-icon>
@@ -333,6 +349,12 @@ export default {
 
             vm.$i18n.locale = lang;
             vm.$cookie.set('currentLanguage', lang, 365);
+        },
+
+        logOut() {
+          const vm = this;
+
+          vm.$store.dispatch("userLogout");
         }
     },
 

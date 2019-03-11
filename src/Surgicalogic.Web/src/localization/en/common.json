@@ -32,5 +32,6 @@
   "eventNumberIsNotDifferent": "Event number is not unique.",
   "emailIsNotUnique":"Email is not unique.",
   "invalidEmail": "Invalid e-mail",
-  "identityRequired":"Please enter valid identity number"
+  "identityRequired":"Please enter valid identity number",
+  "logout": "Log Out"
 }
