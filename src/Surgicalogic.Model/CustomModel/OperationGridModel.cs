@@ -19,5 +19,8 @@ namespace Surgicalogic.Model.CustomModel
 
         [Searchable]
         public OperationTypeForOperationModel OperationType { get; set; }
+        public PatientModel Patient { get; set; }
+        public ICollection<OperationPersonnelModel> OperationPersonels { get; set; }
+        public virtual ICollection<OperationBlockedOperatingRoomModel> OperationBlockedOperatingRooms { get; set; }
     }
 }

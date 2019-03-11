@@ -49,7 +49,7 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<OperationOutputModel>> GetOperations(GridInputModel input)
         {
-            return await _operationStoreService.GetAsync<OperationOutputModel>(input);
+            return await _operationGridStoreService.GetAsync<OperationOutputModel>(input);
         }
 
         [Route("Operation/GetOperationNamesForHistory")]
