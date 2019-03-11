@@ -28,7 +28,7 @@
     </v-card-title>
     <div class="v-card__text">
       <v-data-table id="section-to-print" :headers="headers" :items="items" :loading="loading" :pagination.sync="pagination" :total-items="totalCount" :hide-actions="hideActions" :rows-per-page-text="$t('common.rowsPerPage')" :no-data-text="$t('common.noDataAvailable')" :rows-per-page-items="[10, 25, 50, 100]">
-        <v-progress-linear slot="progress" color="teal" indeterminate>
+        <v-progress-linear slot="progress" height="3" color="teal" indeterminate>
         </v-progress-linear>
 
         <template slot="items" slot-scope="props">
