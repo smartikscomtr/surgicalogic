@@ -33,6 +33,8 @@
   "emailIsNotUnique":"Aynı emaile sahip bir kullanıcı zaten var.",
   "invalidEmail": "Geçersiz e-posta adresi.",
   "identityRequired":"Lütfen geçerli bir kimlik numarası giriniz.",
+  "logout": "Çıkış Yap"
+  "identityRequired":"Lütfen geçerli bir kimlik numarası giriniz.",
   "apiErrorMessage":"Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.",
   "forbiddenErrorMessage":"Bu sayfayı görüntüleme yetkiniz bulunmuyor."
 }
