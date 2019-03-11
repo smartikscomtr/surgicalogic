@@ -161,7 +161,6 @@
               no-title
               locale="tr-TR"
               @input="$refs.menu.save(date)"
-              :min="getMinDate()"
               :max="getMaxDate()"
             >
             </v-date-picker>
@@ -240,19 +239,6 @@ export default {
       let selectDay = new Date();
 
       selectDay.setDate(selectDay.getDate());
-
-      let year = selectDay.getFullYear();
-      let month = toTwoDigits(selectDay.getMonth() + 1);
-      let day = toTwoDigits(selectDay.getDate());
-
-      return `${year}-${month}-${day}`;
-    },
-
-    getMinDate() {
-      const toTwoDigits = num => (num < 10 ? "0" + num : num);
-      let selectDay = new Date();
-
-      selectDay.setDate(selectDay.getDate() - 4);
 
       let year = selectDay.getFullYear();
       let month = toTwoDigits(selectDay.getMonth() + 1);
