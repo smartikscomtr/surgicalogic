@@ -89,7 +89,7 @@
 
           <v-menu offset-y>
             <span slot="activator">
-              <span class="hidden-sm-and-down">
+              <span class="userName">
                 {{ username }}
               </span>
 
