@@ -188,6 +188,11 @@ export default {
                     route: '/operationpage'
                 },
                 {
+                    icon: 'group',
+                    text: vm.$i18n.t('menu.patient'),
+                    route: '/patientpage'
+                },
+                {
                   icon: 'timeline',
                   text: vm.$i18n.t('menu.planArrangementsAndSimulation'),
                   route: '/planarrangementspage'
@@ -265,11 +270,6 @@ export default {
                             icon: 'group',
                             text: vm.$i18n.t('menu.personnel'),
                             route: '/personnelpage'
-                        },
-                        {
-                            icon: 'group',
-                            text: vm.$i18n.t('menu.patient'),
-                            route: '/patientpage'
                         },
                         {
                             icon: 'meeting_room',
