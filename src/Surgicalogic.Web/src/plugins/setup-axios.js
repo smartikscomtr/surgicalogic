@@ -103,11 +103,11 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
         }
       }
 
-      return vm.$router.push({
-        name: 'ApiErrorPage'
-      });
+      // return vm.$router.push({
+      //   name: 'ApiErrorPage'
+      // });
 
-      //console.error('Http after request error: ', error);
+      console.error('Http after request error: ', error);
 
       return Promise.reject(error);
     });

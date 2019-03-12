@@ -1,31 +1,6 @@
 <template>
   <div>
     <div class="v-card__title">
-      <v-flex xs12 sm6 md3>
-        <v-menu ref="menu"
-                :close-on-content-click="false"
-                v-model="menu"
-                :nudge-right="40"
-                :return-value.sync="date"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290px">
-          <v-text-field append-icon="keyboard_arrow_down"
-                        readonly
-                        slot="activator"
-                        v-model="dateFormatted"
-                        :label="$t('operation.operationDate')">
-          </v-text-field>
-
-          <v-date-picker v-model="date"
-                          no-title
-                          locale="tr-TR"
-                          @input="$refs.menu.save(date)">
-          </v-date-picker>
-        </v-menu>
-      </v-flex>
 
       <v-flex xs12 sm6 md3>
         <v-btn class="orangeButton"
@@ -71,13 +46,18 @@ export default {
     gridMixin
   ],
 
+  props: {
+    date: {
+      type: String,
+      required: false
+    }
+  },
+
   data() {
     const vm = this;
 
     return {
       menu: false,
-      dateFormatted: null,
-      date: null,
       search: '',
       detailDialog: false,
       editDialog: false,
@@ -92,14 +72,6 @@ export default {
       simulation: false,
       customParameters: {}
     };
-  },
-
-  watch: {
-    date(val) {
-      const vm = this;
-
-      vm.dateFormatted = vm.formatDate(vm.date);
-    }
   },
 
   computed: {
@@ -187,33 +159,12 @@ export default {
         selectDate: vm.date
       });
       vm.simulation = true;
-    },
-
-    getDate() {
-      const toTwoDigits = num => (num < 10 ? "0" + num : num);
-      let tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-
-      let year = tomorrow.getFullYear();
-      let month = toTwoDigits(tomorrow.getMonth() + 1);
-      let day = toTwoDigits(tomorrow.getDate());
-
-      return `${year}-${month}-${day}`;
-    },
-
-    formatDate(date) {
-      if (!date || date.indexOf(".") > -1) return null;
-
-      const [year, month, day] = date.split("-");
-
-      return `${day}.${month}.${year}`;
     }
   },
 
   created () {
     const vm = this;
 
-    vm.date = vm.getDate();
     vm.$store.dispatch('getAllOperatingRooms');
   }
 };

@@ -172,7 +172,8 @@
                                             ref="overtimeUtilizationComponent">
             </overtime-utilization-component>
 
-            <simulation-run-component v-if="item.content=='simulation'">
+            <simulation-run-component v-if="item.content=='simulation'"
+                                      :date="date">
             </simulation-run-component>
           </v-card-text>
         </v-card>
