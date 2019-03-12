@@ -26,6 +26,7 @@ const loginModule = {
           .then(response => {
             if (response.statusText == "OK") {
               if (response.data) {
+                localStorage.setItem("username", response.data.username);
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("refreshToken", response.data.refreshToken);
                 localStorage.setItem('expiresIn', new Date(Date.parse(response.data.expiresIn)).getTime());
@@ -48,6 +49,7 @@ const loginModule = {
       axios.post('User/LogOff')
         .then(response => {
           if (response.statusText == "OK") {
+            localStorage.removeItem("username");
             localStorage.removeItem("token");
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("expiresIn");

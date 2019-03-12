@@ -205,6 +205,12 @@ export default {
               return false;
             }
 
+            if (response.data.info.infoType == infoTypes.userSelfUpdated)
+            {
+              localStorage.setItem("username", response.data.result.userName);
+              vm.$router.go();
+            }
+
             vm.snackbarVisible = true;
             vm.$parent.getUsers();
 

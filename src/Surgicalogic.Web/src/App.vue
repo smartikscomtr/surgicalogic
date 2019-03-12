@@ -7,13 +7,6 @@
       </v-app>
     </div>
 
-    <!-- Error Page -->
-    <div id="app" v-show=isMounted v-if="$route.meta.fullPage">
-      <v-app id="insipere">
-        <router-view></router-view>
-      </v-app>
-    </div>
-
     <!-- Dashboard Page -->
     <div id="app" v-show=isMounted v-else>
       <v-app id="insipere">
@@ -97,7 +90,7 @@
           <v-menu offset-y>
             <span slot="activator">
               <span class="hidden-sm-and-down">
-                Tuba Bayraktutar
+                {{ username }}
               </span>
 
               <v-btn flat icon dark>
@@ -326,6 +319,10 @@ export default {
                     ]
                 }
             ];
+        },
+
+        username() {
+          return localStorage.getItem("username");
         }
     },
 
@@ -361,7 +358,9 @@ export default {
         logOut() {
           const vm = this;
 
-          vm.$store.dispatch("userLogout");
+          vm.$store.dispatch("userLogout").then(() => {
+            vm.$router.push("/loginpage");
+          });
         }
     },
 

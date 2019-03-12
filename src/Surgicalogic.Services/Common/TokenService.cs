@@ -36,7 +36,7 @@ namespace Surgicalogic.Services.Common
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new { token = accessToken, refreshToken = GetRefreshToken(email, accessToken), expiresIn = expires };
+            return new { token = accessToken, refreshToken = GetRefreshToken(email, accessToken), expiresIn = expires, username = user.UserName };
         }
 
         public string GetEmailFromExpiredToken(string token)

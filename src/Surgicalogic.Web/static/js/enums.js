@@ -8,3 +8,10 @@ var errorMessages = {
   EventNumberIsNotDifferent: 7,
   CodeIsNotUnique: 8
 };
+
+var infoTypes = {
+  error:1,
+  warning: 2,
+  info: 3,
+  userSelfUpdated: 4
+};

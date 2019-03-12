@@ -100,7 +100,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<SettingModel, Setting>()
                 .ForMember(src => src.Key, opt => opt.Ignore());
             config.CreateMap<SettingDataTypeModel, SettingDataType>();
-            config.CreateMap<UserModel, User>();
+            config.CreateMap<UserModel, User>()
+                .ForMember(src => src.PasswordHash, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkType>();
             #endregion
 

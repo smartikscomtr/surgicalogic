@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Surgicalogic.Common.Extensions;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Services;
 using Surgicalogic.Contracts.Stores;
@@ -15,6 +16,7 @@ using Surgicalogic.Model.User;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -180,6 +182,16 @@ namespace Surgicalogic.Api.Controllers
             var updateResult = await _userStoreService.UpdateAndSaveAsync(userItem);
 
             await SetUserRolesAsync(item.Email, item.IsAdmin);
+
+            var loggedInUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!string.IsNullOrEmpty(loggedInUserId))
+            {
+                if (loggedInUserId.ToNCInt() == item.Id)
+                {
+                    updateResult.Info.InfoType = Model.Enum.InfoType.UserSelfUpdated;
+                }
+            }
 
             return updateResult;
         }

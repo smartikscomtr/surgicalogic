@@ -12,7 +12,8 @@
     {
         Error = 1,
         Warning = 2,
-        Info = 3
+        Info = 3,
+        UserSelfUpdated = 4
     }
 
     public enum MessageType
