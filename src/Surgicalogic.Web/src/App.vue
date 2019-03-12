@@ -245,11 +245,6 @@ export default {
                             route: '/feedbackpage'
                         },
                         {
-                            icon: 'help',
-                            text: vm.$i18n.t('menu.help'),
-                            route: "#"
-                        },
-                        {
                             icon: 'settings',
                             text: vm.$i18n.t('menu.settings'),
                             route: '/settingspage'
