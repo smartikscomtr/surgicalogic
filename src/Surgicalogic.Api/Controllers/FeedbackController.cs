@@ -72,5 +72,17 @@ namespace Surgicalogic.Api.Controllers
 
             return await _feedbackStoreService.InsertAndSaveAsync<FeedbackOutputModel>(feedbackItem);
         }
+
+        /// <summary>
+        /// Remove branch item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Int</returns>
+        [Route("Feedback/DeleteFeedback/{id:int}")]
+        [HttpPost]
+        public async Task<ResultModel<int>> DeleteFeedback(int id)
+        {
+            return await _feedbackStoreService.DeleteAndSaveByIdAsync(id);
+        }
     }
 }

@@ -22,8 +22,16 @@ const feedbackModule = {
       state.allFeedbacks = data;
     },
 
-    insertBranch(state, { item }) {
+    insertFeedback(state, { item }) {
       state.feedbacks.push(item);
+    },
+
+    deleteFeedback(state, { payload }) {
+      let index = state.feedbacks.findIndex((item) => {
+        return item.id === payload.id
+      });
+
+      state.feedbacks.splice(index, 1);
     },
   },
 
@@ -69,7 +77,22 @@ const feedbackModule = {
           document.body.appendChild(link);
           link.click();
         })
-    }
+    },
+
+    deleteFeedback(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('Feedback/DeleteFeedback/' + payload.id)
+          .then(response => {
+            if (response.statusText == 'OK' && response.data.info.succeeded == true) {
+              context.commit('deleteFeedback', {
+                payload
+              }); //Delete the Feedbacks in the store
+            }
+
+            resolve(response);
+          })
+      });
+    },
   }
 }
 

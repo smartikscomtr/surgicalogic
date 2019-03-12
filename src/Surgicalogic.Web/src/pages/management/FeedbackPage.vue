@@ -5,13 +5,14 @@
                     :title="title"
                     :show-detail="true"
                     :show-edit="false"
-                    :show-delete="false"
+                    :show-delete="true"
                     :show-search="true"
                     :show-insert="false"
                     :loading="getLoading"
                     :methodName="getMethodName"
                     :totalCount="getTotalCount"
                     @detail="detail"
+                    @deleteitem="deleteItem"
                     @exportToExcel="exportFeedbackToExcel">
     </grid-component>
 
@@ -19,6 +20,12 @@
                                :detail-visible="detailDialog"
                                @cancel="cancel">
     </feedback-detail-component>
+
+    <delete-component :delete-value="deleteValue"
+                      :delete-visible="deleteDialog"
+                      :deleteMethode="deleteMethodName"
+                      @cancel="cancel">
+    </delete-component>
   </div>
 </template>
 
@@ -39,6 +46,9 @@ export default {
       detailDialog: false,
       detailAction: {},
       totalRowCount:0,
+      deleteDialog: false,
+      deleteValue: {},
+      deletePath: 'deleteFeedback'
     };
   },
 
@@ -96,6 +106,10 @@ export default {
   methods: {
     getMethodName(){
       return "getFeedbacks";
+    },
+
+    deleteMethodName(){
+      return "deleteFeedback";
     },
 
     exportFeedbackToExcel() {
