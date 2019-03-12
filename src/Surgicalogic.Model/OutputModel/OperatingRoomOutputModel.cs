@@ -16,6 +16,7 @@ namespace Surgicalogic.Model.OutputModel
         public bool IsAvailable { get; set; }
         public List<int> EquipmentIds { get; set; }
         public List<int> OperationTypeIds { get; set; }
+        public string UnavailableDates { get; set; }
         
         public ICollection<OperatingRoomEquipmentOutputModel> OperatingRoomEquipments { get; set; }
         public ICollection<OperatingRoomOperationTypeOutputModel> OperatingRoomOperationTypes { get; set; }

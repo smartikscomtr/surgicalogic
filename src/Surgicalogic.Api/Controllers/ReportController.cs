@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Smartiks.Framework.IO.Excel;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Contracts.Stores.IReportStoreService;
 using Surgicalogic.Model.CommonModel;
@@ -57,7 +58,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _overtimeReportStoreService.GetExportAsync(input);
 
-            excelService.Write(fs, "Worksheet", typeof(OvertimeReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(OvertimeReportExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
@@ -87,7 +88,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _operationPlanHistoryStoreService.GetExportAsync<HistoryPlanningReportExportModel>(input);
 
-            excelService.Write(fs, "Worksheet", typeof(HistoryPlanningReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(HistoryPlanningReportExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
@@ -112,7 +113,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _historyClinicReportStoreService.GetExportAsync<HistoryClinicReportExportModel>(input);
 
-            excelService.Write(fs, "Worksheet", typeof(HistoryClinicReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(HistoryClinicReportExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
@@ -135,7 +136,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _overtimeUtilizationStoreService.GetExportAsync(input);
 
-            excelService.Write(fs, "Worksheet", typeof(OvertimeUtilizationReportExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(OvertimeUtilizationReportExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }

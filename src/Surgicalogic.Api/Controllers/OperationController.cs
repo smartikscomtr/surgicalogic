@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Smartiks.Framework.IO.Excel;
 using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
@@ -78,7 +79,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _operationStoreService.GetExportAsync<OperationExportModel>();
 
-            excelService.Write(fs, "Worksheet", typeof(OperationExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(OperationExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }

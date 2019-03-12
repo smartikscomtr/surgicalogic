@@ -19,5 +19,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<RoomInputModel>> GetAvailableRoomsAsync(DateTime date);
         Task<List<OperatingRoomOutputModel>> GetByOperationTypeIdAsync(int operationTypeId);
         Task<List<RoomInputModel>> GetOperatingRoomsForDashboardTimelineModelAsync(DateTime selectDate, bool activeOnly = true);
+        Task<bool> HasOperation(int id);
     }
 }

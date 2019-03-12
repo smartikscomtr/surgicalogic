@@ -25,7 +25,8 @@
         PasswordsDoNotMatch = 5,
         AppointmentIsNotAvailable = 6,
         EventNumberIsNotDifferent = 7,
-        CodeIsNotUnique = 8
+        CodeIsNotUnique = 8,
+        OperatingRoomHasOperation = 9
     }
 
     public enum SettingKey

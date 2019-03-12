@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Surgicalogic.Model.ExportModel;
 using Microsoft.AspNetCore.Authorization;
+using Smartiks.Framework.IO.Excel;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -54,7 +55,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _branchStoreService.GetExportAsync<BranchExportModel>();
             
-            excelService.Write(fs, "Worksheet", typeof(BranchExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(BranchExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Smartiks.Framework.IO;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
@@ -737,62 +736,6 @@ namespace Surgicalogic.Data.Migrations.Initialize
             catch (Exception ec)
             { }
 
-        }
-
-        public static void InitializeDataFromExcel(DataContext context, string excelFilePath)
-        {
-            if (context.WorkTypes.Any() ||
-                context.EquipmentTypes.Any() ||
-                context.Equipments.Any() ||
-                context.Branches.Any() ||
-                context.OperatingRooms.Any() ||
-                context.Personnels.Any() ||
-                context.PersonnelCategories.Any())
-            {
-                return; // DB has been seeded
-            }
-
-            ExcelDocumentService excelDocumentService = new ExcelDocumentService();
-
-            var path = Path.Combine(Environment.CurrentDirectory, excelFilePath);
-
-            FileStream fs = new FileStream(path, FileMode.Open);
-
-            var worksheetNames = excelDocumentService.GetWorksheetNames(fs);
-            var metaType = Type.GetType($"Surgicalogic.Model.CommonModel.InitialWorkSheetMetaModel, Surgicalogic.Model");
-            var workSheetObject = excelDocumentService.Read(fs, MetaSheetName, metaType, System.Globalization.CultureInfo.CurrentCulture);
-            var workSheetData = ConvertWorkSheetObjectToModel(workSheetObject);
-
-            foreach (var item in worksheetNames)
-            {
-                if (item != MetaSheetName)
-                {
-                    var entityName = workSheetData.FirstOrDefault(x => x.Worksheet == item)?.Entity;
-                    var type = Type.GetType($"Surgicalogic.Data.Entities.{entityName}, Surgicalogic.Data");
-
-                    if (type == null)
-                    {
-                        return;
-                    }
-
-                    var excelData = excelDocumentService.Read(fs, item, type, System.Globalization.CultureInfo.CurrentCulture);
-
-                    context.AddRange(excelData);
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        private static List<InitialWorkSheetMetaModel> ConvertWorkSheetObjectToModel(IReadOnlyCollection<object> workSheetObject)
-        {
-            var result = new List<InitialWorkSheetMetaModel>();
-
-            foreach (var item in workSheetObject)
-            {
-                result.Add((InitialWorkSheetMetaModel)item);
-            }
-
-            return result;
         }
 
         public static string GetLetter()

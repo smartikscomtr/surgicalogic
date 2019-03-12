@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Surgicalogic.Model.ExportModel;
 using Microsoft.AspNetCore.Authorization;
+using Smartiks.Framework.IO.Excel;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -52,7 +53,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _doctorCalendarStoreService.GetExportAsync<DoctorCalendarExportModel>();
 
-            excelService.Write(fs, "Worksheet", typeof(DoctorCalendarExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(DoctorCalendarExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }

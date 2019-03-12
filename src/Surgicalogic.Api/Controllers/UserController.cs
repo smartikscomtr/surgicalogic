@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Smartiks.Framework.IO.Excel;
 using Surgicalogic.Common.Extensions;
 using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Services;
@@ -79,7 +80,7 @@ namespace Surgicalogic.Api.Controllers
 
             return users;
         }
-        
+
         [Route("User/ExcelExport")]
         public async Task<string> ExcelExport()
         {
@@ -91,10 +92,11 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _userStoreService.GetExportAsync<UserExportModel>();
 
-            excelService.Write(fs, "Worksheet", typeof(UserExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(UserExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
+
         /// <summary>
         /// Add user methode
         /// </summary>
@@ -297,6 +299,7 @@ namespace Surgicalogic.Api.Controllers
             await _signInManager.SignOutAsync();
         }
 
+        [AllowAnonymous]
         [Route("User/RefreshToken")]
         [HttpPost]
         public async Task<object> RefreshToken([FromBody]TokenViewModel model)

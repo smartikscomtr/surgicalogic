@@ -147,5 +147,10 @@ namespace Surgicalogic.Services.Stores
             return result;
         }
 
+        public async Task<bool> HasOperation(int id)
+        {
+            return await _context.OperationPlans.AnyAsync(x => x.IsActive && x.Operation.IsActive && x.OperatingRoomId == id && x.OperationDate >= DateTime.Today);
+        }
+
     }
 }

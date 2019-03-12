@@ -18,5 +18,6 @@ namespace Surgicalogic.Model.EntityModel
         public bool IsAvailable { get; set; }
         public ICollection<OperatingRoomEquipmentModel> OperatingRoomEquipments { get; set; }
         public ICollection<OperatingRoomOperationTypeModel> OperatingRoomOperationTypes { get; set; }
+        public ICollection<OperatingRoomCalendarModel> OperatingRoomCalendars { get; set; }
     }
 }

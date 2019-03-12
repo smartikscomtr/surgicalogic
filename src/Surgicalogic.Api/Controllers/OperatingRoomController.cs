@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Smartiks.Framework.IO;
+using Smartiks.Framework.IO.Excel;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -59,9 +59,9 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _operatingRoomStoreService.GetExportAsync<OperatingRoomExportModel>();
 
-            excelService.Write(fs, "Worksheet", typeof(OperatingRoomExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+           await excelService.WriteAsync(fs, "Worksheet", items, typeof(OperatingRoomExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
-            return fileName;
+           return fileName;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Surgicalogic.Api.Controllers
                 Width = item.Width,
                 Height = item.Height,
                 Length = item.Length,
-                IsAvailable = item.IsAvailable
+                IsAvailable = true
             };
 
             using (var ts = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }, TransactionScopeAsyncFlowOption.Enabled))
@@ -127,6 +127,21 @@ namespace Surgicalogic.Api.Controllers
         [HttpPost]
         public async Task<ResultModel<int>> DeleteOperatingRoom(int id)
         {
+            var hasOperations = await _operatingRoomStoreService.HasOperation(id);
+            
+            if (hasOperations)
+            {
+                return new ResultModel<int>
+                {
+                    Info = new Info
+                    {
+                        Succeeded = false,
+                        InfoType = Model.Enum.InfoType.Warning,
+                        Message = Model.Enum.MessageType.OperatingRoomHasOperation
+                    }
+                };
+            }
+
             return await _operatingRoomStoreService.DeleteAndSaveByIdAsync(id);
         }
 
@@ -148,7 +163,7 @@ namespace Surgicalogic.Api.Controllers
                 Location = item.Location,
                 Width = item.Width,
                 Height = item.Height,
-                IsAvailable = item.IsAvailable,
+                IsAvailable = true,
                 Length = item.Length
             };
 

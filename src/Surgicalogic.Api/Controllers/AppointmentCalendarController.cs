@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
+using Smartiks.Framework.IO.Excel;
 using Surgicalogic.Common.Extensions;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
@@ -259,7 +260,7 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _appointmentCalendarStoreService.GetExportAsync<AppointmentCalendarExportModel>();
 
-            excelService.Write(fs, "Worksheet", typeof(AppointmentCalendarExportModel), items, System.Globalization.CultureInfo.CurrentCulture);
+            await excelService.WriteAsync(fs, "Worksheet", items, typeof(AppointmentCalendarExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;
         }
