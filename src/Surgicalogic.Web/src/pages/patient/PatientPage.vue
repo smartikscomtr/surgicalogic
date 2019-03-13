@@ -8,6 +8,7 @@
                     :show-delete="true"
                     :show-search="true"
                     :show-insert="true"
+                    :show-plan-an-operation="true"
                     :methodName="getMethodName"
                     :loading="getLoading"
                     :totalCount="getTotalCount"
@@ -15,6 +16,7 @@
                     @exportToExcel="exportPatientsToExcel"
                     @newaction="addNewItem"
                     @deleteitem="deleteItem"
+                    @planAnOperation="showModule"
                     ref="gridComponent">
     </grid-component>
 
@@ -23,6 +25,12 @@
                               :edit-index="editedIndex"
                               @cancel="cancel">
     </patient-edit-component>
+
+    <plan-an-operation-component :plan-operation-action="planOperationAction"
+                              :plan-operation-visible="planOperationDialog"
+                              :plan-operation-index="plannedOperationIndex"
+                              @cancel="cancel">
+    </plan-an-operation-component>
 
     <delete-component :delete-value="deleteValue"
                       :delete-visible="deleteDialog"
@@ -52,6 +60,10 @@ export default {
       deleteValue: {},
       totalRows:0,
       editedIndex: -1,
+      planOperationAction: {},
+      planOperationDialog : false,
+      plannedOperationIndex: -1,
+      planLoadOnce: true,
       deletePath: 'deletePatient'
     };
   },
@@ -126,8 +138,18 @@ export default {
   },
 
   watch: {
+    planOperationDialog() {
+      const vm = this;
 
-  },
+      //We are accessing getAllOperationTypes in vuex store
+      if(vm.planLoadOnce){
+          vm.$store.dispatch('getOperationTypesByBranchId');
+          vm.planLoadOnce = false;
+      }
+
+      }
+    },
+
 
   methods: {
     getMethodName(){
@@ -142,6 +164,14 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportPatient');
+    },
+
+    showModule(item){
+        const vm = this;
+
+        vm.planOperationDialog = true;
+        item.fullName = item.firstName + ' ' + item.lastName;
+        vm.planOperationAction = item;
     },
 
     getPatients(){

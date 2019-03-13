@@ -103,10 +103,9 @@ export default {
           align: 'left'
         },
         {
-          value: 'isAvailable',
-          text: vm.$i18n.t('operatingrooms.isAvailable'),
-          sortable: true,
-          isCheck: true,
+          value: 'unavailableDates',
+          text: vm.$i18n.t('operatingrooms.unavailableDates'),
+          sortable: false,
           align: 'left'
         },
         {

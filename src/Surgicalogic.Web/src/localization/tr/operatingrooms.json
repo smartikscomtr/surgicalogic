@@ -12,5 +12,6 @@
   "width": "Genişlik (cm)",
   "operatingRoomsCalendar": "Operasyon Odasının Uygun Olmadığı Tarihler",
   "isAvailable": "Uygun",
-  "operatingRoomSaved": "Operasyon odası kaydedildi."
+  "operatingRoomSaved": "Operasyon odası kaydedildi.",
+  "unavailableDates":"Uygun Olmadığı Tarihler"
 }

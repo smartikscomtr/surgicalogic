@@ -15,7 +15,7 @@ import EquipmentsPage from "@/pages/definitions/EquipmentsPage";
 import EquipmentTypesPage from "@/pages/definitions/EquipmentTypesPage";
 import OperationTypesPage from "@/pages/definitions/OperationTypesPage";
 import PersonnelPage from "@/pages/definitions/PersonnelPage";
-import PatientPage from "@/pages/definitions/PatientPage";
+import PatientPage from "@/pages/patient/PatientPage";
 import PersonnelCategoryPage from "@/pages/definitions/PersonnelCategoryPage";
 import PersonnelTitlePage from "@/pages/definitions/PersonnelTitlePage";
 import OperatingRoomsPage from "@/pages/definitions/OperatingRoomsPage";

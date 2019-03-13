@@ -22,6 +22,7 @@ export const gridMixin = {
       vm.editDialog = false;
       vm.deleteDialog = false;
       vm.resetPasswordDialog = false;
+      vm.planOperationDialog = false;
 
       setTimeout(() =>{
         vm.editAction = Object.assign({}, {})

@@ -31,18 +31,6 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
-                    {{ $t('operatingrooms.isAvailable') }}
-                  </div>
-
-                  <div class="value">
-                    {{ getAvailability() }}
-                  </div>
-                </div>
-              </v-flex>
-
               <v-flex xs12 sm3 md3>
                 <div class="input-group readonly-wrap">
                   <div class="label">
@@ -216,19 +204,6 @@ export default {
       const vm = this;
 
       vm.showModal = false;
-    },
-
-    getAvailability() {
-      const vm = this;
-
-      if(vm.detailAction.isAvailable)
-      {
-          return vm.$i18n.t("common.yes");
-      }
-      else
-      {
-           return vm.$i18n.t("common.no");
-      }
     }
   }
 };

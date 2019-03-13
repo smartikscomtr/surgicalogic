@@ -126,6 +126,12 @@ import SnackbarComponent from '@/components/coreComponents/SnackbarComponent';
 Vue.component('snackbar-component', SnackbarComponent);
 Vue.component('loading-component', LoadingComponent);
 
+//plan an operation component
+import PlanAnOperationComponent from '@/components/customcomponents/PlanAnOperationComponent';
+
+Vue.component('plan-an-operation-component', PlanAnOperationComponent);
+
+
 import {
   setupAxios,
   setupHttpInterceptor

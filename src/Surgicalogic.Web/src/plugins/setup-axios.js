@@ -67,7 +67,7 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
           error.response.statusText === "Unauthorized") {
 
           if (localStorage.getItem("refreshToken")) {
-            axios.post('Account/RefreshToken', {
+            axios.post('User/RefreshToken', {
                 token: localStorage.getItem("token"),
                 refreshToken: localStorage.getItem("refreshToken")
               })

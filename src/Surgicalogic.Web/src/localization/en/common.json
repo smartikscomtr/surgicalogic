@@ -35,5 +35,6 @@
   "identityRequired":"Please enter valid identity number",
   "logout": "Log Out",
   "apiErrorMessage":"An error occurred. Please try again later.",
-  "forbiddenErrorMessage":"You are not authorized to view this page"
+  "forbiddenErrorMessage":"You are not authorized to view this page",
+  "planAnOperation": "Plan An Operation"
 }

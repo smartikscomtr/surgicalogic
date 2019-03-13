@@ -26,7 +26,7 @@
 
               <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectPatient" :items="patients" :label="$t('personnel.patient')" :filter="customFilterForFullName"
-                              clearable chips item-text="fullName" item-value="id" @change="handleChange" >
+                              clearable chips item-text="fullName" item-value="id" :rules="required" @change="handleChange" >
                 </v-autocomplete>
               </v-flex>
 

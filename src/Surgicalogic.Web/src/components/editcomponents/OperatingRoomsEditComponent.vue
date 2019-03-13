@@ -24,13 +24,6 @@
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm4 md4 input-group-checkbox>
-              <v-checkbox v-model="editAction['isAvailable']"
-                          :label="$t('operatingrooms.isAvailable')"
-                          color="primary">
-              </v-checkbox>
-            </v-flex>
-
             <v-flex xs12 sm3 md3>
               <v-text-field v-model="editAction['location']"
                             :label="$t('operatingrooms.location')">
@@ -241,7 +234,6 @@ export default {
                         equipments: vm.editAction.equipmentId,
                         operatingRoomEquipments: vm.editAction.equipmentId,
                         operationTypes: vm.editAction.operationTypeId,
-                        isAvailable: vm.editAction.isAvailable,
                         operatingRoomOperationTypes:
                             vm.editAction.operationTypeId
                     })
@@ -268,7 +260,6 @@ export default {
                         equipments: vm.editAction.equipmentId,
                         operatingRoomEquipments: vm.editAction.equipmentId,
                         operationTypes: vm.editAction.operationTypeId,
-                        isAvailable: vm.editAction.isAvailable,
                         operatingRoomOperationTypes:
                             vm.editAction.operationTypeId
                     })

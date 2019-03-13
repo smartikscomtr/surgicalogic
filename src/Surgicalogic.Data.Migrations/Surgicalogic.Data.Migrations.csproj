@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Smartiks.Framework\Smartiks.Framework.IO.Abstractions\Smartiks.Framework.IO.Abstractions.csproj" />
-    <ProjectReference Include="..\Smartiks.Framework\Smartiks.Framework.IO.Extensions\Smartiks.Framework.IO.Extensions.csproj" />
-    <ProjectReference Include="..\Smartiks.Framework\Smartiks.Framework.IO\Smartiks.Framework.IO.csproj" />
     <ProjectReference Include="..\Surgicalogic.Services\Surgicalogic.Services.csproj" />
   </ItemGroup>
 

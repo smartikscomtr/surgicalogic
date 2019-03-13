@@ -67,6 +67,15 @@
                 </v-icon>
               </v-btn>
 
+                <v-tooltip top>
+                <v-btn v-if="showPlanAnOperation" slot="activator" icon class="mx-0" @click="planAnOperation(props.item)">
+                  <v-icon>
+                    update
+                  </v-icon>
+                </v-btn>
+                <span>{{ $t('common.planAnOperation') }}</span>
+              </v-tooltip>
+
               <v-tooltip top>
                 <v-btn v-if="showDetail" slot="activator" icon class="mx-0" @click="detailItem(props.item)">
                   <v-icon>
@@ -139,6 +148,11 @@ export default {
         },
 
         showCalendar: {
+            type: Boolean,
+            required: false
+        },
+
+        showPlanAnOperation: {
             type: Boolean,
             required: false
         },
@@ -251,6 +265,13 @@ export default {
 
             //When the edit button is clicked, the event is sent to the grid component
             vm.$emit('edit', item, vm.items.indexOf(item));
+        },
+
+        planAnOperation(item){
+            const vm = this;
+
+            //When the date range button is clicked, the event is sent to the grid component
+            vm.$emit('planAnOperation', item);
         },
 
         deleteItem(item) {

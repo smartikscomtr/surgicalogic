@@ -5,14 +5,6 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Surgicalogic.Planning", "Surgicalogic.Planning", "{3EA6C97C-3339-418C-884F-BE49CB746009}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Smartiks.Framework", "Smartiks.Framework", "{054CE7F7-FC51-4B55-A996-7D28154CDB40}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Abstractions", "src\Smartiks.Framework\Smartiks.Framework.IO.Abstractions\Smartiks.Framework.IO.Abstractions.csproj", "{3216E45E-5982-4991-A5BB-F600904DDCB2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO", "src\Smartiks.Framework\Smartiks.Framework.IO\Smartiks.Framework.IO.csproj", "{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smartiks.Framework.IO.Extensions", "src\Smartiks.Framework\Smartiks.Framework.IO.Extensions\Smartiks.Framework.IO.Extensions.csproj", "{E4CBD45B-C0A2-402D-BD6D-92B930E23565}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Api", "src\Surgicalogic.Planning\Surgicalogic.Planning.Api\Surgicalogic.Planning.Api.csproj", "{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surgicalogic.Planning.Engine", "src\Surgicalogic.Planning\Surgicalogic.Planning.Engine\Surgicalogic.Planning.Engine.csproj", "{910E9578-10A3-490E-83A9-FFBD93FF449A}"
@@ -64,18 +56,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3216E45E-5982-4991-A5BB-F600904DDCB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4CBD45B-C0A2-402D-BD6D-92B930E23565}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -131,9 +111,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3216E45E-5982-4991-A5BB-F600904DDCB2} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
-		{7220A7F9-FE07-4AB1-9C75-EFF179B010E1} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
-		{E4CBD45B-C0A2-402D-BD6D-92B930E23565} = {054CE7F7-FC51-4B55-A996-7D28154CDB40}
 		{26EB400D-ACCD-4CFD-975D-EAF2D0AD65D1} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 		{910E9578-10A3-490E-83A9-FFBD93FF449A} = {3EA6C97C-3339-418C-884F-BE49CB746009}
 		{60CFE565-E727-4744-8CC4-113BB7CA0926} = {3EA6C97C-3339-418C-884F-BE49CB746009}
