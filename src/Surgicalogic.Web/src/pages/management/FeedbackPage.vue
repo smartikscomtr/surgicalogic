@@ -115,7 +115,7 @@ export default {
     exportFeedbackToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportFeedbacks');
+      vm.$store.dispatch('excelExportFeedbacks', { langId: vm.$cookie.get("currentLanguage")});
     }
   }
 };

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Smartiks.Framework.IO.Excel;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -32,8 +33,10 @@ namespace Surgicalogic.Api.Controllers
 
 
         [Route("OperatingRoomCalendar/ExcelExport/{id:int}")]
-        public async Task<string> ExcelExport(int id)
+        public async Task<string> ExcelExport(int id, string langId)
         {
+            AppSettings.SetSiteLanguage(langId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("OperatingRoomCalendars_{0}.xlsx", Guid.NewGuid().ToString());
 

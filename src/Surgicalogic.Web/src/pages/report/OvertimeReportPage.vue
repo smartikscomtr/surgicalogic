@@ -358,7 +358,7 @@ export default {
     exportOvertimeReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportOvertimeOperations');
+      vm.$store.dispatch('excelExportOvertimeOperations', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     customFilter(item, queryText, itemText) {

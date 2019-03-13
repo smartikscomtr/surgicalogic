@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Smartiks.Framework.IO.Excel;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -46,8 +47,10 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("Equipment/ExcelExport")]
-        public async Task<string> ExcelExport()
+        public async Task<string> ExcelExport(string langId)
         {
+            AppSettings.SetSiteLanguage(langId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("Equipments_{0}.xlsx", Guid.NewGuid().ToString());
 
@@ -55,6 +58,11 @@ namespace Surgicalogic.Api.Controllers
             var excelService = new ExcelDocumentService();
 
             var items = await _equipmentStoreService.GetExportAsync<EquipmentExportModel>();
+
+            foreach (var item in items)
+            {
+                item.IsPortable = item.IsPortable == "+" ? Resources.Resource.Yes : Resources.Resource.No;
+            }
 
             await excelService.WriteAsync(fs, "Worksheet",items , typeof(EquipmentExportModel), System.Globalization.CultureInfo.CurrentCulture);
 

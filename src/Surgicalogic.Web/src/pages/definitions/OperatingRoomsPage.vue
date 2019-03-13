@@ -169,7 +169,7 @@ export default {
     exportOperatingRoomToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('exportOperatingRoomToExcel');
+      vm.$store.dispatch('exportOperatingRoomToExcel', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getOperatingRooms(){

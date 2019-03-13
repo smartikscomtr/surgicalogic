@@ -8,5 +8,7 @@ namespace Surgicalogic.Model.InputModel
     {
         public DateTime OperationStartDate { get; set; }
         public DateTime OperationEndDate { get; set; }
+        public string LangId { get; set; }
+
     }
 }

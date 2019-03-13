@@ -129,8 +129,8 @@ const patientModule = {
       });
     },
 
-    excelExportPatient(context) {
-      axios.get('Patient/ExcelExport')
+    excelExportPatient(context, payload) {
+      axios.get('Patient/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

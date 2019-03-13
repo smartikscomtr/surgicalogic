@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Smartiks.Framework.IO.Excel;
 using Surgicalogic.Common.Extensions;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Model.CommonModel;
 using Surgicalogic.Model.EntityModel;
@@ -250,8 +251,10 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("AppointmentCalendar/ExcelExport")]
-        public async Task<string> ExcelExport()
+        public async Task<string> ExcelExport(string langId)
         {
+            AppSettings.SetSiteLanguage(langId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("AppointmentCalendar_{0}.xlsx", Guid.NewGuid().ToString());
 

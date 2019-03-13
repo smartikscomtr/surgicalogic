@@ -94,8 +94,8 @@ const personnelTitleModule = {
       });
     },
 
-    excelExportPersonnelTitle(context) {
-      axios.get('PersonnelTitle/ExcelExport')
+    excelExportPersonnelTitle(context, payload) {
+      axios.get('PersonnelTitle/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

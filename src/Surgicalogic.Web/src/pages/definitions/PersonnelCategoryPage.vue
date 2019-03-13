@@ -121,7 +121,7 @@ export default {
     exportPersonnelCategoryToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportPersonnelCategory');
+      vm.$store.dispatch('excelExportPersonnelCategory', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getPersonnelCategories(){

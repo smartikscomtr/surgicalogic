@@ -282,7 +282,7 @@ export default {
     exportOvertimeUtilizationReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportOvertimeUtilization');
+      vm.$store.dispatch('excelExportOvertimeUtilization', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getMaxDate() {

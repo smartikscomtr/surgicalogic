@@ -95,8 +95,8 @@ const personnelCategoryModule = {
       });
     },
 
-    excelExportPersonnelCategory(context) {
-      axios.get('PersonnelCategory/ExcelExport')
+    excelExportPersonnelCategory(context, payload) {
+      axios.get('PersonnelCategory/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

@@ -143,7 +143,7 @@ export default {
     exportOperationTypeToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('exportOperationTypeToExcel');
+      vm.$store.dispatch('exportOperationTypeToExcel', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getOperationTypes(){

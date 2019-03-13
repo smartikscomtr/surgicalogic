@@ -134,8 +134,8 @@ const operationTypeModule = {
         })
     },
 
-    exportOperationTypeToExcel(context) {
-      axios.get('OperationType/ExcelExport')
+    exportOperationTypeToExcel(context, payload) {
+      axios.get('OperationType/ExcelExport?langId='+ payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

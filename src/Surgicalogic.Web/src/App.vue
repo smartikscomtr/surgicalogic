@@ -284,12 +284,12 @@ export default {
                         {
                             icon: 'person_pin',
                             text: vm.$i18n.t('menu.PersonnelCategories'),
-                            route: '/PersonnelCategorypage'
+                            route: '/personnelcategorypage'
                         },
                         {
                             icon: 'grade',
                             text: vm.$i18n.t('menu.PersonnelTitles'),
-                            route: '/PersonnelTitlepage'
+                            route: '/personneltitlepage'
                         },
                         {
                             icon: 'business_center',

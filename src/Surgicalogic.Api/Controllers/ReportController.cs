@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Smartiks.Framework.IO;
 using Smartiks.Framework.IO.Excel;
+using Surgicalogic.Common.Settings;
 using Surgicalogic.Contracts.Stores;
 using Surgicalogic.Contracts.Stores.IReportStoreService;
 using Surgicalogic.Model.CommonModel;
@@ -50,6 +51,8 @@ namespace Surgicalogic.Api.Controllers
         [Route("Report/OvertimeReportExcelExport")]
         public async Task<string> OvertimeReportExcelExport(OvertimeReportInputModel input)
         {
+            AppSettings.SetSiteLanguage(input.LangId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("Overtime_Operations_{0}.xlsx", Guid.NewGuid().ToString());
 
@@ -80,6 +83,8 @@ namespace Surgicalogic.Api.Controllers
         [Route("Report/HistoryPlanningReportExcelExport")]
         public async Task<string> HistoryPlanningReportExcelExport(HistoryPlanningInputModel input)
         {
+            AppSettings.SetSiteLanguage(input.LangId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("History_Plannings_{0}.xlsx", Guid.NewGuid().ToString());
 
@@ -105,6 +110,8 @@ namespace Surgicalogic.Api.Controllers
         [Route("Report/HistoryClinicReportExcelExport")]
         public async Task<string> HistoryClinicReportExcelExport(HistoryClinicReportInputModel input)
         {
+            AppSettings.SetSiteLanguage(input.LangId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("History_Clinics_{0}.xlsx", Guid.NewGuid().ToString());
 
@@ -128,6 +135,8 @@ namespace Surgicalogic.Api.Controllers
         [Route("Report/OvertimeUtilizationReportExcelExport")]
         public async Task<string> OvertimeUtilizationReportExcelExport(OvertimeUtilizationReportInputModel input)
         {
+            AppSettings.SetSiteLanguage(input.LangId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("Overtime_Utilization_{0}.xlsx", Guid.NewGuid().ToString());
 

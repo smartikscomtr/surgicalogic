@@ -208,8 +208,8 @@ const personnelModule = {
       });
     },
 
-    excelExportPersonnel(context) {
-      axios.get('Personnel/ExcelExport')
+    excelExportPersonnel(context, payload) {
+      axios.get('Personnel/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

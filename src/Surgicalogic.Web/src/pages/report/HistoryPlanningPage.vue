@@ -377,7 +377,7 @@ export default {
     exportHistoryPlanningReportToExcel() {
         const vm = this;
 
-        vm.$store.dispatch('excelExportHistoryPlanning');
+        vm.$store.dispatch('excelExportHistoryPlanning', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     clearReport() {

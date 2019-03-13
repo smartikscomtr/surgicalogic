@@ -186,7 +186,7 @@ export default {
     exportPersonnelsToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportPersonnel');
+      vm.$store.dispatch('excelExportPersonnel', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getPersonnels(){

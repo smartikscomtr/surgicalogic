@@ -82,8 +82,10 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("User/ExcelExport")]
-        public async Task<string> ExcelExport()
+        public async Task<string> ExcelExport(string langId)
         {
+            AppSettings.SetSiteLanguage(langId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("Users_{0}.xlsx", Guid.NewGuid().ToString());
 

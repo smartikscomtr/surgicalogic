@@ -68,8 +68,8 @@ const feedbackModule = {
         })
     },
 
-    excelExportFeedbacks(context) {
-      axios.get('Feedback/ExcelExport')
+    excelExportFeedbacks(context, payload) {
+      axios.get('Feedback/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

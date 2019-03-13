@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Surgicalogic.Model.ExportModel;
 using Microsoft.AspNetCore.Authorization;
 using Smartiks.Framework.IO.Excel;
+using Surgicalogic.Common.Settings;
 
 namespace Surgicalogic.Api.Controllers
 {
@@ -45,8 +46,10 @@ namespace Surgicalogic.Api.Controllers
         }
 
         [Route("Branch/ExcelExport")]
-        public async Task<string> ExcelExport()
+        public async Task<string> ExcelExport(string langId)
         {
+            AppSettings.SetSiteLanguage(langId);
+
             var parentDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
             var fileName = string.Format("Branches_{0}.xlsx", Guid.NewGuid().ToString());
 

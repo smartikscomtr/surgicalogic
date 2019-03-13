@@ -95,8 +95,8 @@ const equipmentTypesModule = {
       });
     },
 
-    excelExportEquipmentTypes(context) {
-      axios.get('EquipmentType/ExcelExport')
+    excelExportEquipmentTypes(context, payload) {
+      axios.get('EquipmentType/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

@@ -112,8 +112,8 @@ const workTypesModule = {
       });
     },
 
-    excelExportWorkType(context) {
-      axios.get('WorkType/ExcelExport')
+    excelExportWorkType(context, payload) {
+      axios.get('WorkType/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

@@ -208,8 +208,8 @@ const operationModule = {
       })
     },
 
-    excelExportOperation(context) {
-      axios.get('Operation/ExcelExport')
+    excelExportOperation(context, payload) {
+      axios.get('Operation/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

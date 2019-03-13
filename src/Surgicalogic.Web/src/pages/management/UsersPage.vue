@@ -123,7 +123,7 @@ export default {
     exportUserToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportUser');
+      vm.$store.dispatch('excelExportUser', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getUsers(){

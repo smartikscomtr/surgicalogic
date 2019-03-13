@@ -114,7 +114,7 @@ export default {
     exportPersonnelTitleToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportPersonnelTitle');
+      vm.$store.dispatch('excelExportPersonnelTitle', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getPersonnelTitles(){

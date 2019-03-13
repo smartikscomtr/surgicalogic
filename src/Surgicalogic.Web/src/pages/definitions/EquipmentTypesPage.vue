@@ -119,7 +119,7 @@ export default {
     exportEquipmentTypesToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportEquipmentTypes');
+      vm.$store.dispatch('excelExportEquipmentTypes', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getEquipmentTypes(){

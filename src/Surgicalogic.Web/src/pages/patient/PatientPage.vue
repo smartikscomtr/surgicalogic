@@ -163,7 +163,7 @@ export default {
     exportPatientsToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportPatient');
+      vm.$store.dispatch('excelExportPatient', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     showModule(item){

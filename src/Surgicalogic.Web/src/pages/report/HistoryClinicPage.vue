@@ -414,7 +414,7 @@ export default {
     exportHistoryClinicReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportHistoryClinic');
+      vm.$store.dispatch('excelExportHistoryClinic', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     filterDoctor() {

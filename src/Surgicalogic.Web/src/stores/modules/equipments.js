@@ -118,8 +118,8 @@ const equipmentModule = {
         })
     },
 
-    excelExportEquipments(context) {
-      axios.get('Equipment/ExcelExport')
+    excelExportEquipments(context, payload) {
+      axios.get('Equipment/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

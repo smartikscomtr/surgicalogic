@@ -11,5 +11,7 @@ namespace Surgicalogic.Model.InputModel
         public string PatientId { get; set; } 
         public DateTime AppointmentStartDate { get; set; }
         public DateTime AppointmentEndDate { get; set; }
+        public string LangId { get; set; }
+
     }
 }

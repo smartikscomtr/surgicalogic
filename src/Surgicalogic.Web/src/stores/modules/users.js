@@ -114,8 +114,8 @@ const usersModule = {
     });
   },
 
-    excelExportUser(context) {
-      axios.get('User/ExcelExport')
+    excelExportUser(context, payload) {
+      axios.get('User/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

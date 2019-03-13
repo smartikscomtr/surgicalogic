@@ -120,7 +120,7 @@ export default {
     exportBranchesToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportBranches');
+      vm.$store.dispatch('excelExportBranches', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getBranches(){

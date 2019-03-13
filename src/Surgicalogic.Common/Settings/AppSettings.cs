@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 
 namespace Surgicalogic.Common.Settings
 {
@@ -15,5 +17,12 @@ namespace Surgicalogic.Common.Settings
         public static string DoctorPicture { get; set; }
         public static string ImagesFolder { get; set; }
         public static string WebSiteUrl { get; set; }
+
+        public static void SetSiteLanguage(string code)
+        {
+            var culture = code == "tr" ? "tr-TR" : "en-US";
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+        }
     }
 }

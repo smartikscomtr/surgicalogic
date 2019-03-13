@@ -106,8 +106,8 @@ const branchesModule = {
       });
     },
 
-    excelExportBranches(context) {
-      axios.get('Branch/ExcelExport')
+    excelExportBranches(context, payload) {
+      axios.get('Branch/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

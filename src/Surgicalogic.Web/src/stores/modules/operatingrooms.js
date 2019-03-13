@@ -131,8 +131,8 @@ const operatingRoomModule = {
         })
     },
 
-    exportOperatingRoomToExcel(context) {
-      axios.get('OperatingRoom/ExcelExport')
+    exportOperatingRoomToExcel(context, payload) {
+      axios.get('OperatingRoom/ExcelExport?langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 

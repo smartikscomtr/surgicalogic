@@ -119,7 +119,7 @@ export default {
     exportWorkTypeToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportWorkType');
+      vm.$store.dispatch('excelExportWorkType', { langId: vm.$cookie.get("currentLanguage")});
     },
 
     getWorkTypes(){

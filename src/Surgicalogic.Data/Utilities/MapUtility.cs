@@ -236,7 +236,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<Branch, BranchExportModel>();
             config.CreateMap<DoctorCalendar, DoctorCalendarExportModel>();
             config.CreateMap<Equipment, EquipmentExportModel>()
-                .ForMember(dest => dest.IsPortable, opt => opt.MapFrom(src => src.IsPortable ? "Evet" : "Hayır"));
+                .ForMember(dest => dest.IsPortable, opt => opt.MapFrom(src => src.IsPortable ? "+" : "-"));
             config.CreateMap<EquipmentType, EquipmentTypeExportModel>();
             config.CreateMap<Feedback, FeedbackExportModel>();
             config.CreateMap<AppointmentCalendar, HistoryClinicReportExportModel>()
@@ -248,7 +248,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy")))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy")));
             config.CreateMap<OperatingRoom, OperatingRoomExportModel>()
-                .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.IsAvailable ? "Evet" : "Hayır"));
+                .ForMember(dest => dest.UnavailableDates, opt => opt.MapFrom(src => string.Join(", ", src.OperatingRoomCalendars.Where(x => x.IsActive).Select(x => x.StartDate.ToString("dd.MM.yyyy") + "-" + x.EndDate.ToString("dd.MM.yyyy")))));
             config.CreateMap<Personnel, PersonnelExportModel>()
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
@@ -270,7 +270,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperationPlan, HistoryPlanningReportExportModel>()
                 .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
                 .ForMember(dest => dest.OperationRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name));
-            config.CreateMap<OperationPlanForReportModel, OvertimeReportExportModel>()
+            config.CreateMap<OperationPlan, OvertimeReportExportModel>()
                 .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
                 .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)))
                 .ForMember(dest => dest.OperationRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
