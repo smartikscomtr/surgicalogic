@@ -66,13 +66,16 @@
             </template>
 
             <template v-else>
-              <v-btn v-if="showCalendar" icon class="mx-0" @click="calendarItem(props.item)">
+              <v-tooltip top>
+                <v-btn v-if="showCalendar" slot="activator"  icon class="mx-0" @click="calendarItem(props.item)">
                 <v-icon color="#232222">
                   date_range
-                </v-icon>
-              </v-btn>
+                  </v-icon>
+                </v-btn>
+                <span>{{ $t('common.operatingRoomCalendar') }}</span>
+              </v-tooltip>
 
-                <v-tooltip top>
+              <v-tooltip top>
                 <v-btn v-if="showPlanAnOperation" slot="activator" icon class="mx-0" @click="planAnOperation(props.item)">
                   <v-icon>
                     update

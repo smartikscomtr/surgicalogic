@@ -44,7 +44,7 @@
     </delete-component>
 
         <!-- Uygunluk Takvimi -->
-
+<div id="calendarElement">
         <grid-component :headers="availabilityHeaders"
                     :items="operatingRoomCalendar"
                     :title="availabilityTitle"
@@ -79,13 +79,14 @@
                       :deleteMethode="deleteAvailabilityMethodName"
                       @cancel="cancel">
     </delete-component>
-
+</div>
   </div>
 </template>
 
 <script>
 
 import { gridMixin } from './../../mixins/gridMixin';
+var VueScrollTo = require('vue-scrollto');
 
 export default {
   mixins: [
@@ -256,8 +257,10 @@ export default {
       // vm.calendarDialog = true;
       // vm.calendarAction = Object.assign({}, payload);
       vm.editOperatingRoomId = payload.id;
-      vm.$store.dispatch('getOperatingRoomsCalendar', {operatingRoomId: payload.id });
-      vm.scrollToEnd();
+      vm.$store.dispatch('getOperatingRoomsCalendar', {operatingRoomId: payload.id }).then(() => {
+        window.scrollTo(0,1000);
+      });
+
       //vm.$router.push('/operatingroomcalendarpage?roomId=' + payload.id);
     },
 
@@ -288,12 +291,6 @@ export default {
       const vm = this;
 
       vm.$store.dispatch('excelExportOperatingRoomCalendar', {id: vm.editOperatingRoomId, langId: vm.$cookie.get("currentLanguage")});
-    },
-
-    scrollToEnd(){
-        var container = document.querySelector(".container");
-        var scrollHeight = container.scrollHeight;
-        container.scrollTop = scrollHeight;
     },
 
     getOperatingRooms(){

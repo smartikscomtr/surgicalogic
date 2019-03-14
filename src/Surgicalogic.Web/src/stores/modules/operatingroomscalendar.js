@@ -56,7 +56,7 @@ const operatingRoomCalendarModule = {
 
   actions: {
     getOperatingRoomsCalendar(context, params) {
-
+      return new Promise((resolve, reject) => {
       if (params.operatingRoomId) {
         context.commit('setLoading', true);
 
@@ -68,9 +68,11 @@ const operatingRoomCalendarModule = {
           }
 
           context.commit('setLoading', false);
+
+          resolve(response);
         })
       }
-
+    });
     },
 
     insertOperatingRoomCalendar(context, payload) {

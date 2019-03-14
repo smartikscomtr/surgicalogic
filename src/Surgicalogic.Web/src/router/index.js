@@ -234,7 +234,7 @@ export default new VueRouter({
       }
     },
     {
-      path: '/personnelCategorypage',
+      path: '/personnelcategorypage',
       name: 'PersonnelCategoryPage',
       component: PersonnelCategoryPage,
       meta: {
@@ -242,7 +242,7 @@ export default new VueRouter({
       }
     },
     {
-      path: '/personnelTitlepage',
+      path: '/personneltitlepage',
       name: 'PersonnelTitlePage',
       component: PersonnelTitlePage,
       meta: {

@@ -37,5 +37,6 @@
   "apiErrorMessage":"An error occurred. Please try again later.",
   "forbiddenErrorMessage":"You are not authorized to view this page",
   "planAnOperation": "Plan An Operation",
-  "operatingRoomHasOperation": "You can not delete this room because an operation planned in this room"
+  "operatingRoomHasOperation": "You can not delete this room because an operation planned in this room",
+  "operatingRoomCalendar":"Unavailability Calendar"
 }

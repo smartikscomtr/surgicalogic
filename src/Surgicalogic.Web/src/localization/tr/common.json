@@ -37,5 +37,6 @@
   "apiErrorMessage":"Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.",
   "forbiddenErrorMessage":"Bu sayfayı görüntüleme yetkiniz bulunmuyor.",
   "planAnOperation": "Operasyon Planla",
-  "operatingRoomHasOperation":"Bu odaya ameliyat planlandığı için silemezsiniz."
+  "operatingRoomHasOperation":"Bu odaya ameliyat planlandığı için silemezsiniz.",
+  "operatingRoomCalendar": "Uygun olmadığı tarihler"
 }
