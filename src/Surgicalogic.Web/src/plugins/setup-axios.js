@@ -3,6 +3,7 @@ import VueAxios from 'vue-axios';
 import {
   debug
 } from 'util';
+import EventBus from '../event-bus';
 
 const httpCodes = {
   badRequest: 401,
@@ -103,11 +104,10 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
         }
       }
 
+      EventBus.$emit("target_achieved",4);
       // return vm.$router.push({
       //   name: 'ApiErrorPage'
       // });
-
-      console.error('Http after request error: ', error);
 
       return Promise.reject(error);
     });

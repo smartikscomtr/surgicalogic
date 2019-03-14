@@ -18,6 +18,7 @@ import router from './router';
 import Authentication from './plugins/authentication-plugin.js';
 import VueChartkick from 'vue-chartkick';
 import Chart from 'chart.js'
+import EventBus from './event-bus'
 
 var VueCookie = require('vue-cookie');
 /* ============
@@ -47,6 +48,7 @@ Vue.use(Authentication);
 Vue.use(require('vue-moment'));
 Vue.use(VueCookie);
 Vue.use(VueChartkick, {adapter: Chart});
+Vue.use(EventBus);
 
 // Registering Components
 import DeleteComponent from '@/components/DeleteComponent';
@@ -57,11 +59,13 @@ Vue.component('delete-component', DeleteComponent);
 Vue.component('feedback-component', FeedbackComponent);
 Vue.component('grid-component', GridComponent);
 
-// Registering Calendar Rage Components
+// Registering Custom Components
 import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
 import OvertimeUtilizationComponent from '@/components/customcomponents/OvertimeUtilizationComponent';
-
+import ErrorDialogComponent from '@/components/customcomponents/ErrorDialogComponent';
+1
 Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent);
+Vue.component('error-dialog-component', ErrorDialogComponent);
 Vue.component('overtime-utilization-component', OvertimeUtilizationComponent);
 
 // Registering Detail Components

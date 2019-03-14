@@ -77,8 +77,6 @@
             <v-toolbar-side-icon @click.stop="drawer = !drawer">
             </v-toolbar-side-icon>
 
-            <img height="50px" align="center"  style="cursor: pointer;" :src="'/static/favicon.ico'" @click="changePages('/dashboardpage')" />
-
             <!-- Toolbar text-->
             <span class="hidden-sm-and-down" style="cursor: pointer;" @click="changePages('/dashboardpage')">
               SurgicaLogic
@@ -116,6 +114,9 @@
           <feedback-component v-if="showFeedback" @showModal="showFeedbackMethod">
           </feedback-component>
 
+          <error-dialog-component v-if="showErrorDialog">
+          </error-dialog-component>
+
           <v-menu bottom offset-y origin="center center" transition="scale-transition">
 
             <!-- <v-tooltip z-index="10" bottom slot="activator"> -->
@@ -149,6 +150,8 @@
 </template>
 
 <script>
+import EventBus from './event-bus';
+
 export default {
     props: {
         source: String
@@ -160,6 +163,7 @@ export default {
             isMounted: false,
             drawer: null,
             showFeedback: false,
+            showErrorDialog: false,
             languages: [
                 {
                     code: 'tr',
@@ -356,7 +360,13 @@ export default {
           vm.$store.dispatch("userLogout").then(() => {
             vm.$router.push("/loginpage");
           });
-        }
+        },
+
+      emitGlobalClickEvent() {
+      this.clickCount++;
+      // Send the event on a channel (i-got-clicked) with a payload (the click count.)
+      EventBus.$emit('i-got-clicked', this.clickCount);
+      }
     },
 
     mounted() {
@@ -371,6 +381,10 @@ export default {
         } else {
             vm.changeLanguage(currentLanguage);
         }
+
+        EventBus.$on('target_achieved', function(number){
+          vm.showErrorDialog = true;
+        })
     }
 };
 </script>
