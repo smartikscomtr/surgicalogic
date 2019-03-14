@@ -32,7 +32,7 @@ namespace Surgicalogic.Api.Controllers
         }
 
 
-        [Route("OperatingRoomCalendar/ExcelExport/{id:int}")]
+        [Route("OperatingRoomCalendar/ExcelExport")]
         public async Task<string> ExcelExport(int id, string langId)
         {
             AppSettings.SetSiteLanguage(langId);

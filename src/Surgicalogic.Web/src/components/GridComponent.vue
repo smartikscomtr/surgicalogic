@@ -4,7 +4,12 @@
       <h2>
         {{ title }}
       </h2>
+
+      <v-icon v-if="closable" @click="closeGrid" class="close-wrap">
+              close
+      </v-icon>
     </div>
+
 
     <v-card-title class="search-wrap" v-if="showSearch || !hideExport || showInsert">
       <v-text-field v-if="showSearch" v-model="search" append-icon="search" :label="$t('common.search')" v-on:keyup.enter="filterGrid" single-line hide-details>
@@ -197,6 +202,11 @@ export default {
             required: false
         },
 
+        closable:{
+            type: Boolean,
+            required: false
+        },
+
         methodName: {
             type: Function,
             required: true
@@ -238,6 +248,13 @@ export default {
 
             //When the add new button is clicked, the event is sent to the grid component
             vm.$emit('exportToExcel');
+        },
+
+        closeGrid() {
+                      const vm = this;
+
+            //When the add new button is clicked, the event is sent to the grid component
+            vm.$emit('closeGrid');
         },
 
         filterGrid() {

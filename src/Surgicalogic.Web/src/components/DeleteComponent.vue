@@ -123,6 +123,11 @@ export default {
 
             return vm.showDeleteMessage = vm.$i18n.t('common.theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData');
           }
+          case 9: {
+            vm.snackbarVisible = true;
+
+            return vm.showDeleteMessage = vm.$i18n.t('common.operatingRoomHasOperation');
+          }
           default: {
             vm.snackbarVisible = true;
 

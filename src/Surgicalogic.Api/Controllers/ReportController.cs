@@ -75,7 +75,7 @@ namespace Surgicalogic.Api.Controllers
 
         [Route("OperationPlan/GetOperationListByDate")]
         [HttpGet]
-        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate)
+        public async Task<ResultModel<OperationPlanListOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate)
         {
             return await _operationPlanHistoryStoreService.GetOperationListByDate(input, operationDate);
         }

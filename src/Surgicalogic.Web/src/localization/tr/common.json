@@ -36,5 +36,6 @@
   "logout": "Çıkış Yap",
   "apiErrorMessage":"Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.",
   "forbiddenErrorMessage":"Bu sayfayı görüntüleme yetkiniz bulunmuyor.",
-  "planAnOperation": "Operasyon Planla"
+  "planAnOperation": "Operasyon Planla",
+  "operatingRoomHasOperation":"Bu odaya ameliyat planlandığı için silemezsiniz."
 }

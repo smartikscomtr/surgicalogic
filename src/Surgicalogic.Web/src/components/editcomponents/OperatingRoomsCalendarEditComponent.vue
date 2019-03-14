@@ -126,12 +126,12 @@
 <script>
 export default {
   props: {
-    editVisible: {
+    editAvailableVisible: {
       type: Boolean,
       required: false
     },
 
-    editAction: {
+    editAvailableAction: {
       type: Object,
       required: false,
       default() {
@@ -139,7 +139,12 @@ export default {
       }
     },
 
-    editIndex: {
+    editAvailableIndex: {
+      type: Number,
+      required: false
+    },
+
+    editOperatingRoomId: {
       type: Number,
       required: false
     }
@@ -167,7 +172,7 @@ export default {
     formTitle() {
       const vm = this;
 
-      return vm.editIndex === -1
+      return vm.editAvailableIndex === -1
         ? vm.$t("operatingrooms.addOperatingRoomInformation")
         : vm.$t("operatingrooms.editOperatingRoomInformation");
     },
@@ -176,7 +181,7 @@ export default {
       get() {
         const vm = this;
 
-        return vm.editVisible;
+        return vm.editAvailableVisible;
       },
 
       set(value) {
@@ -193,8 +198,8 @@ export default {
       get() {
         const vm = this;
 
-        if (vm.editAction.startDate) {
-          vm.$store.commit("saveStartDate", vm.editAction.startDate);
+        if (vm.editAvailableAction.startDate) {
+          vm.$store.commit("saveStartDate", vm.editAvailableAction.startDate);
         }
 
         vm.startDateFormatted = vm.formatDate(
@@ -207,8 +212,8 @@ export default {
         const vm = this;
 
         if (newValue) {
-          vm.editAction.startDate = newValue;
-          vm.$store.commit("saveStartDate", vm.editAction.startDate);
+          vm.editAvailableAction.startDate = newValue;
+          vm.$store.commit("saveStartDate", vm.editAvailableAction.startDate);
         }
       }
     },
@@ -217,8 +222,8 @@ export default {
       get() {
         const vm = this;
 
-        if (vm.editAction.endDate) {
-          vm.$store.commit("saveEndDate", vm.editAction.endDate);
+        if (vm.editAvailableAction.endDate) {
+          vm.$store.commit("saveEndDate", vm.editAvailableAction.endDate);
         }
 
         vm.endDateFormatted = vm.formatDate(
@@ -231,8 +236,8 @@ export default {
         const vm = this;
 
         if (newValue) {
-          vm.editAction.endDate = newValue;
-          vm.$store.commit("saveEndDate", vm.editAction.endDate);
+          vm.editAvailableAction.endDate = newValue;
+          vm.$store.commit("saveEndDate", vm.editAvailableAction.endDate);
         }
       }
     }
@@ -242,13 +247,13 @@ export default {
     startDate(val) {
       const vm = this;
 
-      vm.startDateFormatted = vm.formatDate(vm.editAction.startDate);
+      vm.startDateFormatted = vm.formatDate(vm.editAvailableAction.startDate);
     },
 
     endDate(val) {
       const vm = this;
 
-      vm.endDateFormatted = vm.formatDate(vm.editAction.endDate);
+      vm.endDateFormatted = vm.formatDate(vm.editAvailableAction.endDate);
     }
   },
 
@@ -265,8 +270,8 @@ export default {
 
       vm.$store.commit("saveStartDate",null);
       vm.$store.commit("saveEndDate",null);
-      vm.editAction.startDate = null;
-      vm.editAction.endDate = null;
+      vm.editAvailableAction.startDate = null;
+      vm.editAvailableAction.endDate = null;
       vm.endDateFormatted = null;
       vm.startDateFormatted = null;
 
@@ -281,22 +286,26 @@ export default {
       }
 
       //Edit operating room
-      if (vm.editIndex > -1) {
+      if (vm.editAvailableIndex > -1) {
         //We are accessing updateOperatingRoom in vuex store
         vm.$store.dispatch("updateOperatingRoomCalendar", {
-          id: vm.editAction.id,
-          operatingRoomId: vm.$route.query.roomId,
+          id: vm.editAvailableAction.id,
+          operatingRoomId: vm.editOperatingRoomId,
           startDate: vm.startDate,
           endDate: vm.endDate
+        }).then(() => {
+          vm.$emit('refresh');
         });
       }
       //Add operating room
       else {
         //We are accessing insertOperatingRoom in vuex store
         vm.$store.dispatch("insertOperatingRoomCalendar", {
-          operatingRoomId: vm.$route.query.roomId,
+          operatingRoomId: vm.editOperatingRoomId,
           startDate: vm.startDate,
           endDate: vm.endDate
+        }).then(() => {
+          vm.$emit('refresh');
         });
       }
 

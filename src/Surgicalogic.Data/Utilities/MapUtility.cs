@@ -74,7 +74,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(src => src.OperationType, opt => opt.Ignore())
                 .ForMember(src => src.OperationPersonels, opt => opt.Ignore())
                 .ForMember(src => src.Patient, opt => opt.Ignore())
-                .ForMember(src => src.OperationBlockedOperatingRooms, opt => opt.Ignore());
+                .ForMember(src => src.OperationBlockedOperatingRooms, opt => opt.Ignore())
+                .ForMember(src => src.OperationPlans, opt => opt.Ignore());
             config.CreateMap<OperationPersonnelModel, OperationPersonnel>();
             config.CreateMap<OperationPlanModel, OperationPlan>()
                 .ForMember(src => src.Operation, opt => opt.Ignore())
@@ -182,6 +183,7 @@ namespace Surgicalogic.Data.Utilities
                  .ForMember(dest => dest.className, opt => opt.MapFrom(src => src.ClassName));
             config.CreateMap<OperatingRoomCalendarModel, OperatingRoomCalendarOutputModel>()
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("yyyy-MM-dd")))
+                .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("yyyy-MM-dd")));
             config.CreateMap<OperatingRoomOperationTypeModel, OperatingRoomOperationTypeOutputModel>();
             config.CreateMap<OperationPlanForReportModel, OvertimeReportOutputModel>()
@@ -248,7 +250,7 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy")))
                 .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy")));
             config.CreateMap<OperatingRoom, OperatingRoomExportModel>()
-                .ForMember(dest => dest.UnavailableDates, opt => opt.MapFrom(src => string.Join(", ", src.OperatingRoomCalendars.Where(x => x.IsActive).Select(x => x.StartDate.ToString("dd.MM.yyyy") + "-" + x.EndDate.ToString("dd.MM.yyyy")))));
+                .ForMember(dest => dest.UnavailableDates, opt => opt.MapFrom(src => string.Join(", ", src.OperatingRoomCalendars.Where(x => x.IsActive && x.EndDate >= DateTime.Today).Select(x => x.StartDate.ToString("dd.MM.yyyy") + "-" + x.EndDate.ToString("dd.MM.yyyy")))));
             config.CreateMap<Personnel, PersonnelExportModel>()
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.PersonnelTitle.Name))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
@@ -332,6 +334,13 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.OperationPersonelIds, opt => opt.MapFrom(src => src.Operation.OperationPersonels.Select(x => x.PersonnelId)))
                 .ForMember(dest => dest.CoefficientOfVariation, opt => opt.MapFrom(src => src.Operation.OperationType.CoefficientOfVariation));
             config.CreateMap<Operation, OperationNameModel>();
+            config.CreateMap<OperationPlan, OperationPlanListOutputModel>()
+                .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Operation.Name))
+                .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoom.Name))
+                .ForMember(dest => dest.OperationStartDate, opt => opt.MapFrom(src => src.OperationDate))
+                .ForMember(dest => dest.OperationEndDate, opt => opt.MapFrom(src => src.OperationDate.AddMinutes(src.Operation.OperationTime)));
+            config.CreateMap<Operation, OperationPlanListOutputModel>()
+               .ForMember(dest => dest.OperationName, opt => opt.MapFrom(src => src.Name));
             #endregion
         }
     }

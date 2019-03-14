@@ -19,7 +19,6 @@ import PatientPage from "@/pages/patient/PatientPage";
 import PersonnelCategoryPage from "@/pages/definitions/PersonnelCategoryPage";
 import PersonnelTitlePage from "@/pages/definitions/PersonnelTitlePage";
 import OperatingRoomsPage from "@/pages/definitions/OperatingRoomsPage";
-import OperatingRoomCalendarPage from "@/pages/definitions/OperatingRoomCalendarPage";
 import WorkTypesPage from "@/pages/definitions/WorkTypesPage";
 
 
@@ -246,14 +245,6 @@ export default new VueRouter({
       path: '/personnelTitlepage',
       name: 'PersonnelTitlePage',
       component: PersonnelTitlePage,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/operatingroomcalendarpage',
-      name: 'OperatingRoomCalendarPage',
-      component: OperatingRoomCalendarPage,
       meta: {
         requiresAuth: true
       }

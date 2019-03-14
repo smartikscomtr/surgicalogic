@@ -20,6 +20,7 @@ namespace Surgicalogic.Model.EntityModel
         public OperationTypeModel OperationType { get; set; }
         public PatientModel Patient { get; set; }
         public ICollection<OperationPersonnelModel> OperationPersonels { get; set; }
-        public virtual ICollection<OperationBlockedOperatingRoomModel> OperationBlockedOperatingRooms { get; set; }
+        public ICollection<OperationBlockedOperatingRoomModel> OperationBlockedOperatingRooms { get; set; }
+        public ICollection<OperationPlanModel> OperationPlans { get; set; }
     }
 }

@@ -99,7 +99,7 @@ const operatingRoomModule = {
             if (response.statusText == 'OK' && response.data.info.succeeded == true) {
               context.commit('deleteOperatingRoom', {
                 payload
-              }); //Delete the Operating Rooms in the store
+              }); //Delete the operating Rooms in the store
             }
 
             resolve(response);

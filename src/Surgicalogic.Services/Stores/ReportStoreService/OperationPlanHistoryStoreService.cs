@@ -25,11 +25,17 @@ namespace Surgicalogic.Services.Stores
             _context = context;
         }
 
-        public async Task<ResultModel<OperationPlanHistoryOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate)
+        public async Task<ResultModel<OperationPlanListOutputModel>> GetOperationListByDate(GridInputModel input, DateTime operationDate)
         {
-            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > operationDate && x.OperationDate < operationDate.AddDays(1)).OrderByDescending(x => x.OperationDate).ProjectTo<OperationPlanHistoryOutputModel>();
+            var projectQuery = _context.OperationPlans.Where(x => x.IsActive && x.OperationDate > operationDate && x.OperationDate < operationDate.AddDays(1)).OrderByDescending(x => x.OperationDate).ProjectTo<OperationPlanListOutputModel>();
 
             int totalCount = await projectQuery.CountAsync();
+
+            if (totalCount == 0)
+            {
+                projectQuery = _context.Operations.Where(x => x.IsActive && x.Date >= operationDate && x.Date <= operationDate.AddDays(1)).OrderByDescending(x => x.Date).ProjectTo<OperationPlanListOutputModel>();
+                totalCount = await projectQuery.CountAsync();
+            }
 
             if (input.PageSize > 0)
             {
@@ -38,7 +44,7 @@ namespace Surgicalogic.Services.Stores
 
             var result = await projectQuery.ToListAsync();
 
-            return new ResultModel<OperationPlanHistoryOutputModel>
+            return new ResultModel<OperationPlanListOutputModel>
             {
                 Result = result,
                 TotalCount = totalCount,

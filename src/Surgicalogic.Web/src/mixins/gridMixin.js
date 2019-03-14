@@ -14,13 +14,23 @@ export const gridMixin = {
       vm.editAction = Object.assign({}, payload);
     },
 
+    editAvailability(payload, itemIndex){
+      const vm = this;
+
+      vm.editAvailableDialog = true;
+      vm.editedAvailableIndex = itemIndex;
+      vm.editAvailableAction = Object.assign({}, payload);
+    },
+
     cancel() {
       const vm = this;
 
       vm.calendarDialog = false;
       vm.detailDialog = false;
       vm.editDialog = false;
+      vm.editAvailableDialog = false;
       vm.deleteDialog = false;
+      vm.deleteAvailabilityDialog = false;
       vm.resetPasswordDialog = false;
       vm.planOperationDialog = false;
 
@@ -38,11 +48,27 @@ export const gridMixin = {
       vm.editAction = {};
     },
 
+    addNewCalendarItem(){
+      const vm = this;
+
+      vm.editAvailableIndex = -1;
+      vm.editAvailableDialog = true;
+
+      vm.editAvailableAction = {};
+    },
+
     deleteItem(payload) {
       const vm = this;
 
       vm.deleteValue = payload;
       vm.deleteDialog = true;
+    },
+
+    deleteCalendarItem(payload) {
+      const vm = this;
+
+      vm.deleteAvailabilityValue = payload;
+      vm.deleteAvailabilityDialog = true;
     },
 
     resetPassword(payload) {

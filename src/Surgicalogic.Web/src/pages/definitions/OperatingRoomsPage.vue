@@ -42,6 +42,44 @@
                       :deleteMethode="deleteMethodName"
                       @cancel="cancel">
     </delete-component>
+
+        <!-- Uygunluk Takvimi -->
+
+        <grid-component :headers="availabilityHeaders"
+                    :items="operatingRoomCalendar"
+                    :title="availabilityTitle"
+                    :show-detail="false"
+                    :show-edit="true"
+                    :show-delete="true"
+                    :show-search="false"
+                    :show-insert="true"
+                    :hide-actions="true"
+                    :closable="true"
+                    :methodName="getAvailableMethodName"
+                    :loading="getLoading"
+                    @edit="editAvailability"
+                    @exportToExcel="exportOperatingRoomCalendarToExcel"
+                    @newaction="addNewCalendarItem"
+                    @deleteitem="deleteCalendarItem"
+                    @closeGrid="showAvailability = false"
+                    v-if="showAvailability"
+                    ref="gridAvailabilityComponent">
+    </grid-component>
+
+     <operating-rooms-calendar-edit-component :edit-available-action="editAvailableAction"
+                        :edit-available-visible="editAvailableDialog"
+                        :edit-available-index="editedAvailableIndex"
+                        :edit-operating-room-id="editOperatingRoomId"
+                        @refresh="getOperatingRooms"
+                        @cancel="cancel">
+    </operating-rooms-calendar-edit-component>
+
+    <delete-component :delete-value="deleteAvailabilityValue"
+                      :delete-visible="deleteAvailabilityDialog"
+                      :deleteMethode="deleteAvailabilityMethodName"
+                      @cancel="cancel">
+    </delete-component>
+
   </div>
 </template>
 
@@ -63,6 +101,7 @@ export default {
       detailDialog: false,
       editDialog: false,
       deleteDialog: false,
+      deleteAvailabilityDialog: false,
       calendarAction:{},
       detailAction: {},
       editAction: {
@@ -70,11 +109,18 @@ export default {
         operatingRoomOperationTypes:[]
       },
       deleteValue: {},
+      deleteAvailabilityValue: {},
       editedIndex: -1,
       totalRowCount:0,
       editLoadOnce: true,
       equipmentName: null,
-      deletePath: 'deleteOperatingRoom'
+      deletePath: 'deleteOperatingRoom',
+      deleteAvailabilityPath: 'deleteOperatingRoomCalendar',
+      showAvailability: false,
+      editAvailableDialog: false,
+      editAvailableAction: {},
+      editedAvailableIndex: -1,
+      editOperatingRoomId:null
     }
   },
 
@@ -83,6 +129,12 @@ export default {
       const vm = this;
 
       return vm.$i18n.t('operatingrooms.operatingRooms');
+    },
+
+    availabilityTitle() {
+      const vm = this;
+
+      return vm.$i18n.t('operatingrooms.operatingRoomsCalendar');
     },
 
     headers() {
@@ -116,10 +168,49 @@ export default {
       ];
     },
 
+    availabilityHeaders() {
+      const vm = this;
+
+      //Columns and actions
+      return [
+        {
+          value: 'operatingRoomName',
+          text: vm.$i18n.t('operatingrooms.operatingRoom'),
+          sortable: false,
+          align: 'left'
+        },
+        {
+          value: 'startDate',
+          text: vm.$i18n.t('operatingroomscalendar.startDate'),
+          sortable: true,
+          align: 'left',
+          isDate:true
+        },
+        {
+          value: 'endDate',
+          text: vm.$i18n.t('operatingroomscalendar.endDate'),
+          sortable: true,
+          align: 'left',
+          isDate:true
+        },
+        {
+          isAction: true,
+          sortable: false,
+          align: 'right'
+        }
+      ];
+    },
+
     operatingRooms() {
       const vm = this;
 
       return vm.$store.state.operatingRoomModule.operatingRooms;
+    },
+
+    operatingRoomCalendar() {
+      const vm = this;
+
+      return vm.$store.state.operatingRoomCalendarModule.operatingRoomCalendar;
     },
 
     getLoading() {
@@ -145,6 +236,15 @@ export default {
         vm.$store.dispatch('getAllOperationTypes');
         vm.editLoadOnce = false;
      }
+    },
+
+    deleteAvailabilityDialog(newVal, oldVal){
+      const vm = this;
+
+      if (newVal == false && oldVal == true)
+      {
+        vm.getOperatingRooms();
+      }
     }
   },
 
@@ -152,24 +252,48 @@ export default {
     calendar(payload) {
       const vm = this;
 
+      vm.showAvailability = true;
       // vm.calendarDialog = true;
       // vm.calendarAction = Object.assign({}, payload);
-
-      vm.$router.push('/operatingroomcalendarpage?roomId=' + payload.id);
+      vm.editOperatingRoomId = payload.id;
+      vm.$store.dispatch('getOperatingRoomsCalendar', {operatingRoomId: payload.id });
+      vm.scrollToEnd();
+      //vm.$router.push('/operatingroomcalendarpage?roomId=' + payload.id);
     },
 
     getMethodName(){
       return "getOperatingRooms";
     },
 
+
+    getAvailableMethodName() {
+      return "getOperatingRoomsCalendar";
+    },
+
     deleteMethodName(){
       return "deleteOperatingRoom";
+    },
+
+    deleteAvailabilityMethodName(){
+      return "deleteOperatingRoomCalendar";
     },
 
     exportOperatingRoomToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('exportOperatingRoomToExcel', { langId: vm.$cookie.get("currentLanguage")});
+      vm.$store.dispatch('exportOperatingRoomToExcel', { langId: vm.$cookie.get("currentLanguage") });
+    },
+
+    exportOperatingRoomCalendarToExcel() {
+      const vm = this;
+
+      vm.$store.dispatch('excelExportOperatingRoomCalendar', {id: vm.editOperatingRoomId, langId: vm.$cookie.get("currentLanguage")});
+    },
+
+    scrollToEnd(){
+        var container = document.querySelector(".container");
+        var scrollHeight = container.scrollHeight;
+        container.scrollTop = scrollHeight;
     },
 
     getOperatingRooms(){

@@ -56,6 +56,7 @@ const operatingRoomCalendarModule = {
 
   actions: {
     getOperatingRoomsCalendar(context, params) {
+
       if (params.operatingRoomId) {
         context.commit('setLoading', true);
 
@@ -113,7 +114,7 @@ const operatingRoomCalendarModule = {
     },
 
     excelExportOperatingRoomCalendar(context, payload) {
-      axios.get('OperatingRoomCalendar/ExcelExport/' + payload.id)
+      axios.get('OperatingRoomCalendar/ExcelExport?id=' + payload.id +'&langId=' + payload.langId)
         .then(response => {
           const link = document.createElement('a');
 
