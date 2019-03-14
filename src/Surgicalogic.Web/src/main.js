@@ -63,7 +63,7 @@ Vue.component('grid-component', GridComponent);
 import OperatingRoomsCalendarComponent from '@/components/customcomponents/OperatingRoomsCalendarComponent';
 import OvertimeUtilizationComponent from '@/components/customcomponents/OvertimeUtilizationComponent';
 import ErrorDialogComponent from '@/components/customcomponents/ErrorDialogComponent';
-1
+
 Vue.component('operating-rooms-calendar-component', OperatingRoomsCalendarComponent);
 Vue.component('error-dialog-component', ErrorDialogComponent);
 Vue.component('overtime-utilization-component', OvertimeUtilizationComponent);
