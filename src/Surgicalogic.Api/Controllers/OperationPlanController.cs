@@ -117,6 +117,7 @@ namespace Surgicalogic.Api.Controllers
             var workingHourStart = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourStart.ToString());
             var workingHourEnd = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationWorkingHourEnd.ToString());
             var period = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OperationPeriodInMinutes.ToString());
+            var optimizationMethod = systemSettings.SingleOrDefault(x => x.Key == SettingKey.OptimizationMethod.ToString());
 
             foreach (var operation in allOperations)
             {
@@ -147,7 +148,8 @@ namespace Surgicalogic.Api.Controllers
                     StartingHour = workingHourStart.TimeValue.HourToDateTime().Hour,
                     StartingMinute = workingHourStart.TimeValue.HourToDateTime().Minute,
                     PeriodInMinutes = period.IntValue.Value,
-                    OperationDate = input.OperationDate
+                    OperationDate = input.OperationDate,
+                    OptimizationMethod = optimizationMethod.SettingValueId ?? (int)OptimizationMethod.MIP
                 },
                 Rooms = rooms,
                 Operations = operations

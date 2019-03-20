@@ -46,7 +46,8 @@
         WithoutAppointmentPatientRate,
         DoctorTimePatientTimeRate,
         RoundingIntervalValue,
-        SimulationIterationCount
+        SimulationIterationCount,
+        OptimizationMethod
     }
 
     public enum SettingDataTypeNames
@@ -54,6 +55,13 @@
         String = 1,
         Int = 2,
         Time = 3,
-        Double = 7
+        Double = 4,
+        Dropdown = 5
+    }
+
+    public enum OptimizationMethod
+    {
+        MIP = 1,
+        CP = 2
     }
 }

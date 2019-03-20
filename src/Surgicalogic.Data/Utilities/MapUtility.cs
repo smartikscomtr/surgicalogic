@@ -13,6 +13,7 @@ using System.Linq;
 using Surgicalogic.Planning.Model.InputModel;
 using OperationInputModel = Surgicalogic.Model.InputModel.OperationInputModel;
 using Surgicalogic.Model.ExportModel.Report;
+using System.Collections.Generic;
 
 namespace Surgicalogic.Data.Utilities
 {
@@ -59,6 +60,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<PersonnelTitle, PersonnelTitleModel>();
             config.CreateMap<Setting, SettingModel>();
             config.CreateMap<SettingDataType, SettingDataTypeModel>();
+            config.CreateMap<SettingValue, SettingValueModel>();
             config.CreateMap<User, UserModel>();
             config.CreateMap<WorkType, WorkTypeModel>();
             #endregion
@@ -99,8 +101,10 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<PersonnelCategoryModel, PersonnelCategory>();
             config.CreateMap<PersonnelTitleModel, PersonnelTitle>();
             config.CreateMap<SettingModel, Setting>()
-                .ForMember(src => src.Key, opt => opt.Ignore());
+                .ForMember(src => src.Key, opt => opt.Ignore())
+                .ForMember(src => src.SettingValue, opt => opt.Ignore());
             config.CreateMap<SettingDataTypeModel, SettingDataType>();
+            config.CreateMap<SettingValueModel, SettingValue>();
             config.CreateMap<UserModel, User>()
                 .ForMember(src => src.PasswordHash, opt => opt.Ignore());
             config.CreateMap<WorkTypeModel, WorkType>();
@@ -216,7 +220,8 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<SettingModel, SettingOutputModel>()
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.SettingDataTypeId == (int)SettingDataTypeNames.Int ? 
                                                                          src.IntValue.ToString() : src.SettingDataTypeId == (int)SettingDataTypeNames.String ? 
-                                                                         src.StringValue : src.SettingDataTypeId == (int)SettingDataTypeNames.Double ? src.DoubleValue.ToString() : src.TimeValue));
+                                                                         src.StringValue : src.SettingDataTypeId == (int)SettingDataTypeNames.Double ? src.DoubleValue.ToString() :
+                                                                          src.SettingDataTypeId == (int)SettingDataTypeNames.Dropdown ? src.SettingValue.Value : src.TimeValue));
             config.CreateMap<SettingDataTypeModel, SettingDataTypeOutputModel>();
             config.CreateMap<SimulationResultModel, SimulationOutputModel>()
                 .ForMember(dest => dest.OperatingRoomName, opt => opt.MapFrom(src => src.OperatingRoomName))

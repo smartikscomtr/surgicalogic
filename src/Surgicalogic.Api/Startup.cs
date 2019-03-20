@@ -157,6 +157,7 @@ namespace Surgicalogic.Api
             services.AddScoped<IPersonnelCategoryStoreService, PersonnelCategoryStoreService>();
             services.AddScoped<ISettingStoreService, SettingStoreService>();
             services.AddScoped<ISettingDataTypeStoreService, SettingDataTypeStoreService>();
+            services.AddScoped<ISettingValueStoreService, SettingValueStoreService>();
             services.AddScoped<IUserStoreService, UserStoreService>();
             services.AddScoped<IWorkTypeStoreService, WorkTypeStoreService>();
             services.AddScoped<ISimulation, Simulation>();

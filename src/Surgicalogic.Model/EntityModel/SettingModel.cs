@@ -11,9 +11,13 @@ namespace Surgicalogic.Model.EntityModel
         [Searchable]
         public string Name { get; set; }
         public int SettingDataTypeId { get; set; }
+        public int? SettingValueId { get; set; }
+
         public int? IntValue { get; set; }
         public string StringValue { get; set; }
         public string TimeValue { get; set; }
         public double? DoubleValue { get; set; }
+
+        public SettingValueModel SettingValue { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Surgicalogic.Planning.Engine;
+using Surgicalogic.Planning.Model.Enum;
 using Surgicalogic.Planning.Model.InputModel;
 using Surgicalogic.Planning.Model.OutputModel;
 
@@ -16,7 +17,7 @@ namespace Surgicalogic.Planning.Api.Controllers
                 return null;
             }
 
-            var result = MIPPlanner.Solve(input);
+            var result = input.Settings.OptimizationMethod == (int)OptimizationMethod.MIP ?  MIPPlanner.Solve(input) : CPPlanner.Solve(input);
             return result;
         }
     }

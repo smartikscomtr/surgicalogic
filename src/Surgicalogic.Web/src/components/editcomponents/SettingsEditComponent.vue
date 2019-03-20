@@ -44,8 +44,14 @@
             </v-flex>
 
             <v-flex xs12 sm6 md6 v-show="showDouble">
-              <v-text-field v-model="editAction['timeValue']" :rules="requiredDouble" :label="$t('settings.value')" :value="editAction['doubleValue']" >
+              <v-text-field v-model="editAction['doubleValue']" :rules="requiredDouble" :label="$t('settings.value')" :value="editAction['doubleValue']" >
               </v-text-field>
+            </v-flex>
+
+             <v-flex xs12 sm6 md6 v-show="showDropdown">
+              <v-autocomplete v-model="selectSettingValue" :items="settingValues" :label="$t('settings.value')"
+                              item-text="value" item-value="id">
+              </v-autocomplete>
             </v-flex>
 
           </v-layout>
@@ -95,6 +101,7 @@ export default {
             showString: false,
             showTime: false,
             showDouble: false,
+            showDropdown : false,
             valid: true,
             required: [
               v => !!v || this.$i18n.t('common.required')
@@ -144,6 +151,12 @@ export default {
             return vm.$store.state.settingsModule.settingDataTypes;
         },
 
+        settingValues() {
+            const vm = this;
+
+            return vm.$store.state.settingsModule.settingValues;
+        },
+
         selectSettingDataType: {
             get() {
                 const vm = this;
@@ -155,6 +168,20 @@ export default {
                 const vm = this;
 
                 vm.editAction.settingDataTypeId = val;
+            }
+        },
+
+        selectSettingValue: {
+            get() {
+                const vm = this;
+
+                return vm.editAction.settingValueId;
+            },
+
+            set(val) {
+                const vm = this;
+
+                vm.editAction.settingValueId = val;
             }
         }
     },
@@ -201,6 +228,7 @@ export default {
                     id: vm.editAction.id,
                     name: vm.editAction.name,
                     settingDataTypeId: vm.editAction.settingDataTypeId,
+                    settingValueId: vm.editAction.settingValueId,
                     intValue: vm.editAction.intValue,
                     stringValue: vm.editAction.stringValue,
                     timeValue: vm.editAction.timeValue,
@@ -224,18 +252,38 @@ export default {
             switch (vm.editAction.settingDataTypeId) {
                 case 1:
                     (vm.showInt = false),
-                        (vm.showString = true),
-                        (vm.showTime = false);
+                    (vm.showDropdown = false),
+                    (vm.showDouble = false),
+                    (vm.showString = true),
+                    (vm.showTime = false)
                     break;
                 case 2:
                     (vm.showInt = true),
-                        (vm.showString = false),
-                        (vm.showTime = false);
+                    (vm.showDropdown = false),
+                    (vm.showDouble = false),
+                    (vm.showString = false),
+                    (vm.showTime = false)
                     break;
                 case 3:
                     (vm.showInt = false),
-                        (vm.showString = false),
-                        (vm.showTime = true);
+                    (vm.showDropdown = false),
+                    (vm.showDouble = false),
+                    (vm.showString = false),
+                    (vm.showTime = true)
+                    break;
+                case 4:
+                    (vm.showInt = false),
+                    (vm.showDropdown = false),
+                    (vm.showString = false),
+                    (vm.showTime = false),
+                    (vm.showDouble = true)
+                    break;
+                case 5:
+                    (vm.showInt = false),
+                    (vm.showString = false),
+                    (vm.showTime = false),
+                    (vm.showDouble = false),
+                    (vm.showDropdown = true)
                     break;
                 default:
                     break;

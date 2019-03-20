@@ -10,5 +10,6 @@ namespace Surgicalogic.Planning.Model.InputModel
         public int StartingMinute { get; set; }
         public int PeriodInMinutes { get; set; }
         public DateTime OperationDate { get; set; }
+        public int OptimizationMethod { get; set; }
     }
 }

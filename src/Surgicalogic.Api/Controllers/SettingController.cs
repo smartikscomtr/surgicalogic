@@ -14,12 +14,14 @@ namespace Surgicalogic.Api.Controllers
     public class SettingController : Controller
     {
         private readonly ISettingStoreService _settingStoreService;
+        private readonly ISettingValueStoreService _settingValueStoreService;
         private readonly ISettingDataTypeStoreService _settingDataTypeStoreService;
 
-        public SettingController(ISettingStoreService settingStoreService, ISettingDataTypeStoreService settingDataTypeStoreService)
+        public SettingController(ISettingStoreService settingStoreService, ISettingDataTypeStoreService settingDataTypeStoreService, ISettingValueStoreService settingValueStoreService)
         {
             _settingStoreService = settingStoreService;
             _settingDataTypeStoreService = settingDataTypeStoreService;
+            _settingValueStoreService = settingValueStoreService;
         }
 
         /// <summary>
@@ -30,7 +32,9 @@ namespace Surgicalogic.Api.Controllers
         [HttpGet]
         public async Task<ResultModel<SettingOutputModel>> GetSettings(GridInputModel input)
         {
-            return await _settingStoreService.GetAsync<SettingOutputModel>(input);
+            var t = await _settingStoreService.GetAsync<SettingOutputModel>(input);
+
+            return t;
         }
 
         [Route("Setting/GetSettingByName")]
@@ -64,6 +68,12 @@ namespace Surgicalogic.Api.Controllers
             return await _settingDataTypeStoreService.GetAsync<SettingDataTypeOutputModel>();
         }
 
+        [Route("Setting/GetSettingValues")]
+        public async Task<ResultModel<SettingValueModel>> GetSettingValues()
+        {
+            return await _settingValueStoreService.GetAsync<SettingValueModel>();
+        }
+
         /// <summary>
         /// Update setting methode
         /// </summary>
@@ -80,6 +90,7 @@ namespace Surgicalogic.Api.Controllers
                 IntValue = item.IntValue,
                 StringValue = item.StringValue,
                 TimeValue = item.TimeValue,
+                SettingValueId = item.SettingValueId,
                 DoubleValue = item.DoubleValue,
                 SettingDataTypeId = item.SettingDataTypeId
             };

@@ -105,13 +105,14 @@ namespace Surgicalogic.Api.Controllers
         /// <param name="item"></param>
         /// <returns>UserOutputModel</returns>
         [Route("User/InsertUser")]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ResultModel<UserOutputModel>> InsertUser([FromBody] UserInputModel item)
         {
             var userItem = new UserModel()
             {
                 UserName = item.UserName,
-                Email = item.Email,
+                Email = item.Email
             };
 
             var isDuplicateEmail = await _userStoreService.IsDuplicateEmail(item.Email, item.Id);

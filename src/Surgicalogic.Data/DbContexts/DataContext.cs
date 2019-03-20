@@ -38,6 +38,7 @@ namespace Surgicalogic.Data.DbContexts
         public DbSet<PersonnelTitle> PersonnelTitles { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<SettingDataType> SettingDataTypes { get; set; }
+        public DbSet<SettingValue> SettingValues { get; set; }
         public DbSet<WorkType> WorkTypes { get; set; }
 
 
@@ -103,8 +104,6 @@ namespace Surgicalogic.Data.DbContexts
                 .HasOne(o => o.Operation)
                 .WithMany(o => o.OperationBlockedOperatingRooms)
                 .HasForeignKey(o => o.OperationId);
-
-
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Surgicalogic.Data.DbContexts;
 using Surgicalogic.Data.Entities;
 using Surgicalogic.Model.CommonModel;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Surgicalogic.Data.Migrations.Initialize
 {
@@ -360,6 +362,25 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 };
 
                 context.Personnels.AddRange(PersonnelsList);
+
+                context.SaveChanges();
+                #endregion
+
+                #region PersonnelBranches
+
+                for (int i = 0; i < PersonnelsList.Count; i++)
+                {
+                    context.PersonnelBranches.Add(new Entities.PersonnelBranch
+                    {
+                        BranchId = i + 1,
+                        PersonnelId = i + 1,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = 1,
+                        IsActive = true
+                    });
+                }
+                context.SaveChanges();
+
                 #endregion
 
                 #region OperatingRooms
@@ -420,6 +441,28 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     CreatedBy = 1,
                     IsActive = true
                 });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new SettingDataType
+                {
+                    Name = "Double",
+                    CreatedBy = 1,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
+
+                context.SettingDataTypes.Add(new SettingDataType
+                {
+                    Name = "Dropdown",
+                    CreatedBy = 1,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                });
+
+                context.SaveChanges();
                 #endregion
 
                 #region OperatingRoomEquipments
@@ -500,43 +543,24 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 }
                 #endregion
 
-                #region SettingDataTypes
-
-                context.SettingDataTypes.Add(new SettingDataType
+                #region SettingValues
+                context.SettingValues.Add(new Entities.SettingValue
                 {
-                    Name = "String",
-                    CreatedBy = 1,
+                    RelatedSettingId = 17,
+                    Value = "MIP",
                     CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
                     IsActive = true
                 });
 
                 context.SaveChanges();
 
-                context.SettingDataTypes.Add(new SettingDataType
+                context.SettingValues.Add(new Entities.SettingValue
                 {
-                    Name = "Int",
-                    CreatedBy = 1,
+                    RelatedSettingId = 17,
+                    Value = "CP",
                     CreatedDate = DateTime.Now,
-                    IsActive = true
-                });
-
-                context.SaveChanges();
-
-                context.SettingDataTypes.Add(new SettingDataType
-                {
-                    Name = "Time",
                     CreatedBy = 1,
-                    CreatedDate = DateTime.Now,
-                    IsActive = true
-                });
-
-                context.SaveChanges();
-
-                context.SettingDataTypes.Add(new SettingDataType
-                {
-                    Name = "Double",
-                    CreatedBy = 1,
-                    CreatedDate = DateTime.Now,
                     IsActive = true
                 });
 
@@ -660,7 +684,7 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     Key = "ForStandardDeviationAverageTime",
                     Name = "Ortalama Süre İçin Standart Sapma(dk)",
                     DoubleValue = 6.75,
-                    SettingDataTypeId = 7,
+                    SettingDataTypeId = 4,
                     CreatedDate = DateTime.Now,
                     CreatedBy = 1,
                     IsActive = true
@@ -721,6 +745,17 @@ namespace Surgicalogic.Data.Migrations.Initialize
                     IsActive = true
                 });
 
+                context.Settings.Add(new Entities.Setting
+                {
+                    Key = "OptimizationMethod",
+                    Name = "Optimizasyon Yöntemi",
+                    SettingValueId = 1,
+                    SettingDataTypeId = 5,
+                    CreatedDate = DateTime.Now,
+                    CreatedBy = 1,
+                    IsActive = true
+                });
+
                 #endregion
 
                 #region SaveChanges
@@ -732,10 +767,49 @@ namespace Surgicalogic.Data.Migrations.Initialize
                 context.Database.ExecuteSqlCommand("insert into [dbo].[AspNetRoles](Name,NormalizedName) values('Member', 'MEMBER')");
                 #endregion
 
+                context.Users.Add(new User
+                {
+                    Email = "admin@smartiks.com.tr",
+                    UserName = "admin@smartiks.com.tr",
+                    IsActive = true,
+                    PasswordHash = HashPassword("123456"),
+                    EmailConfirmed = false,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0,
+                    SecurityStamp = Guid.NewGuid().ToString()
+                });
+
+                context.SaveChanges();
+
+                context.UserRoles.Add(new IdentityUserRole<int> { RoleId = 1, UserId = 1 });
+
+                context.SaveChanges();
+
             }
             catch (Exception ec)
             { }
 
+        }
+
+        public static string HashPassword(string password)
+        {
+            byte[] salt;
+            byte[] buffer2;
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
+            {
+                salt = bytes.Salt;
+                buffer2 = bytes.GetBytes(0x20);
+            }
+            byte[] dst = new byte[0x31];
+            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
+            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
+            return Convert.ToBase64String(dst);
         }
 
         public static string GetLetter()
