@@ -154,7 +154,9 @@ export default {
         settingValues() {
             const vm = this;
 
-            return vm.$store.state.settingsModule.settingValues;
+            let values = vm.$store.state.settingsModule.settingValues;
+
+            return values.filter(x => x.relatedSettingId == vm.editAction.id);
         },
 
         selectSettingDataType: {
@@ -232,7 +234,7 @@ export default {
                     intValue: vm.editAction.intValue,
                     stringValue: vm.editAction.stringValue,
                     timeValue: vm.editAction.timeValue,
-                    doubleValue: vm.editAction.doubleValue
+                    doubleValue: vm.editAction.doubleValue.toString().replace(',','.')
                 })
                 .then(() => {
                     vm.snackbarVisible = true;
