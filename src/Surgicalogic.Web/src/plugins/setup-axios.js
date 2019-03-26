@@ -104,10 +104,8 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
         }
       }
 
-      EventBus.$emit("target_achieved",4);
-      // return vm.$router.push({
-      //   name: 'ApiErrorPage'
-      // });
+      EventBus.$emit("apiErrorDialog",4);
+
 
       return Promise.reject(error);
     });

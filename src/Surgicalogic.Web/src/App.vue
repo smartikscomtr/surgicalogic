@@ -382,7 +382,7 @@ export default {
             vm.changeLanguage(currentLanguage);
         }
 
-        EventBus.$on('target_achieved', function(number){
+        EventBus.$on('apiErrorDialog', function(number){
           vm.showErrorDialog = true;
         })
     }
