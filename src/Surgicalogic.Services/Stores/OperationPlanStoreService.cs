@@ -62,5 +62,18 @@ namespace Surgicalogic.Services.Stores
         {
             return await GetQueryable().Where(x => x.Operation.OperationPersonels.Any(y => y.PersonnelId == model.DoctorId) && x.RealizedStartDate >= model.SelectedDate && x.RealizedStartDate < model.SelectedDate.AddDays(1)).ProjectTo<OperationPlanModel>().ToListAsync();
         }
+
+        public async Task<int> GetOperationTimeByOperationTypeIdAsync(int operationTypeId)
+        {
+            var operationCount = await GetQueryable()
+                            .CountAsync(x => x.Operation.OperationType.Id == operationTypeId && x.RealizedEndDate <= DateTime.Now);
+
+            if (operationCount >= 5)
+            {
+               return Convert.ToInt32(GetQueryable().Where(x => x.Operation.OperationType.Id == operationTypeId && x.RealizedEndDate <= DateTime.Now).Sum(z => (z.RealizedEndDate - z.RealizedStartDate).TotalMinutes) / operationCount);
+            }
+
+            return 0;
+        }
     }
 }

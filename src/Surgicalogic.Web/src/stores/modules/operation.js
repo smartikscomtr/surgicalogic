@@ -12,6 +12,7 @@ const operationModule = {
     filteredOperationTypes: [],
     filteredPersonnels: [],
     filteredOperatingRooms: [],
+    filteredOperationTime: null,
     globalDate: null
   },
 
@@ -68,6 +69,10 @@ const operationModule = {
 
     setOperatingRoomsByOperationTypeId(state, payload) {
       state.filteredOperatingRooms = payload;
+    },
+
+    setOperationTimeByOperationTypeId(state, payload) {
+      state.filteredOperationTime = payload;
     },
 
     setAllBranchesForOperation(state, payload) {
@@ -192,6 +197,19 @@ const operationModule = {
         axios.get('OperatingRoom/GetOperatingRoomsByOperationTypeId/' + payload.operationTypeId).then(response => {
           if (response.data) {
             context.commit('setOperatingRoomsByOperationTypeId', response.data) //Set the Operation Types in the store
+          }
+          resolve(response);
+        }, error => {
+          reject(error);
+        })
+      })
+    },
+
+    getOperationTimeByOperationTypeId(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.get('OperationPlan/GetOperationTimeByOperationTypeId?operationTypeId=' + payload.operationTypeId).then(response => {
+          if(response.data) {
+            context.commit('setOperationTimeByOperationTypeId', response.data.result) //Set the Operation Types in the store
           }
           resolve(response);
         }, error => {

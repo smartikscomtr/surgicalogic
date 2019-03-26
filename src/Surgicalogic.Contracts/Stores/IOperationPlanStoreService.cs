@@ -18,5 +18,6 @@ namespace Surgicalogic.Contracts.Stores
         Task<List<OperationPlanModel>> GetByIdListAsync(int[] updatedItemIds);
         Task<List<SimulationOperationPlanModel>> GetOperationByIdListAsync(DateTime selectDate);
         Task<List<OperationPlanModel>> GetOperationPlansByDoctorAndDateAsync(AppointmentDayInputModel model);
+        Task<int> GetOperationTimeByOperationTypeIdAsync(int operationTypeId);
     }
 }
