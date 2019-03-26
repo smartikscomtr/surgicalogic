@@ -240,5 +240,13 @@ namespace Surgicalogic.Api.Controllers
 
             await _operationPlanStoreService.SaveChangesAsync();
         }
+
+
+        [HttpGet]
+        [Route("OperationPlan/GetOperationTimeByOperationTypeId")]
+        public async Task<int> GetOperationTimeByOperationTypeIdAsync(int operationTypeId)
+        {
+            return await _operationPlanStoreService.GetOperationTimeByOperationTypeIdAsync(operationTypeId);
+        }
     }
 }

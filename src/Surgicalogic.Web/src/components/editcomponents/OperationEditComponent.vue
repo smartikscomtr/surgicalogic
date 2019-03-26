@@ -59,7 +59,7 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="selectOperationTime" :rules="required" :label="$t('operation.operationTime')" :value="editAction['operationTime']" type="time">
+                <v-text-field v-model="selectOperationTime" :rules="required" :label="$t('operation.operationTime')" :value="filterOperationTime" type="time">
                 </v-text-field>
               </v-flex>
 
@@ -119,6 +119,7 @@ export default {
             filterOperationTypes: [],
             filterPersonnels: [],
             filteredOperatingRooms: [],
+            filterOperationTime: null,
             snackbarVisible: null,
             savedMessage: vm.$i18n.t('operation.operationSaved'),
             menu: false,
@@ -172,6 +173,7 @@ export default {
             vm.editAction.operationName = val;
           }
         },
+
         formTitle() {
           const vm = this;
 
@@ -315,173 +317,184 @@ export default {
           vm.selectedPatient = val;
           vm.operationName = "";
       },
-        customFilter(item, queryText, itemText) {
+
+      customFilter(item, queryText, itemText) {
+        const vm = this;
+
+        const text = vm.replaceForAutoComplete(item.name);
+        const searchText = vm.replaceForAutoComplete(queryText);
+
+        return text.indexOf(searchText) > -1;
+      },
+
+      customFilterForFullName(item, queryText, itemText) {
+        const vm = this;
+
+        const text = vm.replaceForAutoComplete(item.fullName);
+        const searchText = vm.replaceForAutoComplete(queryText);
+
+        return text.indexOf(searchText) > -1;
+      },
+
+      replaceForAutoComplete(text) {
+        return text
+          .replace(/İ/g, 'i')
+          .replace(/I/g, 'ı')
+          .toLowerCase();
+      },
+
+      cancel() {
           const vm = this;
 
-          const text = vm.replaceForAutoComplete(item.name);
-          const searchText = vm.replaceForAutoComplete(queryText);
+          vm.clear();
+          vm.showModal = false;
+      },
 
-          return text.indexOf(searchText) > -1;
-        },
+      clear() {
+        const vm = this;
 
-        customFilterForFullName(item, queryText, itemText) {
+          vm.$refs.form.reset();
+
+          vm.editAction.date = null;
+          vm.$store.commit('saveGlobalDate', null);
+          vm.dateFormatted = null;
+      },
+
+      save() {
           const vm = this;
 
-          const text = vm.replaceForAutoComplete(item.fullName);
-          const searchText = vm.replaceForAutoComplete(queryText);
-
-          return text.indexOf(searchText) > -1;
-        },
-
-        replaceForAutoComplete(text) {
-          return text
-            .replace(/İ/g, 'i')
-            .replace(/I/g, 'ı')
-            .toLowerCase();
-        },
-
-        cancel() {
-            const vm = this;
-
-            vm.clear();
-            vm.showModal = false;
-        },
-
-        clear() {
-          const vm = this;
-
-            vm.$refs.form.reset();
-
-            vm.editAction.date = null;
-            vm.$store.commit('saveGlobalDate', null);
-            vm.dateFormatted = null;
-        },
-
-        save() {
-            const vm = this;
-
-            if (!vm.$refs.form.validate()) {
-                return;
-            }
-
-            vm.snackbarVisible = false;
-
-            //Edit operation
-            if (vm.editIndex > -1) {
-                //We are accessing updateOperation in vuex store
-                vm.$store
-                    .dispatch('updateOperation', {
-                        id: vm.editAction.id,
-                        name: vm.operationName,
-                        date: vm.editAction.date,
-                        operationTime: vm.editAction.operationTime,
-                        description: vm.editAction.description,
-                        operationTypeId: vm.editAction.operationTypeId,
-                        personnelIds: vm.editAction.personnelIds,
-                        operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
-                        patientId: vm.editAction.patientId,
-                        eventNumber: vm.editAction.eventNumber
-                    })
-                    .then(response => {
-                        vm.processResult(response);
-                    });
-            }
-
-            //Add operation
-            else {
-                //We are accessing insertOperation in vuex store
-                vm.$store
-                    .dispatch('insertOperation', {
-                        name: vm.operationName,
-                        date: vm.editAction.date,
-                        operationTime: vm.editAction.operationTime,
-                        description: vm.editAction.description,
-                        operationTypeId: vm.editAction.operationTypeId,
-                        personnelIds: vm.editAction.personnelIds,
-                        operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
-                        patientId: vm.editAction.patientId,
-                        eventNumber: vm.editAction.eventNumber
-                    })
-                    .then(response => {
-                        vm.processResult(response);
-                    });
-            }
-        },
-
-        processResult(response) {
-          const vm = this;
-
-          if (response.data.info.succeeded){
-              vm.savedMessage= vm.$i18n.t('operation.operationSaved');
-              vm.snackbarVisible = true;
+          if (!vm.$refs.form.validate()) {
+              return;
           }
-          else if (response.data.info.message == errorMessages.EventNumberIsNotDifferent){
-            vm.savedMessage= vm.$i18n.t('common.eventNumberIsNotDifferent');
+
+          vm.snackbarVisible = false;
+
+          //Edit operation
+          if (vm.editIndex > -1) {
+              //We are accessing updateOperation in vuex store
+              vm.$store
+                  .dispatch('updateOperation', {
+                      id: vm.editAction.id,
+                      name: vm.operationName,
+                      date: vm.editAction.date,
+                      operationTime: vm.selectOperationTime,
+                      description: vm.editAction.description,
+                      operationTypeId: vm.editAction.operationTypeId,
+                      personnelIds: vm.editAction.personnelIds,
+                      operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
+                      patientId: vm.editAction.patientId,
+                      eventNumber: vm.editAction.eventNumber
+                  })
+                  .then(response => {
+                      vm.processResult(response);
+                  });
+          }
+
+          //Add operation
+          else {
+              //We are accessing insertOperation in vuex store
+              vm.$store
+                  .dispatch('insertOperation', {
+                      name: vm.operationName,
+                      date: vm.editAction.date,
+                      operationTime: vm.filterOperationTime,
+                      description: vm.editAction.description,
+                      operationTypeId: vm.editAction.operationTypeId,
+                      personnelIds: vm.editAction.personnelIds,
+                      operatingRoomIds: vm.editAction.blockedOperatingRoomIds,
+                      patientId: vm.editAction.patientId,
+                      eventNumber: vm.editAction.eventNumber
+                  })
+                  .then(response => {
+                      vm.processResult(response);
+                  });
+          }
+      },
+
+      processResult(response) {
+        const vm = this;
+
+        if (response.data.info.succeeded){
+            vm.savedMessage= vm.$i18n.t('operation.operationSaved');
             vm.snackbarVisible = true;
-            setTimeout(() => {
-              vm.snackbarVisible = false;
-            }, 2300);
-
-            return false;
-          }
-
+        }
+        else if (response.data.info.message == errorMessages.EventNumberIsNotDifferent){
+          vm.savedMessage= vm.$i18n.t('common.eventNumberIsNotDifferent');
           vm.snackbarVisible = true;
-          vm.$parent.getOperations();
-
           setTimeout(() => {
-              vm.snackbarVisible = false;
+            vm.snackbarVisible = false;
           }, 2300);
 
-          vm.showModal = false;
-          vm.clear();
-        },
-
-        getMinDate() {
-            const toTwoDigits = num => (num < 10 ? '0' + num : num);
-            let tomorrow = new Date();
-
-            tomorrow.setDate(tomorrow.getDate() + 1);
-
-            let year = tomorrow.getFullYear();
-            let month = toTwoDigits(tomorrow.getMonth() + 1);
-            let day = toTwoDigits(tomorrow.getDate());
-
-            return `${year}-${month}-${day}`;
-        },
-
-        operationTypeChanged() {
-            const vm = this;
-
-            if (vm.editAction.operationTypeId) {
-                vm.$store
-                    .dispatch('getPersonnelsByOperationTypeId', {
-                        operationTypeId: vm.editAction.operationTypeId
-                    })
-                    .then(() => {
-                        vm.filterPersonnels =
-                            vm.$store.state.operationModule.filteredPersonnels;
-                    });
-            }
-
-            if (vm.editAction.operationTypeId) {
-                vm.$store
-                    .dispatch('getOperatingRoomsByOperationTypeId', {
-                        operationTypeId: vm.editAction.operationTypeId
-                    })
-                    .then(() => {
-                        vm.filteredOperatingRooms =
-                            vm.$store.state.operationModule.filteredOperatingRooms;
-                    });
-            }
-        },
-
-        formatDate(date) {
-            if (!date || date.indexOf('.') > -1) return null;
-
-            const [year, month, day] = date.split('-');
-
-            return `${day}.${month}.${year}`;
+          return false;
         }
+
+        vm.snackbarVisible = true;
+        vm.$parent.getOperations();
+
+        setTimeout(() => {
+            vm.snackbarVisible = false;
+        }, 2300);
+
+        vm.showModal = false;
+        vm.clear();
+      },
+
+      getMinDate() {
+          const toTwoDigits = num => (num < 10 ? '0' + num : num);
+          let tomorrow = new Date();
+
+          tomorrow.setDate(tomorrow.getDate() + 1);
+
+          let year = tomorrow.getFullYear();
+          let month = toTwoDigits(tomorrow.getMonth() + 1);
+          let day = toTwoDigits(tomorrow.getDate());
+
+          return `${year}-${month}-${day}`;
+      },
+
+      operationTypeChanged() {
+        const vm = this;
+
+        if (vm.editAction.operationTypeId) {
+            vm.$store
+                .dispatch('getPersonnelsByOperationTypeId', {
+                    operationTypeId: vm.editAction.operationTypeId
+                })
+                .then(() => {
+                    vm.filterPersonnels =
+                        vm.$store.state.operationModule.filteredPersonnels;
+                });
+        }
+
+        if (vm.editAction.operationTypeId) {
+            vm.$store
+                .dispatch('getOperatingRoomsByOperationTypeId', {
+                    operationTypeId: vm.editAction.operationTypeId
+                })
+                .then(() => {
+                    vm.filteredOperatingRooms =
+                        vm.$store.state.operationModule.filteredOperatingRooms;
+                });
+        }
+
+        if (vm.editAction.operationTypeId) {
+          vm.$store
+              .dispatch('getOperationTimeByOperationTypeId', {
+                  operationTypeId: vm.editAction.operationTypeId
+              })
+              .then(response => {
+                vm.filterOperationTime = ((response.data / 60) < 10 ? '0' + (response.data / 60) : (response.data / 60)) + ':' + ((response.data % 60) < 10 ? '0' + (response.data % 60) : (response.data % 60)) + ':00';
+              });
+        }
+      },
+
+      formatDate(date) {
+          if (!date || date.indexOf('.') > -1) return null;
+
+          const [year, month, day] = date.split('-');
+
+          return `${day}.${month}.${year}`;
+      }
     }
 };
 </script>
