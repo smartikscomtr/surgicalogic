@@ -823,6 +823,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
 
                     b.Property<int>("SettingDataTypeId");
 
+                    b.Property<int?>("SettingValueId");
+
                     b.Property<string>("StringValue");
 
                     b.Property<string>("TimeValue");
@@ -830,6 +832,8 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SettingDataTypeId");
+
+                    b.HasIndex("SettingValueId");
 
                     b.ToTable("Settings");
                 });
@@ -856,6 +860,32 @@ namespace Surgicalogic.Data.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SettingDataTypes");
+                });
+
+            modelBuilder.Entity("Surgicalogic.Data.Entities.SettingValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int>("RelatedSettingId");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SettingValues");
                 });
 
             modelBuilder.Entity("Surgicalogic.Data.Entities.User", b =>
@@ -1099,7 +1129,7 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Surgicalogic.Data.Entities.Operation", "Operation")
-                        .WithMany()
+                        .WithMany("OperationPlans")
                         .HasForeignKey("OperationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1160,6 +1190,10 @@ namespace Surgicalogic.Data.Migrations.Migrations
                         .WithMany()
                         .HasForeignKey("SettingDataTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Surgicalogic.Data.Entities.SettingValue", "SettingValue")
+                        .WithMany()
+                        .HasForeignKey("SettingValueId");
                 });
 #pragma warning restore 612, 618
         }

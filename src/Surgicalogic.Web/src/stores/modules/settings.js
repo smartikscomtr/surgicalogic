@@ -7,7 +7,8 @@ const settingsModule = {
     totalCount: 0,
     allSettings: [],
     appointmentDays: 0,
-    settingDataTypes: []
+    settingDataTypes: [],
+    settingValues: []
   },
 
   mutations: {
@@ -37,6 +38,10 @@ const settingsModule = {
 
     setSettingDataTypes(state, data) {
       state.settingDataTypes = data;
+    },
+
+    setSettingValues(state, data) {
+      state.settingValues = data;
     }
   },
 
@@ -86,6 +91,15 @@ const settingsModule = {
             context.commit('setSettingDataTypes', response.data.result)
           }
         })
+    },
+
+    getSettingValues(context) {
+      axios.get('Setting/GetSettingValues')
+      .then(response => {
+        if (response.data.info.succeeded == true) {
+          context.commit('setSettingValues', response.data.result)
+        }
+      })
     },
 
     updateSetting(context, payload) {

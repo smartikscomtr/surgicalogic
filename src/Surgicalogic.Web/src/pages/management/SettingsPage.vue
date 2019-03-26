@@ -117,6 +117,7 @@ export default {
     //We are accessing getAllOperationTypes in vuex store
      if(vm.editLoadOnce){
         vm.$store.dispatch('getSettingDataTypes');
+        vm.$store.dispatch('getSettingValues');
         vm.editLoadOnce = false;
      }
     }
