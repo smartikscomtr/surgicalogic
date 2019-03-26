@@ -16,5 +16,6 @@
   "patientIdentityNumber": "Hasta TC Kimlik No",
   "patientFirstName": "Hasta Adı",
   "patientLastName": "Hasta Soyadı",
-  "eventNumber": "Vaka Numarası"
+  "eventNumber": "Vaka Numarası",
+  "predictedOperationTime": "Tahmin edilen operasyon süresi"
 }

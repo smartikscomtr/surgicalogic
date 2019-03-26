@@ -59,7 +59,11 @@
               </v-flex>
 
               <v-flex xs12 sm6 md6>
-                <v-text-field v-model="selectOperationTime" :rules="required" :label="$t('operation.operationTime')" :value="filterOperationTime" type="time">
+                <v-text-field v-model="editAction['operationTime']" :rules="required" :label="$t('operation.operationTime')" :value="filterOperationTime" type="time">
+                  <v-tooltip slot="append" v-if="showOperationTimeTooltip" top>
+                    <v-icon slot="activator" color="primary" dark>live_help</v-icon>
+                    <span>{{ $t('operation.predictedOperationTime') }} {{ editAction.operationTime }}</span>
+                </v-tooltip>
                 </v-text-field>
               </v-flex>
 
@@ -120,11 +124,13 @@ export default {
             filterPersonnels: [],
             filteredOperatingRooms: [],
             filterOperationTime: null,
+            predictedOperationTime:null,
             snackbarVisible: null,
             savedMessage: vm.$i18n.t('operation.operationSaved'),
             menu: false,
             dateFormatted: null,
             valid: true,
+            showOperationTimeTooltip: false,
             selectedPatient: null,
             required: [v => !!v || this.$i18n.t('common.required')],
             multipleRequired: [
@@ -347,6 +353,7 @@ export default {
           const vm = this;
 
           vm.clear();
+          vm.showOperationTimeTooltip = false;
           vm.showModal = false;
       },
 
@@ -435,6 +442,7 @@ export default {
             vm.snackbarVisible = false;
         }, 2300);
 
+        vm.showOperationTimeTooltip = false;
         vm.showModal = false;
         vm.clear();
       },
@@ -477,14 +485,20 @@ export default {
                 });
         }
 
-        if (vm.editAction.operationTypeId) {
+        if (vm.editAction.operationTypeId && !vm.editAction.id) {
           vm.$store
               .dispatch('getOperationTimeByOperationTypeId', {
                   operationTypeId: vm.editAction.operationTypeId
               })
               .then(response => {
-                vm.filterOperationTime = ((response.data / 60) < 10 ? '0' + (response.data / 60) : (response.data / 60)) + ':' + ((response.data % 60) < 10 ? '0' + (response.data % 60) : (response.data % 60)) + ':00';
-              });
+                  vm.editAction.operationTime = ((response.data / 60) < 10 ? '0' + (response.data / 60) : (response.data / 60)) + ':' + ((response.data % 60) < 10 ? '0' + (response.data % 60) : (response.data % 60));
+                  if (response.data > 0){
+                    vm.showOperationTimeTooltip = true;
+                  }
+                  else {
+                    vm.showOperationTimeTooltip = false;
+                  }
+                });
         }
       },
 
