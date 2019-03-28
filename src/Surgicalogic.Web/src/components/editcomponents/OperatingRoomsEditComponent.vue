@@ -24,23 +24,23 @@
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm3 md3>
+            <v-flex xs12 sm6 md6>
               <v-text-field v-model="editAction['location']"
                             :label="$t('operatingrooms.location')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm3 md3>
+            <v-flex xs12 sm4 md4>
               <v-text-field v-model="editAction['width']" :mask="mask" :label="$t('operatingrooms.width')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm3 md3>
+            <v-flex xs12 sm4 md4>
               <v-text-field v-model="editAction['height']" :mask="mask" :label="$t('operatingrooms.height')">
               </v-text-field>
             </v-flex>
 
-            <v-flex xs12 sm3 md3>
+            <v-flex xs12 sm4 md4>
               <v-text-field v-model="editAction['length']" :mask="mask" :label="$t('operatingrooms.length')">
               </v-text-field>
             </v-flex>
