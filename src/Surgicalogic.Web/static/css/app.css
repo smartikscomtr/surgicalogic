@@ -713,7 +713,10 @@ div.vis-tooltip {
   letter-spacing: .02em;
 }
 .highlighted {
-  background-color: #9b9b9b !important;
+  background-color: #525252 !important;
+}
+.grid-actions-icon {
+  padding-left:25px;
 }
 .v-chip .v-chip__content {
   height: 20px !important;

@@ -29,7 +29,7 @@
               </v-layout>
 
               <!-- Subgroup -->
-              <v-list-group v-else-if="item.children" v-model="item.model" :key="item.text" :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
+              <v-list-group v-else-if="item.children" v-model="item.active" :key="item.text" :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
                 <v-list-tile slot="activator">
                   <v-list-tile-content>
                     <v-list-tile-title>
@@ -185,86 +185,7 @@ export default {
         items() {
             const vm = this;
 
-            return [
-                {
-                    icon: 'add_alarm',
-                    text: vm.$i18n.t('menu.operations'),
-                    route: '/operationpage'
-                },
-                {
-                    icon: 'group',
-                    text: vm.$i18n.t('menu.patient'),
-                    route: '/patientpage'
-                },
-                {
-                  icon: 'timeline',
-                  text: vm.$i18n.t('menu.planArrangementsAndSimulation'),
-                  route: '/planarrangementspage'
-                },
-                {
-                    icon: 'domain',
-                    text: vm.$i18n.t('menu.clinicManagement'),
-                    route: '/clinicpage'
-                },
-                {
-                    icon: 'keyboard_arrow_up',
-                    'icon-alt': 'keyboard_arrow_down',
-                    text: vm.$i18n.t('menu.reports'),
-                    children: [
-                        {
-                            icon: 'timer_off',
-                            text: vm.$i18n.t('menu.overtimeReport'),
-                            route: '/overtimereportpage'
-                        },
-                        {
-                            icon: 'history',
-                            text: vm.$i18n.t('menu.planningHistoryReport'),
-                            route: '/historyplanningpage'
-                        },
-                        {
-                            icon: 'history',
-                            text: vm.$i18n.t('menu.clinicHistoryReport'),
-                            route: '/historyclinicpage'
-                        },
-                        {
-                            icon: 'hourglass_full',
-                            text: vm.$i18n.t('menu.overtimeUtilizationReport'),
-                            route: '/overtimeutilizationpage'
-                        }
-                    ]
-                },
-                // {
-                //     icon: 'event',
-                //     text: vm.$i18n.t('menu.simulation'),
-                //     route: "/simulationpage"
-                // },
-                {
-                    icon: 'keyboard_arrow_up',
-                    'icon-alt': 'keyboard_arrow_down',
-                    text: vm.$i18n.t('menu.managementPanel'),
-                    children: [
-                        {
-                            icon: 'group',
-                            text: vm.$i18n.t('menu.users'),
-                            route: '/userspage'
-                        },
-                        {
-                            icon: 'chat_bubble',
-                            text: vm.$i18n.t('menu.feedback'),
-                            route: '/feedbackpage'
-                        },
-                        {
-                            icon: 'settings',
-                            text: vm.$i18n.t('menu.settings'),
-                            route: '/settingspage'
-                        }
-                    ]
-                },
-                {
-                    icon: 'keyboard_arrow_up',
-                    'icon-alt': 'keyboard_arrow_down',
-                    text: vm.$i18n.t('menu.definitions'),
-                    children: [
+            let definitions = [
                         {
                             icon: 'build',
                             text: vm.$i18n.t('menu.equipments'),
@@ -315,7 +236,97 @@ export default {
                         //   text: "Klinik"
                         //   // route: "/CreatePlan"
                         // }
-                    ]
+                    ];
+
+            let reports = [
+                        {
+                            icon: 'timer_off',
+                            text: vm.$i18n.t('menu.overtimeReport'),
+                            route: '/overtimereportpage'
+                        },
+                        {
+                            icon: 'history',
+                            text: vm.$i18n.t('menu.planningHistoryReport'),
+                            route: '/historyplanningpage'
+                        },
+                        {
+                            icon: 'history',
+                            text: vm.$i18n.t('menu.clinicHistoryReport'),
+                            route: '/historyclinicpage'
+                        },
+                        {
+                            icon: 'hourglass_full',
+                            text: vm.$i18n.t('menu.overtimeUtilizationReport'),
+                            route: '/overtimeutilizationpage'
+                        }
+                    ];
+
+            let managements = [
+                        {
+                            icon: 'group',
+                            text: vm.$i18n.t('menu.users'),
+                            route: '/userspage'
+                        },
+                        {
+                            icon: 'chat_bubble',
+                            text: vm.$i18n.t('menu.feedback'),
+                            route: '/feedbackpage'
+                        },
+                        {
+                            icon: 'settings',
+                            text: vm.$i18n.t('menu.settings'),
+                            route: '/settingspage'
+                        }
+                    ];
+
+
+
+            return [
+                {
+                    icon: 'add_alarm',
+                    text: vm.$i18n.t('menu.operations'),
+                    route: '/operationpage'
+                },
+                {
+                    icon: 'group',
+                    text: vm.$i18n.t('menu.patient'),
+                    route: '/patientpage'
+                },
+                {
+                  icon: 'timeline',
+                  text: vm.$i18n.t('menu.planArrangementsAndSimulation'),
+                  route: '/planarrangementspage'
+                },
+                {
+                    icon: 'domain',
+                    text: vm.$i18n.t('menu.clinicManagement'),
+                    route: '/clinicpage'
+                },
+                {
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.reports'),
+                    children: reports,
+                    active: reports.some(x => x.route === vm.$route.path)
+                },
+                // {
+                //     icon: 'event',
+                //     text: vm.$i18n.t('menu.simulation'),
+                //     route: "/simulationpage"
+                // },
+                {
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.managementPanel'),
+                    children: managements,
+                    active: managements.some(x => x.route === vm.$route.path)
+                },
+                {
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: vm.$i18n.t('menu.definitions'),
+                    children: definitions,
+                    active: definitions.some(x => x.route === vm.$route.path)
                 }
             ];
         },

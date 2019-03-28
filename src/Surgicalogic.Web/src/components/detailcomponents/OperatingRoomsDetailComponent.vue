@@ -31,7 +31,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm3 md3>
+              <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.location') }}
@@ -43,7 +43,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm3 md3>
+              <v-flex xs12 sm4 md4>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.width') }}
@@ -55,7 +55,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm3 md3>
+              <v-flex xs12 sm4 md4>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.height') }}
@@ -67,7 +67,7 @@
                 </div>
               </v-flex>
 
-              <v-flex xs12 sm3 md3>
+              <v-flex xs12 sm4 md4>
                 <div class="input-group readonly-wrap">
                   <div class="label">
                     {{ $t('operatingrooms.length') }}
@@ -82,23 +82,23 @@
               <v-flex xs12 sm6 md6>
                 <div class="input-group readonly-wrap">
                   <div class="label">
-                    {{ $t('operationtypes.operationType') }}
-                  </div>
-
-                  <div class="value">
-                    {{ selectOperationType }}
-                  </div>
-                </div>
-              </v-flex>
-
-              <v-flex xs12 sm6 md6>
-                <div class="input-group readonly-wrap">
-                  <div class="label">
                     {{ $t('equipments.equipments') }}
                   </div>
 
                   <div class="value">
                     {{ selectEquipment }}
+                  </div>
+                </div>
+              </v-flex>
+
+             <v-flex xs12 sm6 md6>
+                <div class="input-group readonly-wrap">
+                  <div class="label">
+                    {{ $t('operationtypes.operationType') }}
+                  </div>
+
+                  <div class="value">
+                    {{ selectOperationType }}
                   </div>
                 </div>
               </v-flex>
