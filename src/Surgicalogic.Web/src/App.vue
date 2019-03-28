@@ -72,7 +72,7 @@
         </v-navigation-drawer>
 
         <!-- Toolbar -->
-        <v-toolbar color="teal" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
+        <v-toolbar color="teal" height="48px" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
           <v-toolbar-title style="width: 300px" class="ml-0">
             <v-toolbar-side-icon @click.stop="drawer = !drawer">
             </v-toolbar-side-icon>
