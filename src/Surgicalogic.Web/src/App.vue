@@ -371,13 +371,7 @@ export default {
           vm.$store.dispatch("userLogout").then(() => {
             vm.$router.push("/loginpage");
           });
-        },
-
-      emitGlobalClickEvent() {
-      this.clickCount++;
-      // Send the event on a channel (i-got-clicked) with a payload (the click count.)
-      EventBus.$emit('i-got-clicked', this.clickCount);
-      }
+        }
     },
 
     mounted() {
@@ -393,7 +387,7 @@ export default {
             vm.changeLanguage(currentLanguage);
         }
 
-        EventBus.$on('apiErrorDialog', function(number){
+        EventBus.$on('apiErrorDialog', function() {
           vm.showErrorDialog = true;
         })
     }

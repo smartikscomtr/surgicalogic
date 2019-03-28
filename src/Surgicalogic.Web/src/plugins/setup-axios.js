@@ -7,8 +7,19 @@ import EventBus from '../event-bus';
 
 const httpCodes = {
   badRequest: 401,
-  unAuthorized:403,
+  unAuthorized: 403,
   serverError: 500
+}
+
+let isAlreadyFetchingAccessToken = false
+let subscribers = []
+
+function onAccessTokenFetched(access_token) {
+  subscribers = subscribers.filter(callback => callback(access_token))
+}
+
+function addSubscriber(callback) {
+  subscribers.push(callback)
 }
 
 function cleanResponseError(err) {
@@ -39,7 +50,9 @@ function setupAxios() {
 function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
   axios.interceptors.request.use(
     config => {
-      config.url = process.env.ROOT_API + config.url;
+      if (config.url.indexOf(process.env.ROOT_API) <= -1) {
+        config.url = process.env.ROOT_API + config.url;
+      }
 
       if (vm.auth.isAuthenticated()) {
         const token = vm.auth.getToken();
@@ -64,50 +77,60 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
     },
     error => {
       if (error.response) {
-        if (error.response.status === httpCodes.badRequest &&
-          error.response.statusText === "Unauthorized") {
+        const {
+          config,
+          response: {
+            status
+          }
+        } = error
+        const originalRequest = config
 
+        if (status === 401) {
           if (localStorage.getItem("refreshToken")) {
-            axios.post('User/RefreshToken', {
+            if (!isAlreadyFetchingAccessToken) {
+              isAlreadyFetchingAccessToken = true
+              axios.post('User/RefreshToken', {
                 token: localStorage.getItem("token"),
                 refreshToken: localStorage.getItem("refreshToken")
-              })
-              .then(response => {
+              }).then(response => {
                 if (response.statusText == 'OK') {
                   vm.auth.setAuthentication(response.data.token, response.data.refreshToken, response.data.expiresIn);
-                  // localStorage.setItem("token", response.data.token);
-                  // localStorage.setItem("refreshToken", response.data.refreshToken);
-                  // localStorage.setItem("expiresIn", response.data.expiresIn);
-                  vm.$router.push(vm.$router.currentRoute.name);
-                }
-                else {
+                  isAlreadyFetchingAccessToken = false;
+                  onAccessTokenFetched(response.data.token);
+                } else {
                   return vm.$router.push({
                     name: 'LoginPage'
                   });
                 }
-              }).catch(error => {
-                return vm.$router.push({
-                  name: 'LoginPage'
-                });
-            });
+              });
+
+              const retryOriginalRequest = new Promise((resolve) => {
+                addSubscriber(access_token => {
+                  originalRequest.headers.Authorization = 'Bearer ' + access_token
+                  resolve(axios(originalRequest))
+                })
+              })
+              return retryOriginalRequest
+            }
           } else {
             return vm.$router.push({
               name: 'LoginPage'
             });
           }
-
-        }
-        else if (error.response.status === httpCodes.unAuthorized) {
+        } else if (error.response.status === httpCodes.unAuthorized) {
           return vm.$router.push({
             name: 'ForbiddenErrorPage'
           });
+        } else {
+          EventBus.$emit("apiErrorDialog");
         }
+
+      } else {
+        EventBus.$emit("apiErrorDialog");
       }
 
-      EventBus.$emit("apiErrorDialog",4);
-
-
       return Promise.reject(error);
+
     });
 }
 
