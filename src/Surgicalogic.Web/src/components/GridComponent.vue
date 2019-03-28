@@ -70,7 +70,7 @@
         <v-progress-linear
           slot="progress"
           height="3"
-          color="teal"
+          color="orange darken-2"
           indeterminate
         >
         </v-progress-linear>

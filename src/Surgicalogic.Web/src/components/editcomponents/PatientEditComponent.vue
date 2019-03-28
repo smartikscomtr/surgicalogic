@@ -26,6 +26,13 @@
             </v-flex>
 
              <v-flex xs12 sm6 md6>
+              <v-text-field v-model="editAction['phone']"
+                            :rules="required"
+                            :label="$t('patient.phone')">
+              </v-text-field>
+            </v-flex>
+
+             <v-flex xs12 sm6 md6>
               <v-text-field v-model="editAction['firstName']"
                             :rules="required"
                             :label="$t('patient.firstName')">
@@ -36,13 +43,6 @@
               <v-text-field v-model="editAction['lastName']"
                             :rules="required"
                             :label="$t('patient.lastName')">
-              </v-text-field>
-            </v-flex>
-
-             <v-flex xs12 sm6 md6>
-              <v-text-field v-model="editAction['phone']"
-                            :rules="required"
-                            :label="$t('patient.phone')">
               </v-text-field>
             </v-flex>
 
