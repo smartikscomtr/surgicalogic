@@ -17,7 +17,6 @@
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-card-text>
             <v-layout wrap edit-layout>
-
               <v-flex xs12 sm6 md6>
                 <v-text-field v-model="editAction['eventNumber']" :rules="required" :label="$t('operation.eventNo')">
                 </v-text-field>
@@ -26,7 +25,7 @@
 
               <v-flex xs12 sm6 md6>
                 <v-autocomplete v-model="selectPatient" :items="patients" :label="$t('personnel.patient')" :filter="customFilterForFullName"
-                              clearable chips item-text="fullName" item-value="id" :rules="required" @change="handleChange" >
+                              clearable item-text="fullName" item-value="id" :rules="required" @change="handleChange" >
                 </v-autocomplete>
               </v-flex>
 

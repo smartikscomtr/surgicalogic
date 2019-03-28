@@ -283,7 +283,7 @@ table.v-table thead th:not(:first-child) {
   overflow: visible;
 }
 .v-select.v-select--chips .v-select__selections {
-  min-height: 32px;
+  min-height: 32px !important;
 }
 
 input[type='date']::-webkit-inner-spin-button {
@@ -714,4 +714,17 @@ div.vis-tooltip {
 }
 .highlighted {
   background-color: #9b9b9b !important;
+}
+.v-chip .v-chip__content {
+  height: 20px !important;
+}
+.v-card__text .edit-layout .flex{
+  align-items: flex-end;
+  display: flex;
+}
+.v-card__text .edit-layout .flex > div{
+  flex: 1;
+}
+.v-dialog {
+  overflow: hidden !important;
 }
