@@ -1,8 +1,8 @@
 {
-  "addEquipmentsInformation": "Yeni Ekipman Bilgisi Ekle",
+  "addEquipmentsInformation": "Ekipman Ekle",
   "description" : "Açıklama",
   "detailEquipments": "Ekipman Detayı",
-  "editEquipmentsInformation": "Ekipman Bilgileri Düzenleme",
+  "editEquipmentsInformation": "Ekipman Güncelle",
   "equipment": "Ekipman",
   "equipments": "Ekipmanlar",
   "name": "Adı",

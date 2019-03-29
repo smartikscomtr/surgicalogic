@@ -1,5 +1,5 @@
 {
-  "actions": "Aksiyon",
+  "actions": "İşlemler",
   "add": "Ekle",
   "areYouSureWantToDelete": "Silmek istediğinizden emin misiniz?",
   "deleteOperation": "Silme İşlemi",
@@ -22,7 +22,7 @@
   "theItemCanNotBeDeletedBecauseItIsAssociatedWithAnotherData": "Başka bir veri ile ilişkilendirildiği için öğe silinemez.",
   "theDataWasSuccessfullyDeleted": "Veri başarıyla silindi.",
   "viewRecord": "Kayıt Detayı",
-  "editRecord": "Kayıt Düzenle",
+  "editRecord": "Kayıt Güncelle",
   "deleteRecord": "Kayıt Sil",
   "required":"Zorunlu Alan",
   "endDateMustBeBiggerThanStart": "Bitiş tarihi başlangıç tarihinden büyük olmalı.",

@@ -1,6 +1,6 @@
 {
-  "addOperationType": "Yeni Operasyon Tipi Ekleme",
-  "editOperationType": "Operasyon Tipi Düzenleme",
+  "addOperationType": "Operasyon Tipi Ekle",
+  "editOperationType": "Operasyon Tipi Güncelle",
   "operationType": "Operasyon Tipi",
   "operationtypes": "Operasyon Tipleri",
   "detailOperationType": "Operasyon Tipi Detayları",

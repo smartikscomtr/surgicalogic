@@ -84,7 +84,7 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
           }
         } = error
         const originalRequest = config
-
+debugger;
         if (status === 401) {
           if (localStorage.getItem("refreshToken")) {
             if (!isAlreadyFetchingAccessToken) {
@@ -117,9 +117,9 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
               name: 'LoginPage'
             });
           }
-        } else if (error.response.status === httpCodes.unAuthorized) {
+        } else if (error.response.status === httpCodes.unAuthorized || error.response.status === 400) {
           return vm.$router.push({
-            name: 'ForbiddenErrorPage'
+            name: 'LoginPage'
           });
         } else {
           EventBus.$emit("apiErrorDialog");

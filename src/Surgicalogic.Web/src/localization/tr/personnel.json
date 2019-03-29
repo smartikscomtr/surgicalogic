@@ -1,6 +1,6 @@
 {
-  "addPersonnelInformation": "Yeni Personel Bilgisi Ekleme",
-  "editPersonnelInformation": "Personel Bilgisi Düzenleme",
+  "addPersonnelInformation": "Personel Ekle",
+  "editPersonnelInformation": "Personel Güncelle",
   "lastName": "Soyadı",
   "firstName" : "Adı",
   "personnel": "Personel",

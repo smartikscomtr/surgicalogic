@@ -117,8 +117,9 @@
             </template>
 
             <template v-else>
-              <v-menu offset-y left open-on-hover v-if="showCalendar || showPlanAnOperation || showDetail || showEdit || showDelete">
+              <v-menu offset-y left v-if="showCalendar || showPlanAnOperation || showDetail || showEdit || showDelete">
                 <template slot="activator">
+                  <v-tooltip top>
                     <v-btn
                       slot="activator"
                       style="color:black;"
@@ -127,6 +128,8 @@
                     >
                       <v-icon>more_vert</v-icon>
                     </v-btn>
+                    <span>{{ $t('common.actions') }}</span>
+              </v-tooltip>
                 </template>
                 <v-list>
                   <v-list-tile v-if="showCalendar" @click="calendarItem(props.item)">

@@ -2,7 +2,7 @@
   "title":"Ayarlar",
   "name":"Adı",
   "value":"Değeri",
-  "editSettings": "Ayar Düzenleme",
+  "editSettings": "Ayar Güncelle",
   "settingUpdated": "Ayar Güncellendi",
   "valueType": "Değer Tipi",
   "settingDataType":"Veri Tipi"
