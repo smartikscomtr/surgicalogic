@@ -138,8 +138,9 @@ const operatingRoomModule = {
 
           link.href = "/static/" + response.data;
           document.body.appendChild(link);
-          link.click();
-        })
+          setTimeout(function() {
+            link.click();
+          }, 1000);        })
     }
   }
 }
