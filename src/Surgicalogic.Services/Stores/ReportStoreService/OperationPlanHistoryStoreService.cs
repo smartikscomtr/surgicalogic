@@ -148,8 +148,46 @@ namespace Surgicalogic.Services.Stores
 
         public async Task<List<HistoryPlanningReportExportModel>> GetExportAsync<OperationPlanHistoryOutputModel>(HistoryPlanningInputModel input)
         {
-            var query = _context.OperationPlans.Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
-            
+            var query = _context.OperationPlans.Where(x => x.IsActive);
+
+            var operatingRoomIds = input.OperatingRoomId?.Split(',').Select(int.Parse).ToList();
+            var operationIds = input.OperationId?.Split(',').Select(int.Parse).ToList();
+
+
+            if (operatingRoomIds?.Count > 0)
+            {
+                query = query.Where(x => operatingRoomIds.Contains(x.OperatingRoomId));
+            }
+
+            if (operationIds?.Count > 0)
+            {
+                query = query.Where(x => operationIds.Contains(x.OperationId));
+            }
+
+            if (input.OperationStartDate != null && input.OperationStartDate != DateTime.MinValue)
+            {
+                query = query.Where(x => x.OperationDate >= input.OperationStartDate);
+            }
+
+            if (input.OperationEndDate != null && input.OperationEndDate != DateTime.MinValue)
+            {
+                query = query.Where(x => x.OperationDate <= input.OperationEndDate.AddDays(1));
+            }
+
+            if (!string.IsNullOrEmpty(input.IdentityNumber))
+            {
+                query = query.Where(x => x.Operation.Patient.IdentityNumber == input.IdentityNumber);
+            }
+
+            if (!string.IsNullOrEmpty(input.Search))
+            {
+                query = query.Where(x =>
+                    x.Operation.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+                    x.OperatingRoom.Name.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0 ||
+                    x.Operation.Patient.IdentityNumber.IndexOf(input.Search, StringComparison.CurrentCultureIgnoreCase) >= 0
+                );
+            }
+
             return await query.ProjectTo<HistoryPlanningReportExportModel>().ToListAsync();
         }
     }

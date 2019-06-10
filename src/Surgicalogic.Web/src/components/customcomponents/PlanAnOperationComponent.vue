@@ -52,7 +52,7 @@
                   </v-text-field>
 
                   <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)"
-                    locale="tr-TR" :min="getMinDate()">
+                    :locale="getLocale()" :min="getMinDate()">
                   </v-date-picker>
                 </v-menu>
               </v-flex>
@@ -90,7 +90,13 @@
 </template>
 
 <script>
+
+import { localizationMixin } from './../../mixins/localizationMixin';
+
 export default {
+  mixins: [
+    localizationMixin
+  ],
 
   props: {
         planOperationVisible: {

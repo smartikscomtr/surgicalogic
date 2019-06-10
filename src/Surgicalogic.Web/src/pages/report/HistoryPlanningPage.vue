@@ -66,7 +66,7 @@
                             :label="$t('report.operationStartDate')">
               </v-text-field>
 
-              <v-date-picker v-model="startDate" no-title locale="tr-TR" @input="$refs.menu1.save(startDate)" :max="getMaxDate()">
+              <v-date-picker v-model="startDate" no-title :locale="getLocale()" @input="$refs.menu1.save(startDate)" :max="getMaxDate()">
               </v-date-picker>
             </v-menu>
           </v-flex>
@@ -88,7 +88,7 @@
 
               <v-date-picker v-model="endDate"
                             no-title
-                            locale="tr-TR"
+                            :locale="getLocale()"
                             @input="$refs.menu2.save(endDate)"
                             :max="getMaxDate()">
               </v-date-picker>
@@ -124,10 +124,12 @@
 <script>
 
 import { gridMixin } from './../../mixins/gridMixin';
+import { localizationMixin } from './../../mixins/localizationMixin';
 
 export default {
   mixins: [
-    gridMixin
+    gridMixin,
+    localizationMixin
   ],
 
   data() {

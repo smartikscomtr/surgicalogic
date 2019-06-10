@@ -237,4 +237,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Evet</value>
   </data>
+  <data name="SuitableForMultipleOperation" xml:space="preserve">
+    <value>Birden Fazla Operasyonda Kullanılabilir Mi</value>
+  </data>
 </root>

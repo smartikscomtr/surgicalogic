@@ -349,6 +349,15 @@ namespace Surgicalogic.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suitable For Multiple Operation.
+        /// </summary>
+        public static string SuitableForMultipleOperation {
+            get {
+                return ResourceManager.GetString("SuitableForMultipleOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Title {

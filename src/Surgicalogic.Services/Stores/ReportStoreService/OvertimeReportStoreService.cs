@@ -129,7 +129,7 @@ namespace Surgicalogic.Services.Stores.ReportStoreService
 
         public async Task<List<OvertimeReportExportModel>> GetExportAsync(OvertimeReportInputModel input)
         {
-            var query = _context.OperationPlans.AsNoTracking().Where(x => Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
+            var query = _context.OperationPlans.AsNoTracking().Where(x => x.IsActive && Convert.ToInt32((x.RealizedEndDate - x.RealizedStartDate).TotalMinutes) != x.Operation.OperationTime);
 
             return await query.ProjectTo<OvertimeReportExportModel>().ToListAsync();
         }

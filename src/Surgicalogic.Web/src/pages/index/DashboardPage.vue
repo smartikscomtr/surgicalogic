@@ -159,7 +159,7 @@
             <v-date-picker
               v-model="date"
               no-title
-              locale="tr-TR"
+              :locale="getLocale()"
               @input="$refs.menu.save(date)"
               :max="getMaxDate()"
             >
@@ -208,8 +208,13 @@
 
 <script>
 import Vis from "vis/dist/vis.js";
+import { localizationMixin } from './../../mixins/localizationMixin';
 
 export default {
+  mixins: [
+    localizationMixin
+  ],
+
   data() {
     const vm = this;
 

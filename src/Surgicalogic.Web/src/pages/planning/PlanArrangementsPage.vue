@@ -97,7 +97,7 @@
 
             <v-date-picker
               v-model="date"
-              locale="tr-TR"
+              :locale="getLocale()"
               no-title
               @input="$refs.menu.save(date)"
               :min="getMinDate()"
@@ -185,8 +185,13 @@
 <script>
 
 import Vis from "vis/dist/vis.js";
+import { localizationMixin } from './../../mixins/localizationMixin';
 
 export default {
+  mixins: [
+    localizationMixin
+  ],
+
   data() {
     const vm = this;
 

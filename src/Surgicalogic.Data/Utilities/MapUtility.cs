@@ -177,7 +177,7 @@ namespace Surgicalogic.Data.Utilities
             config.CreateMap<OperatingRoomModel, OperatingRoomOutputModel>()
                  .ForMember(dest => dest.EquipmentIds, opt => opt.MapFrom(src => src.OperatingRoomEquipments.Where(x => x.IsActive).Select(x => x.EquipmentId)))
                  .ForMember(dest => dest.OperationTypeIds, opt => opt.MapFrom(src => src.OperatingRoomOperationTypes.Where(x => x.IsActive).Select(x => x.OperationTypeId)))
-                 .ForMember(dest => dest.UnavailableDates, opt => opt.MapFrom(src => string.Join(", ", src.OperatingRoomCalendars.Where(x => x.IsActive).Select(x => x.StartDate.ToString("dd.MM.yyyy") + "-" + x.EndDate.ToString("dd.MM.yyyy")))));
+                 .ForMember(dest => dest.UnavailableDates, opt => opt.MapFrom(src => string.Join(", ", src.OperatingRoomCalendars.Where(x => x.IsActive && x.EndDate >= DateTime.Today).Select(x => x.StartDate.ToString("dd.MM.yyyy") + "-" + x.EndDate.ToString("dd.MM.yyyy")))));
             config.CreateMap<OperatingRoomModel, OperatingRoomForTimelineModel>()
                  .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
                  .ForMember(dest => dest.content, opt => opt.MapFrom(src => src.Name));
@@ -261,7 +261,8 @@ namespace Surgicalogic.Data.Utilities
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.PersonnelCategory.Name))
                 .ForMember(dest => dest.Branch, opt => opt.MapFrom(src => string.Join(", ", src.PersonnelBranches.Select(x => x.Branch.Name))))
                 .ForMember(dest => dest.WorkType, opt => opt.MapFrom(src => src.WorkType.Name));
-            config.CreateMap<PersonnelCategory, PersonnelCategoryExportModel>();
+            config.CreateMap<PersonnelCategory, PersonnelCategoryExportModel>()
+                .ForMember(dest => dest.SuitableForMultipleOperation, opt => opt.MapFrom(src => src.SuitableForMultipleOperation ? "+" : "-"));
             config.CreateMap<PersonnelTitle, PersonnelTitleExportModel>();
             config.CreateMap<WorkType, WorkTypeExportModel>();
             config.CreateMap<OperationType, OperationTypeExportModel>()

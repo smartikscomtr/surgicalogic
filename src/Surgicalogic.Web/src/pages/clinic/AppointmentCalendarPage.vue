@@ -18,7 +18,7 @@
 
             <v-date-picker v-model="date"
                             no-title
-                            locale="tr-TR" @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
+                            :locale="getLocale()" @input="$refs.menu.save(date)" :min="getMinDate()" @change="destroyPicker()" :max="getMaxDate()">
             </v-date-picker>
           </v-menu>
         </v-flex>
@@ -97,7 +97,14 @@
 <script src="js/appointment-picker.min.js"></script>
 
 <script>
+
+import { localizationMixin } from './../../mixins/localizationMixin';
+
 export default {
+  mixins: [
+    localizationMixin
+  ],
+
     data() {
         const vm = this;
 
@@ -359,11 +366,11 @@ export default {
                     }
                 }
 
-                vm.availableAppointmentsMessage =
+                vm.availableAppointmentsMessage = vm.$cookie.get("currentLanguage") == "tr" ?
                     vm.selectedTime +
                     ' saatine ' +
                     availablePerson +
-                    ' randevu alabilirsiniz.';
+                    ' randevu alabilirsiniz.' : "You can schedule " + availablePerson + " appointment(s) for " + vm.selectedTime;
                 vm.showModal = true;
             },
             false

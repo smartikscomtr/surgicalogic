@@ -40,7 +40,7 @@
 
               <v-date-picker v-model="startDate"
                             no-title
-                            locale="tr-TR"
+                            :locale="getLocale()"
                             @input="$refs.menu1.save(startDate)"
                             :max="getMaxDate()">
               </v-date-picker>
@@ -64,7 +64,7 @@
 
               <v-date-picker v-model="endDate"
                             no-title
-                            locale="tr-TR"
+                            :locale="getLocale()"
                             @input="$refs.menu2.save(endDate)"
                             :max="getMaxDate()">
               </v-date-picker>
@@ -126,10 +126,12 @@
 <script>
 
 import { gridMixin } from './../../mixins/gridMixin';
+import { localizationMixin } from './../../mixins/localizationMixin';
 
 export default {
   mixins: [
-    gridMixin
+    gridMixin,
+    localizationMixin
   ],
 
   data() {
@@ -282,7 +284,7 @@ export default {
     exportOvertimeUtilizationReportToExcel() {
       const vm = this;
 
-      vm.$store.dispatch('excelExportOvertimeUtilization', { langId: vm.$cookie.get("currentLanguage")});
+      vm.$store.dispatch('excelExportOvertimeUtilization', { langId: vm.$cookie.get("currentLanguage"), operationStartDate: vm.startDate, operationEndDate: vm.endDate});
     },
 
     getMaxDate() {

@@ -61,7 +61,7 @@
                   <v-date-picker
                     v-model="startDate"
                     no-title
-                    locale="tr-TR"
+                    :locale="getLocale()"
                     @input="$refs.menu1.save(startDate);"
                     :min="getMinDate()"
                   >
@@ -99,7 +99,7 @@
                   <v-date-picker
                     v-model="endDate"
                     no-title
-                    locale="tr-TR"
+                    :locale="getLocale()"
                     @input="$refs.menu2.save(endDate);"
                     :min="getMinDate()"
                   >
@@ -124,7 +124,14 @@
 </template>
 
 <script>
+
+import { localizationMixin } from './../../mixins/localizationMixin';
+
 export default {
+  mixins: [
+    localizationMixin
+  ],
+
   props: {
     editAvailableVisible: {
       type: Boolean,

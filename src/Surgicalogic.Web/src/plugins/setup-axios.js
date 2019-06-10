@@ -84,7 +84,7 @@ function setupHttpInterceptor(vm) { // eslint-disable-line consistent-this
           }
         } = error
         const originalRequest = config
-debugger;
+
         if (status === 401) {
           if (localStorage.getItem("refreshToken")) {
             if (!isAlreadyFetchingAccessToken) {

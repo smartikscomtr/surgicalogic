@@ -10,5 +10,7 @@ namespace Surgicalogic.Model.ExportModel
     {
         [Display(Name = "Category", ResourceType = typeof(Resource))]
         public string Name { get; set; }
+        [Display(Name = "SuitableForMultipleOperation", ResourceType = typeof(Resource))]
+        public string SuitableForMultipleOperation { get; set; }
     }
 }

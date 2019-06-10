@@ -52,7 +52,7 @@
                   </v-text-field>
 
                   <v-date-picker v-model="date" no-title @input="$refs.menu.save(date)"
-                    locale="tr-TR" :min="getMinDate()">
+                    :locale="getLocale()" :min="getMinDate()">
                   </v-date-picker>
                 </v-menu>
               </v-flex>
@@ -94,7 +94,14 @@
 </template>
 
 <script>
+
+import { localizationMixin } from './../../mixins/localizationMixin';
+
 export default {
+  mixins: [
+    localizationMixin
+  ],
+
     props: {
         editVisible: {
             type: Boolean,
@@ -159,7 +166,7 @@ export default {
             if (vm.patients)
             {
               vm.patients.forEach(element => {
-                if (element.id == vm.selectedPatient)
+                if (element.id == vm.selectedPatient || (vm.editAction && element.id == vm.editAction.patientId))
                 {
                   patientName = element.fullName;
                 }
@@ -403,7 +410,7 @@ export default {
                   .dispatch('insertOperation', {
                       name: vm.operationName,
                       date: vm.editAction.date,
-                      operationTime: vm.filterOperationTime,
+                      operationTime: vm.selectOperationTime,
                       description: vm.editAction.description,
                       operationTypeId: vm.editAction.operationTypeId,
                       personnelIds: vm.editAction.personnelIds,

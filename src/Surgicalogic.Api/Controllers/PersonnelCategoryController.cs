@@ -57,6 +57,11 @@ namespace Surgicalogic.Api.Controllers
 
             var items = await _PersonnelCategoryStoreService.GetExportAsync<PersonnelCategoryExportModel>();
 
+            foreach (var item in items)
+            {
+                item.SuitableForMultipleOperation = item.SuitableForMultipleOperation == "+" ? Resources.Resource.Yes : Resources.Resource.No;
+            }
+
             await excelService.WriteAsync(fs, "Worksheet", items, typeof(PersonnelCategoryExportModel), System.Globalization.CultureInfo.CurrentCulture);
 
             return fileName;

@@ -69,7 +69,7 @@
 
               <v-date-picker v-model="startDate"
                              no-title
-                             locale="tr-TR"
+                             :locale="getLocale()"
                              @input="$refs.menu1.save(startDate)"
                              :max="getMaxDate()">
               </v-date-picker>
@@ -96,7 +96,7 @@
 
               <v-date-picker v-model="endDate"
                              no-title
-                             locale="tr-TR"
+                             :locale="getLocale()"
                              @input="$refs.menu2.save(endDate)"
                              :max="getMaxDate()">
               </v-date-picker>
@@ -133,9 +133,12 @@
 
 import { gridMixin } from './../../mixins/gridMixin';
 
+import { localizationMixin } from './../../mixins/localizationMixin';
+
 export default {
   mixins: [
-    gridMixin
+    gridMixin,
+    localizationMixin
   ],
 
   data() {
