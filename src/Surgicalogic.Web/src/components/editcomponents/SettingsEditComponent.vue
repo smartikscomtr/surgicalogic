@@ -188,6 +188,16 @@ export default {
         }
     },
 
+    watch: {
+      showModal(val) {
+        if (val) {
+            const vm = this;
+
+            vm.settingDataTypeChanged();
+        }
+      }
+    },
+
     methods: {
         customFilter(item, queryText, itemText) {
             const vm = this;
@@ -234,7 +244,7 @@ export default {
                     intValue: vm.editAction.intValue,
                     stringValue: vm.editAction.stringValue,
                     timeValue: vm.editAction.timeValue,
-                    doubleValue: vm.editAction.doubleValue.toString().replace(',','.')
+                    doubleValue: vm.editAction.doubleValue ? vm.editAction.doubleValue.toString().replace(',','.') : null
                 })
                 .then(() => {
                     vm.snackbarVisible = true;
