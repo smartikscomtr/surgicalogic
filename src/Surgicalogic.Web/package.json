@@ -14,7 +14,7 @@
   "dependencies": {
     "appointment-picker": "^1.2.0",
     "axios": "^0.18.0",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.9.4",
     "jshint": "^2.9.5",
     "vis": "^4.21.0",
     "vue": "^2.5.2",
